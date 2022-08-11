@@ -1,28 +1,18 @@
 import {Fragment, useState} from 'react'
 import {Dialog, Menu, Transition} from '@headlessui/react'
-import {
-    BellIcon,
-    ChartBarIcon,
-    CashIcon,
-    HomeIcon,
-    InboxIcon,
-    MenuAlt2Icon,
-    UsersIcon,
-    XIcon,
-} from '@heroicons/react/outline'
-import {SearchIcon} from '@heroicons/react/solid'
-import {useLoaderData} from "@remix-run/react";
+import {BellIcon, CashIcon, HomeIcon, MenuAlt2Icon, SearchIcon, UsersIcon, XIcon} from '@heroicons/react/outline'
+import {Link, NavLink, useLoaderData} from "@remix-run/react";
 import type {LoaderFunction} from "@remix-run/node";
 import {json} from "@remix-run/node";
 import PatreonIcon from "~/icons/PatreonIcon";
 import KofiIcon from "~/icons/KofiIcon";
 
 const navigation = [
-    {name: 'Dashboard', href: '#', icon: HomeIcon, current: true},
-    {name: 'Trading', href: '#', icon: CashIcon, current: false},
-    {name: 'Retainers', href: '#', icon: UsersIcon, current: false},
-    {name: 'Patreon', href: '#', icon: PatreonIcon, current: false},
-    {name: 'Ko-fi', href: '#', icon: KofiIcon, current: false},
+    {name: 'Dashboard', href: '/', icon: HomeIcon},
+    {name: 'Trading', href: 'trading', icon: CashIcon},
+    {name: 'Retainers', href: 'retainers', icon: UsersIcon},
+    {name: 'Patreon', href: 'https://www.patreon.com/indopan', icon: PatreonIcon, external: true},
+    {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true},
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '#'},
@@ -103,26 +93,39 @@ export default function Index() {
                                     <div className="mt-5 flex-1 h-0 overflow-y-auto">
                                         <nav className="px-2 space-y-1">
                                             {navigation.map((item) => (
-                                                <a
-                                                    key={item.name}
-                                                    href={item.href}
-                                                    className={classNames(
-                                                        item.current
-                                                            ? 'bg-gray-900 text-white'
-                                                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                        'group flex items-center px-2 py-2 text-base font-medium rounded-md'
-                                                    )}
-                                                >
-                                                    <item.icon
-                                                        className={classNames(
-                                                            item.current ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
-                                                            'mr-4 flex-shrink-0 h-6 w-6'
+                                                !item.external ?
+                                                    <NavLink
+                                                        key={item.name}
+                                                        to={item.href}
+                                                        className={({isActive}) => classNames(
+                                                            isActive
+                                                                ? 'bg-gray-900 text-white'
+                                                                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                            'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                                                         )}
-                                                        aria-hidden="true"
-                                                    />
-                                                    {item.name}
-                                                </a>
+                                                    >{({isActive}) => (<>
+                                                        <item.icon
+                                                            className={classNames(
+                                                                isActive ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
+                                                                'mr-4 flex-shrink-0 h-6 w-6'
+                                                            )}
+                                                            aria-hidden="true"
+                                                        />
+                                                        {item.name}</>)}
+                                                    </ NavLink> : <Link key={item.name}
+                                                                        to={item.href}
+                                                                        className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
+                                                        <item.icon
+                                                            className={classNames(
+                                                                'text-gray-400 group-hover:text-gray-300',
+                                                                'mr-4 flex-shrink-0 h-6 w-6'
+                                                            )}
+                                                            aria-hidden="true"
+                                                        />
+                                                        {item.name}
+                                                    </Link>
                                             ))}
+
                                         </nav>
                                     </div>
                                 </Dialog.Panel>
@@ -148,23 +151,35 @@ export default function Index() {
                         <div className="flex-1 flex flex-col overflow-y-auto">
                             <nav className="flex-1 px-2 py-4 space-y-1">
                                 {navigation.map((item) => (
-                                    <a
+                                    !item.external ? <NavLink
                                         key={item.name}
-                                        href={item.href}
-                                        className={classNames(
-                                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        to={item.href}
+                                        className={({isActive}) => classNames(
+                                            isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                             'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                                         )}
-                                    >
+                                    >{({isActive}) => (<>
+                                            <item.icon
+                                                className={classNames(
+                                                    isActive ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
+                                                    'mr-3 flex-shrink-0 h-6 w-6'
+                                                )}
+                                                aria-hidden="true"
+                                            />
+                                            {item.name}</>
+                                    )}
+                                    </NavLink> : <Link key={item.name}
+                                                       to={item.href}
+                                                       className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
                                         <item.icon
                                             className={classNames(
-                                                item.current ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
-                                                'mr-3 flex-shrink-0 h-6 w-6'
+                                                'text-gray-400 group-hover:text-gray-300',
+                                                'mr-4 flex-shrink-0 h-6 w-6'
                                             )}
                                             aria-hidden="true"
                                         />
                                         {item.name}
-                                    </a>
+                                    </Link>
                                 ))}
                             </nav>
                         </div>
