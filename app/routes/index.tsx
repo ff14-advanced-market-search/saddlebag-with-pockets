@@ -1,7 +1,7 @@
 import {Fragment, useState} from 'react'
 import {Dialog, Menu, Transition} from '@headlessui/react'
 import {BellIcon, CashIcon, HomeIcon, MenuAlt2Icon, SearchIcon, UsersIcon, XIcon} from '@heroicons/react/outline'
-import {Link, NavLink, useLoaderData} from "@remix-run/react";
+import {NavLink, useLoaderData} from "@remix-run/react";
 import type {LoaderFunction} from "@remix-run/node";
 import {json} from "@remix-run/node";
 import PatreonIcon from "~/icons/PatreonIcon";
@@ -112,9 +112,9 @@ export default function Index() {
                                                             aria-hidden="true"
                                                         />
                                                         {item.name}</>)}
-                                                    </ NavLink> : <Link key={item.name}
-                                                                        to={item.href}
-                                                                        className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
+                                                    </ NavLink> : <a key={item.name}
+                                                                     href={item.href}
+                                                                     className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
                                                         <item.icon
                                                             className={classNames(
                                                                 'text-gray-400 group-hover:text-gray-300',
@@ -123,7 +123,7 @@ export default function Index() {
                                                             aria-hidden="true"
                                                         />
                                                         {item.name}
-                                                    </Link>
+                                                    </a>
                                             ))}
 
                                         </nav>
@@ -168,9 +168,9 @@ export default function Index() {
                                             />
                                             {item.name}</>
                                     )}
-                                    </NavLink> : <Link key={item.name}
-                                                       to={item.href}
-                                                       className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
+                                    </NavLink> : <a key={item.name}
+                                                    href={item.href}
+                                                    className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
                                         <item.icon
                                             className={classNames(
                                                 'text-gray-400 group-hover:text-gray-300',
@@ -179,7 +179,7 @@ export default function Index() {
                                             aria-hidden="true"
                                         />
                                         {item.name}
-                                    </Link>
+                                    </a>
                                 ))}
                             </nav>
                         </div>
