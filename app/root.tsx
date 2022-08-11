@@ -1,8 +1,9 @@
 import type {LoaderFunction, MetaFunction} from "@remix-run/node";
 import {json} from "@remix-run/node";
 import styles from './tailwind.css'
-import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration,} from "@remix-run/react";
+import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from "@remix-run/react";
 import {DataCenters, Regions, Worlds} from "~/utils/locations";
+import Sidebar from "~/components/navigation/sidebar";
 
 export const links = () => {
     return [{
@@ -16,12 +17,11 @@ export const loader: LoaderFunction = async () => {
     return json({
         site_name: process.env.SITE_NAME ?? "Saddlebag",
         // proof of concept v
-        regions: Regions(),
-        data_centers: DataCenters(),
-        worlds: Worlds(),
+        regions: Regions,
+        data_centers: DataCenters,
+        worlds: Worlds,
     })
 }
-
 
 export const meta: MetaFunction = ({data}) => {
 
@@ -34,6 +34,7 @@ export const meta: MetaFunction = ({data}) => {
 };
 
 export default function App() {
+    const data = useLoaderData();
 
     return (
         <html lang="en" className={`h-full bg-gray-100`}>
@@ -42,7 +43,10 @@ export default function App() {
             <Links/>
         </head>
         <body className={`h-full`}>
-        <Outlet/>
+
+        <Sidebar data={data}>
+            <Outlet/>
+        </Sidebar>
         <ScrollRestoration/>
         <Scripts/>
         <LiveReload/>

@@ -32,8 +32,7 @@ export const DataCenterList: Record<string, Array<{ name: string }>> = {
 }
 export type DataCentersList = typeof DataCenterList;
 
-export const DataCentersMap = () => {
-    return new Map(Object.entries(DataCenterList));
-}
+export const DataCentersMap = new Map(Object.entries(DataCenterList));
+
 
 export default DataCentersMap;

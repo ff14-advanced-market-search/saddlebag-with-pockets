@@ -33,8 +33,7 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
 
 export type WorldsList = typeof WorldList;
 
-export const WorldsMap = () => {
-    return new Map(Object.entries(WorldList));
-}
+export const WorldsMap = new Map(Object.entries(WorldList));
+
 
 export default WorldsMap;

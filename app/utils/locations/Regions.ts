@@ -6,10 +6,9 @@ export const RegionList: Record<string, [string, string]> = {
     'CN': ["China", "Chinese"],
 }
 
-export type RegionsList = typeof RegionList
+// export type RegionsList = typeof RegionList
 
-export const RegionsMap = () => {
-    return new Map(Object.entries(RegionList));
-}
+export const RegionsMap = new Map(Object.entries(RegionList));
+
 
 export default RegionsMap;
