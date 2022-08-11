@@ -15,6 +15,7 @@ export const links = () => {
 export const loader: LoaderFunction = async () => {
     return json({
         site_name: process.env.SITE_NAME ?? "Saddlebag",
+        // proof of concept v
         regions: Regions(),
         data_centers: DataCenters(),
         worlds: Worlds(),
@@ -35,12 +36,12 @@ export const meta: MetaFunction = ({data}) => {
 export default function App() {
 
     return (
-        <html lang="en">
+        <html lang="en" className={`h-full bg-gray-100`}>
         <head>
             <Meta/>
             <Links/>
         </head>
-        <body>
+        <body className={`h-full`}>
         <Outlet/>
         <ScrollRestoration/>
         <Scripts/>
