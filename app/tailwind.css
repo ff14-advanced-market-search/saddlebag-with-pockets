@@ -854,6 +854,10 @@ select {
   height: 0px;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .h-16 {
   height: 4rem;
 }
@@ -864,22 +868,6 @@ select {
 
 .h-96 {
   height: 24rem;
-}
-
-.h-24 {
-  height: 6rem;
-}
-
-.max-h-9 {
-  max-height: 2.25rem;
-}
-
-.max-h-8 {
-  max-height: 2rem;
-}
-
-.max-h-6 {
-  max-height: 1.5rem;
 }
 
 .min-h-0 {
