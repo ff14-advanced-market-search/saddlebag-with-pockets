@@ -2,7 +2,7 @@ import type {LoaderFunction, MetaFunction} from "@remix-run/node";
 import {json} from "@remix-run/node";
 import styles from './tailwind.css'
 import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration,} from "@remix-run/react";
-import {DataCenters, Regions, Worlds} from "~/utils/worlds";
+import {DataCenters, Regions, Worlds} from "~/utils/locations";
 
 export const links = () => {
     return [{
