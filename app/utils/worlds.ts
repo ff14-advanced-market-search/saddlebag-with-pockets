@@ -1,4 +1,4 @@
-export const Regions = () => {
+export const Regions: () => Record<string, [string, string]> = () => {
     return {
         'NA': ["North America", "North American"],
         'EU': ["Europe", "European"],
@@ -8,7 +8,7 @@ export const Regions = () => {
     }
 }
 
-export const DataCenters = () => {
+export const DataCenters: () => Record<string, Array<{ name: string }>> = () => {
     return {
         "NA": [{
             name: 'Aether',
@@ -42,7 +42,7 @@ export const DataCenters = () => {
     }
 }
 
-export const Worlds = () => {
+export const Worlds: () => Record<string, Array<{ name: string }>> = () => {
     return {
         "Aether": [{
             name: "Adamantoise",
