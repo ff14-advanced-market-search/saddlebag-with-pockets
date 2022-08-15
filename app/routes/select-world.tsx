@@ -1,20 +1,10 @@
 import EarthIcon from "~/icons/EarthIcon";
 import {CalendarIcon, CheckIcon, ColorSwatchIcon, LocationMarkerIcon} from "@heroicons/react/solid";
-import {Link, useLoaderData} from "@remix-run/react";
-import type {LoaderFunction} from "@remix-run/node";
-import {json} from "@remix-run/node";
-import {DataCenters, Regions, Worlds} from "~/utils/locations";
-
-export const loader: LoaderFunction = () => {
-    return json({
-        regions: Regions, data_centers: DataCenters, worlds: Worlds
-    });
-}
+import {Link} from "@remix-run/react";
+import SelectWorld from "~/components/form";
 
 
-export default function SelectWorld() {
-    const data = useLoaderData();
-    console.log(data);
+export default function () {
     return (<div>
         <main className="flex-1">
             <div className="py-6">
@@ -30,7 +20,7 @@ export default function SelectWorld() {
                                 className="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
                                 <div className="mt-2 flex items-center text-sm text-gray-500">
                                     <EarthIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                               aria-hidden="true"/>
+                                               aria-hidden="true" />
                                     ?
                                 </div>
                                 <div className="mt-2 flex items-center text-sm text-gray-500">
@@ -63,45 +53,6 @@ export default function SelectWorld() {
             Save
           </Link>
         </span>
-                            {/* @todo */}
-                            {/*<Menu as="div" className="ml-3 relative sm:hidden">*/}
-                            {/*    <Menu.Button*/}
-                            {/*        className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">*/}
-                            {/*        More*/}
-                            {/*        <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5 text-gray-500"*/}
-                            {/*                         aria-hidden="true"/>*/}
-                            {/*    </Menu.Button>*/}
-
-                            {/*    <Transition*/}
-                            {/*        as={Fragment}*/}
-                            {/*        enter="transition ease-out duration-200"*/}
-                            {/*        enterFrom="transform opacity-0 scale-95"*/}
-                            {/*        enterTo="transform opacity-100 scale-100"*/}
-                            {/*        leave="transition ease-in duration-75"*/}
-                            {/*        leaveFrom="transform opacity-100 scale-100"*/}
-                            {/*        leaveTo="transform opacity-0 scale-95"*/}
-                            {/*    >*/}
-                            {/*        <Menu.Items*/}
-                            {/*            className="origin-top-right absolute right-0 mt-2 -mr-1 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">*/}
-                            {/*            <Menu.Item>*/}
-                            {/*                {({active}) => (<a*/}
-                            {/*                    href="#"*/}
-                            {/*                    className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}*/}
-                            {/*                >*/}
-                            {/*                    Edit*/}
-                            {/*                </a>)}*/}
-                            {/*            </Menu.Item>*/}
-                            {/*            <Menu.Item>*/}
-                            {/*                {({active}) => (<a*/}
-                            {/*                    href="#"*/}
-                            {/*                    className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}*/}
-                            {/*                >*/}
-                            {/*                    View*/}
-                            {/*                </a>)}*/}
-                            {/*            </Menu.Item>*/}
-                            {/*        </Menu.Items>*/}
-                            {/*    </Transition>*/}
-                            {/*</Menu>*/}
                         </div>
                     </div>
                 </div>
@@ -115,9 +66,9 @@ export default function SelectWorld() {
                             <div className="md:grid md:grid-cols-3 md:gap-6">
                                 <div className="md:col-span-1">
                                     <div className="px-4 sm:px-0">
-                                        <h3 className="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+                                        <h3 className="text-lg font-medium leading-6 text-gray-900">Server/World Selection</h3>
                                         <p className="mt-1 text-sm text-gray-600">
-                                            This information will be displayed publicly so be careful what you share.
+                                            The selected server will change what marketplace your queries are run against.
                                         </p>
                                     </div>
                                 </div>
@@ -125,25 +76,7 @@ export default function SelectWorld() {
                                     <form action="#" method="POST">
                                         <div className="shadow sm:rounded-md sm:overflow-hidden">
                                             <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                                <div>
-                                                    <label htmlFor="location"
-                                                           className="block text-sm font-medium text-gray-700">
-                                                        Location
-                                                    </label>
-                                                    <select
-                                                        id="region"
-                                                        name="region"
-                                                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                                                        defaultValue="Canada"
-                                                    >
-
-                                                        {/*{data.region.forEach((region) => {*/}
-                                                        {/*    return <option>region[0]</option>;*/}
-                                                        {/*})}*/}
-                                                    </select>
-                                                </div>
-
-
+                                                <SelectWorld />
                                             </div>
                                         </div>
                                     </form>
