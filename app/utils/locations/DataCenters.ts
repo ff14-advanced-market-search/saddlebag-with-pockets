@@ -28,7 +28,6 @@ export const DataCenterList: Record<string, Array<{ name: string }>> = {
     }, {
         name: 'DouDouChai',
     },]
-
 }
 export type DataCentersList = typeof DataCenterList;
 
