@@ -22,12 +22,10 @@ export const validator: Validator<SelectWorldInputFields> = withZod(z.object({
 
 export const action: ActionFunction = async ({request}) => {
     const result = await validator.validate(await request.formData());
-    console.log(result);
     if (result.error) {
         return json(result);
     }
     const session = await getSession(request.headers.get('Cookie'));
-    console.log(session.data, result.data);
     if (session.data === result.data) {
         return redirect('/');
     }
