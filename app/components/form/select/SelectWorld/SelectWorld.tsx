@@ -22,7 +22,7 @@ export const SelectWorld: FC<SelectWorldProps> = ({onSelect, world, dataCenter, 
             onSelect(event.target.value)
         }}
     >
-        <option disabled hidden>{worldDefaultValue()}</option>
+        {!world && <option disabled hidden>{worldDefaultValue()}</option>}
         {worlds && worlds.map((value) => {
             return <option key={value.name}>{value.name}</option>
         })}

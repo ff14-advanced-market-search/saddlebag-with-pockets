@@ -27,10 +27,10 @@ export const SelectDataCenter: FC<SelectDataCenterProps> = ({onSelect, dataCente
             onSelect(event.target.value);
         }}
     >
-        <option disabled hidden>{dataCenterDefaultValue()}</option>
+        {!dataCenter && <option disabled hidden>{dataCenterDefaultValue()}</option>}
         {regions.map((value, index, array) => {
             return (<Fragment key={`${index}_${value[0]}`}>
-                <option disabled={true} key={value[0]}>{value[1][1]} Data Centers</option>
+                <option disabled key={value[0]}>{value[1][1]} Data Centers</option>
                 {dataCentersFromRegion(value[0]).map((value) => {
                     return <option key={value.name}>{value.name}</option>
                 })}

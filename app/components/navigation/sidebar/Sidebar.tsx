@@ -15,18 +15,12 @@ type Props = PropsWithChildren<any> & {
 
 
 const navigation = [{name: 'Dashboard', href: '/', icon: HomeIcon}, {
-    name: 'Trading',
-    href: 'trading',
-    icon: CashIcon
+    name: 'Trading', href: 'trading', icon: CashIcon
 }, {name: 'Retainers', href: 'retainers', icon: UsersIcon}, {
-    name: 'Patreon',
-    href: 'https://www.patreon.com/indopan',
-    icon: PatreonIcon,
-    external: true
+    name: 'Patreon', href: 'https://www.patreon.com/indopan', icon: PatreonIcon, external: true
 }, {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true},]
 const userNavigation = [{name: 'Your Profile', href: '#'}, {name: 'Settings', href: '#'}, {
-    name: 'Sign out',
-    href: '#'
+    name: 'Sign out', href: '#'
 },]
 
 export const Sidebar: FC<Props> = ({children, data}) => {
@@ -165,13 +159,13 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                     <MenuAlt2Icon className="h-6 w-6" aria-hidden="true"/>
                 </button>
                 <div className="flex-1 px-4 flex justify-end">
-                    <div className={`ml-4 flex md:ml-6`}>
+                    <div className={`ml-4 flex md:ml-6 basis-52`}>
                         <NavLink
                             to={'/select-world'}
                             type="button"
-                            className={classNames(`group flex flex-nowrap`, "hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500")}
+                            className={classNames(`group content-between flex flex-1`, "hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500")}
                         >
-                            <div className={`flex flex-wrap pl-1.5`}>
+                            <div className={`flex flex-wrap pl-1.5 flex-1`}>
                                 <div className="flex items-center text-sm text-gray-500 basis-full">
                                     <EarthIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                                                aria-hidden="true"/>
@@ -184,18 +178,11 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                                     {data.world}
                                 </div>
                             </div>
-                            <div className={`flex items-center`}>
-                                <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 basis-full group-hover:text-blue-500" aria-hidden="true"/>
+                            <div className={`flex items-center pr-1.5`}>
+                                <PencilIcon className="h-5 w-5 text-gray-400 basis-full group-hover:text-blue-500"
+                                            aria-hidden="true"/>
                             </div>
                         </NavLink>
-
-                        {/*    <div className={`flex flex-wrap`}>*/}
-                        {/*
-                        {/*    </div>*/}
-                        {/*    <div className={`flex basis-full`}>*/}
-                        {/*        <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 basis-full" aria-hidden="true"/>*/}
-                        {/*    </div>*/}
-                        {/*</NavLink>*/}
                     </div>
                     <div className="ml-4 flex items-center md:ml-6">
                         <button

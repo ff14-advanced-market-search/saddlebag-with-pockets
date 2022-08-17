@@ -14,7 +14,6 @@ type SelectWorldProps = PropsWithoutRef<{ transition: Transition, actionData: Va
 
 
 export const SelectDCandWorld: FC<SelectWorldProps> = ({transition, sessionData}) => {
-    /** @todo load from jwt/session/localstorage **/
     const [dataCenter, setDataCenter] = useState<string | undefined>(sessionData.data_center);
     const [worlds, setWorlds] = useState<GetDeepProp<WorldsList, 'name'>>();
     const [world, setWorld] = useState<string | undefined>(sessionData.world);
