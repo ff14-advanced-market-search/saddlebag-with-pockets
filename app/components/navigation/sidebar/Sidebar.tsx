@@ -1,30 +1,33 @@
 import type {FC, PropsWithChildren} from "react";
 import {Fragment, useState} from "react";
 import {Dialog, Menu, Transition} from "@headlessui/react";
-import {BellIcon, CashIcon, HomeIcon, MenuAlt2Icon, SearchIcon, UsersIcon, XIcon} from "@heroicons/react/outline";
+import {BellIcon, CashIcon, HomeIcon, MenuAlt2Icon, UsersIcon, XIcon} from "@heroicons/react/outline";
 import {NavLink} from "@remix-run/react";
 import {classNames} from "~/utils";
 import PatreonIcon from "~/icons/PatreonIcon";
 import KofiIcon from "~/icons/KofiIcon";
-
+import EarthIcon from "~/icons/EarthIcon";
+import {LocationMarkerIcon, PencilIcon} from "@heroicons/react/solid";
 
 type Props = PropsWithChildren<any> & {
     data: any
 }
 
 
-const navigation = [
-    {name: 'Dashboard', href: '/', icon: HomeIcon},
-    {name: 'Trading', href: 'trading', icon: CashIcon},
-    {name: 'Retainers', href: 'retainers', icon: UsersIcon},
-    {name: 'Patreon', href: 'https://www.patreon.com/indopan', icon: PatreonIcon, external: true},
-    {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true},
-]
-const userNavigation = [
-    {name: 'Your Profile', href: '#'},
-    {name: 'Settings', href: '#'},
-    {name: 'Sign out', href: '#'},
-]
+const navigation = [{name: 'Dashboard', href: '/', icon: HomeIcon}, {
+    name: 'Trading',
+    href: 'trading',
+    icon: CashIcon
+}, {name: 'Retainers', href: 'retainers', icon: UsersIcon}, {
+    name: 'Patreon',
+    href: 'https://www.patreon.com/indopan',
+    icon: PatreonIcon,
+    external: true
+}, {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true},]
+const userNavigation = [{name: 'Your Profile', href: '#'}, {name: 'Settings', href: '#'}, {
+    name: 'Sign out',
+    href: '#'
+},]
 
 export const Sidebar: FC<Props> = ({children, data}) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -84,39 +87,25 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                             </div>
                             <div className="mt-5 flex-1 h-0 overflow-y-auto">
                                 <nav className="px-2 space-y-1">
-                                    {navigation.map((item) => (
-                                        !item.external ?
-                                            <NavLink
-                                                key={item.name}
-                                                to={item.href}
-                                                className={({isActive}) => classNames(
-                                                    isActive
-                                                        ? 'bg-gray-900 text-white'
-                                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                    'group flex items-center px-2 py-2 text-base font-medium rounded-md'
-                                                )}
-                                            >{({isActive}) => (<>
-                                                <item.icon
-                                                    className={classNames(
-                                                        isActive ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
-                                                        'mr-4 flex-shrink-0 h-6 w-6'
-                                                    )}
-                                                    aria-hidden="true"
-                                                />
-                                                {item.name}</>)}
-                                            </ NavLink> : <a key={item.name}
-                                                             href={item.href}
-                                                             className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
-                                                <item.icon
-                                                    className={classNames(
-                                                        'text-gray-400 group-hover:text-gray-300',
-                                                        'mr-4 flex-shrink-0 h-6 w-6'
-                                                    )}
-                                                    aria-hidden="true"
-                                                />
-                                                {item.name}
-                                            </a>
-                                    ))}
+                                    {navigation.map((item) => (!item.external ? <NavLink
+                                        key={item.name}
+                                        to={item.href}
+                                        className={({isActive}) => classNames(isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'group flex items-center px-2 py-2 text-base font-medium rounded-md')}
+                                    >{({isActive}) => (<>
+                                        <item.icon
+                                            className={classNames(isActive ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300', 'mr-4 flex-shrink-0 h-6 w-6')}
+                                            aria-hidden="true"
+                                        />
+                                        {item.name}</>)}
+                                    </ NavLink> : <a key={item.name}
+                                                     href={item.href}
+                                                     className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
+                                        <item.icon
+                                            className={classNames('text-gray-400 group-hover:text-gray-300', 'mr-4 flex-shrink-0 h-6 w-6')}
+                                            aria-hidden="true"
+                                        />
+                                        {item.name}
+                                    </a>))}
 
                                 </nav>
                             </div>
@@ -175,26 +164,38 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                     <span className="sr-only">Open sidebar</span>
                     <MenuAlt2Icon className="h-6 w-6" aria-hidden="true"/>
                 </button>
-                <div className="flex-1 px-4 flex justify-between">
-                    <div className="flex-1 flex">
-                        <form className="w-full flex md:ml-0" action="#" method="GET">
-                            <label htmlFor="search-field" className="sr-only">
-                                Search
-                            </label>
-                            <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                                <div
-                                    className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                                    <SearchIcon className="h-5 w-5" aria-hidden="true"/>
+                <div className="flex-1 px-4 flex justify-end">
+                    <div className={`ml-4 flex md:ml-6`}>
+                        <NavLink
+                            to={'/select-world'}
+                            type="button"
+                            className={classNames(`group flex flex-nowrap`, "hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500")}
+                        >
+                            <div className={`flex flex-wrap pl-1.5`}>
+                                <div className="flex items-center text-sm text-gray-500 basis-full">
+                                    <EarthIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                               aria-hidden="true"/>
+                                    {data.data_center}
                                 </div>
-                                <input
-                                    id="search-field"
-                                    className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
-                                    placeholder="Search"
-                                    type="search"
-                                    name="search"
-                                />
+                                <div className="flex items-center text-sm text-gray-500 basis-full">
+                                    <LocationMarkerIcon
+                                        className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                        aria-hidden="true"/>
+                                    {data.world}
+                                </div>
                             </div>
-                        </form>
+                            <div className={`flex items-center`}>
+                                <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 basis-full group-hover:text-blue-500" aria-hidden="true"/>
+                            </div>
+                        </NavLink>
+
+                        {/*    <div className={`flex flex-wrap`}>*/}
+                        {/*
+                        {/*    </div>*/}
+                        {/*    <div className={`flex basis-full`}>*/}
+                        {/*        <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 basis-full" aria-hidden="true"/>*/}
+                        {/*    </div>*/}
+                        {/*</NavLink>*/}
                     </div>
                     <div className="ml-4 flex items-center md:ml-6">
                         <button
@@ -229,21 +230,14 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                             >
                                 <Menu.Items
                                     className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    {userNavigation.map((item) => (
-                                        <Menu.Item key={item.name}>
-                                            {({active}) => (
-                                                <a
-                                                    href={item.href}
-                                                    className={classNames(
-                                                        active ? 'bg-gray-100' : '',
-                                                        'block px-4 py-2 text-sm text-gray-700'
-                                                    )}
-                                                >
-                                                    {item.name}
-                                                </a>
-                                            )}
-                                        </Menu.Item>
-                                    ))}
+                                    {userNavigation.map((item) => (<Menu.Item key={item.name}>
+                                        {({active}) => (<a
+                                            href={item.href}
+                                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                        >
+                                            {item.name}
+                                        </a>)}
+                                    </Menu.Item>))}
                                 </Menu.Items>
                             </Transition>
                         </Menu>

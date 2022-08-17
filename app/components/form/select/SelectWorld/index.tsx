@@ -3,20 +3,21 @@ import {useEffect, useState} from 'react'
 import * as locations from "~/utils/locations";
 import type {Transition} from "@remix-run/react/dist/transition";
 import type {ValidationResult} from "remix-validated-form";
-import type {SelectWorldInputFields} from "~/routes/select-world/edit";
+import type {SelectWorldInputFields} from "~/routes/select-world";
 import type {GetDeepProp} from "~/utils/ts";
 import type {WorldsList} from "~/utils/locations/Worlds";
 import {SelectDataCenter} from "~/components/form/select/SelectWorld/SelectDataCenter";
 import {SelectWorld} from "~/components/form/select/SelectWorld/SelectWorld";
+import type {SessionData} from "@remix-run/node";
 
-type SelectWorldProps = PropsWithoutRef<{ transition: Transition, actionData: ValidationResult<SelectWorldInputFields> }>
+type SelectWorldProps = PropsWithoutRef<{ transition: Transition, actionData: ValidationResult<SelectWorldInputFields>, sessionData: SessionData }>
 
 
-export const SelectDCandWorld: FC<SelectWorldProps> = ({transition, actionData}) => {
+export const SelectDCandWorld: FC<SelectWorldProps> = ({transition, sessionData}) => {
     /** @todo load from jwt/session/localstorage **/
-    const [dataCenter, setDataCenter] = useState<string | undefined>();
+    const [dataCenter, setDataCenter] = useState<string | undefined>(sessionData.data_center);
     const [worlds, setWorlds] = useState<GetDeepProp<WorldsList, 'name'>>();
-    const [world, setWorld] = useState<string | undefined>();
+    const [world, setWorld] = useState<string | undefined>(sessionData.world);
     useEffect(() => {
         if (dataCenter) {
             setWorlds(Array.from(locations.WorldsOfDataCenter(dataCenter)));

@@ -2,8 +2,8 @@ import type {LoaderFunction, MetaFunction} from "@remix-run/node";
 import {json} from "@remix-run/node";
 import styles from './tailwind.css'
 import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from "@remix-run/react";
-import {DataCenters, Regions, Worlds} from "~/utils/locations";
 import Sidebar from "~/components/navigation/sidebar";
+import {getSession} from "~/sessions";
 
 export const links = () => {
     return [{
@@ -13,13 +13,19 @@ export const links = () => {
 }
 
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({request}) => {
+    const session = await getSession(request.headers.get('Cookie'));
+    if (session.has('data_center') && session.has('world')) {
+        return json({
+            data_center: session.get('data_center'),
+            world: session.get('world'),
+        });
+    }
+    // @todo set safe default for DC and world
     return json({
         site_name: process.env.SITE_NAME ?? "Saddlebag",
-        // proof of concept v
-        regions: Regions,
-        data_centers: DataCenters,
-        worlds: Worlds,
+        data_center: session.has('data_center') ? session.get('data_center') : 'Aether',
+        world: session.has('world') ? session.get('world') : 'Adamantoise'
     })
 }
 
