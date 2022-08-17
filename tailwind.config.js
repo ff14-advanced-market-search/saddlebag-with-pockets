@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    darkMode: ['class', 'weak-eyes'],
   content: [
       "./app/**/*.{ts,tsx,jsx,js}"
   ],

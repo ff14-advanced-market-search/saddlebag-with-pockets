@@ -1,7 +1,7 @@
 import type {FC, PropsWithChildren} from "react";
 import {Fragment, useState} from "react";
 import {Dialog, Menu, Transition} from "@headlessui/react";
-import {BellIcon, CashIcon, HomeIcon, MenuAlt2Icon, UsersIcon, XIcon} from "@heroicons/react/outline";
+import {BellIcon, CashIcon, CogIcon, HomeIcon, MenuAlt2Icon, UsersIcon, XIcon} from "@heroicons/react/outline";
 import {NavLink} from "@remix-run/react";
 import {classNames} from "~/utils";
 import PatreonIcon from "~/icons/PatreonIcon";
@@ -179,7 +179,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                                 </div>
                             </div>
                             <div className={`flex items-center pr-1.5`}>
-                                <PencilIcon className="h-5 w-5 text-gray-400 basis-full group-hover:text-blue-500"
+                                <CogIcon className="h-5 w-5 text-gray-400 basis-full group-hover:text-blue-500"
                                             aria-hidden="true"/>
                             </div>
                         </NavLink>
