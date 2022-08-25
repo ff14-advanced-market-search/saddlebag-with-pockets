@@ -4,6 +4,8 @@ import styles from './tailwind.css'
 import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from "@remix-run/react";
 import Sidebar from "~/components/navigation/sidebar";
 import {getSession} from "~/sessions";
+import {EnsureThemeApplied, ThemeProvider, useTheme} from "~/utils/providers/theme-provider";
+import {classNames} from "~/utils";
 
 export const links = () => {
     return [{
@@ -39,16 +41,18 @@ export const meta: MetaFunction = ({data}) => {
     }
 };
 
-export default function App() {
+function App() {
     const data = useLoaderData();
+    const [theme] = useTheme();
 
     return (
-        <html lang="en" className={`h-full bg-gray-100`}>
+        <html lang="en" className={classNames(`h-full`, theme || '') }>
         <head>
             <Meta/>
             <Links/>
+            <EnsureThemeApplied />
         </head>
-        <body className={`h-full`}>
+        <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
 
         <Sidebar data={data}>
             <Outlet/>
@@ -59,4 +63,12 @@ export default function App() {
         </body>
         </html>
     );
+}
+
+export default function AppWithTheme() {
+    return (
+        <ThemeProvider>
+            <App />
+        </ThemeProvider>
+    )
 }

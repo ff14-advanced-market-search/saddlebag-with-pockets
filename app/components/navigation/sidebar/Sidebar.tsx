@@ -7,7 +7,7 @@ import {classNames} from "~/utils";
 import PatreonIcon from "~/icons/PatreonIcon";
 import KofiIcon from "~/icons/KofiIcon";
 import EarthIcon from "~/icons/EarthIcon";
-import {LocationMarkerIcon, PencilIcon} from "@heroicons/react/solid";
+import {LocationMarkerIcon} from "@heroicons/react/solid";
 
 type Props = PropsWithChildren<any> & {
     data: any
@@ -149,7 +149,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
             </div>
         </div>
         <div className="md:pl-64 flex flex-col">
-            <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
+            <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
                 <button
                     type="button"
                     className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
@@ -161,7 +161,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                 <div className="flex-1 px-4 flex justify-end">
                     <div className={`ml-4 flex md:ml-6 basis-52`}>
                         <NavLink
-                            to={'/select-world'}
+                            to={'/options'}
                             type="button"
                             className={classNames(`group content-between flex flex-1`, "hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500")}
                         >
