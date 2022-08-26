@@ -15,7 +15,7 @@ type Props = PropsWithChildren<any> & {
 
 
 const navigation = [{name: 'Dashboard', href: '/', icon: HomeIcon}, {
-    name: 'Trading', href: 'trading', icon: CashIcon
+    name: 'Queries', href: 'queries', icon: CashIcon
 }, {name: 'Retainers', href: 'retainers', icon: UsersIcon}, {
     name: 'Patreon', href: 'https://www.patreon.com/indopan', icon: PatreonIcon, external: true
 }, {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true},]

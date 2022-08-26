@@ -4,7 +4,7 @@ type ScanArguments = {
     "min_profit_amount": number, // Minimum desired, average price per unit
     "min_desired_avg_ppu": number, // Minimum stack size
     "min_stack_size": number, // Hours ago
-    "hours_ago": number, // Minumum number of sales
+    "hours_ago": number, // Minimum number of sales
     "min_sales": number, // High quality
     "hq": boolean, // Home server
     "home_sever": string, // Filters, see [docs]
