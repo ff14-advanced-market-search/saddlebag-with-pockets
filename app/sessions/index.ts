@@ -1,4 +1,6 @@
 import {createCookieSessionStorage} from '@remix-run/node';
+import {WorldList, WorldsArray} from "~/utils/locations/Worlds";
+import {DataCenterArray} from "~/utils/locations/DataCenters";
 
 const {getSession, commitSession, destroySession} = createCookieSessionStorage({
     cookie: {
@@ -10,4 +12,29 @@ const {getSession, commitSession, destroySession} = createCookieSessionStorage({
     }
 })
 
-export {getSession, commitSession, destroySession}
+
+
+async function getUserSessionData(request: Request) {
+    const session = await getSession(request.headers.get('Cookie'));
+    return {
+        getWorld: () => {
+            try {
+                const world = session.get('world');
+                console.log(world);
+                if (!WorldsArray.includes(world)) {
+                    // @todo select a default
+                    throw new Error(`World not an available option. [${world}]`);
+                }
+                return world;
+            }catch(err) {
+                return WorldsArray.at(0);
+            }
+        },
+        getDataCenter: () => {
+            const dataCenter = session.get('data_center');
+            return DataCenterArray.includes(dataCenter) && dataCenter;
+        },
+    }
+}
+
+export {getUserSessionData, getSession, commitSession, destroySession}

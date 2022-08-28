@@ -18,14 +18,15 @@ import {Theme, useTheme} from "~/utils/providers/theme-provider";
 export type SelectWorldInputFields = {
     data_center: GetDeepProp<DataCentersList, 'name'>
     world: GetDeepProp<WorldsList, 'name'>
-    dark_mode: boolean
+    // dark_mode: boolean
 }
 // @ts-ignore
 export const validator: Validator<SelectWorldInputFields> = withZod(z.object({
-    data_center: z.string().min(1), world: z.string().min(1), dark_mode: z.boolean()
+    data_center: z.string().min(1), world: z.string().min(1), /*dark_mode: z.boolean()*/
 }));
 
 export const action: ActionFunction = async ({request}) => {
+
     const result = await validator.validate(await request.formData());
     if (result.error) {
         return json(result);
@@ -57,9 +58,9 @@ export default function () {
     const [darkMode, setDarkMode] = useState(false);
     const [, setTheme] = useTheme();
     useEffect(() => {
-        if(darkMode){
+        if (darkMode) {
             setTheme(Theme.DARK);
-        }else{
+        } else {
             setTheme(Theme.LIGHT);
         }
     }, [darkMode, setTheme])
@@ -143,17 +144,23 @@ export default function () {
                                     <div className="mt-5 md:mt-0 md:col-span-2">
                                         <div className="shadow sm:rounded-md sm:overflow-hidden">
                                             <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                                <Switch.Group as={`div`} className={`flex items-center justify-between`}>
+                                                <Switch.Group as={`div`}
+                                                              className={`flex items-center justify-between`}>
                                                     <span className={`flex-grow flex flex-col`}>
-                                                        <Switch.Label as={`span`} className={`txt-sm font-meidum text-gray-900`} passive>
+                                                        <Switch.Label as={`span`}
+                                                                      className={`txt-sm font-meidum text-gray-900`}
+                                                                      passive>
                                                             Enable Dark Mode
                                                         </Switch.Label>
-                                                        <Switch.Description as={`span`} className={`text-sm text-gray-500`}>
+                                                        <Switch.Description as={`span`}
+                                                                            className={`text-sm text-gray-500`}>
                                                             I confirm, I have weak eyeballs.
                                                         </Switch.Description>
                                                     </span>
-                                                    <Switch checked={darkMode} onChange={setDarkMode} className={classNames(darkMode ? `bg-blue-500` : `bg-gray-200`, `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`)}>
-                                                        <span aria-hidden={true} className={classNames(darkMode ? `translate-x-5` : `translate-x-0`, `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`)} />
+                                                    <Switch checked={darkMode} onChange={setDarkMode}
+                                                            className={classNames(darkMode ? `bg-blue-500` : `bg-gray-200`, `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`)}>
+                                                        <span aria-hidden={true}
+                                                              className={classNames(darkMode ? `translate-x-5` : `translate-x-0`, `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`)}/>
                                                     </Switch>
                                                 </Switch.Group>
                                             </div>

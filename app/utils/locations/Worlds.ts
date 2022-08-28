@@ -35,5 +35,10 @@ export type WorldsList = typeof WorldList;
 
 export const WorldsMap = new Map(Object.entries(WorldList));
 
+export const WorldsArray = Array.from(WorldsMap).map((w) => w[1]).flatMap((item) => {
+    return item;
+}).map((item) => {
+    return item.name;
+});
 
 export default WorldsMap;

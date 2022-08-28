@@ -23,6 +23,23 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({transition, sessionData}
         }
     }, [dataCenter]);
 
+    const boilerplate = () => {
+
+        if(blah){
+
+        }
+
+
+
+
+        if(!false){
+
+        }else{
+
+        }
+
+    }
+
     return (<fieldset className="mt-6 dark:bg-slate-800 bg-white" disabled={transition.state === 'submitting'}>
         <legend className="block text-sm font-medium text-gray-700">Data Center</legend>
         <div className="mt-1 shadow-sm">
