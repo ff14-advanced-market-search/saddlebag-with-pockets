@@ -5,10 +5,6 @@ import type {FullScanFields} from "~/requests/FullScan";
 import FullScanRequest, { RunTimeFullScanForm, validator} from "~/requests/FullScan";
 import type {ErrorBoundaryComponent} from "@remix-run/node";
 
-
-
-
-
 export const action: ActionFunction = async ({request, params}) => {
     const formData = await request.formData();
     const session = await getUserSessionData(request);
@@ -277,7 +273,7 @@ const FullScan = () => {
                     <div className="flex justify-end">
                         <button
                             type="submit"
-                            className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Search
                         </button>
