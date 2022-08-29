@@ -19,8 +19,160 @@ export const action: ActionFunction = async ({request, params}) => {
 
     // return Object.fromEntries(typedFormData.formData());
 
-    const data = remappedKeys(typedFormData.formData());
-    return await FullScanRequest(data);
+    // const data = remappedKeys(typedFormData.formData());
+    return {
+        "36612": {
+            "R.O.I": 54,
+            "avg_ppu": 50637,
+            "home_server_price": 54073,
+            "home_update_time": "2022-08-29 05:28:19",
+            "ppu": 20999,
+            "profit_amount": 29320,
+            "profit_raw_percent": 132,
+            "real_name": "Timeworn Kumbhiraskin Map",
+            "sale_rates": "1.9036",
+            "server": "Sargatanas - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:58:54",
+            "url": "https://universalis.app/market/36612"
+        },
+        "36714": {
+            "R.O.I": 63,
+            "avg_ppu": 321296,
+            "home_server_price": 231000,
+            "home_update_time": "2022-08-29 05:48:26",
+            "ppu": 68250,
+            "profit_amount": 147787,
+            "profit_raw_percent": 206,
+            "real_name": "Pactmaker's Coat of Gathering",
+            "sale_rates": "0.2945",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:51:21",
+            "url": "https://universalis.app/market/36714"
+        },
+        "37746": {
+            "R.O.I": 76,
+            "avg_ppu": 1068517,
+            "home_server_price": 727598,
+            "home_update_time": "2022-08-29 06:00:23",
+            "ppu": 131250,
+            "profit_amount": 553405,
+            "profit_raw_percent": 401,
+            "real_name": "Rinascita Composite Bow",
+            "sale_rates": "0.2720",
+            "server": "Jenova - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 04:31:01",
+            "url": "https://universalis.app/market/37746"
+        },
+        "37762": {
+            "R.O.I": 53,
+            "avg_ppu": 471031,
+            "home_server_price": 463470,
+            "home_update_time": "2022-08-29 05:59:34",
+            "ppu": 183750,
+            "profit_amount": 247359,
+            "profit_raw_percent": 128,
+            "real_name": "Rinascita Helm of Fending",
+            "sale_rates": "0.7928",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:55:30",
+            "url": "https://universalis.app/market/37762"
+        },
+        "37763": {
+            "R.O.I": 60,
+            "avg_ppu": 620868,
+            "home_server_price": 556750,
+            "home_update_time": "2022-08-29 06:00:08",
+            "ppu": 183750,
+            "profit_amount": 335975,
+            "profit_raw_percent": 174,
+            "real_name": "Rinascita Cuirass of Fending",
+            "sale_rates": "0.9604",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:53:56",
+            "url": "https://universalis.app/market/37763"
+        },
+        "37764": {
+            "R.O.I": 63,
+            "avg_ppu": 393198,
+            "home_server_price": 517141,
+            "home_update_time": "2022-08-29 05:54:48",
+            "ppu": 157500,
+            "profit_amount": 325908,
+            "profit_raw_percent": 197,
+            "real_name": "Rinascita Vambraces of Fending",
+            "sale_rates": "0.9599",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:53:45",
+            "url": "https://universalis.app/market/37764"
+        },
+        "37765": {
+            "R.O.I": 54,
+            "avg_ppu": 572499,
+            "home_server_price": 471251,
+            "home_update_time": "2022-08-29 05:54:54",
+            "ppu": 182700,
+            "profit_amount": 255853,
+            "profit_raw_percent": 133,
+            "real_name": "Rinascita Poleyns of Fending",
+            "sale_rates": "0.7634",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 06:03:31",
+            "url": "https://universalis.app/market/37765"
+        },
+        "37766": {
+            "R.O.I": 54,
+            "avg_ppu": 634782,
+            "home_server_price": 478785,
+            "home_update_time": "2022-08-29 05:55:08",
+            "ppu": 183750,
+            "profit_amount": 261908,
+            "profit_raw_percent": 135,
+            "real_name": "Rinascita Sabatons of Fending",
+            "sale_rates": "0.7087",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:54:55",
+            "url": "https://universalis.app/market/37766"
+        },
+        "37802": {
+            "R.O.I": 55,
+            "avg_ppu": 443416,
+            "home_server_price": 419989,
+            "home_update_time": "2022-08-29 05:58:41",
+            "ppu": 157500,
+            "profit_amount": 233614,
+            "profit_raw_percent": 141,
+            "real_name": "Rinascita Necklace of Fending",
+            "sale_rates": "0.8783",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:52:28",
+            "url": "https://universalis.app/market/37802"
+        },
+        "37807": {
+            "R.O.I": 52,
+            "avg_ppu": 255212,
+            "home_server_price": 309160,
+            "home_update_time": "2022-08-29 05:55:28",
+            "ppu": 126000,
+            "profit_amount": 161402,
+            "profit_raw_percent": 121,
+            "real_name": "Rinascita Bracelet of Fending",
+            "sale_rates": "0.9621",
+            "server": "Midgardsormr - Aether",
+            "stack_size": 1,
+            "update_time": "2022-08-29 05:53:13",
+            "url": "https://universalis.app/market/37807"
+        }
+    };
+    // return await FullScanRequest(data);
     // return await scan;
 
 }
@@ -43,6 +195,7 @@ const FullScan = () => {
     }
 
     if (results) {
+        console.log(`r`, results);
         const data: Record<string, any> = Object.entries(results).map((entry: [string, any]) => {
             return {id: parseInt(entry[0]), ...entry[1]};
         });
