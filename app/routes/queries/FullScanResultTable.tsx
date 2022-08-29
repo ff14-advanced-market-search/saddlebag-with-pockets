@@ -10,6 +10,7 @@ type ResultTableProps<T> = {
 
 
 const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => {
+    console.log("FullScanResultTable", rows);
     const columnHelper = createColumnHelper<ResponseType & { id: number }>()
     const columns = [columnHelper.accessor('avg_ppu', {
         header: 'Price per unit', cell: info => info.getValue()
