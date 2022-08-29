@@ -13,13 +13,13 @@ export const action: ActionFunction = async ({request, params}) => {
 
     const typedFormData = new RunTimeFullScanForm<FullScanFields>(Object.fromEntries(formData) as unknown as FullScanFields)
 
+    const scan = FullScanRequest(typedFormData);
+    return scan.then((result) => {
+        return result.data;
+    })
 
-    const result = await validator.validate(typedFormData);
-    const req = FullScanRequest(typedFormData);
-    req.catch((err) => {
-        console.log(err.response);
-    });
     return null;
+    // const result = await validator.validate(typedFormData);
     return await FullScanRequest(typedFormData);
 }
 
@@ -31,8 +31,7 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({error}) => {
 const FullScan = () => {
     const results = useActionData();
     if(results){
-        console.log(results.Data);
-        return <pre>{JSON.stringify(results)}</pre>;
+        return <pre className={`break-normal whitespace-normal`}>{JSON.stringify(results)}</pre>;
     }
     return <main className="flex-1">
         <div className="py-6">

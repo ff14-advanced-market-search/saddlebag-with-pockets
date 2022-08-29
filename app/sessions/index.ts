@@ -20,7 +20,6 @@ async function getUserSessionData(request: Request) {
         getWorld: () => {
             try {
                 const world = session.get('world');
-                console.log(world);
                 if (!WorldsArray.includes(world)) {
                     // @todo select a default
                     throw new Error(`World not an available option. [${world}]`);

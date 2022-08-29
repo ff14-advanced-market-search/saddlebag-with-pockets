@@ -50,11 +50,15 @@ export const validator: Validator<FullScanFields> = withZod(z.object({
 const remappedKeys = (fields: any, setDefaults = true) => {
     const map = setDefaults ? new Map(Object.entries(defaults)) : new Map();
 
-    Array.from(fields as [string, string | boolean][]).map((field) => {
+    Array.from(fields as [string, string | boolean | number][]).map((field) => {
         let value = field[1];
+
         // checkboxes whyyyyyy
-        if(value === 'on'){
-           value = true;
+        if (value === 'on') {
+            value = true;
+        }
+        if(!isNaN(parseInt(value as string))){
+            value = parseInt(value as string)
         }
         map.set(keyMap(field[0]), value);
         return field;
@@ -107,8 +111,7 @@ const defaults = {
 const FullScanRequest: (args: RunTimeFullScanForm<FullScanFields>) => Promise<AxiosResponse> = async (args) => {
     // const updated = remappedKeys(args.formData());
     const data = remappedKeys(args.formData());
-    console.log(data);
-    return axios.post(`${address}/api/scan`, data.entries(), {
+    return axios.post(`${address}/api/scan`, Object.fromEntries(data.entries()), {
         headers: {
             "Content-Type": "application/json",
             "User-Agent": UserAgent

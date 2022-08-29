@@ -1106,6 +1106,15 @@ select {
   overflow-y: auto;
 }
 
+.whitespace-normal {
+  white-space: normal;
+}
+
+.break-normal {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
 .rounded-xl {
   border-radius: 0.75rem;
 }
