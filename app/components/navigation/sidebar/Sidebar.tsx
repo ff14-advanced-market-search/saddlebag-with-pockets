@@ -84,7 +84,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                             <div className="flex-shrink-0 flex items-center px-4">
                                 <img
                                     className="h-8 w-auto"
-                                    src="/images/chocobo.png"
+                                    src="/images/tiny-chocobo.png"
                                     alt={data.site_name}
                                 />
                             </div>
@@ -128,7 +128,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                 <div className="flex items-center h-24 flex-shrink-0 px-4 bg-gray-900">
                     <img
                         className="h-24 w-auto"
-                        src="/images/chocobo.png"
+                        src="/images/tiny-chocobo.png"
                         alt={data.site_name}
                     />
                 </div>
@@ -210,7 +210,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                                     <span className="sr-only">Open user menu</span>
                                     <img
                                         className="h-8 w-8 rounded-full"
-                                        src="/images/chocobo.png"
+                                        src="/images/tiny-chocobo.png"
                                         alt=""
                                     />
                                 </Menu.Button>

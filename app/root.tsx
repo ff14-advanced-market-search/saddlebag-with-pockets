@@ -15,6 +15,7 @@ export const links = () => {
 }
 
 
+
 export const loader: LoaderFunction = async ({request, context}) => {
     const session = await getSession(request.headers.get('Cookie'));
     if (session.has('data_center') && session.has('world')) {
