@@ -9,10 +9,7 @@ type ResultTableProps<T> = {
 }
 
 
-const ResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => {
-    console.log('rows', rows);
-    // const [sorting, setSorting] = useState<SortingState>([]);
-
+const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => {
     const columnHelper = createColumnHelper<ResponseType & { id: number }>()
     const columns = [columnHelper.accessor('avg_ppu', {
         header: 'Price per unit', cell: info => info.getValue()
@@ -73,23 +70,4 @@ const ResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => {
     </div>
 }
 
-{/*interface */
-}
-
-{/*function ResultTable<Type>: FC<ResultTableProps<Type> ({rows}) {*/
-}
-{/*    //*/
-}
-{/*}*/
-}
-{/*export const ResultTable<Type>: FC<ResultTableProps<Type>> = ({rows}) => {*/
-}
-
-{/*    const [sorting, setSorting] = useState<SortingState>([])*/
-}
-
-
-{/*}*/
-}
-
-export default ResultTable;
+export default FullScanResultTable;

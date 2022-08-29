@@ -2,9 +2,11 @@ import {Form, useActionData} from "@remix-run/react";
 import type {ActionFunction} from "@remix-run/cloudflare";
 import {getUserSessionData} from "~/sessions";
 import type {FullScanFields} from "~/requests/FullScan";
-import FullScanRequest, { RunTimeFullScanForm} from "~/requests/FullScan";
+import FullScanRequest, {RunTimeFullScanForm} from "~/requests/FullScan";
 import type {ErrorBoundaryComponent} from "@remix-run/cloudflare";
-import ResultTable from "~/components/table/ResultTable";
+import {classNames} from "~/utils";
+import {MouseEventHandler, useState} from "react";
+import FullScanResultTable from "~/routes/queries/FullScanResultTable";
 
 export const action: ActionFunction = async ({request, params}) => {
     const formData = await request.formData();
@@ -14,15 +16,22 @@ export const action: ActionFunction = async ({request, params}) => {
 
     const typedFormData = new RunTimeFullScanForm<FullScanFields>(Object.fromEntries(formData) as unknown as FullScanFields)
 
+    console.log('sending request');
     const scan = FullScanRequest(typedFormData);
-    return scan.then((result) => {
-        return Object.entries(result.data).map((entry: [string, any]) => {
+    return await scan.then((response) => response.json()).then((data) => {
+        // return null;
+        // console.log('req result', data);
+        return Object.entries(data).map((entry: [string, any]) => {
+            console.log('entry', entry);
             return {
-                id: parseInt(entry[0]),
-                ...entry[1]
+                id: parseInt(entry[0]), ...entry[1]
             }
         })
-    })
+    }).catch((error) => {
+        console.log(error);
+        return error;
+    });
+
 }
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({error}) => {
@@ -32,8 +41,20 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({error}) => {
 
 const FullScan = () => {
     const results = useActionData();
-    if(results){
-        return <ResultTable rows={results} />
+    const [isRunning, setIsRunning] = useState<boolean>(false);
+
+    const onSubmit = (e: MouseEventHandler<HTMLButtonElement>) => {
+        if(isRunning){
+            console.log('onSubmit blocked');
+            e.preventDefault();
+        }else {
+            console.log('onSubmit');
+            setIsRunning(true);
+        }
+    }
+
+    if (results) {
+        return <FullScanResultTable rows={results}/>
     }
     return <main className="flex-1">
         <div className="py-6">
@@ -108,7 +129,8 @@ const FullScan = () => {
                                         </p>
                                     </div>
                                     <div className="col-span-6 sm:col-span-2">
-                                        <label htmlFor="minimum_stack_size" className="block text-sm font-medium text-gray-700">
+                                        <label htmlFor="minimum_stack_size"
+                                               className="block text-sm font-medium text-gray-700">
                                             Minimum Stack Size
                                         </label>
                                         <div className={`mt-1 flex rounded-md shadow-sm`}>
@@ -121,12 +143,14 @@ const FullScan = () => {
                                             />
                                         </div>
                                         <p className="mt-2 text-sm text-gray-500">
-                                            Desired Min Stack Size. ex: `10` is only show deals you can get in stacks of 10 or greater. For more items to sell choose a lower number.
+                                            Desired Min Stack Size. ex: `10` is only show deals you can get in stacks of
+                                            10 or greater. For more items to sell choose a lower number.
                                         </p>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                        <label htmlFor="minimum_profit_amount" className="block text-sm font-medium text-gray-700">
+                                        <label htmlFor="minimum_profit_amount"
+                                               className="block text-sm font-medium text-gray-700">
                                             Minimum Profit Amount
                                         </label>
                                         <div className={`mt-1 flex rounded-md shadow-sm`}>
@@ -139,12 +163,14 @@ const FullScan = () => {
                                             />
                                         </div>
                                         <p className="mt-2 text-sm text-gray-500">
-                                            Desired Min Profit Amount. ex: `10000` is only show deals that yields 10000 gil profit or greater. For more items to sell choose a lower number.
+                                            Desired Min Profit Amount. ex: `10000` is only show deals that yields 10000
+                                            gil profit or greater. For more items to sell choose a lower number.
                                         </p>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                        <label htmlFor="price_per_unit" className="block text-sm font-medium text-gray-700">
+                                        <label htmlFor="price_per_unit"
+                                               className="block text-sm font-medium text-gray-700">
                                             Average Price Per Unit
                                         </label>
                                         <div className={`mt-1 flex rounded-md shadow-sm`}>
@@ -157,7 +183,9 @@ const FullScan = () => {
                                             />
                                         </div>
                                         <p className="mt-2 text-sm text-gray-500">
-                                            Desired Average Price Per Unit. ex: `10000` is only show deals that sell on average for 10000 gil or greater. For more items to sell choose a lower number.
+                                            Desired Average Price Per Unit. ex: `10000` is only show deals that sell on
+                                            average for 10000 gil or greater. For more items to sell choose a lower
+                                            number.
                                         </p>
                                     </div>
 
@@ -225,11 +253,13 @@ const FullScan = () => {
                                                     />
                                                 </div>
                                                 <div className="ml-3 text-sm">
-                                                    <label htmlFor="include_vendor" className="font-medium text-gray-700">
+                                                    <label htmlFor="include_vendor"
+                                                           className="font-medium text-gray-700">
                                                         Include Vendor Prices
                                                     </label>
                                                     <p className="mt-2 text-sm text-gray-500">
-                                                        Compare market prices vs vendor prices on NQ items that can be purchased from vendors.
+                                                        Compare market prices vs vendor prices on NQ items that can be
+                                                        purchased from vendors.
                                                     </p>
                                                 </div>
                                             </div>
@@ -255,13 +285,13 @@ const FullScan = () => {
                                                         Include Out of Stock
                                                     </label>
                                                     <p className="mt-2 text-sm text-gray-500">
-                                                        Include out of stock items from the list (they will show up as having 100% profit margins and 1 bil gil profit).
+                                                        Include out of stock items from the list (they will show up as
+                                                        having 100% profit margins and 1 bil gil profit).
                                                     </p>
                                                 </div>
                                             </div>
                                         </fieldset>
                                     </div>
-
 
 
                                 </div>
@@ -274,8 +304,16 @@ const FullScan = () => {
                     <div className="flex justify-end">
                         <button
                             type="submit"
-                            className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            onClick={onSubmit}
+                            className={classNames( isRunning ? 'bg-gray-500' : 'bg-blue-500', "cursor-pointer ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")}
                         >
+                            {isRunning && <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                               xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>}
                             Search
                         </button>
                     </div>

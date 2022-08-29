@@ -8,6 +8,7 @@
     "dev": "run-p \"dev:*\"",
     "dev:css": "yarn run generate:css --watch",
     "dev:remix": "remix dev",
+    "dev:wrangler": "wrangler pages dev ./public",
     "generate:css": "npx tailwindcss -o ./app/tailwind.css",
     "start": "remix-serve build",
     "test": "ts-jest"

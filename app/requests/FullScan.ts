@@ -1,5 +1,5 @@
-import type {AxiosResponse} from "axios";
-import axios from "axios";
+// import type {AxiosResponse} from "axios";
+// import axios from "axios";
 import type {Validator} from "remix-validated-form";
 import {withZod} from "@remix-validated-form/with-zod";
 import {z} from "zod";
@@ -57,7 +57,7 @@ const remappedKeys = (fields: any, setDefaults = true) => {
         if (value === 'on') {
             value = true;
         }
-        if(!isNaN(parseInt(value as string))){
+        if (!isNaN(parseInt(value as string))) {
             value = parseInt(value as string)
         }
         map.set(keyMap(field[0]), value);
@@ -109,29 +109,20 @@ const defaults = {
 }
 
 export type ResponseType = {
-    "R.O.I": number,
-    "avg_ppu": number,
-    "home_server_price": number,
-    "home_update_time": string, // @todo datetime
-    "ppu": number,
-    "profit_amount": number,
-    "profit_raw_percent": number,
-    "real_name": string,
-    "sale_rates": number, // @todo decimal
+    "R.O.I": number, "avg_ppu": number, "home_server_price": number, "home_update_time": string, // @todo datetime
+    "ppu": number, "profit_amount": number, "profit_raw_percent": number, "real_name": string, "sale_rates": number, // @todo decimal
     "server": string, // @todo world / datacenter
-    "stack_size": number,
-    "update_time": string, // @todo datetime
+    "stack_size": number, "update_time": string, // @todo datetime
     "url": string // @todo URL
 }
 
-const FullScanRequest: (args: RunTimeFullScanForm<FullScanFields>) => Promise<AxiosResponse> = async (args) => {
-    // const updated = remappedKeys(args.formData());
+const FullScanRequest: (args: RunTimeFullScanForm<FullScanFields>) => Promise<Response> = async (args) => {
     const data = remappedKeys(args.formData());
-    return axios.post(`${address}/api/scan`, Object.fromEntries(data.entries()), {
-        headers: {
-            "Content-Type": "application/json",
-            "User-Agent": UserAgent
-        }
+
+    return fetch(`${address}/api/scan`, {
+        'method': 'POST', headers: {
+            "Content-Type": "application/json", "User-Agent": UserAgent
+        }, body: JSON.stringify(Object.fromEntries(data.entries()))
     });
 }
 
