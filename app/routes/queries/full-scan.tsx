@@ -6,6 +6,7 @@ import FullScanRequest, {remappedKeys, RunTimeFullScanForm} from "~/requests/Ful
 import type {ErrorBoundaryComponent} from "@remix-run/cloudflare";
 import {classNames} from "~/utils";
 import {useState} from "react";
+import FullScanResultTable from "~/routes/queries/FullScanResultTable";
 // import FullScanResultTable from "~/routes/queries/FullScanResultTable";
 
 export const action: ActionFunction = async ({request, params}) => {
@@ -19,16 +20,8 @@ export const action: ActionFunction = async ({request, params}) => {
     // return Object.fromEntries(typedFormData.formData());
 
     const data = remappedKeys(typedFormData.formData());
-    const scan = FullScanRequest(data);
-    return await scan.then((response) => response.json()).then((data) => {
-        return Object.entries(data).map((entry: [string, any]) => {
-            return {
-                id: parseInt(entry[0]), ...entry[1]
-            }
-        })
-    }).catch((error) => {
-        return error;
-    });
+    return await FullScanRequest(data);
+    // return await scan;
 
 }
 
@@ -50,10 +43,11 @@ const FullScan = () => {
     }
 
     if (results) {
-        console.log('results', results);
+        const data: Record<string, any> = Object.entries(results).map((entry: [string, any]) => {
+            return {id: parseInt(entry[0]), ...entry[1]};
+        });
 
-        return null;
-        // return <FullScanResultTable rows={results}/>
+        return <FullScanResultTable rows={data}/>
     }
     return <main className="flex-1">
         <div className="py-6">
