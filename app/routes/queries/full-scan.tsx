@@ -2,7 +2,7 @@ import {Form, useActionData} from "@remix-run/react";
 import type {ActionFunction} from "@remix-run/cloudflare";
 import {getUserSessionData} from "~/sessions";
 import type {FullScanFields} from "~/requests/FullScan";
-import FullScanRequest, {RunTimeFullScanForm} from "~/requests/FullScan";
+import FullScanRequest, {remappedKeys, RunTimeFullScanForm} from "~/requests/FullScan";
 import type {ErrorBoundaryComponent} from "@remix-run/cloudflare";
 import {classNames} from "~/utils";
 import {useState} from "react";
@@ -16,8 +16,10 @@ export const action: ActionFunction = async ({request, params}) => {
 
     const typedFormData = new RunTimeFullScanForm<FullScanFields>(Object.fromEntries(formData) as unknown as FullScanFields)
 
-    return Object.fromEntries(typedFormData.formData());
-    const scan = FullScanRequest(typedFormData);
+    // return Object.fromEntries(typedFormData.formData());
+
+    const data = remappedKeys(typedFormData.formData());
+    const scan = FullScanRequest(data);
     return await scan.then((response) => response.json()).then((data) => {
         return Object.entries(data).map((entry: [string, any]) => {
             return {

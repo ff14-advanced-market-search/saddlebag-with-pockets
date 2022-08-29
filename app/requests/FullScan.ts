@@ -43,7 +43,7 @@ export type FullScanFields = {
 // }));
 
 
-const remappedKeys = (fields: any, setDefaults = true) => {
+export const remappedKeys = (fields: any, setDefaults = true) => {
     const map = setDefaults ? new Map(Object.entries(defaults)) : new Map();
 
     Array.from(fields as [string, string | boolean | number][]).map((field) => {
@@ -114,14 +114,12 @@ export type ResponseType = {
     "url": string // @todo URL
 }
 
-const FullScanRequest: (args: RunTimeFullScanForm<FullScanFields>) => Promise<Response> = async (args) => {
-    const data = remappedKeys(args.formData());
-    console.log(JSON.stringify(Object.fromEntries(data)));
+const FullScanRequest: (map: Map<string, number | boolean | string>) => Promise<Response> = async (map) => {
 
     return fetch(`${address}/api/scan`, {
         'method': 'POST', headers: {
             "Content-Type": "application/json", "User-Agent": UserAgent
-        }, body: JSON.stringify(Object.fromEntries(data.entries()))
+        }, body: JSON.stringify(Object.fromEntries(map.entries()))
     });
 }
 
