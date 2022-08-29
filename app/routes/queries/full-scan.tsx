@@ -16,19 +16,16 @@ export const action: ActionFunction = async ({request, params}) => {
 
     const typedFormData = new RunTimeFullScanForm<FullScanFields>(Object.fromEntries(formData) as unknown as FullScanFields)
 
-    console.log('sending request');
     const scan = FullScanRequest(typedFormData);
     return await scan.then((response) => response.json()).then((data) => {
         // return null;
         // console.log('req result', data);
         return Object.entries(data).map((entry: [string, any]) => {
-            console.log('entry', entry);
             return {
                 id: parseInt(entry[0]), ...entry[1]
             }
         })
     }).catch((error) => {
-        console.log(error);
         return error;
     });
 
@@ -44,14 +41,16 @@ const FullScan = () => {
     const [isRunning, setIsRunning] = useState<boolean>(false);
 
     const onSubmit = (e: MouseEvent) => {
-        if(isRunning){
+        if (isRunning) {
             e.preventDefault();
-        }else {
+        } else {
             setIsRunning(true);
         }
     }
 
     if (results) {
+        console.log('results, pre table render', results);
+
         return <FullScanResultTable rows={results}/>
     }
     return <main className="flex-1">
@@ -303,7 +302,7 @@ const FullScan = () => {
                         <button
                             type="submit"
                             onClick={onSubmit}
-                            className={classNames( isRunning ? 'bg-gray-500' : 'bg-blue-500', "cursor-pointer ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")}
+                            className={classNames(isRunning ? 'bg-gray-500' : 'bg-blue-500', "cursor-pointer ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")}
                         >
                             {isRunning && <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
