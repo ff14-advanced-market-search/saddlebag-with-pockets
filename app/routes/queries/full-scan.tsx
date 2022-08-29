@@ -5,7 +5,7 @@ import type {FullScanFields} from "~/requests/FullScan";
 import FullScanRequest, {RunTimeFullScanForm} from "~/requests/FullScan";
 import type {ErrorBoundaryComponent} from "@remix-run/cloudflare";
 import {classNames} from "~/utils";
-import {MouseEventHandler, useState} from "react";
+import {useState} from "react";
 import FullScanResultTable from "~/routes/queries/FullScanResultTable";
 
 export const action: ActionFunction = async ({request, params}) => {
@@ -43,12 +43,10 @@ const FullScan = () => {
     const results = useActionData();
     const [isRunning, setIsRunning] = useState<boolean>(false);
 
-    const onSubmit = (e: MouseEventHandler<HTMLButtonElement>) => {
+    const onSubmit = (e: MouseEvent) => {
         if(isRunning){
-            console.log('onSubmit blocked');
             e.preventDefault();
         }else {
-            console.log('onSubmit');
             setIsRunning(true);
         }
     }
