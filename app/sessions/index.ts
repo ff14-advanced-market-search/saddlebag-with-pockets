@@ -1,5 +1,5 @@
-import {createCookieSessionStorage} from '@remix-run/node';
-import {WorldList, WorldsArray} from "~/utils/locations/Worlds";
+import {createCookieSessionStorage} from '@remix-run/cloudflare';
+import { WorldsArray} from "~/utils/locations/Worlds";
 import {DataCenterArray} from "~/utils/locations/DataCenters";
 
 const {getSession, commitSession, destroySession} = createCookieSessionStorage({

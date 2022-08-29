@@ -1,5 +1,5 @@
-import type {LoaderFunction, MetaFunction} from "@remix-run/node";
-import {json} from "@remix-run/node";
+import type {LoaderFunction, MetaFunction} from "@remix-run/cloudflare";
+import {json} from "@remix-run/cloudflare";
 import styles from './tailwind.css'
 import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from "@remix-run/react";
 import Sidebar from "~/components/navigation/sidebar";

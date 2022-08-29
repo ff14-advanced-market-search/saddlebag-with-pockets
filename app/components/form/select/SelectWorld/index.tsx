@@ -8,7 +8,7 @@ import type {GetDeepProp} from "~/utils/ts";
 import type {WorldsList} from "~/utils/locations/Worlds";
 import {SelectDataCenter} from "~/components/form/select/SelectWorld/SelectDataCenter";
 import {SelectWorld} from "~/components/form/select/SelectWorld/SelectWorld";
-import type {SessionData} from "@remix-run/node";
+import type {SessionData} from "@remix-run/cloudflare";
 
 type SelectWorldProps = PropsWithoutRef<{ transition: Transition, actionData: ValidationResult<SelectWorldInputFields>, sessionData: SessionData }>
 
@@ -22,23 +22,6 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({transition, sessionData}
             setWorlds(Array.from(locations.WorldsOfDataCenter(dataCenter)));
         }
     }, [dataCenter]);
-
-    const boilerplate = () => {
-
-        if(blah){
-
-        }
-
-
-
-
-        if(!false){
-
-        }else{
-
-        }
-
-    }
 
     return (<fieldset className="mt-6 dark:bg-slate-800 bg-white" disabled={transition.state === 'submitting'}>
         <legend className="block text-sm font-medium text-gray-700">Data Center</legend>

@@ -1,9 +1,9 @@
 import {Form, useActionData} from "@remix-run/react";
-import type {ActionFunction} from "@remix-run/node";
+import type {ActionFunction} from "@remix-run/cloudflare";
 import {getUserSessionData} from "~/sessions";
 import type {FullScanFields} from "~/requests/FullScan";
-import FullScanRequest, { RunTimeFullScanForm, validator} from "~/requests/FullScan";
-import type {ErrorBoundaryComponent} from "@remix-run/node";
+import FullScanRequest, { RunTimeFullScanForm} from "~/requests/FullScan";
+import type {ErrorBoundaryComponent} from "@remix-run/cloudflare";
 import ResultTable from "~/components/table/ResultTable";
 
 export const action: ActionFunction = async ({request, params}) => {

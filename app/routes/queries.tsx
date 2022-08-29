@@ -1,5 +1,5 @@
 import {Outlet} from "@remix-run/react";
-import {ErrorBoundaryComponent} from "@remix-run/node";
+import type {ErrorBoundaryComponent} from "@remix-run/cloudflare";
 
 export default function Queries() {
     return (<div>

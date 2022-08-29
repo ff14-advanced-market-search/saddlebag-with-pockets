@@ -1050,6 +1050,13 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cloudflare/kv-asset-handler@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@cloudflare/kv-asset-handler/-/kv-asset-handler-0.1.3.tgz#3eaaf962b16c48a7189db5d5ac1c4dca4e2ed1a0"
+  integrity sha512-FNcunDuTmEfQTLRLtA6zz+buIXUHj1soPvSWzzQFBC+n2lsy+CGf/NIrR3SEPCmsVNQj70/Jx2lViCpq+09YpQ==
+  dependencies:
+    mime "^2.5.2"
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"
@@ -1415,6 +1422,21 @@
   dependencies:
     json-parse-even-better-errors "^2.3.1"
 
+"@remix-run/cloudflare-pages@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare-pages/-/cloudflare-pages-1.7.0.tgz#347779f1a7618b7c023d697ed161e581ddf085ea"
+  integrity sha512-fvP26bwc71sBHGlKgkCZhMjV5Lg/JPVcnsQ4Ew1N9Kf8eEiUTMRvotq13k5tvHJ14NGxQIYWJIUE5gtgEBmypw==
+  dependencies:
+    "@remix-run/cloudflare" "1.7.0"
+
+"@remix-run/cloudflare@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare/-/cloudflare-1.7.0.tgz#96dcb223f34903921e5470e58e26fb473cf5cfaa"
+  integrity sha512-eysvhYq69CBv8z6sczmGzmudkxbSs3xWB1UM8Z8g0Y1moQ/yjbRvNJJ4jNPcsJXnvg0gKH6kcUPEph/l12vjLg==
+  dependencies:
+    "@cloudflare/kv-asset-handler" "^0.1.3"
+    "@remix-run/server-runtime" "1.7.0"
+
 "@remix-run/dev@^1.6.7":
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.6.7.tgz#62875b43781e97ad97f25fb1c80e5a24e9cfc6c3"
@@ -1532,6 +1554,18 @@
     "@web3-storage/multipart-parser" "^1.0.0"
     cookie "^0.4.1"
     jsesc "3.0.2"
+    react-router-dom "^6.2.2"
+    set-cookie-parser "^2.4.8"
+    source-map "^0.7.3"
+
+"@remix-run/server-runtime@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.7.0.tgz#df278c46757ebf6d7bdda144830428a0e93341a7"
+  integrity sha512-xP/422QACVA6wtnsbTXKABUqKtyMguST+vzJDjKbxVyk8/3k9La8OpF5NF4ovtLhLf0V6gus6WaR86k+HyC9Hg==
+  dependencies:
+    "@types/cookie" "^0.4.0"
+    "@web3-storage/multipart-parser" "^1.0.0"
+    cookie "^0.4.1"
     react-router-dom "^6.2.2"
     set-cookie-parser "^2.4.8"
     source-map "^0.7.3"
@@ -6122,6 +6156,11 @@ mime@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
+
+mime@^2.5.2:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-2.6.0.tgz#a2a682a95cd4d0cb1d6257e28f83da7e35800367"
+  integrity sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==
 
 mimic-fn@^2.1.0:
   version "2.1.0"
