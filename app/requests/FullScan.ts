@@ -1,6 +1,3 @@
-import type {Validator} from "remix-validated-form";
-import {withZod} from "@remix-validated-form/with-zod";
-import {z} from "zod";
 import {address, UserAgent} from "~/requests/client/config";
 
 
@@ -35,15 +32,16 @@ export type FullScanFields = {
     world: string
 };
 
-export const validator: Validator<FullScanFields> = withZod(z.object({
-    scan_hours: z.number().positive().min(1).max(128),
-    sale_amount: z.number().min(1),
-    roi: z.number().min(1),
-    minimum_stack_size: z.number().min(1),
-    minimum_profit_amount: z.number().min(1),
-    price_per_unit: z.number().min(1),
-    world: z.string()
-}));
+// export const validator: Validator<FullScanFields> = withZod(z.object({
+//     scan_hours: z.number().positive().min(1).max(128),
+//     sale_amount: z.number().min(1),
+//     roi: z.number().min(1),
+//     minimum_stack_size: z.number().min(1),
+//     minimum_profit_amount: z.number().min(1),
+//     price_per_unit: z.number().min(1),
+//     world: z.string()
+// }));
+
 
 const remappedKeys = (fields: any, setDefaults = true) => {
     const map = setDefaults ? new Map(Object.entries(defaults)) : new Map();
@@ -63,6 +61,8 @@ const remappedKeys = (fields: any, setDefaults = true) => {
     });
     return map;
 }
+
+
 const keyMap: (key: string) => string = (key) => {
     switch (key) {
         case 'sale_amount':
@@ -116,6 +116,7 @@ export type ResponseType = {
 
 const FullScanRequest: (args: RunTimeFullScanForm<FullScanFields>) => Promise<Response> = async (args) => {
     const data = remappedKeys(args.formData());
+    console.log(JSON.stringify(Object.fromEntries(data)));
 
     return fetch(`${address}/api/scan`, {
         'method': 'POST', headers: {

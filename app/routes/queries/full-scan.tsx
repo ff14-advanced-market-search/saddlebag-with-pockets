@@ -6,9 +6,12 @@ import FullScanRequest, {RunTimeFullScanForm} from "~/requests/FullScan";
 import type {ErrorBoundaryComponent} from "@remix-run/cloudflare";
 import {classNames} from "~/utils";
 import {useState} from "react";
-import FullScanResultTable from "~/routes/queries/FullScanResultTable";
+// import FullScanResultTable from "~/routes/queries/FullScanResultTable";
 
 export const action: ActionFunction = async ({request, params}) => {
+    return {
+        'returnme': 'ok'
+    };
     const formData = await request.formData();
     const session = await getUserSessionData(request);
 
@@ -18,8 +21,6 @@ export const action: ActionFunction = async ({request, params}) => {
 
     const scan = FullScanRequest(typedFormData);
     return await scan.then((response) => response.json()).then((data) => {
-        // return null;
-        // console.log('req result', data);
         return Object.entries(data).map((entry: [string, any]) => {
             return {
                 id: parseInt(entry[0]), ...entry[1]
@@ -49,9 +50,10 @@ const FullScan = () => {
     }
 
     if (results) {
-        console.log('results, pre table render', results);
+        console.log('results', results);
 
-        return <FullScanResultTable rows={results}/>
+        return null;
+        // return <FullScanResultTable rows={results}/>
     }
     return <main className="flex-1">
         <div className="py-6">
