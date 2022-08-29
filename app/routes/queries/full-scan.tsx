@@ -9,9 +9,6 @@ import {useState} from "react";
 // import FullScanResultTable from "~/routes/queries/FullScanResultTable";
 
 export const action: ActionFunction = async ({request, params}) => {
-    return {
-        'returnme': 'ok'
-    };
     const formData = await request.formData();
     const session = await getUserSessionData(request);
 
@@ -19,6 +16,7 @@ export const action: ActionFunction = async ({request, params}) => {
 
     const typedFormData = new RunTimeFullScanForm<FullScanFields>(Object.fromEntries(formData) as unknown as FullScanFields)
 
+    return Object.fromEntries(typedFormData.formData());
     const scan = FullScanRequest(typedFormData);
     return await scan.then((response) => response.json()).then((data) => {
         return Object.entries(data).map((entry: [string, any]) => {
