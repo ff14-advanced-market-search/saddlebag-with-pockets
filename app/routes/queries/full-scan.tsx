@@ -4,6 +4,7 @@ import {getUserSessionData} from "~/sessions";
 import type {FullScanFields} from "~/requests/FullScan";
 import FullScanRequest, { RunTimeFullScanForm, validator} from "~/requests/FullScan";
 import type {ErrorBoundaryComponent} from "@remix-run/node";
+import ResultTable from "~/components/table/ResultTable";
 
 export const action: ActionFunction = async ({request, params}) => {
     const formData = await request.formData();
@@ -15,23 +16,24 @@ export const action: ActionFunction = async ({request, params}) => {
 
     const scan = FullScanRequest(typedFormData);
     return scan.then((result) => {
-        return result.data;
+        return Object.entries(result.data).map((entry: [string, any]) => {
+            return {
+                id: parseInt(entry[0]),
+                ...entry[1]
+            }
+        })
     })
-
-    return null;
-    // const result = await validator.validate(typedFormData);
-    return await FullScanRequest(typedFormData);
 }
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({error}) => {
-    console.error(error);
-    return <p>err</p>
+    console.error('errorBoundary', error);
+    return <pre>{JSON.stringify(error.message)}</pre>
 }
 
 const FullScan = () => {
     const results = useActionData();
     if(results){
-        return <pre className={`break-normal whitespace-normal`}>{JSON.stringify(results)}</pre>;
+        return <ResultTable rows={results} />
     }
     return <main className="flex-1">
         <div className="py-6">
