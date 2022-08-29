@@ -154,7 +154,7 @@ const FullScan = () => {
                                             <input
                                                 type="number"
                                                 name="minimum_profit_amount"
-                                                defaultValue={10}
+                                                defaultValue={10000}
                                                 id="minimum_profit_amount"
                                                 className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                             />
@@ -174,7 +174,7 @@ const FullScan = () => {
                                             <input
                                                 type="number"
                                                 name="price_per_unit"
-                                                defaultValue={10}
+                                                defaultValue={10000}
                                                 id="price_per_unit"
                                                 className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                             />
