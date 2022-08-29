@@ -15,7 +15,7 @@ export const links = () => {
 }
 
 
-export const loader: LoaderFunction = async ({request}) => {
+export const loader: LoaderFunction = async ({request, context}) => {
     const session = await getSession(request.headers.get('Cookie'));
     if (session.has('data_center') && session.has('world')) {
         return json({
@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({request}) => {
     }
     // @todo set safe default for DC and world
     return json({
-        site_name: process.env.SITE_NAME ?? "Saddlebag",
+        site_name: context.SITE_NAME ?? "Saddlebag",
         data_center: session.has('data_center') ? session.get('data_center') : 'Aether',
         world: session.has('world') ? session.get('world') : 'Adamantoise'
     })
