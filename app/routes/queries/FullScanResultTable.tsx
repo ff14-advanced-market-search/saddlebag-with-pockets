@@ -54,29 +54,31 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
 
     const columnHelper = createColumnHelper<ResponseType & { id: number }>()
     const columns = [columnHelper.accessor('avg_ppu', {
-        header: 'Average Price per unit', cell: info => info.getValue()
+        header: 'Average Price per unit (avg_ppu)', cell: info => info.getValue()
     }), columnHelper.accessor('home_server_price', {
-        header: 'Home server price', cell: info => info.getValue()
+        header: 'Home server price (home_server_price)', cell: info => info.getValue()
     }), columnHelper.accessor('home_update_time', {
-        header: 'Last Updated At', cell: info => info.getValue()
+        header: 'Last Updated At (home_update_time)', cell: info => info.getValue()
     }), columnHelper.accessor('ppu', {
-        header: 'Price per unit', cell: info => info.getValue()
+        header: 'Price per unit (ppu)', cell: info => info.getValue()
     }), columnHelper.accessor('profit_amount', {
-        id: 'profit_amount', header: 'Profit Amount', cell: info => info.getValue()
+        header: 'Profit Amount (profit_amount)', cell: info => info.getValue()
     }), columnHelper.accessor('profit_raw_percent', {
-        header: 'Profit Percentage', cell: info => info.getValue()
+        header: 'Profit Percentage (profit_raw_percent)', cell: info => info.getValue()
     }), columnHelper.accessor('real_name', {
-        header: 'Item Name', cell: info => info.getValue()
+        header: 'Item Name (real_name)', cell: info => info.getValue()
     }), columnHelper.accessor('sale_rates', {
-        header: 'Sale Rates', cell: info => info.getValue()
+        header: 'Sale Rates (sale_rates)', cell: info => info.getValue()
     }), columnHelper.accessor('server', {
-        header: 'Server', cell: info => info.getValue()
+        header: 'Server (server)', cell: info => info.getValue()
     }), columnHelper.accessor('stack_size', {
-        header: 'Stack Size', cell: info => info.getValue()
+        header: 'Stack Size (stack_size)', cell: info => info.getValue()
     }), columnHelper.accessor('update_time', {
-        header: 'Update Time', cell: info => info.getValue()
-    }), columnHelper.accessor('url', {
-        header: 'URL', cell: info => info.getValue()
+        header: 'Update Time (update_time)', cell: info => info.getValue()
+    }), /*columnHelper.accessor('R.O.I', {
+        header: 'Return on Investment (R.O.I)', cell: info => info.getValue()
+    }),*/ columnHelper.accessor('url', {
+        header: 'URL (url)', cell: info => info.getValue()
     })]
 
     const table = useReactTable({
@@ -111,8 +113,8 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
     }, [table.getState().columnFilters[0]?.id])
 
     useEffect(() => {
-        setColumnOrder(['real_name', 'avg_ppu','home_server_price','home_update_time','ppu','profit_amount','profit_raw_percent','server','stack_size','update_time','url'])
-    },[]);
+        setColumnOrder(['real_name', 'ppu', 'home_server_price', 'profit_amount', 'sale_rates', 'avg_ppu', 'server'/*, 'R.O.I'*/, 'profit_raw_percent', 'stack_size', 'update_time', 'home_update_time', 'url'])
+    }, []);
 
     return <div className={`mt-0 flex flex-col`}>
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
