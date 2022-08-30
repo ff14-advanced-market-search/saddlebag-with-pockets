@@ -224,7 +224,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                                 leaveTo="transform opacity-0 scale-95"
                             >
                                 <Menu.Items
-                                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <p className={`text-gray-700 text-sm py-2 px-4`}><strong>Welcome to
                                         Saddlebag!</strong> We're super freaking hyped to see where this journey
                                         together goes. Hoping you make it big! Join our Discord for spicy news!</p>
