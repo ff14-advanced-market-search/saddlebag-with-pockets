@@ -154,7 +154,7 @@ export default function () {
                                                         </Switch.Label>
                                                         <Switch.Description as={`span`}
                                                                             className={`text-sm text-gray-500`}>
-                                                            I confirm, I have weak eyeballs.
+                                                            I confirm, I have weak eyeballs. But also confirm that I don't mind how currently broken this is. (page refreshes currently clear)
                                                         </Switch.Description>
                                                     </span>
                                                     <Switch checked={darkMode} onChange={setDarkMode}
