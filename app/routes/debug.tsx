@@ -1,9 +1,9 @@
 import {LoaderFunction} from "@remix-run/cloudflare";
 import {useLoaderData} from "@remix-run/react";
-import {UserAgent} from "~/requests/client/config";
+import {address, UserAgent} from "~/requests/client/config";
 
 const loader: LoaderFunction = async () => {
-    return fetch('', {
+    return fetch(`${address}/api/scan`, {
         'method': 'POST', headers: {
             "Content-Type": "application/json", "User-Agent": UserAgent
         }, body: JSON.stringify({
