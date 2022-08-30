@@ -9,19 +9,16 @@ import {classNames} from "~/utils";
 
 export const links = () => {
     return [{
-        rel: "stylesheet",
-        href: styles
+        rel: "stylesheet", href: styles
     }]
 }
-
 
 
 export const loader: LoaderFunction = async ({request, context}) => {
     const session = await getSession(request.headers.get('Cookie'));
     if (session.has('data_center') && session.has('world')) {
         return json({
-            data_center: session.get('data_center'),
-            world: session.get('world'),
+            data_center: session.get('data_center'), world: session.get('world'),
         });
     }
     // @todo set safe default for DC and world
@@ -47,12 +44,11 @@ function App() {
     const data = useLoaderData();
     const [theme] = useTheme();
 
-    return (
-        <html lang="en" className={classNames(`h-full`, theme || '') }>
+    return (<html lang="en" className={classNames(`h-full`, theme || '')}>
         <head>
             <Meta/>
             <Links/>
-            <EnsureThemeApplied />
+            <EnsureThemeApplied/>
         </head>
         <body className={`h-full bg-gray-100 dark:bg-slate-900`}>
 
@@ -61,16 +57,15 @@ function App() {
         </Sidebar>
         <ScrollRestoration/>
         <Scripts/>
+        <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+                data-cf-beacon='{"token": "11e77ba21d5948a4871a6e7372775da2"}'></script>
         <LiveReload/>
         </body>
-        </html>
-    );
+        </html>);
 }
 
 export default function AppWithTheme() {
-    return (
-        <ThemeProvider>
-            <App />
-        </ThemeProvider>
-    )
+    return (<ThemeProvider>
+            <App/>
+        </ThemeProvider>)
 }
