@@ -67,8 +67,6 @@ function App() {
     </Sidebar>
     <ScrollRestoration/>
     <Scripts/>
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-            data-cf-beacon='{"token": "11e77ba21d5948a4871a6e7372775da2"}'></script>
     <LiveReload/>
     </body>
     </html>);
