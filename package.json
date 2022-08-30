@@ -4,7 +4,7 @@
   "scripts": {
     "build": "run-s \"build:css\" \"build:remix\"",
     "build:css": "yarn run generate:css --minify",
-    "build:remix": "remix build",
+    "build:remix": "remix build --sourcemap",
     "dev": "run-p \"dev:*\"",
     "dev:css": "yarn run generate:css --watch",
     "dev:remix": "remix dev",
