@@ -1,4 +1,4 @@
-export const address = `http://api.saddlebag.exchange:5000`;
+export const address = `http://api.saddlebagexchange.com:5000`;
 export const backupAddress = `http://24.199.64.108:5000`;
 
 
