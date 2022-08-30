@@ -1,16 +1,51 @@
-import type {SortingState} from "@tanstack/table-core";
-import {FC, useState} from "react";
+import type {FilterFn, SortingFn, SortingState} from "@tanstack/table-core";
+import {FC, useEffect, useState} from "react";
 import {flexRender, useReactTable} from "@tanstack/react-table";
-import {createColumnHelper, getCoreRowModel} from "@tanstack/table-core";
+import {
+    ColumnFiltersState,
+    createColumnHelper,
+    getCoreRowModel, getFacetedMinMaxValues, getFacetedRowModel, getFacetedUniqueValues,
+    getFilteredRowModel, getSortedRowModel,
+    sortingFns
+} from "@tanstack/table-core";
 import {ResponseType} from "~/requests/FullScan";
+import {compareItems, RankingInfo, rankItem} from "@tanstack/match-sorter-utils";
 
 type ResultTableProps<T> = {
     rows: Record<string, T>
 }
 
+declare module '@tanstack/table-core' {
+    interface FilterFns {
+        fuzzy: FilterFn<unknown>
+    }
+    interface FilterMeta {
+        itemRank: RankingInfo
+    }
+}
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+    const itemRank = rankItem(row.getValue(columnId), value)
+
+    addMeta({itemRank})
+    return itemRank.passed
+}
+
+const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+    let dir = 0;
+
+    if(rowA.columnFiltersMeta[columnId]){
+        dir = compareItems(
+            rowA.columnFiltersMeta[columnId]?.itemRank!,
+            rowB.columnFiltersMeta[columnId]?.itemRank!
+        )
+    }
+    return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId): dir
+}
 
 const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => {
-    console.log("FullScanResultTable", rows);
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [globalFilter, setGlobalFilter] = useState('');
     const columnHelper = createColumnHelper<ResponseType & { id: number }>()
     const columns = [columnHelper.accessor('avg_ppu', {
         header: 'Price per unit', cell: info => info.getValue()
@@ -21,6 +56,7 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
     }), columnHelper.accessor('ppu', {
         header: 'Average Price per unit', cell: info => info.getValue()
     }), columnHelper.accessor('profit_amount', {
+        id: 'profit_amount',
         header: 'Profit Amount', cell: info => info.getValue()
     }), columnHelper.accessor('profit_raw_percent', {
         header: 'Profit Percentage', cell: info => info.getValue()
@@ -39,8 +75,34 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
     })]
 
     const table = useReactTable({
-        data: rows as any, columns, getCoreRowModel: getCoreRowModel(),
+        data: rows, columns, filterFns: {
+            fuzzy: fuzzyFilter
+        },
+        state: {
+            columnFilters,
+            globalFilter
+        },
+        onColumnFiltersChange: setColumnFilters,
+        onGlobalFilterChange: setGlobalFilter,
+        globalFilterFn: fuzzyFilter,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFacetedRowModel: getFacetedRowModel(),
+        getFacetedUniqueValues: getFacetedUniqueValues(),
+        getFacetedMinMaxValues: getFacetedMinMaxValues(),
+        debugTable: true,
+        debugHeaders: true,
+        debugColumns: false,
     })
+
+    useEffect(() => {
+        if(table.getState().columnFilters[0]?.id === 'profit_amount'){
+            if(table.getState().sorting[0]?.id !== 'profit_amount'){
+                table.setSorting([{id: 'profit_amount', desc: false}])
+            }
+        }
+    }, [table.getState().columnFilters[0]?.id])
 
     return <div className={`mt-0 flex flex-col`}>
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

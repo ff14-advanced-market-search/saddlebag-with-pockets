@@ -1823,6 +1823,13 @@
   dependencies:
     mini-svg-data-uri "^1.2.3"
 
+"@tanstack/match-sorter-utils@^8.1.1":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.1.1.tgz#895f407813254a46082a6bbafad9b39b943dc834"
+  integrity sha512-IdmEekEYxQsoLOR0XQyw3jD1GujBpRRYaGJYQUw1eOT1eUugWxdc7jomh1VQ1EKHcdwDLpLaCz/8y4KraU4T9A==
+  dependencies:
+    remove-accents "0.4.2"
+
 "@tanstack/react-table@^8.5.11":
   version "8.5.11"
   resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.5.11.tgz#544f551f15412087edfc2df01bed9697aab4651f"
@@ -7418,6 +7425,11 @@ remix-validated-form@^4.5.5:
     lodash "^4.17.21"
     tiny-invariant "^1.2.0"
     zustand "^4.0.0-rc.1"
+
+remove-accents@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.4.2.tgz#0a43d3aaae1e80db919e07ae254b285d9e1c7bb5"
+  integrity sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==
 
 repeat-element@^1.1.2:
   version "1.1.4"

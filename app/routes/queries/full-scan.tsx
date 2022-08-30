@@ -42,7 +42,6 @@ const FullScan = () => {
             // error!
             return <pre>{results}</pre>
         }
-        console.log(`results`, results);
         const data: Record<string, any> = Object.entries(results).map((entry: [string, any]) => {
             return {id: parseInt(entry[0]), ...entry[1]};
         });
