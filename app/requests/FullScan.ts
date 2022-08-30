@@ -115,7 +115,6 @@ export type ResponseType = {
 }
 
 const FullScanRequest: (map: Map<string, number | boolean | string>) => Promise<Response> = async (map) => {
-
     return fetch(`${address}/api/scan`, {
         'method': 'POST', headers: {
             "Content-Type": "application/json", "User-Agent": UserAgent
