@@ -1,12 +1,11 @@
 import {LoaderFunction} from "@remix-run/cloudflare";
 import {useLoaderData} from "@remix-run/react";
-import {address, UserAgent} from "~/requests/client/config";
+import {address} from "~/requests/client/config";
 
 export const loader: LoaderFunction = async () => {
-    console.log('loader called');
     return fetch(`${address}/api/scan`, {
         'method': 'POST', headers: {
-            "Content-Type": "application/json", "User-Agent": UserAgent
+            "Content-Type": "application/json", "User-Agent": 'Saddlebag/1.0'
         }, body: JSON.stringify({
             "preferred_roi": 50,
             "min_profit_amount": 10000,
