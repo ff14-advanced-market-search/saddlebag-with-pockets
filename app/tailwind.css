@@ -736,6 +736,10 @@ select {
   pointer-events: none;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .static {
   position: static;
 }
