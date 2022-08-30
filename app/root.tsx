@@ -45,27 +45,37 @@ function App() {
     const [theme] = useTheme();
 
     return (<html lang="en" className={classNames(`h-full`, theme || '')}>
-        <head>
-            <Meta/>
-            <Links/>
-            <EnsureThemeApplied/>
-        </head>
-        <body className={`h-full bg-gray-100 dark:bg-slate-900`}>
-
-        <Sidebar data={data}>
-            <Outlet/>
-        </Sidebar>
-        <ScrollRestoration/>
-        <Scripts/>
-        <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-                data-cf-beacon='{"token": "11e77ba21d5948a4871a6e7372775da2"}'></script>
-        <LiveReload/>
-        </body>
-        </html>);
+    <head>
+        <script dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WH4KFG5');`
+        }}/>
+        <Meta/>
+        <Links/>
+        <EnsureThemeApplied/>
+    </head>
+    <body className={`h-full bg-gray-100 dark:bg-slate-900`}>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH4KFG5"
+                height="0" width="0" className={`hidden invisible`}></iframe>
+    </noscript>
+    <Sidebar data={data}>
+        <Outlet/>
+    </Sidebar>
+    <ScrollRestoration/>
+    <Scripts/>
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+            data-cf-beacon='{"token": "11e77ba21d5948a4871a6e7372775da2"}'></script>
+    <LiveReload/>
+    </body>
+    </html>);
 }
 
 export default function AppWithTheme() {
     return (<ThemeProvider>
-            <App/>
-        </ThemeProvider>)
+        <App/>
+    </ThemeProvider>)
 }
