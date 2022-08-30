@@ -3,6 +3,7 @@ import {FC, useEffect, useState} from "react";
 import {flexRender, useReactTable} from "@tanstack/react-table";
 import {
     ColumnFiltersState,
+    ColumnOrderState,
     createColumnHelper,
     getCoreRowModel,
     getFacetedMinMaxValues,
@@ -49,15 +50,17 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
 const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [globalFilter, setGlobalFilter] = useState('');
+    const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
+
     const columnHelper = createColumnHelper<ResponseType & { id: number }>()
     const columns = [columnHelper.accessor('avg_ppu', {
-        header: 'Price per unit', cell: info => info.getValue()
+        header: 'Average Price per unit', cell: info => info.getValue()
     }), columnHelper.accessor('home_server_price', {
         header: 'Home server price', cell: info => info.getValue()
     }), columnHelper.accessor('home_update_time', {
         header: 'Last Updated At', cell: info => info.getValue()
     }), columnHelper.accessor('ppu', {
-        header: 'Average Price per unit', cell: info => info.getValue()
+        header: 'Price per unit', cell: info => info.getValue()
     }), columnHelper.accessor('profit_amount', {
         id: 'profit_amount', header: 'Profit Amount', cell: info => info.getValue()
     }), columnHelper.accessor('profit_raw_percent', {
@@ -83,7 +86,7 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
             fuzzy: fuzzyFilter
         },
         state: {
-            columnFilters, globalFilter
+            columnFilters, globalFilter, columnOrder
         },
         onColumnFiltersChange: setColumnFilters,
         onGlobalFilterChange: setGlobalFilter,
@@ -106,6 +109,10 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
             }
         }
     }, [table.getState().columnFilters[0]?.id])
+
+    useEffect(() => {
+        setColumnOrder(['real_name', 'avg_ppu','home_server_price','home_update_time','ppu','profit_amount','profit_raw_percent','server','stack_size','update_time','url'])
+    },[]);
 
     return <div className={`mt-0 flex flex-col`}>
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
