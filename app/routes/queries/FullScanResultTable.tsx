@@ -19,7 +19,7 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
     }), columnHelper.accessor('home_update_time', {
         header: 'Last Updated At', cell: info => info.getValue()
     }), columnHelper.accessor('ppu', {
-        header: 'Price per unit', cell: info => info.getValue()
+        header: 'Average Price per unit', cell: info => info.getValue()
     }), columnHelper.accessor('profit_amount', {
         header: 'Profit Amount', cell: info => info.getValue()
     }), columnHelper.accessor('profit_raw_percent', {
