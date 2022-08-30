@@ -99,7 +99,7 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
     useEffect(() => {
         if(table.getState().columnFilters[0]?.id === 'profit_amount'){
             if(table.getState().sorting[0]?.id !== 'profit_amount'){
-                table.setSorting([{id: 'profit_amount', desc: false}])
+                table.setSorting([{id: 'profit_amount', desc: true}])
             }
         }
     }, [table.getState().columnFilters[0]?.id])
