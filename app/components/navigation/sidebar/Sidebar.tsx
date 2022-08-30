@@ -2,13 +2,7 @@ import type {FC, PropsWithChildren} from "react";
 import {Fragment, useState} from "react";
 import {Dialog, Menu, Transition} from "@headlessui/react";
 import {
-    BellIcon,
-    ChartSquareBarIcon,
-    CogIcon,
-    HomeIcon,
-    MenuAlt2Icon,
-    UsersIcon,
-    XIcon
+    BellIcon, ChartSquareBarIcon, CogIcon, HomeIcon, MenuAlt2Icon, XIcon
 } from "@heroicons/react/outline";
 import {NavLink} from "@remix-run/react";
 import {classNames} from "~/utils";
@@ -25,9 +19,14 @@ type Props = PropsWithChildren<any> & {
 
 const navigation = [{name: 'Dashboard', href: '/', icon: HomeIcon}, {
     name: 'Queries', href: 'queries', icon: ChartSquareBarIcon
-}, {name: 'Retainers', href: 'retainers', icon: UsersIcon}, {
+}, {
     name: 'Patreon', href: 'https://www.patreon.com/indopan', icon: PatreonIcon, external: true
-}, {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true},{name: 'Discord', href: 'https://discord.gg/836C8wDVNq', external: true, icon: DiscordIcon}]
+}, {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true}, {
+    name: 'Discord',
+    href: 'https://discord.gg/836C8wDVNq',
+    external: true,
+    icon: DiscordIcon
+}]
 const userNavigation = [{name: 'Your Profile', href: '#'}, {name: 'Settings', href: '#'}, {
     name: 'Sign out', href: '#'
 },]
@@ -189,7 +188,7 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                             </div>
                             <div className={`flex items-center pr-1.5`}>
                                 <CogIcon className="h-5 w-5 text-gray-400 basis-full group-hover:text-blue-500"
-                                            aria-hidden="true"/>
+                                         aria-hidden="true"/>
                             </div>
                         </NavLink>
                     </div>
@@ -226,7 +225,9 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                             >
                                 <Menu.Items
                                     className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <p className={`text-gray-700 text-sm py-2 px-4`}><strong>Welcome to Saddlebag!</strong> We're super freaking hyped to see where this journey together goes. Hoping you make it big! Join our Discord for spicy news!</p>
+                                    <p className={`text-gray-700 text-sm py-2 px-4`}><strong>Welcome to
+                                        Saddlebag!</strong> We're super freaking hyped to see where this journey
+                                        together goes. Hoping you make it big! Join our Discord for spicy news!</p>
                                     {/*{userNavigation.map((item) => (<Menu.Item key={item.name}>
                                         {({active}) => (<a
                                             href={item.href}
