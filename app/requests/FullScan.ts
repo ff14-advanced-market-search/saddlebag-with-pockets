@@ -1,4 +1,4 @@
-import {address, UserAgent} from "~/requests/client/config";
+import {address, backupAddress, UserAgent} from "~/requests/client/config";
 
 
 interface IRuntimeForm {
@@ -116,7 +116,7 @@ export type ResponseType = {
 
 const FullScanRequest: (map: Map<string, number | boolean | string>) => Promise<Response> = async (map) => {
 
-    return fetch(`${address}/api/scan`, {
+    return fetch(`${backupAddress}/api/scan`, {
         'method': 'POST', headers: {
             "Content-Type": "application/json", "User-Agent": UserAgent
         }, body: JSON.stringify(Object.fromEntries(map.entries()))

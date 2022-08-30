@@ -38,7 +38,6 @@ const FullScan = () => {
     }
 
     if (results) {
-        console.log(`r`, results);
         const data: Record<string, any> = Object.entries(results).map((entry: [string, any]) => {
             return {id: parseInt(entry[0]), ...entry[1]};
         });
