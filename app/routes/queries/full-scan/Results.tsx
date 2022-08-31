@@ -15,7 +15,8 @@ import {
 } from "@tanstack/table-core";
 import {ResponseType} from "~/requests/FullScan";
 import {compareItems, RankingInfo, rankItem} from "@tanstack/match-sorter-utils";
-import {ArrowDownIcon, ArrowUpIcon} from "@heroicons/react/solid";
+import {ArrowDownIcon, ArrowUpIcon, ChevronDownIcon, ChevronUpIcon, SortAscendingIcon} from "@heroicons/react/solid";
+import {classNames} from "~/utils";
 
 type ResultTableProps<T> = {
     rows: Record<string, T>
@@ -47,7 +48,7 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
     return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
-const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => {
+const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [globalFilter, setGlobalFilter] = useState('');
     const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
@@ -82,6 +83,7 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
     })]
 
     const table = useReactTable({
+        // @ts-ignore
         data: rows,
         columns,
         filterFns: {
@@ -125,16 +127,17 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
                         {table.getHeaderGroups().map(headerGroup => (<tr key={headerGroup.id}>
                             {headerGroup.headers.map(header => (<th scope={`col`}
                                                                     onClick={header.column.getToggleSortingHandler()}
-                                                                    className={`whitespace-nowrap py-3.5 px-2 text-left text-sm font-semibold text-gray-900 hover:bg-gray-300 cursor-pointer`}
+                                                                    className={classNames(header.column.getCanSort() ? 'cursor-pointer' : '', `whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900`)}
                                                                     key={header.id}>
-                                <div>
+                                <div className={`group inline-flex`}>
                                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                </div>
-                                <div className={`flex justify-center`}>
-                                    {{
-                                        asc: <ArrowUpIcon className={`h-4 w-4`}/>,
-                                        desc: <ArrowDownIcon className={`h-4 w-4`}/>
-                                    }[header.column.getIsSorted() as string] ?? null}
+                                    <div
+                                        className={classNames(header.column.getIsSorted() ? 'bg-gray-200 rounded bg-gray-200' : '', ` ml-1 flex-none p-1`)}>
+                                        {{
+                                            asc: <span className={`text-gray-900 group-hover:bg-gray-300`}><ChevronUpIcon className={`h-4 w-4`}/></span>,
+                                            desc: <span className={`text-gray-900 group-hover:bg-gray-300`}><ChevronDownIcon className={`h-4 w-4`}/></span>
+                                        }[header.column.getIsSorted() as string] ?? <span className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}><ChevronDownIcon className={`h-4 w-4`}/></span> }
+                                    </div>
                                 </div>
                             </th>))}
                         </tr>))}
@@ -154,4 +157,4 @@ const FullScanResultTable = <T extends unknown>({rows}: ResultTableProps<T>) => 
     </div>
 }
 
-export default FullScanResultTable;
+export default Results;
