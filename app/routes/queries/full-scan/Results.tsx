@@ -67,7 +67,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
     }), columnHelper.accessor('profit_raw_percent', {
         header: 'Profit Percentage (profit_raw_percent)', cell: info => info.getValue()
     }), columnHelper.accessor('real_name', {
-        header: 'Item Name (real_name)', cell: info => info.getValue()
+        header: 'Item Name (real_name)', cell: ({row, getValue}) => (<span className={`font-bold`}>{getValue()}</span>), footer: props => props.column.id
     }), columnHelper.accessor('sale_rates', {
         header: 'Sale Rates (sale_rates)', cell: info => info.getValue()
     }), columnHelper.accessor('server', {
@@ -76,9 +76,9 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
         header: 'Stack Size (stack_size)', cell: info => info.getValue()
     }), columnHelper.accessor('update_time', {
         header: 'Update Time (update_time)', cell: info => info.getValue()
-    }), /*columnHelper.accessor('R.O.I', {
-        header: 'Return on Investment (R.O.I)', cell: info => info.getValue()
-    }),*/ columnHelper.accessor('url', {
+    }), columnHelper.accessor('ROI', {
+        header: 'Return on Investment (ROI)', cell: info => info.getValue()
+    }), columnHelper.accessor('url', {
         header: 'URL (url)', cell: info => info.getValue()
     })]
 
@@ -115,7 +115,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
     }, [table.getState().columnFilters[0]?.id])
 
     useEffect(() => {
-        setColumnOrder(['real_name', 'ppu', 'home_server_price', 'profit_amount', 'sale_rates', 'avg_ppu', 'server'/*, 'R.O.I'*/, 'profit_raw_percent', 'stack_size', 'update_time', 'home_update_time', 'url'])
+        setColumnOrder(['real_name', 'ppu', 'home_server_price', 'profit_amount', 'sale_rates', 'avg_ppu', 'server', 'ROI', 'profit_raw_percent', 'stack_size', 'update_time', 'home_update_time', 'url'])
     }, []);
 
     return <div className={`mt-0 flex flex-col`}>
