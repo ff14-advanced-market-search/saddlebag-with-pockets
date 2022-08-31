@@ -82,7 +82,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
     }), columnHelper.accessor('ROI', {
         header: 'Return on Investment (ROI)', cell: info => info.getValue()
     }), columnHelper.accessor('url', {
-        header: 'URL', cell: info => (<UniversalisBadgedLink link={info.getValue()} />)
+        header: 'Universalis Link (url)', cell: info => (<UniversalisBadgedLink link={info.getValue()} />)
     })]
 
     const table = useReactTable({
