@@ -15,8 +15,9 @@ import {
 } from "@tanstack/table-core";
 import {ResponseType} from "~/requests/FullScan";
 import {compareItems, RankingInfo, rankItem} from "@tanstack/match-sorter-utils";
-import {ArrowDownIcon, ArrowUpIcon, ChevronDownIcon, ChevronUpIcon, SortAscendingIcon} from "@heroicons/react/solid";
+import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/solid";
 import {classNames} from "~/utils";
+import UniversalisBadgedLink from "~/components/utilities/UniversalisBadgedLink";
 
 type ResultTableProps<T> = {
     rows: Record<string, T>
@@ -57,29 +58,31 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
     const columns = [columnHelper.accessor('avg_ppu', {
         header: 'Average Price per unit (avg_ppu)', cell: info => info.getValue()
     }), columnHelper.accessor('home_server_price', {
-        header: 'Home server price (home_server_price)', cell: info => info.getValue()
+        header: 'Home server price', cell: info => info.getValue()
     }), columnHelper.accessor('home_update_time', {
         header: 'Last Updated At (home_update_time)', cell: info => info.getValue()
     }), columnHelper.accessor('ppu', {
         header: 'Price per unit (ppu)', cell: info => info.getValue()
     }), columnHelper.accessor('profit_amount', {
-        header: 'Profit Amount (profit_amount)', cell: info => info.getValue()
+        header: 'Profit Amount', cell: info => info.getValue()
     }), columnHelper.accessor('profit_raw_percent', {
         header: 'Profit Percentage (profit_raw_percent)', cell: info => info.getValue()
     }), columnHelper.accessor('real_name', {
-        header: 'Item Name (real_name)', cell: ({row, getValue}) => (<span className={`font-bold`}>{getValue()}</span>), footer: props => props.column.id
+        header: 'Item Name (real_name)',
+        cell: ({row, getValue}) => (<span className={`font-bold`}>{getValue()}</span>),
+        footer: props => props.column.id
     }), columnHelper.accessor('sale_rates', {
-        header: 'Sale Rates (sale_rates)', cell: info => info.getValue()
+        header: 'Sale Rates', cell: info => info.getValue()
     }), columnHelper.accessor('server', {
-        header: 'Server (server)', cell: info => info.getValue()
+        header: 'Server', cell: info => info.getValue()
     }), columnHelper.accessor('stack_size', {
-        header: 'Stack Size (stack_size)', cell: info => info.getValue()
+        header: 'Stack Size', cell: info => info.getValue()
     }), columnHelper.accessor('update_time', {
-        header: 'Update Time (update_time)', cell: info => info.getValue()
+        header: 'Update Time', cell: info => info.getValue()
     }), columnHelper.accessor('ROI', {
         header: 'Return on Investment (ROI)', cell: info => info.getValue()
     }), columnHelper.accessor('url', {
-        header: 'URL (url)', cell: info => info.getValue()
+        header: 'URL', cell: info => (<UniversalisBadgedLink link={info.getValue()} />)
     })]
 
     const table = useReactTable({
@@ -134,9 +137,15 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
                                     <div
                                         className={classNames(header.column.getIsSorted() ? 'bg-gray-200 rounded bg-gray-200' : '', ` ml-1 flex-none p-1`)}>
                                         {{
-                                            asc: <span className={`text-gray-900 group-hover:bg-gray-300`}><ChevronUpIcon className={`h-4 w-4`}/></span>,
-                                            desc: <span className={`text-gray-900 group-hover:bg-gray-300`}><ChevronDownIcon className={`h-4 w-4`}/></span>
-                                        }[header.column.getIsSorted() as string] ?? <span className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}><ChevronDownIcon className={`h-4 w-4`}/></span> }
+                                            asc: <span
+                                                className={`text-gray-900 group-hover:bg-gray-300`}><ChevronUpIcon
+                                                className={`h-4 w-4`}/></span>,
+                                            desc: <span
+                                                className={`text-gray-900 group-hover:bg-gray-300`}><ChevronDownIcon
+                                                className={`h-4 w-4`}/></span>
+                                        }[header.column.getIsSorted() as string] ?? <span
+                                            className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}><ChevronDownIcon
+                                            className={`h-4 w-4`}/></span>}
                                     </div>
                                 </div>
                             </th>))}

@@ -44,7 +44,7 @@ const Index = () => {
             return {id: parseInt(entry[0]), ...entry[1]};
         });
 
-        return <Results rows={data}/>
+        return <Results rows={data} />
     }
     return <main className="flex-1">
         <div className="py-6">
