@@ -5,6 +5,7 @@ import {armor} from "~/utils/filters/armor";
 import {accessories} from "~/utils/filters/accessories";
 import {materials} from "~/utils/filters/materials";
 import {medicinesMeals} from "~/utils/filters/medicines-meals";
+import {other} from "~/utils/filters/other";
 
 export type FilterFormat = {
     name: string, abbreviation?: string, icon: ReactNode,
@@ -19,7 +20,8 @@ const filters: FiltersList = [{
     name: "Tools", data: tools
 }, {name: "Armor", data: armor}, {name: "Accessories", data: accessories}, {
     name: "Medicines & Meals", data: medicinesMeals
-}, {name: "Materials", data: materials}]
+}, {name: "Materials", data: materials},
+    {name: "Other", data: other}]
 
 
 export default filters
