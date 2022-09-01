@@ -149,8 +149,12 @@ const Index = () => {
                                                 name="minimum_profit_amount"
                                                 defaultValue={10000}
                                                 id="minimum_profit_amount"
-                                                className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                                className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                             />
+                                            <span
+                                                className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                                                gil
+                                            </span>
                                         </div>
                                         <p className="mt-2 text-sm text-gray-500">
                                             Desired Min Profit Amount. ex: `10000` is only show deals that yields 10000
@@ -169,8 +173,12 @@ const Index = () => {
                                                 name="price_per_unit"
                                                 defaultValue={10000}
                                                 id="price_per_unit"
-                                                className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                                className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                             />
+                                            <span
+                                                className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                                                gil
+                                            </span>
                                         </div>
                                         <p className="mt-2 text-sm text-gray-500">
                                             Desired Average Price Per Unit. ex: `10000` is only show deals that sell on
