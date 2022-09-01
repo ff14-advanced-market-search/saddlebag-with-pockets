@@ -304,7 +304,7 @@ const Index = () => {
                             type="submit"
                             // @ts-ignore
                             onClick={onSubmit}
-                            className={classNames(transition.state === 'submitting' ? 'bg-gray-500' : 'bg-blue-600', "cursor-pointer ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")}
+                            className={classNames(transition.state === 'submitting' ? 'bg-gray-500' : 'bg-blue-600', "cursor-pointer ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500")}
                         >
                             {transition.state === 'submitting' && <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
