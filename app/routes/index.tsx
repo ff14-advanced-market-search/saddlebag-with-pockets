@@ -15,7 +15,7 @@ const recommendedQueries = [
 export default function Index() {
     return (<>
         <main className="flex-1">
-            <div className="rounded-md bg-blue-50 p-4">
+            <div className="rounded-md bg-blue-50 p-4 m-4 border-2 border-blue-100">
                 <div className="flex">
                     <div className="flex-shrink-0">
                         <InformationCircleIcon className="h-5 w-5 text-blue-400" aria-hidden="true" />
