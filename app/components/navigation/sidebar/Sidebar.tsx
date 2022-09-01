@@ -4,7 +4,7 @@ import {Dialog, Menu, Transition} from "@headlessui/react";
 import {
     BellIcon, ChartSquareBarIcon, CogIcon, HomeIcon, MenuAlt2Icon, XIcon
 } from "@heroicons/react/outline";
-import {NavLink} from "@remix-run/react";
+import {Link, NavLink} from "@remix-run/react";
 import {classNames} from "~/utils";
 import PatreonIcon from "~/icons/PatreonIcon";
 import KofiIcon from "~/icons/KofiIcon";
@@ -22,10 +22,7 @@ const navigation = [{name: 'Dashboard', href: '/', icon: HomeIcon}, {
 }, {
     name: 'Patreon', href: 'https://www.patreon.com/indopan', icon: PatreonIcon, external: true
 }, {name: 'Ko-fi', href: 'https://ko-fi.com/indopan', icon: KofiIcon, external: true}, {
-    name: 'Discord',
-    href: 'https://discord.gg/836C8wDVNq',
-    external: true,
-    icon: DiscordIcon
+    name: 'Discord', href: 'https://discord.gg/836C8wDVNq', external: true, icon: DiscordIcon
 }]
 const userNavigation = [{name: 'Your Profile', href: '#'}, {name: 'Settings', href: '#'}, {
     name: 'Sign out', href: '#'
@@ -81,11 +78,13 @@ export const Sidebar: FC<Props> = ({children, data}) => {
                                 </div>
                             </Transition.Child>
                             <div className="flex-shrink-0 flex items-center px-4">
-                                <img
-                                    className="h-8 w-auto"
-                                    src="/images/tiny-chocobo.png"
-                                    alt={data.site_name}
-                                />
+                                <Link to={`/`}>
+                                    <img
+                                        className="h-8 w-auto"
+                                        src="/images/tiny-chocobo.png"
+                                        alt={data.site_name}
+                                    />
+                                </Link>
                             </div>
                             <div className="mt-5 flex-1 h-0 overflow-y-auto">
                                 <nav className="px-2 space-y-1">
