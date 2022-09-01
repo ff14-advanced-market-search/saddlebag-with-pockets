@@ -124,11 +124,14 @@ export const Sidebar: FC<Props> = ({children, data}) => {
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
                 <div className="flex items-center h-24 flex-shrink-0 px-4 bg-gray-900">
-                    <img
-                        className="h-24 w-auto"
-                        src="/images/tiny-chocobo.png"
-                        alt={data.site_name}
-                    />
+
+                    <Link to={`/`}>
+                        <img
+                            className="h-24 w-auto"
+                            src="/images/tiny-chocobo.png"
+                            alt={data.site_name}
+                        />
+                    </Link>
                 </div>
                 <div className="flex-1 flex flex-col overflow-y-auto">
                     <nav className="flex-1 px-2 py-4 space-y-1">
