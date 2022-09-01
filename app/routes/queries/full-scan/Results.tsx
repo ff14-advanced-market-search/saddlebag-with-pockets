@@ -82,7 +82,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
     }), columnHelper.accessor('ROI', {
         header: 'Return on Investment (ROI)', cell: info => info.getValue()
     }), columnHelper.accessor('url', {
-        header: 'Universalis Link (url)', cell: info => (<UniversalisBadgedLink link={info.getValue()} />)
+        header: 'Universalis Link (url)', cell: info => (<UniversalisBadgedLink link={info.getValue()}/>)
     })]
 
     const table = useReactTable({
@@ -139,8 +139,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
                                         {{
                                             asc: <span
                                                 className={`text-gray-900 group-hover:bg-gray-300`}><ChevronUpIcon
-                                                className={`h-4 w-4`}/></span>,
-                                            desc: <span
+                                                className={`h-4 w-4`}/></span>, desc: <span
                                                 className={`text-gray-900 group-hover:bg-gray-300`}><ChevronDownIcon
                                                 className={`h-4 w-4`}/></span>
                                         }[header.column.getIsSorted() as string] ?? <span
