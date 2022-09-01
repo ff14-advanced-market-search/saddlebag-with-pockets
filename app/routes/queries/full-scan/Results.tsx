@@ -160,6 +160,9 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
                         </tbody>
                     </table>
                 </div>
+                <div>
+                    <p className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>{rows.length} results found</p>
+                </div>
             </div>
         </div>
     </div>
