@@ -70,13 +70,13 @@ export default function () {
             <Form method="post">
                 <div className="py-6">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                        <h1 className="text-2xl font-semibold text-gray-900">subheeding</h1>
+                        <h1 className="text-2xl font-semibold text-gray-900">Options</h1>
                     </div>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                         <div className="lg:flex lg:items-center lg:justify-between">
                             <div className="flex-1 min-w-0">
                                 <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                                    And other associated hoopla around w/e is happening</h2>
+                                    Site Configuration</h2>
                             </div>
                             <div className="mt-5 flex lg:mt-0 lg:ml-4">
         <span className="block">
