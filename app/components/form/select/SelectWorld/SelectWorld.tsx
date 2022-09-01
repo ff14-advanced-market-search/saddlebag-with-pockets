@@ -8,6 +8,7 @@ type SelectWorldProps = {
 export const SelectWorld: FC<SelectWorldProps> = ({onSelect, world, dataCenter, worlds}) => {
     const worldDefaultValue = () => {
         if (dataCenter) {
+            console.log(dataCenter, world);
             return world ? world : 'Select your World/Server';
         }
         return `Please select a Data Center`;
@@ -17,14 +18,15 @@ export const SelectWorld: FC<SelectWorldProps> = ({onSelect, world, dataCenter, 
         name="world"
         autoComplete="world"
         className="focus:ring-indigo-500 focus:border-indigo-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300"
-        defaultValue={worldDefaultValue()}
+        // defaultValue={worldDefaultValue()}
+        value={worldDefaultValue()}
         onChange={(event) => {
             onSelect(event.target.value)
         }}
     >
         {!world && <option disabled hidden>{worldDefaultValue()}</option>}
         {worlds && worlds.map((value) => {
-            return <option key={value.name}>{value.name}</option>
+            return <option key={value.name} value={value.name}>{value.name}</option>
         })}
     </select>
 }
