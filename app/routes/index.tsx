@@ -1,5 +1,6 @@
 import {DocumentSearchIcon} from "@heroicons/react/outline";
 import {Link} from "@remix-run/react";
+import {InformationCircleIcon} from "@heroicons/react/solid";
 
 const recommendedQueries = [
     {
@@ -14,9 +15,25 @@ const recommendedQueries = [
 export default function Index() {
     return (<>
         <main className="flex-1">
+            <div className="rounded-md bg-blue-50 p-4">
+                <div className="flex">
+                    <div className="flex-shrink-0">
+                        <InformationCircleIcon className="h-5 w-5 text-blue-400" aria-hidden="true" />
+                    </div>
+                    <div className="ml-3 flex-1 md:flex md:justify-between">
+                        <p className="text-sm text-blue-700">Welcome to the new Saddlebag Exchange! Join Discord to get in on the juicy news & goss!</p>
+                        <p className="mt-3 text-sm md:mt-0 md:ml-6">
+                            <a href="https://discord.gg/836C8wDVNq" className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600">
+                                Discord
+                                <span aria-hidden="true"> &rarr;</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div className="py-6">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                    <h1 className="text-2xl font-semibold text-gray-900">Recommended Hoopla</h1>
+                    <h1 className="text-2xl font-semibold text-gray-900">Recommended Queries</h1>
                     <div className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
                         {recommendedQueries.map((query) => {
                             return (
