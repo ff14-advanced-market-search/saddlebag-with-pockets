@@ -1,7 +1,15 @@
 import type {LoaderFunction, MetaFunction} from "@remix-run/cloudflare";
 import {json} from "@remix-run/cloudflare";
 import styles from './tailwind.css'
-import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from "@remix-run/react";
+import {
+    Links,
+    LiveReload,
+    Meta,
+    Outlet,
+    Scripts,
+    ScrollRestoration,
+    useLoaderData,
+} from "@remix-run/react";
 import Sidebar from "~/components/navigation/sidebar";
 import {getSession} from "~/sessions";
 import {EnsureThemeApplied, ThemeProvider, useTheme} from "~/utils/providers/theme-provider";
@@ -13,6 +21,11 @@ export const links = () => {
     }]
 }
 
+type LoaderData = {
+    site_name: string,
+    data_center: string,
+    world: string,
+}
 
 export const loader: LoaderFunction = async ({request, context}) => {
     const session = await getSession(request.headers.get('Cookie'));
@@ -22,10 +35,10 @@ export const loader: LoaderFunction = async ({request, context}) => {
         });
     }
     // @todo set safe default for DC and world
-    return json({
-        site_name: context.SITE_NAME ?? "Saddlebag",
+    return json<LoaderData>({
+        site_name: context.SITE_NAME as string ?? "Saddlebag",
         data_center: session.has('data_center') ? session.get('data_center') : 'Aether',
-        world: session.has('world') ? session.get('world') : 'Adamantoise'
+        world: session.has('world') ? session.get('world') : 'Adamantoise',
     })
 }
 
@@ -41,7 +54,7 @@ export const meta: MetaFunction = ({data}) => {
 };
 
 function App() {
-    const data = useLoaderData();
+    const data = useLoaderData<LoaderData>();
     const [theme] = useTheme();
 
     return (<html lang="en" className={classNames(`h-full`, theme || '')}>

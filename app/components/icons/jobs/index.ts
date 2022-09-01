@@ -10,6 +10,7 @@ import {CNJ} from "~/components/icons/jobs/CNJ";
 import {CRP} from "~/components/icons/jobs/CRP";
 import {CUL} from "~/components/icons/jobs/CUL";
 import {DRK} from "~/components/icons/jobs/DRK";
+import {FSH} from "~/components/icons/jobs/FSH";
 import {GLA} from "~/components/icons/jobs/GLA";
 import {GSM} from "~/components/icons/jobs/GSM";
 import {LNC} from "~/components/icons/jobs/LNC";
@@ -39,6 +40,7 @@ export default {
     CRP,
     CUL,
     DRK,
+    FSH,
     GLA,
     GSM,
     LNC,
