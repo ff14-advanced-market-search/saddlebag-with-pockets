@@ -118,7 +118,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) => {
     }, [table.getState().columnFilters[0]?.id])
 
     useEffect(() => {
-        setColumnOrder(['real_name', 'ppu', 'home_server_price', 'profit_amount', 'sale_rates', 'avg_ppu', 'server', 'ROI', 'profit_raw_percent', 'stack_size', 'update_time', 'home_update_time', 'url'])
+        setColumnOrder(['real_name', 'url', 'ppu', 'home_server_price', 'profit_amount', 'sale_rates', 'avg_ppu', 'server', 'ROI', 'profit_raw_percent', 'stack_size', 'update_time', 'home_update_time'])
     }, []);
 
     return <div className={`mt-0 flex flex-col`}>
