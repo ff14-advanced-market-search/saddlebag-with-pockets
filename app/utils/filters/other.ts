@@ -24,7 +24,7 @@ import {GardeningItems} from "~/components/icons/other/GardeningItems";
 import {Paintings} from "~/components/icons/other/Paintings";
 import {RegistrableMiscellany} from "~/components/icons/other/RegistrableMiscellany";
 
-export const accessories: FilterFormat[] = [{
+export const other: FilterFormat[] = [{
     name: `Furnishings`, icon: Furnishings
 }, {
     name: `Materia`, icon: Materia
@@ -65,3 +65,4 @@ export const accessories: FilterFormat[] = [{
 },{
     name: `Registrable Miscellany`, icon: RegistrableMiscellany
 },]
+
