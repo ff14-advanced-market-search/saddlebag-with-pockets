@@ -107,7 +107,7 @@ const defaults = {
 }
 
 export type ResponseType = {
-    "R.O.I": number, "avg_ppu": number, "home_server_price": number, "home_update_time": string, // @todo datetime
+    "ROI": number, "avg_ppu": number, "home_server_price": number, "home_update_time": string, // @todo datetime
     "ppu": number, "profit_amount": number, "profit_raw_percent": number, "real_name": string, "sale_rates": number, // @todo decimal
     "server": string, // @todo world / datacenter
     "stack_size": number, "update_time": string, // @todo datetime
