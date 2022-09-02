@@ -60,13 +60,14 @@ export const remappedKeys = (fields: any, setDefaults = true) =>
                 {
                     value = true
                 }
-            if(!isNaN(parseInt(value as string)))
+            if(!isNaN(parseInt(value as string)) && field[0] !== 'filters')
                 {
                     value = parseInt(value as string)
                 }
             map.set(keyMap(field[0]), value)
             return field
         })
+        console.log('vars', Object.fromEntries(map.entries()));
         return map
     }
 
@@ -110,7 +111,7 @@ const defaults = {
     "min_sales":           5,
     "hq":                  false,
     "home_server":         "Midgardsormr",
-    "filters":             -1,
+    "filters":             0,
     "region_wide":         false,
     "include_vendor":      false,
     "show_out_stock":      true
