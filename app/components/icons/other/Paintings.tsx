@@ -1,5 +1,5 @@
-import {ReactComponent as Icon} from './svg/ItemCategory_Painting.svg'
-import {FC}                     from "react"
+import Icon from './svg/ItemCategory_Painting.svg'
+import {FC} from "react"
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const Paintings: FC<Props> = ({className = ''}) =>
     {
+        // @ts-ignore
         return <Icon className={className}/>
     }

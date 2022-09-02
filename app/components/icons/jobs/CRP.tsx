@@ -1,5 +1,5 @@
-import {ReactComponent as CRPIcon} from './svg/ItemCategory_CRP.svg'
-import {FC}                        from "react"
+import CRPIcon from './svg/ItemCategory_CRP.svg'
+import {FC}    from "react"
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const CRP: FC<Props> = ({className = ''}) =>
     {
+        // @ts-ignore
         return <CRPIcon className={className}/>
     }

@@ -1,5 +1,5 @@
-import {ReactComponent as BTNIcon} from './svg/ItemCategory_BTN.svg'
-import {FC}                        from "react"
+import BTNIcon from './svg/ItemCategory_BTN.svg'
+import {FC}    from "react"
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const BTN: FC<Props> = ({className = ''}) =>
     {
+        // @ts-ignore
         return <BTNIcon className={className}/>
     }

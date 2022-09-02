@@ -1,5 +1,5 @@
-import {ReactComponent as RPRIcon} from './svg/class_job_039.svg'
-import {FC}                        from "react"
+import RPRIcon from './svg/class_job_039.svg'
+import {FC}    from "react"
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const RPR: FC<Props> = ({className = ''}) =>
     {
+        // @ts-ignore
         return <RPRIcon className={className}/>
     }

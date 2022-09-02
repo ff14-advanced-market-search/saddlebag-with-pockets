@@ -1,5 +1,5 @@
-import {ReactComponent as ROGIcon} from './svg/ItemCategory_ROG.svg'
-import {FC}                        from "react"
+import ROGIcon from './svg/ItemCategory_ROG.svg'
+import {FC}    from "react"
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const ROG: FC<Props> = ({className = ''}) =>
     {
+        // @ts-ignore
         return <ROGIcon className={className}/>
     }
