@@ -28,6 +28,7 @@ import {WVR} from "~/components/icons/jobs/WVR"
 import {GNB} from "~/components/icons/jobs/GNB"
 import {DNC} from "~/components/icons/jobs/DNC"
 import {RPR} from "~/components/icons/jobs/RPR"
+import {SGE} from "~/components/icons/jobs/SGE"
 
 
 export default {
@@ -59,6 +60,7 @@ export default {
     RPR,
     SAM,
     SCH,
+    SGE,
     THM,
     WVR
 }

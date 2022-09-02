@@ -34,6 +34,12 @@ export const arms: FilterFormat[] = [
         icon:         Job.CNJ
     },
     {
+        name:         `Dancer's Arms`,
+        abbreviation: `DNC`,
+        id:           87,
+        icon:         Job.DNC
+    },
+    {
         name:         `Dark Knight's Arms`,
         abbreviation: `DRK`,
         id:           76,
@@ -44,6 +50,12 @@ export const arms: FilterFormat[] = [
         abbreviation: 'GLA',
         icon:         Job.GLA,
         id:           10
+    },
+    {
+        name:         `Gunbreaker's Arms`,
+        abbreviation: `GNB`,
+        id:           86,
+        icon:         Job.GNB
     },
     {
         name:         `Lancer's Arms`,
@@ -82,6 +94,12 @@ export const arms: FilterFormat[] = [
         icon:         Job.ROG
     },
     {
+        name:         `Reaper's Arms`,
+        abbreviation: `RPR`,
+        id:           88,
+        icon:         Job.RPR
+    },
+    {
         name:         `Samurai's Arms`,
         abbreviation: `SAM`,
         id:           83,
@@ -92,6 +110,12 @@ export const arms: FilterFormat[] = [
         abbreviation: `SCH`,
         id:           85,
         icon:         Job.SCH
+    },
+    {
+        name:         `Sage's Arms`,
+        abbreviation: `SGE`,
+        id:           89,
+        icon:         Job.SGE
     },
     {
         name:         `Thaumaturge's Arms`,
