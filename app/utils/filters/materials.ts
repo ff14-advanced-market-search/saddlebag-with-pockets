@@ -13,37 +13,46 @@ export const materials: FilterFormat[] = [
     {
         name: `Stone`,
         icon: Stone,
+        id:   47,
     },
     {
         name: `Metal`,
         icon: Metal,
+        id:   48,
     },
     {
         name: `Lumber`,
         icon: Lumber,
+        id:   49,
     },
     {
         name: `Cloth`,
         icon: Cloth,
+        id:   50,
     },
     {
         name: `Leather`,
         icon: Leather,
+        id:   51,
     },
     {
         name: `Bone`,
         icon: Bone,
+        id:   52,
     },
     {
         name: `Reagents`,
         icon: Reagents,
+        id:   53,
     },
     {
         name: `Dyes`,
         icon: Dyes,
+        id:   54,
     },
     {
         name: `Weapon Parts`,
         icon: WeaponParts,
+        id:   55,
     },
 ];

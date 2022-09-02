@@ -8,17 +8,21 @@ export const accessories: FilterFormat[] = [
     {
         name: `Necklaces`,
         icon: Necklaces,
+        id:   39,
     },
     {
         name: `Earrings`,
         icon: Earrings,
+        id:   40,
     },
     {
         name: `Bracelets`,
         icon: Bracelets,
+        id:   41,
     },
     {
         name: `Rings`,
         icon: Rings,
+        id:   42,
     },
 ];

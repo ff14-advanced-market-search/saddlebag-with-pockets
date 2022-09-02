@@ -24,82 +24,102 @@ export const other: FilterFormat[] = [
     {
         name: `Furnishings`,
         icon: Furnishings,
+        id:   56,
     },
     {
         name: `Materia`,
         icon: Materia,
+        id:   57,
     },
     {
         name: `Crystals`,
         icon: Crystals,
+        id:   58,
     },
     {
         name: `Catalysts`,
         icon: Catalysts,
+        id:   59,
     },
     {
         name: `Miscellany`,
         icon: Miscellany,
+        id:   60,
     },
     {
         name: `Exterior Fixtures`,
         icon: ExteriorFixtures,
+        id:   65,
     },
     {
         name: `Interior Fixtures`,
         icon: InteriorFixtures,
+        id:   66,
     },
     {
         name: `Outdoor Furnishings`,
         icon: OutdoorFurnishings,
+        id:   67,
     },
     {
         name: `Chairs and Beds`,
         icon: ChairsAndBeds,
+        id:   68,
     },
     {
         name: `Tables`,
         icon: Tables,
+        id:   69,
     },
     {
         name: `Tabletop`,
         icon: Tabletop,
+        id:   70,
     },
     {
         name: `Wall-mounted`,
         icon: WallMounted,
+        id:   71,
     },
     {
         name: `Rugs`,
         icon: Rugs,
+        id:   72,
     },
     {
         name: `Seasonal Miscellany`,
         icon: SeasonalMiscellany,
+        id:   74,
     },
     {
         name: `Minions`,
         icon: Minions,
+        id:   75,
     },
     {
         name: `Airship/Submersible Components`,
         icon: AirshipSubmersibleComponents,
+        id:   79,
     },
     {
         name: `Orchestration Components`,
         icon: OrchestrationComponents,
+        id:   80,
     },
     {
         name: `Gardening Items`,
         icon: GardeningItems,
+        id:   81,
     },
     {
         name: `Paintings`,
         icon: Paintings,
+        id:   82,
     },
     {
         name: `Registrable Miscellany`,
         icon: RegistrableMiscellany,
+        id:   90,
     },
 ];
 
