@@ -8,13 +8,24 @@ import {medicinesMeals} from "~/utils/filters/medicines-meals"
 import {other}          from "~/utils/filters/other"
 
 export type FilterFormat = {
-    name: string, abbreviation?: string, icon: ReactNode, id: number,
+    // @todo reencforce ID once all set.
+    name: string, abbreviation?: string, icon: ReactNode, id?: number,
 }
 type FiltersList = {
-    name: string, data: FilterFormat[], id: number
+    name: string, data: FilterFormat[], id: number | "all" | "vendor"
 }[]
 
 const filters: FiltersList = [
+    {
+        name: `Everything`,
+        data: [],
+        id:   "all",
+    },
+    {
+        name: 'Vendor sellable',
+        data: [],
+        id:   "vendor",
+    },
     {
         name: "Arms",
         data: arms,

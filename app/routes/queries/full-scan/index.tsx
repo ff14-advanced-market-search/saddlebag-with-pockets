@@ -5,6 +5,7 @@ import type {FullScanFields}                                from "~/requests/Ful
 import FullScanRequest, {remappedKeys, RunTimeFullScanForm} from "~/requests/FullScan"
 import {classNames}                                         from "~/utils"
 import Results                                              from "~/routes/queries/full-scan/Results"
+import filters                                              from "~/utils/filters"
 
 export const action: ActionFunction = async ({
                                                  request,
@@ -200,6 +201,40 @@ const Index = () =>
                                                 on
                                                 average for 10000 gil or greater. For more items to sell choose a lower
                                                 number.
+                                            </p>
+                                        </div>
+
+                                        <div className="col-span-6 sm:col-span-2">
+                                            <label htmlFor="filters"
+                                                   className="block text-sm font-medium text-gray-700">
+                                                Item Filter
+                                            </label>
+                                            <div className={`mt-1 flex rounded-md shadow-sm`}>
+                                                <select
+                                                    name="filters"
+                                                    className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300"
+                                                    defaultValue={`all`}
+                                                >
+                                                    {filters.map((value) =>
+                                                    {
+                                                        const children = value.data
+                                                        return (<>
+                                                                <option key={`${value.id}_${value.name}`}
+                                                                        value={value.id}>{value.name}</option>
+                                                                {children.map((child) =>
+                                                                {
+                                                                    return child.id
+                                                                           ? <option
+                                                                               key={`${value.id}_${child.id}_${child.name}`}
+                                                                               value={child.id}>{child.name}</option>
+                                                                           : null
+                                                                })}
+                                                            </>)
+                                                    })}
+                                                </select>
+                                            </div>
+                                            <p className="mt-2 text-sm text-gray-500">
+                                                Filters
                                             </p>
                                         </div>
 
