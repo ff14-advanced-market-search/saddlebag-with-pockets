@@ -8,40 +8,47 @@ import {medicinesMeals} from "~/utils/filters/medicines-meals"
 import {other}          from "~/utils/filters/other"
 
 export type FilterFormat = {
-    name: string, abbreviation?: string, icon: ReactNode,
+    name: string, abbreviation?: string, icon: ReactNode, id: number,
 }
 type FiltersList = {
-    name: string, data: FilterFormat[]
+    name: string, data: FilterFormat[], id: number
 }[]
 
 const filters: FiltersList = [
     {
         name: "Arms",
-        data: arms
+        data: arms,
+        id:   1,
     },
     {
         name: "Tools",
-        data: tools
+        data: tools,
+        id:   2,
     },
     {
         name: "Armor",
-        data: armor
+        data: armor,
+        id:   3
     },
     {
         name: "Accessories",
-        data: accessories
+        data: accessories,
+        id:   4
     },
     {
         name: "Medicines & Meals",
-        data: medicinesMeals
+        data: medicinesMeals,
+        id:   5
     },
     {
         name: "Materials",
-        data: materials
+        data: materials,
+        id:   6
     },
     {
         name: "Other",
-        data: other
+        data: other,
+        id:   7
     }
 ]
 
