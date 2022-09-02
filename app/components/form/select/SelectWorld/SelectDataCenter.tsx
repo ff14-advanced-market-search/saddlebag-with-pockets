@@ -1,29 +1,29 @@
-import type {FC}      from "react"
-import {Fragment}     from "react"
-import * as locations from "~/utils/locations"
+import type {FC}      from "react";
+import {Fragment}     from "react";
+import * as locations from "~/utils/locations";
 
 type SelectDataCenterProps = {
     onSelect: (data_center: string) => void, dataCenter: string | undefined;
 }
 export const SelectDataCenter: FC<SelectDataCenterProps> = ({
                                                                 onSelect,
-                                                                dataCenter
+                                                                dataCenter,
                                                             }) =>
     {
 
-        const regions = Array.from(locations.Regions)
+        const regions = Array.from(locations.Regions);
 
         const dataCenterDefaultValue = () =>
             {
                 return dataCenter
                        ? dataCenter
-                       : 'Select your Data Center'
-            }
+                       : 'Select your Data Center';
+            };
 
         const dataCentersFromRegion = (region_id: string) =>
             {
-                return locations.DataCentersOfRegion(region_id)
-            }
+                return locations.DataCentersOfRegion(region_id);
+            };
         return <select
             key={"data_center_select"}
             name="data_center"
@@ -33,7 +33,7 @@ export const SelectDataCenter: FC<SelectDataCenterProps> = ({
             defaultValue={dataCenterDefaultValue()}
             onChange={(event) =>
                 {
-                    onSelect(event.target.value)
+                    onSelect(event.target.value);
                 }}
         >
             {!dataCenter && <option disabled hidden>{dataCenterDefaultValue()}</option>}
@@ -43,9 +43,9 @@ export const SelectDataCenter: FC<SelectDataCenterProps> = ({
                     <option disabled key={value[0]}>{value[1][1]} Data Centers</option>
                     {dataCentersFromRegion(value[0]).map((value) =>
                     {
-                        return <option key={value.name}>{value.name}</option>
+                        return <option key={value.name}>{value.name}</option>;
                     })}
-                </Fragment>)
+                </Fragment>);
             })}
-        </select>
-    }
+        </select>;
+    };

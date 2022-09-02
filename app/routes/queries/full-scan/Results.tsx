@@ -1,12 +1,12 @@
-import type {FilterFn, SortingFn}                                                                                                                                                                          from "@tanstack/table-core"
-import {ColumnFiltersState, ColumnOrderState, createColumnHelper, getCoreRowModel, getFacetedMinMaxValues, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getSortedRowModel, sortingFns} from "@tanstack/table-core"
-import {useEffect, useState}                                                                                                                                                                               from "react"
-import {flexRender, useReactTable}                                                                                                                                                                         from "@tanstack/react-table"
-import {ResponseType}                                                                                                                                                                                      from "~/requests/FullScan"
-import {compareItems, RankingInfo, rankItem}                                                                                                                                                               from "@tanstack/match-sorter-utils"
-import {ChevronDownIcon, ChevronUpIcon}                                                                                                                                                                    from "@heroicons/react/solid"
-import {classNames}                                                                                                                                                                                        from "~/utils"
-import UniversalisBadgedLink                                                                                                                                                                               from "~/components/utilities/UniversalisBadgedLink"
+import type {FilterFn, SortingFn}                                                                                                                                                                          from "@tanstack/table-core";
+import {ColumnFiltersState, ColumnOrderState, createColumnHelper, getCoreRowModel, getFacetedMinMaxValues, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getSortedRowModel, sortingFns} from "@tanstack/table-core";
+import {useEffect, useState}                                                                                                                                                                               from "react";
+import {flexRender, useReactTable}                                                                                                                                                                         from "@tanstack/react-table";
+import {ResponseType}                                                                                                                                                                                      from "~/requests/FullScan";
+import {compareItems, RankingInfo, rankItem}                                                                                                                                                               from "@tanstack/match-sorter-utils";
+import {ChevronDownIcon, ChevronUpIcon}                                                                                                                                                                    from "@heroicons/react/solid";
+import {classNames}                                                                                                                                                                                        from "~/utils";
+import UniversalisBadgedLink                                                                                                                                                                               from "~/components/utilities/UniversalisBadgedLink";
 
 type ResultTableProps<T> = {
     rows: Record<string, T>
@@ -14,112 +14,112 @@ type ResultTableProps<T> = {
 
 declare module '@tanstack/table-core' {
     interface FilterFns {
-        fuzzy: FilterFn<unknown>
+        fuzzy: FilterFn<unknown>;
     }
 
     interface FilterMeta {
-        itemRank: RankingInfo
+        itemRank: RankingInfo;
     }
 }
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) =>
     {
-        const itemRank = rankItem(row.getValue(columnId), value)
+        const itemRank = rankItem(row.getValue(columnId), value);
 
-        addMeta({itemRank})
-        return itemRank.passed
-    }
+        addMeta({itemRank});
+        return itemRank.passed;
+    };
 
 const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) =>
     {
-        let dir = 0
+        let dir = 0;
 
         if(rowA.columnFiltersMeta[columnId])
             {
-                dir = compareItems(rowA.columnFiltersMeta[columnId]?.itemRank!, rowB.columnFiltersMeta[columnId]?.itemRank!)
+                dir = compareItems(rowA.columnFiltersMeta[columnId]?.itemRank!, rowB.columnFiltersMeta[columnId]?.itemRank!);
             }
         return dir === 0
                ? sortingFns.alphanumeric(rowA, rowB, columnId)
-               : dir
-    }
+               : dir;
+    };
 
 const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
     {
-        const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-        const [globalFilter, setGlobalFilter] = useState('')
-        const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
+        const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+        const [globalFilter, setGlobalFilter] = useState('');
+        const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
 
-        const columnHelper = createColumnHelper<ResponseType & { id: number }>()
+        const columnHelper = createColumnHelper<ResponseType & { id: number }>();
         const columns = [
             columnHelper.accessor('avg_ppu', {
                 header: 'Average Price per unit (avg_ppu)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('home_server_price', {
                 header: 'Home server price',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('home_update_time', {
                 header: 'Last Updated At (home_update_time)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('ppu', {
                 header: 'Price per unit (ppu)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('profit_amount', {
                 header: 'Profit Amount',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('profit_raw_percent', {
                 header: 'Profit Percentage (profit_raw_percent)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('real_name', {
                 header: 'Item Name (real_name)',
                 cell:   ({
                              row,
-                             getValue
+                             getValue,
                          }) => (<span className={`font-bold`}>{getValue()}</span>),
-                footer: props => props.column.id
+                footer: props => props.column.id,
             }),
             columnHelper.accessor('sale_rates', {
                 header: 'Sale Rates',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('server', {
                 header: 'Server',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('stack_size', {
                 header: 'Stack Size',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('update_time', {
                 header: 'Update Time',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('ROI', {
                 header: 'Return on Investment (ROI)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('url', {
                 header: 'Universalis Link (url)',
-                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>)
-            })
-        ]
+                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
+            }),
+        ];
 
         const table = useReactTable({
             // @ts-ignore
             data:                   rows,
             columns,
             filterFns:              {
-                fuzzy: fuzzyFilter
+                fuzzy: fuzzyFilter,
             },
             state:                  {
                 columnFilters,
                 globalFilter,
-                columnOrder
+                columnOrder,
             },
             onColumnFiltersChange:  setColumnFilters,
             onGlobalFilterChange:   setGlobalFilter,
@@ -133,7 +133,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
             debugTable:             true,
             debugHeaders:           true,
             debugColumns:           false,
-        })
+        });
 
         useEffect(() =>
         {
@@ -144,12 +144,12 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                             table.setSorting([
                                 {
                                     id:   'profit_amount',
-                                    desc: true
-                                }
-                            ])
+                                    desc: true,
+                                },
+                            ]);
                         }
                 }
-        }, [table.getState().columnFilters[0]?.id])
+        }, [table.getState().columnFilters[0]?.id]);
 
         useEffect(() =>
         {
@@ -166,9 +166,9 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 'profit_raw_percent',
                 'stack_size',
                 'update_time',
-                'home_update_time'
-            ])
-        }, [])
+                'home_update_time',
+            ]);
+        }, []);
 
         return <div className={`mt-0 flex flex-col`}>
             <div className="overflow-x-auto">
@@ -197,7 +197,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                                                      className={`h-4 w-4`}/></span>,
                                                  desc: <span
                                                            className={`text-gray-900 group-hover:bg-gray-300`}><ChevronDownIcon
-                                                     className={`h-4 w-4`}/></span>
+                                                     className={`h-4 w-4`}/></span>,
                                              }[header.column.getIsSorted() as string] ?? <span
                                                  className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}><ChevronDownIcon
                                                 className={`h-4 w-4`}/></span>}
@@ -223,7 +223,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        </div>;
+    };
 
-export default Results
+export default Results;

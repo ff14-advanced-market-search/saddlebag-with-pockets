@@ -1,28 +1,28 @@
 export const RegionList: Record<string, [string, string]> = {
     'NA':  [
         "North America",
-        "North American"
+        "North American",
     ],
     'EU':  [
         "Europe",
-        "European"
+        "European",
     ],
     'JP':  [
         "Japan",
-        "Japanese"
+        "Japanese",
     ],
     'OCE': [
         "Oceania",
-        "Oceanic"
+        "Oceanic",
     ],
     'CN':  [
         "China",
-        "Chinese"
+        "Chinese",
     ],
-}
+};
 
 
-export const RegionsMap = new Map(Object.entries(RegionList))
+export const RegionsMap = new Map(Object.entries(RegionList));
 
 
-export default RegionsMap
+export default RegionsMap;

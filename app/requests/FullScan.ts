@@ -1,4 +1,4 @@
-import {address, UserAgent} from "~/requests/client/config"
+import {address, UserAgent} from "~/requests/client/config";
 
 
 interface IRuntimeForm {
@@ -10,17 +10,17 @@ export class RunTimeFullScanForm<T extends IRuntimeForm> {
     }
 
     public formData(): FormData {
-        const form = new FormData()
+        const form = new FormData();
 
         Object.keys(this.form).forEach((key) =>
         {
             if(this.form[key] !== undefined)
                 {
-                    form.append(key, this.form[key])
+                    form.append(key, this.form[key]);
                 }
-        })
+        });
 
-        return form
+        return form;
     }
 }
 
@@ -49,27 +49,30 @@ export const remappedKeys = (fields: any, setDefaults = true) =>
     {
         const map = setDefaults
                     ? new Map(Object.entries(defaults))
-                    : new Map()
+                    : new Map();
 
         Array.from(fields as [string, string | boolean | number][]).map((field) =>
         {
-            let value = field[1]
+            let [key, value] = field;
 
             // checkboxes whyyyyyy
             if(value === 'on')
                 {
-                    value = true
+                    value = true;
                 }
-            if(!isNaN(parseInt(value as string)) && field[0] !== 'filters')
+            if(!isNaN(parseInt(value as string)))
                 {
-                    value = parseInt(value as string)
+                    value = parseInt(value as string);
                 }
-            map.set(keyMap(field[0]), value)
-            return field
-        })
-        console.log('vars', Object.fromEntries(map.entries()));
-        return map
-    }
+            map.set(keyMap(key), value);
+            return field;
+        });
+        if(process.env.NODE_ENV === 'development')
+            {
+                console.log('vars', Object.fromEntries(map.entries()));
+            }
+        return map;
+    };
 
 
 const keyMap: (key: string) => string = (key) =>
@@ -77,30 +80,30 @@ const keyMap: (key: string) => string = (key) =>
         switch(key)
             {
                 case 'sale_amount':
-                    return 'min_sales'
+                    return 'min_sales';
                 case 'world':
-                    return 'home_server'
+                    return 'home_server';
                 case 'minimum_stack_size':
-                    return 'min_stack_size'
+                    return 'min_stack_size';
                 case 'hq_only':
-                    return 'hq'
+                    return 'hq';
                 case 'minimum_profit_amount':
-                    return 'min_profit_amount'
+                    return 'min_profit_amount';
                 case 'price_per_unit':
-                    return 'min_desired_avg_ppu'
+                    return 'min_desired_avg_ppu';
                 case 'out_of_stock':
-                    return 'show_out_stock'
+                    return 'show_out_stock';
                 case 'roi':
-                    return 'preferred_roi'
+                    return 'preferred_roi';
                 case 'scan_hours':
-                    return 'hours_ago'
+                    return 'hours_ago';
                 default:
                     // region_wide
                     // include_vendor
-                    return key
+                    return key;
 
             }
-    }
+    };
 
 const defaults = {
     'preferred_roi':       50,
@@ -114,8 +117,8 @@ const defaults = {
     "filters":             0,
     "region_wide":         false,
     "include_vendor":      false,
-    "show_out_stock":      true
-}
+    "show_out_stock":      true,
+};
 
 export type ResponseType = {
     "ROI": number, "avg_ppu": number, "home_server_price": number, "home_update_time": string, // @todo datetime
@@ -131,10 +134,10 @@ const FullScanRequest: (map: Map<string, number | boolean | string>) => Promise<
             'method': 'POST',
             headers:  {
                 "Content-Type": "application/json",
-                "User-Agent":   UserAgent
+                "User-Agent":   UserAgent,
             },
-            body:     JSON.stringify(Object.fromEntries(map.entries()))
-        })
-    }
+            body:     JSON.stringify(Object.fromEntries(map.entries())),
+        });
+    };
 
-export default FullScanRequest
+export default FullScanRequest;

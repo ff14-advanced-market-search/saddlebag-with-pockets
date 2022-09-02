@@ -1,5 +1,5 @@
-import {ReactComponent as CNJIcon} from './svg/ItemCategory_CNJ.svg'
-import {FC}                        from "react"
+import CNJIcon from './svg/ItemCategory_CNJ.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const CNJ: FC<Props> = ({className = ''}) =>
     {
-        return <CNJIcon className={className}/>
-    }
+        // @ts-ignore
+        return <CNJIcon className={className}/>;
+    };

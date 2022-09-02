@@ -1,5 +1,5 @@
-import {ReactComponent as ASTIcon} from './svg/ItemCategory_AST.svg'
-import {FC}                        from "react"
+import ASTIcon from './svg/ItemCategory_AST.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const AST: FC<Props> = ({className = ''}) =>
     {
-        return <ASTIcon className={className}/>
-    }
+        // @ts-ignore
+        return <ASTIcon className={className}/>;
+    };

@@ -1,19 +1,19 @@
-import {CheckIcon}                                         from "@heroicons/react/solid"
-import {Form, useActionData, useLoaderData, useTransition} from "@remix-run/react"
-import SelectDCandWorld                                    from "~/components/form/select/SelectWorld"
-import type {ActionFunction, LoaderFunction}               from "@remix-run/cloudflare"
-import {json, redirect}                                    from "@remix-run/cloudflare"
-import {withZod}                                           from "@remix-validated-form/with-zod"
-import {z}                                                 from "zod"
-import type {GetDeepProp}                                  from "~/utils/ts"
-import type {DataCentersList}                              from "~/utils/locations/DataCenters"
-import type {Validator}                                    from "remix-validated-form"
-import type {WorldsList}                                   from "~/utils/locations/Worlds"
-import {commitSession, getSession}                         from "~/sessions"
-import {Switch}                                            from "@headlessui/react"
-import {useEffect, useState}                               from "react"
-import {classNames}                                        from "~/utils"
-import {Theme, useTheme}                                   from "~/utils/providers/theme-provider"
+import {CheckIcon}                                         from "@heroicons/react/solid";
+import {Form, useActionData, useLoaderData, useTransition} from "@remix-run/react";
+import SelectDCandWorld                                    from "~/components/form/select/SelectWorld";
+import type {ActionFunction, LoaderFunction}               from "@remix-run/cloudflare";
+import {json, redirect}                                    from "@remix-run/cloudflare";
+import {withZod}                                           from "@remix-validated-form/with-zod";
+import {z}                                                 from "zod";
+import type {GetDeepProp}                                  from "~/utils/ts";
+import type {DataCentersList}                              from "~/utils/locations/DataCenters";
+import type {Validator}                                    from "remix-validated-form";
+import type {WorldsList}                                   from "~/utils/locations/Worlds";
+import {commitSession, getSession}                         from "~/sessions";
+import {Switch}                                            from "@headlessui/react";
+import {useEffect, useState}                               from "react";
+import {classNames}                                        from "~/utils";
+import {Theme, useTheme}                                   from "~/utils/providers/theme-provider";
 
 export type SelectWorldInputFields = {
     data_center: GetDeepProp<DataCentersList, 'name'>
@@ -24,59 +24,59 @@ export type SelectWorldInputFields = {
 export const validator: Validator<SelectWorldInputFields> = withZod(z.object({
     data_center: z.string().min(1),
     world:       z.string().min(1), /*dark_mode: z.boolean()*/
-}))
+}));
 
 export const action: ActionFunction = async ({request}) =>
     {
 
-        const result = await validator.validate(await request.formData())
+        const result = await validator.validate(await request.formData());
         if(result.error)
             {
-                return json(result)
+                return json(result);
             }
-        const session = await getSession(request.headers.get('Cookie'))
+        const session = await getSession(request.headers.get('Cookie'));
         if(session.data === result.data)
             {
                 // Options already match existing stored session data. Yeet back to index.
-                return redirect('/')
+                return redirect('/');
             }
-        session.set('data_center', result.data.data_center)
-        session.set('world', result.data.world)
+        session.set('data_center', result.data.data_center);
+        session.set('world', result.data.world);
         // Set the new option, yeet back to index (but save against session data within the cookie)
         return redirect('/', {
             headers: {
-                'Set-Cookie': await commitSession(session)
-            }
-        })
-    }
+                'Set-Cookie': await commitSession(session),
+            },
+        });
+    };
 
 export const loader: LoaderFunction = async ({request}) =>
     {
-        const session = await getSession(request.headers.get('Cookie'))
-        return json(session.data)
-    }
+        const session = await getSession(request.headers.get('Cookie'));
+        return json(session.data);
+    };
 
 export default function()
     {
-        const data = useLoaderData()
-        const transition = useTransition()
-        const actionData = useActionData()
-        const [darkMode, setDarkMode] = useState(false)
-        const [, setTheme] = useTheme()
+        const data = useLoaderData();
+        const transition = useTransition();
+        const actionData = useActionData();
+        const [darkMode, setDarkMode] = useState(false);
+        const [, setTheme] = useTheme();
         useEffect(() =>
         {
             if(darkMode)
                 {
-                    setTheme(Theme.DARK)
+                    setTheme(Theme.DARK);
                 }
             else
                 {
-                    setTheme(Theme.LIGHT)
+                    setTheme(Theme.LIGHT);
                 }
         }, [
             darkMode,
-            setTheme
-        ])
+            setTheme,
+        ]);
         return (<div>
             <main className="flex-1">
 
@@ -200,5 +200,5 @@ export default function()
             </main>
 
 
-        </div>)
+        </div>);
     }

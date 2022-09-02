@@ -1,5 +1,5 @@
-import type {Dispatch, ReactNode, SetStateAction} from "react"
-import {createContext, useContext, useState}      from "react"
+import type {Dispatch, ReactNode, SetStateAction} from "react";
+import {createContext, useContext, useState}      from "react";
 
 enum Theme {
     DARK = 'dark', LIGHT = 'light'
@@ -7,13 +7,13 @@ enum Theme {
 
 type ThemeContextType = [Theme | null, Dispatch<SetStateAction<Theme | null>>];
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const prefersDarkMQ = `(prefers-color-scheme: dark)`
+const prefersDarkMQ = `(prefers-color-scheme: dark)`;
 
 const getPreferredTheme = () => (window.matchMedia(prefersDarkMQ).matches
                                  ? Theme.DARK
-                                 : Theme.LIGHT)
+                                 : Theme.LIGHT);
 
 const ThemeProvider = ({children}: { children: ReactNode }) =>
     {
@@ -21,27 +21,27 @@ const ThemeProvider = ({children}: { children: ReactNode }) =>
         {
             if(typeof window !== 'object')
                 {
-                    return null
+                    return null;
                 }
-            return getPreferredTheme()
-        })
+            return getPreferredTheme();
+        });
 
         return <ThemeContext.Provider value={[
             theme,
-            setTheme
-        ]}>{children}</ThemeContext.Provider>
-    }
+            setTheme,
+        ]}>{children}</ThemeContext.Provider>;
+    };
 
 const useTheme = () =>
     {
-        const context = useContext(ThemeContext)
+        const context = useContext(ThemeContext);
 
         if(context === undefined)
             {
-                throw new Error('useTheme must be used within a ThemeProvider. Ya noob.')
+                throw new Error('useTheme must be used within a ThemeProvider. Ya noob.');
             }
-        return context
-    }
+        return context;
+    };
 
 const clientThemeCode = `
 ;(() => {
@@ -51,9 +51,9 @@ const themeAlreadyApplied = cl.contains('${Theme.DARK}') || cl.contains('${Theme
 if(!themeAlreadyApplied){
     cl.add(theme);
 }
-})()`
+})()`;
 const EnsureThemeApplied = () =>
     {
-        return <script dangerouslySetInnerHTML={{__html: clientThemeCode}}/>
-    }
-export {EnsureThemeApplied, Theme, ThemeProvider, useTheme}
+        return <script dangerouslySetInnerHTML={{__html: clientThemeCode}}/>;
+    };
+export {EnsureThemeApplied, Theme, ThemeProvider, useTheme};

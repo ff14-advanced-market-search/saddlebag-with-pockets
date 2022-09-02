@@ -1,14 +1,14 @@
-import type {FC, PropsWithChildren}                                           from "react"
-import {Fragment, useState}                                                   from "react"
-import {Dialog, Menu, Transition}                                             from "@headlessui/react"
-import {BellIcon, ChartSquareBarIcon, CogIcon, HomeIcon, MenuAlt2Icon, XIcon} from "@heroicons/react/outline"
-import {Link, NavLink}                                                        from "@remix-run/react"
-import {classNames}                                                           from "~/utils"
-import PatreonIcon                                                            from "~/icons/PatreonIcon"
-import KofiIcon                                                               from "~/icons/KofiIcon"
-import EarthIcon                                                              from "~/icons/EarthIcon"
-import {LocationMarkerIcon}                                                   from "@heroicons/react/solid"
-import DiscordIcon                                                            from "~/icons/DiscordIcon"
+import type {FC, PropsWithChildren}                                           from "react";
+import {Fragment, useState}                                                   from "react";
+import {Dialog, Menu, Transition}                                             from "@headlessui/react";
+import {BellIcon, ChartSquareBarIcon, CogIcon, HomeIcon, MenuAlt2Icon, XIcon} from "@heroicons/react/outline";
+import {Link, NavLink}                                                        from "@remix-run/react";
+import {classNames}                                                           from "~/utils";
+import PatreonIcon                                                            from "~/icons/PatreonIcon";
+import KofiIcon                                                               from "~/icons/KofiIcon";
+import EarthIcon                                                              from "~/icons/EarthIcon";
+import {LocationMarkerIcon}                                                   from "@heroicons/react/solid";
+import DiscordIcon                                                            from "~/icons/DiscordIcon";
 
 type Props = PropsWithChildren<any> & {
     data: any
@@ -19,53 +19,53 @@ const navigation = [
     {
         name: 'Dashboard',
         href: '/',
-        icon: HomeIcon
+        icon: HomeIcon,
     },
     {
         name: 'Queries',
         href: 'queries',
-        icon: ChartSquareBarIcon
+        icon: ChartSquareBarIcon,
     },
     {
         name:     'Patreon',
         href:     'https://www.patreon.com/indopan',
         icon:     PatreonIcon,
-        external: true
+        external: true,
     },
     {
         name:     'Ko-fi',
         href:     'https://ko-fi.com/indopan',
         icon:     KofiIcon,
-        external: true
+        external: true,
     },
     {
         name:     'Discord',
         href:     'https://discord.gg/836C8wDVNq',
         external: true,
-        icon:     DiscordIcon
-    }
-]
+        icon:     DiscordIcon,
+    },
+];
 const userNavigation = [
     {
         name: 'Your Profile',
-        href: '#'
+        href: '#',
     },
     {
         name: 'Settings',
-        href: '#'
+        href: '#',
     },
     {
         name: 'Sign out',
-        href: '#'
+        href: '#',
     },
-]
+];
 
 export const Sidebar: FC<Props> = ({
                                        children,
-                                       data
+                                       data,
                                    }) =>
     {
-        const [sidebarOpen, setSidebarOpen] = useState(false)
+        const [sidebarOpen, setSidebarOpen] = useState(false);
         return <>
             <Transition.Root show={sidebarOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-40 md:hidden" onClose={setSidebarOpen}>
@@ -294,5 +294,5 @@ export const Sidebar: FC<Props> = ({
                 </div>
                 {children}
             </div>
-        </>
-    }
+        </>;
+    };

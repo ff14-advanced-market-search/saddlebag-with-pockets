@@ -1,6 +1,6 @@
-import type {FC}          from "react"
-import type {GetDeepProp} from "~/utils/ts"
-import type {WorldsList}  from "~/utils/locations/Worlds"
+import type {FC}          from "react";
+import type {GetDeepProp} from "~/utils/ts";
+import type {WorldsList}  from "~/utils/locations/Worlds";
 
 type SelectWorldProps = {
     onSelect: (world: string) => void, dataCenter: string | undefined, world: string | undefined, worlds: GetDeepProp<WorldsList, 'name'> | undefined
@@ -9,20 +9,20 @@ export const SelectWorld: FC<SelectWorldProps> = ({
                                                       onSelect,
                                                       world,
                                                       dataCenter,
-                                                      worlds
+                                                      worlds,
                                                   }) =>
     {
         const worldDefaultValue = () =>
             {
                 if(dataCenter)
                     {
-                        console.log(dataCenter, world)
+                        console.log(dataCenter, world);
                         return world
                                ? world
-                               : 'Select your World/Server'
+                               : 'Select your World/Server';
                     }
-                return `Please select a Data Center`
-            }
+                return `Please select a Data Center`;
+            };
         return <select
             key={"world_select"}
             name="world"
@@ -32,13 +32,13 @@ export const SelectWorld: FC<SelectWorldProps> = ({
             value={worldDefaultValue()}
             onChange={(event) =>
                 {
-                    onSelect(event.target.value)
+                    onSelect(event.target.value);
                 }}
         >
             {!world && <option disabled hidden>{worldDefaultValue()}</option>}
             {worlds && worlds.map((value) =>
             {
-                return <option key={value.name} value={value.name}>{value.name}</option>
+                return <option key={value.name} value={value.name}>{value.name}</option>;
             })}
-        </select>
-    }
+        </select>;
+    };

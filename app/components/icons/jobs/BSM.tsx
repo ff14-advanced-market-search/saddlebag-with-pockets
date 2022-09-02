@@ -1,5 +1,5 @@
-import {ReactComponent as BSMIcon} from './svg/ItemCategory_BSM.svg'
-import {FC}                        from "react"
+import BSMIcon from './svg/ItemCategory_BSM.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const BSM: FC<Props> = ({className = ''}) =>
     {
-        return <BSMIcon className={className}/>
-    }
+        // @ts-ignore
+        return <BSMIcon className={className}/>;
+    };

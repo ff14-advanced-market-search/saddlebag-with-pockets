@@ -146,19 +146,19 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
         {name: "TaiYangHaiAn"},
         {name: "YiXiuJiaDe"},
         {name: "HongChaChuan"},
-    ]
-}
+    ],
+};
 
 export type WorldsList = typeof WorldList;
 
-export const WorldsMap = new Map(Object.entries(WorldList))
+export const WorldsMap = new Map(Object.entries(WorldList));
 
 export const WorldsArray = Array.from(WorldsMap).map((w) => w[1]).flatMap((item) =>
 {
-    return item
+    return item;
 }).map((item) =>
 {
-    return item.name
-})
+    return item.name;
+});
 
-export default WorldsMap
+export default WorldsMap;

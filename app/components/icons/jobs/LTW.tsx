@@ -1,5 +1,5 @@
-import {ReactComponent as LTWIcon} from './svg/ItemCategory_LTW.svg'
-import {FC}                        from "react"
+import LTWIcon from './svg/ItemCategory_LTW.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const LTW: FC<Props> = ({className = ''}) =>
     {
-        return <LTWIcon className={className}/>
-    }
+        // @ts-ignore
+        return <LTWIcon className={className}/>;
+    };

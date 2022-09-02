@@ -1,5 +1,5 @@
-import {ReactComponent as ARMIcon} from './svg/ItemCategory_ARM.svg'
-import {FC}                        from "react"
+import ARMIcon from './svg/ItemCategory_ARM.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const ARM: FC<Props> = ({className = ''}) =>
     {
-        return <ARMIcon className={className}/>
-    }
+        // @ts-ignore
+        return <ARMIcon className={className}/>;
+    };

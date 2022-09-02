@@ -1,5 +1,5 @@
-import {ReactComponent as GSMIcon} from './svg/ItemCategory_GSM.svg'
-import {FC}                        from "react"
+import GSMIcon from './svg/ItemCategory_GSM.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -7,5 +7,6 @@ type Props = {
 
 export const GSM: FC<Props> = ({className = ''}) =>
     {
-        return <GSMIcon className={className}/>
-    }
+        // @ts-ignore
+        return <GSMIcon className={className}/>;
+    };
