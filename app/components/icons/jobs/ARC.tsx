@@ -1,5 +1,5 @@
-import ARCIcon from './svg/ItemCategory_ARC.svg'
-import {FC}    from "react"
+import ARCIcon from './svg/ItemCategory_ARC.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const ARC: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <ARCIcon className={className}/>
-    }
+        return <ARCIcon className={className}/>;
+    };

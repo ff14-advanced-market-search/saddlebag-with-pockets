@@ -19,10 +19,10 @@ export const RegionList: Record<string, [string, string]> = {
         "China",
         "Chinese"
     ],
-}
+};
 
 
-export const RegionsMap = new Map(Object.entries(RegionList))
+export const RegionsMap = new Map(Object.entries(RegionList));
 
 
-export default RegionsMap
+export default RegionsMap;

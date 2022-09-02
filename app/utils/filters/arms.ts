@@ -1,5 +1,5 @@
-import Job            from "~/components/icons/jobs"
-import {FilterFormat} from "~/utils/filters/index"
+import Job            from "~/components/icons/jobs";
+import {FilterFormat} from "~/utils/filters/index";
 
 
 export const arms: FilterFormat[] = [
@@ -123,4 +123,4 @@ export const arms: FilterFormat[] = [
         icon:         Job.THM,
         id:           14
     },
-]
+];

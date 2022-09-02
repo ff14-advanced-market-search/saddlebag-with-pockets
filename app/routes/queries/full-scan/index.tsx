@@ -1,58 +1,68 @@
-import {Form, useActionData, useTransition}                 from "@remix-run/react"
-import type {ActionFunction, ErrorBoundaryComponent}        from "@remix-run/cloudflare"
-import {getUserSessionData}                                 from "~/sessions"
-import type {FullScanFields}                                from "~/requests/FullScan"
-import FullScanRequest, {remappedKeys, RunTimeFullScanForm} from "~/requests/FullScan"
-import {classNames}                                         from "~/utils"
-import Results                                              from "~/routes/queries/full-scan/Results"
-import filters                                              from "~/utils/filters"
+import {Form, useActionData, useTransition}                 from "@remix-run/react";
+import type {ActionFunction, ErrorBoundaryComponent}        from "@remix-run/cloudflare";
+import {getUserSessionData}                                 from "~/sessions";
+import type {FullScanFields}                                from "~/requests/FullScan";
+import FullScanRequest, {remappedKeys, RunTimeFullScanForm} from "~/requests/FullScan";
+import {classNames}                                         from "~/utils";
+import filters                                              from "~/utils/filters";
+import {Fragment}                                           from "react";
+import NoResults                                            from "~/routes/queries/full-scan/NoResults";
+import Results                                              from "~/routes/queries/full-scan/Results";
 
 export const action: ActionFunction = async ({
                                                  request,
                                                  params
                                              }) =>
     {
-        const formData = await request.formData()
-        const session = await getUserSessionData(request)
+        const formData = await request.formData();
+        const session = await getUserSessionData(request);
 
-        formData.append('world', session.getWorld())
+        formData.append('world', session.getWorld());
 
-        const typedFormData = new RunTimeFullScanForm<FullScanFields>(Object.fromEntries(formData) as unknown as FullScanFields)
+        const typedFormData = new RunTimeFullScanForm<FullScanFields>(Object.fromEntries(formData) as unknown as FullScanFields);
 
-        const data = remappedKeys(typedFormData.formData())
-        return await FullScanRequest(data)
-    }
+        const data = remappedKeys(typedFormData.formData());
+        return await FullScanRequest(data).catch(err =>
+        {
+            console.log('catch', err);
+            return err;
+        });
+    };
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({error}) =>
     {
-        console.error('errorBoundary', error)
-        return <pre>{JSON.stringify(error.message)}</pre>
-    }
+        console.error('errorBoundary', error);
+        return <pre>ErrorBoundary Hit</pre>;
+    };
 
 const Index = () =>
     {
-        const transition = useTransition()
-        const results = useActionData()
+        const transition = useTransition();
+        const results = useActionData();
 
         const onSubmit = (e: MouseEvent) =>
             {
                 if(transition.state === 'submitting')
                     {
-                        e.preventDefault()
+                        e.preventDefault();
                     }
-            }
+            };
 
         if(results)
             {
-                if(typeof results === "string")
-                    {
-                        // error!
-                        return <pre>{results}</pre>
+                if(Object.keys(results).length === 0){
+                        return <NoResults href={`/queries/full-scan`}/>;
                     }
+                // if(typeof results === "string")
+                //     {
+                //         // error!
+                //         return <pre>{results}</pre>
+                //     }
                 const data: Record<string, any> = Object.entries(results).map((entry: [string, any]) =>
                 {
                     return {id: parseInt(entry[0]), ...entry[1]}
                 })
+
 
                 return <Results rows={data}/>
             }
@@ -217,19 +227,19 @@ const Index = () =>
                                                 >
                                                     {filters.map((value) =>
                                                     {
-                                                        const children = value.data
-                                                        return (<>
-                                                                <option key={`${value.id}_${value.name}`}
-                                                                        value={value.id}>{value.name}</option>
-                                                                {children.map((child) =>
-                                                                {
-                                                                    return child.id
-                                                                           ? <option
-                                                                               key={`${value.id}_${child.id}_${child.name}`}
-                                                                               value={child.id}>{child.name}</option>
-                                                                           : null
-                                                                })}
-                                                            </>)
+                                                        const children = value.data;
+                                                        return (<Fragment key={`f_${value.id}`}>
+                                                            <option key={`${value.id}_${value.name}`}
+                                                                    value={value.id}>{value.name}</option>
+                                                            {children.map((child) =>
+                                                            {
+                                                                return child.id
+                                                                       ? <option
+                                                                           key={`${value.id}_${child.id}_${child.name}`}
+                                                                           value={child.id}>-- {child.name}</option>
+                                                                       : null;
+                                                            })}
+                                                        </Fragment>);
                                                     })}
                                                 </select>
                                             </div>
@@ -378,7 +388,7 @@ const Index = () =>
 
                 </Form>
             </div>
-        </main>
-    }
+        </main>;
+    };
 
-export default Index
+export default Index;

@@ -1,24 +1,24 @@
-import {FilterFormat}                 from "~/utils/filters/index"
-import {Furnishings}                  from "~/components/icons/other/Furnishings"
-import {Materia}                      from "~/components/icons/other/Materia"
-import {Crystals}                     from "~/components/icons/other/Crystals"
-import {Catalysts}                    from "~/components/icons/other/Catalysts"
-import {Miscellany}                   from "~/components/icons/other/Miscellany"
-import {ExteriorFixtures}             from "~/components/icons/other/ExteriorFixtures"
-import {InteriorFixtures}             from "~/components/icons/other/InteriorFixtures"
-import {OutdoorFurnishings}           from "~/components/icons/other/OutdoorFurnishings"
-import {ChairsAndBeds}                from "~/components/icons/other/ChairsAndBeds"
-import {Tables}                       from "~/components/icons/other/Tables"
-import {Tabletop}                     from "~/components/icons/other/Tabletop"
-import {WallMounted}                  from "~/components/icons/other/WallMounted"
-import {Rugs}                         from "~/components/icons/other/Rugs"
-import {SeasonalMiscellany}           from "~/components/icons/other/SeasonalMiscellany"
-import {Minions}                      from "~/components/icons/other/Minions"
-import {AirshipSubmersibleComponents} from "~/components/icons/other/AirshipSubmersibleComponents"
-import {OrchestrationComponents}      from "~/components/icons/other/OrchestrionComponents"
-import {GardeningItems}               from "~/components/icons/other/GardeningItems"
-import {Paintings}                    from "~/components/icons/other/Paintings"
-import {RegistrableMiscellany}        from "~/components/icons/other/RegistrableMiscellany"
+import {FilterFormat}                 from "~/utils/filters/index";
+import {Furnishings}                  from "~/components/icons/other/Furnishings";
+import {Materia}                      from "~/components/icons/other/Materia";
+import {Crystals}                     from "~/components/icons/other/Crystals";
+import {Catalysts}                    from "~/components/icons/other/Catalysts";
+import {Miscellany}                   from "~/components/icons/other/Miscellany";
+import {ExteriorFixtures}             from "~/components/icons/other/ExteriorFixtures";
+import {InteriorFixtures}             from "~/components/icons/other/InteriorFixtures";
+import {OutdoorFurnishings}           from "~/components/icons/other/OutdoorFurnishings";
+import {ChairsAndBeds}                from "~/components/icons/other/ChairsAndBeds";
+import {Tables}                       from "~/components/icons/other/Tables";
+import {Tabletop}                     from "~/components/icons/other/Tabletop";
+import {WallMounted}                  from "~/components/icons/other/WallMounted";
+import {Rugs}                         from "~/components/icons/other/Rugs";
+import {SeasonalMiscellany}           from "~/components/icons/other/SeasonalMiscellany";
+import {Minions}                      from "~/components/icons/other/Minions";
+import {AirshipSubmersibleComponents} from "~/components/icons/other/AirshipSubmersibleComponents";
+import {OrchestrationComponents}      from "~/components/icons/other/OrchestrionComponents";
+import {GardeningItems}               from "~/components/icons/other/GardeningItems";
+import {Paintings}                    from "~/components/icons/other/Paintings";
+import {RegistrableMiscellany}        from "~/components/icons/other/RegistrableMiscellany";
 
 export const other: FilterFormat[] = [
     {
@@ -101,5 +101,5 @@ export const other: FilterFormat[] = [
         name: `Registrable Miscellany`,
         icon: RegistrableMiscellany
     },
-]
+];
 

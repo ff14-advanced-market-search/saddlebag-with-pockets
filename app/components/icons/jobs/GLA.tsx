@@ -1,5 +1,5 @@
-import GLAIcon from './svg/ItemCategory_GLA.svg'
-import {FC}    from "react"
+import GLAIcon from './svg/ItemCategory_GLA.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const GLA: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <GLAIcon className={className}/>
-    }
+        return <GLAIcon className={className}/>;
+    };

@@ -1,5 +1,5 @@
-import GNBIcon from './svg/class_job_037.svg'
-import {FC}    from "react"
+import GNBIcon from './svg/class_job_037.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const GNB: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <GNBIcon className={className}/>
-    }
+        return <GNBIcon className={className}/>;
+    };

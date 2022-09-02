@@ -1,4 +1,4 @@
-import type {FC, PropsWithChildren} from "react"
+import type {FC, PropsWithChildren} from "react";
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
@@ -18,8 +18,8 @@ const DiscordIcon: FC<SVGProps> = (props) =>
                     <rect width="416" height="480" fill="white"/>
                 </clipPath>
             </defs>
-        </svg>
-    }
+        </svg>;
+    };
 
 
-export default DiscordIcon
+export default DiscordIcon;

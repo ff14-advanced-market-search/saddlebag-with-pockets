@@ -1,5 +1,5 @@
-import {DataCentersOfRegion, WorldsOfDataCenter}              from "./index"
-import {DataCenterNotFoundException, RegionNotFoundException} from "~/utils/locations/Errors"
+import {DataCentersOfRegion, WorldsOfDataCenter}              from "./index";
+import {DataCenterNotFoundException, RegionNotFoundException} from "~/utils/locations/Errors";
 
 test('DataCentersOfRegion returns a data center array', () =>
 {
@@ -7,16 +7,16 @@ test('DataCentersOfRegion returns a data center array', () =>
         {
             name: 'Materia',
         }
-    ])
-})
+    ]);
+});
 
 test('DataCentersOfRegion throws RegionNotFoundException', () =>
 {
     expect(() =>
     {
-        DataCentersOfRegion('NOT-REAL-REGION')
-    }).toThrow(RegionNotFoundException)
-})
+        DataCentersOfRegion('NOT-REAL-REGION');
+    }).toThrow(RegionNotFoundException);
+});
 
 test('WorldsOfDataCenter returns a world array', () =>
 {
@@ -45,14 +45,14 @@ test('WorldsOfDataCenter returns a world array', () =>
         {
             "name": "Titan"
         }
-    ])
-})
+    ]);
+});
 
 
 test('WorldsOfDataCenter throws DataCenterNotFoundException', () =>
 {
     expect(() =>
     {
-        WorldsOfDataCenter('Something about hot dogs')
-    }).toThrow(DataCenterNotFoundException)
-})
+        WorldsOfDataCenter('Something about hot dogs');
+    }).toThrow(DataCenterNotFoundException);
+});

@@ -1,6 +1,6 @@
-import {createCookieSessionStorage} from '@remix-run/cloudflare'
-import {WorldsArray}                from "~/utils/locations/Worlds"
-import {DataCenterArray}            from "~/utils/locations/DataCenters"
+import {createCookieSessionStorage} from '@remix-run/cloudflare';
+import {WorldsArray}                from "~/utils/locations/Worlds";
+import {DataCenterArray}            from "~/utils/locations/DataCenters";
 
 const {
           getSession,
@@ -14,34 +14,34 @@ const {
         sameSite: "lax",
         path:     "/",
     }
-})
+});
 
 
 async function getUserSessionData(request: Request) {
-    const session = await getSession(request.headers.get('Cookie'))
+    const session = await getSession(request.headers.get('Cookie'));
     return {
         getWorld:      () =>
                            {
                                try
                                    {
-                                       const world = session.get('world')
+                                       const world = session.get('world');
                                        if(!WorldsArray.includes(world))
                                            {
                                                // @todo select a default
-                                               throw new Error(`World not an available option. [${world}]`)
+                                               throw new Error(`World not an available option. [${world}]`);
                                            }
-                                       return world
+                                       return world;
                                    } catch(err)
                                    {
-                                       return WorldsArray.at(0)
+                                       return WorldsArray.at(0);
                                    }
                            },
         getDataCenter: () =>
                            {
-                               const dataCenter = session.get('data_center')
-                               return DataCenterArray.includes(dataCenter) && dataCenter
+                               const dataCenter = session.get('data_center');
+                               return DataCenterArray.includes(dataCenter) && dataCenter;
                            },
-    }
+    };
 }
 
-export {getUserSessionData, getSession, commitSession, destroySession}
+export {getUserSessionData, getSession, commitSession, destroySession};

@@ -1,5 +1,5 @@
-import DRKIcon from './svg/ItemCategory_DRK.svg'
-import {FC}    from "react"
+import DRKIcon from './svg/ItemCategory_DRK.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const DRK: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <DRKIcon className={className}/>
-    }
+        return <DRKIcon className={className}/>;
+    };

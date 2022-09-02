@@ -1,13 +1,13 @@
-import {FilterFormat} from "~/utils/filters/index"
-import {Stone}        from "~/components/icons/materials/Stone"
-import {Metal}        from "~/components/icons/materials/Metal"
-import {Lumber}       from "~/components/icons/materials/Lumber"
-import {Cloth}        from "~/components/icons/materials/Cloth"
-import {Leather}      from "~/components/icons/materials/Leather"
-import {Bone}         from "~/components/icons/materials/Bone"
-import {Reagents}     from "~/components/icons/materials/Reagents"
-import {Dyes}         from "~/components/icons/materials/Dyes"
-import {WeaponParts}  from "~/components/icons/materials/WeaponParts"
+import {FilterFormat} from "~/utils/filters/index";
+import {Stone}        from "~/components/icons/materials/Stone";
+import {Metal}        from "~/components/icons/materials/Metal";
+import {Lumber}       from "~/components/icons/materials/Lumber";
+import {Cloth}        from "~/components/icons/materials/Cloth";
+import {Leather}      from "~/components/icons/materials/Leather";
+import {Bone}         from "~/components/icons/materials/Bone";
+import {Reagents}     from "~/components/icons/materials/Reagents";
+import {Dyes}         from "~/components/icons/materials/Dyes";
+import {WeaponParts}  from "~/components/icons/materials/WeaponParts";
 
 export const materials: FilterFormat[] = [
     {
@@ -46,4 +46,4 @@ export const materials: FilterFormat[] = [
         name: `Weapon Parts`,
         icon: WeaponParts
     },
-]
+];

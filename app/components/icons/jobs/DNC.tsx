@@ -1,5 +1,5 @@
-import DNCIcon from './svg/class_job_038.svg'
-import {FC}    from "react"
+import DNCIcon from './svg/class_job_038.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const DNC: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <DNCIcon className={className}/>
-    }
+        return <DNCIcon className={className}/>;
+    };

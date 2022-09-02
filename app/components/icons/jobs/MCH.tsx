@@ -1,5 +1,5 @@
-import MCHIcon from './svg/ItemCategory_MCH.svg'
-import {FC}    from "react"
+import MCHIcon from './svg/ItemCategory_MCH.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const MCH: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <MCHIcon className={className}/>
-    }
+        return <MCHIcon className={className}/>;
+    };

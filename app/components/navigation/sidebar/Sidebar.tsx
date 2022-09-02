@@ -1,14 +1,14 @@
-import type {FC, PropsWithChildren}                                           from "react"
-import {Fragment, useState}                                                   from "react"
-import {Dialog, Menu, Transition}                                             from "@headlessui/react"
-import {BellIcon, ChartSquareBarIcon, CogIcon, HomeIcon, MenuAlt2Icon, XIcon} from "@heroicons/react/outline"
-import {Link, NavLink}                                                        from "@remix-run/react"
-import {classNames}                                                           from "~/utils"
-import PatreonIcon                                                            from "~/icons/PatreonIcon"
-import KofiIcon                                                               from "~/icons/KofiIcon"
-import EarthIcon                                                              from "~/icons/EarthIcon"
-import {LocationMarkerIcon}                                                   from "@heroicons/react/solid"
-import DiscordIcon                                                            from "~/icons/DiscordIcon"
+import type {FC, PropsWithChildren}                                           from "react";
+import {Fragment, useState}                                                   from "react";
+import {Dialog, Menu, Transition}                                             from "@headlessui/react";
+import {BellIcon, ChartSquareBarIcon, CogIcon, HomeIcon, MenuAlt2Icon, XIcon} from "@heroicons/react/outline";
+import {Link, NavLink}                                                        from "@remix-run/react";
+import {classNames}                                                           from "~/utils";
+import PatreonIcon                                                            from "~/icons/PatreonIcon";
+import KofiIcon                                                               from "~/icons/KofiIcon";
+import EarthIcon                                                              from "~/icons/EarthIcon";
+import {LocationMarkerIcon}                                                   from "@heroicons/react/solid";
+import DiscordIcon                                                            from "~/icons/DiscordIcon";
 
 type Props = PropsWithChildren<any> & {
     data: any
@@ -44,7 +44,7 @@ const navigation = [
         external: true,
         icon:     DiscordIcon
     }
-]
+];
 const userNavigation = [
     {
         name: 'Your Profile',
@@ -58,14 +58,14 @@ const userNavigation = [
         name: 'Sign out',
         href: '#'
     },
-]
+];
 
 export const Sidebar: FC<Props> = ({
                                        children,
                                        data
                                    }) =>
     {
-        const [sidebarOpen, setSidebarOpen] = useState(false)
+        const [sidebarOpen, setSidebarOpen] = useState(false);
         return <>
             <Transition.Root show={sidebarOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-40 md:hidden" onClose={setSidebarOpen}>
@@ -294,5 +294,5 @@ export const Sidebar: FC<Props> = ({
                 </div>
                 {children}
             </div>
-        </>
-    }
+        </>;
+    };

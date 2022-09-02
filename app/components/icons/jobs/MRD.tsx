@@ -1,5 +1,5 @@
-import MRDIcon from './svg/ItemCategory_MRD.svg'
-import {FC}    from "react"
+import MRDIcon from './svg/ItemCategory_MRD.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const MRD: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <MRDIcon className={className}/>
-    }
+        return <MRDIcon className={className}/>;
+    };

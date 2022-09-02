@@ -1,5 +1,5 @@
-import WVRIcon from './svg/ItemCategory_WVR.svg'
-import {FC}    from "react"
+import WVRIcon from './svg/ItemCategory_WVR.svg';
+import {FC}    from "react";
 
 type Props = {
     className?: string;
@@ -8,5 +8,5 @@ type Props = {
 export const WVR: FC<Props> = ({className = ''}) =>
     {
         // @ts-ignore
-        return <WVRIcon className={className}/>
-    }
+        return <WVRIcon className={className}/>;
+    };

@@ -1,4 +1,4 @@
-import {FC} from "react"
+import {FC} from "react";
 
 type Props = {
     className?: string
@@ -37,8 +37,8 @@ const UniversalisBadge: FC<Props> = ({className}) =>
                 </filter>
                 /* Made by Zac Bruce for Saddlebag Exchange / Discord: Acen#3040 */
             </defs>
-        </svg>
+        </svg>;
 
-    }
+    };
 
-export default UniversalisBadge
+export default UniversalisBadge;

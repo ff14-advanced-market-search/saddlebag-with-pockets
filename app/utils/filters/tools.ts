@@ -1,4 +1,4 @@
-import Job from "~/components/icons/jobs"
+import Job from "~/components/icons/jobs";
 
 export const tools = [
     {
@@ -56,4 +56,4 @@ export const tools = [
         abbreviation: `WVR`,
         icon:         Job.WVR
     },
-]
+];

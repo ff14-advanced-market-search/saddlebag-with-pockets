@@ -1,11 +1,11 @@
-import {arms}           from "~/utils/filters/arms"
-import {tools}          from "~/utils/filters/tools"
-import {ReactNode}      from "react"
-import {armor}          from "~/utils/filters/armor"
-import {accessories}    from "~/utils/filters/accessories"
-import {materials}      from "~/utils/filters/materials"
-import {medicinesMeals} from "~/utils/filters/medicines-meals"
-import {other}          from "~/utils/filters/other"
+import {arms}           from "~/utils/filters/arms";
+import {tools}          from "~/utils/filters/tools";
+import {ReactNode}      from "react";
+import {armor}          from "~/utils/filters/armor";
+import {accessories}    from "~/utils/filters/accessories";
+import {materials}      from "~/utils/filters/materials";
+import {medicinesMeals} from "~/utils/filters/medicines-meals";
+import {other}          from "~/utils/filters/other";
 
 export type FilterFormat = {
     // @todo reencforce ID once all set.
@@ -19,12 +19,12 @@ const filters: FiltersList = [
     {
         name: `Everything`,
         data: [],
-        id:   "all",
+        id:   0,
     },
     {
         name: 'Vendor sellable',
         data: [],
-        id:   "vendor",
+        id:   -1,
     },
     {
         name: "Arms",
@@ -61,7 +61,7 @@ const filters: FiltersList = [
         data: other,
         id:   7
     }
-]
+];
 
 
-export default filters
+export default filters;
