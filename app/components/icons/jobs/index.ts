@@ -62,6 +62,6 @@ export default {
     SCH,
     SGE,
     THM,
-    WVR
+    WVR,
 };
 

@@ -7,5 +7,5 @@ export default {
     Necklaces,
     Earrings,
     Bracelets,
-    Rings
+    Rings,
 };

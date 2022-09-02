@@ -39,28 +39,28 @@ const filters: FiltersList = [
     {
         name: "Armor",
         data: armor,
-        id:   3
+        id:   3,
     },
     {
         name: "Accessories",
         data: accessories,
-        id:   4
+        id:   4,
     },
     {
         name: "Medicines & Meals",
         data: medicinesMeals,
-        id:   5
+        id:   5,
     },
     {
         name: "Materials",
         data: materials,
-        id:   6
+        id:   6,
     },
     {
         name: "Other",
         data: other,
-        id:   7
-    }
+        id:   7,
+    },
 ];
 
 

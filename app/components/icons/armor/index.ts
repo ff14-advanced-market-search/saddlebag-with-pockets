@@ -11,5 +11,5 @@ export default {
     Body,
     Legs,
     Hands,
-    Feet
+    Feet,
 };

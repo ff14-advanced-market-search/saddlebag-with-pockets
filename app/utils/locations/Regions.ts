@@ -1,23 +1,23 @@
 export const RegionList: Record<string, [string, string]> = {
     'NA':  [
         "North America",
-        "North American"
+        "North American",
     ],
     'EU':  [
         "Europe",
-        "European"
+        "European",
     ],
     'JP':  [
         "Japan",
-        "Japanese"
+        "Japanese",
     ],
     'OCE': [
         "Oceania",
-        "Oceanic"
+        "Oceanic",
     ],
     'CN':  [
         "China",
-        "Chinese"
+        "Chinese",
     ],
 };
 

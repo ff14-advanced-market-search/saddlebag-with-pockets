@@ -7,7 +7,7 @@ type SelectDataCenterProps = {
 }
 export const SelectDataCenter: FC<SelectDataCenterProps> = ({
                                                                 onSelect,
-                                                                dataCenter
+                                                                dataCenter,
                                                             }) =>
     {
 

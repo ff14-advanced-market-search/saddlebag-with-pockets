@@ -7,5 +7,5 @@ export default {
     Medicine,
     Ingredients,
     Meals,
-    Seafood
+    Seafood,
 };

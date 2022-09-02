@@ -6,7 +6,7 @@ test('DataCentersOfRegion returns a data center array', () =>
     expect(DataCentersOfRegion('OCE')).toEqual([
         {
             name: 'Materia',
-        }
+        },
     ]);
 });
 
@@ -22,29 +22,29 @@ test('WorldsOfDataCenter returns a world array', () =>
 {
     expect(WorldsOfDataCenter('Mana')).toEqual([
         {
-            "name": "Anima"
+            "name": "Anima",
         },
         {
-            "name": "Asura"
+            "name": "Asura",
         },
         {
-            "name": "Chocobo"
+            "name": "Chocobo",
         },
         {
-            "name": "Hades"
+            "name": "Hades",
         },
         {
-            "name": "Ixion"
+            "name": "Ixion",
         },
         {
-            "name": "Masamune"
+            "name": "Masamune",
         },
         {
-            "name": "Pandaemonium"
+            "name": "Pandaemonium",
         },
         {
-            "name": "Titan"
-        }
+            "name": "Titan",
+        },
     ]);
 });
 

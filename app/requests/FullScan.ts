@@ -117,7 +117,7 @@ const defaults = {
     "filters":             0,
     "region_wide":         false,
     "include_vendor":      false,
-    "show_out_stock":      true
+    "show_out_stock":      true,
 };
 
 export type ResponseType = {
@@ -134,9 +134,9 @@ const FullScanRequest: (map: Map<string, number | boolean | string>) => Promise<
             'method': 'POST',
             headers:  {
                 "Content-Type": "application/json",
-                "User-Agent":   UserAgent
+                "User-Agent":   UserAgent,
             },
-            body:     JSON.stringify(Object.fromEntries(map.entries()))
+            body:     JSON.stringify(Object.fromEntries(map.entries())),
         });
     };
 

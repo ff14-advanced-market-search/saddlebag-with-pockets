@@ -11,7 +11,7 @@ import Results                                              from "~/routes/queri
 
 export const action: ActionFunction = async ({
                                                  request,
-                                                 params
+                                                 params,
                                              }) =>
     {
         const formData = await request.formData();

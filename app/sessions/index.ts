@@ -5,7 +5,7 @@ import {DataCenterArray}            from "~/utils/locations/DataCenters";
 const {
           getSession,
           commitSession,
-          destroySession
+          destroySession,
       } = createCookieSessionStorage({
     cookie: {
         name:     "__session",
@@ -13,7 +13,7 @@ const {
         httpOnly: true,
         sameSite: "lax",
         path:     "/",
-    }
+    },
 });
 
 

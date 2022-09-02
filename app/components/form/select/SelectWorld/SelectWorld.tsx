@@ -9,7 +9,7 @@ export const SelectWorld: FC<SelectWorldProps> = ({
                                                       onSelect,
                                                       world,
                                                       dataCenter,
-                                                      worlds
+                                                      worlds,
                                                   }) =>
     {
         const worldDefaultValue = () =>

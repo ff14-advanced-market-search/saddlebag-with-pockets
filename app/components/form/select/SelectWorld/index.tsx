@@ -15,7 +15,7 @@ type SelectWorldProps = PropsWithoutRef<{ transition: Transition, actionData: Va
 
 export const SelectDCandWorld: FC<SelectWorldProps> = ({
                                                            transition,
-                                                           sessionData
+                                                           sessionData,
                                                        }) =>
     {
         const [dataCenter, setDataCenter] = useState<string | undefined>(sessionData.data_center);

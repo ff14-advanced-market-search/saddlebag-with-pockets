@@ -39,5 +39,5 @@ export default {
     SeasonalMiscellany,
     Tables,
     Tabletop,
-    WallMounted
+    WallMounted,
 };

@@ -17,5 +17,5 @@ export default {
     Bone,
     Reagents,
     Dyes,
-    WeaponParts
+    WeaponParts,
 };

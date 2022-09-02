@@ -53,60 +53,60 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
         const columns = [
             columnHelper.accessor('avg_ppu', {
                 header: 'Average Price per unit (avg_ppu)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('home_server_price', {
                 header: 'Home server price',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('home_update_time', {
                 header: 'Last Updated At (home_update_time)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('ppu', {
                 header: 'Price per unit (ppu)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('profit_amount', {
                 header: 'Profit Amount',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('profit_raw_percent', {
                 header: 'Profit Percentage (profit_raw_percent)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('real_name', {
                 header: 'Item Name (real_name)',
                 cell:   ({
                              row,
-                             getValue
+                             getValue,
                          }) => (<span className={`font-bold`}>{getValue()}</span>),
-                footer: props => props.column.id
+                footer: props => props.column.id,
             }),
             columnHelper.accessor('sale_rates', {
                 header: 'Sale Rates',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('server', {
                 header: 'Server',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('stack_size', {
                 header: 'Stack Size',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('update_time', {
                 header: 'Update Time',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('ROI', {
                 header: 'Return on Investment (ROI)',
-                cell:   info => info.getValue()
+                cell:   info => info.getValue(),
             }),
             columnHelper.accessor('url', {
                 header: 'Universalis Link (url)',
-                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>)
-            })
+                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
+            }),
         ];
 
         const table = useReactTable({
@@ -114,12 +114,12 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
             data:                   rows,
             columns,
             filterFns:              {
-                fuzzy: fuzzyFilter
+                fuzzy: fuzzyFilter,
             },
             state:                  {
                 columnFilters,
                 globalFilter,
-                columnOrder
+                columnOrder,
             },
             onColumnFiltersChange:  setColumnFilters,
             onGlobalFilterChange:   setGlobalFilter,
@@ -144,8 +144,8 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                             table.setSorting([
                                 {
                                     id:   'profit_amount',
-                                    desc: true
-                                }
+                                    desc: true,
+                                },
                             ]);
                         }
                 }
@@ -166,7 +166,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 'profit_raw_percent',
                 'stack_size',
                 'update_time',
-                'home_update_time'
+                'home_update_time',
             ]);
         }, []);
 
@@ -197,7 +197,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                                                      className={`h-4 w-4`}/></span>,
                                                  desc: <span
                                                            className={`text-gray-900 group-hover:bg-gray-300`}><ChevronDownIcon
-                                                     className={`h-4 w-4`}/></span>
+                                                     className={`h-4 w-4`}/></span>,
                                              }[header.column.getIsSorted() as string] ?? <span
                                                  className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}><ChevronDownIcon
                                                 className={`h-4 w-4`}/></span>}

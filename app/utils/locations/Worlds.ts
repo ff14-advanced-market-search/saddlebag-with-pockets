@@ -146,7 +146,7 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
         {name: "TaiYangHaiAn"},
         {name: "YiXiuJiaDe"},
         {name: "HongChaChuan"},
-    ]
+    ],
 };
 
 export type WorldsList = typeof WorldList;

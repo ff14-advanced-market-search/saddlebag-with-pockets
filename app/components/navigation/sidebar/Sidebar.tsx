@@ -19,50 +19,50 @@ const navigation = [
     {
         name: 'Dashboard',
         href: '/',
-        icon: HomeIcon
+        icon: HomeIcon,
     },
     {
         name: 'Queries',
         href: 'queries',
-        icon: ChartSquareBarIcon
+        icon: ChartSquareBarIcon,
     },
     {
         name:     'Patreon',
         href:     'https://www.patreon.com/indopan',
         icon:     PatreonIcon,
-        external: true
+        external: true,
     },
     {
         name:     'Ko-fi',
         href:     'https://ko-fi.com/indopan',
         icon:     KofiIcon,
-        external: true
+        external: true,
     },
     {
         name:     'Discord',
         href:     'https://discord.gg/836C8wDVNq',
         external: true,
-        icon:     DiscordIcon
-    }
+        icon:     DiscordIcon,
+    },
 ];
 const userNavigation = [
     {
         name: 'Your Profile',
-        href: '#'
+        href: '#',
     },
     {
         name: 'Settings',
-        href: '#'
+        href: '#',
     },
     {
         name: 'Sign out',
-        href: '#'
+        href: '#',
     },
 ];
 
 export const Sidebar: FC<Props> = ({
                                        children,
-                                       data
+                                       data,
                                    }) =>
     {
         const [sidebarOpen, setSidebarOpen] = useState(false);

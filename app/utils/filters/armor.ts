@@ -9,26 +9,26 @@ import {Feet}         from "~/components/icons/armor/Feet";
 export const armor: FilterFormat[] = [
     {
         name: `Shields`,
-        icon: Shields
+        icon: Shields,
     },
     {
         name: `Head`,
-        icon: Head
+        icon: Head,
     },
     {
         name: `Body`,
-        icon: Body
+        icon: Body,
     },
     {
         name: `Legs`,
-        icon: Legs
+        icon: Legs,
     },
     {
         name: `Hands`,
-        icon: Hands
+        icon: Hands,
     },
     {
         name: `Feet`,
-        icon: Feet
+        icon: Feet,
     },
 ];

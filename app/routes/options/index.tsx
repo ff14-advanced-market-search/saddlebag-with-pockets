@@ -45,8 +45,8 @@ export const action: ActionFunction = async ({request}) =>
         // Set the new option, yeet back to index (but save against session data within the cookie)
         return redirect('/', {
             headers: {
-                'Set-Cookie': await commitSession(session)
-            }
+                'Set-Cookie': await commitSession(session),
+            },
         });
     };
 
@@ -75,7 +75,7 @@ export default function()
                 }
         }, [
             darkMode,
-            setTheme
+            setTheme,
         ]);
         return (<div>
             <main className="flex-1">

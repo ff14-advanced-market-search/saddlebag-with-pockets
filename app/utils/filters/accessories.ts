@@ -7,18 +7,18 @@ import {Rings}        from "~/components/icons/accessories/Ring";
 export const accessories: FilterFormat[] = [
     {
         name: `Necklaces`,
-        icon: Necklaces
+        icon: Necklaces,
     },
     {
         name: `Earrings`,
-        icon: Earrings
+        icon: Earrings,
     },
     {
         name: `Bracelets`,
-        icon: Bracelets
+        icon: Bracelets,
     },
     {
         name: `Rings`,
-        icon: Rings
+        icon: Rings,
     },
 ];

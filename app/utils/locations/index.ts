@@ -28,5 +28,5 @@ const WorldsOfDataCenter: (data_center_key: keyof WorldsList) => ValueOf<WorldsL
 
 
 export {
-    Regions, Worlds, DataCenters, DataCentersOfRegion, WorldsOfDataCenter
+    Regions, Worlds, DataCenters, DataCentersOfRegion, WorldsOfDataCenter,
 };

@@ -7,18 +7,18 @@ import {Seafood}      from "~/components/icons/medicines-meals/Seafood";
 export const medicinesMeals: FilterFormat[] = [
     {
         name: `Medicine`,
-        icon: Medicine
+        icon: Medicine,
     },
     {
         name: `Ingredients`,
-        icon: Ingredients
+        icon: Ingredients,
     },
     {
         name: `Meals`,
-        icon: Meals
+        icon: Meals,
     },
     {
         name: `Seafood`,
-        icon: Seafood
+        icon: Seafood,
     },
 ];

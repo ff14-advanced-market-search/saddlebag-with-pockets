@@ -7,8 +7,8 @@ const recommendedQueries = [
         name:        'Full Scan',
         description: "Search throughout the entire data set! Nigh-infinite options.",
         icon:        DocumentSearchIcon,
-        href:        '/queries/full-scan'
-    }
+        href:        '/queries/full-scan',
+    },
 ];
 
 

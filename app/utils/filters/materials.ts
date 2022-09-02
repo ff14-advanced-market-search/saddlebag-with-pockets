@@ -12,38 +12,38 @@ import {WeaponParts}  from "~/components/icons/materials/WeaponParts";
 export const materials: FilterFormat[] = [
     {
         name: `Stone`,
-        icon: Stone
+        icon: Stone,
     },
     {
         name: `Metal`,
-        icon: Metal
+        icon: Metal,
     },
     {
         name: `Lumber`,
-        icon: Lumber
+        icon: Lumber,
     },
     {
         name: `Cloth`,
-        icon: Cloth
+        icon: Cloth,
     },
     {
         name: `Leather`,
-        icon: Leather
+        icon: Leather,
     },
     {
         name: `Bone`,
-        icon: Bone
+        icon: Bone,
     },
     {
         name: `Reagents`,
-        icon: Reagents
+        icon: Reagents,
     },
     {
         name: `Dyes`,
-        icon: Dyes
+        icon: Dyes,
     },
     {
         name: `Weapon Parts`,
-        icon: WeaponParts
+        icon: WeaponParts,
     },
 ];

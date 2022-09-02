@@ -23,6 +23,6 @@ const defaultArguments = () =>
 export const Scan = (args: ScanArguments) =>
     {
         const loadDefault = {
-            ...args, ...defaultArguments()
+            ...args, ...defaultArguments(),
         };
     };

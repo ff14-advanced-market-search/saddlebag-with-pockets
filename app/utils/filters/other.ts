@@ -23,83 +23,83 @@ import {RegistrableMiscellany}        from "~/components/icons/other/Registrable
 export const other: FilterFormat[] = [
     {
         name: `Furnishings`,
-        icon: Furnishings
+        icon: Furnishings,
     },
     {
         name: `Materia`,
-        icon: Materia
+        icon: Materia,
     },
     {
         name: `Crystals`,
-        icon: Crystals
+        icon: Crystals,
     },
     {
         name: `Catalysts`,
-        icon: Catalysts
+        icon: Catalysts,
     },
     {
         name: `Miscellany`,
-        icon: Miscellany
+        icon: Miscellany,
     },
     {
         name: `Exterior Fixtures`,
-        icon: ExteriorFixtures
+        icon: ExteriorFixtures,
     },
     {
         name: `Interior Fixtures`,
-        icon: InteriorFixtures
+        icon: InteriorFixtures,
     },
     {
         name: `Outdoor Furnishings`,
-        icon: OutdoorFurnishings
+        icon: OutdoorFurnishings,
     },
     {
         name: `Chairs and Beds`,
-        icon: ChairsAndBeds
+        icon: ChairsAndBeds,
     },
     {
         name: `Tables`,
-        icon: Tables
+        icon: Tables,
     },
     {
         name: `Tabletop`,
-        icon: Tabletop
+        icon: Tabletop,
     },
     {
         name: `Wall-mounted`,
-        icon: WallMounted
+        icon: WallMounted,
     },
     {
         name: `Rugs`,
-        icon: Rugs
+        icon: Rugs,
     },
     {
         name: `Seasonal Miscellany`,
-        icon: SeasonalMiscellany
+        icon: SeasonalMiscellany,
     },
     {
         name: `Minions`,
-        icon: Minions
+        icon: Minions,
     },
     {
         name: `Airship/Submersible Components`,
-        icon: AirshipSubmersibleComponents
+        icon: AirshipSubmersibleComponents,
     },
     {
         name: `Orchestration Components`,
-        icon: OrchestrationComponents
+        icon: OrchestrationComponents,
     },
     {
         name: `Gardening Items`,
-        icon: GardeningItems
+        icon: GardeningItems,
     },
     {
         name: `Paintings`,
-        icon: Paintings
+        icon: Paintings,
     },
     {
         name: `Registrable Miscellany`,
-        icon: RegistrableMiscellany
+        icon: RegistrableMiscellany,
     },
 ];
 
