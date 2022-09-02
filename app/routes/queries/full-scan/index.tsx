@@ -32,7 +32,8 @@ export const action: ActionFunction = async ({
 export const ErrorBoundary: ErrorBoundaryComponent = ({error}) =>
     {
         console.error('errorBoundary', error);
-        return <pre>If you're seeing this, it'd be appreciated if you could report in our Discord's <span className={`font-bold`}>#bug-reporting</span> channel. Much thank</pre>;
+        return <pre>If you're seeing this, it'd be appreciated if you could report in our Discord's <span
+            className={`font-bold`}>#bug-reporting</span> channel. Much thank</pre>;
     };
 
 const Index = () =>
@@ -50,21 +51,17 @@ const Index = () =>
 
         if(results)
             {
-                if(Object.keys(results).length === 0){
+                if(Object.keys(results).length === 0)
+                    {
                         return <NoResults href={`/queries/full-scan`}/>;
                     }
-                // if(typeof results === "string")
-                //     {
-                //         // error!
-                //         return <pre>{results}</pre>
-                //     }
                 const data: Record<string, any> = Object.entries(results).map((entry: [string, any]) =>
                 {
-                    return {id: parseInt(entry[0]), ...entry[1]}
-                })
+                    return {id: parseInt(entry[0]), ...entry[1]};
+                });
 
 
-                return <Results rows={data}/>
+                return <Results rows={data}/>;
             }
         return <main className="flex-1">
             <div className="py-6">
