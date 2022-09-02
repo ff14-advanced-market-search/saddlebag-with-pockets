@@ -1,10 +1,11 @@
 import {ReactComponent as ALCIcon} from './svg/ItemCategory_ALC.svg'
-import {FC} from "react";
+import {FC}                        from "react"
 
 type Props = {
     className?: string;
 }
 
-export const ALC: FC<Props> = ({className = ''}) => {
-    return <ALCIcon className={className}/>
-}
+export const ALC: FC<Props> = ({className = ''}) =>
+    {
+        return <ALCIcon className={className}/>
+    }

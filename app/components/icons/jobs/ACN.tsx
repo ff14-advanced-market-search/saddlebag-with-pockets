@@ -1,10 +1,11 @@
 import {ReactComponent as ACNIcon} from './svg/ItemCategory_ACN.svg'
-import {FC} from "react";
+import {FC}                        from "react"
 
 type Props = {
     className?: string;
 }
 
-export const ACN: FC<Props> = ({className = ''}) => {
-    return <ACNIcon className={className}/>
-}
+export const ACN: FC<Props> = ({className = ''}) =>
+    {
+        return <ACNIcon className={className}/>
+    }
