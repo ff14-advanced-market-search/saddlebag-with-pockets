@@ -24,7 +24,7 @@ export const arms: FilterFormat[] = [
     {
         name:         `Blue Mage's Arms`,
         abbreviation: `BLU`,
-        id:           105, // @todo blue mage id
+        id:           105,
         icon:         Job.BLU,
     },
     {

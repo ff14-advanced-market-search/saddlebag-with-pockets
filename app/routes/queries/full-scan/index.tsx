@@ -241,7 +241,7 @@ const Index = () =>
                                                 </select>
                                             </div>
                                             <p className="mt-2 text-sm text-gray-500">
-                                                Filters
+                                                Filters let you limit what type of item you're wanting to search for. Keep in mind, that a low Scan Hours or high Sale Amount value will limit your results.
                                             </p>
                                         </div>
 
