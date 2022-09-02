@@ -16,11 +16,13 @@ type ScanArguments = {
 
 }
 
-const defaultArguments = () => {
-    return {'f': 'f'}
-}
-export const Scan = (args: ScanArguments) => {
-    const loadDefault = {
-        ...args, ...defaultArguments()
+const defaultArguments = () =>
+    {
+        return {'f': 'f'}
     }
-}
+export const Scan = (args: ScanArguments) =>
+    {
+        const loadDefault = {
+            ...args, ...defaultArguments()
+        }
+    }
