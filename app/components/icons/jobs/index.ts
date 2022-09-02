@@ -25,6 +25,9 @@ import {SAM} from "~/components/icons/jobs/SAM"
 import {SCH} from "~/components/icons/jobs/SCH"
 import {THM} from "~/components/icons/jobs/THM"
 import {WVR} from "~/components/icons/jobs/WVR"
+import {GNB} from "~/components/icons/jobs/GNB"
+import {DNC} from "~/components/icons/jobs/DNC"
+import {RPR} from "~/components/icons/jobs/RPR"
 
 
 export default {
@@ -39,9 +42,11 @@ export default {
     CNJ,
     CRP,
     CUL,
+    DNC,
     DRK,
     FSH,
     GLA,
+    GNB,
     GSM,
     LNC,
     LTW,
@@ -51,6 +56,7 @@ export default {
     PGL,
     RDM,
     ROG,
+    RPR,
     SAM,
     SCH,
     THM,
