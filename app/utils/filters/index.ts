@@ -22,7 +22,7 @@ const filters: FiltersList = [
         id:   0,
     },
     {
-        name: 'Vendor sellable',
+        name: 'Purchasable from NPC Vendor',
         data: [],
         id:   -1,
     },
