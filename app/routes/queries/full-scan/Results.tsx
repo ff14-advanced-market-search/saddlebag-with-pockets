@@ -80,7 +80,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 cell:   ({
                              row,
                              getValue,
-                         }) => (<span className={`font-bold`}>{getValue()}</span>),
+                         }) => (<span className={`font-bold select-all`}>{getValue()}</span>),
                 footer: props => props.column.id,
             }),
             columnHelper.accessor('sale_rates', {
