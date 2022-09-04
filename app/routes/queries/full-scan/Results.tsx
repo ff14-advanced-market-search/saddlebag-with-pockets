@@ -107,6 +107,10 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 header: 'Universalis Link (url)',
                 cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
             }),
+            columnHelper.accessor('npc_vendor_info', {
+                header: 'NPC Vendor Info',
+                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
+            }),
         ];
 
         const table = useReactTable({
@@ -162,6 +166,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 'sale_rates',
                 'avg_ppu',
                 'server',
+                'npc_vendor_info',
                 'ROI',
                 'profit_raw_percent',
                 'stack_size',
