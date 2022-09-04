@@ -109,7 +109,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
             }),
             columnHelper.accessor('npc_vendor_info', {
                 header: 'NPC Vendor Info',
-                cell:   info => info.getValue(),
+                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
             }),
         ];
 
