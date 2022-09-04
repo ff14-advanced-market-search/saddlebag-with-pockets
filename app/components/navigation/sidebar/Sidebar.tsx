@@ -142,6 +142,7 @@ export const Sidebar: FC<Props> = ({
                                                                    </ NavLink>
                                                                    : <a key={item.name}
                                                                         href={item.href}
+                                                                        target={`_blank`}
                                                                         className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
                                                                        <item.icon
                                                                            className={classNames('text-gray-400 group-hover:text-gray-300', 'mr-4 flex-shrink-0 h-6 w-6')}
