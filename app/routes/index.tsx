@@ -9,6 +9,36 @@ const recommendedQueries = [
         icon:        DocumentSearchIcon,
         href:        '/queries/full-scan',
     },
+    {
+        name:        'High Value Scan',
+        description: "Search for high value trades.",
+        icon:        DocumentSearchIcon,
+        href:        '/queries/full-scan',
+    },
+    {
+        name:        'Fast Sales Scan',
+        description: "Search for items with high rate of sales.",
+        icon:        DocumentSearchIcon,
+        href:        '/queries/full-scan',
+    },
+    {
+        name:        'Commodities Scan',
+        description: "Search for items that sell in larger quanties per sale.",
+        icon:        DocumentSearchIcon,
+        href:        '/queries/full-scan',
+    },
+    {
+        name:        'NPC Vendor Item Scan',
+        description: "Search for items sold by NPC Vendors which can be resold on the marketboard.",
+        icon:        DocumentSearchIcon,
+        href:        '/queries/full-scan',
+    },
+    {
+        name:        'Beginner Out of Stock Scan',
+        description: "Recommended for Beginners. Low level requirement, low risk, low price, low effort, low competition, high profit margins, but slow sale rates.",
+        icon:        DocumentSearchIcon,
+        href:        '/queries/full-scan',
+    },
 ];
 
 
