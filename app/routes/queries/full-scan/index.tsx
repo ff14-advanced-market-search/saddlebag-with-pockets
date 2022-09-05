@@ -113,7 +113,7 @@ const Index = () => {
                         </span>
                       </div>
                       <p className="mt-2 text-sm text-gray-500">
-                        The time period to search over. ex: `{DEFAULT_SCAN_HOURS}`` is the past{" "}
+                        The time period to search over. ex: `{DEFAULT_SCAN_HOURS}` is the past{" "}
                         {DEFAULT_SCAN_HOURS} hours. For more items to sell choose a higher number.
                       </p>
                     </div>
