@@ -40,6 +40,10 @@ const Index = () => {
   const DEFAULT_SALE_AMOUNT = 5;
   const DEFAULT_SCAN_HOURS = 24;
   const DEFAULT_ROI = 50; // in percent
+  const DEFAULT_MIN_STACK_SIZE = 1;
+  const DEFAULT_MIN_PROFIT_AMOUNT = 10000;
+  const DEFAULT_AVERAGE_PRICE_PER_UNIT = 10000;
+  const DEFAULT_ITEM_FILTER = "Everything";
 
   const transition = useTransition();
   const results = useActionData();
@@ -47,6 +51,14 @@ const Index = () => {
   const [saleAmount, setSaleAmount] = useState(DEFAULT_SALE_AMOUNT);
   const [scanHours, setScanHours] = useState(DEFAULT_SCAN_HOURS);
   const [roi, setROI] = useState(DEFAULT_ROI);
+  const [minStackSize, setMinStackSize] = useState(DEFAULT_MIN_STACK_SIZE);
+  const [minProfitAmount, setMinProfitAmount] = useState(DEFAULT_MIN_PROFIT_AMOUNT);
+  const [avgPricePerUnit, setAvgPricePerUnit] = useState(DEFAULT_AVERAGE_PRICE_PER_UNIT);
+  const [itemFilter, setItemFilter] = useState(DEFAULT_ITEM_FILTER); // TODO: not sure how to implement this
+  const [hqOnly, setHQOnly] = useState(false);
+  const [regionSearch, setRegionSearch] = useState(false);
+  const [includeVendorPrice, setIncludeVendorPrice] = useState(false);
+  const [includeOutOfStock, setIncludeOutOfStock] = useState(true);
 
   // TODO: replace this with a useEffect
   const onSubmit = (e: MouseEvent) => {
@@ -101,8 +113,8 @@ const Index = () => {
                         </span>
                       </div>
                       <p className="mt-2 text-sm text-gray-500">
-                        The time period to search over. ex: <code>24</code> is the past 24 hours.
-                        For more items to sell choose a higher number.
+                        The time period to search over. ex: `{DEFAULT_SCAN_HOURS}`` is the past{" "}
+                        {DEFAULT_SCAN_HOURS} hours. For more items to sell choose a higher number.
                       </p>
                     </div>
                     <div className="col-span-6 sm:col-span-2">
@@ -120,8 +132,8 @@ const Index = () => {
                         }}
                       />
                       <p className="mt-2 text-sm text-gray-500">
-                        Number of sales in that time. ex: `5` is 5 sales in that selected time
-                        period. For more items to sell choose a lower number.
+                        Number of sales in that time. ex: `{DEFAULT_SALE_AMOUNT}` is 5 sales in that
+                        selected time period. For more items to sell choose a lower number.
                       </p>
                     </div>
 
@@ -147,9 +159,9 @@ const Index = () => {
                         </span>
                       </div>
                       <p className="mt-2 text-sm text-gray-500">
-                        Desired R.O.I (return on investment): ex: `50` means that 50% of the revenue
-                        you get from a sale should be all profit (after tax). For more profit,
-                        choose a higher number from 1 to 100.
+                        Desired return on investment (ROI): ex: `{DEFAULT_ROI}` means that{" "}
+                        {DEFAULT_ROI}% of the revenue you get from a sale should be all profit
+                        (after tax). For more profit, choose a higher number from 1 to 100.
                       </p>
                     </div>
                     <div className="col-span-6 sm:col-span-2">
@@ -163,14 +175,18 @@ const Index = () => {
                         <input
                           type="number"
                           name="minimum_stack_size"
-                          defaultValue={1}
                           id="minimum_stack_size"
                           className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={minStackSize}
+                          onChange={(e) => {
+                            setMinStackSize(parseInt(e.currentTarget.value));
+                          }}
                         />
                       </div>
                       <p className="mt-2 text-sm text-gray-500">
-                        Desired Min Stack Size. ex: `10` is only show deals you can get in stacks of
-                        10 or greater. For more items to sell choose a lower number.
+                        Desired Min Stack Size. ex: `{DEFAULT_MIN_STACK_SIZE}` is only show deals
+                        you can get in stacks of {DEFAULT_MIN_STACK_SIZE} or greater. For more items
+                        to sell choose a lower number.
                       </p>
                     </div>
 
@@ -185,9 +201,12 @@ const Index = () => {
                         <input
                           type="number"
                           name="minimum_profit_amount"
-                          defaultValue={10000}
                           id="minimum_profit_amount"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={minProfitAmount}
+                          onChange={(e) => {
+                            setMinProfitAmount(parseInt(e.currentTarget.value));
+                          }}
                         />
                         <span
                           className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}
@@ -196,8 +215,9 @@ const Index = () => {
                         </span>
                       </div>
                       <p className="mt-2 text-sm text-gray-500">
-                        Desired Min Profit Amount. ex: `10000` is only show deals that yields 10000
-                        gil profit or greater. For more items to sell choose a lower number.
+                        Desired Min Profit Amount. ex: `{DEFAULT_MIN_PROFIT_AMOUNT}` is only show
+                        deals that yields {DEFAULT_MIN_PROFIT_AMOUNT} gil profit or greater. For
+                        more items to sell choose a lower number.
                       </p>
                     </div>
 
@@ -212,9 +232,12 @@ const Index = () => {
                         <input
                           type="number"
                           name="price_per_unit"
-                          defaultValue={10000}
                           id="price_per_unit"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          value={avgPricePerUnit}
+                          onChange={(e) => {
+                            setAvgPricePerUnit(parseInt(e.currentTarget.value));
+                          }}
                         />
                         <span
                           className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}
@@ -223,9 +246,9 @@ const Index = () => {
                         </span>
                       </div>
                       <p className="mt-2 text-sm text-gray-500">
-                        Desired Average Price Per Unit. ex: `10000` is only show deals that sell on
-                        average for 10000 gil or greater. For more items to sell choose a lower
-                        number.
+                        Desired Average Price Per Unit. ex: `{DEFAULT_AVERAGE_PRICE_PER_UNIT}` is
+                        only show deals that sell on average for {DEFAULT_AVERAGE_PRICE_PER_UNIT}{" "}
+                        gil or greater. For more items to sell choose a lower number.
                       </p>
                     </div>
 
@@ -279,6 +302,10 @@ const Index = () => {
                               name="hq_only"
                               type="checkbox"
                               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                              checked={hqOnly}
+                              onChange={(e) => {
+                                setHQOnly(e.target.checked);
+                              }}
                             />
                           </div>
                           <div className="ml-3 text-sm">
@@ -302,6 +329,10 @@ const Index = () => {
                               name="region_wide"
                               type="checkbox"
                               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                              checked={regionSearch}
+                              onChange={(e) => {
+                                setRegionSearch(e.target.checked);
+                              }}
                             />
                           </div>
                           <div className="ml-3 text-sm">
@@ -327,6 +358,10 @@ const Index = () => {
                               name="include_vendor"
                               type="checkbox"
                               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                              checked={includeVendorPrice}
+                              onChange={(e) => {
+                                setIncludeVendorPrice(e.target.checked);
+                              }}
                             />
                           </div>
                           <div className="ml-3 text-sm">
@@ -352,8 +387,11 @@ const Index = () => {
                               aria-describedby="comments-description"
                               name="out_of_stock"
                               type="checkbox"
-                              defaultChecked={true}
                               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                              checked={includeOutOfStock}
+                              onChange={(e) => {
+                                setIncludeOutOfStock(e.target.checked);
+                              }}
                             />
                           </div>
                           <div className="ml-3 text-sm">
