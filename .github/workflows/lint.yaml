@@ -1,0 +1,16 @@
+---
+name: "Linters"
+
+on: push
+
+jobs:
+  "Prettier":
+    runs-on: ubuntu-latest
+    container: node:16
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: yarn install
+      - name: Run prettier check
+        run: yarn run prettier:check
