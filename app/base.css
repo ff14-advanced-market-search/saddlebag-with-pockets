@@ -2,19 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /** @todo **/
 .scroll-track {
-    background-color: #f1db9d;
-    height: 2px;
-    width: 100%;
-    position: relative;
-    top: -3px;
-    z-index: -10;
+  background-color: #f1db9d;
+  height: 2px;
+  width: 100%;
+  position: relative;
+  top: -3px;
+  z-index: -10;
 }
 
 @media (any-hover: none) {
-    .scroll-track {
-        display: none;
-    }
+  .scroll-track {
+    display: none;
+  }
 }

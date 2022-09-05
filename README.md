@@ -3,11 +3,13 @@
 ## Development
 
 Install dependencies w/ yarn:
+
 ```sh
 yarn install
 ```
 
 From your terminal:
+
 ```sh
 yarn run dev
 ```

@@ -1,12 +1,11 @@
-import Icon from './svg/ItemCategory_Catalyst.svg';
-import {FC} from "react";
+import Icon from "./svg/ItemCategory_Catalyst.svg";
+import { FC } from "react";
 
 type Props = {
-    className?: string;
-}
+  className?: string;
+};
 
-export const Catalysts: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <Icon className={className}/>;
-    };
+export const Catalysts: FC<Props> = ({ className = "" }) => {
+  // @ts-ignore
+  return <Icon className={className} />;
+};

@@ -1,12 +1,11 @@
-import LNCIcon from './svg/ItemCategory_LNC.svg';
-import {FC}    from "react";
+import LNCIcon from "./svg/ItemCategory_LNC.svg";
+import { FC } from "react";
 
 type Props = {
-    className?: string;
-}
+  className?: string;
+};
 
-export const LNC: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <LNCIcon className={className}/>;
-    };
+export const LNC: FC<Props> = ({ className = "" }) => {
+  // @ts-ignore
+  return <LNCIcon className={className} />;
+};

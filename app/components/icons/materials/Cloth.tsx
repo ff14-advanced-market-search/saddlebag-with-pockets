@@ -1,12 +1,11 @@
-import Icon from './svg/ItemCategory_WVR.svg';
-import {FC} from "react";
+import Icon from "./svg/ItemCategory_WVR.svg";
+import { FC } from "react";
 
 type Props = {
-    className?: string;
-}
+  className?: string;
+};
 
-export const Cloth: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <Icon className={className}/>;
-    };
+export const Cloth: FC<Props> = ({ className = "" }) => {
+  // @ts-ignore
+  return <Icon className={className} />;
+};

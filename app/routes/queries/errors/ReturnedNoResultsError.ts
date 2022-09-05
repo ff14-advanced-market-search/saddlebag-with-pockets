@@ -1,3 +1,1 @@
-export class ReturnedNoResultsError extends Error {
-
-}
+export class ReturnedNoResultsError extends Error {}

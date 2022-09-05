@@ -1,12 +1,11 @@
-import CULIcon from './svg/ItemCategory_CUL.svg';
-import {FC}    from "react";
+import CULIcon from "./svg/ItemCategory_CUL.svg";
+import { FC } from "react";
 
 type Props = {
-    className?: string;
-}
+  className?: string;
+};
 
-export const CUL: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <CULIcon className={className}/>;
-    };
+export const CUL: FC<Props> = ({ className = "" }) => {
+  // @ts-ignore
+  return <CULIcon className={className} />;
+};

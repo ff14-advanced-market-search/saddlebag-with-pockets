@@ -1,12 +1,11 @@
-import Icon from './svg/ItemCategory_CRP.svg';
-import {FC} from "react";
+import Icon from "./svg/ItemCategory_CRP.svg";
+import { FC } from "react";
 
 type Props = {
-    className?: string;
-}
+  className?: string;
+};
 
-export const Lumber: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <Icon className={className}/>;
-    };
+export const Lumber: FC<Props> = ({ className = "" }) => {
+  // @ts-ignore
+  return <Icon className={className} />;
+};

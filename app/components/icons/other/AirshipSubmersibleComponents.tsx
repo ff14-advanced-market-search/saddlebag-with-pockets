@@ -1,12 +1,11 @@
-import Icon from './svg/ItemCategory_Airship.svg';
-import {FC} from "react";
+import Icon from "./svg/ItemCategory_Airship.svg";
+import { FC } from "react";
 
 type Props = {
-    className?: string;
-}
+  className?: string;
+};
 
-export const AirshipSubmersibleComponents: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <Icon className={className}/>;
-    };
+export const AirshipSubmersibleComponents: FC<Props> = ({ className = "" }) => {
+  // @ts-ignore
+  return <Icon className={className} />;
+};

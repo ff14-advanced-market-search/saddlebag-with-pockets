@@ -1,12 +1,11 @@
-import BLUIcon from './svg/ItemCategory_BLU.svg';
-import {FC}    from "react";
+import BLUIcon from "./svg/ItemCategory_BLU.svg";
+import { FC } from "react";
 
 type Props = {
-    className?: string;
-}
+  className?: string;
+};
 
-export const BLU: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <BLUIcon className={className}/>;
-    };
+export const BLU: FC<Props> = ({ className = "" }) => {
+  // @ts-ignore
+  return <BLUIcon className={className} />;
+};
