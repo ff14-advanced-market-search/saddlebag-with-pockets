@@ -1,9 +1,11 @@
 node_modules
 
+.dccache
 /.cache
 /functions/\[\[path\]\].js
 /functions/\[\[path\]\].js.map
 /functions/_assets
+
 /build
 /public/build
 .env
