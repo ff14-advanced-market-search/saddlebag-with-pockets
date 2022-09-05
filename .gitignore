@@ -1,12 +1,26 @@
-node_modules
-
+# IDE
+.vscode
+.DS_Store
 .dccache
-/.cache
-/functions/\[\[path\]\].js
-/functions/\[\[path\]\].js.map
-/functions/_assets
-
-/build
-/public/build
-.env
+.cache
 .idea
+.cspell
+
+# React
+node_modules
+build
+public/build
+package-lock
+
+# Remix
+functions/\[\[path\]\].js
+functions/\[\[path\]\].js.map
+functions/_assets
+
+# Templates
+src/app
+
+# Secrets
+.secrets
+.env
+certs/
