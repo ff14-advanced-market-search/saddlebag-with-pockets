@@ -52,11 +52,11 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
         const columnHelper = createColumnHelper<ResponseType & { id: number }>();
         const columns = [
             columnHelper.accessor('avg_ppu', {
-                header: 'Average Price per unit (avg_ppu)',
+                header: 'Average Price Per Unit',
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('home_server_price', {
-                header: 'Home server price',
+                header: 'Home Server Price',
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('home_update_time', {
@@ -64,7 +64,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('ppu', {
-                header: 'Price per unit (ppu)',
+                header: 'Lowest Price Per Unit',
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('profit_amount', {
@@ -72,11 +72,11 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('profit_raw_percent', {
-                header: 'Profit Percentage (profit_raw_percent)',
+                header: 'Profit Percentage',
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('real_name', {
-                header: 'Item Name (real_name)',
+                header: 'Item Name',
                 cell:   ({
                              row,
                              getValue,
@@ -88,7 +88,7 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('server', {
-                header: 'Server',
+                header: 'Server - DC',
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('stack_size', {
@@ -100,11 +100,11 @@ const Results = <T extends unknown>({rows}: ResultTableProps<T>) =>
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('ROI', {
-                header: 'Return on Investment (ROI)',
+                header: 'Return on Investment',
                 cell:   info => info.getValue(),
             }),
             columnHelper.accessor('url', {
-                header: 'Universalis Link (url)',
+                header: 'Universalis Link',
                 cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
             }),
             columnHelper.accessor('npc_vendor_info', {
