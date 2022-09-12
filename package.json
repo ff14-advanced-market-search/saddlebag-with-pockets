@@ -13,7 +13,7 @@
     "test": "ts-jest",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
-    "prepare": "husky install"
+    "prepare": "husky install && git add .husky/pre-commit"
   },
   "packageManager": "yarn@1.22.18",
   "dependencies": {
