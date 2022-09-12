@@ -27,6 +27,16 @@ const filters: FiltersList = [
         id:   -1,
     },
     {
+        name: 'Supply and Provisioning Mission Quest Items',
+        data: [],
+        id:   -2,
+    },
+    {
+        name: 'Crafter Class Quest Items',
+        data: [],
+        id:   -3,
+    },
+    {
         name: "Arms",
         data: arms,
         id:   1,
