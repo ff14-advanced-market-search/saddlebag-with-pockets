@@ -118,6 +118,7 @@ const defaults = {
     "region_wide":         false,
     "include_vendor":      false,
     "show_out_stock":      true,
+    "universalis_list_uid": "",
 };
 
 export type ResponseType = {
