@@ -11,7 +11,8 @@
     "dev:wrangler": "wrangler pages dev ./public",
     "generate:css": "npx tailwindcss -o ./app/tailwind.css",
     "test": "ts-jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "remix-esbuild-override"
   },
   "packageManager": "yarn@1.22.18",
   "dependencies": {
@@ -26,6 +27,7 @@
     "axios": "^0.27.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "remix-esbuild-override": "^3.0.4",
     "remix-validated-form": "^4.5.5",
     "zod": "^3.18.0"
   },

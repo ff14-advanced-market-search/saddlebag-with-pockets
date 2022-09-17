@@ -7493,6 +7493,11 @@ remark-rehype@^9.0.0:
     mdast-util-to-hast "^11.0.0"
     unified "^10.0.0"
 
+remix-esbuild-override@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/remix-esbuild-override/-/remix-esbuild-override-3.0.4.tgz#e62c7f00af1ea1e3398eaae62497c5faed72872f"
+  integrity sha512-nIK9DcPo+bo2G2l8a779KdJhOQ6fs7evWpMVDiEZmKd/rvDRf//5Ygcavrxa4W7hLcJzIXcwh+A3o7QimaJgVQ==
+
 remix-validated-form@^4.5.5:
   version "4.5.5"
   resolved "https://registry.yarnpkg.com/remix-validated-form/-/remix-validated-form-4.5.5.tgz#513f3d2143b2960f6852ff00ec2dbcc4b75cec3f"
