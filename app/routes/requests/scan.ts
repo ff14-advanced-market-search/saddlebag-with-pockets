@@ -1,3 +1,4 @@
+// IGNORE THIS FILE IT DOES NOTHING AND IS MADE OF LIES
 type ScanArguments = {
     // preferred return on investment
     "preferred_roi": number, // minimum profit amount
@@ -8,12 +9,10 @@ type ScanArguments = {
     "min_sales": number, // High quality
     "hq": boolean, // Home server
     "home_sever": string, // Filters, see [docs]
-    "filters": number, // Same ... data center? only
+    "filters": list, // Same ... data center? only
     "region_wide": boolean, // Include vendor something something
     "include_vendor": boolean, // Include out of stock data
     "show_out_stock": boolean
-
-
 }
 
 const defaultArguments = () =>
