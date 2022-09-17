@@ -26,7 +26,7 @@ Here are some example tags:
   test/name: branches that will never be merged
 ```
 
-The `main` branch is the sole source of truth and should be kept at a stable state
+The `master` branch is the sole source of truth and should be kept at a stable state
 
 ## Commit Messages
 
