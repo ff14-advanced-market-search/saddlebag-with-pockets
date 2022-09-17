@@ -1,12 +1,11 @@
-import SAMIcon from './svg/ItemCategory_SAM.svg';
-import {FC}    from "react";
+import SAMIcon from './svg/ItemCategory_SAM.svg'
+import { FC } from 'react'
 
 type Props = {
-    className?: string;
+  className?: string
 }
 
-export const SAM: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <SAMIcon className={className}/>;
-    };
+export const SAM: FC<Props> = ({ className = '' }) => {
+  // @ts-ignore
+  return <SAMIcon className={className} />
+}
