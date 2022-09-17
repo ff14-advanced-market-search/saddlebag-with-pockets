@@ -6,6 +6,8 @@ _Frontend for Aetheryte API_
 
 - Node `16.13.0`
 
+## [Documentation](docs/INDEX.md)
+
 ## Getting Started
 
 The frontend directory is bootstraped by `create-react-app` and `material-ui`
