@@ -34,10 +34,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-validated-form": "^4.5.5",
-    "zod": "^3.18.0"
+    "zod": "^3.19.1"
   },
   "devDependencies": {
-    "@headlessui/react": "^1.6.6",
+    "@headlessui/react": "^1.7.2",
     "@heroicons/react": "^1.0.6",
     "@remix-run/dev": "^1.7.0",
     "@remix-run/eslint-config": "^1.7.0",
