@@ -1,0 +1,14 @@
+---
+version: "3.9"
+
+services:
+  ui:
+    container_name: saddlebag
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8788:8788"
+    volumes:
+      - "./app:/app/app"
+    init: true

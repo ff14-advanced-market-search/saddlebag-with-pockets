@@ -1,19 +1,44 @@
 # saddlebag
 
-## Development
+_Frontend for Aetheryte API_
 
-Install dependencies w/ yarn:
-```sh
+## Prerequisites
+
+- Node `16.13.0`
+
+## Getting Started
+
+The frontend directory is bootstraped by `create-react-app` and `material-ui`
+Install the dependencies:
+
+```bash
 yarn install
 ```
 
-From your terminal:
-```sh
+Run Server:
+
+```bash
 yarn run dev
 ```
 
 This starts your app in development mode, rebuilding assets on file changes.
 Check your terminal for the address, the default is `http://127.0.0.1:8788`
+
+### Docker
+
+Alternatively, you can use docker to run the server:
+
+```bash
+docker-compose up --build
+```
+
+Any subsequent runs will not require you to rebuild the images:
+
+```bash
+docker-compose up
+```
+
+> NOTE: any changes to the `Dockerfile` or dependencies will require you to rebuild the images.
 
 ## Deployment
 
