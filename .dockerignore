@@ -1,0 +1,20 @@
+# IDE
+.vscode
+.DS_Store
+.dccache
+.cache
+
+# React
+/node_modules
+build
+
+# Docker
+docker-compose.yml
+Dockerfile
+
+# Dev
+.github
+.editorconfig
+.gitignore
+LICENSE
+README.md

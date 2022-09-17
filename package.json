@@ -1,5 +1,10 @@
 {
+  "name": "saddlebag.exchange",
+  "version": "1.0.0",
   "private": true,
+  "license": "Apache-2.0",
+  "proxy": "https://localhost:3000",
+  "homepage": "http://saddlebagexchange.com/",
   "sideEffects": false,
   "scripts": {
     "build": "run-s \"build:css\" \"build:remix\"",
@@ -10,6 +15,8 @@
     "dev:remix": "remix watch",
     "dev:wrangler": "wrangler pages dev ./public",
     "generate:css": "npx tailwindcss -o ./app/tailwind.css",
+    "prettier": "prettier --write app",
+    "prettier:check": "prettier --check app",
     "test": "ts-jest",
     "prepare": "husky install"
   },
