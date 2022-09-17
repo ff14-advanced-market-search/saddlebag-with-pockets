@@ -1,12 +1,11 @@
-import PGLIcon from './svg/ItemCategory_PGL.svg';
-import {FC}    from "react";
+import PGLIcon from './svg/ItemCategory_PGL.svg'
+import { FC } from 'react'
 
 type Props = {
-    className?: string;
+  className?: string
 }
 
-export const PGL: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <PGLIcon className={className}/>;
-    };
+export const PGL: FC<Props> = ({ className = '' }) => {
+  // @ts-ignore
+  return <PGLIcon className={className} />
+}

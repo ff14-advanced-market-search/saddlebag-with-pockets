@@ -1,12 +1,11 @@
-import RPRIcon from './svg/class_job_039.svg';
-import {FC}    from "react";
+import RPRIcon from './svg/class_job_039.svg'
+import { FC } from 'react'
 
 type Props = {
-    className?: string;
+  className?: string
 }
 
-export const RPR: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <RPRIcon className={className}/>;
-    };
+export const RPR: FC<Props> = ({ className = '' }) => {
+  // @ts-ignore
+  return <RPRIcon className={className} />
+}
