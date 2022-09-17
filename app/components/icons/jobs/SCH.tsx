@@ -1,12 +1,11 @@
-import SCHIcon from './svg/ItemCategory_SCH.svg';
-import {FC}    from "react";
+import SCHIcon from './svg/ItemCategory_SCH.svg'
+import { FC } from 'react'
 
 type Props = {
-    className?: string;
+  className?: string
 }
 
-export const SCH: FC<Props> = ({className = ''}) =>
-    {
-        // @ts-ignore
-        return <SCHIcon className={className}/>;
-    };
+export const SCH: FC<Props> = ({ className = '' }) => {
+  // @ts-ignore
+  return <SCHIcon className={className} />
+}
