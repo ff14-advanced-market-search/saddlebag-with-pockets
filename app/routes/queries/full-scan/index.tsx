@@ -227,13 +227,13 @@ const Index = () =>
                                                         const children = value.data;
                                                         return (<Fragment key={`f_${value.id}`}>
                                                             <option key={`${value.id}_${value.name}`}
-                                                                    value={value.id}>{value.name}</option>
+                                                                    value={[value.id]}>{value.name}</option>
                                                             {children.map((child) =>
                                                             {
                                                                 return child.id
                                                                        ? <option
                                                                            key={`${value.id}_${child.id}_${child.name}`}
-                                                                           value={child.id}>-- {child.name}</option>
+                                                                           value={[child.id]}>-- {child.name}</option>
                                                                        : null;
                                                             })}
                                                         </Fragment>);
