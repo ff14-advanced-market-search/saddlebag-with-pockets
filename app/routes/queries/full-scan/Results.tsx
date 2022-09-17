@@ -57,66 +57,69 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([]);
 
-  const columnHelper = createColumnHelper<ResponseType & { id: number }>();
-  const columns = [
-    columnHelper.accessor("avg_ppu", {
-      header: "Average Price per unit (avg_ppu)",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("home_server_price", {
-      header: "Home server price",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("home_update_time", {
-      header: "Last Updated At (home_update_time)",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("ppu", {
-      header: "Price per unit (ppu)",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("profit_amount", {
-      header: "Profit Amount",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("profit_raw_percent", {
-      header: "Profit Percentage (profit_raw_percent)",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("real_name", {
-      header: "Item Name (real_name)",
-      cell: ({ row, getValue }) => <span className={`font-bold select-all`}>{getValue()}</span>,
-      footer: (props) => props.column.id,
-    }),
-    columnHelper.accessor("sale_rates", {
-      header: "Sale Rates",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("server", {
-      header: "Server",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("stack_size", {
-      header: "Stack Size",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("update_time", {
-      header: "Update Time",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("ROI", {
-      header: "Return on Investment (ROI)",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("url", {
-      header: "Universalis Link (url)",
-      cell: (info) => <UniversalisBadgedLink link={info.getValue()} />,
-    }),
-    columnHelper.accessor("npc_vendor_info", {
-      header: "NPC Vendor Info",
-      cell: (info) => <UniversalisBadgedLink link={info.getValue()} />,
-    }),
-  ];
+        const columnHelper = createColumnHelper<ResponseType & { id: number }>();
+        const columns = [
+            columnHelper.accessor('avg_ppu', {
+                header: 'Average Price Per Unit',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('home_server_price', {
+                header: 'Home Server Price',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('home_update_time', {
+                header: 'Home Server Info Last Updated At',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('ppu', {
+                header: 'Lowest Price Per Unit',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('profit_amount', {
+                header: 'Profit Amount',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('profit_raw_percent', {
+                header: 'Profit Percentage',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('real_name', {
+                header: 'Item Name',
+                cell:   ({
+                             row,
+                             getValue,
+                         }) => (<span className={`font-bold select-all`}>{getValue()}</span>),
+                footer: props => props.column.id,
+            }),
+            columnHelper.accessor('sale_rates', {
+                header: 'Sale Rates',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('server', {
+                header: 'Lowest Price Server',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('stack_size', {
+                header: 'Lowest Price Stack Size',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('update_time', {
+                header: 'Lowest Price Last Update Time',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('ROI', {
+                header: 'Return on Investment',
+                cell:   info => info.getValue(),
+            }),
+            columnHelper.accessor('url', {
+                header: 'Universalis Link',
+                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
+            }),
+            columnHelper.accessor('npc_vendor_info', {
+                header: 'NPC Vendor Info',
+                cell:   info => (<UniversalisBadgedLink link={info.getValue()}/>),
+            }),
+        ];
 
   const table = useReactTable({
     // @ts-ignore
@@ -157,24 +160,25 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }
   }, [table.getState().columnFilters[0]?.id]);
 
-  useEffect(() => {
-    setColumnOrder([
-      "real_name",
-      "url",
-      "ppu",
-      "home_server_price",
-      "profit_amount",
-      "sale_rates",
-      "avg_ppu",
-      "server",
-      "npc_vendor_info",
-      "ROI",
-      "profit_raw_percent",
-      "stack_size",
-      "update_time",
-      "home_update_time",
-    ]);
-  }, []);
+        useEffect(() =>
+        {
+            setColumnOrder([
+                'real_name',
+                'url',
+                'ppu',
+                'home_server_price',
+                'profit_amount',
+                'sale_rates',
+                'avg_ppu',
+                'npc_vendor_info',
+                'server',
+                'ROI',
+                'profit_raw_percent',
+                'stack_size',
+                'update_time',
+                'home_update_time',
+            ]);
+        }, []);
 
   return (
     <div className={`mt-0 flex flex-col`}>
