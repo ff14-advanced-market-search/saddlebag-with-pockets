@@ -1,22 +1,62 @@
 import { address, UserAgent } from '~/requests/client/config'
 
-interface IRuntimeForm {
-  [key: string]: any
+const defaults = {
+  preferred_roi: 50,
+  min_profit_amount: 10000,
+  min_desired_avg_ppu: 10000,
+  min_stack_size: 1,
+  hours_ago: 24,
+  min_sales: 5,
+  hq: false,
+  home_server: 'Midgardsormr',
+  filters: [0],
+  region_wide: false,
+  include_vendor: false,
+  show_out_stock: true
 }
 
-export class RunTimeFullScanForm<T extends IRuntimeForm> {
-  constructor(private form: T) {}
+export class FormValues {
+  private map: Map<string, number | string | boolean | number[] | string[]>
+  constructor(private data: FormData) {
+    this.map = new Map(Object.entries(defaults))
+  }
 
-  public formData(): FormData {
-    const form = new FormData()
+  public toMap(
+    fixValueTypes = true
+  ): Map<string, number | string | boolean | Array<number> | Array<string>> {
+    for (const [key, value] of this.data.entries()) {
+      const newValue = fixValueTypes
+        ? this.resolveValueType(value as string)
+        : value
+      const remappedKey = keyMap(key)
 
-    Object.keys(this.form).forEach((key) => {
-      if (this.form[key] !== undefined) {
-        form.append(key, this.form[key])
+      console.dir(remappedKey, newValue)
+      if (this.map.has(remappedKey)) {
+        const existing: any[] | any = this.map.get(remappedKey)
+        if (Array.isArray(existing)) {
+          this.map.set(
+            remappedKey,
+            existing.push(newValue as boolean | number | string)
+          )
+        }
+      } else {
+        this.map.set(remappedKey, newValue as boolean | number | string)
       }
-    })
+    }
+    return this.map
+  }
 
-    return form
+  private resolveValueType: (value: string) => string | number | boolean = (
+    value
+  ) => {
+    if (value === 'on') {
+      // checkboxes whyyyyyy
+      return true
+    }
+    if (!isNaN(parseInt(value as string))) {
+      return parseInt(value)
+    }
+    return value
   }
 }
 
@@ -39,28 +79,6 @@ export type FullScanFields = {
 //     price_per_unit: z.number().min(1),
 //     world: z.string()
 // }));
-
-export const remappedKeys = (fields: any, setDefaults = true) => {
-  const map = setDefaults ? new Map(Object.entries(defaults)) : new Map()
-
-  Array.from(fields as [string, string | boolean | number][]).map((field) => {
-    let [key, value] = field
-
-    // checkboxes whyyyyyy
-    if (value === 'on') {
-      value = true
-    }
-    if (!isNaN(parseInt(value as string))) {
-      value = parseInt(value as string)
-    }
-    map.set(keyMap(key), value)
-    return field
-  })
-  if (process.env.NODE_ENV === 'development') {
-    console.log('vars', Object.fromEntries(map.entries()))
-  }
-  return map
-}
 
 const keyMap: (key: string) => string = (key) => {
   switch (key) {
@@ -87,21 +105,6 @@ const keyMap: (key: string) => string = (key) => {
       // include_vendor
       return key
   }
-}
-
-const defaults = {
-  preferred_roi: 50,
-  min_profit_amount: 10000,
-  min_desired_avg_ppu: 10000,
-  min_stack_size: 1,
-  hours_ago: 24,
-  min_sales: 5,
-  hq: false,
-  home_server: 'Midgardsormr',
-  filters: [0],
-  region_wide: false,
-  include_vendor: false,
-  show_out_stock: true
 }
 
 export type ResponseType = {
