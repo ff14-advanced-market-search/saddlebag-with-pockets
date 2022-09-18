@@ -101,7 +101,7 @@ const defaults = {
   filters: 0,
   region_wide: false,
   include_vendor: false,
-  show_out_stock: true
+  show_out_stock: false
 }
 
 export type ResponseType = {
