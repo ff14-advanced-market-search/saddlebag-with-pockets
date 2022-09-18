@@ -140,7 +140,6 @@ export type ResponseType = {
 const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (
   map
 ) => {
-  console.dir(`body`, map.entries())
   return fetch(`${address}/api/scan`, {
     method: 'POST',
     headers: {
