@@ -50,6 +50,8 @@ export class FormValues {
             arrayedValue = [...existing, newValue]
           }
           this.map.set(remappedKey, arrayedValue)
+        } else {
+          this.map.set(remappedKey, newValue as boolean | number | string)
         }
       } else {
         this.map.set(remappedKey, newValue as boolean | number | string)

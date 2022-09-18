@@ -1914,10 +1914,6 @@ select {
 }
 
 @media (min-width: 768px) {
-  .md\:visible {
-    visibility: visible;
-  }
-
   .md\:fixed {
     position: fixed;
   }
