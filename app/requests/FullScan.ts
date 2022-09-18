@@ -65,15 +65,15 @@ export class FormValues {
   }
 }
 
-export type FullScanFields = {
-  scan_hours: number
-  sale_amount: number
-  roi: number
-  minimum_stack_size: number
-  minimum_profit_amount: number
-  price_per_unit: number
-  world: string
-}
+// export type FullScanFields = {
+//   scan_hours: number
+//   sale_amount: number
+//   roi: number
+//   minimum_stack_size: number
+//   minimum_profit_amount: number
+//   price_per_unit: number
+//   world: string
+// }
 
 // export const validator: Validator<FullScanFields> = withZod(z.object({
 //     scan_hours: z.number().positive().min(1).max(128),
