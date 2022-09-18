@@ -98,7 +98,7 @@ const defaults = {
   min_sales: 5,
   hq: false,
   home_server: 'Midgardsormr',
-  filters: 0,
+  filters: [0],
   region_wide: false,
   include_vendor: false,
   show_out_stock: true

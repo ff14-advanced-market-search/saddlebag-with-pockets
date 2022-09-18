@@ -1,3 +1,7 @@
-export const address = `http://api.saddlebagexchange.com`
+const defaultAddress = `http://api.saddlebagexchange.com`
+export const address =
+  process.env.NODE_ENV === 'development'
+    ? process.env.API_ADDRESS
+    : defaultAddress
 
 export const UserAgent = 'Saddlebag/1.0'
