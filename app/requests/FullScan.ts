@@ -12,7 +12,8 @@ const defaults = {
   filters: [0],
   region_wide: false,
   include_vendor: false,
-  show_out_stock: false
+  show_out_stock: false,
+  universalis_list_uid: ''
 }
 
 export type FormValuesMap = Map<
