@@ -4,11 +4,7 @@ import type {
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
-import type { FullScanFields } from '~/requests/FullScan'
-import FullScanRequest, {
-  remappedKeys,
-  RunTimeFullScanForm
-} from '~/requests/FullScan'
+import FullScanRequest, { FormValues } from '~/requests/FullScan'
 import { classNames } from '~/utils'
 import filters from '~/utils/filters'
 import { Fragment } from 'react'
@@ -21,11 +17,10 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   formData.append('world', session.getWorld())
 
-  const typedFormData = new RunTimeFullScanForm<FullScanFields>(
-    Object.fromEntries(formData) as unknown as FullScanFields
-  )
+  const typedData = new FormValues(formData)
 
-  const data = remappedKeys(typedFormData.formData())
+  const data = typedData.toMap()
+  console.dir(data)
   return await FullScanRequest(data).catch((err) => {
     console.log('catch', err)
     return err
@@ -73,11 +68,11 @@ const Index = () => {
             <h1 className="text-2xl font-semibold text-gray-900 py-6">
               Full Scan
             </h1>
-            <div className="mt-5 md:mt-0 md:col-span-2 py-6">
+            <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="scan-hours"
                         className="block text-sm font-medium text-gray-700">
@@ -102,7 +97,7 @@ const Index = () => {
                         higher number.
                       </p>
                     </div>
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="sale-amt"
                         className="block text-sm font-medium text-gray-700">
@@ -122,7 +117,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="roi"
                         className="block text-sm font-medium text-gray-700">
@@ -148,7 +143,7 @@ const Index = () => {
                         number from 1 to 100.
                       </p>
                     </div>
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="minimum_stack_size"
                         className="block text-sm font-medium text-gray-700">
@@ -170,7 +165,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="minimum_profit_amount"
                         className="block text-sm font-medium text-gray-700">
@@ -196,7 +191,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="price_per_unit"
                         className="block text-sm font-medium text-gray-700">
@@ -222,7 +217,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="filters"
                         className="block text-sm font-medium text-gray-700">
@@ -232,7 +227,9 @@ const Index = () => {
                         <select
                           name="filters"
                           className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                          defaultValue={`all`}>
+                          defaultValue={[0]}
+                          multiple={true}>
+                          {/** @todo clean up what the multiple select dropdown looks like **/}
                           {filters.map((value) => {
                             const children = value.data
                             return (
@@ -260,10 +257,15 @@ const Index = () => {
                         Filters let you limit what type of item you're wanting
                         to search for. Keep in mind, that a low Scan Hours or
                         high Sale Amount value will limit your results.
+                        <span className={`italic hidden md:block`}>
+                          Spicy side note, this is a multi-select filter. Hold
+                          CTRL or SHIFT + click to select multiple if on a
+                          keyboard.
+                        </span>
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">Force HQ only</legend>
                         <div className="relative flex items-start">
@@ -290,7 +292,7 @@ const Index = () => {
                       </fieldset>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">Region Wide Search</legend>
                         <div className="relative flex items-start">
@@ -318,7 +320,7 @@ const Index = () => {
                       </fieldset>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">
                           Include Vendor Prices
@@ -348,7 +350,7 @@ const Index = () => {
                       </fieldset>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">
                           Include Out of Stock
@@ -407,11 +409,13 @@ const Index = () => {
                       cy="12"
                       r="10"
                       stroke="currentColor"
-                      strokeWidth="4"></circle>
+                      strokeWidth="4"
+                    />
                     <path
                       className="opacity-75"
                       fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
                   </svg>
                 )}
                 Search

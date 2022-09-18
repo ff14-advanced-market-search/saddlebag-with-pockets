@@ -1,34 +1,86 @@
 import { address, UserAgent } from '~/requests/client/config'
 
-interface IRuntimeForm {
-  [key: string]: any
+const defaults = {
+  preferred_roi: 50,
+  min_profit_amount: 10000,
+  min_desired_avg_ppu: 10000,
+  min_stack_size: 1,
+  hours_ago: 24,
+  min_sales: 5,
+  hq: false,
+  home_server: 'Midgardsormr',
+  filters: [0],
+  region_wide: false,
+  include_vendor: false,
+  show_out_stock: false,
+  universalis_list_uid: ''
 }
 
-export class RunTimeFullScanForm<T extends IRuntimeForm> {
-  constructor(private form: T) {}
+export type FormValuesMap = Map<
+  string,
+  number | string | boolean | number[] | string[]
+>
 
-  public formData(): FormData {
-    const form = new FormData()
+export class FormValues {
+  private readonly map: FormValuesMap
+  constructor(private data: FormData) {
+    if (data.has('filters')) {
+      defaults['filters'] = []
+    }
+    this.map = new Map(Object.entries(defaults))
+  }
 
-    Object.keys(this.form).forEach((key) => {
-      if (this.form[key] !== undefined) {
-        form.append(key, this.form[key])
+  public toMap(
+    fixValueTypes = true
+  ): Map<string, number | string | boolean | Array<number> | Array<string>> {
+    for (const [key, value] of this.data.entries()) {
+      const newValue = fixValueTypes
+        ? this.resolveValueType(value as string)
+        : value
+      const remappedKey = keyMap(key)
+
+      console.dir(remappedKey, newValue)
+      if (this.map.has(remappedKey)) {
+        const existing: any[] | any = this.map.get(remappedKey)
+        if (Array.isArray(existing)) {
+          let arrayedValue
+          if (Array.isArray(newValue)) {
+            arrayedValue = [...existing, ...newValue]
+          } else {
+            arrayedValue = [...existing, newValue]
+          }
+          this.map.set(remappedKey, arrayedValue)
+        }
+      } else {
+        this.map.set(remappedKey, newValue as boolean | number | string)
       }
-    })
+    }
+    return this.map
+  }
 
-    return form
+  private resolveValueType: (value: string) => string | number | boolean = (
+    value
+  ) => {
+    if (value === 'on') {
+      // checkboxes whyyyyyy
+      return true
+    }
+    if (!isNaN(parseInt(value as string))) {
+      return parseInt(value)
+    }
+    return value
   }
 }
 
-export type FullScanFields = {
-  scan_hours: number
-  sale_amount: number
-  roi: number
-  minimum_stack_size: number
-  minimum_profit_amount: number
-  price_per_unit: number
-  world: string
-}
+// export type FullScanFields = {
+//   scan_hours: number
+//   sale_amount: number
+//   roi: number
+//   minimum_stack_size: number
+//   minimum_profit_amount: number
+//   price_per_unit: number
+//   world: string
+// }
 
 // export const validator: Validator<FullScanFields> = withZod(z.object({
 //     scan_hours: z.number().positive().min(1).max(128),
@@ -39,28 +91,6 @@ export type FullScanFields = {
 //     price_per_unit: z.number().min(1),
 //     world: z.string()
 // }));
-
-export const remappedKeys = (fields: any, setDefaults = true) => {
-  const map = setDefaults ? new Map(Object.entries(defaults)) : new Map()
-
-  Array.from(fields as [string, string | boolean | number][]).map((field) => {
-    let [key, value] = field
-
-    // checkboxes whyyyyyy
-    if (value === 'on') {
-      value = true
-    }
-    if (!isNaN(parseInt(value as string))) {
-      value = parseInt(value as string)
-    }
-    map.set(keyMap(key), value)
-    return field
-  })
-  if (process.env.NODE_ENV === 'development') {
-    console.log('vars', Object.fromEntries(map.entries()))
-  }
-  return map
-}
 
 const keyMap: (key: string) => string = (key) => {
   switch (key) {
@@ -89,21 +119,6 @@ const keyMap: (key: string) => string = (key) => {
   }
 }
 
-const defaults = {
-  preferred_roi: 50,
-  min_profit_amount: 10000,
-  min_desired_avg_ppu: 10000,
-  min_stack_size: 1,
-  hours_ago: 24,
-  min_sales: 5,
-  hq: false,
-  home_server: 'Midgardsormr',
-  filters: 0,
-  region_wide: false,
-  include_vendor: false,
-  show_out_stock: false
-}
-
 export type ResponseType = {
   ROI: number
   avg_ppu: number
@@ -120,9 +135,9 @@ export type ResponseType = {
   url: string // @todo URL
 }
 
-const FullScanRequest: (
-  map: Map<string, number | boolean | string>
-) => Promise<Response> = async (map) => {
+const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (
+  map
+) => {
   return fetch(`${address}/api/scan`, {
     method: 'POST',
     headers: {
