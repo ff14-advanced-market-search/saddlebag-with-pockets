@@ -257,7 +257,7 @@ const Index = () => {
                         Filters let you limit what type of item you're wanting
                         to search for. Keep in mind, that a low Scan Hours or
                         high Sale Amount value will limit your results.
-                        <span className={`font-italic invisible sm:visible`}>
+                        <span className={`italic invisible sm:visible`}>
                           Spicy side note, this is a multi-select filter. Hold
                           CTRL or SHIFT + click to select multiple if on a
                           keyboard.
