@@ -41,11 +41,6 @@ export class FormValues {
 
       console.dir(remappedKey, newValue)
       if (this.map.has(remappedKey)) {
-        console.log(
-          `already has remapped key`,
-          remappedKey,
-          this.map.get(remappedKey)
-        )
         const existing: any[] | any = this.map.get(remappedKey)
         if (Array.isArray(existing)) {
           let arrayedValue
@@ -54,12 +49,9 @@ export class FormValues {
           } else {
             arrayedValue = [...existing, newValue]
           }
-          console.log(`is array, new all value:`, arrayedValue)
           this.map.set(remappedKey, arrayedValue)
-          console.dir(`new map value`, this.map.get(remappedKey))
         }
       } else {
-        console.log(`does not has remapped key`, remappedKey, newValue)
         this.map.set(remappedKey, newValue as boolean | number | string)
       }
     }

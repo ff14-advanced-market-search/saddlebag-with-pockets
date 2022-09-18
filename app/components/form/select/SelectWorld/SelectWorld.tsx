@@ -16,7 +16,6 @@ export const SelectWorld: FC<SelectWorldProps> = ({
 }) => {
   const worldDefaultValue = () => {
     if (dataCenter) {
-      console.log(dataCenter, world)
       return world ? world : 'Select your World/Server'
     }
     return `Please select a Data Center`
