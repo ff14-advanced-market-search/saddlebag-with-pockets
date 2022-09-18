@@ -68,11 +68,11 @@ const Index = () => {
             <h1 className="text-2xl font-semibold text-gray-900 py-6">
               Full Scan
             </h1>
-            <div className="mt-5 md:mt-0 md:col-span-2 py-6">
+            <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="scan-hours"
                         className="block text-sm font-medium text-gray-700">
@@ -97,7 +97,7 @@ const Index = () => {
                         higher number.
                       </p>
                     </div>
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="sale-amt"
                         className="block text-sm font-medium text-gray-700">
@@ -117,7 +117,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="roi"
                         className="block text-sm font-medium text-gray-700">
@@ -143,7 +143,7 @@ const Index = () => {
                         number from 1 to 100.
                       </p>
                     </div>
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="minimum_stack_size"
                         className="block text-sm font-medium text-gray-700">
@@ -165,7 +165,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="minimum_profit_amount"
                         className="block text-sm font-medium text-gray-700">
@@ -191,7 +191,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="price_per_unit"
                         className="block text-sm font-medium text-gray-700">
@@ -217,7 +217,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="filters"
                         className="block text-sm font-medium text-gray-700">
@@ -260,7 +260,7 @@ const Index = () => {
                       </p>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">Force HQ only</legend>
                         <div className="relative flex items-start">
@@ -287,7 +287,7 @@ const Index = () => {
                       </fieldset>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">Region Wide Search</legend>
                         <div className="relative flex items-start">
@@ -315,7 +315,7 @@ const Index = () => {
                       </fieldset>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">
                           Include Vendor Prices
@@ -345,7 +345,7 @@ const Index = () => {
                       </fieldset>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-2">
+                    <div className="col-span-6 sm:col-span-3">
                       <fieldset className="space-y-5">
                         <legend className="sr-only">
                           Include Out of Stock
