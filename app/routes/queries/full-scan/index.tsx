@@ -4,11 +4,7 @@ import type {
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
-import type { FullScanFields } from '~/requests/FullScan'
-import FullScanRequest, {
-  remappedKeys,
-  RunTimeFullScanForm
-} from '~/requests/FullScan'
+import FullScanRequest, { FormValues } from '~/requests/FullScan'
 import { classNames } from '~/utils'
 import filters from '~/utils/filters'
 import { Fragment } from 'react'
@@ -21,11 +17,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   formData.append('world', session.getWorld())
 
-  const typedFormData = new RunTimeFullScanForm<FullScanFields>(
-    Object.fromEntries(formData) as unknown as FullScanFields
-  )
+  const typedData = new FormValues(formData)
 
-  const data = remappedKeys(typedFormData.formData())
+  const data = typedData.toMap()
   return await FullScanRequest(data).catch((err) => {
     console.log('catch', err)
     return err

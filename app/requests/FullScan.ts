@@ -15,8 +15,13 @@ const defaults = {
   show_out_stock: true
 }
 
+export type FormValuesMap = Map<
+  string,
+  number | string | boolean | number[] | string[]
+>
+
 export class FormValues {
-  private map: Map<string, number | string | boolean | number[] | string[]>
+  private readonly map: FormValuesMap
   constructor(private data: FormData) {
     this.map = new Map(Object.entries(defaults))
   }
@@ -123,9 +128,9 @@ export type ResponseType = {
   url: string // @todo URL
 }
 
-const FullScanRequest: (
-  map: Map<string, number | boolean | string>
-) => Promise<Response> = async (map) => {
+const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (
+  map
+) => {
   return fetch(`${address}/api/scan`, {
     method: 'POST',
     headers: {
