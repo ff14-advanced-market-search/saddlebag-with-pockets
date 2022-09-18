@@ -1960,6 +1960,10 @@ select {
 }
 
 @media (min-width: 640px) {
+  .sm\:visible {
+    visibility: visible;
+  }
+
   .sm\:col-span-3 {
     grid-column: span 3 / span 3;
   }
