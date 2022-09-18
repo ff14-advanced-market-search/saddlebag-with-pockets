@@ -50,6 +50,8 @@ export class FormValues {
             arrayedValue = [...existing, newValue]
           }
           this.map.set(remappedKey, arrayedValue)
+        } else {
+          this.map.set(remappedKey, newValue as boolean | number | string)
         }
       } else {
         this.map.set(remappedKey, newValue as boolean | number | string)
@@ -138,6 +140,7 @@ export type ResponseType = {
 const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (
   map
 ) => {
+  console.dir(`body`, map.entries())
   return fetch(`${address}/api/scan`, {
     method: 'POST',
     headers: {
