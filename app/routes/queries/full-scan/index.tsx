@@ -20,6 +20,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const typedData = new FormValues(formData)
 
   const data = typedData.toMap()
+  console.dir(data)
   return await FullScanRequest(data).catch((err) => {
     console.log('catch', err)
     return err
@@ -226,7 +227,7 @@ const Index = () => {
                         <select
                           name="filters"
                           className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                          defaultValue={`all`}
+                          defaultValue={[0]}
                           multiple={true}>
                           {/** @todo clean up what the multiple select dropdown looks like **/}
                           {filters.map((value) => {

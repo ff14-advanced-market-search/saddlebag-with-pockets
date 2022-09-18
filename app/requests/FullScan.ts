@@ -23,6 +23,9 @@ export type FormValuesMap = Map<
 export class FormValues {
   private readonly map: FormValuesMap
   constructor(private data: FormData) {
+    if (data.has('filters')) {
+      defaults['filters'] = []
+    }
     this.map = new Map(Object.entries(defaults))
   }
 
@@ -37,14 +40,25 @@ export class FormValues {
 
       console.dir(remappedKey, newValue)
       if (this.map.has(remappedKey)) {
+        console.log(
+          `already has remapped key`,
+          remappedKey,
+          this.map.get(remappedKey)
+        )
         const existing: any[] | any = this.map.get(remappedKey)
         if (Array.isArray(existing)) {
-          this.map.set(
-            remappedKey,
-            existing.push(newValue as boolean | number | string)
-          )
+          let arrayedValue
+          if (Array.isArray(newValue)) {
+            arrayedValue = [...existing, ...newValue]
+          } else {
+            arrayedValue = [...existing, newValue]
+          }
+          console.log(`is array, new all value:`, arrayedValue)
+          this.map.set(remappedKey, arrayedValue)
+          console.dir(`new map value`, this.map.get(remappedKey))
         }
       } else {
+        console.log(`does not has remapped key`, remappedKey, newValue)
         this.map.set(remappedKey, newValue as boolean | number | string)
       }
     }
