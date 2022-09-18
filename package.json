@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@headlessui/react": "^1.7.2",
-    "@heroicons/react": "^2.0.11",
+    "@heroicons/react": "^1.0.6",
     "@remix-run/dev": "^1.7.0",
     "@remix-run/eslint-config": "^1.7.0",
     "@tailwindcss/forms": "^0.5.2",
