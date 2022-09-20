@@ -1,77 +1,91 @@
-import { address, UserAgent } from '~/requests/client/config'
+import { address, UserAgent } from "~/requests/client/config"
 
 const defaults = {
-  preferred_roi: 50,
-  min_profit_amount: 10000,
-  min_desired_avg_ppu: 10000,
-  min_stack_size: 1,
-  hours_ago: 24,
-  min_sales: 5,
-  hq: false,
-  home_server: 'Midgardsormr',
-  filters: [0],
-  region_wide: false,
-  include_vendor: false,
-  show_out_stock: false,
-  universalis_list_uid: ''
+  preferred_roi:        50,
+  min_profit_amount:    10000,
+  min_desired_avg_ppu:  10000,
+  min_stack_size:       1,
+  hours_ago:            24,
+  min_sales:            5,
+  hq:                   false,
+  home_server:          "Midgardsormr",
+  filters:              [0],
+  region_wide:          false,
+  include_vendor:       false,
+  show_out_stock:       false,
+  universalis_list_uid: "",
 }
 
-export type FormValuesMap = Map<
-  string,
-  number | string | boolean | number[] | string[]
->
+export type FormValuesMap = Map<string, number | string | boolean | number[] | string[]>
 
 export class FormValues {
   private readonly map: FormValuesMap
+
   constructor(private data: FormData) {
-    if (data.has('filters')) {
-      defaults['filters'] = []
-    }
+    if(data.has("filters"))
+      {
+        defaults["filters"] = []
+      }
     this.map = new Map(Object.entries(defaults))
   }
 
-  public toMap(
-    fixValueTypes = true
-  ): Map<string, number | string | boolean | Array<number> | Array<string>> {
-    for (const [key, value] of this.data.entries()) {
-      const newValue = fixValueTypes
-        ? this.resolveValueType(value as string)
-        : value
-      const remappedKey = keyMap(key)
+  public toMap(fixValueTypes = true): Map<string, number | string | boolean | Array<number> | Array<string>> {
+    for(const [key, value] of this.data.entries())
+      {
+        const newValue = fixValueTypes
+                         ? this.resolveValueType(value as string)
+                         : value
+        const remappedKey = keyMap(key)
 
-      console.dir(remappedKey, newValue)
-      if (this.map.has(remappedKey)) {
-        const existing: any[] | any = this.map.get(remappedKey)
-        if (Array.isArray(existing)) {
-          let arrayedValue
-          if (Array.isArray(newValue)) {
-            arrayedValue = [...existing, ...newValue]
-          } else {
-            arrayedValue = [...existing, newValue]
+        console.dir(remappedKey, newValue)
+        if(this.map.has(remappedKey))
+          {
+            const existing: any[] | any = this.map.get(remappedKey)
+            if(Array.isArray(existing))
+              {
+                let arrayedValue
+                if(Array.isArray(newValue))
+                  {
+                    arrayedValue = [
+                      ...existing,
+                      ...newValue,
+                    ]
+                  }
+                else
+                  {
+                    arrayedValue = [
+                      ...existing,
+                      newValue,
+                    ]
+                  }
+                this.map.set(remappedKey, arrayedValue)
+              }
+            else
+              {
+                this.map.set(remappedKey, newValue as boolean | number | string)
+              }
           }
-          this.map.set(remappedKey, arrayedValue)
-        } else {
-          this.map.set(remappedKey, newValue as boolean | number | string)
-        }
-      } else {
-        this.map.set(remappedKey, newValue as boolean | number | string)
+        else
+          {
+            this.map.set(remappedKey, newValue as boolean | number | string)
+          }
       }
-    }
     return this.map
   }
 
-  private resolveValueType: (value: string) => string | number | boolean = (
-    value
-  ) => {
-    if (value === 'on') {
-      // checkboxes whyyyyyy
-      return true
+  private resolveValueType: (value: string) => string | number | boolean = (value) =>
+    {
+      if(value === "on")
+        {
+          // checkboxes whyyyyyy
+          return true
+        }
+      if(!isNaN(parseInt(value as string)))
+        {
+          return parseInt(value)
+        }
+      return value
     }
-    if (!isNaN(parseInt(value as string))) {
-      return parseInt(value)
-    }
-    return value
-  }
 }
 
 // export type FullScanFields = {
@@ -94,32 +108,34 @@ export class FormValues {
 //     world: z.string()
 // }));
 
-const keyMap: (key: string) => string = (key) => {
-  switch (key) {
-    case 'sale_amount':
-      return 'min_sales'
-    case 'world':
-      return 'home_server'
-    case 'minimum_stack_size':
-      return 'min_stack_size'
-    case 'hq_only':
-      return 'hq'
-    case 'minimum_profit_amount':
-      return 'min_profit_amount'
-    case 'price_per_unit':
-      return 'min_desired_avg_ppu'
-    case 'out_of_stock':
-      return 'show_out_stock'
-    case 'roi':
-      return 'preferred_roi'
-    case 'scan_hours':
-      return 'hours_ago'
-    default:
-      // region_wide
-      // include_vendor
-      return key
+const keyMap: (key: string) => string = (key) =>
+  {
+    switch(key)
+      {
+        case "sale_amount":
+          return "min_sales"
+        case "world":
+          return "home_server"
+        case "minimum_stack_size":
+          return "min_stack_size"
+        case "hq_only":
+          return "hq"
+        case "minimum_profit_amount":
+          return "min_profit_amount"
+        case "price_per_unit":
+          return "min_desired_avg_ppu"
+        case "out_of_stock":
+          return "show_out_stock"
+        case "roi":
+          return "preferred_roi"
+        case "scan_hours":
+          return "hours_ago"
+        default:
+          // region_wide
+          // include_vendor
+          return key
+      }
   }
-}
 
 export type ResponseType = {
   ROI: number
@@ -138,17 +154,16 @@ export type ResponseType = {
   npc_vendor_info: string
 }
 
-const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (
-  map
-) => {
-  return fetch(`${address}/api/scan`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': UserAgent
-    },
-    body: JSON.stringify(Object.fromEntries(map.entries()))
-  })
-}
+const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (map) =>
+  {
+    return fetch(`${address}/api/scan`, {
+      method:  "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent":   UserAgent,
+      },
+      body:    JSON.stringify(Object.fromEntries(map.entries())),
+    })
+  }
 
 export default FullScanRequest

@@ -1,70 +1,70 @@
 export const DataCenterList: Record<string, Array<{ name: string }>> = {
-  NA: [
+  NA:  [
     {
-      name: 'Aether'
+      name: "Aether",
     },
     {
-      name: 'Primal'
+      name: "Primal",
     },
     {
-      name: 'Crystal'
-    }
+      name: "Crystal",
+    },
   ],
-  EU: [
+  EU:  [
     {
-      name: 'Chaos'
+      name: "Chaos",
     },
     {
-      name: 'Light'
-    }
+      name: "Light",
+    },
   ],
-  JP: [
+  JP:  [
     {
-      name: 'Elemental'
+      name: "Elemental",
     },
     {
-      name: 'Gaia'
+      name: "Gaia",
     },
     {
-      name: 'Mana'
+      name: "Mana",
     },
     {
-      name: 'Meteor'
-    }
+      name: "Meteor",
+    },
   ],
   OCE: [
     {
-      name: 'Materia'
-    }
+      name: "Materia",
+    },
   ],
-  CN: [
+  CN:  [
     {
-      name: 'LuXingNiao'
+      name: "LuXingNiao",
     },
     {
-      name: 'MoGuLi'
+      name: "MoGuLi",
     },
     {
-      name: 'MaoXiaoPang'
+      name: "MaoXiaoPang",
     },
     {
-      name: 'DouDouChai'
-    }
-  ]
+      name: "DouDouChai",
+    },
+  ],
 }
 export type DataCentersList = typeof DataCenterList
 
-export const DataCentersMap: Map<string, Array<{ name: string }>> = new Map(
-  Object.entries(DataCenterList)
-)
+export const DataCentersMap: Map<string, Array<{ name: string }>> = new Map(Object.entries(DataCenterList))
 
 export const DataCenterArray = Array.from(DataCentersMap)
-  .map((w) => w[1])
-  .flatMap((item) => {
-    return item
-  })
-  .map((item) => {
-    return item.name
-  })
+                                    .map((w) => w[1])
+                                    .flatMap((item) =>
+                                    {
+                                      return item
+                                    })
+                                    .map((item) =>
+                                    {
+                                      return item.name
+                                    })
 
 export default DataCentersMap

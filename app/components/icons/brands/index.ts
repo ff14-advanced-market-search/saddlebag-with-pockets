@@ -1,5 +1,5 @@
-import UniversalisBadge from './UniversalisBadge'
+import UniversalisBadge from "./UniversalisBadge"
 
 export default {
-  UniversalisBadge
+  UniversalisBadge,
 }

@@ -6,4 +6,4 @@ export const address = defaultAddress
 //     ? process.env.API_ADDRESS
 //     : defaultAddress
 
-export const UserAgent = 'Saddlebag/1.0'
+export const UserAgent = "Saddlebag/1.0"

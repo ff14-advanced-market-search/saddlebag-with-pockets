@@ -1,54 +1,57 @@
-import { DataCentersOfRegion, WorldsOfDataCenter } from './index'
-import {
-  DataCenterNotFoundException,
-  RegionNotFoundException
-} from '~/utils/locations/Errors'
+import { DataCentersOfRegion, WorldsOfDataCenter }               from "./index"
+import { DataCenterNotFoundException, RegionNotFoundException } from "~/utils/locations/Errors"
 
-test('DataCentersOfRegion returns a data center array', () => {
-  expect(DataCentersOfRegion('OCE')).toEqual([
+test("DataCentersOfRegion returns a data center array", () =>
+{
+  expect(DataCentersOfRegion("OCE")).toEqual([
     {
-      name: 'Materia'
-    }
+      name: "Materia",
+    },
   ])
 })
 
-test('DataCentersOfRegion throws RegionNotFoundException', () => {
-  expect(() => {
-    DataCentersOfRegion('NOT-REAL-REGION')
+test("DataCentersOfRegion throws RegionNotFoundException", () =>
+{
+  expect(() =>
+  {
+    DataCentersOfRegion("NOT-REAL-REGION")
   }).toThrow(RegionNotFoundException)
 })
 
-test('WorldsOfDataCenter returns a world array', () => {
-  expect(WorldsOfDataCenter('Mana')).toEqual([
+test("WorldsOfDataCenter returns a world array", () =>
+{
+  expect(WorldsOfDataCenter("Mana")).toEqual([
     {
-      name: 'Anima'
+      name: "Anima",
     },
     {
-      name: 'Asura'
+      name: "Asura",
     },
     {
-      name: 'Chocobo'
+      name: "Chocobo",
     },
     {
-      name: 'Hades'
+      name: "Hades",
     },
     {
-      name: 'Ixion'
+      name: "Ixion",
     },
     {
-      name: 'Masamune'
+      name: "Masamune",
     },
     {
-      name: 'Pandaemonium'
+      name: "Pandaemonium",
     },
     {
-      name: 'Titan'
-    }
+      name: "Titan",
+    },
   ])
 })
 
-test('WorldsOfDataCenter throws DataCenterNotFoundException', () => {
-  expect(() => {
-    WorldsOfDataCenter('Something about hot dogs')
+test("WorldsOfDataCenter throws DataCenterNotFoundException", () =>
+{
+  expect(() =>
+  {
+    WorldsOfDataCenter("Something about hot dogs")
   }).toThrow(DataCenterNotFoundException)
 })

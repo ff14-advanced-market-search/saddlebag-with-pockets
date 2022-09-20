@@ -1,11 +1,12 @@
-import SGEIcon from './svg/class_job_040.svg'
-import { FC } from 'react'
+import SGEIcon from "./svg/class_job_040.svg"
+import { FC }  from "react"
 
 type Props = {
   className?: string
 }
 
-export const SGE: FC<Props> = ({ className = '' }) => {
-  // @ts-ignore
-  return <SGEIcon className={className} />
-}
+export const SGE: FC<Props> = ({ className = "" }) =>
+  {
+    // @ts-ignore
+    return <SGEIcon className={className} />
+  }
