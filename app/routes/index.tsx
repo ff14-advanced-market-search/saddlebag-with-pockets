@@ -9,7 +9,14 @@ const recommendedQueries = [
       'Search throughout the entire data set! Nigh-infinite options.',
     icon: DocumentSearchIcon,
     href: '/queries/full-scan'
-  }
+  },
+  {
+    name: 'Value Scan',
+    description:
+      'Search for high value trades.',
+    icon: DocumentSearchIcon,
+    href: '/queries/value-scan'
+  },
 ]
 
 export default function Index() {
