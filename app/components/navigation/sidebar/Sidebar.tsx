@@ -56,21 +56,21 @@ const navigation = [
     href: 'https://github.com/ff14-advanced-market-search',
     external: true,
     icon: GithubIcon
-  },
+  }
 ]
 const advertisements = [
   {
     name: 'Best Sellers in Video Games',
-    href: 'https://www.amazon.com/best-sellers-video-games/zgbs/videogames?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=e9fc3b6346a319e96288b98cbf3e688d&ref_=ihub_curatedcontent_c0e2eb7b-31db-4cc7-a427-b5f5f75b09db',
+    href: 'https://www.amazon.com/best-sellers-video-games/zgbs/videogames?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=e9fc3b6346a319e96288b98cbf3e688d&ref_=ihub_curatedcontent_c0e2eb7b-31db-4cc7-a427-b5f5f75b09db'
   },
 
   {
     name: 'Best Sellers in Electronics',
-    href: 'https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=2d456819badb061450b7200abf42b1cf&ref_=ihub_curatedcontent_c71c4a67-0a56-4af2-a5a5-78ab26623653',
+    href: 'https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=2d456819badb061450b7200abf42b1cf&ref_=ihub_curatedcontent_c71c4a67-0a56-4af2-a5a5-78ab26623653'
   },
   {
     name: 'Best Sellers in Computers & Accessories',
-    href: 'https://www.amazon.com/Best-Sellers-Computers-Accessories/zgbs/pc?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=d5510f37e5ba06b34988212672d6e470&ref_=ihub_curatedcontent_cc03e16d-0d64-46fc-ba03-79623230ca5e',
+    href: 'https://www.amazon.com/Best-Sellers-Computers-Accessories/zgbs/pc?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=d5510f37e5ba06b34988212672d6e470&ref_=ihub_curatedcontent_cc03e16d-0d64-46fc-ba03-79623230ca5e'
   }
 ]
 const userNavigation = [
@@ -197,16 +197,19 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     )}
                   </nav>
                   <nav className="px-2 space-y-1">
-                    <span className={`text-gray-300 text-base p-2`}>Advertisements</span>
-                  {advertisements.map((item) => <a
+                    <span className={`text-gray-300 text-base p-2`}>
+                      Advertisements
+                    </span>
+                    {advertisements.map((item) => (
+                      <a
                         key={item.name}
                         href={item.href}
                         target={`_blank`}
                         className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
                         {item.name}
                       </a>
-                  )}
-                </nav>
+                    ))}
+                  </nav>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -278,15 +281,20 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               )}
             </nav>
             <nav className="flex-1 px-2 py-4 space-y-1">
-              <NavLink className={`text-gray-300 text-base p-2 hover:bg-gray-700 hover:text-white `} to={`/why/advertisements`}>Advertisements</NavLink>
-            {advertisements.map((item) => <a
+              <NavLink
+                className={`text-gray-300 text-base p-2 hover:bg-gray-700 hover:text-white `}
+                to={`/why/advertisements`}>
+                Advertisements
+              </NavLink>
+              {advertisements.map((item) => (
+                <a
                   key={item.name}
                   href={item.href}
                   className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
                   {item.name}
                 </a>
-            )}
-          </nav>
+              ))}
+            </nav>
           </div>
         </div>
       </div>
