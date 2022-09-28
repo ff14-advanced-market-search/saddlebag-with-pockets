@@ -10,7 +10,6 @@ _Frontend for Aetheryte API_
 
 ## Getting Started
 
-The frontend directory is bootstraped by `create-react-app` and `material-ui`
 Install the dependencies:
 
 ```bash
