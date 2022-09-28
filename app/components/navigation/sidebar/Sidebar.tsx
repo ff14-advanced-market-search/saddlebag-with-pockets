@@ -14,6 +14,7 @@ import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
 import EarthIcon from '~/icons/EarthIcon'
+import GithubIcon from '~/icons/GithubIcon'
 import { LocationMarkerIcon } from '@heroicons/react/solid'
 import DiscordIcon from '~/icons/DiscordIcon'
 
@@ -54,7 +55,7 @@ const navigation = [
     name: 'Github',
     href: 'https://github.com/ff14-advanced-market-search',
     external: true,
-    icon: ChartSquareBarIcon
+    icon: GithubIcon
   },
 ]
 const advertisements = [
