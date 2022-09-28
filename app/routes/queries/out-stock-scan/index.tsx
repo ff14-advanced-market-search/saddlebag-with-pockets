@@ -227,7 +227,7 @@ const Index = () => {
                         <select
                           name="filters"
                           className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                          defaultValue={[1,2,3,4,7]}
+                          defaultValue={[1, 2, 3, 4, 7]}
                           multiple={true}>
                           {/** @todo clean up what the multiple select dropdown looks like **/}
                           {filters.map((value) => {
