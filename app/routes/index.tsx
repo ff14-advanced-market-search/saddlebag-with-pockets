@@ -4,40 +4,40 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
   {
-    name: 'Full Scan',
+    name: 'Full Search',
     description:
       'A trading scan that searches through all items on your local marketboard for items to buy from other servers and sell on your own for a profit!',
     icon: DocumentSearchIcon,
     href: '/queries/full-scan'
   },
   {
-    name: 'High Value Scan',
+    name: 'High Value Search',
     description: 'Search for high value trades.',
     icon: DocumentSearchIcon,
     href: '/queries/value-scan'
   },
   {
-    name: 'Fast Sales Scan',
+    name: 'Fast Sales Search',
     description: 'Search for items with high rate of sales.',
     icon: DocumentSearchIcon,
     href: '/queries/fast-scan'
   },
   {
-    name: 'Commodities Scan',
+    name: 'Commodities Search',
     description:
       'Search for items that sell in larger stack sizes (i.e. larger quantities)',
     icon: DocumentSearchIcon,
     href: '/queries/commodity-scan'
   },
   {
-    name: 'NPC Vendor Item Scan',
+    name: 'NPC Vendor Item Search',
     description:
       'Search for items sold by NPC Vendors which can be resold on the marketboard.',
     icon: DocumentSearchIcon,
     href: '/queries/vendor-scan'
   },
   {
-    name: 'Beginner Out of Stock Scan',
+    name: 'Beginner Out of Stock Search',
     description:
       'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
     icon: DocumentSearchIcon,
