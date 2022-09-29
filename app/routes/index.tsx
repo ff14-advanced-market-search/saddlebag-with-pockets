@@ -6,7 +6,7 @@ const recommendedQueries = [
   {
     name: 'Full Scan',
     description:
-      'Search throughout the entire data set! Nigh-infinite options.',
+      'A trading scan that searches through all items on your local marketboard for items to buy from other servers and sell on your own for a profit!',
     icon: DocumentSearchIcon,
     href: '/queries/full-scan'
   },
