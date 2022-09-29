@@ -65,7 +65,7 @@ const Index = () => {
       <div className="py-6">
         <Form method="post">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-green-900 py-6">
+            <h1 className="text-2xl font-semibold text-blue-900 py-6">
               Fast Search
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
