@@ -106,7 +106,7 @@ const Index = () => {
                       <input
                         type="number"
                         id="sale-amt"
-                        defaultValue={5}
+                        defaultValue={1}
                         name="sale_amount"
                         className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
