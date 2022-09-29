@@ -66,7 +66,7 @@ const Index = () => {
         <Form method="post">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 py-6">
-              Basic Search
+              NPC Vendor Item Search
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
@@ -82,7 +82,7 @@ const Index = () => {
                         <input
                           type="number"
                           id="scan-hours"
-                          defaultValue={24}
+                          defaultValue={48}
                           name="scan_hours"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -175,7 +175,7 @@ const Index = () => {
                         <input
                           type="number"
                           name="minimum_profit_amount"
-                          defaultValue={10000}
+                          defaultValue={1000}
                           id="minimum_profit_amount"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -201,7 +201,7 @@ const Index = () => {
                         <input
                           type="number"
                           name="price_per_unit"
-                          defaultValue={10000}
+                          defaultValue={1000}
                           id="price_per_unit"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -227,7 +227,7 @@ const Index = () => {
                         <select
                           name="filters"
                           className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                          defaultValue={[0]}
+                          defaultValue={[-1]}
                           multiple={true}>
                           {/** @todo clean up what the multiple select dropdown looks like **/}
                           {filters.map((value) => {
@@ -332,6 +332,7 @@ const Index = () => {
                               aria-describedby="comments-description"
                               name="include_vendor"
                               type="checkbox"
+                              defaultChecked={true}
                               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                             />
                           </div>

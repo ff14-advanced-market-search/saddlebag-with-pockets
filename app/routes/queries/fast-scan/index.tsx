@@ -66,7 +66,7 @@ const Index = () => {
         <Form method="post">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 py-6">
-              Basic Search
+              Fast Search
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
@@ -106,7 +106,7 @@ const Index = () => {
                       <input
                         type="number"
                         id="sale-amt"
-                        defaultValue={5}
+                        defaultValue={20}
                         name="sale_amount"
                         className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
@@ -175,7 +175,7 @@ const Index = () => {
                         <input
                           type="number"
                           name="minimum_profit_amount"
-                          defaultValue={10000}
+                          defaultValue={500}
                           id="minimum_profit_amount"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -201,7 +201,7 @@ const Index = () => {
                         <input
                           type="number"
                           name="price_per_unit"
-                          defaultValue={10000}
+                          defaultValue={500}
                           id="price_per_unit"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />

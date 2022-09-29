@@ -51,6 +51,6 @@ https://dash.cloudflare.com/131d3ef77f51b43d39c70f2e5b65c34c/pages/view/saddleba
 
 For those interested, we're using the following in the front-end architecture:
 
-* [Remix Run](https://remix.run/)
-* [Cloudflare Pages](https://pages.cloudflare.com/)
-* [Tailwind CSS](https://tailwindcss.com/)
+- [Remix Run](https://remix.run/)
+- [Cloudflare Pages](https://pages.cloudflare.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
