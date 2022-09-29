@@ -66,7 +66,11 @@ const Index = () => {
         <Form method="post">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 py-6">
-              Out Of Stock Search - Buy at least 5 to 10 different items not listed on your server which cost under 5k. Sell them on your market board for 70k. Not all will guarenteed sell before competition shows up, but you only need 1 sale to gain a massive profit margin.
+              Out Of Stock Search - Buy at least 5 to 10 different items not
+              listed on your server which cost under 5k. Sell them on your
+              market board for 70k. Not all will guarenteed sell before
+              competition shows up, but you only need 1 sale to gain a massive
+              profit margin.
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
