@@ -82,7 +82,7 @@ const Index = () => {
                         <input
                           type="number"
                           id="scan-hours"
-                          defaultValue={5}
+                          defaultValue={10}
                           name="scan_hours"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -106,7 +106,7 @@ const Index = () => {
                       <input
                         type="number"
                         id="sale-amt"
-                        defaultValue={5}
+                        defaultValue={8}
                         name="sale_amount"
                         className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
