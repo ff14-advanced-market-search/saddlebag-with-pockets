@@ -83,13 +83,6 @@ const Index = () => {
     }
   }
 
-  if (results) {
-    if (Object.keys(results).length === 0) {
-      return <NoResults href={`/queries/listings`} />
-    }
-
-    return <Results data={results} />
-  }
   return (
     <main className="flex-1">
       <div className="py-6">
@@ -148,19 +141,26 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
+                <div className="px-4 py-5 bg-white sm:p-6">
+                  <div className="flex justify-end">
+                    <SubmitButton
+                      title="Search"
+                      onClick={onSubmit}
+                      loading={transition.state === 'submitting'}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <div className="flex justify-end">
-              <SubmitButton
-                title="Search"
-                onClick={onSubmit}
-                loading={transition.state === 'submitting'}
-              />
             </div>
           </div>
         </Form>
       </div>
+      {results && results.listings && results.listings.length === 0 && (
+        <NoResults href={`/queries/listings`} />
+      )}
+      {results && results.listings && results.listings.length > 0 && (
+        <Results data={results} />
+      )}
     </main>
   )
 }

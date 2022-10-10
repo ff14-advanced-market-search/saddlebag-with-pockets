@@ -44,36 +44,32 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 const Results = ({ data }: { data: ListingResponseType }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
-  const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
+  const [columnOrder] = useState<ColumnOrderState>([])
 
   const columnHelper = createColumnHelper<Listing>()
   const columns = [
-    columnHelper.accessor('hq', {
-      header: 'Headquaters',
-      cell: (info) => info.getValue().toString()
-    }),
-    columnHelper.accessor('lastReviewTime', {
-      header: 'Last Review Time',
+    columnHelper.accessor('retainerName', {
+      header: 'Retainer Name',
       cell: (info) => info.getValue()
     }),
     columnHelper.accessor('pricePerUnit', {
       header: 'Price Per Unit',
       cell: (info) => info.getValue()
     }),
+    columnHelper.accessor('hq', {
+      header: 'Quality',
+      cell: (info) => (info.getValue() ? 'High' : null)
+    }),
     columnHelper.accessor('quantity', {
       header: 'Quantity',
-      cell: (info) => info.getValue()
-    }),
-    columnHelper.accessor('retainerName', {
-      header: 'Retainer Name',
       cell: (info) => info.getValue()
     }),
     columnHelper.accessor('total', {
       header: 'Total',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('unix_timestamp', {
-      header: 'Timestamp:',
+    columnHelper.accessor('lastReviewTime', {
+      header: 'Last Review Time',
       cell: (info) => info.getValue()
     })
   ]
@@ -104,26 +100,13 @@ const Results = ({ data }: { data: ListingResponseType }) => {
   })
 
   useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'profit_amount') {
-      if (table.getState().sorting[0]?.id !== 'profit_amount') {
-        table.setSorting([
-          {
-            id: 'profit_amount',
-            desc: true
-          }
-        ])
+    table.setSorting([
+      {
+        id: 'pricePerUnit',
+        desc: true
       }
-    }
-  }, [table])
-
-  useEffect(() => {
-    setColumnOrder([
-      'id',
-      'listing_price_diff.avg_price_diff',
-      'min_price',
-      'listing_time_diff.avg_time_diff'
     ])
-  }, [])
+  }, [table])
 
   return (
     <div className={`mt-0 flex flex-col`}>
