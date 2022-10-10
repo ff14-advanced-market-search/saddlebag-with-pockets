@@ -8,6 +8,8 @@ import type { GetListingProps } from '~/requests/GetListing'
 import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import { useState } from 'react'
+import { getItemNameById, searchForItemName } from '~/utils/items'
 
 const validateInput = ({
   itemId,
@@ -74,6 +76,8 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 }
 
 const Index = () => {
+  const [id, setId] = useState(36109)
+  const [name, setName] = useState('')
   const transition = useTransition()
   const results = useActionData()
 
@@ -82,6 +86,9 @@ const Index = () => {
       e.preventDefault()
     }
   }
+
+  const nameById = getItemNameById(id)
+  const items = searchForItemName(name)?.sort()
 
   return (
     <main className="flex-1">
@@ -97,6 +104,45 @@ const Index = () => {
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
+                        htmlFor="world"
+                        className="block text-sm font-medium text-gray-700">
+                        Search for item
+                      </label>
+                      <div className={`mt-1 flex rounded-md shadow-sm`}>
+                        <input
+                          type={'text'}
+                          id="itemName"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                        <span
+                          className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                          Item
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  {items && (
+                    <select
+                      defaultValue={''}
+                      onChange={(e) => setId(parseInt(e.target.value))}>
+                      <option value={''} disabled>
+                        Choose item from below
+                      </option>
+                      {items.map(([id, item]) => (
+                        <option key={item} value={id}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+
+                <div className="px-4 py-5 bg-white sm:p-6">
+                  <div className="grid grid-cols-6 gap-6">
+                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                      <label
                         htmlFor="item-id"
                         className="block text-sm font-medium text-gray-700">
                         Item Id
@@ -105,7 +151,8 @@ const Index = () => {
                         <input
                           type="number"
                           id="item-id"
-                          defaultValue={36109}
+                          value={id}
+                          onChange={(e) => setId(parseInt(e.target.value))}
                           name="itemId"
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -116,6 +163,7 @@ const Index = () => {
                       </div>
                     </div>
                   </div>
+                  {nameById && <p>{nameById}</p>}
                 </div>
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
