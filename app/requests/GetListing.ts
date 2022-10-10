@@ -51,7 +51,8 @@ const GetListing: ({
     body: JSON.stringify({
       item_id: itemId,
       home_server: world,
-      days_range: daysRange
+      initial_days: daysRange[0],
+      end_days: daysRange[1]
     })
   })
 }
