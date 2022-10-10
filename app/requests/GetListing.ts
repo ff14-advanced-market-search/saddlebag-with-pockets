@@ -27,19 +27,19 @@ export interface ResponseType {
   min_price: number
 }
 
-interface GetListingProps {
+export interface GetListingProps {
   itemId: number
-  homeServer: string
+  world: string
   daysRange?: Array<number>
 }
 
 const GetListing: ({
   itemId,
-  homeServer,
+  world,
   daysRange
 }: GetListingProps) => Promise<Response> = async ({
   itemId,
-  homeServer,
+  world,
   daysRange = [7, 0]
 }) => {
   return fetch(`${address}/api/listing`, {
@@ -50,7 +50,7 @@ const GetListing: ({
     },
     body: JSON.stringify({
       item_id: itemId,
-      home_server: homeServer,
+      home_server: world,
       days_range: daysRange
     })
   })
