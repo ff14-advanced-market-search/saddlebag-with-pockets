@@ -14,7 +14,7 @@ import {
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { ResponseType } from '~/requests/GetListing'
+import type { Listing, ListingResponseType } from '~/requests/GetListing'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import {
@@ -23,10 +23,6 @@ import {
   ChevronUpIcon
 } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
-
-type ResultTableProps<T> = {
-  rows: Record<string, T>
-}
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -45,34 +41,45 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
+const Results = ({ data }: { data: ListingResponseType }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
 
-  const columnHelper = createColumnHelper<ResponseType & { id: number }>()
+  const columnHelper = createColumnHelper<Listing>()
   const columns = [
-    columnHelper.accessor('id', {
-      header: 'Item Id',
+    columnHelper.accessor('hq', {
+      header: 'Headquaters',
+      cell: (info) => info.getValue().toString()
+    }),
+    columnHelper.accessor('lastReviewTime', {
+      header: 'Last Review Time',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('listing_price_diff.avg_price_diff', {
-      header: 'Average Price Difference',
+    columnHelper.accessor('pricePerUnit', {
+      header: 'Price Per Unit',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('listing_time_diff.avg_time_diff', {
-      header: 'Average Time difference',
+    columnHelper.accessor('quantity', {
+      header: 'Quantity',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('min_price', {
-      header: 'Minimum Price',
+    columnHelper.accessor('retainerName', {
+      header: 'Retainer Name',
+      cell: (info) => info.getValue()
+    }),
+    columnHelper.accessor('total', {
+      header: 'Total',
+      cell: (info) => info.getValue()
+    }),
+    columnHelper.accessor('unix_timestamp', {
+      header: 'Timestamp:',
       cell: (info) => info.getValue()
     })
   ]
 
   const table = useReactTable({
-    // @ts-ignore
-    data: rows,
+    data: data.listings,
     columns,
     filterFns: {
       fuzzy: fuzzyFilter
@@ -219,7 +226,7 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
           </div>
           <div>
             <p className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>
-              {`${rows.length} results found`}
+              {`${data.listings.length} results found`}
             </p>
           </div>
         </div>

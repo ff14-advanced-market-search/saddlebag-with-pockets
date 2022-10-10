@@ -20,7 +20,7 @@ export interface Listing {
   unix_timestamp: number
 }
 
-export interface ResponseType {
+export interface ListingResponseType {
   listing_price_diff: ListingPriceDiff
   listing_time_diff: ListingTimeDiff
   listings: Array<Listing>
