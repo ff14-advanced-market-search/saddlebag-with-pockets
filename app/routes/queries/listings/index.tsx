@@ -178,13 +178,6 @@ const Index = () => {
       {results && results.listings && results.listings.length > 0 && (
         <>
           <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
-            {'min_price' in results && (
-              <Differences
-                diffTitle="Minimum Price"
-                diffAmount={results.min_price}
-                className={'bg-blue-100 font-semibold text-blue-800'}
-              />
-            )}
             {'listing_price_diff' in results && (
               <Differences
                 diffTitle="Avg Price Difference"
@@ -205,6 +198,13 @@ const Index = () => {
                     ? 'bg-green-100 font-semibold text-green-800'
                     : 'bg-red-100 font-semibold text-red-800'
                 }
+              />
+            )}
+            {'min_price' in results && (
+              <Differences
+                diffTitle="Minimum Price"
+                diffAmount={results.min_price}
+                className={'bg-blue-100 font-semibold text-blue-800'}
               />
             )}
           </div>
