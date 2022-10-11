@@ -9,11 +9,6 @@ const NoResults: FC<{ href: string }> = ({ href }) => {
       <h3 className="mt-2 text-sm font-medium text-gray-900">
         We didn't get any results!
       </h3>
-      <p className="mt-1 text-sm text-gray-500">
-        A quick suggestion would be expanding the{' '}
-        <span className={`font-bold`}>date range</span> to search over more
-        days.
-      </p>
       <div className="mt-6">
         <Link
           to={href}

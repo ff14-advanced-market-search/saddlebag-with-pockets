@@ -1,8 +1,9 @@
 import { items } from './id_to_item'
 
 export const searchForItemName = (term: string) => {
-  if (term.length < 2) return
-  return items.filter(([_, name]) => name.includes(term))
+  const termToFilter = term.trim().toLowerCase()
+  if (termToFilter.length < 2) return
+  return items.filter(([_, name]) => name.toLowerCase().includes(termToFilter))
 }
 
 export const getItemNameById = (id: number): string | undefined => {

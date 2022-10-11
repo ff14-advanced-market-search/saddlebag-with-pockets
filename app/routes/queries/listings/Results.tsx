@@ -48,10 +48,6 @@ const Results = ({ data }: { data: ListingResponseType }) => {
 
   const columnHelper = createColumnHelper<Listing>()
   const columns = [
-    columnHelper.accessor('retainerName', {
-      header: 'Retainer Name',
-      cell: (info) => info.getValue()
-    }),
     columnHelper.accessor('pricePerUnit', {
       header: 'Price Per Unit',
       cell: (info) => info.getValue()
@@ -66,6 +62,10 @@ const Results = ({ data }: { data: ListingResponseType }) => {
     }),
     columnHelper.accessor('total', {
       header: 'Total',
+      cell: (info) => info.getValue()
+    }),
+    columnHelper.accessor('retainerName', {
+      header: 'Retainer Name',
       cell: (info) => info.getValue()
     }),
     columnHelper.accessor('lastReviewTime', {

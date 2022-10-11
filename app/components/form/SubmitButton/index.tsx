@@ -3,19 +3,21 @@ import { classNames } from '~/utils'
 export const SubmitButton = ({
   title,
   onClick,
-  loading
+  loading,
+  disabled
 }: {
   title: string
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   loading?: boolean
+  disabled?: boolean
 }) => {
   return (
     <button
       type="submit"
       onClick={onClick}
-      disabled={loading}
+      disabled={loading || disabled}
       className={classNames(
-        loading ? 'bg-gray-500' : 'bg-blue-600',
+        loading || disabled ? 'bg-gray-500' : 'bg-blue-600',
         'cursor-pointer ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
       )}>
       {loading && (

@@ -9,7 +9,7 @@ import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
-import { getItemNameById, searchForItemName } from '~/utils/items'
+import { searchForItemName } from '~/utils/items'
 import { getUserSessionData } from '~/sessions'
 
 const validateInput = ({
@@ -80,7 +80,7 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 }
 
 const Index = () => {
-  const [id, setId] = useState(36109)
+  const [id, setId] = useState<number | undefined>()
   const [name, setName] = useState('')
   const transition = useTransition()
   const results = useActionData()
@@ -91,15 +91,16 @@ const Index = () => {
     }
   }
 
-  const nameById = getItemNameById(id)
   const items = searchForItemName(name)?.sort()
+
+  const selectIsDisabled = !name || name.length < 2
 
   return (
     <main className="flex-1">
-      <div className="py-6">
+      <div className="py-3">
         <Form method="post">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 py-6">
+            <h1 className="text-2xl font-semibold text-blue-900 py-3">
               Get Item Listing Details
             </h1>
             <div className="mt-3 md:mt-0 md:col-span-3 py-3">
@@ -117,6 +118,7 @@ const Index = () => {
                           type={'text'}
                           id="itemName"
                           value={name}
+                          placeholder="Axe ..."
                           onChange={(e) => setName(e.target.value)}
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -127,14 +129,16 @@ const Index = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-1 flex rounded-md shadow-sm`">
+                  <div className="max-w-7xl mt-1 flex rounded-md shadow-sm`">
                     <select
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       defaultValue={''}
-                      disabled={!name}
+                      disabled={selectIsDisabled}
                       onChange={(e) => setId(parseInt(e.target.value))}>
                       <option value={''} disabled>
-                        {!name ? 'Search above for results' : 'Choose item'}
+                        {selectIsDisabled
+                          ? 'Search above for results'
+                          : 'Choose item'}
                       </option>
                       {items &&
                         items.map(([id, item]) => (
@@ -146,47 +150,30 @@ const Index = () => {
                   </div>
                 </div>
 
-                <div className="px-4 py-2 bg-white sm:p-4">
-                  <div className="grid grid-cols-6 gap-6">
-                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                      <label
-                        htmlFor="item-id"
-                        className="block text-sm font-medium text-gray-700">
-                        Item Id
-                      </label>
-                      <div className={`mt-1 flex rounded-md shadow-sm`}>
-                        <input
-                          type="number"
-                          id="item-id"
-                          value={id}
-                          onChange={(e) => setId(parseInt(e.target.value))}
-                          name="itemId"
-                          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                        <span
-                          className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
-                          ID Code
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  {nameById && <p>{nameById}</p>}
-                </div>
                 <div className="px-4 py-2 bg-white sm:p-2">
-                  <div className="flex justify-end">
+                  <div className="flex justify-between">
+                    {
+                      <p className="text-red-500 mx-2">
+                        {results && 'exception' in results
+                          ? `Server Error: ${results.exception}`
+                          : ''}
+                      </p>
+                    }
                     <SubmitButton
                       title="Search"
                       onClick={onSubmit}
                       loading={transition.state === 'submitting'}
+                      disabled={!id}
                     />
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <input name="itemId" value={id} hidden />
         </Form>
       </div>
-      {results && results.listings && results.listings.length === 0 && (
+      {results && !Object.keys(results).length && (
         <NoResults href={`/queries/listings`} />
       )}
       {results && results.listings && results.listings.length > 0 && (
