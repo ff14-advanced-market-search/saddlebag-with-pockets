@@ -17,11 +17,7 @@ import { flexRender, useReactTable } from '@tanstack/react-table'
 import type { Listing, ListingResponseType } from '~/requests/GetListing'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
-import {
-  ChevronDoubleRightIcon,
-  ChevronDownIcon,
-  ChevronUpIcon
-} from '@heroicons/react/solid'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
 
 declare module '@tanstack/table-core' {
@@ -110,29 +106,6 @@ const Results = ({ data }: { data: ListingResponseType }) => {
 
   return (
     <div className={`mt-0 flex flex-col`}>
-      <div className="py-2 sm:py-5">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
-            <div className="flex flex-wrap items-center justify-between">
-              <div className="flex w-0 flex-1 items-center">
-                <span className="flex rounded-lg bg-blue-800 p-2">
-                  <ChevronDoubleRightIcon
-                    className="h-6 w-6 text-white"
-                    aria-hidden="true"
-                  />
-                </span>
-                <p className="ml-3 truncate font-medium text-white">
-                  <span className="md:hidden">This is a wide table!</span>
-                  <span className="hidden md:inline">
-                    Heads up, this table is pretty wide. You'll probably need to
-                    scroll horizontally (left & right).
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="overflow-x-auto">
         <div className="inline-block min-w-full align-middle">
           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">

@@ -99,17 +99,17 @@ const Index = () => {
     <main className="flex-1">
       <div className="py-3">
         <Form method="post">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 py-3">
+          <div className="max-w-4xl mx-auto px-4">
+            <h1 className="text-2xl font-semibold text-blue-900 py-2">
               Get Item Listing Details
             </h1>
             <div className="mt-3 md:mt-0 md:col-span-3 py-3">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-2 bg-white sm:p-4">
-                  <div className="grid grid-cols-6 gap-6">
+                  <div className="flex-1 min-w-full dir-col md:max-w-md">
                     <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
-                        htmlFor="world"
+                        htmlFor="itemName"
                         className="block text-sm font-medium text-gray-700">
                         Search for Item by Name
                       </label>
@@ -118,7 +118,7 @@ const Index = () => {
                           type={'text'}
                           id="itemName"
                           value={name}
-                          placeholder="Axe ..."
+                          placeholder="...potion"
                           onChange={(e) => setName(e.target.value)}
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -136,9 +136,7 @@ const Index = () => {
                       disabled={selectIsDisabled}
                       onChange={(e) => setId(parseInt(e.target.value))}>
                       <option value={''} disabled>
-                        {selectIsDisabled
-                          ? 'Search above for results'
-                          : 'Choose item'}
+                        {selectIsDisabled ? '... no items ...' : 'Choose item'}
                       </option>
                       {items &&
                         items.map(([id, item]) => (
