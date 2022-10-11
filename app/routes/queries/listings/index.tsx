@@ -11,6 +11,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
 import { searchForItemName } from '~/utils/items'
 import { getUserSessionData } from '~/sessions'
+import { Differences } from './Differences'
 
 const validateInput = ({
   itemId,
@@ -118,7 +119,7 @@ const Index = () => {
                           type={'text'}
                           id="itemName"
                           value={name}
-                          placeholder="...potion"
+                          placeholder="Potion ..."
                           onChange={(e) => setName(e.target.value)}
                           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
@@ -136,7 +137,7 @@ const Index = () => {
                       disabled={selectIsDisabled}
                       onChange={(e) => setId(parseInt(e.target.value))}>
                       <option value={''} disabled>
-                        {selectIsDisabled ? '... no items ...' : 'Choose item'}
+                        {selectIsDisabled ? '(nothing found)' : 'Choose item'}
                       </option>
                       {items &&
                         items.map(([id, item]) => (
@@ -175,7 +176,40 @@ const Index = () => {
         <NoResults href={`/queries/listings`} />
       )}
       {results && results.listings && results.listings.length > 0 && (
-        <Results data={results} />
+        <>
+          <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
+            {'min_price' in results && (
+              <Differences
+                diffTitle="Minimum Price"
+                diffAmount={results.min_price}
+                className={'bg-grey-100 font-semibold text-grey-800'}
+              />
+            )}
+            {'listing_price_diff' in results && (
+              <Differences
+                diffTitle="Avg Price Difference"
+                diffAmount={results.listing_price_diff.avg_price_diff}
+                className={
+                  results.listing_price_diff.avg_price_diff >= 10000
+                    ? 'bg-green-100 font-semibold text-green-800'
+                    : 'bg-red-100 font-semibold text-red-800'
+                }
+              />
+            )}
+            {'listing_time_diff' in results && (
+              <Differences
+                diffTitle="Avg Time Difference"
+                diffAmount={`${results.listing_time_diff.avg_time_diff} hrs`}
+                className={
+                  results.listing_time_diff.avg_time_diff >= 30
+                    ? 'bg-green-100 font-semibold text-green-800'
+                    : 'bg-red-100 font-semibold text-red-800'
+                }
+              />
+            )}
+          </div>
+          <Results data={results} />
+        </>
       )}
     </main>
   )
