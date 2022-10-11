@@ -10,6 +10,7 @@ import Results from '~/routes/queries/listings/Results'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
 import { getItemNameById, searchForItemName } from '~/utils/items'
+import { getUserSessionData } from '~/sessions'
 
 const validateInput = ({
   itemId,
@@ -46,6 +47,9 @@ const validateInput = ({
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+  const session = await getUserSessionData(request)
+
+  formData.append('world', session.getWorld())
 
   const validInput = validateInput({
     itemId: formData.get('itemId'),
@@ -98,15 +102,15 @@ const Index = () => {
             <h1 className="text-2xl font-semibold text-blue-900 py-6">
               Get Item Listing Details
             </h1>
-            <div className="mt-5 md:mt-0 md:col-span-3 py-6">
+            <div className="mt-3 md:mt-0 md:col-span-3 py-3">
               <div className="shadow overflow-hidden sm:rounded-md">
-                <div className="px-4 py-5 bg-white sm:p-6">
+                <div className="px-4 py-2 bg-white sm:p-4">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
                         htmlFor="world"
                         className="block text-sm font-medium text-gray-700">
-                        Search for item
+                        Search for Item by Name
                       </label>
                       <div className={`mt-1 flex rounded-md shadow-sm`}>
                         <input
@@ -123,23 +127,26 @@ const Index = () => {
                       </div>
                     </div>
                   </div>
-                  {items && (
+                  <div className="mt-1 flex rounded-md shadow-sm`">
                     <select
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       defaultValue={''}
+                      disabled={!name}
                       onChange={(e) => setId(parseInt(e.target.value))}>
                       <option value={''} disabled>
-                        Choose item from below
+                        {!name ? 'Search above for results' : 'Choose item'}
                       </option>
-                      {items.map(([id, item]) => (
-                        <option key={item} value={id}>
-                          {item}
-                        </option>
-                      ))}
+                      {items &&
+                        items.map(([id, item]) => (
+                          <option key={item} value={id}>
+                            {item}
+                          </option>
+                        ))}
                     </select>
-                  )}
+                  </div>
                 </div>
 
-                <div className="px-4 py-5 bg-white sm:p-6">
+                <div className="px-4 py-2 bg-white sm:p-4">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                       <label
@@ -165,31 +172,7 @@ const Index = () => {
                   </div>
                   {nameById && <p>{nameById}</p>}
                 </div>
-                <div className="px-4 py-5 bg-white sm:p-6">
-                  <div className="grid grid-cols-6 gap-6">
-                    <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                      <label
-                        htmlFor="world"
-                        className="block text-sm font-medium text-gray-700">
-                        World
-                      </label>
-                      <div className={`mt-1 flex rounded-md shadow-sm`}>
-                        <input
-                          type={'text'}
-                          id="world"
-                          defaultValue={'Midgardsormr'}
-                          name="world"
-                          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                        <span
-                          className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
-                          World
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="px-4 py-5 bg-white sm:p-6">
+                <div className="px-4 py-2 bg-white sm:p-2">
                   <div className="flex justify-end">
                     <SubmitButton
                       title="Search"
