@@ -182,7 +182,7 @@ const Index = () => {
               <Differences
                 diffTitle="Minimum Price"
                 diffAmount={results.min_price}
-                className={'bg-grey-100 font-semibold text-grey-800'}
+                className={'bg-blue-100 font-semibold text-blue-800'}
               />
             )}
             {'listing_price_diff' in results && (
