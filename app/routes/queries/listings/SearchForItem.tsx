@@ -6,7 +6,8 @@ export const SearchForItem = ({
   onClick,
   loading,
   error,
-  onSelectChange
+  onSelectChange,
+  onTextChange
 }: {
   onClick: (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -15,12 +16,14 @@ export const SearchForItem = ({
   loading: boolean
   error?: string
   onSelectChange?: (selectValue: { id: number; name: string }) => void
+  onTextChange?: (selectValue?: string) => void
 }) => {
-  const [id, setId] = useState<number | undefined>()
+  const [id, setId] = useState<number | undefined>(undefined)
   const [name, setName] = useState('')
   const items = searchForItemName(name)?.sort()
 
-  const selectIsDisabled = !name || name.length < 2
+  const selectIsDisabled = !name || name.length < 2 || !items || !items.length
+
   return (
     <div className="mt-3 md:mt-0 md:col-span-3 py-3">
       <div className="shadow overflow-hidden sm:rounded-md">
@@ -38,7 +41,14 @@ export const SearchForItem = ({
                   id="itemName"
                   value={name}
                   placeholder="Potion ..."
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value)
+                    setId(undefined)
+
+                    if (onTextChange) {
+                      onTextChange(e.target.value)
+                    }
+                  }}
                   className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
                 <span
@@ -51,7 +61,8 @@ export const SearchForItem = ({
           <div className="max-w-7xl mt-1 flex rounded-md shadow-sm`">
             <select
               className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              defaultValue={''}
+              value={id}
+              name="itemId"
               disabled={selectIsDisabled}
               onChange={(e) => {
                 const idChosen = parseInt(e.target.value)
@@ -62,12 +73,15 @@ export const SearchForItem = ({
                   onSelectChange({ id: idChosen, name: chosenName })
                 }
               }}>
-              <option value={''} disabled>
+              <option disabled selected={id === undefined}>
                 {selectIsDisabled ? '(nothing found)' : 'Choose item'}
               </option>
               {items &&
-                items.map(([id, item]) => (
-                  <option key={item} value={id}>
+                items.map(([itemId, item]) => (
+                  <option
+                    key={item}
+                    value={itemId}
+                    selected={id?.toString() === itemId}>
                     {item}
                   </option>
                 ))}

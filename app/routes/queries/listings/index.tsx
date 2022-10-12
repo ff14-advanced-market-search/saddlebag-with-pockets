@@ -7,7 +7,6 @@ import GetListingRequest from '~/requests/GetListing'
 import type { GetListingProps } from '~/requests/GetListing'
 import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
-import { useState } from 'react'
 import { getUserSessionData } from '~/sessions'
 import { Differences } from './Differences'
 import { SearchForItem } from './SearchForItem'
@@ -80,7 +79,6 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 }
 
 const Index = () => {
-  const [id, setId] = useState<number | undefined>()
   const transition = useTransition()
   const results = useActionData()
 
@@ -101,9 +99,6 @@ const Index = () => {
             <SearchForItem
               loading={transition.state === 'submitting'}
               onClick={onSubmit}
-              onSelectChange={({ id }) => {
-                setId(id)
-              }}
               error={
                 results && 'exception' in results
                   ? `Server Error: ${results.exception}`
@@ -111,7 +106,6 @@ const Index = () => {
               }
             />
           </div>
-          <input name="itemId" value={id} hidden />
         </Form>
       </div>
       {results && !Object.keys(results).length && (
