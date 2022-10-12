@@ -123,18 +123,18 @@ const Index = () => {
             {'listing_price_diff' in results && (
               <Differences
                 diffTitle="Avg Price Difference"
-                diffAmount={results.listing_price_diff.avg_price_diff}
+                diffAmount={`${results.listing_price_diff.avg_price_diff} gil`}
                 className={
                   results.listing_price_diff.avg_price_diff >= 10000
-                    ? 'bg-green-100 font-semibold text-green-800'
-                    : 'bg-red-100 font-semibold text-red-800'
+                    ? 'bg-red-100 font-semibold text-red-800'
+                    : 'bg-green-100 font-semibold text-green-800'
                 }
               />
             )}
             {'listing_time_diff' in results && (
               <Differences
                 diffTitle="Avg Time Difference"
-                diffAmount={`${results.listing_time_diff.avg_time_diff} hrs`}
+                diffAmount={`${results.listing_time_diff.avg_time_diff} minutes`}
                 className={
                   results.listing_time_diff.avg_time_diff >= 30
                     ? 'bg-green-100 font-semibold text-green-800'
