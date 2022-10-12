@@ -34,7 +34,7 @@ const navigation = [
     icon: ChartSquareBarIcon
   },
   {
-    name: 'Lisings',
+    name: 'Listings',
     href: 'queries/listings',
     icon: ChartSquareBarIcon
   },
