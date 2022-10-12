@@ -40,7 +40,7 @@ const GetListing: ({
 }: GetListingProps) => Promise<Response> = async ({
   itemId,
   world,
-  daysRange = [7, 0]
+  daysRange = [30, 0]
 }) => {
   return fetch(`${address}/api/listing`, {
     method: 'POST',
