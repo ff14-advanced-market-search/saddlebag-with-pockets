@@ -134,7 +134,7 @@ const Index = () => {
             {'listing_price_diff' in results && (
               <Differences
                 diffTitle="Median Price Difference"
-                diffAmount={results.listing_price_diff.median_price_diff}
+                diffAmount={`${results.listing_price_diff.median_price_diff} gil`}
                 className={
                   results.listing_price_diff.median_price_diff >= 10000
                     ? 'bg-red-100 font-semibold text-red-800'
@@ -167,7 +167,7 @@ const Index = () => {
             {'min_price' in results && (
               <Differences
                 diffTitle="Minimum Price"
-                diffAmount={results.min_price}
+                diffAmount={`${results.min_price} gil`}
                 className={'bg-blue-100 font-semibold text-blue-800'}
               />
             )}
