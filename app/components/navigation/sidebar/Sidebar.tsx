@@ -34,6 +34,11 @@ const navigation = [
     icon: ChartSquareBarIcon
   },
   {
+    name: 'Listings',
+    href: 'queries/listings',
+    icon: ChartSquareBarIcon
+  },
+  {
     name: 'Patreon',
     href: 'https://www.patreon.com/indopan',
     icon: PatreonIcon,
