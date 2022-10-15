@@ -1,5 +1,48 @@
 import { address, UserAgent } from '~/requests/client/config'
 
+export interface DirtySale {
+  buyerName: string
+  hq: boolean
+  human_timestamp: string
+  itemID: number
+  onMannequin: boolean
+  pricePerUnit: number
+  quantity: number
+  realName: string
+  server: string
+  timestamp: number
+}
+
+export interface HomeServerSalesByHour {
+  sale_amt: number
+  time: number
+}
+
+export interface PriceHistory {
+  price_range: string
+  sales_amount: number
+}
+
+export interface StackChance {
+  average_price_for_size: number
+  number_of_sales: number
+  percent_of_sales: number
+  percent_of_total_quantity_sold: number
+  stack_size: number
+}
+
+export interface GetHistoryResponse {
+  average_ppu: number
+  average_quantity_sold_per_day: number
+  average_sales_per_day: number
+  dirty_sales: Array<DirtySale>
+  home_server_sales_by_hour_chart: Array<HomeServerSalesByHour>
+  median_ppu: number
+  price_history: Array<PriceHistory>
+  stack_chance: Array<StackChance>
+  total_quantity_sold: number
+}
+
 export interface GetHistoryProps {
   itemId: number
   world: string
