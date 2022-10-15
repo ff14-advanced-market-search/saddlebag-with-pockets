@@ -102,7 +102,6 @@ const Index = () => {
       ? `Server Error: ${results.exception}`
       : ''
 
-  console.log(formState)
   return (
     <main className="flex-1">
       <div className="py-3">
