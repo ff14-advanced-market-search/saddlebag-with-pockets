@@ -115,7 +115,7 @@ const Index = () => {
                 <ItemSelect onSelectChange={setFormState} />
                 <div className="px-4 py-2 bg-white sm:p-2">
                   <div className="flex justify-between">
-                    {error && <p className="text-red-500 mx-2">{error}</p>}
+                    <p className="text-red-500 mx-2">{error}</p>
                     <SubmitButton
                       title="Search"
                       onClick={onSubmit}
