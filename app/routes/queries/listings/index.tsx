@@ -9,7 +9,10 @@ import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
 import { getUserSessionData } from '~/sessions'
 import { Differences } from './Differences'
+import type { ItemSelected } from './SearchForItem'
 import { SearchForItem } from './SearchForItem'
+import { SubmitButton } from '~/components/form/SubmitButton'
+import { useState } from 'react'
 
 const validateInput = ({
   itemId,
@@ -81,13 +84,25 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 const Index = () => {
   const transition = useTransition()
   const results = useActionData()
+  const [formState, setFormState] = useState<ItemSelected | undefined>()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
+
+    if (!formState || !formState.id) {
+      e.preventDefault()
+      return
+    }
   }
 
+  const error =
+    results && 'exception' in results
+      ? `Server Error: ${results.exception}`
+      : ''
+
+  console.log(formState)
   return (
     <main className="flex-1">
       <div className="py-3">
@@ -96,15 +111,22 @@ const Index = () => {
             <h1 className="text-2xl font-semibold text-blue-900 py-2">
               Get Item Listing Details
             </h1>
-            <SearchForItem
-              loading={transition.state === 'submitting'}
-              onClick={onSubmit}
-              error={
-                results && 'exception' in results
-                  ? `Server Error: ${results.exception}`
-                  : undefined
-              }
-            />
+            <div className="mt-3 md:mt-0 md:col-span-3 py-3">
+              <div className="shadow overflow-hidden sm:rounded-md">
+                <SearchForItem onSelectChange={setFormState} />
+                <div className="px-4 py-2 bg-white sm:p-2">
+                  <div className="flex justify-between">
+                    {error && <p className="text-red-500 mx-2">{error}</p>}
+                    <SubmitButton
+                      title="Search"
+                      onClick={onSubmit}
+                      loading={transition.state === 'submitting'}
+                      disabled={!formState || !formState.id}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Form>
       </div>
