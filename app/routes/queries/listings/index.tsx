@@ -9,8 +9,8 @@ import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
 import { getUserSessionData } from '~/sessions'
 import { Differences } from './Differences'
-import type { ItemSelected } from './SearchForItem'
-import { SearchForItem } from './SearchForItem'
+import type { ItemSelected } from '../../../components/form/select/ItemSelect'
+import ItemSelect from '../../../components/form/select/ItemSelect'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
 
@@ -112,7 +112,7 @@ const Index = () => {
             </h1>
             <div className="mt-3 md:mt-0 md:col-span-3 py-3">
               <div className="shadow overflow-hidden sm:rounded-md">
-                <SearchForItem onSelectChange={setFormState} />
+                <ItemSelect onSelectChange={setFormState} />
                 <div className="px-4 py-2 bg-white sm:p-2">
                   <div className="flex justify-between">
                     {error && <p className="text-red-500 mx-2">{error}</p>}
