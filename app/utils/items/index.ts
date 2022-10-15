@@ -6,8 +6,10 @@ export const searchForItemName = (term: string) => {
   return items.filter(([_, name]) => name.toLowerCase().includes(termToFilter))
 }
 
-export const getItemNameById = (id: number): string | undefined => {
-  const name = items.find(([itemId]) => id.toString() === itemId)
+export const getItemNameById = (id: number | string): string | undefined => {
+  const idToUse = typeof id === 'number' ? id.toString() : id
+
+  const name = items.find(([itemId]) => idToUse === itemId)
 
   if (!name) {
     return

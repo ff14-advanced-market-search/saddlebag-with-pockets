@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { getItemNameById, searchForItemName } from '~/utils/items'
 
 export interface ItemSelected {
-  id?: number
-  name?: string
+  id: string
+  name: string
 }
 
+const DEFAULT_SELECT_VALUE = 'default'
 const ItemSelect = ({
   onSelectChange,
   onTextChange
@@ -13,7 +14,7 @@ const ItemSelect = ({
   onSelectChange?: (selectValue?: ItemSelected) => void
   onTextChange?: (selectValue?: string) => void
 }) => {
-  const [id, setId] = useState<number | undefined>(undefined)
+  const [id, setId] = useState<string>(DEFAULT_SELECT_VALUE)
   const [name, setName] = useState('')
   const items = searchForItemName(name)?.sort()
 
@@ -36,7 +37,9 @@ const ItemSelect = ({
               placeholder="Potion ..."
               onChange={(e) => {
                 setName(e.target.value)
-                setId(undefined)
+                if (id !== DEFAULT_SELECT_VALUE) {
+                  setId(DEFAULT_SELECT_VALUE)
+                }
 
                 if (onTextChange) {
                   onTextChange(e.target.value)
@@ -57,12 +60,13 @@ const ItemSelect = ({
       </div>
       <div className="max-w-7xl mt-1 flex rounded-md shadow-sm`">
         <select
-          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           value={id}
+          defaultValue={DEFAULT_SELECT_VALUE}
           name="itemId"
           disabled={selectIsDisabled}
           onChange={(e) => {
-            const idChosen = parseInt(e.target.value)
+            const idChosen = e.target.value
             setId(idChosen)
             const chosenName = getItemNameById(idChosen)
 
@@ -72,7 +76,7 @@ const ItemSelect = ({
               onSelectChange()
             }
           }}>
-          <option disabled selected={id === undefined}>
+          <option disabled value={DEFAULT_SELECT_VALUE}>
             {selectIsDisabled ? '(nothing found)' : 'Choose item'}
           </option>
           {items &&

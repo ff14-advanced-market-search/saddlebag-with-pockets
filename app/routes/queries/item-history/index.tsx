@@ -83,11 +83,7 @@ const Index = () => {
   const [formState, setFormState] = useState<ItemSelected | undefined>()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (transition.state === 'submitting') {
-      e.preventDefault()
-    }
-
-    if (!formState || !formState.id) {
+    if (transition.state === 'submitting' || !formState) {
       e.preventDefault()
       return
     }
@@ -117,7 +113,7 @@ const Index = () => {
                       title="Search"
                       onClick={onSubmit}
                       loading={transition.state === 'submitting'}
-                      disabled={!formState || !formState.id}
+                      disabled={!formState}
                     />
                   </div>
                 </div>
