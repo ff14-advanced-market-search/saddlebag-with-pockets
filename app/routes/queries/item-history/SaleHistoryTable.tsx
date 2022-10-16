@@ -106,7 +106,7 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
         Sale history for bundle size
       </h2>
       <p className="italic text-sm text-grey-500 px-3">
-        This table shows the sale history for the last 30 days. Including which
+        This table shows the sale history for the last 14 days. Including which
         bundle size is most popular and what price it is selling for.
       </p>
       <div className="overflow-x-auto max-h-96 my-2">

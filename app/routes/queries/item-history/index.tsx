@@ -13,6 +13,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
 import { Differences } from '../listings/Differences'
 import SaleHistoryTable from './SaleHistoryTable'
+import SalesByHourChart from './SalesByHourChart'
 
 const validateInput = ({
   itemId,
@@ -79,6 +80,14 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
   )
 }
 
+const parseServerError = (error: string) => {
+  if (error.includes('Error sending result:')) {
+    return 'Failed to receive result from external API'
+  }
+
+  return error
+}
+
 const Index = () => {
   const transition = useTransition()
   const results = useActionData<GetHistoryResponse>()
@@ -93,10 +102,9 @@ const Index = () => {
 
   const error =
     results && 'exception' in results
-      ? `Server Error: ${results.exception}`
+      ? `Server Error: ${parseServerError(results.exception)}`
       : ''
 
-  console.log(results)
   return (
     <main className="flex-1">
       <div className="py-3">
@@ -160,6 +168,9 @@ const Index = () => {
               />
             </div>
           </div>
+
+          <SalesByHourChart data={results.home_server_sales_by_hour_chart} />
+
           <SaleHistoryTable data={results.stack_chance} />
         </>
       )}

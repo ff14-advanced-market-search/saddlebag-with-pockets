@@ -64,7 +64,7 @@ const GetHistory: ({
 }: GetHistoryProps) => Promise<Response> = async ({
   itemId,
   world,
-  initialDays = 30,
+  initialDays = 14,
   endDays = 0,
   itemType = 'all'
 }) => {
