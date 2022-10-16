@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { Differences } from '../listings/Differences'
 import SaleHistoryTable from './SaleHistoryTable'
 import SalesByHourChart from './SalesByHourChart'
+import PriceHistoryChart from './PriceHistoryChart'
 
 const validateInput = ({
   itemId,
@@ -174,6 +175,10 @@ const Index = () => {
           </div>
 
           <SaleHistoryTable data={results.stack_chance} />
+
+          <div className="my-6">
+            <PriceHistoryChart data={results.price_history} />
+          </div>
         </>
       )}
     </main>
