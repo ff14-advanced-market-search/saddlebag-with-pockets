@@ -12,6 +12,7 @@ import type { ItemSelected } from '~/components/form/select/ItemSelect'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
 import { Differences } from '../listings/Differences'
+import SaleHistoryTable from './SaleHistoryTable'
 
 const validateInput = ({
   itemId,
@@ -127,37 +128,40 @@ const Index = () => {
         <NoResults href={`/queries/item-history`} />
       )}
       {results && 'average_ppu' in results && (
-        <div className="flex flex-col justify-around mx-3 my-1 md:flex-row">
-          <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Average Price Per Unit Sold"
-              diffAmount={results.average_ppu}
-              className="bg-blue-100 text-blue-700 font-semibold "
-            />
-            <Differences
-              diffTitle="Median Price Per Unit Sold"
-              diffAmount={results.median_ppu}
-              className="bg-blue-100 text-blue-700 font-semibold "
-            />
+        <>
+          <div className="flex flex-col justify-around mx-3 my-1 md:flex-row">
+            <div className="flex flex-col max-w-full">
+              <Differences
+                diffTitle="Average Price Per Unit Sold"
+                diffAmount={results.average_ppu}
+                className="bg-blue-100 text-blue-700 font-semibold "
+              />
+              <Differences
+                diffTitle="Median Price Per Unit Sold"
+                diffAmount={results.median_ppu}
+                className="bg-blue-100 text-blue-700 font-semibold "
+              />
+            </div>
+            <div className="flex flex-col max-w-full">
+              <Differences
+                diffTitle="Average quantity sold per day"
+                diffAmount={results.average_quantity_sold_per_day}
+                className="bg-blue-100 text-blue-700 font-semibold "
+              />
+              <Differences
+                diffTitle="Average amount Sold per day"
+                diffAmount={results.average_sales_per_day}
+                className="bg-blue-100 text-blue-700 font-semibold "
+              />
+              <Differences
+                diffTitle="Total Sold"
+                diffAmount={results.total_quantity_sold}
+                className="bg-blue-100 text-blue-700 font-semibold "
+              />
+            </div>
           </div>
-          <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Average quantity sold per day"
-              diffAmount={results.average_quantity_sold_per_day}
-              className="bg-blue-100 text-blue-700 font-semibold "
-            />
-            <Differences
-              diffTitle="Average amount Sold per day"
-              diffAmount={results.average_sales_per_day}
-              className="bg-blue-100 text-blue-700 font-semibold "
-            />
-            <Differences
-              diffTitle="Total Sold"
-              diffAmount={results.total_quantity_sold}
-              className="bg-blue-100 text-blue-700 font-semibold "
-            />
-          </div>
-        </div>
+          <SaleHistoryTable data={results.stack_chance} />
+        </>
       )}
     </main>
   )
