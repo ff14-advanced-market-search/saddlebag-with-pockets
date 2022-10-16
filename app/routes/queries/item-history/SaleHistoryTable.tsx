@@ -101,8 +101,8 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   }, [table])
 
   return (
-    <div className={`mt-0 flex flex-col my-4`}>
-      <h2 className="bold text-grey-800 text-lg px-3">
+    <div className={`mt-0 flex flex-col my-6`}>
+      <h2 className="bold text-grey-800 text-xl px-3 my-2">
         Sale history for bundle size
       </h2>
       <p className="italic text-sm text-grey-500 px-3">
@@ -122,7 +122,7 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
+                          `whitespace-nowrap px-3 py-3.5 text-center text-sm font-semibold text-gray-900`
                         )}
                         key={header.id}>
                         <div className={`group inline-flex`}>

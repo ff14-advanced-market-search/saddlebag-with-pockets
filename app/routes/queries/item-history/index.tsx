@@ -169,7 +169,9 @@ const Index = () => {
             </div>
           </div>
 
-          <SalesByHourChart data={results.home_server_sales_by_hour_chart} />
+          <div className="my-6">
+            <SalesByHourChart data={results.home_server_sales_by_hour_chart} />
+          </div>
 
           <SaleHistoryTable data={results.stack_chance} />
         </>
