@@ -80,10 +80,7 @@ const ItemSelect = ({
           </option>
           {items &&
             items.map(([itemId, item]) => (
-              <option
-                key={item}
-                value={itemId}
-                selected={id?.toString() === itemId}>
+              <option key={item} value={itemId}>
                 {item}
               </option>
             ))}
