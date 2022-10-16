@@ -62,7 +62,6 @@ const ItemSelect = ({
         <select
           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           value={id}
-          defaultValue={DEFAULT_SELECT_VALUE}
           name="itemId"
           disabled={selectIsDisabled}
           onChange={(e) => {

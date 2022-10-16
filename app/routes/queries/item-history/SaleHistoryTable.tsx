@@ -49,7 +49,7 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
       cell: (info) => info.getValue()
     }),
     columnHelper.accessor('average_price_for_size', {
-      header: 'Avg Price',
+      header: 'Avg Price per item',
       cell: (info) => info.getValue()
     }),
     columnHelper.accessor('number_of_sales', {
@@ -101,12 +101,19 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   }, [table])
 
   return (
-    <div className={`mt-0 flex flex-col`}>
-      <div className="overflow-x-auto">
+    <div className={`mt-0 flex flex-col my-4`}>
+      <h2 className="bold text-grey-800 text-lg px-3">
+        Sale history for bundle size
+      </h2>
+      <p className="italic text-sm text-grey-500 px-3">
+        This table shows the sale history for the last 30 days. Including which
+        bundle size is most popular and what price it is selling for.
+      </p>
+      <div className="overflow-x-auto max-h-96 my-2">
         <div className="inline-block min-w-full align-middle">
           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-300 overflow-hidden">
+              <thead className="bg-gray-50 sticky top-0">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
