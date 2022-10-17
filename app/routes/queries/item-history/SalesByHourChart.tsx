@@ -23,7 +23,7 @@ export default function SalesByHourChart({
       type: 'line'
     },
     title: {
-      text: 'Hourly Sales'
+      text: undefined
     },
     yAxis: {
       title: {
@@ -40,7 +40,7 @@ export default function SalesByHourChart({
         data: data.map<PointOptionsObject>(({ sale_amt, time }) => {
           return [makeDateString(time), sale_amt]
         }),
-        name: 'Sales Per Hour',
+        name: 'Sales per Hour',
         type: 'line'
       }
     ],

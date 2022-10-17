@@ -101,13 +101,14 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   }, [table])
 
   return (
-    <div className={`mt-0 flex flex-col my-6`}>
-      <h2 className="bold text-grey-800 text-xl px-3 my-2">
-        Sale history for bundle size
+    <div className={`mt-0 flex flex-col my-6 bg-white p-4 sm:rounded-md`}>
+      <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
+        Region Wide Sale History
       </h2>
       <p className="italic text-sm text-grey-500 px-3">
-        This table shows the sale history for the last 14 days. Including which
-        bundle size is most popular and what price it is selling for.
+        This table shows the sale history for the last 14 days in your region.
+        Including which bundle size is most popular and what price it is selling
+        for.
       </p>
       <div className="overflow-x-auto max-h-96 my-2">
         <div className="inline-block min-w-full align-middle">

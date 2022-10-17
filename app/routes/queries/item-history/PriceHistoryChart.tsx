@@ -15,7 +15,7 @@ export default function PriceHistoryChart({
       type: 'column'
     },
     title: {
-      text: 'Price History'
+      text: undefined
     },
     yAxis: {
       title: {
@@ -33,7 +33,7 @@ export default function PriceHistoryChart({
         data: data.map<PointOptionsObject>(({ sales_amount, price_range }) => {
           return [price_range, sales_amount]
         }),
-        name: 'Amount sold in range',
+        name: 'Ranges in Gil',
         type: 'column'
       }
     ],
