@@ -52,7 +52,7 @@ export interface GetHistoryProps {
   world: string
   initialDays?: number
   endDays?: number
-  itemType?: string
+  itemType?: 'all' | 'hq_only' | 'nq_only'
 }
 
 const GetHistory: ({
