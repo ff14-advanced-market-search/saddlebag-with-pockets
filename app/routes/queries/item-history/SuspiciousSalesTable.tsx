@@ -46,7 +46,7 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
   const columns = [
     columnHelper.accessor('pricePerUnit', {
       header: 'Price per unit',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('server', {
       header: 'World',
@@ -59,6 +59,14 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
     columnHelper.accessor('onMannequin', {
       header: 'Retailer',
       cell: (info) => (info.getValue() ? 'Mannequin' : 'Retainer')
+    }),
+    columnHelper.accessor('buyerName', {
+      header: 'Buyer Name',
+      cell: (info) => info.getValue()
+    }),
+    columnHelper.accessor('human_timestamp', {
+      header: 'Time',
+      cell: (info) => info.getValue()
     })
   ]
 
