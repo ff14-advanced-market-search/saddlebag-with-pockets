@@ -14,7 +14,7 @@ import {
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { StackChance } from '~/requests/GetHistory'
+import type { DirtySale } from '~/requests/GetHistory'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
@@ -37,32 +37,28 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
+const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder] = useState<ColumnOrderState>([])
 
-  const columnHelper = createColumnHelper<StackChance>()
+  const columnHelper = createColumnHelper<DirtySale>()
   const columns = [
-    columnHelper.accessor('stack_size', {
-      header: 'Bundle Size',
+    columnHelper.accessor('pricePerUnit', {
+      header: 'Price per unit',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('average_price_for_size', {
-      header: 'Avg Price per item',
+    columnHelper.accessor('server', {
+      header: 'World',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('number_of_sales', {
-      header: 'No# Sales',
+    columnHelper.accessor('hq', {
+      header: 'Quality',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('percent_of_sales', {
-      header: '% of Sales',
-      cell: (info) => info.getValue()
-    }),
-    columnHelper.accessor('percent_of_total_quantity_sold', {
-      header: '% of Total Sold',
-      cell: (info) => info.getValue()
+    columnHelper.accessor('onMannequin', {
+      header: 'Retailer',
+      cell: (info) => (info.getValue() ? 'Mannequin' : 'Retainer')
     })
   ]
 
@@ -94,7 +90,7 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   useEffect(() => {
     table.setSorting([
       {
-        id: 'percent_of_sales',
+        id: 'pricePerUnit',
         desc: true
       }
     ])
@@ -102,14 +98,6 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
 
   return (
     <div className={`mt-0 flex flex-col my-6 bg-white p-4 sm:rounded-md`}>
-      <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
-        Region Wide Sale History
-      </h2>
-      <p className="italic text-sm text-grey-500 px-3">
-        This table shows the sale history for the last 14 days in your region.
-        Including which bundle size is most popular and what price it is selling
-        for.
-      </p>
       <div className="overflow-x-auto max-h-96 my-2">
         <div className="inline-block min-w-full align-middle">
           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5">
@@ -195,4 +183,4 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   )
 }
 
-export default SaleHistoryTable
+export default SuspiciousSaleTable

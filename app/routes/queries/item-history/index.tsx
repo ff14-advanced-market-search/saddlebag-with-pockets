@@ -15,6 +15,7 @@ import { Differences } from '../listings/Differences'
 import SaleHistoryTable from './SaleHistoryTable'
 import SalesByHourChart from './SalesByHourChart'
 import PriceHistoryChart from './PriceHistoryChart'
+import SuspiciousSaleTable from './SuspiciousSalesTable'
 
 const validateInput = ({
   itemId,
@@ -140,7 +141,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto px-4">
           <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white">
             <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
-              Home Server Sales Hour
+              Home Server Sales per Hour
             </h2>
             <SalesByHourChart data={results.home_server_sales_by_hour_chart} />
           </div>
@@ -186,6 +187,19 @@ const Index = () => {
               Region Price History
             </h2>
             <PriceHistoryChart data={results.price_history} />
+          </div>
+
+          <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white">
+            <h2 className="text-2xl font-semibold text-blue-900 py-2 ml-8">
+              Region Wide Suspicious Sales
+            </h2>
+            {results.dirty_sales.length ? (
+              <SuspiciousSaleTable data={results.dirty_sales} />
+            ) : (
+              <p className="italic text-sm text-grey-500 px-3">
+                No suspicious sales found
+              </p>
+            )}
           </div>
         </div>
       )}
