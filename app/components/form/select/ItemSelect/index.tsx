@@ -21,7 +21,7 @@ const ItemSelect = ({
   const selectIsDisabled = !name || name.length < 2 || !items || !items.length
 
   return (
-    <div className="px-4 py-2 bg-white sm:p-4">
+    <div className="py-2 bg-white sm:p-4">
       <div className="flex-1 min-w-full dir-col md:max-w-md">
         <div className="col-span-6 sm:col-span-3 xl:col-span-2">
           <label
