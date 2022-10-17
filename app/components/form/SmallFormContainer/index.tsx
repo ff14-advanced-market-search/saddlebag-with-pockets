@@ -1,6 +1,6 @@
 import { Form } from '@remix-run/react'
 import React from 'react'
-import { SubmitButton } from './SubmitButton'
+import { SubmitButton } from '../SubmitButton'
 
 const SmallFormContainer = ({
   children,
