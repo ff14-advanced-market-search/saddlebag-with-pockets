@@ -149,7 +149,7 @@ const Index = () => {
       )}
       {results && 'average_ppu' in results && (
         <div className="max-w-4xl mx-auto px-4">
-          <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white">
+          <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
             <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
               Home Server Sales per Hour
             </h2>
@@ -192,14 +192,14 @@ const Index = () => {
 
           <SaleHistoryTable data={results.stack_chance} />
 
-          <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white">
+          <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
             <h2 className="text-2xl font-semibold text-blue-900 py-2 ml-8">
               Region Price History
             </h2>
             <PriceHistoryChart data={results.price_history} />
           </div>
 
-          <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white">
+          <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
             <h2 className="text-2xl font-semibold text-blue-900 py-2 ml-8">
               Region Wide Suspicious Sales
             </h2>

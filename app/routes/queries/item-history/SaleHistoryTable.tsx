@@ -101,7 +101,8 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   }, [table])
 
   return (
-    <div className={`mt-0 flex flex-col my-6 bg-white p-4 sm:rounded-md`}>
+    <div
+      className={`mt-0 flex flex-col my-6 bg-white p-4 sm:rounded-md shadow`}>
       <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
         Region Wide Sale History
       </h2>
