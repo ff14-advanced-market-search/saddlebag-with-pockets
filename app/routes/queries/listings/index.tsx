@@ -1,4 +1,4 @@
-import { Form, useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useTransition } from '@remix-run/react'
 import type {
   ActionFunction,
   ErrorBoundaryComponent
@@ -11,8 +11,8 @@ import { getUserSessionData } from '~/sessions'
 import { Differences } from './Differences'
 import type { ItemSelected } from '../../../components/form/select/ItemSelect'
 import ItemSelect from '../../../components/form/select/ItemSelect'
-import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
 
 const validateInput = ({
   itemId,
@@ -101,29 +101,14 @@ const Index = () => {
   return (
     <main className="flex-1">
       <div className="py-3">
-        <Form method="post">
-          <div className="max-w-4xl mx-auto px-4">
-            <h1 className="text-2xl font-semibold text-blue-900 py-2">
-              Get Item Listing Details
-            </h1>
-            <div className="mt-3 md:mt-0 md:col-span-3 py-3">
-              <div className="shadow overflow-hidden sm:rounded-md">
-                <ItemSelect onSelectChange={setFormState} />
-                <div className="px-4 py-2 bg-white sm:p-2">
-                  <div className="flex justify-between">
-                    <p className="text-red-500 mx-2">{error}</p>
-                    <SubmitButton
-                      title="Search"
-                      onClick={onSubmit}
-                      loading={transition.state === 'submitting'}
-                      disabled={!formState || !formState.id}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Form>
+        <SmallFormContainer
+          title="Get Item Listing Details"
+          onClick={onSubmit}
+          loading={transition.state === 'submitting'}
+          disabled={!formState || !formState.id}
+          error={error}>
+          <ItemSelect onSelectChange={setFormState} />
+        </SmallFormContainer>
       </div>
       {results && !Object.keys(results).length && (
         <NoResults href={`/queries/listings`} />

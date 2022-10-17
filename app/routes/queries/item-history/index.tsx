@@ -1,4 +1,4 @@
-import { Form, useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useTransition } from '@remix-run/react'
 import type {
   ActionFunction,
   ErrorBoundaryComponent
@@ -9,20 +9,22 @@ import NoResults from '~/routes/queries/listings/NoResults'
 import { getUserSessionData } from '~/sessions'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import type { ItemSelected } from '~/components/form/select/ItemSelect'
-import { SubmitButton } from '~/components/form/SubmitButton'
 import { useState } from 'react'
 import { Differences } from '../listings/Differences'
 import SaleHistoryTable from './SaleHistoryTable'
 import SalesByHourChart from './SalesByHourChart'
 import PriceHistoryChart from './PriceHistoryChart'
 import SuspiciousSaleTable from './SuspiciousSalesTable'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
 
 const validateInput = ({
   itemId,
-  world
+  world,
+  itemType
 }: {
   itemId?: FormDataEntryValue | null
   world?: FormDataEntryValue | null
+  itemType?: FormDataEntryValue | null
 }): GetHistoryProps | undefined => {
   if (itemId === undefined || itemId === null) {
     return
@@ -40,12 +42,16 @@ const validateInput = ({
     return
   }
 
+  if (itemType !== 'all' && itemType !== 'hq_only' && itemType !== 'nq_only') {
+    return
+  }
+
   const parsedItemId = parseInt(itemId, 10)
   if (isNaN(parsedItemId)) {
     return
   }
 
-  return { itemId: parsedItemId, world }
+  return { itemId: parsedItemId, world, itemType }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -56,7 +62,8 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validInput = validateInput({
     itemId: formData.get('itemId'),
-    world: formData.get('world')
+    world: formData.get('world'),
+    itemType: formData.get('itemType')
   })
 
   if (!validInput) {
@@ -110,29 +117,32 @@ const Index = () => {
   return (
     <main className="flex-1">
       <div className="py-3">
-        <Form method="post">
-          <div className="max-w-4xl mx-auto px-4">
-            <h1 className="text-2xl font-semibold text-blue-900 py-2">
-              Find Item History
-            </h1>
-            <div className="mt-3 md:mt-0 md:col-span-3 py-3">
-              <div className="shadow overflow-hidden sm:rounded-md">
-                <ItemSelect onSelectChange={setFormState} />
-                <div className="px-4 py-2 bg-white sm:p-2">
-                  <div className="flex justify-between">
-                    <p className="text-red-500 mx-2">{error}</p>
-                    <SubmitButton
-                      title="Search"
-                      onClick={onSubmit}
-                      loading={transition.state === 'submitting'}
-                      disabled={!formState}
-                    />
-                  </div>
-                </div>
-              </div>
+        <SmallFormContainer
+          title="Find Item History"
+          onClick={onSubmit}
+          error={error}
+          loading={transition.state === 'submitting'}
+          disabled={!formState}>
+          <>
+            <ItemSelect onSelectChange={setFormState} />
+            <div className="my-1 flex flex-1 px-4">
+              <select
+                id="itemType"
+                className="flex-1 min-w-0 block px-3 py-2 rounded-l-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-l-md"
+                name="itemType"
+                defaultValue={'all'}>
+                <option value="all">All</option>
+                <option value="hq_only">High Quality</option>
+                <option value="nq_only">Low Quality</option>
+              </select>
+              <label
+                htmlFor="itemType"
+                className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm shadow-sm">
+                Item Quality
+              </label>
             </div>
-          </div>
-        </Form>
+          </>
+        </SmallFormContainer>
       </div>
       {results && !Object.keys(results).length && (
         <NoResults href={`/queries/item-history`} />
