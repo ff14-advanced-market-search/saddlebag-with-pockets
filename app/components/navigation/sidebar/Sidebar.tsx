@@ -7,7 +7,8 @@ import {
   CogIcon,
   HomeIcon,
   MenuAlt2Icon,
-  XIcon
+  XIcon,
+  DocumentSearchIcon
 } from '@heroicons/react/outline'
 import { Link, NavLink } from '@remix-run/react'
 import { classNames } from '~/utils'
@@ -37,6 +38,11 @@ const navigation = [
     name: 'Listings',
     href: 'queries/listings',
     icon: ChartSquareBarIcon
+  },
+  {
+    name: 'Item History',
+    href: 'queries/item-history',
+    icon: DocumentSearchIcon
   },
   {
     name: 'Patreon',

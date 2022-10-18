@@ -1,4 +1,4 @@
-import { Form, useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useTransition } from '@remix-run/react'
 import type {
   ActionFunction,
   ErrorBoundaryComponent
@@ -9,7 +9,10 @@ import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
 import { getUserSessionData } from '~/sessions'
 import { Differences } from './Differences'
-import { SearchForItem } from './SearchForItem'
+import type { ItemSelected } from '../../../components/form/select/ItemSelect'
+import ItemSelect from '../../../components/form/select/ItemSelect'
+import { useState } from 'react'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
 
 const validateInput = ({
   itemId,
@@ -81,32 +84,31 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 const Index = () => {
   const transition = useTransition()
   const results = useActionData()
+  const [formState, setFormState] = useState<ItemSelected | undefined>()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (transition.state === 'submitting') {
+    if (transition.state === 'submitting' || !formState) {
       e.preventDefault()
+      return
     }
   }
+
+  const error =
+    results && 'exception' in results
+      ? `Server Error: ${results.exception}`
+      : ''
 
   return (
     <main className="flex-1">
       <div className="py-3">
-        <Form method="post">
-          <div className="max-w-4xl mx-auto px-4">
-            <h1 className="text-2xl font-semibold text-blue-900 py-2">
-              Get Item Listing Details
-            </h1>
-            <SearchForItem
-              loading={transition.state === 'submitting'}
-              onClick={onSubmit}
-              error={
-                results && 'exception' in results
-                  ? `Server Error: ${results.exception}`
-                  : undefined
-              }
-            />
-          </div>
-        </Form>
+        <SmallFormContainer
+          title="Get Item Listing Details"
+          onClick={onSubmit}
+          loading={transition.state === 'submitting'}
+          disabled={!formState || !formState.id}
+          error={error}>
+          <ItemSelect onSelectChange={setFormState} />
+        </SmallFormContainer>
       </div>
       {results && !Object.keys(results).length && (
         <NoResults href={`/queries/listings`} />
