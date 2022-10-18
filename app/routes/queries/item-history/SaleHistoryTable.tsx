@@ -48,10 +48,10 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
       header: 'Bundle Size',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('average_price_for_size', {
-      header: 'Avg Price per item',
-      cell: (info) => info.getValue()
-    }),
+    // columnHelper.accessor('average_price_for_size', {
+    //   header: 'Avg Price per item',
+    //   cell: (info) => info.getValue()
+    // }),
     columnHelper.accessor('number_of_sales', {
       header: 'No# Sales',
       cell: (info) => info.getValue()
@@ -104,12 +104,11 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
     <div
       className={`mt-0 flex flex-col my-6 bg-white p-4 sm:rounded-md shadow`}>
       <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
-        Region Wide Sale History
+        Region Wide Stack Size History
       </h2>
       <p className="italic text-sm text-grey-500 px-3">
-        This table shows the sale history for the last 14 days in your region.
-        Including which bundle size is most popular and what price it is selling
-        for.
+        This table shows the sale history for the last 14 days in your region by stack size.
+        Including which stack size is most popular by number of sales and total quantity sold.
       </p>
       <div className="overflow-x-auto max-h-96 my-2">
         <div className="inline-block min-w-full align-middle">
