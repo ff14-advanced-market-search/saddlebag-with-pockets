@@ -28,7 +28,7 @@ export interface ListingResponseType {
 }
 
 export interface GetListingProps {
-  itemId: number
+  itemId: string
   world: string
   daysRange?: Array<number>
 }

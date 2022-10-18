@@ -39,12 +39,7 @@ const validateInput = ({
     return
   }
 
-  const parsedItemId = parseInt(itemId, 10)
-  if (isNaN(parsedItemId)) {
-    return
-  }
-
-  return { itemId: parsedItemId, world, daysRange }
+  return { itemId, world, daysRange }
 }
 
 export const action: ActionFunction = async ({ request }) => {
