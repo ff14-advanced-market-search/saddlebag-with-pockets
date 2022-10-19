@@ -1,6 +1,6 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
-import { useTransition } from 'react'
 import type { HistoryResponse } from '~/requests/GetHistory'
 import GetHistory from '~/requests/GetHistory'
 import type { ListingResponseType } from '~/requests/GetListing'
@@ -24,6 +24,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     return { exception: 'No item found, please try again' }
   }
 
+  const parsedItemId = parseInt(itemId)
+  if (isNaN(parsedItemId)) return { exception: 'Invalid item' }
+
   const itemName = getItemNameById(itemId)
   if (!itemName) {
     return { exception: 'No item found, please try again' }
@@ -39,35 +42,28 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const itemType = 'all' as const
   const initialDays = 14
   const endDays = 0
-  const input = { itemId, world, itemType, initialDays, endDays }
+  const input = { itemId: parsedItemId, world, itemType, initialDays, endDays }
 
   try {
-    const history = await GetHistory(input)
-    const listing = await GetListing({
+    const historyResponse = await GetHistory(input)
+    const listingResponse = await GetListing({
       ...input,
       daysRange: [initialDays, endDays]
     })
 
-    if ('exception' in history) {
-      return history
+    if (!historyResponse.ok) {
+      return { exception: historyResponse.statusText }
     }
 
-    if ('exception' in listing) {
-      return listing
-    }
-    if ('status' in history && history.status !== 200) {
-      return { exception: history.statusText }
+    if (!listingResponse.ok) {
+      return { exception: listingResponse.statusText }
     }
 
-    if ('status' in listing && listing.status !== 200) {
-      return { exception: listing.statusText }
-    }
-
-    return {
-      history,
-      listing,
+    return json({
+      history: await historyResponse.json(),
+      listing: await listingResponse.json(),
       itemName
-    }
+    })
   } catch (error) {
     if (error instanceof Error) {
       return { exception: error.message }
@@ -76,12 +72,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 }
 
 const ItemPage = () => {
-  const transition = useTransition()
   const data = useLoaderData<ItemPageData>()
 
-  console.log('transition', transition)
-
-  console.log('data', data)
+  if ('exception' in data) {
+    return <main className="flex-1"></main>
+  }
 }
 
 export default ItemPage

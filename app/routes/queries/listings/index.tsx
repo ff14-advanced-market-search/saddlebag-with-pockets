@@ -22,24 +22,28 @@ const validateInput = ({
   itemId?: FormDataEntryValue | null
   world?: FormDataEntryValue | null
   daysRange?: Array<number>
-}): GetListingProps | undefined => {
+}): GetListingProps | { exception: string } => {
   if (itemId === undefined || itemId === null) {
-    return
+    return { exception: 'Item not found' }
   }
 
   if (world === undefined || world === null) {
-    return
+    return { exception: 'World not set' }
   }
 
   if (typeof itemId !== 'string') {
-    return
+    return { exception: 'Invalid item' }
   }
 
   if (typeof world !== 'string') {
-    return
+    return { exception: 'Invalid world' }
   }
 
-  return { itemId, world, daysRange }
+  const parsedItemId = parseInt(itemId)
+
+  if (isNaN(parsedItemId)) return { exception: 'Invalid item' }
+
+  return { itemId: parsedItemId, world, daysRange }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -53,8 +57,8 @@ export const action: ActionFunction = async ({ request }) => {
     world: formData.get('world')
   })
 
-  if (!validInput) {
-    return new Error('not valid input')
+  if ('exception' in validInput) {
+    return validInput
   }
 
   try {
@@ -86,6 +90,8 @@ const Index = () => {
       e.preventDefault()
       return
     }
+
+    console.log('submitting')
   }
 
   const error =

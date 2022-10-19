@@ -50,7 +50,7 @@ export type GetHistoryResponse =
     }
 
 export interface GetHistoryProps {
-  itemId: string
+  itemId: number
   world: string
   initialDays?: number
   endDays?: number

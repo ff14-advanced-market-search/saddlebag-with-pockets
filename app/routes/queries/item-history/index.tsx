@@ -25,28 +25,32 @@ const validateInput = ({
   itemId?: FormDataEntryValue | null
   world?: FormDataEntryValue | null
   itemType?: FormDataEntryValue | null
-}): GetHistoryProps | undefined => {
+}): GetHistoryProps | { exception: string } => {
   if (itemId === undefined || itemId === null) {
-    return
+    return { exception: 'Item not found' }
   }
 
   if (world === undefined || world === null) {
-    return
+    return { exception: 'World not set' }
   }
 
   if (typeof itemId !== 'string') {
-    return
+    return { exception: 'Invalid item' }
   }
 
   if (typeof world !== 'string') {
-    return
+    return { exception: 'Invalid world' }
   }
+
+  const parsedItemId = parseInt(itemId)
+
+  if (isNaN(parsedItemId)) return { exception: 'Invalid item' }
 
   if (itemType !== 'all' && itemType !== 'hq_only' && itemType !== 'nq_only') {
-    return
+    return { exception: 'Invalid item type selected' }
   }
 
-  return { itemId, world, itemType }
+  return { itemId: parsedItemId, world, itemType }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -61,15 +65,15 @@ export const action: ActionFunction = async ({ request }) => {
     itemType: formData.get('itemType')
   })
 
-  if (!validInput) {
-    return new Error('not valid input')
+  if ('exception' in validInput) {
+    return validInput
   }
 
   try {
     return await GetHistoryRequest(validInput)
   } catch (err) {
-    console.log('catch', err)
-    return err
+    console.error('catch', err)
+    return { exception: err }
   }
 }
 
