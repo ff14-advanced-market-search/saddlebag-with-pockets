@@ -80,7 +80,8 @@ const Index = () => {
                 href="https://ffxivgillionaire.com/crafter-class-quest-items-guide">
                 <u> Crafter Class Quests </u>
               </a>
-              .
+              . Look over those links as some quests or missions require high
+              quality items.
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
