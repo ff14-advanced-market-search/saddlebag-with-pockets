@@ -26,6 +26,7 @@ import {
 } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
+import ItemDataLink from '~/components/utilities/ItemDataLink'
 
 type ResultTableProps<T> = {
   rows: Record<string, T>
@@ -125,6 +126,12 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     columnHelper.accessor('npc_vendor_info', {
       header: 'NPC Vendor Info',
       cell: (info) => <UniversalisBadgedLink link={info.getValue()} />
+    }),
+    columnHelper.accessor('id', {
+      header: 'Item Data',
+      cell: (info) => (
+        <ItemDataLink link={'/queries/item-data/' + info.getValue()} />
+      )
     })
   ]
 
@@ -170,6 +177,7 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
   useEffect(() => {
     setColumnOrder([
       'real_name',
+      'id',
       'url',
       'ppu',
       'home_server_price',
@@ -287,7 +295,7 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
           </div>
           <div>
             <p className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>
-              {rows.length} results found
+              {`${rows.length} results found`}
             </p>
           </div>
         </div>
