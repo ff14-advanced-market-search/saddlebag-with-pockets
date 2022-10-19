@@ -1,193 +1,65 @@
-import type {
-  FilterFn,
-  ColumnFiltersState,
-  ColumnOrderState
-} from '@tanstack/table-core'
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getSortedRowModel
-} from '@tanstack/table-core'
-import { useEffect, useState } from 'react'
-import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { Listing, ListingResponseType } from '~/requests/GetListing'
-import type { RankingInfo } from '@tanstack/match-sorter-utils'
-import { rankItem } from '@tanstack/match-sorter-utils'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
-import { classNames } from '~/utils'
-
-declare module '@tanstack/table-core' {
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>
-  }
-
-  interface FilterMeta {
-    itemRank: RankingInfo
-  }
-}
-
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  const itemRank = rankItem(row.getValue(columnId), value)
-
-  addMeta({ itemRank })
-  return itemRank.passed
-}
+import type { ListingResponseType } from '~/requests/GetListing'
+import { Differences } from './Differences'
+import ListingTable from './ListingTable'
 
 const Results = ({ data }: { data: ListingResponseType }) => {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
-  const [columnOrder] = useState<ColumnOrderState>([])
-
-  const columnHelper = createColumnHelper<Listing>()
-  const columns = [
-    columnHelper.accessor('pricePerUnit', {
-      header: 'Price Per Unit',
-      cell: (info) => info.getValue()
-    }),
-    columnHelper.accessor('hq', {
-      header: 'Quality',
-      cell: (info) => (info.getValue() ? 'High' : null)
-    }),
-    columnHelper.accessor('quantity', {
-      header: 'Quantity',
-      cell: (info) => info.getValue()
-    }),
-    columnHelper.accessor('total', {
-      header: 'Total',
-      cell: (info) => info.getValue()
-    }),
-    columnHelper.accessor('retainerName', {
-      header: 'Retainer Name',
-      cell: (info) => info.getValue()
-    }),
-    columnHelper.accessor('lastReviewTime', {
-      header: 'Last Review Time',
-      cell: (info) => info.getValue()
-    })
-  ]
-
-  const table = useReactTable({
-    data: data.listings,
-    columns,
-    filterFns: {
-      fuzzy: fuzzyFilter
-    },
-    state: {
-      columnFilters,
-      globalFilter,
-      columnOrder
-    },
-    onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: fuzzyFilter,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false
-  })
-
-  useEffect(() => {
-    table.setSorting([
-      {
-        id: 'pricePerUnit',
-        desc: true
-      }
-    ])
-  }, [table])
-
   return (
-    <div className={`mt-0 flex flex-col`}>
-      <div className="overflow-x-auto">
-        <div className="inline-block min-w-full align-middle">
-          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead className="bg-gray-50">
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <th
-                        scope={`col`}
-                        onClick={header.column.getToggleSortingHandler()}
-                        className={classNames(
-                          header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
-                        )}
-                        key={header.id}>
-                        <div className={`group inline-flex`}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                          <div
-                            className={classNames(
-                              header.column.getIsSorted()
-                                ? 'bg-gray-200 rounded bg-gray-200'
-                                : '',
-                              ` ml-1 flex-none p-1`
-                            )}>
-                            {{
-                              asc: (
-                                <span
-                                  className={`text-gray-900 group-hover:bg-gray-300`}>
-                                  <ChevronUpIcon className={`h-4 w-4`} />
-                                </span>
-                              ),
-                              desc: (
-                                <span
-                                  className={`text-gray-900 group-hover:bg-gray-300`}>
-                                  <ChevronDownIcon className={`h-4 w-4`} />
-                                </span>
-                              )
-                            }[header.column.getIsSorted() as string] ?? (
-                              <span
-                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
-                                <ChevronDownIcon className={`h-4 w-4`} />
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <td
-                        key={cell.id}
-                        className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <p className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>
-              {`${data.listings.length} results found`}
-            </p>
-          </div>
-        </div>
+    <>
+      <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
+        {'listing_price_diff' in data && (
+          <Differences
+            diffTitle="Avg Price Difference"
+            diffAmount={`${data.listing_price_diff.avg_price_diff} gil`}
+            className={
+              data.listing_price_diff.avg_price_diff >= 10000
+                ? 'bg-red-100 font-semibold text-red-800'
+                : 'bg-green-100 font-semibold text-green-800'
+            }
+          />
+        )}
+        {'listing_price_diff' in data && (
+          <Differences
+            diffTitle="Median Price Difference"
+            diffAmount={`${data.listing_price_diff.median_price_diff} gil`}
+            className={
+              data.listing_price_diff.median_price_diff >= 10000
+                ? 'bg-red-100 font-semibold text-red-800'
+                : 'bg-green-100 font-semibold text-green-800'
+            }
+          />
+        )}
+        {'listing_time_diff' in data && (
+          <Differences
+            diffTitle="Avg Time Difference"
+            diffAmount={`${data.listing_time_diff.avg_time_diff} minutes`}
+            className={
+              data.listing_time_diff.avg_time_diff >= 30
+                ? 'bg-green-100 font-semibold text-green-800'
+                : 'bg-red-100 font-semibold text-red-800'
+            }
+          />
+        )}
+        {'listing_time_diff' in data && (
+          <Differences
+            diffTitle="Median Time Difference"
+            diffAmount={`${data.listing_time_diff.median_time_diff} minutes`}
+            className={
+              data.listing_time_diff.median_time_diff >= 30
+                ? 'bg-green-100 font-semibold text-green-800'
+                : 'bg-red-100 font-semibold text-red-800'
+            }
+          />
+        )}
+        {'min_price' in data && (
+          <Differences
+            diffTitle="Minimum Price"
+            diffAmount={`${data.min_price} gil`}
+            className={'bg-blue-100 font-semibold text-blue-800'}
+          />
+        )}
       </div>
-    </div>
+      <ListingTable data={data} />
+    </>
   )
 }
 

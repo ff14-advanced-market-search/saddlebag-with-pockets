@@ -7,6 +7,9 @@ import type { ListingResponseType } from '~/requests/GetListing'
 import GetListing from '~/requests/GetListing'
 import { getUserSessionData } from '~/sessions'
 import { getItemNameById } from '~/utils/items'
+import HistoryResults from '../item-history/Results'
+import NoResults from '../listings/NoResults'
+import ListingResults from '../listings/Results'
 
 export { ErrorBoundary } from '~/components/utilities/ErrorBoundary'
 
@@ -71,12 +74,63 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 }
 
+const PageWrapper = ({ children }: { children: JSX.Element }) => (
+  <main className="flex-1">
+    <div className="py-3 px-4">{children}</div>
+  </main>
+)
+
+const Title = ({ title }: { title: string }) => (
+  <h1 className="text-2xl font-semibold text-blue-900 py-2">{title}</h1>
+)
+
+const Section = ({ children }: { children: JSX.Element }) => (
+  <section className="max-w-4xl mx-auto px-4">{children}</section>
+)
+
+const ContentContainer = ({ children }: { children: JSX.Element }) => (
+  <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
+    {children}
+  </div>
+)
+
 const ItemPage = () => {
   const data = useLoaderData<ItemPageData>()
 
   if ('exception' in data) {
-    return <main className="flex-1"></main>
+    return (
+      <PageWrapper>
+        <h2 className="text-red-800">Error: {data.exception}</h2>
+      </PageWrapper>
+    )
   }
+
+  const listing = data.listing
+
+  return (
+    <PageWrapper>
+      <>
+        <Section>
+          <Title title={data.itemName} />
+        </Section>
+        <HistoryResults data={data.history} />
+        <Section>
+          <ContentContainer>
+            <>
+              <Title title={`${data.itemName} Listings`} />
+              {listing &&
+              'listings' in listing &&
+              listing.listings.length > 0 ? (
+                <ListingResults data={listing} />
+              ) : (
+                <NoResults href="/" />
+              )}
+            </>
+          </ContentContainer>
+        </Section>
+      </>
+    </PageWrapper>
+  )
 }
 
 export default ItemPage

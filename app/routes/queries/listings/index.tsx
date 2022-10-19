@@ -8,7 +8,6 @@ import type { GetListingProps } from '~/requests/GetListing'
 import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
 import { getUserSessionData } from '~/sessions'
-import { Differences } from './Differences'
 import type { ItemSelected } from '../../../components/form/select/ItemSelect'
 import ItemSelect from '../../../components/form/select/ItemSelect'
 import { useState } from 'react'
@@ -115,62 +114,7 @@ const Index = () => {
         <NoResults href={`/queries/listings`} />
       )}
       {results && results.listings && results.listings.length > 0 && (
-        <>
-          <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
-            {'listing_price_diff' in results && (
-              <Differences
-                diffTitle="Avg Price Difference"
-                diffAmount={`${results.listing_price_diff.avg_price_diff} gil`}
-                className={
-                  results.listing_price_diff.avg_price_diff >= 10000
-                    ? 'bg-red-100 font-semibold text-red-800'
-                    : 'bg-green-100 font-semibold text-green-800'
-                }
-              />
-            )}
-            {'listing_price_diff' in results && (
-              <Differences
-                diffTitle="Median Price Difference"
-                diffAmount={`${results.listing_price_diff.median_price_diff} gil`}
-                className={
-                  results.listing_price_diff.median_price_diff >= 10000
-                    ? 'bg-red-100 font-semibold text-red-800'
-                    : 'bg-green-100 font-semibold text-green-800'
-                }
-              />
-            )}
-            {'listing_time_diff' in results && (
-              <Differences
-                diffTitle="Avg Time Difference"
-                diffAmount={`${results.listing_time_diff.avg_time_diff} minutes`}
-                className={
-                  results.listing_time_diff.avg_time_diff >= 30
-                    ? 'bg-green-100 font-semibold text-green-800'
-                    : 'bg-red-100 font-semibold text-red-800'
-                }
-              />
-            )}
-            {'listing_time_diff' in results && (
-              <Differences
-                diffTitle="Median Time Difference"
-                diffAmount={`${results.listing_time_diff.median_time_diff} minutes`}
-                className={
-                  results.listing_time_diff.median_time_diff >= 30
-                    ? 'bg-green-100 font-semibold text-green-800'
-                    : 'bg-red-100 font-semibold text-red-800'
-                }
-              />
-            )}
-            {'min_price' in results && (
-              <Differences
-                diffTitle="Minimum Price"
-                diffAmount={`${results.min_price} gil`}
-                className={'bg-blue-100 font-semibold text-blue-800'}
-              />
-            )}
-          </div>
-          <Results data={results} />
-        </>
+        <Results data={results} />
       )}
     </main>
   )
