@@ -73,14 +73,14 @@ const Index = () => {
                 href="https://ffxiv.gamerescape.com/wiki/Supply_and_Provisioning_Mission">
                 <u> Supply and Provisioning Missions </u>
               </a>
-              or for
+              or
               <a
                 target="_blank"
                 class="primary-btn"
                 href="https://ffxivgillionaire.com/crafter-class-quest-items-guide">
-                <u> Crafter Class Quests </u>
+                <u> Crafter Class Quests.</u>
               </a>
-              . Look over those links as some quests or missions require high
+              Look over those links as some quests or missions require high
               quality items.
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
