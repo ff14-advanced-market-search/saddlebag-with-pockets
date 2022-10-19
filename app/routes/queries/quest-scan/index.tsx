@@ -65,20 +65,22 @@ const Index = () => {
       <div className="py-6">
         <Form method="post">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 py-6">
+            <h1 className="text-2xl font-semibold text-green-900 py-6">
               Quest Search: These items are bought by players to turn in for
               <a
                 target="_blank"
                 class="primary-btn"
                 href="https://ffxiv.gamerescape.com/wiki/Supply_and_Provisioning_Mission">
-                Supply and Provisioning Missions
+                <u> Supply and Provisioning Missions </u>
               </a>
+              or for
               <a
                 target="_blank"
                 class="primary-btn"
                 href="https://ffxivgillionaire.com/crafter-class-quest-items-guide">
-                Crafter Class Quests
+                <u> Crafter Class Quests </u>
               </a>
+              .
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
