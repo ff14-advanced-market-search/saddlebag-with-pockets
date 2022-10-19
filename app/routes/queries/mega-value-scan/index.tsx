@@ -65,8 +65,9 @@ const Index = () => {
       <div className="py-6">
         <Form method="post">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 py-6">
-              Value Search
+            <h1 className="text-2xl font-semibold text-green-900 py-6">
+              Mega Value Search for items with slow sale rates, but on average
+              sale value over 1,000,000 gil!
             </h1>
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
