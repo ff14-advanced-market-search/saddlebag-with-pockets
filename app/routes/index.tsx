@@ -4,9 +4,9 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
   {
-    name: 'Full Search',
+    name: 'Example Search',
     description:
-      'A trading scan that searches through all items on your local marketboard for items to buy from other servers and sell on your own for a profit!',
+      'A trading search that looks through all items on your local marketboard for items to buy from other servers and sell on your own for a profit!',
     icon: DocumentSearchIcon,
     href: '/queries/full-scan'
   },
@@ -42,6 +42,27 @@ const recommendedQueries = [
       'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
     icon: DocumentSearchIcon,
     href: '/queries/out-stock-scan'
+  },
+  {
+    name: 'Low Quality Out of Stock Search',
+    description:
+      'Same rules for out of stock search, but this one looks for Low Quality items that can sell for 50k to 70K like furniture or dyes.',
+    icon: DocumentSearchIcon,
+    href: '/queries/nq-out-stock-scan'
+  },
+  {
+    name: 'Quest Item Search',
+    description:
+      'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
+    icon: DocumentSearchIcon,
+    href: '/queries/quest-scan'
+  },
+  {
+    name: 'Mega Value Search',
+    description:
+      'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
+    icon: DocumentSearchIcon,
+    href: '/queries/mega-value-scan'
   }
 ]
 
