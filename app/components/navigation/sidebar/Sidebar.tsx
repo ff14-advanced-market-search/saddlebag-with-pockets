@@ -7,7 +7,8 @@ import {
   CogIcon,
   HomeIcon,
   MenuAlt2Icon,
-  XIcon
+  XIcon,
+  DocumentSearchIcon
 } from '@heroicons/react/outline'
 import { Link, NavLink } from '@remix-run/react'
 import { classNames } from '~/utils'
@@ -32,6 +33,16 @@ const navigation = [
     name: 'Queries',
     href: 'queries',
     icon: ChartSquareBarIcon
+  },
+  {
+    name: 'Listings',
+    href: 'queries/listings',
+    icon: ChartSquareBarIcon
+  },
+  {
+    name: 'Item History',
+    href: 'queries/item-history',
+    icon: DocumentSearchIcon
   },
   {
     name: 'Patreon',
@@ -59,19 +70,18 @@ const navigation = [
   }
 ]
 const advertisements = [
-  {
-    name: 'Best Sellers in Video Games',
-    href: 'https://www.amazon.com/best-sellers-video-games/zgbs/videogames?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=e9fc3b6346a319e96288b98cbf3e688d&ref_=ihub_curatedcontent_c0e2eb7b-31db-4cc7-a427-b5f5f75b09db'
-  },
-
-  {
-    name: 'Best Sellers in Electronics',
-    href: 'https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=2d456819badb061450b7200abf42b1cf&ref_=ihub_curatedcontent_c71c4a67-0a56-4af2-a5a5-78ab26623653'
-  },
-  {
-    name: 'Best Sellers in Computers & Accessories',
-    href: 'https://www.amazon.com/Best-Sellers-Computers-Accessories/zgbs/pc?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=d5510f37e5ba06b34988212672d6e470&ref_=ihub_curatedcontent_cc03e16d-0d64-46fc-ba03-79623230ca5e'
-  }
+  // {
+  //   name: 'Best Sellers in Video Games',
+  //   href: 'https://www.amazon.com/best-sellers-video-games/zgbs/videogames?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=e9fc3b6346a319e96288b98cbf3e688d&ref_=ihub_curatedcontent_c0e2eb7b-31db-4cc7-a427-b5f5f75b09db'
+  // },
+  // {
+  //   name: 'Best Sellers in Electronics',
+  //   href: 'https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=2d456819badb061450b7200abf42b1cf&ref_=ihub_curatedcontent_c71c4a67-0a56-4af2-a5a5-78ab26623653'
+  // },
+  // {
+  //   name: 'Best Sellers in Computers & Accessories',
+  //   href: 'https://www.amazon.com/Best-Sellers-Computers-Accessories/zgbs/pc?_encoding=UTF8&linkCode=ib1&tag=ff14advancedm-20&linkId=d5510f37e5ba06b34988212672d6e470&ref_=ihub_curatedcontent_cc03e16d-0d64-46fc-ba03-79623230ca5e'
+  // }
 ]
 const userNavigation = [
   {
@@ -197,9 +207,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     )}
                   </nav>
                   <nav className="px-2 space-y-1">
-                    <span className={`text-gray-300 text-base p-2`}>
-                      Advertisements
-                    </span>
+                    <span className={`text-gray-300 text-base p-2`}>.</span>
                     {advertisements.map((item) => (
                       <a
                         key={item.name}
