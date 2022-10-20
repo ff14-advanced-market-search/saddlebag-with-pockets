@@ -21,12 +21,12 @@ const ItemSelect = ({
   const selectIsDisabled = !name || name.length < 2 || !items || !items.length
 
   return (
-    <div className="py-2 bg-white sm:p-4">
+    <div className="py-2 bg-white sm:p-4 dark:bg-slate-700">
       <div className="flex-1 min-w-full dir-col md:max-w-md">
         <div className="col-span-6 sm:col-span-3 xl:col-span-2">
           <label
             htmlFor="itemName"
-            className="block text-sm font-medium text-gray-700">
+            className="block text-sm font-medium text-gray-700 dark:text-grey-100">
             Search for Item by Name
           </label>
           <div className={`mt-1 flex rounded-md shadow-sm`}>
