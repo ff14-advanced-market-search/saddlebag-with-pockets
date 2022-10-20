@@ -10605,7 +10605,7 @@ const itemsMap: Record<string, string> = {
   '28591': 'Rebel Boots',
   '28592': "Craftsman's Coverall Top",
   '28593': "Craftsman's Coverall Bottoms",
-  '28594': "Craftsman's\u00a0Singlet",
+  '28594': "Craftsman's Singlet",
   '28612': 'Ballroom Etiquette - The Winsome Wallflower',
   '28615': 'Modern Aesthetics - Modern Legend',
   '28616': 'Hades Barding',
@@ -11558,7 +11558,7 @@ const itemsMap: Record<string, string> = {
   '31679': 'Grandma (Destruction) Orchestrion Roll',
   '31680': 'End of the Unknown Orchestrion Roll',
   '31681':
-    'Torn from the Heavens\uff0fThe Dark Colossus Destroys All (Medley Version) Orchestrion Roll',
+    'Torn from the Heavens The Dark Colossus Destroys All (Medley Version) Orchestrion Roll',
   '31687': 'Faded Copy of To the Edge',
   '31758': 'Oddly Delicate Pine Log',
   '31759': 'Oddly Delicate Silvergrace Ore',
