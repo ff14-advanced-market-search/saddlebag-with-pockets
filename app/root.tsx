@@ -14,12 +14,15 @@ import Sidebar from '~/components/navigation/sidebar'
 import { getSession } from '~/sessions'
 import {
   EnsureThemeApplied,
+  Theme,
   ThemeProvider,
   useTheme
 } from '~/utils/providers/theme-provider'
 import { classNames } from '~/utils'
 import { store } from '~/redux/store'
 import { Provider } from 'react-redux'
+import { useTypedSelector } from './redux/useTypedSelector'
+import { useEffect } from 'react'
 
 export const links = () => {
   return [
@@ -67,7 +70,16 @@ export const meta: MetaFunction = ({ data }) => {
 
 function App() {
   const data = useLoaderData<LoaderData>()
-  const [theme] = useTheme()
+  const [theme, setTheme] = useTheme()
+  const { darkmode } = useTypedSelector((state) => state.user)
+
+  useEffect(() => {
+    if (darkmode) {
+      setTheme(Theme.DARK)
+    } else {
+      setTheme(Theme.LIGHT)
+    }
+  }, [setTheme, darkmode])
 
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
