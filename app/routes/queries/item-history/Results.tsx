@@ -1,3 +1,4 @@
+import { ContentContainer, Title } from '~/components/Common'
 import type { HistoryResponse } from '~/requests/GetHistory'
 import { Differences } from '../listings/Differences'
 import PriceHistoryChart from './PriceHistoryChart'
@@ -7,9 +8,7 @@ import SuspiciousSaleTable from './SuspiciousSalesTable'
 
 const Results = ({ data }: { data: HistoryResponse }) => (
   <div className="max-w-4xl mx-auto px-4">
-    <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
-      Region Wide Pricing and Sales
-    </h2>
+    <Title title="Region Wide Pricing and Sales" />
     <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
       <div className="flex flex-col max-w-full">
         <Differences
@@ -42,34 +41,34 @@ const Results = ({ data }: { data: HistoryResponse }) => (
       </div>
     </div>
 
-    <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
-      <h2 className="text-2xl font-semibold text-blue-900 py-2 ml-8">
-        Region Price History
-      </h2>
-      <PriceHistoryChart data={data.price_history} />
-    </div>
+    <ContentContainer>
+      <>
+        <Title title="Region Price History" />
+        <PriceHistoryChart data={data.price_history} />
+      </>
+    </ContentContainer>
 
     <SaleHistoryTable data={data.stack_chance} />
 
-    <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
-      <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">
-        Home Server Sales per Hour
-      </h2>
-      <SalesByHourChart data={data.home_server_sales_by_hour_chart} />
-    </div>
+    <ContentContainer>
+      <>
+        <Title title="Home Server Sales per Hour" />
+        <SalesByHourChart data={data.home_server_sales_by_hour_chart} />
+      </>
+    </ContentContainer>
 
-    <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
-      <h2 className="text-2xl font-semibold text-blue-900 py-2 ml-8">
-        Region Wide Suspicious Sales
-      </h2>
-      {data.dirty_sales.length ? (
-        <SuspiciousSaleTable data={data.dirty_sales} />
-      ) : (
-        <p className="italic text-sm text-grey-500 px-3">
-          No suspicious sales found
-        </p>
-      )}
-    </div>
+    <ContentContainer>
+      <>
+        <Title title="Region Wide Suspicious Sales" />
+        {data.dirty_sales.length ? (
+          <SuspiciousSaleTable data={data.dirty_sales} />
+        ) : (
+          <p className="italic text-sm text-grey-500 px-3 dark:text-grey-200">
+            No suspicious sales found
+          </p>
+        )}
+      </>
+    </ContentContainer>
   </div>
 )
 

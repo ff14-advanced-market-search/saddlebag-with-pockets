@@ -12,6 +12,7 @@ import type { ItemSelected } from '~/components/form/select/ItemSelect'
 import { useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import Results from './Results'
+import { PageWrapper } from '~/components/Common'
 
 const validateInput = ({
   itemId,
@@ -110,40 +111,42 @@ const Index = () => {
       : ''
 
   return (
-    <main className="flex-1">
-      <div className="py-3">
-        <SmallFormContainer
-          title="Find Item History"
-          onClick={onSubmit}
-          error={error}
-          loading={transition.state === 'submitting'}
-          disabled={!formState}>
-          <>
-            <ItemSelect onSelectChange={setFormState} />
-            <div className="my-1 flex flex-1 px-4">
-              <select
-                id="itemType"
-                className="flex-1 min-w-0 block px-3 py-2 rounded-l-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-l-md"
-                name="itemType"
-                defaultValue={'all'}>
-                <option value="all">All</option>
-                <option value="hq_only">High Quality</option>
-                <option value="nq_only">Low Quality</option>
-              </select>
-              <label
-                htmlFor="itemType"
-                className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm shadow-sm">
-                Item Quality
-              </label>
-            </div>
-          </>
-        </SmallFormContainer>
-      </div>
-      {results && !Object.keys(results).length && (
-        <NoResults href={`/queries/item-history`} />
-      )}
-      {results && 'average_ppu' in results && <Results data={results} />}
-    </main>
+    <PageWrapper>
+      <>
+        <div className="py-3">
+          <SmallFormContainer
+            title="Find Item History"
+            onClick={onSubmit}
+            error={error}
+            loading={transition.state === 'submitting'}
+            disabled={!formState}>
+            <>
+              <ItemSelect onSelectChange={setFormState} />
+              <div className="my-1 flex flex-1 px-4">
+                <select
+                  id="itemType"
+                  className="flex-1 min-w-0 block px-3 py-2 rounded-l-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-l-md"
+                  name="itemType"
+                  defaultValue={'all'}>
+                  <option value="all">All</option>
+                  <option value="hq_only">High Quality</option>
+                  <option value="nq_only">Low Quality</option>
+                </select>
+                <label
+                  htmlFor="itemType"
+                  className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm shadow-sm">
+                  Item Quality
+                </label>
+              </div>
+            </>
+          </SmallFormContainer>
+        </div>
+        {results && !Object.keys(results).length && (
+          <NoResults href={`/queries/item-history`} />
+        )}
+        {results && 'average_ppu' in results && <Results data={results} />}
+      </>
+    </PageWrapper>
   )
 }
 

@@ -12,6 +12,7 @@ import type { ItemSelected } from '../../../components/form/select/ItemSelect'
 import ItemSelect from '../../../components/form/select/ItemSelect'
 import { useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
+import { PageWrapper } from '~/components/Common'
 
 const validateInput = ({
   itemId,
@@ -99,24 +100,26 @@ const Index = () => {
       : ''
 
   return (
-    <main className="flex-1">
-      <div className="py-3">
-        <SmallFormContainer
-          title="Get Item Listing Details"
-          onClick={onSubmit}
-          loading={transition.state === 'submitting'}
-          disabled={!formState || !formState.id}
-          error={error}>
-          <ItemSelect onSelectChange={setFormState} />
-        </SmallFormContainer>
-      </div>
-      {results && !Object.keys(results).length && (
-        <NoResults href={`/queries/listings`} />
-      )}
-      {results && results.listings && results.listings.length > 0 && (
-        <Results data={results} />
-      )}
-    </main>
+    <PageWrapper>
+      <>
+        <div className="py-3">
+          <SmallFormContainer
+            title="Get Item Listing Details"
+            onClick={onSubmit}
+            loading={transition.state === 'submitting'}
+            disabled={!formState || !formState.id}
+            error={error}>
+            <ItemSelect onSelectChange={setFormState} />
+          </SmallFormContainer>
+        </div>
+        {results && !Object.keys(results).length && (
+          <NoResults href={`/queries/listings`} />
+        )}
+        {results && results.listings && results.listings.length > 0 && (
+          <Results data={results} />
+        )}
+      </>
+    </PageWrapper>
   )
 }
 

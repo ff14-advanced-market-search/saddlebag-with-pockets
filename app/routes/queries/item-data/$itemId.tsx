@@ -1,6 +1,12 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
+import {
+  ContentContainer,
+  PageWrapper,
+  Section,
+  Title
+} from '~/components/Common'
 import type { HistoryResponse } from '~/requests/GetHistory'
 import GetHistory from '~/requests/GetHistory'
 import type { ListingResponseType } from '~/requests/GetListing'
@@ -74,33 +80,15 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 }
 
-const PageWrapper = ({ children }: { children: JSX.Element }) => (
-  <main className="flex-1">
-    <div className="py-3 px-4">{children}</div>
-  </main>
-)
-
-const Title = ({ title }: { title: string }) => (
-  <h1 className="text-2xl font-semibold text-blue-900 py-2">{title}</h1>
-)
-
-const Section = ({ children }: { children: JSX.Element }) => (
-  <section className="max-w-4xl mx-auto px-4">{children}</section>
-)
-
-const ContentContainer = ({ children }: { children: JSX.Element }) => (
-  <div className="my-6 px-3 pb-2 pt-4 sm:rounded-md bg-white shadow">
-    {children}
-  </div>
-)
-
 const ItemPage = () => {
   const data = useLoaderData<ItemPageData>()
 
   if ('exception' in data) {
     return (
       <PageWrapper>
-        <h2 className="text-red-800">Error: {data.exception}</h2>
+        <h2 className="text-red-800 dark:text-red-200">
+          Error: {data.exception}
+        </h2>
       </PageWrapper>
     )
   }
