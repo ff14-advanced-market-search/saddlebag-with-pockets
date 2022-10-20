@@ -31,18 +31,20 @@ export interface StackChance {
   stack_size: number
 }
 
+export interface HistoryResponse {
+  average_ppu: number
+  median_ppu: number
+  average_quantity_sold_per_day: number
+  average_sales_per_day: number
+  total_quantity_sold: number
+  home_server_sales_by_hour_chart: Array<HomeServerSalesByHour>
+  price_history: Array<PriceHistory>
+  stack_chance: Array<StackChance>
+  dirty_sales: Array<DirtySale>
+}
+
 export type GetHistoryResponse =
-  | {
-      average_ppu: number
-      median_ppu: number
-      average_quantity_sold_per_day: number
-      average_sales_per_day: number
-      total_quantity_sold: number
-      home_server_sales_by_hour_chart: Array<HomeServerSalesByHour>
-      price_history: Array<PriceHistory>
-      stack_chance: Array<StackChance>
-      dirty_sales: Array<DirtySale>
-    }
+  | HistoryResponse
   | {
       exception: string
     }
