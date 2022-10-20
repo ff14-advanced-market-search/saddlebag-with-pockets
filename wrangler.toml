@@ -1,0 +1,12 @@
+name = "exchange"
+main = "./build/index.js"
+compatibility_date = "2022-10-20"
+
+workers_dev = true
+account_id = "131d3ef77f51b43d39c70f2e5b65c34c"
+
+[site]
+bucket = "./public"
+
+[build]
+command = "yarn run build"
