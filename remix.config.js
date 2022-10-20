@@ -1,9 +1,15 @@
 const { withEsbuildOverride } = require('remix-esbuild-override')
 
 withEsbuildOverride((option) => {
-  option.external = ['__STATIC_CONTENT_MANIFEST'];
-  option.logLevel = "error";
-  option.logOverride = {"this-is-undefined-in-esm":"silent"}
+  if (
+    option.entryPoints &&
+    Array.isArray(option.entryPoints) &&
+    option.entryPoints.includes('./server.ts')
+  ) {
+    if (!option.external) {
+      option.external = ['__STATIC_CONTENT_MANIFEST']
+    }
+  }
   return option
 })
 
