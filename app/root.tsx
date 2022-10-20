@@ -18,6 +18,8 @@ import {
   useTheme
 } from '~/utils/providers/theme-provider'
 import { classNames } from '~/utils'
+import { store } from '~/redux/store'
+import { Provider } from 'react-redux'
 
 export const links = () => {
   return [
@@ -104,8 +106,10 @@ function App() {
 
 export default function AppWithTheme() {
   return (
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </Provider>
   )
 }

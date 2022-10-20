@@ -16,9 +16,12 @@ import type { Validator } from 'remix-validated-form'
 import type { WorldsList } from '~/utils/locations/Worlds'
 import { commitSession, getSession } from '~/sessions'
 import { Switch } from '@headlessui/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { classNames } from '~/utils'
 import { Theme, useTheme } from '~/utils/providers/theme-provider'
+import { useDispatch } from 'react-redux'
+import { toggleDarkMode } from '~/redux/reducers/userSlice'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export type SelectWorldInputFields = {
   data_center: GetDeepProp<DataCentersList, 'name'>
@@ -62,15 +65,20 @@ export default function () {
   const data = useLoaderData()
   const transition = useTransition()
   const actionData = useActionData()
-  const [darkMode, setDarkMode] = useState(false)
   const [, setTheme] = useTheme()
-  useEffect(() => {
-    if (darkMode) {
+  const dispatch = useDispatch()
+  const { darkmode } = useTypedSelector((state) => state.user)
+
+  const handleDarkModeToggle = (value: boolean) => {
+    if (value) {
       setTheme(Theme.DARK)
     } else {
       setTheme(Theme.LIGHT)
     }
-  }, [darkMode, setTheme])
+
+    dispatch(toggleDarkMode())
+  }
+
   return (
     <div>
       <main className="flex-1">
@@ -178,16 +186,16 @@ export default function () {
                               </Switch.Description>
                             </span>
                             <Switch
-                              checked={darkMode}
-                              onChange={setDarkMode}
+                              checked={darkmode}
+                              onChange={handleDarkModeToggle}
                               className={classNames(
-                                darkMode ? `bg-blue-500` : `bg-gray-200`,
+                                darkmode ? `bg-blue-500` : `bg-gray-200`,
                                 `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
                               )}>
                               <span
                                 aria-hidden={true}
                                 className={classNames(
-                                  darkMode ? `translate-x-5` : `translate-x-0`,
+                                  darkmode ? `translate-x-5` : `translate-x-0`,
                                   `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
                                 )}
                               />
