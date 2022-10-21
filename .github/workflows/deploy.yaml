@@ -15,6 +15,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Publish
-        uses: cloudflare/wrangler-action@1.2.0
+        uses: cloudflare/wrangler-action@2.0.0
+        command: publish
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
