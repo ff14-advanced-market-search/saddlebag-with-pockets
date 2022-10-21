@@ -23,8 +23,9 @@ export const userSlice = createSlice({
 
       state.darkmode = newValue
     },
-    setDarkMode: (state, action: PayloadAction<boolean>) => {
-      state.darkmode = action.payload
+    setDarkMode: (state, { payload }: PayloadAction<boolean>) => {
+      setDarkModeInLocalStorage(payload)
+      state.darkmode = payload
     }
   }
 })
