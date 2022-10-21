@@ -23,7 +23,10 @@ yarn run dev
 ```
 
 This starts your app in development mode, rebuilding assets on file changes.
-Check your terminal for the address, the default is `http://127.0.0.1:8788`
+Runs the server via `wrangler` in `local` mode.
+Check your terminal for the address, the default is `http://127.0.0.1:8787`
+
+- You may need to `wrangler login` before being able to run the command properly.
 
 ### Docker
 
@@ -43,14 +46,13 @@ docker-compose up
 
 ## Deployment
 
-Commit to `master`. Auto deploys to CloudFlare.
+Commit to `master`. Auto deploys to CloudFlare Workers.
 
-https://dash.cloudflare.com/131d3ef77f51b43d39c70f2e5b65c34c/pages/view/saddlebag-with-pockets
 
 ## Architecture
 
 For those interested, we're using the following in the front-end architecture:
 
 - [Remix Run](https://remix.run/)
-- [Cloudflare Pages](https://pages.cloudflare.com/)
+- [Cloudflare Workers](https://workers.cloudflare.com/)
 - [Tailwind CSS](https://tailwindcss.com/)

@@ -4,7 +4,7 @@
   "private": true,
   "license": "Apache-2.0",
   "proxy": "https://localhost:3000",
-  "homepage": "http://saddlebagexchange.com/",
+  "homepage": "https://saddlebagexchange.com/",
   "sideEffects": false,
   "scripts": {
     "build": "concurrently \" yarn run build:css\" \"remix build\"",
