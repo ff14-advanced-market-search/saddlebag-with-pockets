@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { ListingResponseType } from '~/requests/GetListing'
 
-export interface UserState {
+export interface ListingsState {
   listings?: ListingResponseType
 }
 
-const initialState: UserState = {
+const initialState: ListingsState = {
   listings: undefined
 }
 
