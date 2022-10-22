@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { ListingResponseType } from '~/requests/GetListing'
+import type { HistoryResponse } from '~/requests/GetHistory'
 
 export interface ListingsState {
   listings?: ListingResponseType
+  itemHistory?: HistoryResponse
 }
 
 const initialState: ListingsState = {
-  listings: undefined
+  listings: undefined,
+  itemHistory: undefined
 }
 
 export const queriesSlice = createSlice({
@@ -19,10 +22,16 @@ export const queriesSlice = createSlice({
       action: PayloadAction<ListingResponseType | undefined>
     ) => {
       state.listings = action.payload
+    },
+    setItemHistory: (
+      state,
+      action: PayloadAction<HistoryResponse | undefined>
+    ) => {
+      state.itemHistory = action.payload
     }
   }
 })
 
-export const { setListings } = queriesSlice.actions
+export const { setListings, setItemHistory } = queriesSlice.actions
 
 export default queriesSlice.reducer
