@@ -8,7 +8,6 @@ import type {
   GetListingProps,
   ListingResponseType
 } from '~/requests/GetListing'
-import NoResults from '~/routes/queries/listings/NoResults'
 import Results from '~/routes/queries/listings/Results'
 import { getUserSessionData } from '~/sessions'
 import type { ItemSelected } from '../../../components/form/select/ItemSelect'
@@ -99,6 +98,7 @@ const Index = () => {
     ListingResponseType | { exception: string } | {}
   >()
   const [formState, setFormState] = useState<ItemSelected | undefined>()
+  const [error, setError] = useState<string | undefined>()
   const dispatch = useDispatch()
   const { listings } = useTypedSelector((state) => state.queries)
 
@@ -109,21 +109,28 @@ const Index = () => {
     }
   }
 
-  const error =
-    results && 'exception' in results
-      ? `Server Error: ${results.exception}`
-      : ''
-
   useEffect(() => {
     if (results && 'listings' in results) {
       dispatch(setListings(results))
+    } else if (results && 'exception' in results) {
+      setError(`Server Error: ${results.exception}`)
+    } else if (results && 'payload' in results) {
+      setError('No results found')
     }
   }, [results, dispatch])
 
   const resultTitle = listings ? getItemNameById(listings.payload.itemId) : null
 
-  console.log('title', { resultTitle, itemId: listings?.payload.itemId })
-  console.log(listings)
+  const handleFormChange = (selectValue?: ItemSelected | undefined) => {
+    if (error) {
+      setError(undefined)
+    }
+    setFormState(selectValue)
+  }
+
+  const handleTextChange = () => {
+    setError(undefined)
+  }
 
   return (
     <PageWrapper>
@@ -135,12 +142,12 @@ const Index = () => {
             loading={transition.state === 'submitting'}
             disabled={!formState || !formState.id}
             error={error}>
-            <ItemSelect onSelectChange={setFormState} />
+            <ItemSelect
+              onSelectChange={handleFormChange}
+              onTextChange={handleTextChange}
+            />
           </SmallFormContainer>
         </div>
-        {results && !Object.keys(results).length && (
-          <NoResults href={`/queries/listings`} />
-        )}
         {listings && listings.listings && listings.listings.length > 0 && (
           <>
             {resultTitle && <Title title={resultTitle} />}
