@@ -124,7 +124,6 @@ const Index = () => {
   }
 
   useEffect(() => {
-    console.log(results)
     if (results && 'average_ppu' in results) {
       dispatch(setItemHistory(results))
     } else if (results && 'exception' in results) {
