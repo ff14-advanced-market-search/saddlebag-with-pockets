@@ -73,6 +73,9 @@ function App() {
   const [theme, setTheme] = useTheme()
   const { darkmode } = useTypedSelector((state) => state.user)
 
+  /**
+   * Setup theme for app
+   */
   useEffect(() => {
     if (darkmode) {
       setTheme(Theme.DARK)

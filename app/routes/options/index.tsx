@@ -44,6 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
     // Options already match existing stored session data. Yeet back to index.
     return redirect('/')
   }
+
   session.set('data_center', result.data.data_center)
   session.set('world', result.data.world)
   // Set the new option, yeet back to index (but save against session data within the cookie)
