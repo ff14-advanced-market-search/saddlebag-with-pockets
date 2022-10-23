@@ -4,18 +4,20 @@ import type { ListingResponseType } from '~/requests/GetListing'
 import type { HistoryResponse } from '~/requests/GetHistory'
 import type { ResponseType } from '~/requests/FullScan'
 
+type ScanResponse = Record<string, ResponseType>
+
 export interface QueriesState {
   listings?: ListingResponseType
   itemHistory?: HistoryResponse
-  fullScan?: ResponseType
-  commodityScan?: ResponseType
-  fastScan?: ResponseType
-  megaValueScan?: ResponseType
-  nqOutOfStockScan?: ResponseType
-  outOfStockScan?: ResponseType
-  questScan?: ResponseType
-  valueScan?: ResponseType
-  vendorScan?: ResponseType
+  fullScan?: ScanResponse
+  commodityScan?: ScanResponse
+  fastScan?: ScanResponse
+  megaValueScan?: ScanResponse
+  nqOutOfStockScan?: ScanResponse
+  outOfStockScan?: ScanResponse
+  questScan?: ScanResponse
+  valueScan?: ScanResponse
+  vendorScan?: ScanResponse
 }
 
 const initialState: QueriesState = {}
@@ -36,43 +38,43 @@ export const queriesSlice = createSlice({
     ) => {
       state.itemHistory = action.payload
     },
-    setFullScan: (state, action: PayloadAction<ResponseType | undefined>) => {
+    setFullScan: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.fullScan = action.payload
     },
     setCommodoityScan: (
       state,
-      action: PayloadAction<ResponseType | undefined>
+      action: PayloadAction<ScanResponse | undefined>
     ) => {
       state.commodityScan = action.payload
     },
-    setFastScan: (state, action: PayloadAction<ResponseType | undefined>) => {
+    setFastScan: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.fastScan = action.payload
     },
     setMegaValueScan: (
       state,
-      action: PayloadAction<ResponseType | undefined>
+      action: PayloadAction<ScanResponse | undefined>
     ) => {
       state.megaValueScan = action.payload
     },
     setNqOutOfStockScan: (
       state,
-      action: PayloadAction<ResponseType | undefined>
+      action: PayloadAction<ScanResponse | undefined>
     ) => {
       state.nqOutOfStockScan = action.payload
     },
     setOutOfStockScan: (
       state,
-      action: PayloadAction<ResponseType | undefined>
+      action: PayloadAction<ScanResponse | undefined>
     ) => {
       state.outOfStockScan = action.payload
     },
-    setQuestScan: (state, action: PayloadAction<ResponseType | undefined>) => {
+    setQuestScan: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.questScan = action.payload
     },
-    setValueScan: (state, action: PayloadAction<ResponseType | undefined>) => {
+    setValueScan: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.valueScan = action.payload
     },
-    setVendorScan: (state, action: PayloadAction<ResponseType | undefined>) => {
+    setVendorScan: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.vendorScan = action.payload
     }
   }
