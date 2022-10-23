@@ -10,6 +10,7 @@ export interface QueriesState {
   fullScan?: ResponseType
   commodityScan?: ResponseType
   fastScan?: ResponseType
+  megaValueScan?: ResponseType
 }
 
 const initialState: QueriesState = {
@@ -44,6 +45,12 @@ export const queriesSlice = createSlice({
     },
     setFastScan: (state, action: PayloadAction<ResponseType | undefined>) => {
       state.fastScan = action.payload
+    },
+    setMegaValueScan: (
+      state,
+      action: PayloadAction<ResponseType | undefined>
+    ) => {
+      state.megaValueScan = action.payload
     }
   }
 })
@@ -53,7 +60,8 @@ export const {
   setItemHistory,
   setFullScan,
   setCommodoityScan,
-  setFastScan
+  setFastScan,
+  setMegaValueScan
 } = queriesSlice.actions
 
 export default queriesSlice.reducer
