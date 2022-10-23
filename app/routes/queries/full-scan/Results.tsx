@@ -74,7 +74,7 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('home_server_price', {
       header: 'Home Server Price',
-      cell: (info) => info.getValue()
+      cell: (info) => (!info.getValue() ? 'No Listing' : info.getValue())
     }),
     columnHelper.accessor('home_update_time', {
       header: 'Home Server Info Last Updated At',
@@ -86,11 +86,11 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('profit_amount', {
       header: 'Profit Amount',
-      cell: (info) => info.getValue()
+      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
     }),
     columnHelper.accessor('profit_raw_percent', {
       header: 'Profit Percentage',
-      cell: (info) => info.getValue()
+      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
     }),
     columnHelper.accessor('real_name', {
       header: 'Item Name',

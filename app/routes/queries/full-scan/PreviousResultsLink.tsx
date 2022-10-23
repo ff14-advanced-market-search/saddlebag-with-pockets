@@ -6,6 +6,6 @@ export const PreviousResultsLink = ({ to }: { to: string }) => (
     className={
       'bg-gray-700 text-white items-center px-4 py-2 text-base font-medium rounded-md'
     }>
-    See previous search
+    See last search
   </NavLink>
 )
