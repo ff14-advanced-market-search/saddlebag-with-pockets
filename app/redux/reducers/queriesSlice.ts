@@ -9,6 +9,7 @@ export interface QueriesState {
   itemHistory?: HistoryResponse
   fullScan?: ResponseType
   commodityScan?: ResponseType
+  fastScan?: ResponseType
 }
 
 const initialState: QueriesState = {
@@ -40,11 +41,19 @@ export const queriesSlice = createSlice({
       action: PayloadAction<ResponseType | undefined>
     ) => {
       state.commodityScan = action.payload
+    },
+    setFastScan: (state, action: PayloadAction<ResponseType | undefined>) => {
+      state.fastScan = action.payload
     }
   }
 })
 
-export const { setListings, setItemHistory, setFullScan, setCommodoityScan } =
-  queriesSlice.actions
+export const {
+  setListings,
+  setItemHistory,
+  setFullScan,
+  setCommodoityScan,
+  setFastScan
+} = queriesSlice.actions
 
 export default queriesSlice.reducer
