@@ -12,12 +12,10 @@ export interface QueriesState {
   fastScan?: ResponseType
   megaValueScan?: ResponseType
   nqOutOfStockScan?: ResponseType
+  outOfStockScan?: ResponseType
 }
 
-const initialState: QueriesState = {
-  listings: undefined,
-  itemHistory: undefined
-}
+const initialState: QueriesState = {}
 
 export const queriesSlice = createSlice({
   name: 'queries',
@@ -58,6 +56,12 @@ export const queriesSlice = createSlice({
       action: PayloadAction<ResponseType | undefined>
     ) => {
       state.nqOutOfStockScan = action.payload
+    },
+    setOutOfStockScan: (
+      state,
+      action: PayloadAction<ResponseType | undefined>
+    ) => {
+      state.outOfStockScan = action.payload
     }
   }
 })
@@ -69,7 +73,8 @@ export const {
   setCommodoityScan,
   setFastScan,
   setMegaValueScan,
-  setNqOutOfStockScan
+  setNqOutOfStockScan,
+  setOutOfStockScan
 } = queriesSlice.actions
 
 export default queriesSlice.reducer
