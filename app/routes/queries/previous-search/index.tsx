@@ -4,7 +4,7 @@ import { useLoaderData } from '@remix-run/react'
 import type { QueriesState } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { convertResponseToTableRows } from '../full-scan/convertResponseToTableRows'
-import NoResults from '../full-scan/NoResults'
+import NoResults from './NoResults'
 import Results from '../full-scan/Results'
 
 export const loader: LoaderFunction = ({ request }) => {

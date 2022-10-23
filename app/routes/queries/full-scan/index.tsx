@@ -1,4 +1,4 @@
-import { Form, NavLink, useActionData, useTransition } from '@remix-run/react'
+import { Form, useActionData, useTransition } from '@remix-run/react'
 import type {
   ActionFunction,
   ErrorBoundaryComponent
@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { convertResponseToTableRows } from './convertResponseToTableRows'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import { PreviousResultsLink } from './PreviousResultsLink'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -59,7 +60,7 @@ const Index = () => {
     if (results && Object.keys(results).length > 0) {
       dispatch(setFullScan(results))
     }
-  })
+  }, [results, dispatch])
 
   if (results) {
     if (Object.keys(results).length === 0) {
@@ -78,13 +79,7 @@ const Index = () => {
               Example Search
             </h1>
             {fullScan && !results && (
-              <NavLink
-                to="/queries/previous-search?query=fullScan"
-                className={
-                  'bg-gray-700 text-white items-center px-4 py-2 text-base font-medium rounded-md'
-                }>
-                See previous search
-              </NavLink>
+              <PreviousResultsLink to="/queries/previous-search?query=fullScan" />
             )}
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
@@ -245,7 +240,7 @@ const Index = () => {
                         <select
                           name="filters"
                           className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                          defaultValue={[0]}
+                          defaultValue={['all']}
                           multiple={true}>
                           {/** @todo clean up what the multiple select dropdown looks like **/}
                           {filters.map((value) => {
