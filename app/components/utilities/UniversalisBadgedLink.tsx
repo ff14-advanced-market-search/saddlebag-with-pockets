@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import UniversalisBadge from '~/components/icons/brands/UniversalisBadge'
 import { LinkIcon } from '@heroicons/react/solid'
 

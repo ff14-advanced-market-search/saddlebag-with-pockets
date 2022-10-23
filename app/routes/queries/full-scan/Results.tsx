@@ -27,6 +27,7 @@ import {
 import { classNames } from '~/utils'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
+import FinalFantasyBadgedLink from '~/components/utilities/FinalFantasyBagdedLink'
 
 type ResultTableProps<T> = {
   rows: Record<string, T>
@@ -125,7 +126,7 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }),
     columnHelper.accessor('npc_vendor_info', {
       header: 'NPC Vendor Info',
-      cell: (info) => <UniversalisBadgedLink link={info.getValue()} />
+      cell: (info) => <FinalFantasyBadgedLink link={info.getValue()} />
     }),
     columnHelper.accessor('id', {
       header: 'Item Data',
@@ -232,10 +233,10 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
+                          `px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
                         )}
                         key={header.id}>
-                        <div className={`group inline-flex`}>
+                        <div className={`group inline-flex  min-w-[100px]`}>
                           {header.isPlaceholder
                             ? null
                             : flexRender(
