@@ -7,9 +7,14 @@ import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
 import { classNames } from '~/utils'
 import filters from '~/utils/filters'
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
+import { convertResponseToTableRows } from '../full-scan/convertResponseToTableRows'
+import { useDispatch } from 'react-redux'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
+import { setNqOutOfStockScan } from '~/redux/reducers/queriesSlice'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -41,6 +46,11 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 const Index = () => {
   const transition = useTransition()
   const results = useActionData()
+  const dispatch = useDispatch()
+
+  const nqOutOfStockScan = useTypedSelector(
+    (state) => state.queries.nqOutOfStockScan
+  )
 
   const onSubmit = (e: MouseEvent) => {
     if (transition.state === 'submitting') {
@@ -48,15 +58,17 @@ const Index = () => {
     }
   }
 
+  useEffect(() => {
+    if (results && Object.keys(results).length > 0) {
+      dispatch(setNqOutOfStockScan(results))
+    }
+  }, [results, dispatch])
+
   if (results) {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
-    const data: Record<string, any> = Object.entries(results).map(
-      (entry: [string, any]) => {
-        return { id: parseInt(entry[0]), ...entry[1] }
-      }
-    )
+    const data = convertResponseToTableRows(results)
 
     return <Results rows={data} />
   }
@@ -72,6 +84,9 @@ const Index = () => {
               will guarenteed sell before competition shows up, but you only
               need 1 sale to gain a massive profit margin.
             </h1>
+            {nqOutOfStockScan && !results && (
+              <PreviousResultsLink to="/queries/previous-search?query=nqOutOfStockScan" />
+            )}
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
