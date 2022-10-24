@@ -81,16 +81,16 @@ const Index = () => {
           <FullScanForm
             loading={transition.state === 'submitting'}
             onClick={onSubmit}
-            defaultHours={24}
+            defaultHours={48}
             defaultSalesAmount={5}
             defaultROI={50}
             defaultMinimumStackSize={1}
-            defaultMinimumProfitAmount={10000}
-            defaultPricePerUnit={10000}
+            defaultMinimumProfitAmount={1000}
+            defaultPricePerUnit={1000}
             defaultFilters={[-1]}
             defaultHQChecked={false}
             defaultRegionWideChecked={false}
-            defaultIncludeVendorChecked={false}
+            defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}
           />
         </div>
