@@ -215,7 +215,8 @@ const Results = ({ rows }: ResultTableProps) => {
                   <span className="md:hidden">This is a wide table!</span>
                   <span className="hidden md:inline">
                     Heads up, this table is pretty wide. You'll probably need to
-                    scroll horizontally (left & right).
+                    scroll horizontally (left & right). Click a column name to
+                    sort by that column.
                   </span>
                 </p>
               </div>
