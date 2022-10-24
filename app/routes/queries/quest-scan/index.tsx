@@ -7,9 +7,14 @@ import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
 import { classNames } from '~/utils'
 import filters from '~/utils/filters'
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
+import { convertResponseToTableRows } from '../full-scan/convertResponseToTableRows'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { useDispatch } from 'react-redux'
+import { setQuestScan } from '~/redux/reducers/queriesSlice'
+import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -42,6 +47,16 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
 
+  const questScan = useTypedSelector((state) => state.queries.questScan)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (results && Object.keys(results).length > 0) {
+      dispatch(setQuestScan(results))
+    }
+  }, [results, dispatch])
+
   const onSubmit = (e: MouseEvent) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
@@ -52,11 +67,7 @@ const Index = () => {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
-    const data: Record<string, any> = Object.entries(results).map(
-      (entry: [string, any]) => {
-        return { id: parseInt(entry[0]), ...entry[1] }
-      }
-    )
+    const data = convertResponseToTableRows(results)
 
     return <Results rows={data} />
   }
@@ -69,20 +80,25 @@ const Index = () => {
               Quest Search: These items are bought by players to turn in for
               <a
                 target="_blank"
-                class="primary-btn"
+                rel="noreferrer"
+                className="primary-btn"
                 href="https://ffxiv.gamerescape.com/wiki/Supply_and_Provisioning_Mission">
                 <u> Supply and Provisioning Missions </u>
               </a>
               or
               <a
                 target="_blank"
-                class="primary-btn"
+                rel="noreferrer"
+                className="primary-btn"
                 href="https://ffxivgillionaire.com/crafter-class-quest-items-guide">
                 <u> Crafter Class Quests.</u>
               </a>
               Look over those links as some quests or missions require high
               quality items.
             </h1>
+            {questScan && !results && (
+              <PreviousResultsLink to="/queries/previous-search?query=questScan" />
+            )}
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">

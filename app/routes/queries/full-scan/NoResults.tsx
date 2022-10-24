@@ -1,5 +1,5 @@
 import { ExclamationIcon, SearchIcon } from '@heroicons/react/solid'
-import { FC } from 'react'
+import type { FC } from 'react'
 import { Link } from '@remix-run/react'
 
 const NoResults: FC<{ href: string }> = ({ href }) => {

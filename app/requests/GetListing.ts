@@ -25,22 +25,26 @@ export interface ListingResponseType {
   listing_time_diff: ListingTimeDiff
   listings: Array<Listing>
   min_price: number
+  payload: GetListingProps
 }
 
 export interface GetListingProps {
   itemId: number
   world: string
-  daysRange?: Array<number>
+  initialDays: number
+  endDays: number
 }
 
 const GetListing: ({
   itemId,
   world,
-  daysRange
+  initialDays,
+  endDays
 }: GetListingProps) => Promise<Response> = async ({
   itemId,
   world,
-  daysRange = [30, 0]
+  initialDays,
+  endDays
 }) => {
   return fetch(`${address}/api/listing`, {
     method: 'POST',
@@ -51,8 +55,8 @@ const GetListing: ({
     body: JSON.stringify({
       item_id: itemId,
       home_server: world,
-      initial_days: daysRange[0],
-      end_days: daysRange[1]
+      initial_days: initialDays,
+      end_days: endDays
     })
   })
 }

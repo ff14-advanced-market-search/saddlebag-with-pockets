@@ -7,11 +7,16 @@ import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
 import { classNames } from '~/utils'
 import filters from '~/utils/filters'
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
+import { convertResponseToTableRows } from '../full-scan/convertResponseToTableRows'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { useDispatch } from 'react-redux'
+import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
+import { setValueScan } from '~/redux/reducers/queriesSlice'
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const session = await getUserSessionData(request)
 
@@ -42,21 +47,26 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
 
+  const valueScan = useTypedSelector((state) => state.queries.valueScan)
+  const dispatch = useDispatch()
+
   const onSubmit = (e: MouseEvent) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
   }
 
+  useEffect(() => {
+    if (results && Object.keys(results).length > 0) {
+      dispatch(setValueScan(results))
+    }
+  }, [results, dispatch])
+
   if (results) {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
-    const data: Record<string, any> = Object.entries(results).map(
-      (entry: [string, any]) => {
-        return { id: parseInt(entry[0]), ...entry[1] }
-      }
-    )
+    const data = convertResponseToTableRows(results)
 
     return <Results rows={data} />
   }
@@ -68,6 +78,9 @@ const Index = () => {
             <h1 className="text-2xl font-semibold text-green-900 py-6">
               Value Search
             </h1>
+            {valueScan && !results && (
+              <PreviousResultsLink to="/queries/previous-search?query=valueScan" />
+            )}
             <div className="mt-5 md:mt-0 md:col-span-3 py-6">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
