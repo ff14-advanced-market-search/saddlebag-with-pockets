@@ -37,7 +37,7 @@ const navigation = [
   {
     name: 'Listings',
     href: 'queries/listings',
-    icon: ChartSquareBarIcon
+    icon: DocumentSearchIcon
   },
   {
     name: 'Item History',
@@ -47,7 +47,7 @@ const navigation = [
   {
     name: 'Legacy Site',
     href: 'https://saddlebag.exchange',
-    icon: PatreonIcon,
+    icon: HomeIcon,
     external: true
   },
   {
