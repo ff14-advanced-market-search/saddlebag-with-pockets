@@ -45,6 +45,12 @@ const navigation = [
     icon: DocumentSearchIcon
   },
   {
+    name: 'Legacy Site',
+    href: 'https://saddlebag.exchange',
+    icon: PatreonIcon,
+    external: true
+  },
+  {
     name: 'Patreon',
     href: 'https://www.patreon.com/indopan',
     icon: PatreonIcon,
@@ -292,7 +298,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               <NavLink
                 className={`text-gray-300 text-base p-2 hover:bg-gray-700 hover:text-white `}
                 to={`/why/advertisements`}>
-                Advertisements
+                .
               </NavLink>
               {advertisements.map((item) => (
                 <a
