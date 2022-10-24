@@ -182,15 +182,15 @@ const Results = ({ rows }: ResultTableProps) => {
   useEffect(() => {
     setColumnOrder([
       'real_name',
+      'server',
+      'home_server_price',
+      'ppu',
       'id',
       'url',
-      'ppu',
-      'home_server_price',
       'profit_amount',
       'sale_rates',
       'avg_ppu',
       'npc_vendor_info',
-      'server',
       'ROI',
       'profit_raw_percent',
       'stack_size',
