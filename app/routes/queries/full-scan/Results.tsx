@@ -27,6 +27,7 @@ import {
 import { classNames } from '~/utils'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
+import FinalFantasyBadgedLink from '~/components/utilities/FinalFantasyBagdedLink'
 
 type ResultTableProps = {
   rows: Array<ResponseType>
@@ -94,7 +95,7 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('real_name', {
       header: 'Item Name',
-      cell: ({ row, getValue }) => (
+      cell: ({ getValue }) => (
         <span className={`font-bold select-all`}>{getValue()}</span>
       ),
       footer: (props) => props.column.id
@@ -128,7 +129,7 @@ const Results = ({ rows }: ResultTableProps) => {
       cell: (info) => {
         const value = info.getValue()
         if (!value) return null
-        return <UniversalisBadgedLink link={value} />
+        return <FinalFantasyBadgedLink link={value} />
       }
     }),
     columnHelper.accessor('id', {
@@ -183,13 +184,13 @@ const Results = ({ rows }: ResultTableProps) => {
       'real_name',
       'id',
       'url',
-      'ppu',
+      'npc_vendor_info',
+      'server',
       'home_server_price',
+      'ppu',
       'profit_amount',
       'sale_rates',
       'avg_ppu',
-      'npc_vendor_info',
-      'server',
       'ROI',
       'profit_raw_percent',
       'stack_size',
@@ -237,10 +238,10 @@ const Results = ({ rows }: ResultTableProps) => {
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
+                          `px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
                         )}
                         key={header.id}>
-                        <div className={`group inline-flex`}>
+                        <div className={`group inline-flex  min-w-[100px]`}>
                           {header.isPlaceholder
                             ? null
                             : flexRender(
