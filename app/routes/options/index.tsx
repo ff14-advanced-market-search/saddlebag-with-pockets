@@ -16,9 +16,10 @@ import type { Validator } from 'remix-validated-form'
 import type { WorldsList } from '~/utils/locations/Worlds'
 import { commitSession, getSession } from '~/sessions'
 import { Switch } from '@headlessui/react'
-import { useEffect, useState } from 'react'
 import { classNames } from '~/utils'
-import { Theme, useTheme } from '~/utils/providers/theme-provider'
+import { useDispatch } from 'react-redux'
+import { toggleDarkMode } from '~/redux/reducers/userSlice'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export type SelectWorldInputFields = {
   data_center: GetDeepProp<DataCentersList, 'name'>
@@ -43,6 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
     // Options already match existing stored session data. Yeet back to index.
     return redirect('/')
   }
+
   session.set('data_center', result.data.data_center)
   session.set('world', result.data.world)
   // Set the new option, yeet back to index (but save against session data within the cookie)
@@ -62,15 +64,13 @@ export default function () {
   const data = useLoaderData()
   const transition = useTransition()
   const actionData = useActionData()
-  const [darkMode, setDarkMode] = useState(false)
-  const [, setTheme] = useTheme()
-  useEffect(() => {
-    if (darkMode) {
-      setTheme(Theme.DARK)
-    } else {
-      setTheme(Theme.LIGHT)
-    }
-  }, [darkMode, setTheme])
+  const dispatch = useDispatch()
+  const { darkmode } = useTypedSelector((state) => state.user)
+
+  const handleDarkModeToggle = () => {
+    dispatch(toggleDarkMode())
+  }
+
   return (
     <div>
       <main className="flex-1">
@@ -177,21 +177,26 @@ export default function () {
                                 this is. (page refreshes currently clear)
                               </Switch.Description>
                             </span>
-                            <Switch
-                              checked={darkMode}
-                              onChange={setDarkMode}
-                              className={classNames(
-                                darkMode ? `bg-blue-500` : `bg-gray-200`,
-                                `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
-                              )}>
-                              <span
-                                aria-hidden={true}
+                            {typeof document !== 'undefined' && (
+                              <Switch
+                                key={darkmode.toString()}
+                                checked={darkmode}
+                                onChange={handleDarkModeToggle}
                                 className={classNames(
-                                  darkMode ? `translate-x-5` : `translate-x-0`,
-                                  `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
-                                )}
-                              />
-                            </Switch>
+                                  darkmode ? `bg-blue-500` : `bg-gray-200`,
+                                  `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
+                                )}>
+                                <span
+                                  aria-hidden={true}
+                                  className={classNames(
+                                    darkmode
+                                      ? `translate-x-5`
+                                      : `translate-x-0`,
+                                    `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
+                                  )}
+                                />
+                              </Switch>
+                            )}
                           </Switch.Group>
                         </div>
                       </div>

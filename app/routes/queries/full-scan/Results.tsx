@@ -1,7 +1,10 @@
-import type { FilterFn, SortingFn } from '@tanstack/table-core'
-import {
+import type {
+  FilterFn,
+  SortingFn,
   ColumnFiltersState,
-  ColumnOrderState,
+  ColumnOrderState
+} from '@tanstack/table-core'
+import {
   createColumnHelper,
   getCoreRowModel,
   getFacetedMinMaxValues,
@@ -13,12 +16,9 @@ import {
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import { ResponseType } from '~/requests/FullScan'
-import {
-  compareItems,
-  RankingInfo,
-  rankItem
-} from '@tanstack/match-sorter-utils'
+import type { ResponseType } from '~/requests/FullScan'
+import type { RankingInfo } from '@tanstack/match-sorter-utils'
+import { compareItems, rankItem } from '@tanstack/match-sorter-utils'
 import {
   ChevronDoubleRightIcon,
   ChevronDownIcon,
@@ -28,8 +28,8 @@ import { classNames } from '~/utils'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 
-type ResultTableProps<T> = {
-  rows: Record<string, T>
+type ResultTableProps = {
+  rows: Array<ResponseType>
 }
 
 declare module '@tanstack/table-core' {
@@ -49,7 +49,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   let dir = 0
 
   if (rowA.columnFiltersMeta[columnId]) {
@@ -61,7 +61,7 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
-const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
+const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
@@ -74,7 +74,7 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }),
     columnHelper.accessor('home_server_price', {
       header: 'Home Server Price',
-      cell: (info) => info.getValue()
+      cell: (info) => (!info.getValue() ? 'No Listing' : info.getValue())
     }),
     columnHelper.accessor('home_update_time', {
       header: 'Home Server Info Last Updated At',
@@ -86,11 +86,11 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }),
     columnHelper.accessor('profit_amount', {
       header: 'Profit Amount',
-      cell: (info) => info.getValue()
+      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
     }),
     columnHelper.accessor('profit_raw_percent', {
       header: 'Profit Percentage',
-      cell: (info) => info.getValue()
+      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
     }),
     columnHelper.accessor('real_name', {
       header: 'Item Name',
@@ -125,7 +125,11 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }),
     columnHelper.accessor('npc_vendor_info', {
       header: 'NPC Vendor Info',
-      cell: (info) => <UniversalisBadgedLink link={info.getValue()} />
+      cell: (info) => {
+        const value = info.getValue()
+        if (!value) return null
+        return <UniversalisBadgedLink link={value} />
+      }
     }),
     columnHelper.accessor('id', {
       header: 'Item Data',
@@ -172,7 +176,7 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
         ])
       }
     }
-  }, [table.getState().columnFilters[0]?.id])
+  }, [table])
 
   useEffect(() => {
     setColumnOrder([

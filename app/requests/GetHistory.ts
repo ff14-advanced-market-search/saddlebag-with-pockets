@@ -41,6 +41,7 @@ export interface HistoryResponse {
   price_history: Array<PriceHistory>
   stack_chance: Array<StackChance>
   dirty_sales: Array<DirtySale>
+  payload: GetHistoryProps
 }
 
 export type GetHistoryResponse =
