@@ -95,7 +95,7 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('real_name', {
       header: 'Item Name',
-      cell: ({ row, getValue }) => (
+      cell: ({ getValue }) => (
         <span className={`font-bold select-all`}>{getValue()}</span>
       ),
       footer: (props) => props.column.id
@@ -184,8 +184,8 @@ const Results = ({ rows }: ResultTableProps) => {
       'real_name',
       'id',
       'url',
-      'server',
       'npc_vendor_info',
+      'server',
       'home_server_price',
       'ppu',
       'profit_amount',
