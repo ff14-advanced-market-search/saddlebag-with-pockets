@@ -787,6 +787,10 @@ select {
   z-index: 10;
 }
 
+.z-\[inherit\] {
+  z-index: inherit;
+}
+
 .col-span-6 {
   grid-column: span 6 / span 6;
 }
@@ -901,6 +905,14 @@ select {
 
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.mb-0\.5 {
+  margin-bottom: 0.125rem;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
 }
 
 .mt-6 {
@@ -1041,6 +1053,10 @@ select {
 
 .w-64 {
   width: 16rem;
+}
+
+.w-\[95\%\] {
+  width: 95%;
 }
 
 .w-12 {
@@ -1293,16 +1309,16 @@ select {
   border-radius: 0px;
 }
 
-.rounded-sm {
-  border-radius: 0.125rem;
-}
-
 .rounded {
   border-radius: 0.25rem;
 }
 
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.rounded-sm {
+  border-radius: 0.125rem;
 }
 
 .rounded-l-md {
@@ -1419,10 +1435,6 @@ select {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
-.bg-transparent {
-  background-color: transparent;
-}
-
 .bg-gray-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
@@ -1446,6 +1458,10 @@ select {
 .bg-green-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
+}
+
+.bg-transparent {
+  background-color: transparent;
 }
 
 .bg-opacity-75 {
@@ -1516,6 +1532,11 @@ select {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .py-3\.5 {
@@ -2087,10 +2108,6 @@ select {
 
   .md\:ml-6 {
     margin-left: 1.5rem;
-  }
-
-  .md\:block {
-    display: block;
   }
 
   .md\:inline {

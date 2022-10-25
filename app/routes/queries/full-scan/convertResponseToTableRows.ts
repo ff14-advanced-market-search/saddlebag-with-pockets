@@ -5,5 +5,5 @@ export const convertResponseToTableRows = (
 ): Array<ResponseType> => {
   return Object.entries(data).map((entry: [string, any]) => {
     return { id: parseInt(entry[0]), ...entry[1] }
-  }, [])
+  })
 }
