@@ -60,13 +60,23 @@ export class FormValues {
     return this.map
   }
 
-  private resolveValueType: (value: string) => string | number | boolean = (
-    value
-  ) => {
+  private resolveValueType: (
+    value: string
+  ) => string | number | boolean | Array<string> = (value) => {
     if (value === 'on') {
       // checkboxes whyyyyyy
       return true
     }
+
+    // filters form element now is unhappy
+    // dirty hack will work for now...
+    const isNumArray =
+      value.includes(',') &&
+      value.split(',').every((item) => !isNaN(parseInt(item)))
+    if (isNumArray) {
+      return value.split(',')
+    }
+
     if (!isNaN(parseInt(value as string))) {
       return parseInt(value)
     }
