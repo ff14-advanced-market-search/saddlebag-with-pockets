@@ -1,4 +1,5 @@
 import React from 'react'
+import XMarkIcon from '~/icons/XMarkIcon'
 import filters from '~/utils/filters/'
 
 interface CheckboxRowProps {
@@ -10,10 +11,8 @@ interface CheckboxRowProps {
 
 const CheckBoxRow = ({ selected, onChange, id, title }: CheckboxRowProps) => {
   return (
-    <div className="w-[95%] flex px-1 py-2 z-[inherit] shadow-sm mb-0.5 content-between items-center">
-      <label
-        htmlFor={`${title}-${id}`}
-        style={{ flexGrow: 1, textAlign: 'left' }}>
+    <div className="w-[95%] flex px-1 py-2 z-[inherit] shadow-sm mb-0.5 content-between items-center min-h-12">
+      <label htmlFor={`${title}-${id}`} className="grow text-left">
         {title}
       </label>
       <input
@@ -92,51 +91,31 @@ export const ModalContent = ({
 export const Modal: React.FC<{
   onClose: () => void
   children: React.ReactNode
-}> = ({ children, onClose }) => {
+  title: string
+}> = ({ children, onClose, title }) => {
   return (
     <>
       <div
-        style={{
-          zIndex: 10001,
-          backgroundColor: 'white',
-          position: 'fixed',
-          top: '20px',
-          width: 'fit-content',
-          borderRadius: '5px',
-          margin: '0 auto',
-          padding: '20px',
-          display: 'flex',
-          flexDirection: 'column',
-          maxHeight: '90vh',
-          maxWidth: '90vw'
-        }}
+        className="z-[10001] bg-white fixed rounded top-5 bottom-5 left-3.5 right-3.5 sm:translate-y-[-50%] sm:top-2/4 sm:bottom-[none] sm:right-[none] sm:translate-x-[-50%] sm:left-2/4 p-4 pt-1 flex flex-col sm:max-w-fit sm:h-[90vh]"
         onClick={(e) => {
           e.stopPropagation()
         }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <button type="button" onClick={onClose}>
-            Close
+        <div className="flex justify-between items-center m-1 mt-0 py-0">
+          <p className="font-semibold">{title}</p>
+          <button
+            className="flex text-gray-700 rounded p-2 justify-between items-center"
+            type="button"
+            aria-label="Close filter selection"
+            onClick={onClose}>
+            <XMarkIcon />
           </button>
         </div>
-        <div
-          style={{
-            overflow: 'scroll',
-            maxHeight: '100%'
-          }}>
+        <div className="overflow-scroll max-h-full shadow-inner">
           {children}
         </div>
       </div>
       <div
-        style={{
-          zIndex: 10000,
-          opacity: 0.7,
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'black'
-        }}
+        className="z-[10000] opacity-75 fixed inset-0 bg-black"
         onClick={onClose}></div>
     </>
   )

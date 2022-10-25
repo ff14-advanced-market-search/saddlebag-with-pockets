@@ -195,7 +195,8 @@ const FullScanForm = ({
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input name="filters" value={ids} hidden readOnly />
                     <button
-                      className="w-full py-2 text-sm bg-gray-100 border-gray-300 rounded"
+                      className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left"
+                      aria-label="Choose filters"
                       type="button"
                       onClick={() => setIsOpen(true)}>
                       Choose Filters
@@ -330,7 +331,9 @@ const FullScanForm = ({
         </div>
       </Form>
       {isOpen && (
-        <Modal onClose={() => setIsOpen(false)}>
+        <Modal
+          onClose={() => setIsOpen(false)}
+          title={`Filters Selected: ${ids.length}`}>
           <ModalContent ids={ids} setIds={setIds} />
         </Modal>
       )}
