@@ -17,7 +17,7 @@ export type FilterFormat = {
 type FiltersList = {
   name: string
   data: FilterFormat[]
-  id: number | 'all' | 'vendor'
+  id: number
 }[]
 
 const filters: FiltersList = [
