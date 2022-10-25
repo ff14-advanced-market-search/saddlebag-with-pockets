@@ -93,7 +93,7 @@ const Index = () => {
             defaultROI={99}
             defaultMinimumProfitAmount={100}
             defaultPricePerUnit={100}
-            defaultFilters={[1, 2, 3, 4, 7]}
+            defaultFilters={[0]}
             defaultHQChecked={true}
             defaultOutOfStockChecked={true}
           />
