@@ -34,6 +34,7 @@ const FullScanForm = ({
 }) => {
   const [ids, setIds] = useState(defaultFilters)
   const [isOpen, setIsOpen] = useState(false)
+  const noop = () => {}
   return (
     <>
       <Form method="post">
@@ -193,7 +194,12 @@ const FullScanForm = ({
                     Item Filter
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
-                    <input name="filters" value={ids} hidden readOnly />
+                    <input
+                      name="filters"
+                      value={ids.map((item) => item.toString())}
+                      hidden
+                      onChange={noop}
+                    />
                     <button
                       className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left"
                       aria-label="Choose filters"
