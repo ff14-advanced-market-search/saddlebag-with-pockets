@@ -62,7 +62,7 @@ export class FormValues {
 
   private resolveValueType: (
     value: string
-  ) => string | number | boolean | Array<string> = (value) => {
+  ) => string | number | boolean | Array<number> = (value) => {
     if (value === 'on') {
       // checkboxes whyyyyyy
       return true
@@ -74,7 +74,7 @@ export class FormValues {
       value.includes(',') &&
       value.split(',').every((item) => !isNaN(parseInt(item)))
     if (isNumArray) {
-      return value.split(',')
+      return value.split(',').map((num) => parseInt(num))
     }
 
     if (!isNaN(parseInt(value as string))) {
