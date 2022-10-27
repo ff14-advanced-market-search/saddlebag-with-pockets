@@ -246,3 +246,7 @@ export const data = [
   { name: "Aman'Thul", id: 3726 },
   { name: "Dath'Remar", id: 3726 }
 ]
+
+export const findWoWServersIdByName = (term: string) => {
+  return data.filter(({ name }) => name.includes(term))
+}

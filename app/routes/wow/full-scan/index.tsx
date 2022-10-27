@@ -109,15 +109,8 @@ const Index = () => {
             setError(undefined)
           }}
         />
-        <div>
-          <p>Home World</p>
-          <WoWServerSelect name="homeRealmId" />
-        </div>
-
-        <div>
-          <p>New World</p>
-          <WoWServerSelect name="newRealmId" />
-        </div>
+        <WoWServerSelect formName="homeRealmId" title="Home World" />
+        <WoWServerSelect formName="newRealmId" title="New World" />
       </SmallFormContainer>
     </PageWrapper>
   )
