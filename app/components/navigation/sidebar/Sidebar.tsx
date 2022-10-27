@@ -44,6 +44,12 @@ const navigation = [
     href: 'queries/item-history',
     icon: DocumentSearchIcon
   },
+
+  {
+    name: 'WoW Scan',
+    href: 'wow/full-scan',
+    icon: HomeIcon
+  },
   {
     name: 'Legacy Site',
     href: 'https://saddlebag.exchange',
