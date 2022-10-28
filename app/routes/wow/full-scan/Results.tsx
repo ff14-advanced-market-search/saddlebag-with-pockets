@@ -44,7 +44,7 @@ export const Results = ({ data }: { data: WoWScanResponse }) => {
         columnList={oosColumnList}
         sortingOrder={[{ id: 'historicPrice', desc: true }]}
         title="Out of Stock Items"
-        description="This shows items you can buy on your home server that are not listed on the new server.  You can sell them for any price you want!"
+        description="This shows items that are not listed on the new server.  You can buy on your home server and sell them for any price you want on your new server!"
       />
     </>
   )
