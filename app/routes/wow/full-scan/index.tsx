@@ -4,7 +4,7 @@ import type {
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import type { WoWOutOfStock } from '~/requests/WOWScan'
+import type { WoWScanResponse } from '~/requests/WOWScan'
 import WOWScanRequest from '~/requests/WOWScan'
 import NoResults from '../../queries/listings/NoResults'
 import { PageWrapper } from '~/components/Common'
@@ -49,7 +49,7 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 
 const Index = () => {
   const transition = useTransition()
-  const results = useActionData()
+  const results = useActionData<WoWScanResponse | { exception: string }>()
   const [error, setError] = useState<string | undefined>()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,11 +71,11 @@ const Index = () => {
     }
   }
 
-  if (results && results.out_of_stock) {
+  if (results && 'out_of_stock' in results) {
     return (
       <PageWrapper>
         <>
-          <Results data={results.out_of_stock as Array<WoWOutOfStock>} />{' '}
+          <Results data={results} />
         </>
       </PageWrapper>
     )

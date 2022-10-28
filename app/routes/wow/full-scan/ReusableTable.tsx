@@ -36,6 +36,12 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
+export type ColumnList<Type> = {
+  columnId: keyof Type
+  header: string
+  newComponent?: (value: string | number | boolean | unknown) => JSX.Element
+}
+
 function ReusableTable<Type>({
   data,
   sortingOrder,
@@ -44,12 +50,8 @@ function ReusableTable<Type>({
   description
 }: {
   data: Array<Type>
-  sortingOrder: Array<{ id: string; desc: boolean }>
-  columnList: Array<{
-    columnId: keyof Type
-    header: string
-    newComponent?: (value: string | number | boolean | unknown) => JSX.Element
-  }>
+  sortingOrder: Array<{ id: keyof Type; desc: boolean }>
+  columnList: Array<ColumnList<Type>>
   title: string
   description: string
 }) {
@@ -60,6 +62,7 @@ function ReusableTable<Type>({
   const columnHelper = createColumnHelper<Type>()
 
   const columns = columnList.map((col) => {
+    // @ts-ignore
     return columnHelper.accessor(col.columnId, {
       header: col.header,
       cell: (info) =>
@@ -93,6 +96,7 @@ function ReusableTable<Type>({
   })
 
   useEffect(() => {
+    // @ts-ignore
     table.setSorting(sortingOrder)
   }, [table, sortingOrder])
 

@@ -16,6 +16,24 @@ export interface WoWOutOfStock {
   salesPerDay: number
 }
 
+export interface WoWProfitableItems {
+  historicPrice: number
+  home_price: number
+  itemID: number
+  name: string
+  new_price: number
+  profit: number
+  roi: number
+  salesPerDay: number
+}
+
+export interface WoWScanResponse {
+  out_of_stock: Array<WoWOutOfStock>
+  out_w_sales: Array<WoWOutOfStock>
+  profit_w_sales: Array<WoWProfitableItems>
+  profitable_items: Array<WoWProfitableItems>
+}
+
 const WOWScan: ({
   homeRealmId,
   newRealmId,
