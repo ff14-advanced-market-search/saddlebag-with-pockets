@@ -35,14 +35,14 @@ export const Results = ({ data }: { data: WoWScanResponse }) => {
       <ReusableTable<WoWProfitableItems>
         data={data.profitable_items}
         columnList={profitableItemsColumnList}
-        sortingOrder={[{ id: 'new_price', desc: true }]}
+        sortingOrder={[{ id: 'profit', desc: true }]}
         title="Profitable Items"
         description="This shows items you can buy on your home server and sell on your new server for a profit!"
       />
       <ReusableTable<WoWOutOfStock>
         data={data.out_of_stock}
         columnList={oosColumnList}
-        sortingOrder={[{ id: 'price', desc: true }]}
+        sortingOrder={[{ id: 'historicPrice', desc: true }]}
         title="Out of Stock Items"
         description="This shows items you can buy on your home server that are not listed on the new server.  You can sell them for any price you want!"
       />
