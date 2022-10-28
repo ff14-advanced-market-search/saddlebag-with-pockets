@@ -8,6 +8,14 @@ export interface WOWScanProps {
   salePerDay: number
 }
 
+export interface WoWOutOfStock {
+  historicPrice: number
+  itemID: number
+  name: string
+  price: number
+  salesPerDay: number
+}
+
 const WOWScan: ({
   homeRealmId,
   newRealmId,

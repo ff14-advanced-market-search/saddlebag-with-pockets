@@ -4,14 +4,14 @@ import type {
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
+import type { WoWOutOfStock } from '~/requests/WOWScan'
 import WOWScanRequest from '~/requests/WOWScan'
 import NoResults from '../../queries/listings/NoResults'
-import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { PageWrapper } from '~/components/Common'
-import { InputWithLabel } from '~/components/form/InputWithLabel'
 import { validateWoWScanInput } from './validateWoWScanInput'
-import WoWServerSelect from './WoWServerSelect'
 import { useEffect, useState } from 'react'
+import WoWScanForm from './WoWScanForm'
+import { Results } from './Results'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -71,47 +71,26 @@ const Index = () => {
     }
   }
 
+  if (results && results.out_of_stock) {
+    return (
+      <PageWrapper>
+        <>
+          <Results data={results.out_of_stock as Array<WoWOutOfStock>} />{' '}
+        </>
+      </PageWrapper>
+    )
+  }
+
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="WoW Sale Search"
+      <WoWScanForm
         onClick={onSubmit}
+        onChange={() => {
+          setError(undefined)
+        }}
         loading={transition.state === 'submitting'}
-        disabled={transition.state === 'submitting'}
-        error={error}>
-        <InputWithLabel
-          defaultValue={10000}
-          type="number"
-          labelTitle="Minimum Historic Price"
-          inputTag="Amount"
-          name="minHistoricPrice"
-          onChange={() => {
-            setError(undefined)
-          }}
-        />
-        <InputWithLabel
-          defaultValue={50}
-          type="number"
-          labelTitle="Return On Investment (%)"
-          inputTag="Percentage"
-          name="roi"
-          onChange={() => {
-            setError(undefined)
-          }}
-        />
-        <InputWithLabel
-          defaultValue={0}
-          type="number"
-          labelTitle="Sales Per Day"
-          inputTag="Min Sales"
-          name="salePerDay"
-          onChange={() => {
-            setError(undefined)
-          }}
-        />
-        <WoWServerSelect formName="homeRealmId" title="Home World" />
-        <WoWServerSelect formName="newRealmId" title="New World" />
-      </SmallFormContainer>
+        error={error}
+      />
     </PageWrapper>
   )
 }

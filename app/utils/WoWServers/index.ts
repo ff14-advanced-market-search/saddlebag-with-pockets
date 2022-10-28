@@ -248,5 +248,7 @@ export const data = [
 ]
 
 export const findWoWServersIdByName = (term: string) => {
-  return data.filter(({ name }) => name.includes(term))
+  return data.filter(({ name }) =>
+    name.toLowerCase().includes(term.toLowerCase())
+  )
 }
