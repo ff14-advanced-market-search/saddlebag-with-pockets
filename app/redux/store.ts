@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userSlice from './reducers/userSlice'
 import queriesSlice from './reducers/queriesSlice'
+import wowQueriesSlice from './reducers/wowSlice'
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
-    queries: queriesSlice
+    queries: queriesSlice,
+    wowQueries: wowQueriesSlice
   }
 })
 
