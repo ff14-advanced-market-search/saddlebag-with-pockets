@@ -89,6 +89,7 @@ const Index = () => {
           }}
           loading={transition.state === 'submitting'}
           error={error}
+          clearErrors={() => setError(undefined)}
         />
         {wowScan && 'out_of_stock' in wowScan && <Results data={wowScan} />}
       </>

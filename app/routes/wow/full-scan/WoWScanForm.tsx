@@ -7,9 +7,16 @@ interface Props {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   loading: boolean
   error?: string
+  clearErrors: () => void
 }
 
-const WoWScanForm = ({ onClick, loading, error, onChange }: Props) => (
+const WoWScanForm = ({
+  onClick,
+  loading,
+  error,
+  onChange,
+  clearErrors
+}: Props) => (
   <SmallFormContainer
     title="WoW Sale Search"
     onClick={onClick}
@@ -24,7 +31,10 @@ const WoWScanForm = ({ onClick, loading, error, onChange }: Props) => (
           labelTitle="Minimum Historic Price"
           inputTag="Amount"
           name="minHistoricPrice"
-          onChange={onChange}
+          onChange={(e) => {
+            onChange(e)
+            clearErrors()
+          }}
         />
         <InputWithLabel
           defaultValue={50}
@@ -44,8 +54,18 @@ const WoWScanForm = ({ onClick, loading, error, onChange }: Props) => (
         />
       </div>
       <div className="w-full">
-        <WoWServerSelect formName="homeRealmId" title="Home World" />
-        <WoWServerSelect formName="newRealmId" title="New World" />
+        <WoWServerSelect
+          formName="homeRealmId"
+          title="Home World"
+          onSelectChange={clearErrors}
+          onTextChange={clearErrors}
+        />
+        <WoWServerSelect
+          formName="newRealmId"
+          title="New World"
+          onSelectChange={clearErrors}
+          onTextChange={clearErrors}
+        />
       </div>
     </div>
   </SmallFormContainer>
