@@ -8,13 +8,69 @@ import type { ColumnList } from './SmallTable'
 import { Section } from '~/components/Common'
 import ExternalLink from '~/components/utilities/ExternalLink'
 
+const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
+  <ExternalLink
+    link={'https://www.wowhead.com/item=' + row.itemID}
+    text="WoWHead"
+  />
+)
+
+const parseServerName = (serverName: string) =>
+  serverName
+    .replaceAll('-', '')
+    .replaceAll("'", '')
+    .replaceAll(' ', '-')
+    .toLowerCase()
+
+const getOribosLink =
+  (serverName: string | undefined, title: string) =>
+  ({ row }: { row: { itemID: number } }) => {
+    const itemId = row.itemID
+    if (typeof itemId !== 'number') return null
+
+    if (!serverName) return null
+
+    const parsedServerName = parseServerName(serverName)
+
+    return (
+      <ExternalLink
+        link={`https://oribos.exchange/#us-${parsedServerName}/${itemId}`}
+        text={title}
+        tooltip={`Oribos Marketplace For ${serverName}`}
+      />
+    )
+  }
+
 export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
+  const newOribosLink = getOribosLink(
+    data?.payload.newRealmServerName,
+    'New World'
+  )
+  const homeOribosLink = getOribosLink(
+    data?.payload.homeRealmServerName,
+    'Home World'
+  )
   const oosColumnList: Array<ColumnList<WoWOutOfStock>> = [
     { columnId: 'name', header: 'Item Name' },
     { columnId: 'itemID', header: 'Item ID' },
     { columnId: 'price', header: 'Price' },
     { columnId: 'historicPrice', header: 'Historic Price' },
-    { columnId: 'salesPerDay', header: 'Sales Per Day' }
+    { columnId: 'salesPerDay', header: 'Sales Per Day' },
+    {
+      columnId: 'WoWHead',
+      header: 'WoWHead Link',
+      accessor: woWHeadLink
+    },
+    {
+      columnId: 'OribosNewWorld',
+      header: 'Oribos New World',
+      accessor: newOribosLink
+    },
+    {
+      columnId: 'OribosHomeWorld',
+      header: 'Oribos Home World',
+      accessor: homeOribosLink
+    }
   ]
 
   const profitableItemsColumnList: Array<ColumnList<WoWProfitableItems>> = [
@@ -33,64 +89,17 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
     {
       columnId: 'WoWHead',
       header: 'WoWHead Link',
-      accessor: ({ row }) => (
-        <ExternalLink
-          link={'https://www.wowhead.com/item=' + row.itemID}
-          text="WoWHead"
-        />
-      )
+      accessor: woWHeadLink
     },
     {
       columnId: 'OribosNewWorld',
       header: 'Oribos New World',
-      accessor: ({ row }) => {
-        const itemId = row.itemID
-        if (typeof itemId !== 'number') return null
-
-        const serverName = data?.payload.newRealmServerName
-
-        if (!serverName) return null
-
-        const editedServerName = serverName
-          .replaceAll('-', '')
-          .replaceAll("'", '')
-          .replaceAll(' ', '-')
-          .toLowerCase()
-
-        return (
-          <ExternalLink
-            link={`https://oribos.exchange/#us-${editedServerName}/${itemId}`}
-            text="New World"
-            tooltip="Oribos marketplace new world link"
-          />
-        )
-      }
+      accessor: newOribosLink
     },
     {
       columnId: 'OribosHomeWorld',
       header: 'Oribos Home World',
-      accessor: ({ row }) => {
-        const itemId = row.itemID
-        if (typeof itemId !== 'number') return null
-
-        const serverName = data?.payload.homeRealmServerName
-
-        if (!serverName) return null
-
-        const editedServerName = serverName
-          .replaceAll('-', '')
-          .replaceAll("'", '')
-          .replaceAll(' ', '-')
-          .toLowerCase()
-
-        return (
-          <ExternalLink
-            link={`https://oribos.exchange/#us-${editedServerName}/${itemId}`}
-            text="Home World"
-            tooltip="Oribos marketplace home world link"
-          />
-        )
-      }
+      accessor: homeOribosLink
     }
   ]
 
