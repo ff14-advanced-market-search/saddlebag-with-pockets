@@ -2,7 +2,9 @@ import { address, UserAgent } from '~/requests/client/config'
 
 export interface WOWScanProps {
   homeRealmId: number
+  homeRealmServerName: string
   newRealmId: number
+  newRealmServerName: string
   minHistoricPrice: number
   roi: number
   salePerDay: number
@@ -34,6 +36,10 @@ export interface WoWScanResponse {
   profitable_items: Array<WoWProfitableItems>
 }
 
+export type WoWScanResponseWithPayload = WoWScanResponse & {
+  payload: WOWScanProps
+}
+
 const WOWScan: ({
   homeRealmId,
   newRealmId,
@@ -47,6 +53,13 @@ const WOWScan: ({
   roi,
   salePerDay
 }) => {
+  console.log('WoW Scan:', {
+    homeRealmId,
+    newRealmId,
+    minHistoricPrice,
+    roi,
+    salePerDay
+  })
   return fetch(`${address}/api/wow/scan`, {
     method: 'POST',
     headers: {

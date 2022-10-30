@@ -252,3 +252,7 @@ export const findWoWServersIdByName = (term: string) => {
     name.toLowerCase().includes(term.toLowerCase())
   )
 }
+
+export const findWoWServerByID = (idToFind: number) => {
+  return data.find(({ id }) => id === idToFind)
+}

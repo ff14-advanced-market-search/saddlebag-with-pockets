@@ -1,7 +1,8 @@
 import type {
   FilterFn,
   ColumnFiltersState,
-  ColumnOrderState
+  ColumnOrderState,
+  Getter
 } from '@tanstack/table-core'
 import {
   createColumnHelper,
@@ -37,12 +38,15 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 }
 
 export type ColumnList<Type> = {
-  columnId: keyof Type
+  columnId: string
   header: string
-  newComponent?: (value: string | number | boolean | unknown) => JSX.Element
+  accessor?: (props: {
+    row: Type
+    getValue: Getter<unknown>
+  }) => JSX.Element | null
 }
 
-function ReusableTable<Type>({
+function SmallTable<Type>({
   data,
   sortingOrder,
   columnList,
@@ -65,8 +69,10 @@ function ReusableTable<Type>({
     // @ts-ignore
     return columnHelper.accessor(col.columnId, {
       header: col.header,
-      cell: (info) =>
-        col?.newComponent ? col.newComponent(info.getValue()) : info.getValue()
+      cell: (props) =>
+        col.accessor
+          ? col.accessor({ row: props.row.original, getValue: props.getValue })
+          : props.getValue()
     })
   })
 
@@ -118,7 +124,7 @@ function ReusableTable<Type>({
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 py-3.5 text-center text-sm font-semibold text-gray-900`
+                          `px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
                         )}
                         key={header.id}>
                         <div className={`group inline-flex`}>
@@ -133,7 +139,7 @@ function ReusableTable<Type>({
                               header.column.getIsSorted()
                                 ? 'bg-gray-200 rounded bg-gray-200'
                                 : '',
-                              ` ml-1 flex-none p-1`
+                              ` ml-1 flex flex-0 p-1 justify-center items-center`
                             )}>
                             {{
                               asc: (
@@ -190,4 +196,4 @@ function ReusableTable<Type>({
   )
 }
 
-export default ReusableTable
+export default SmallTable
