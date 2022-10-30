@@ -1,5 +1,11 @@
 import type { WOWScanProps } from '~/requests/WOWScan'
 
+const getServerIdAndNameFromInput = (selectString: string) => {
+  const [id, name] = selectString.split('---')
+  if (!id || !name) return
+  else return { id, name }
+}
+
 export const validateWoWScanInput = (
   formData: FormData
 ): WOWScanProps | { exception: string } => {
@@ -32,29 +38,40 @@ export const validateWoWScanInput = (
 
   const salePerDay = parseInt(salePerDayData)
 
-  const homeRealmIdData = formData.get('homeRealmId')
-  if (
-    !homeRealmIdData ||
-    typeof homeRealmIdData !== 'string' ||
-    isNaN(parseInt(homeRealmIdData))
-  ) {
+  const homeRealmData = formData.get('homeRealmId')
+
+  if (!homeRealmData || typeof homeRealmData !== 'string') {
     return { exception: 'Missing home world server selection' }
   }
-  const homeRealmId = parseInt(homeRealmIdData)
 
-  const newRealmIdData = formData.get('newRealmId')
-  if (
-    !newRealmIdData ||
-    typeof newRealmIdData !== 'string' ||
-    isNaN(parseInt(newRealmIdData))
-  ) {
+  const homeRealmIdData = getServerIdAndNameFromInput(homeRealmData)
+
+  if (!homeRealmIdData) {
+    return { exception: 'Missing home world server selection' }
+  }
+
+  const homeRealmId = parseInt(homeRealmIdData.id)
+  const homeRealmServerName = homeRealmIdData.name
+
+  const newRealmData = formData.get('newRealmId')
+  if (!newRealmData || typeof newRealmData !== 'string') {
     return { exception: 'Missing new world server selection' }
   }
-  const newRealmId = parseInt(newRealmIdData)
+
+  const newRealmIdData = getServerIdAndNameFromInput(newRealmData)
+
+  if (!newRealmIdData) {
+    return { exception: 'Missing new world server selection' }
+  }
+
+  const newRealmId = parseInt(newRealmIdData.id)
+  const newRealmServerName = newRealmIdData.name
 
   return {
     homeRealmId,
+    homeRealmServerName,
     newRealmId,
+    newRealmServerName,
     minHistoricPrice,
     roi,
     salePerDay

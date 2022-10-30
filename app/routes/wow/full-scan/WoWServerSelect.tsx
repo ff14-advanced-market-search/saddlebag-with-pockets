@@ -1,4 +1,4 @@
-import { data, findWoWServersIdByName } from '~/utils/WoWServers'
+import { findWoWServersIdByName } from '~/utils/WoWServers'
 import { useState } from 'react'
 
 export interface ServerSelected {
@@ -6,7 +6,7 @@ export interface ServerSelected {
   name: string
 }
 
-const DEFAULT_SELECT_VALUE = -1
+const DEFAULT_SELECT_VALUE = 'default'
 
 const WoWServerSelect = ({
   onSelectChange,
@@ -19,7 +19,7 @@ const WoWServerSelect = ({
   formName: string
   title?: string
 }) => {
-  const [id, setId] = useState<number>(-1)
+  const [id, setId] = useState<string>(DEFAULT_SELECT_VALUE)
   const [name, setName] = useState('')
   const servers = findWoWServersIdByName(name)
 
@@ -72,17 +72,17 @@ const WoWServerSelect = ({
           disabled={selectIsDisabled}
           onChange={(e) => {
             const value = e.target.value
-            const idChosen = parseInt(value)
-            if (isNaN(idChosen)) {
+
+            const [idChosen, chosenName] = value.split('---')
+
+            if (isNaN(parseInt(idChosen))) {
               return
             }
 
-            setId(idChosen)
-
-            const chosenName = data.find(({ id }) => id === idChosen)?.name
+            setId(value)
 
             if (onSelectChange && idChosen && chosenName) {
-              onSelectChange({ id: idChosen, name: chosenName })
+              onSelectChange({ id: parseInt(idChosen), name: chosenName })
             } else if (onSelectChange) {
               onSelectChange()
             }
@@ -92,7 +92,7 @@ const WoWServerSelect = ({
           </option>
           {servers &&
             servers.map(({ name, id }) => (
-              <option key={name} value={id} label={name}>
+              <option key={name} value={`${id}---${name}`} label={name}>
                 {name}
               </option>
             ))}

@@ -4,7 +4,7 @@ import type {
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import type { WoWScanResponse } from '~/requests/WOWScan'
+import type { WoWScanResponseWithPayload } from '~/requests/WOWScan'
 import WOWScanRequest from '~/requests/WOWScan'
 import NoResults from '../../queries/listings/NoResults'
 import { PageWrapper } from '~/components/Common'
@@ -12,6 +12,9 @@ import { validateWoWScanInput } from './validateWoWScanInput'
 import { useEffect, useState } from 'react'
 import WoWScanForm from './WoWScanForm'
 import { Results } from './Results'
+import { useDispatch } from 'react-redux'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { setWoWScan } from '~/redux/reducers/wowSlice'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -49,48 +52,46 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 
 const Index = () => {
   const transition = useTransition()
-  const results = useActionData<WoWScanResponse | { exception: string }>()
+  const results = useActionData<
+    WoWScanResponseWithPayload | { exception: string }
+  >()
   const [error, setError] = useState<string | undefined>()
+  const dispatch = useDispatch()
+  const wowScan = useTypedSelector((state) => state.wowQueries.scan)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
   }
-  console.log(results)
 
   useEffect(() => {
     if (results && 'exception' in results) {
       setError(`Error: ${results.exception}`)
+    } else if (results && Object.keys(results).length > 0) {
+      dispatch(setWoWScan(results))
     }
-  }, [results])
+  }, [results, dispatch])
 
-  if (results) {
-    if (Object.keys(results).length === 0) {
+  if (wowScan) {
+    if (Object.keys(wowScan).length === 0) {
       return <NoResults href={`/wow/full-scan`} />
     }
   }
 
-  if (results && 'out_of_stock' in results) {
-    return (
-      <PageWrapper>
-        <>
-          <Results data={results} />
-        </>
-      </PageWrapper>
-    )
-  }
-
   return (
     <PageWrapper>
-      <WoWScanForm
-        onClick={onSubmit}
-        onChange={() => {
-          setError(undefined)
-        }}
-        loading={transition.state === 'submitting'}
-        error={error}
-      />
+      <>
+        <WoWScanForm
+          onClick={onSubmit}
+          onChange={() => {
+            setError(undefined)
+          }}
+          loading={transition.state === 'submitting'}
+          error={error}
+        />
+        {wowScan && 'out_of_stock' in wowScan && <Results data={wowScan} />}
+      </>
     </PageWrapper>
   )
 }
