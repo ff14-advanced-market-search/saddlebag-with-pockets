@@ -3,7 +3,6 @@ import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import type { QueriesState } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import { convertResponseToTableRows } from '../full-scan/convertResponseToTableRows'
 import NoResults from './NoResults'
 import Results from '../full-scan/Results'
 
@@ -29,7 +28,7 @@ const PreviousSearch = () => {
     return <NoResults href="/" />
   }
 
-  const rowData = convertResponseToTableRows(dataToUse)
+  const rowData = dataToUse
 
   return <Results rows={rowData} />
 }

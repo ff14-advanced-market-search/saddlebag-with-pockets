@@ -11,7 +11,6 @@ import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
-import { convertResponseToTableRows } from '../full-scan/convertResponseToTableRows'
 import { useDispatch } from 'react-redux'
 import { setOutOfStockScan } from '~/redux/reducers/queriesSlice'
 import FullScanForm from '../full-scan/FullScanForm'
@@ -53,8 +52,8 @@ const Index = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (results && Object.keys(results).length > 0) {
-      dispatch(setOutOfStockScan(results))
+    if (results && results.data) {
+      dispatch(setOutOfStockScan(results.data))
     }
   }, [results, dispatch])
 
@@ -68,10 +67,11 @@ const Index = () => {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
-    const data = convertResponseToTableRows(results)
+    const data = results.data
 
     return <Results rows={data} />
   }
+
   return (
     <main className="flex-1">
       <div className="py-6">
