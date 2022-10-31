@@ -65,7 +65,8 @@ const Index = () => {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
-    const data = results.map
+
+    const data = results.data
 
     return <Results rows={data} />
   }
