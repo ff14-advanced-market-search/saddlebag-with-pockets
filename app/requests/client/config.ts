@@ -1,6 +1,5 @@
-export const defaultAddress = `http://api.saddlebagexchange.com`
-// export const address = defaultAddress
-export const address = 'http://24.199.70.65'
+export const defaultAddress = `http://api.saddlebag.exchange`
+export const address = defaultAddress
 // @todo update via env var
 // export const address =
 //   process.env.NODE_ENV === 'development'
