@@ -9,7 +9,6 @@ import FullScanRequest, { FormValues } from '~/requests/FullScan'
 import { useEffect } from 'react'
 import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
-import { convertResponseToTableRows } from '../full-scan/convertResponseToTableRows'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
 import { setFastScan } from '~/redux/reducers/queriesSlice'
@@ -56,8 +55,8 @@ const Index = () => {
   }
 
   useEffect(() => {
-    if (results && Object.keys(results).length > 0) {
-      dispatch(setFastScan(results))
+    if (results && results.data) {
+      dispatch(setFastScan(results.data))
     }
   }, [results, dispatch])
 
@@ -65,7 +64,8 @@ const Index = () => {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
-    const data = convertResponseToTableRows(results)
+
+    const data = results.data
 
     return <Results rows={data} />
   }

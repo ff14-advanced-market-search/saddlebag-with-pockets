@@ -167,16 +167,12 @@ const Results = ({ rows }: ResultTableProps) => {
   })
 
   useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'profit_amount') {
-      if (table.getState().sorting[0]?.id !== 'profit_amount') {
-        table.setSorting([
-          {
-            id: 'profit_amount',
-            desc: true
-          }
-        ])
+    table.setSorting([
+      {
+        id: 'profit_amount',
+        desc: true
       }
-    }
+    ])
   }, [table])
 
   useEffect(() => {
