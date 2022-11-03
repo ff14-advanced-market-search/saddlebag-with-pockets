@@ -53,7 +53,7 @@ const WoWScanForm = ({
   clearErrors
 }: Props) => (
   <SmallFormContainer
-    title="WoW Sale Search"
+    title="WoW Non-Commodity Server to Server Trade Search"
     onClick={onClick}
     loading={loading}
     disabled={loading}
