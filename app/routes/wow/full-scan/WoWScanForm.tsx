@@ -82,7 +82,7 @@ const WoWScanForm = ({
         <InputWithLabel
           defaultValue={0}
           type="number"
-          labelTitle="Sales Per Day"
+          labelTitle="Minimum Sales Per Day"
           inputTag="Min Sales"
           name="salePerDay"
           onChange={onChange}
@@ -90,7 +90,7 @@ const WoWScanForm = ({
         <InputWithLabel
           defaultValue={-1}
           type="number"
-          labelTitle="Required Level"
+          labelTitle="Minimum Required Level"
           inputTag="Level"
           name="requiredLevel"
           onChange={onChange}
@@ -98,7 +98,15 @@ const WoWScanForm = ({
         <InputWithLabel
           defaultValue={-1}
           type="number"
-          labelTitle="Item Class"
+          labelTitle="Minimum Item Level (ilvl)"
+          inputTag="Level"
+          name="iLvl"
+          onChange={onChange}
+        />
+        <InputWithLabel
+          defaultValue={-1}
+          type="number"
+          labelTitle="Item Category"
           inputTag="Class"
           name="itemClass"
           onChange={onChange}
@@ -106,17 +114,9 @@ const WoWScanForm = ({
         <InputWithLabel
           defaultValue={-1}
           type="number"
-          labelTitle="Item Sub Class"
+          labelTitle="Item Sub Category"
           inputTag="Class"
           name="itemSubClass"
-          onChange={onChange}
-        />
-        <InputWithLabel
-          defaultValue={-1}
-          type="number"
-          labelTitle="Item Level"
-          inputTag="Level"
-          name="iLvl"
           onChange={onChange}
         />
       </div>
