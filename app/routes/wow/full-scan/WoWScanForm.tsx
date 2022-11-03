@@ -79,6 +79,7 @@ const WoWScanForm = ({
           inputTag="%"
           name="roi"
           onChange={onChange}
+          min={0}
         />
         <InputWithLabel
           defaultValue={0}
@@ -87,6 +88,7 @@ const WoWScanForm = ({
           inputTag="Min Sales"
           name="salePerDay"
           onChange={onChange}
+          min={0}
         />
         <InputWithLabel
           defaultValue={-1}
@@ -95,6 +97,8 @@ const WoWScanForm = ({
           inputTag="Level"
           name="requiredLevel"
           onChange={onChange}
+          min={-1}
+          max={70}
         />
         <InputWithLabel
           defaultValue={-1}
@@ -103,6 +107,8 @@ const WoWScanForm = ({
           inputTag="Level"
           name="iLvl"
           onChange={onChange}
+          min={-1}
+          max={1000}
         />
         <div className="w-full mt-2">
           <Label htmlFor="item-quality">Item Quality</Label>
