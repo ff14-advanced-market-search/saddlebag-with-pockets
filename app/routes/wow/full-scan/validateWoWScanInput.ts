@@ -9,35 +9,6 @@ const getServerIdAndNameFromInput = (selectString: string) => {
 export const validateWoWScanInput = (
   formData: FormData
 ): WOWScanProps | { exception: string } => {
-  const minHistoricPriceData = formData.get('minHistoricPrice')
-  if (
-    !minHistoricPriceData ||
-    typeof minHistoricPriceData !== 'string' ||
-    isNaN(parseInt(minHistoricPriceData))
-  ) {
-    return { exception: 'Missing historic price' }
-  }
-
-  const minHistoricPrice = parseInt(minHistoricPriceData)
-
-  const roiData = formData.get('roi')
-  if (!roiData || typeof roiData !== 'string' || isNaN(parseInt(roiData))) {
-    return { exception: 'Missing return on investment percentage' }
-  }
-
-  const roi = parseInt(roiData)
-
-  const salePerDayData = formData.get('salePerDay')
-  if (
-    !salePerDayData ||
-    typeof salePerDayData !== 'string' ||
-    isNaN(parseInt(salePerDayData))
-  ) {
-    return { exception: 'Missing sale per day information' }
-  }
-
-  const salePerDay = parseInt(salePerDayData)
-
   const homeRealmData = formData.get('homeRealmId')
 
   if (!homeRealmData || typeof homeRealmData !== 'string') {
@@ -67,13 +38,82 @@ export const validateWoWScanInput = (
   const newRealmId = parseInt(newRealmIdData.id)
   const newRealmServerName = newRealmIdData.name
 
+  const minHistoricPriceData = formData.get('minHistoricPrice')
+
+  if (!minHistoricPriceData || typeof minHistoricPriceData !== 'string') {
+    return { exception: 'Missing minimum historic price' }
+  }
+
+  const minHistoricPrice = parseInt(minHistoricPriceData)
+
+  const roiData = formData.get('roi')
+
+  if (!roiData || typeof roiData !== 'string') {
+    return { exception: 'Missing minimum historic price' }
+  }
+
+  const roi = parseInt(roiData)
+
+  const salePerDayData = formData.get('salePerDay')
+
+  if (!salePerDayData || typeof salePerDayData !== 'string') {
+    return { exception: 'Missing minimum historic price' }
+  }
+
+  const salePerDay = parseInt(salePerDayData)
+
+  const itemQualityData = formData.get('itemQuality')
+
+  if (!itemQualityData || typeof itemQualityData !== 'string') {
+    return { exception: 'Missing Item Quality' }
+  }
+
+  const itemQuality = parseInt(itemQualityData)
+
+  const requiredLevelData = formData.get('requiredLevel')
+
+  if (!requiredLevelData || typeof requiredLevelData !== 'string') {
+    return { exception: 'Missing Required level' }
+  }
+
+  const requiredLevel = parseInt(requiredLevelData)
+
+  const itemClassData = formData.get('itemClass')
+
+  if (!itemClassData || typeof itemClassData !== 'string') {
+    return { exception: 'Missing item class' }
+  }
+
+  const itemClass = parseInt(itemClassData)
+
+  const itemSubClassData = formData.get('itemSubClass')
+
+  if (!itemSubClassData || typeof itemSubClassData !== 'string') {
+    return { exception: 'Missing item sub class' }
+  }
+
+  const itemSubClass = parseInt(itemSubClassData)
+
+  const iLvlData = formData.get('iLvl')
+
+  if (!iLvlData || typeof iLvlData !== 'string') {
+    return { exception: 'Missing item level' }
+  }
+
+  const iLvl = parseInt(iLvlData)
+
   return {
-    homeRealmId,
-    homeRealmServerName,
-    newRealmId,
-    newRealmServerName,
     minHistoricPrice,
     roi,
-    salePerDay
+    salePerDay,
+    itemQuality,
+    requiredLevel,
+    itemClass,
+    itemSubClass,
+    iLvl,
+    newRealmServerName,
+    newRealmId,
+    homeRealmId,
+    homeRealmServerName
   }
 }

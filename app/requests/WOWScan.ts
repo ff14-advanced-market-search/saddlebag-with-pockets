@@ -8,6 +8,11 @@ export interface WOWScanProps {
   minHistoricPrice: number
   roi: number
   salePerDay: number
+  itemQuality: number
+  requiredLevel: number
+  itemClass: number
+  itemSubClass: number
+  iLvl: number
 }
 
 export interface WoWOutOfStock {
@@ -51,15 +56,13 @@ const WOWScan: ({
   newRealmId,
   minHistoricPrice,
   roi,
-  salePerDay
+  salePerDay,
+  itemQuality,
+  requiredLevel,
+  itemClass,
+  itemSubClass,
+  iLvl
 }) => {
-  console.log('WoW Scan:', {
-    homeRealmId,
-    newRealmId,
-    minHistoricPrice,
-    roi,
-    salePerDay
-  })
   return fetch(`${address}/api/wow/scan`, {
     method: 'POST',
     headers: {
@@ -71,7 +74,12 @@ const WOWScan: ({
       newRealmId: newRealmId,
       min_historic_price: minHistoricPrice,
       desired_roi: roi,
-      sale_per_day: salePerDay
+      sale_per_day: salePerDay,
+      itemQuality: itemQuality,
+      required_level: requiredLevel,
+      item_class: itemClass,
+      item_subclass: itemSubClass,
+      ilvl: iLvl
     })
   })
 }

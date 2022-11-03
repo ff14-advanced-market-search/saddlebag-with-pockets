@@ -22,14 +22,17 @@ export const action: ActionFunction = async ({ request }) => {
   const validInput = validateWoWScanInput(formData)
 
   if ('exception' in validInput) {
+    console.log('here invalid input')
     return json({ ...validInput })
   }
 
   try {
+    console.log('Input:', validInput)
     const request = await WOWScanRequest(validInput)
 
     const jsonedRespone = await request.json()
     if ('exception' in jsonedRespone) {
+      console.log('Response from server')
       return json({ ...jsonedRespone })
     }
 

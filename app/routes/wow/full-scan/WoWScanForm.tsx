@@ -10,6 +10,41 @@ interface Props {
   clearErrors: () => void
 }
 
+const itemQuality = [
+  {
+    name: 'Poor',
+    value: 0
+  },
+  {
+    name: 'Common',
+    value: 1
+  },
+  {
+    name: 'Uncommon',
+    value: 2
+  },
+  {
+    name: 'Rare',
+    value: 3
+  },
+  {
+    name: 'Epic',
+    value: 4
+  },
+  {
+    name: 'Legendary',
+    value: 5
+  },
+  {
+    name: 'Artifact',
+    value: 6
+  },
+  {
+    name: 'Heirloom',
+    value: 7
+  }
+]
+
 const WoWScanForm = ({
   onClick,
   loading,
@@ -52,6 +87,38 @@ const WoWScanForm = ({
           name="salePerDay"
           onChange={onChange}
         />
+        <InputWithLabel
+          defaultValue={-1}
+          type="number"
+          labelTitle="Required Level"
+          inputTag="Level"
+          name="requiredLevel"
+          onChange={onChange}
+        />
+        <InputWithLabel
+          defaultValue={-1}
+          type="number"
+          labelTitle="Item Class"
+          inputTag="Class"
+          name="itemClass"
+          onChange={onChange}
+        />
+        <InputWithLabel
+          defaultValue={-1}
+          type="number"
+          labelTitle="Item Sub Class"
+          inputTag="Class"
+          name="itemSubClass"
+          onChange={onChange}
+        />
+        <InputWithLabel
+          defaultValue={-1}
+          type="number"
+          labelTitle="Item Level"
+          inputTag="Level"
+          name="iLvl"
+          onChange={onChange}
+        />
       </div>
       <div className="w-full">
         <WoWServerSelect
@@ -66,6 +133,26 @@ const WoWScanForm = ({
           onSelectChange={clearErrors}
           onTextChange={clearErrors}
         />
+        <div className="w-full">
+          <label
+            htmlFor="item-quality"
+            className="block text-sm font-medium text-gray-700 dark:text-grey-100">
+            Item Quality
+          </label>
+          <select
+            className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            id="item-quality"
+            name="itemQuality"
+            defaultValue={'Poor'}>
+            {itemQuality.map(({ name, value }) => {
+              return (
+                <option key={name + value} value={value}>
+                  {name}
+                </option>
+              )
+            })}
+          </select>
+        </div>
       </div>
     </div>
   </SmallFormContainer>

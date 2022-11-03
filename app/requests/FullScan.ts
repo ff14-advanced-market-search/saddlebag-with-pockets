@@ -146,6 +146,7 @@ export type ResponseType = {
   update_time: string // @todo datetime
   url: string // @todo URL
   npc_vendor_info: string
+  item_id?: string | number
 }
 
 const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (

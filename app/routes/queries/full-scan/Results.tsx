@@ -67,7 +67,7 @@ const Results = ({ rows }: ResultTableProps) => {
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
 
-  const columnHelper = createColumnHelper<ResponseType & { id: number }>()
+  const columnHelper = createColumnHelper<ResponseType>()
   const columns = [
     columnHelper.accessor('avg_ppu', {
       header: 'Average Price Per Unit',
@@ -132,7 +132,7 @@ const Results = ({ rows }: ResultTableProps) => {
         return <FinalFantasyBadgedLink link={value} />
       }
     }),
-    columnHelper.accessor('id', {
+    columnHelper.accessor('item_id', {
       header: 'Item Data',
       cell: (info) => (
         <ItemDataLink link={'/queries/item-data/' + info.getValue()} />
@@ -178,7 +178,7 @@ const Results = ({ rows }: ResultTableProps) => {
   useEffect(() => {
     setColumnOrder([
       'real_name',
-      'id',
+      'item_id',
       'url',
       'npc_vendor_info',
       'server',
