@@ -968,6 +968,10 @@ select {
   margin-left: 2rem;
 }
 
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+
 .block {
   display: block;
 }
