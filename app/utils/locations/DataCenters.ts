@@ -8,6 +8,9 @@ export const DataCenterList: Record<string, Array<{ name: string }>> = {
     },
     {
       name: 'Crystal'
+    },
+    {
+      name: 'Dynamis'
     }
   ],
   EU: [
