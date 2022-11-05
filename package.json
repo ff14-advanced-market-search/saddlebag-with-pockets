@@ -22,6 +22,7 @@
   },
   "packageManager": "yarn@1.22.18",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.6",
     "@cloudflare/wrangler": "^1.20.0",
     "@remix-run/cloudflare": "^1.7.3",
     "@remix-run/cloudflare-pages": "^1.7.0",
@@ -38,6 +39,8 @@
     "highcharts-react-official": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4",
+    "remix-utils": "^3.4.0",
     "remix": "^1.7.3",
     "remix-esbuild-override": "^3.0.4",
     "remix-validated-form": "^4.5.5",
