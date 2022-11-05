@@ -24,12 +24,12 @@ const Results = ({ data }: { data: HistoryResponse }) => (
       </div>
       <div className="flex flex-col max-w-full">
         <Differences
-          diffTitle="Average quantity sold per day"
+          diffTitle="Average quantity of indivitual items sold per day"
           diffAmount={data.average_quantity_sold_per_day}
           className="bg-blue-100 text-blue-900 font-semibold "
         />
         <Differences
-          diffTitle="Average amount Sold per day"
+          diffTitle="Average amount total purchases per day"
           diffAmount={data.average_sales_per_day}
           className="bg-blue-100 text-blue-900 font-semibold "
         />

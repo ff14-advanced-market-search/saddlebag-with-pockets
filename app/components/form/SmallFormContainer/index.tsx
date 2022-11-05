@@ -23,7 +23,7 @@ const SmallFormContainer = ({
         <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-blue-300">
           {title}
         </h1>
-        <div className="mt-3 md:mt-0 md:col-span-3 py-2">
+        <div className="mt-0 md:col-span-3">
           <div className="shadow overflow-hidden rounded-md px-4 bg-white dark:bg-slate-700">
             {children}
             <div className="px-4 py-4 bg-white dark:bg-slate-700">

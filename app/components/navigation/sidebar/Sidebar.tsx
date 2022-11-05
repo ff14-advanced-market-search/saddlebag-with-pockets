@@ -37,12 +37,24 @@ const navigation = [
   {
     name: 'Listings',
     href: 'queries/listings',
-    icon: ChartSquareBarIcon
+    icon: DocumentSearchIcon
   },
   {
     name: 'Item History',
     href: 'queries/item-history',
     icon: DocumentSearchIcon
+  },
+
+  {
+    name: 'WoW Scan',
+    href: 'wow/full-scan',
+    icon: HomeIcon
+  },
+  {
+    name: 'Legacy Site',
+    href: 'https://saddlebag.exchange',
+    icon: HomeIcon,
+    external: true
   },
   {
     name: 'Patreon',
@@ -292,7 +304,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               <NavLink
                 className={`text-gray-300 text-base p-2 hover:bg-gray-700 hover:text-white `}
                 to={`/why/advertisements`}>
-                Advertisements
+                .
               </NavLink>
               {advertisements.map((item) => (
                 <a

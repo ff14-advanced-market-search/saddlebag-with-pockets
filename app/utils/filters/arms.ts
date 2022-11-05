@@ -12,7 +12,7 @@ export const arms: FilterFormat[] = [
     name: `Archer's Arms`,
     abbreviation: `ARC`,
     icon: Job.ARC,
-    id: 11
+    id: 12
   },
   {
     name: `Astrologian's Arms`,
@@ -65,7 +65,7 @@ export const arms: FilterFormat[] = [
   {
     name: `Machinist's Arms`,
     abbreviation: `MCH`,
-    id: 0,
+    id: 77,
     icon: Job.MCH
   },
   {

@@ -1,7 +1,10 @@
-import type { FilterFn, SortingFn } from '@tanstack/table-core'
-import {
+import type {
+  FilterFn,
+  SortingFn,
   ColumnFiltersState,
-  ColumnOrderState,
+  ColumnOrderState
+} from '@tanstack/table-core'
+import {
   createColumnHelper,
   getCoreRowModel,
   getFacetedMinMaxValues,
@@ -13,12 +16,9 @@ import {
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import { ResponseType } from '~/requests/FullScan'
-import {
-  compareItems,
-  RankingInfo,
-  rankItem
-} from '@tanstack/match-sorter-utils'
+import type { ResponseType } from '~/requests/FullScan'
+import type { RankingInfo } from '@tanstack/match-sorter-utils'
+import { compareItems, rankItem } from '@tanstack/match-sorter-utils'
 import {
   ChevronDoubleRightIcon,
   ChevronDownIcon,
@@ -27,9 +27,10 @@ import {
 import { classNames } from '~/utils'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
+import FinalFantasyBadgedLink from '~/components/utilities/FinalFantasyBagdedLink'
 
-type ResultTableProps<T> = {
-  rows: Record<string, T>
+type ResultTableProps = {
+  rows: Array<ResponseType>
 }
 
 declare module '@tanstack/table-core' {
@@ -49,7 +50,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   let dir = 0
 
   if (rowA.columnFiltersMeta[columnId]) {
@@ -61,12 +62,12 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
-const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
+const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
 
-  const columnHelper = createColumnHelper<ResponseType & { id: number }>()
+  const columnHelper = createColumnHelper<ResponseType>()
   const columns = [
     columnHelper.accessor('avg_ppu', {
       header: 'Average Price Per Unit',
@@ -74,7 +75,7 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }),
     columnHelper.accessor('home_server_price', {
       header: 'Home Server Price',
-      cell: (info) => info.getValue()
+      cell: (info) => (!info.getValue() ? 'No Listing' : info.getValue())
     }),
     columnHelper.accessor('home_update_time', {
       header: 'Home Server Info Last Updated At',
@@ -86,15 +87,15 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }),
     columnHelper.accessor('profit_amount', {
       header: 'Profit Amount',
-      cell: (info) => info.getValue()
+      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
     }),
     columnHelper.accessor('profit_raw_percent', {
       header: 'Profit Percentage',
-      cell: (info) => info.getValue()
+      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
     }),
     columnHelper.accessor('real_name', {
       header: 'Item Name',
-      cell: ({ row, getValue }) => (
+      cell: ({ getValue }) => (
         <span className={`font-bold select-all`}>{getValue()}</span>
       ),
       footer: (props) => props.column.id
@@ -125,9 +126,13 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
     }),
     columnHelper.accessor('npc_vendor_info', {
       header: 'NPC Vendor Info',
-      cell: (info) => <UniversalisBadgedLink link={info.getValue()} />
+      cell: (info) => {
+        const value = info.getValue()
+        if (!value) return null
+        return <FinalFantasyBadgedLink link={value} />
+      }
     }),
-    columnHelper.accessor('id', {
+    columnHelper.accessor('item_id', {
       header: 'Item Data',
       cell: (info) => (
         <ItemDataLink link={'/queries/item-data/' + info.getValue()} />
@@ -162,30 +167,26 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
   })
 
   useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'profit_amount') {
-      if (table.getState().sorting[0]?.id !== 'profit_amount') {
-        table.setSorting([
-          {
-            id: 'profit_amount',
-            desc: true
-          }
-        ])
+    table.setSorting([
+      {
+        id: 'profit_amount',
+        desc: true
       }
-    }
-  }, [table.getState().columnFilters[0]?.id])
+    ])
+  }, [table])
 
   useEffect(() => {
     setColumnOrder([
       'real_name',
-      'id',
+      'item_id',
       'url',
-      'ppu',
+      'npc_vendor_info',
+      'server',
       'home_server_price',
+      'ppu',
       'profit_amount',
       'sale_rates',
       'avg_ppu',
-      'npc_vendor_info',
-      'server',
       'ROI',
       'profit_raw_percent',
       'stack_size',
@@ -211,7 +212,8 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
                   <span className="md:hidden">This is a wide table!</span>
                   <span className="hidden md:inline">
                     Heads up, this table is pretty wide. You'll probably need to
-                    scroll horizontally (left & right).
+                    scroll horizontally (left & right). Click a column name to
+                    sort by that column.
                   </span>
                 </p>
               </div>
@@ -232,10 +234,10 @@ const Results = <T extends unknown>({ rows }: ResultTableProps<T>) => {
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
+                          `px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
                         )}
                         key={header.id}>
-                        <div className={`group inline-flex`}>
+                        <div className={`group inline-flex  min-w-[100px]`}>
                           {header.isPlaceholder
                             ? null
                             : flexRender(

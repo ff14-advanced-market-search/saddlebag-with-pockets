@@ -55,10 +55,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   try {
     const historyResponse = await GetHistory(input)
-    const listingResponse = await GetListing({
-      ...input,
-      daysRange: [initialDays, endDays]
-    })
+    const listingResponse = await GetListing(input)
 
     if (!historyResponse.ok) {
       return { exception: historyResponse.statusText }

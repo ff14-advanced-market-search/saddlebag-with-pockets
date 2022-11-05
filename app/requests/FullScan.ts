@@ -60,13 +60,23 @@ export class FormValues {
     return this.map
   }
 
-  private resolveValueType: (value: string) => string | number | boolean = (
-    value
-  ) => {
+  private resolveValueType: (
+    value: string
+  ) => string | number | boolean | Array<number> = (value) => {
     if (value === 'on') {
       // checkboxes whyyyyyy
       return true
     }
+
+    // filters form element now is unhappy
+    // dirty hack will work for now...
+    const isNumArray =
+      value.includes(',') &&
+      value.split(',').every((item) => !isNaN(parseInt(item)))
+    if (isNumArray) {
+      return value.split(',').map((num) => parseInt(num))
+    }
+
     if (!isNaN(parseInt(value as string))) {
       return parseInt(value)
     }
@@ -136,6 +146,7 @@ export type ResponseType = {
   update_time: string // @todo datetime
   url: string // @todo URL
   npc_vendor_info: string
+  item_id?: string | number
 }
 
 const FullScanRequest: (map: FormValuesMap) => Promise<Response> = async (

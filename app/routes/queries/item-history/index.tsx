@@ -3,16 +3,21 @@ import type {
   ActionFunction,
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import GetHistoryRequest from '~/requests/GetHistory'
 import type { GetHistoryProps, GetHistoryResponse } from '~/requests/GetHistory'
 import NoResults from '~/routes/queries/listings/NoResults'
 import { getUserSessionData } from '~/sessions'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import type { ItemSelected } from '~/components/form/select/ItemSelect'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import Results from './Results'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, Title } from '~/components/Common'
+import { useDispatch } from 'react-redux'
+import { setItemHistory } from '~/redux/reducers/queriesSlice'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { getItemNameById } from '~/utils/items'
 
 const validateInput = ({
   itemId,
@@ -47,7 +52,7 @@ const validateInput = ({
     return { exception: 'Invalid item type selected' }
   }
 
-  return { itemId: parsedItemId, world, itemType }
+  return { itemId: parsedItemId, world, itemType, initialDays: 14, endDays: 0 }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -67,7 +72,15 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   try {
-    return await GetHistoryRequest(validInput)
+    const response = await GetHistoryRequest(validInput)
+
+    const jsonedRespone = await response.json()
+
+    if ('exception' in jsonedRespone) {
+      return json({ ...jsonedRespone })
+    }
+
+    return json({ ...jsonedRespone, payload: validInput })
   } catch (err) {
     console.error('catch', err)
     return { exception: err }
@@ -97,6 +110,11 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData<GetHistoryResponse>()
   const [formState, setFormState] = useState<ItemSelected | undefined>()
+  const [error, setError] = useState<string | undefined>()
+
+  const { itemHistory } = useTypedSelector((state) => state.queries)
+
+  const dispatch = useDispatch()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {
@@ -105,10 +123,31 @@ const Index = () => {
     }
   }
 
-  const error =
-    results && 'exception' in results
-      ? `Server Error: ${parseServerError(results.exception)}`
-      : ''
+  useEffect(() => {
+    if (results && 'average_ppu' in results) {
+      dispatch(setItemHistory(results))
+    } else if (results && 'exception' in results) {
+      const message = parseServerError(results.exception)
+      setError(`Server Error: ${message}`)
+    } else if (results && 'payload' in results) {
+      setError('No results found')
+    }
+  }, [results, dispatch])
+
+  const resultTitle = itemHistory
+    ? getItemNameById(itemHistory.payload.itemId)
+    : null
+
+  const handleFormChange = (selectValue?: ItemSelected | undefined) => {
+    if (error) {
+      setError(undefined)
+    }
+    setFormState(selectValue)
+  }
+
+  const handleTextChange = () => {
+    setError(undefined)
+  }
 
   return (
     <PageWrapper>
@@ -121,7 +160,10 @@ const Index = () => {
             loading={transition.state === 'submitting'}
             disabled={!formState}>
             <>
-              <ItemSelect onSelectChange={setFormState} />
+              <ItemSelect
+                onSelectChange={handleFormChange}
+                onTextChange={handleTextChange}
+              />
               <div className="my-1 flex flex-1 px-4">
                 <select
                   id="itemType"
@@ -141,10 +183,13 @@ const Index = () => {
             </>
           </SmallFormContainer>
         </div>
-        {results && !Object.keys(results).length && (
+        {error === 'No results found' && !itemHistory && (
           <NoResults href={`/queries/item-history`} />
         )}
-        {results && 'average_ppu' in results && <Results data={results} />}
+        {resultTitle && <Title title={resultTitle} />}
+        {itemHistory && 'average_ppu' in itemHistory && (
+          <Results data={itemHistory} />
+        )}
       </>
     </PageWrapper>
   )
