@@ -1,29 +1,19 @@
 export const WorldList: Record<string, Array<{ name: string }>> = {
   Aether: [
-    {
-      name: 'Adamantoise'
-    },
-    {
-      name: 'Cactuar'
-    },
-    {
-      name: 'Faerie'
-    },
-    {
-      name: 'Gilgamesh'
-    },
-    {
-      name: 'Jenova'
-    },
-    {
-      name: 'Midgardsormr'
-    },
-    {
-      name: 'Sargatanas'
-    },
-    {
-      name: 'Siren'
-    }
+    { name: 'Adamantoise' },
+    { name: 'Cactuar' },
+    { name: 'Faerie' },
+    { name: 'Gilgamesh' },
+    { name: 'Jenova' },
+    { name: 'Midgardsormr' },
+    { name: 'Sargatanas' },
+    { name: 'Siren' }
+  ],
+  Dynamis: [
+    { name: 'Halicarnassus' },
+    { name: 'Maduin' },
+    { name: 'Marilith' },
+    { name: 'Seraph' }
   ],
   Primal: [
     { name: 'Behemoth' },
