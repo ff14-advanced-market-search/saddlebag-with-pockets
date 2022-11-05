@@ -20,11 +20,13 @@ const SmallFormContainer = ({
   return (
     <Form method="post">
       <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-2xl font-semibold text-blue-900 py-2">{title}</h1>
+        <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-blue-300">
+          {title}
+        </h1>
         <div className="mt-3 md:mt-0 md:col-span-3 py-2">
-          <div className="shadow overflow-hidden rounded-md px-4 bg-white">
+          <div className="shadow overflow-hidden rounded-md px-4 bg-white dark:bg-slate-700">
             {children}
-            <div className="px-4 py-4 bg-white">
+            <div className="px-4 py-4 bg-white dark:bg-slate-700">
               <div className="flex justify-between">
                 <p className="text-red-500 mx-2">{error}</p>
                 <SubmitButton
