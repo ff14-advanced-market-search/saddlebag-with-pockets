@@ -46,7 +46,7 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
   const columns = [
     columnHelper.accessor('pricePerUnit', {
       header: 'Price Per Unit',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('hq', {
       header: 'Quality',
@@ -54,11 +54,11 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
     }),
     columnHelper.accessor('quantity', {
       header: 'Quantity',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('total', {
       header: 'Total',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('retainerName', {
       header: 'Retainer Name',

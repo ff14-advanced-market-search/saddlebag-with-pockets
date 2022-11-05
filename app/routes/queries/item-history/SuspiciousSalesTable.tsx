@@ -46,7 +46,7 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
   const columns = [
     columnHelper.accessor('pricePerUnit', {
       header: 'Price per unit',
-      cell: (info) => info.getValue().toLocaleString()
+      cell: (info) => info.getValue().toLocaleString().toLocaleString()
     }),
     columnHelper.accessor('server', {
       header: 'World',

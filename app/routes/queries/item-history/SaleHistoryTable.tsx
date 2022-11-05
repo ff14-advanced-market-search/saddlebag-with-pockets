@@ -46,7 +46,7 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   const columns = [
     columnHelper.accessor('stack_size', {
       header: 'Bundle Size',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     // columnHelper.accessor('average_price_for_size', {
     //   header: 'Avg Price per item',
@@ -54,15 +54,15 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
     // }),
     columnHelper.accessor('number_of_sales', {
       header: 'No# Sales',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('percent_of_sales', {
       header: '% of Sales',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('percent_of_total_quantity_sold', {
       header: '% of Total Sold',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     })
   ]
 

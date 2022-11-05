@@ -9,7 +9,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         {'listing_price_diff' in data && (
           <Differences
             diffTitle="Avg Price Difference"
-            diffAmount={`${data.listing_price_diff.avg_price_diff} gil`}
+            diffAmount={`${data.listing_price_diff.avg_price_diff.toLocaleString()} gil`}
             className={
               data.listing_price_diff.avg_price_diff >= 10000
                 ? 'bg-red-100 font-semibold text-red-800'
@@ -20,7 +20,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         {'listing_price_diff' in data && (
           <Differences
             diffTitle="Median Price Difference"
-            diffAmount={`${data.listing_price_diff.median_price_diff} gil`}
+            diffAmount={`${data.listing_price_diff.median_price_diff.toLocaleString()} gil`}
             className={
               data.listing_price_diff.median_price_diff >= 10000
                 ? 'bg-red-100 font-semibold text-red-800'
@@ -31,7 +31,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         {'listing_time_diff' in data && (
           <Differences
             diffTitle="Avg Time Difference"
-            diffAmount={`${data.listing_time_diff.avg_time_diff} minutes`}
+            diffAmount={`${data.listing_time_diff.avg_time_diff.toLocaleString()} minutes`}
             className={
               data.listing_time_diff.avg_time_diff >= 30
                 ? 'bg-green-100 font-semibold text-green-800'
@@ -42,7 +42,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         {'listing_time_diff' in data && (
           <Differences
             diffTitle="Median Time Difference"
-            diffAmount={`${data.listing_time_diff.median_time_diff} minutes`}
+            diffAmount={`${data.listing_time_diff.median_time_diff.toLocaleString()} minutes`}
             className={
               data.listing_time_diff.median_time_diff >= 30
                 ? 'bg-green-100 font-semibold text-green-800'
@@ -53,7 +53,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         {'min_price' in data && (
           <Differences
             diffTitle="Minimum Price"
-            diffAmount={`${data.min_price} gil`}
+            diffAmount={`${data.min_price.toLocaleString()} gil`}
             className={'bg-blue-100 font-semibold text-blue-800'}
           />
         )}
