@@ -65,14 +65,28 @@ function SmallTable<Type>({
 
   const columnHelper = createColumnHelper<Type>()
 
+  const returnLocaleString = (value: any) => {
+    if (typeof value === 'number') {
+      return value.toLocaleString()
+    }
+    if (typeof value === 'string' && !isNaN(parseFloat(value))) {
+      return parseFloat(value).toLocaleString()
+    }
+
+    return value
+  }
+
   const columns = columnList.map((col) => {
     // @ts-ignore
     return columnHelper.accessor(col.columnId, {
       header: col.header,
       cell: (props) =>
         col.accessor
-          ? col.accessor({ row: props.row.original, getValue: props.getValue })
-          : props.getValue()
+          ? col.accessor({
+              row: props.row.original,
+              getValue: () => returnLocaleString(props.getValue())
+            })
+          : returnLocaleString(props.getValue())
     })
   })
 

@@ -71,11 +71,12 @@ const Results = ({ rows }: ResultTableProps) => {
   const columns = [
     columnHelper.accessor('avg_ppu', {
       header: 'Average Price Per Unit',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('home_server_price', {
       header: 'Home Server Price',
-      cell: (info) => (!info.getValue() ? 'No Listing' : info.getValue())
+      cell: (info) =>
+        !info.getValue() ? 'No Listing' : info.getValue().toLocaleString()
     }),
     columnHelper.accessor('home_update_time', {
       header: 'Home Server Info Last Updated At',
@@ -83,15 +84,17 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('ppu', {
       header: 'Lowest Price Per Unit',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('profit_amount', {
       header: 'Profit Amount',
-      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
+      cell: (info) =>
+        info.getValue() === 99999999999 ? '∞' : info.getValue().toLocaleString()
     }),
     columnHelper.accessor('profit_raw_percent', {
       header: 'Profit Percentage',
-      cell: (info) => (info.getValue() === 99999999999 ? '∞' : info.getValue())
+      cell: (info) =>
+        info.getValue() === 99999999999 ? '∞' : info.getValue().toLocaleString()
     }),
     columnHelper.accessor('real_name', {
       header: 'Item Name',
@@ -102,15 +105,15 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('sale_rates', {
       header: 'Sale Rates',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('server', {
       header: 'Lowest Price Server',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('stack_size', {
       header: 'Lowest Price Stack Size',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('update_time', {
       header: 'Lowest Price Last Update Time',
@@ -118,7 +121,7 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('ROI', {
       header: 'Return on Investment',
-      cell: (info) => info.getValue()
+      cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('url', {
       header: 'Universalis Link',
