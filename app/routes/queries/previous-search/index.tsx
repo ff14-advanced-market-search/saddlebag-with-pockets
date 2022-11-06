@@ -17,6 +17,7 @@ const PreviousSearch = () => {
   const data = useLoaderData()
 
   const queries = useTypedSelector((state) => state.queries)
+  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
 
   if (!data || !data.query) {
     return <NoResults href="/" />
@@ -30,7 +31,7 @@ const PreviousSearch = () => {
 
   const rowData = dataToUse
 
-  return <Results rows={rowData} />
+  return <Results rows={rowData} sortOrder={sortOrder} />
 }
 
 export default PreviousSearch

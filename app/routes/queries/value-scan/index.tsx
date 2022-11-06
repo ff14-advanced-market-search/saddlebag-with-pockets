@@ -46,6 +46,8 @@ const Index = () => {
   const results = useActionData()
 
   const valueScan = useTypedSelector((state) => state.queries.valueScan)
+  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
+
   const dispatch = useDispatch()
 
   const onSubmit = (e: React.MouseEvent) => {
@@ -66,7 +68,7 @@ const Index = () => {
     }
     const data = results.data
 
-    return <Results rows={data} />
+    return <Results rows={data} sortOrder={sortOrder} />
   }
   return (
     <main className="flex-1">

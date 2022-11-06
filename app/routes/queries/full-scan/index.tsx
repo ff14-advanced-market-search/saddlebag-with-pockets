@@ -46,6 +46,7 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
   const fullScan = useTypedSelector((state) => state.queries.fullScan)
+  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
 
   const dispatch = useDispatch()
 
@@ -68,7 +69,7 @@ const Index = () => {
 
     const data = results.data
 
-    return <Results rows={data} />
+    return <Results rows={data} sortOrder={sortOrder} />
   }
   return (
     <main className="flex-1">

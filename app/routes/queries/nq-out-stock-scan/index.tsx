@@ -49,6 +49,7 @@ const Index = () => {
   const nqOutOfStockScan = useTypedSelector(
     (state) => state.queries.nqOutOfStockScan
   )
+  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
 
   const onSubmit = (e: React.MouseEvent) => {
     if (transition.state === 'submitting') {
@@ -68,7 +69,7 @@ const Index = () => {
     }
     const data = results.data
 
-    return <Results rows={data} />
+    return <Results rows={data} sortOrder={sortOrder} />
   }
   return (
     <main className="flex-1">

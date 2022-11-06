@@ -31,6 +31,7 @@ import FinalFantasyBadgedLink from '~/components/utilities/FinalFantasyBagdedLin
 
 type ResultTableProps = {
   rows: Array<ResponseType>
+  sortOrder: Array<string>
 }
 
 declare module '@tanstack/table-core' {
@@ -62,7 +63,7 @@ export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
-const Results = ({ rows }: ResultTableProps) => {
+const Results = ({ rows, sortOrder }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>([])
@@ -179,24 +180,8 @@ const Results = ({ rows }: ResultTableProps) => {
   }, [table])
 
   useEffect(() => {
-    setColumnOrder([
-      'real_name',
-      'item_id',
-      'url',
-      'npc_vendor_info',
-      'server',
-      'home_server_price',
-      'ppu',
-      'profit_amount',
-      'sale_rates',
-      'avg_ppu',
-      'ROI',
-      'profit_raw_percent',
-      'stack_size',
-      'update_time',
-      'home_update_time'
-    ])
-  }, [])
+    setColumnOrder(sortOrder)
+  }, [sortOrder])
 
   return (
     <div className={`mt-0 flex flex-col`}>

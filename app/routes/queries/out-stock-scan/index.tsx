@@ -48,6 +48,7 @@ const Index = () => {
   const outOfStockScan = useTypedSelector(
     (state) => state.queries.outOfStockScan
   )
+  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
 
   const dispatch = useDispatch()
 
@@ -69,7 +70,7 @@ const Index = () => {
     }
     const data = results.data
 
-    return <Results rows={data} />
+    return <Results rows={data} sortOrder={sortOrder} />
   }
 
   return (
