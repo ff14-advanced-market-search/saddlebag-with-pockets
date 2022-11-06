@@ -1,8 +1,8 @@
 const FF_SCAN_ORDER_KEY = 'ff-scan-order'
 
 export const defaultSortOrder = [
-  'item_id',
   'real_name',
+  'item_id',
   'url',
   'npc_vendor_info',
   'server',
@@ -18,7 +18,7 @@ export const defaultSortOrder = [
   'home_update_time'
 ]
 
-export const getFFScanSortOrder = (): Array<string> => {
+export const getFFScanSortOrderInLocalStorage = (): Array<string> => {
   try {
     const sortOrder = localStorage.getItem(FF_SCAN_ORDER_KEY)
     if (!sortOrder) {
@@ -30,7 +30,7 @@ export const getFFScanSortOrder = (): Array<string> => {
   }
 }
 
-export const setFFScanSortOrder = (newOrder: Array<string>) => {
+export const setFFScanOrderInLocalStorage = (newOrder: Array<string>) => {
   try {
     localStorage.setItem(FF_SCAN_ORDER_KEY, JSON.stringify(newOrder))
     return { success: true }

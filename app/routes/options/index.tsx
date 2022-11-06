@@ -18,8 +18,9 @@ import { commitSession, getSession } from '~/sessions'
 import { Switch } from '@headlessui/react'
 import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
-import { toggleDarkMode } from '~/redux/reducers/userSlice'
+import { setFFScanOrder, toggleDarkMode } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import { Draggable } from 'react-drag-reorder'
 
 export type SelectWorldInputFields = {
   data_center: GetDeepProp<DataCentersList, 'name'>
@@ -65,7 +66,7 @@ export default function () {
   const transition = useTransition()
   const actionData = useActionData()
   const dispatch = useDispatch()
-  const { darkmode } = useTypedSelector((state) => state.user)
+  const { darkmode, ffScanSortOrder } = useTypedSelector((state) => state.user)
 
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode())
@@ -203,6 +204,12 @@ export default function () {
                     </div>
                   </div>
                 </div>
+                <ResultsTableOrder
+                  sortOrder={ffScanSortOrder}
+                  onOrderChange={(newOrder) =>
+                    dispatch(setFFScanOrder(newOrder))
+                  }
+                />
 
                 <div className="hidden sm:block" aria-hidden="true">
                   <div className="py-5">
@@ -214,6 +221,65 @@ export default function () {
           </div>
         </Form>
       </main>
+    </div>
+  )
+}
+
+const getUpdatedArray = (
+  currentPos: number,
+  newPos: number,
+  sortOrder: Array<string>
+): Array<string> | undefined => {
+  const itemToMove = sortOrder[currentPos]
+  if (!itemToMove) return
+
+  const result = sortOrder.reduce<Array<string>>(
+    (newOrder, columnId, currentIndex) => {
+      if (currentIndex !== currentPos && currentIndex !== newPos) {
+        return [...newOrder, columnId]
+      }
+
+      if (currentIndex === currentPos) {
+        return newOrder
+      }
+
+      return [...newOrder, itemToMove, columnId]
+    },
+    []
+  )
+  return result
+}
+
+const ResultsTableOrder = ({
+  sortOrder,
+  onOrderChange
+}: {
+  sortOrder: Array<string>
+  onOrderChange: (newList: Array<string>) => void
+}) => {
+  const handleColumnChange = (currentPosition: number, newPosition: number) => {
+    const newArray = getUpdatedArray(currentPosition, newPosition, sortOrder)
+    if (!newArray) {
+      return
+    }
+    onOrderChange(newArray)
+  }
+  return (
+    <div>
+      <p>Final Fantasy Scan Table Column Order</p>
+      <div className="flex-container">
+        <div className="row">
+          <Draggable onPosChange={handleColumnChange}>
+            {sortOrder.map((columnId, idx) => {
+              return (
+                <div key={idx} className="">
+                  <p>{columnId}</p>
+                </div>
+              )
+            })}
+          </Draggable>
+        </div>
+      </div>
     </div>
   )
 }
