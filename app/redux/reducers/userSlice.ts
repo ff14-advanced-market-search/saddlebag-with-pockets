@@ -4,13 +4,16 @@ import {
   getDarkModeFromLocalStorage,
   setDarkModeInLocalStorage
 } from '../localStorage/darkModeHelpers'
+import { getFFScanSortOrder } from '../localStorage/ffScanOrderHelpers'
 
 export interface UserState {
   darkmode: boolean
+  ffScanSortOrder: Array<string>
 }
 
 const initialState: UserState = {
-  darkmode: getDarkModeFromLocalStorage()
+  darkmode: getDarkModeFromLocalStorage(),
+  ffScanSortOrder: getFFScanSortOrder()
 }
 
 export const userSlice = createSlice({
@@ -26,10 +29,14 @@ export const userSlice = createSlice({
     setDarkMode: (state, { payload }: PayloadAction<boolean>) => {
       setDarkModeInLocalStorage(payload)
       state.darkmode = payload
+    },
+    setFFScanOrder: (state, { payload }: PayloadAction<Array<string>>) => {
+      setFFScanOrder(payload)
+      state.ffScanSortOrder = payload
     }
   }
 })
 
-export const { toggleDarkMode, setDarkMode } = userSlice.actions
+export const { toggleDarkMode, setDarkMode, setFFScanOrder } = userSlice.actions
 
 export default userSlice.reducer
