@@ -8,14 +8,26 @@ export const getOrderedColumns = (
 
   const result = sortOrder.reduce<Array<string>>(
     (newOrder, columnId, currentIndex) => {
-      if (currentIndex !== currentPos && currentIndex !== newPos) {
+      // We are not at an item that needs swapping
+      if (
+        (currentIndex !== currentPos && currentIndex !== newPos) ||
+        // item is placed on itself
+        (currentIndex === newPos && currentPos === newPos)
+      ) {
         return [...newOrder, columnId]
       }
 
       if (currentIndex === currentPos) {
+        // we need to remove the item that is being moved
         return newOrder
       }
 
+      // if we are moving the item 1 place to the right then we need to swap them around.
+      if (currentIndex === newPos && currentPos + 1 === newPos) {
+        return [...newOrder, columnId, itemToMove]
+      }
+
+      // else we need to drop in the moving item infront of the currently placed item
       return [...newOrder, itemToMove, columnId]
     },
     []

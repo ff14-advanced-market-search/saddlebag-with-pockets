@@ -17,11 +17,15 @@ const DraggableHeader = ({
   const ref = useRef()
   const { id } = column
 
-  const [, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.COLUMN,
     drop: (item) => {
       reorder(item, index)
-    }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      isOverCurrent: monitor.isOver({ shallow: true })
+    })
   })
 
   const [{ isDragging }, drag, preview] = useDrag({
@@ -50,7 +54,8 @@ const DraggableHeader = ({
       {...rest}
       style={{
         cursor: 'move',
-        opacity: isDragging ? 0.5 : 1
+        opacity: isDragging ? 0.5 : 1,
+        outline: isOver ? 'solid 2px yellow' : 'none'
       }}>
       {children}
     </th>
