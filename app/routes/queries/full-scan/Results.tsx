@@ -34,11 +34,14 @@ import withScrolling from 'react-dnd-scrolling'
 import Preview from './Preview'
 import DraggableHeader from './DraggableHeader'
 import { getOrderedColumns } from './getOrderedColumns'
+import { SubmitButton } from '~/components/form/SubmitButton'
+import { setFFScanOrder } from '~/redux/reducers/userSlice'
+import { useDispatch } from 'react-redux'
+import { defaultSortOrder } from '~/redux/localStorage/ffScanOrderHelpers'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 type ResultTableProps = {
   rows: Array<ResponseType>
-  sortOrder: Array<string>
-  onReOrder: (newOrder: Array<string>) => void
 }
 
 const ScrollingComponent = withScrolling('div')
@@ -72,10 +75,11 @@ export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
-const Results = ({ rows, sortOrder, onReOrder }: ResultTableProps) => {
+const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const touchBackendRef = useRef(false)
+  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
 
   const columnHelper = createColumnHelper<ResponseType>()
   const columns = [
@@ -188,7 +192,9 @@ const Results = ({ rows, sortOrder, onReOrder }: ResultTableProps) => {
     ])
   }, [table])
 
-  const reorderColumns = useCallback(
+  const dispatch = useDispatch()
+
+  const handleReorder = useCallback(
     (item: any, newIndex: number) => {
       const newOrder = getOrderedColumns(item.index, newIndex, sortOrder)
 
@@ -196,9 +202,9 @@ const Results = ({ rows, sortOrder, onReOrder }: ResultTableProps) => {
         return
       }
 
-      onReOrder(newOrder)
+      dispatch(setFFScanOrder(newOrder))
     },
-    [sortOrder, onReOrder]
+    [sortOrder, dispatch]
   )
 
   useEffect(() => {
@@ -208,6 +214,8 @@ const Results = ({ rows, sortOrder, onReOrder }: ResultTableProps) => {
       }
     }
   }, [])
+
+  const handleColumnReset = () => dispatch(setFFScanOrder(defaultSortOrder))
 
   return (
     <div key={`${touchBackendRef.current}`} className={`mt-0 flex flex-col`}>
@@ -249,7 +257,7 @@ const Results = ({ rows, sortOrder, onReOrder }: ResultTableProps) => {
                         {headerGroup.headers.map((header, i) => (
                           <DraggableHeader
                             scope={`col`}
-                            reorder={reorderColumns}
+                            reorder={handleReorder}
                             key={header.id}
                             column={header}
                             index={i}
@@ -318,11 +326,18 @@ const Results = ({ rows, sortOrder, onReOrder }: ResultTableProps) => {
                   </tbody>
                 </table>
               </div>
-              <div>
+              <div className="flex flex-0 flex-col">
                 <p
                   className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>
                   {`${rows.length} results found`}
                 </p>
+                <div className="max-w-fit my-2">
+                  <SubmitButton
+                    onClick={handleColumnReset}
+                    title={'Reset table columns'}
+                    type="button"
+                  />
+                </div>
               </div>
             </div>
           </div>
