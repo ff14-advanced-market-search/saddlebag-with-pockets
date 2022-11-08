@@ -5,8 +5,6 @@ import type { QueriesState } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import NoResults from './NoResults'
 import Results from '../full-scan/Results'
-import { setFFScanOrder } from '~/redux/reducers/userSlice'
-import { useDispatch } from 'react-redux'
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)
@@ -19,8 +17,6 @@ const PreviousSearch = () => {
   const data = useLoaderData()
 
   const queries = useTypedSelector((state) => state.queries)
-  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
-  const dispatch = useDispatch()
 
   if (!data || !data.query) {
     return <NoResults href="/" />
@@ -34,13 +30,7 @@ const PreviousSearch = () => {
 
   const rowData = dataToUse
 
-  return (
-    <Results
-      rows={rowData}
-      sortOrder={sortOrder}
-      onReOrder={(newOrder) => dispatch(setFFScanOrder(newOrder))}
-    />
-  )
+  return <Results rows={rowData} />
 }
 
 export default PreviousSearch

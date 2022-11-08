@@ -14,7 +14,6 @@ import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { PreviousResultsLink } from './PreviousResultsLink'
 import FullScanForm from './FullScanForm'
-import { setFFScanOrder } from '~/redux/reducers/userSlice'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -47,7 +46,6 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
   const fullScan = useTypedSelector((state) => state.queries.fullScan)
-  const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
 
   const dispatch = useDispatch()
 
@@ -70,13 +68,7 @@ const Index = () => {
 
     const data = results.data
 
-    return (
-      <Results
-        rows={data}
-        sortOrder={sortOrder}
-        onReOrder={(newOrder) => dispatch(setFFScanOrder(newOrder))}
-      />
-    )
+    return <Results rows={data} />
   }
   return (
     <main className="flex-1">
