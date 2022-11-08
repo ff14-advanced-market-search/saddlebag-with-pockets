@@ -803,6 +803,10 @@ select {
   right: 0.75rem;
 }
 
+.left-0 {
+  left: 0px;
+}
+
 .z-40 {
   z-index: 40;
 }
@@ -1326,6 +1330,10 @@ select {
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
 }
 
+.self-start {
+  align-self: flex-start;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1826,6 +1834,10 @@ select {
 
 .opacity-100 {
   opacity: 1;
+}
+
+.opacity-80 {
+  opacity: 0.8;
 }
 
 .shadow {

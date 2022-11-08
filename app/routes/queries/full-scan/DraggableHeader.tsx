@@ -51,12 +51,13 @@ const DraggableHeader = ({
   return (
     <th
       ref={ref}
-      {...rest}
       style={{
         cursor: 'move',
-        opacity: isDragging ? 0.5 : 1,
-        outline: isOver ? 'solid 2px yellow' : 'none'
-      }}>
+        outline: isOver ? 'solid 2px rgb(55 65 81)' : '',
+        opacity: isDragging || isOver ? 0.5 : 1,
+        borderRadius: '0.375rem'
+      }}
+      {...rest}>
       {children}
     </th>
   )

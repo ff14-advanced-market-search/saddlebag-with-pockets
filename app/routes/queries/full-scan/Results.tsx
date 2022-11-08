@@ -250,7 +250,7 @@ const Results = ({ rows }: ResultTableProps) => {
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300">
+                <table className="min-w-full divide-y divide-gray-300 mt-2">
                   <thead className="bg-gray-50">
                     {table.getHeaderGroups().map((headerGroup) => (
                       <tr key={headerGroup.id}>
@@ -280,7 +280,7 @@ const Results = ({ rows }: ResultTableProps) => {
                                   header.column.getIsSorted()
                                     ? 'bg-gray-200 rounded bg-gray-200'
                                     : '',
-                                  ` ml-1 flex-none p-1`
+                                  ` ml-1 flex flex-0 p-1 justify-center items-center`
                                 )}>
                                 {{
                                   asc: (

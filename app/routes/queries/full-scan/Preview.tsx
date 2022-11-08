@@ -13,14 +13,9 @@ const Preview = () => {
 
   return isDragging ? (
     <div
-      className="preview"
+      className="fixed pointer-events-none top-0 left-0 opacity-80"
       style={{
-        position: 'fixed',
-        pointerEvents: 'none',
-        left: 0,
-        top: 0,
-        transform: `translate(${currentOffset?.x}px, ${currentOffset?.y}px) rotate(5deg)`,
-        opacity: 0.8
+        transform: `translate(${currentOffset?.x}px, ${currentOffset?.y}px) rotate(5deg)`
       }}>
       {item.stuff}
     </div>
