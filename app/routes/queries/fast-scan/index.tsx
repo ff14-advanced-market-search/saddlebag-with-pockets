@@ -65,10 +65,11 @@ const Index = () => {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
+    if ('data' in results) {
+      const data = results.data
 
-    const data = results.data
-
-    return <Results rows={data} />
+      return <Results rows={data} />
+    }
   }
   return (
     <main className="flex-1">
@@ -86,6 +87,7 @@ const Index = () => {
             defaultSalesAmount={20}
             defaultMinimumProfitAmount={500}
             defaultPricePerUnit={500}
+            error={results && results.exception ? results.exception : undefined}
           />
         </div>
       </div>

@@ -65,9 +65,12 @@ const Index = () => {
     if (Object.keys(results).length === 0) {
       return <NoResults href={`/queries/full-scan`} />
     }
-    const data = results.data
 
-    return <Results rows={data} />
+    if ('data' in results) {
+      const data = results.data
+
+      return <Results rows={data} />
+    }
   }
   return (
     <main className="flex-1">
@@ -93,6 +96,7 @@ const Index = () => {
             defaultRegionWideChecked={true}
             defaultIncludeVendorChecked={false}
             defaultOutOfStockChecked={true}
+            error={results && results.exception ? results.exception : undefined}
           />
         </div>
       </div>
