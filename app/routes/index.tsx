@@ -18,6 +18,13 @@ const recommendedQueries = [
     href: '/queries/out-stock-scan'
   },
   {
+    name: 'Low Quality Out of Stock Search',
+    description:
+      'Same rules for out of stock search, but this one looks for Low Quality items that can sell for 50k to 70K like furniture or dyes.',
+    icon: DocumentSearchIcon,
+    href: '/queries/nq-out-stock-scan'
+  },
+  {
     name: 'High Value Search',
     description: 'Search for high value trades.',
     icon: DocumentSearchIcon,
@@ -42,13 +49,6 @@ const recommendedQueries = [
       'Search for items sold by NPC Vendors which can be resold on the marketboard.',
     icon: DocumentSearchIcon,
     href: '/queries/vendor-scan'
-  },
-  {
-    name: 'Low Quality Out of Stock Search',
-    description:
-      'Same rules for out of stock search, but this one looks for Low Quality items that can sell for 50k to 70K like furniture or dyes.',
-    icon: DocumentSearchIcon,
-    href: '/queries/nq-out-stock-scan'
   },
   {
     name: 'Quest Item Search',
