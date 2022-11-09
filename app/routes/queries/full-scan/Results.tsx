@@ -244,6 +244,14 @@ const Results = ({ rows }: ResultTableProps) => {
         </div>
       </div>
 
+      <div className="max-w-fit my-2">
+        <SubmitButton
+          onClick={handleColumnReset}
+          title={'Reset table columns'}
+          type="button"
+        />
+      </div>
+
       <DndProvider
         backend={touchBackendRef.current ? TouchBackend : HTML5Backend}>
         <ScrollingComponent>
@@ -326,18 +334,11 @@ const Results = ({ rows }: ResultTableProps) => {
                   </tbody>
                 </table>
               </div>
-              <div className="flex flex-0 flex-col">
+              <div className="flex flex-0 ">
                 <p
                   className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>
                   {`${rows.length} results found`}
                 </p>
-                <div className="max-w-fit my-2">
-                  <SubmitButton
-                    onClick={handleColumnReset}
-                    title={'Reset table columns'}
-                    type="button"
-                  />
-                </div>
               </div>
             </div>
           </div>
