@@ -16,7 +16,8 @@ const FullScanForm = ({
   defaultHQChecked = false,
   defaultRegionWideChecked = false,
   defaultIncludeVendorChecked = false,
-  defaultOutOfStockChecked = true
+  defaultOutOfStockChecked = true,
+  error
 }: {
   loading: boolean
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -31,6 +32,7 @@ const FullScanForm = ({
   defaultRegionWideChecked?: boolean
   defaultIncludeVendorChecked?: boolean
   defaultOutOfStockChecked?: boolean
+  error?: string
 }) => {
   const [ids, setIds] = useState(defaultFilters)
   const [isOpen, setIsOpen] = useState(false)
@@ -333,6 +335,7 @@ const FullScanForm = ({
         </div>
 
         <div className="flex justify-end">
+          {error && <p className="self-start text-red-500">{error}</p>}
           <SubmitButton title="Search" loading={loading} onClick={onClick} />
         </div>
       </Form>

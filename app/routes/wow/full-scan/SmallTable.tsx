@@ -65,7 +65,7 @@ function SmallTable<Type>({
 
   const columnHelper = createColumnHelper<Type>()
 
-  const returnLocaleString = (value: any) => {
+  const parseToLocaleString = (value: any) => {
     if (typeof value === 'number') {
       return value.toLocaleString()
     }
@@ -84,9 +84,9 @@ function SmallTable<Type>({
         col.accessor
           ? col.accessor({
               row: props.row.original,
-              getValue: () => returnLocaleString(props.getValue())
+              getValue: () => parseToLocaleString(props.getValue())
             })
-          : returnLocaleString(props.getValue())
+          : parseToLocaleString(props.getValue())
     })
   })
 

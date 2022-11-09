@@ -4,7 +4,7 @@ import type { ListingResponseType } from '~/requests/GetListing'
 import type { HistoryResponse } from '~/requests/GetHistory'
 import type { ResponseType } from '~/requests/FullScan'
 
-type ScanResponse = Record<string, ResponseType>
+type ScanResponse = Array<ResponseType>
 
 export interface QueriesState {
   listings?: ListingResponseType

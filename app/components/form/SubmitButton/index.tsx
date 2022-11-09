@@ -4,8 +4,12 @@ export const SubmitButton = ({
   title,
   onClick,
   loading,
-  disabled
-}: {
+  disabled,
+  ...rest
+}: React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> & {
   title: string
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   loading?: boolean
@@ -19,7 +23,8 @@ export const SubmitButton = ({
       className={classNames(
         loading || disabled ? 'bg-gray-500' : 'bg-blue-600',
         'cursor-pointer ml-3 inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-      )}>
+      )}
+      {...rest}>
       {loading && (
         <svg
           className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
