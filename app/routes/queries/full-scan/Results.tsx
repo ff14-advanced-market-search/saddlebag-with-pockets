@@ -230,12 +230,18 @@ const Results = ({ rows }: ResultTableProps) => {
                     aria-hidden="true"
                   />
                 </span>
-                <p className="ml-3 truncate font-medium text-white">
+                <p className="ml-3 truncate font-medium text-white flex flex-1 flex-col">
                   <span className="md:hidden">This is a wide table!</span>
+                  <span className="md:hidden">
+                    Drag a column name to move it!
+                  </span>
                   <span className="hidden md:inline">
                     Heads up, this table is pretty wide. You'll probably need to
-                    scroll horizontally (left & right). Click a column name to
-                    sort by that column.
+                    scroll horizontally (left & right).
+                  </span>
+                  <span className="hidden md:inline">
+                    Click a column name to sort by that column. Drag a column
+                    name to move it!
                   </span>
                 </p>
               </div>
@@ -258,7 +264,7 @@ const Results = ({ rows }: ResultTableProps) => {
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300 mt-2">
+                <table className="min-w-full divide-y divide-gray-300 mt-2 bg-gray-50">
                   <thead className="bg-gray-50">
                     {table.getHeaderGroups().map((headerGroup) => (
                       <tr key={headerGroup.id}>
