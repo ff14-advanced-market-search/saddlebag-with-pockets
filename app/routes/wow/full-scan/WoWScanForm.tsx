@@ -110,18 +110,7 @@ const WoWScanForm = ({
           min={-1}
           max={1000}
         />
-        <div className="w-full mt-2">
-          <Label htmlFor="item-quality">Item Quality</Label>
-          <Select id="item-quality" name="itemQuality" defaultValue={'Poor'}>
-            {itemQuality.map(({ name, value }) => {
-              return (
-                <option key={name + value} value={value}>
-                  {name}
-                </option>
-              )
-            })}
-          </Select>
-        </div>
+        <ItemQualitySelect />
       </div>
       <div className="w-full">
         <ItemClassSelect />
@@ -354,7 +343,7 @@ const itemClasses: Array<{
   }
 ]
 
-const ItemClassSelect = () => {
+export const ItemClassSelect = () => {
   const [itemClass, setItemClass] = useState(-1)
   const [itemSubClass, setItemSubClass] = useState(-1)
 
@@ -397,6 +386,21 @@ const ItemClassSelect = () => {
     </div>
   )
 }
+
+export const ItemQualitySelect = () => (
+  <div className="w-full mt-2">
+    <Label htmlFor="item-quality">Item Quality</Label>
+    <Select id="item-quality" name="itemQuality" defaultValue={'Poor'}>
+      {itemQuality.map(({ name, value }) => {
+        return (
+          <option key={name + value} value={value}>
+            {name}
+          </option>
+        )
+      })}
+    </Select>
+  </div>
+)
 
 const Select = (
   props: React.DetailedHTMLProps<
