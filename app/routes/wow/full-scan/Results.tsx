@@ -7,6 +7,7 @@ import SmallTable from './SmallTable'
 import type { ColumnList } from './SmallTable'
 import { Section } from '~/components/Common'
 import ExternalLink from '~/components/utilities/ExternalLink'
+import { getOribosLink } from './getOribosLink'
 
 const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
   <ExternalLink
@@ -14,32 +15,6 @@ const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
     text="WoWHead"
   />
 )
-
-const parseServerName = (serverName: string) =>
-  serverName
-    .replaceAll('-', '')
-    .replaceAll("'", '')
-    .replaceAll(' ', '-')
-    .toLowerCase()
-
-const getOribosLink =
-  (serverName: string | undefined, title: string) =>
-  ({ row }: { row: { itemID: number } }) => {
-    const itemId = row.itemID
-    if (typeof itemId !== 'number') return null
-
-    if (!serverName) return null
-
-    const parsedServerName = parseServerName(serverName)
-
-    return (
-      <ExternalLink
-        link={`https://oribos.exchange/#us-${parsedServerName}/${itemId}`}
-        text={title}
-        tooltip={`Oribos Marketplace For ${serverName}`}
-      />
-    )
-  }
 
 export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
   const newOribosLink = getOribosLink(

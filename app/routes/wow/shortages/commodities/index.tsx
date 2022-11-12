@@ -12,9 +12,16 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { ItemClassSelect, ItemQualitySelect } from '../../full-scan/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import CommoditiesResults from './CommoditiesResults'
+import WoWServerSelect from '../../full-scan/WoWServerSelect'
+import { useState } from 'react'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+
+  const homeServerData = formData.get('homeServer')
+  if (!homeServerData || typeof homeServerData !== 'string') {
+    return json({ exception: 'Missing home server selection' })
+  }
 
   const desiredAvgPriceData = formData.get('desiredAvgPrice')
   if (!desiredAvgPriceData || typeof desiredAvgPriceData !== 'string') {
@@ -93,6 +100,7 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 const Index = () => {
   const transition = useTransition()
   const results = useActionData<WowShortageResult>()
+  const [serverName, setServerName] = useState<string | undefined>()
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
@@ -106,7 +114,7 @@ const Index = () => {
   }
 
   if (results && 'increase' in results) {
-    return <CommoditiesResults results={results} />
+    return <CommoditiesResults results={results} serverName={serverName} />
   }
 
   return (
@@ -120,6 +128,13 @@ const Index = () => {
           results && 'exception' in results ? results.exception : undefined
         }>
         <WoWShortageFormFields />
+        <WoWServerSelect
+          formName="homeServer"
+          title="Home Server"
+          onSelectChange={(selectValue) => {
+            if (selectValue) setServerName(selectValue.name)
+          }}
+        />
       </SmallFormContainer>
     </PageWrapper>
   )

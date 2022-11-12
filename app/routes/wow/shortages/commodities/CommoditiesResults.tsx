@@ -3,12 +3,14 @@ import type { WoWShortage } from '~/requests/WoWCommodities'
 import { WoWShortageItem } from '../ShortageResultItem'
 
 const CommoditiesResults = ({
-  results
+  results,
+  serverName
 }: {
   results: {
     increase: Array<WoWShortage>
     reset: Array<WoWShortage>
   }
+  serverName?: string
 }) => (
   <PageWrapper>
     <>
@@ -20,7 +22,7 @@ const CommoditiesResults = ({
             market and then sell a small amount for profit.
           </p>
           <div className="flex w-full overflow-x-scroll">
-            {results.increase.map(WoWShortageItem)}
+            {results.increase.map((item) => WoWShortageItem(item, serverName))}
           </div>
         </div>
       </ContentContainer>
@@ -32,7 +34,7 @@ const CommoditiesResults = ({
             small amount of items for profit.
           </p>
           <div className="flex w-full overflow-x-scroll">
-            {results.reset.map(WoWShortageItem)}
+            {results.reset.map((item) => WoWShortageItem(item, serverName))}
           </div>
         </div>
       </ContentContainer>
