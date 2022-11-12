@@ -11,7 +11,7 @@ import WoWCommodityShortage from '~/requests/WoWCommodities'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { ItemClassSelect, ItemQualitySelect } from '../../full-scan/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import CommodotiesResults from './CommodotiesResults'
+import CommoditiesResults from './CommoditiesResults'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -106,13 +106,13 @@ const Index = () => {
   }
 
   if (results && 'increase' in results) {
-    return <CommodotiesResults results={results} />
+    return <CommoditiesResults results={results} />
   }
 
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Commodoty Shortage finder"
+        title="Commodity Shortage finder"
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}

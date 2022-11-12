@@ -2,7 +2,7 @@ import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import type { WoWShortage } from '~/requests/WoWCommodities'
 import { WoWShortageItem } from '../ShortageResultItem'
 
-const CommodotiesResults = ({
+const CommoditiesResults = ({
   results
 }: {
   results: {
@@ -40,4 +40,4 @@ const CommodotiesResults = ({
   </PageWrapper>
 )
 
-export default CommodotiesResults
+export default CommoditiesResults
