@@ -33,7 +33,7 @@ export const WoWShortageItem = (item: WoWShortage) => (
     {item.flip_price_levels.length > 0 && (
       <>
         <p className="font-semibold">Shorting the market</p>
-        <div className="my-2 px-3 border border-w-1 p-1 rounded ">
+        <div className="my-2 px-3 border border-w-1 p-1 rounded">
           <TextRow
             leftText="Start Price:"
             rightText={
@@ -64,7 +64,7 @@ export const WoWShortageItem = (item: WoWShortage) => (
     {item.max_sane_flip_level?.listing_price_level && (
       <>
         <p className="font-semibold">Suggested resell price</p>
-        <div className="my-2 border-2 border-black rounded p-2">
+        <div className="my-2 border-2 border-blue-900 rounded p-2">
           {Math.floor(
             item.max_sane_flip_level.listing_price_level.from_price_level - 1
           ) ===
@@ -114,7 +114,7 @@ export const WoWShortageItem = (item: WoWShortage) => (
       item.price_reset_info.total_price && (
         <>
           <p className="font-semibold">Reset the market</p>
-          <div className="my-2 border-2 border-black rounded p-2">
+          <div className="my-2 border-2 border-blue-900 rounded p-2">
             <TextRow
               leftText={'Total cost:'}
               rightText={numberToLocaleStringWithDecimal(
@@ -141,13 +141,14 @@ export const WoWShortageItem = (item: WoWShortage) => (
     <p className="font-semibold mt-3">More item info</p>
     <div className="my-2 px-3 border border-w-1 p-1 rounded ">
       <div className="my-2 pb-2 border-b">
+        <TextRow leftText={'Item ID:'} rightText={item.item_id} />
         <TextRow
           leftText={'Avg price:'}
           rightText={numberToLocaleStringWithDecimal(item.avg_price)}
         />
       </div>
 
-      <p className="font-semibold">No# of Sales</p>
+      <p className="font-semibold text-sm">No# of Sales</p>
       <div>
         <TextRow
           leftText={'Daily:'}
