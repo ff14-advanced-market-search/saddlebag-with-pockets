@@ -1,6 +1,6 @@
 import { address, UserAgent } from '~/requests/client/config'
 
-interface WoWShortageReset {
+export interface WoWShortage {
   avg_price: number
   flip_price_levels: Array<{
     listing_price_level: {
@@ -13,39 +13,11 @@ interface WoWShortageReset {
   name: string
   sales_per_day: number
   sales_per_hour: number
-  price_reset: true
+  price_reset: boolean
   max_sane_flip_level: {
     cost_to_level?: number
     cost_to_next_level?: number
     listing_price_level?: {
-      from_price_level?: number
-      to_price_level?: number
-    }
-  }
-  price_reset_info: {
-    recommend_price: number
-    total_price: number
-  }
-}
-
-interface WowShortageIncrease {
-  avg_price: number
-  flip_price_levels: Array<{
-    listing_price_level: {
-      from_price_level: number
-      to_price_level: number
-    }
-    total_price: number
-  }>
-  item_id: number
-  name: string
-  sales_per_day: number
-  sales_per_hour: number
-  price_reset: false
-  max_sane_flip_level: {
-    cost_to_level: number
-    cost_to_next_level: number
-    listing_price_level: {
       from_price_level: number
       to_price_level: number
     }
@@ -58,8 +30,8 @@ interface WowShortageIncrease {
 
 export type WowShortageResult =
   | {
-      increase: Array<WowShortageIncrease>
-      reset: Array<WoWShortageReset>
+      increase: Array<WoWShortage>
+      reset: Array<WoWShortage>
     }
   | { exception: string }
   | {}

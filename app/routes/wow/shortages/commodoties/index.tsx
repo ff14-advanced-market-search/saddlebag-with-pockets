@@ -5,12 +5,13 @@ import type {
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '../../../queries/listings/NoResults'
-import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
 import type { WowShortageResult } from '~/requests/WoWCommodities'
 import WoWCommodityShortage from '~/requests/WoWCommodities'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { ItemClassSelect, ItemQualitySelect } from '../../full-scan/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
+import CommodotiesResults from './CommodotiesResults'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -104,30 +105,8 @@ const Index = () => {
     }
   }
 
-  console.log(results)
-
   if (results && 'increase' in results) {
-    return (
-      <PageWrapper>
-        <ContentContainer>
-          <>
-            <Title title="Increase these items" />
-            <div className="flex w-full overflow-x-scroll">
-              {results.increase.map((item) => (
-                <div
-                  key={item.item_id + '-increase'}
-                  className="my-0.5 mx-1 w-1/2 shrink-0">
-                  <p>{item.name}</p>
-                  <p>Average price: {item.avg_price}</p>
-                  <p>Sales per day: {item.sales_per_day}</p>
-                  <p>Sales per hour: {item.sales_per_hour}</p>
-                </div>
-              ))}
-            </div>
-          </>
-        </ContentContainer>
-      </PageWrapper>
-    )
+    return <CommodotiesResults results={results} />
   }
 
   return (
@@ -140,52 +119,64 @@ const Index = () => {
         error={
           results && 'exception' in results ? results.exception : undefined
         }>
-        <ItemClassSelect />
-        <ItemQualitySelect />
-        <InputWithLabel
-          defaultValue={30}
-          type="number"
-          labelTitle="Desired Avg Price"
-          inputTag="Amount"
-          name="desiredAvgPrice"
-          min={0}
-        />
-        <InputWithLabel
-          defaultValue={200}
-          type="number"
-          labelTitle="Desired Sale Increase"
-          inputTag="Price"
-          name="desiredSellPrice"
-          min={0}
-        />
-
-        <InputWithLabel
-          defaultValue={50}
-          type="number"
-          labelTitle="Desired Price Increase"
-          inputTag="Price"
-          name="desiredPriceIncrease"
-          min={0}
-        />
-        <InputWithLabel
-          defaultValue={40}
-          type="number"
-          labelTitle="Desired Sales per Day"
-          inputTag="Sales"
-          name="desiredSalesPerDay"
-          min={0}
-        />
-        <InputWithLabel
-          defaultValue={100}
-          type="number"
-          labelTitle="Risk Limit"
-          inputTag="%"
-          name="flipRiskLimit"
-          min={0}
-        />
+        <WoWShortageFormFields />
       </SmallFormContainer>
     </PageWrapper>
   )
 }
 
 export default Index
+
+export const WoWShortageFormFields = ({
+  desiredAvgPriceDefault = 30,
+  desiredSellPriceDefault = 200,
+  desiredPriceIncreaseDefault = 50,
+  desiredSalesPerDayDefault = 40,
+  flipRiskLimitDefault = 100
+}) => (
+  <>
+    <ItemClassSelect />
+    <ItemQualitySelect />
+    <InputWithLabel
+      defaultValue={desiredAvgPriceDefault}
+      type="number"
+      labelTitle="Desired Avg Price"
+      inputTag="Amount"
+      name="desiredAvgPrice"
+      min={0}
+    />
+    <InputWithLabel
+      defaultValue={desiredSellPriceDefault}
+      type="number"
+      labelTitle="Desired Sale Increase"
+      inputTag="Price"
+      name="desiredSellPrice"
+      min={0}
+    />
+
+    <InputWithLabel
+      defaultValue={desiredPriceIncreaseDefault}
+      type="number"
+      labelTitle="Desired Price Increase"
+      inputTag="Price"
+      name="desiredPriceIncrease"
+      min={0}
+    />
+    <InputWithLabel
+      defaultValue={desiredSalesPerDayDefault}
+      type="number"
+      labelTitle="Desired Sales per Day"
+      inputTag="Sales"
+      name="desiredSalesPerDay"
+      min={0}
+    />
+    <InputWithLabel
+      defaultValue={flipRiskLimitDefault}
+      type="number"
+      labelTitle="Risk Limit"
+      inputTag="%"
+      name="flipRiskLimit"
+      min={0}
+    />
+  </>
+)
