@@ -160,26 +160,7 @@ export const WoWShortageFormFields = ({
       inputTag="Amount"
       name="desiredAvgPrice"
       min={0}
-      toolTip="Give an average price you're looking to spend"
-    />
-    <InputWithLabel
-      defaultValue={desiredSellPriceDefault}
-      type="number"
-      labelTitle="Desired Sale Increase"
-      inputTag="Price"
-      name="desiredSellPrice"
-      min={0}
-      toolTip="Give a price you're looking to sell at"
-    />
-
-    <InputWithLabel
-      defaultValue={desiredPriceIncreaseDefault}
-      type="number"
-      labelTitle="Desired Price Increase"
-      inputTag="Price"
-      name="desiredPriceIncrease"
-      min={0}
-      toolTip="Give an amount you're looking to increae by"
+      toolTip="Find items that on average sell for this price or more."
     />
     <InputWithLabel
       defaultValue={desiredSalesPerDayDefault}
@@ -188,16 +169,34 @@ export const WoWShortageFormFields = ({
       inputTag="Sales"
       name="desiredSalesPerDay"
       min={0}
-      toolTip="Sets popularity of item"
+      toolTip="Finds items that have this many sales per day on your region."
+    />
+    <InputWithLabel
+      defaultValue={desiredSellPriceDefault}
+      type="number"
+      labelTitle="Desired Minimum Sale Price"
+      inputTag="Price"
+      name="desiredSellPrice"
+      min={0}
+      toolTip="Finds items that you can sell for this price or higher. Ex: 200 means we want to get the price up to 200 or more."
+    />
+    <InputWithLabel
+      defaultValue={desiredPriceIncreaseDefault}
+      type="number"
+      labelTitle="Desired Price Increase per Price Level"
+      inputTag="Price"
+      name="desiredPriceIncrease"
+      min={0}
+      toolTip="Only show price flip levels when the price difference is greater than this amount. Ex: 50 means that it will not show when we can increase the price from 100 to 120, but it will show when a price can be increased from 100 to 151 or more."
     />
     <InputWithLabel
       defaultValue={flipRiskLimitDefault}
       type="number"
-      labelTitle="Risk Limit"
+      labelTitle="Price Risk Limit"
       inputTag="%"
       name="flipRiskLimit"
       min={0}
-      toolTip="Change how risky something is by reducing the percentage amount"
+      toolTip="Change how risky something is by reducing the percentage amount.  The limit is the average price multiplied by your Price Risk Limit. Ex: if an item sells for 20g it will not consider any flips or resets over 2000g."
     />
   </div>
 )
