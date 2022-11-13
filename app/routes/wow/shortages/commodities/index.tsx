@@ -11,27 +11,41 @@ import WoWCommodityShortage from '~/requests/WoWCommodities'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { ItemClassSelect, ItemQualitySelect } from '../../full-scan/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import CommoditiesResults from './CommoditiesResults'
+import ShortageResults from '../ShortageResults'
 import WoWServerSelect from '../../full-scan/WoWServerSelect'
 import { useState } from 'react'
 
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData()
-
-  const homeServerData = formData.get('homeServer')
+export const validateShortageData = (
+  formData: FormData
+):
+  | {
+      desiredAvgPrice: number
+      desiredSalesPerDay: number
+      desiredPriceIncrease: number
+      desiredSellPrice: number
+      flipRiskLimit: number
+      itemQuality: number
+      itemClass: number
+      itemSubClass: number
+      homeRealmId: number
+    }
+  | { exception: string } => {
+  const homeServerData = formData.get('homeRealmId')
   if (!homeServerData || typeof homeServerData !== 'string') {
-    return json({ exception: 'Missing home server selection' })
+    return { exception: 'Missing home server selection' }
   }
+
+  const homeRealmId = parseFloat(homeServerData)
 
   const desiredAvgPriceData = formData.get('desiredAvgPrice')
   if (!desiredAvgPriceData || typeof desiredAvgPriceData !== 'string') {
-    return json({ exception: 'Missing average price data' })
+    return { exception: 'Missing average price data' }
   }
   const desiredAvgPrice = parseFloat(desiredAvgPriceData)
 
   const desiredSalesPerDayData = formData.get('desiredSalesPerDay')
   if (!desiredSalesPerDayData || typeof desiredSalesPerDayData !== 'string') {
-    return json({ exception: 'Missing selling price data' })
+    return { exception: 'Missing selling price data' }
   }
   const desiredSalesPerDay = parseFloat(desiredSalesPerDayData)
 
@@ -40,41 +54,41 @@ export const action: ActionFunction = async ({ request }) => {
     !desiredPriceIncreaseData ||
     typeof desiredPriceIncreaseData !== 'string'
   ) {
-    return json({ exception: 'Missing price increase data' })
+    return { exception: 'Missing price increase data' }
   }
   const desiredPriceIncrease = parseFloat(desiredPriceIncreaseData)
 
   const desiredSellPriceData = formData.get('desiredSellPrice')
   if (!desiredSellPriceData || typeof desiredSellPriceData !== 'string') {
-    return json({ exception: 'Missing sell price data' })
+    return { exception: 'Missing sell price data' }
   }
   const desiredSellPrice = parseFloat(desiredSellPriceData)
 
   const flipRiskLimitData = formData.get('flipRiskLimit')
   if (!flipRiskLimitData || typeof flipRiskLimitData !== 'string') {
-    return json({ exception: 'Missing sell price data' })
+    return { exception: 'Missing sell price data' }
   }
   const flipRiskLimit = parseFloat(flipRiskLimitData)
 
   const itemQualityData = formData.get('itemQuality')
   if (!itemQualityData || typeof itemQualityData !== 'string') {
-    return json({ exception: 'Missing sell price data' })
+    return { exception: 'Missing sell price data' }
   }
   const itemQuality = parseFloat(itemQualityData)
 
   const itemClassData = formData.get('itemClass')
   if (!itemClassData || typeof itemClassData !== 'string') {
-    return json({ exception: 'Missing sell price data' })
+    return { exception: 'Missing sell price data' }
   }
   const itemClass = parseFloat(itemClassData)
 
   const itemSubClassData = formData.get('itemSubClass')
   if (!itemSubClassData || typeof itemSubClassData !== 'string') {
-    return json({ exception: 'Missing sell price data' })
+    return { exception: 'Missing sell price data' }
   }
   const itemSubClass = parseFloat(itemSubClassData)
 
-  return await WoWCommodityShortage({
+  return {
     desiredAvgPrice,
     desiredSalesPerDay,
     desiredPriceIncrease,
@@ -82,8 +96,21 @@ export const action: ActionFunction = async ({ request }) => {
     flipRiskLimit,
     itemQuality,
     itemClass,
-    itemSubClass
-  })
+    itemSubClass,
+    homeRealmId
+  }
+}
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData()
+
+  const validInput = validateShortageData(formData)
+
+  if ('exception' in validInput) {
+    return json(validInput)
+  }
+
+  return await WoWCommodityShortage(validInput)
 }
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
@@ -109,12 +136,12 @@ const Index = () => {
 
   if (results) {
     if (Object.keys(results).length === 0) {
-      return <NoResults href={`/wow/shorts`} />
+      return <NoResults href={`/wow/shortages/commodities`} />
     }
   }
 
   if (results && 'increase' in results) {
-    return <CommoditiesResults results={results} serverName={serverName} />
+    return <ShortageResults results={results} serverName={serverName} />
   }
 
   return (
@@ -129,7 +156,7 @@ const Index = () => {
         }>
         <WoWShortageFormFields />
         <WoWServerSelect
-          formName="homeServer"
+          formName="homeRealmId"
           title="Home Server"
           onSelectChange={(selectValue) => {
             if (selectValue) setServerName(selectValue.name)

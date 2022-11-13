@@ -14,16 +14,20 @@ const WoWServerSelect = ({
   onTextChange,
   formName,
   title,
-  toolTip
+  toolTip,
+  defaultServerId = DEFAULT_SELECT_VALUE,
+  defaultServerName = ''
 }: {
   onSelectChange?: (selectValue?: ServerSelected) => void
   onTextChange?: (selectValue?: string) => void
   formName: string
   title?: string
   toolTip?: string
+  defaultServerId?: string
+  defaultServerName?: string
 }) => {
-  const [id, setId] = useState<string>(DEFAULT_SELECT_VALUE)
-  const [name, setName] = useState('')
+  const [id, setId] = useState<string>(defaultServerId)
+  const [name, setName] = useState(defaultServerName)
   const servers = findWoWServersIdByName(name)
 
   const selectIsDisabled =

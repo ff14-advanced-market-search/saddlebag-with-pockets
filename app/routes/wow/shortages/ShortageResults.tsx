@@ -1,8 +1,8 @@
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import type { WoWShortage } from '~/requests/WoWCommodities'
-import { WoWShortageItem } from '../ShortageResultItem'
+import { WoWShortageItem } from './ShortageResultItem'
 
-const CommoditiesResults = ({
+const ShortageResults = ({
   results,
   serverName
 }: {
@@ -42,4 +42,4 @@ const CommoditiesResults = ({
   </PageWrapper>
 )
 
-export default CommoditiesResults
+export default ShortageResults

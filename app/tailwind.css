@@ -1895,8 +1895,8 @@ select {
   opacity: 0;
 }
 
-.opacity-80 {
-  opacity: 0.8;
+.opacity-90 {
+  opacity: 0.9;
 }
 
 .opacity-25 {
@@ -1911,8 +1911,8 @@ select {
   opacity: 1;
 }
 
-.opacity-90 {
-  opacity: 0.9;
+.opacity-80 {
+  opacity: 0.8;
 }
 
 .shadow {
