@@ -150,7 +150,7 @@ export const WoWShortageFormFields = ({
   desiredSalesPerDayDefault = 40,
   flipRiskLimitDefault = 100
 }) => (
-  <div className="flex flex-1 flex-col mt-7">
+  <div className="flex flex-1 flex-col">
     <ItemClassSelect />
     <ItemQualitySelect />
     <InputWithLabel

@@ -24,7 +24,7 @@ const SmallFormContainer = ({
           {title}
         </h1>
         <div className="mt-0 md:col-span-3">
-          <div className="shadow overflow-hidden rounded-md px-4 bg-white dark:bg-slate-700">
+          <div className="shadow rounded-md px-4 bg-white dark:bg-slate-700">
             {children}
             <div className="px-4 py-4 bg-white dark:bg-slate-700">
               <div className="flex justify-between">

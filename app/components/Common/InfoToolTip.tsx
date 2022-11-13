@@ -9,7 +9,7 @@ export const ToolTip = ({ data }: { data: string }) => (
     <span className="peer shrink-0 max-w-5 max-h-5 text-sm">
       <InformationCircleIcon className="w-5 h-5" />
     </span>
-    <span className="absolute -left-1 peer-hover:bottom-6 hover:bottom-6 hidden peer-hover:flex hover:flex bg-black opacity-80 text-sm text-white rounded px-3 py-1 z-50">
+    <span className="absolute -left-1 peer-hover:bottom-6 hover:bottom-6 hidden peer-hover:flex hover:flex bg-black opacity-90 text-sm text-white rounded px-3 py-1 z-50">
       {data}
     </span>
   </>

@@ -18,7 +18,7 @@ const CommoditiesResults = ({
         <div className="sm:m-3 text-slate-900">
           <Title title="Buy the cheapest of these items" />
           <p className="italic my-2 text-sm text-slate-700">
-            The idea with these items is to take the cheapest items off the
+            The idea with these items is to take the cheapest listings off the
             market and then sell a small amount for profit.
           </p>
           <div className="flex w-full overflow-x-scroll gap-3">
