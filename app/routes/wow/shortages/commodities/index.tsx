@@ -134,6 +134,7 @@ const Index = () => {
           onSelectChange={(selectValue) => {
             if (selectValue) setServerName(selectValue.name)
           }}
+          toolTip="Select your home world server, type to begin selection."
         />
       </SmallFormContainer>
     </PageWrapper>
@@ -159,6 +160,7 @@ export const WoWShortageFormFields = ({
       inputTag="Amount"
       name="desiredAvgPrice"
       min={0}
+      toolTip="Give an average price you're looking to spend"
     />
     <InputWithLabel
       defaultValue={desiredSellPriceDefault}
@@ -167,6 +169,7 @@ export const WoWShortageFormFields = ({
       inputTag="Price"
       name="desiredSellPrice"
       min={0}
+      toolTip="Give a price you're looking to sell at"
     />
 
     <InputWithLabel
@@ -176,6 +179,7 @@ export const WoWShortageFormFields = ({
       inputTag="Price"
       name="desiredPriceIncrease"
       min={0}
+      toolTip="Give an amount you're looking to increae by"
     />
     <InputWithLabel
       defaultValue={desiredSalesPerDayDefault}
@@ -184,6 +188,7 @@ export const WoWShortageFormFields = ({
       inputTag="Sales"
       name="desiredSalesPerDay"
       min={0}
+      toolTip="Sets popularity of item"
     />
     <InputWithLabel
       defaultValue={flipRiskLimitDefault}
@@ -192,6 +197,7 @@ export const WoWShortageFormFields = ({
       inputTag="%"
       name="flipRiskLimit"
       min={0}
+      toolTip="Change how risky something is by reducing the percentage amount"
     />
   </>
 )

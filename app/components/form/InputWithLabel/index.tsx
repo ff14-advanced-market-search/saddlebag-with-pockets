@@ -1,7 +1,10 @@
 import React from 'react'
+import { ToolTip } from '~/components/Common/InfoToolTip'
+
 type InputWithLabelProps = {
   labelTitle: string
   inputTag?: string
+  toolTip?: string
 } & Omit<
   React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -13,14 +16,18 @@ type InputWithLabelProps = {
 export const InputWithLabel = ({
   labelTitle,
   inputTag,
+  toolTip,
   ...rest
 }: InputWithLabelProps) => (
   <div className="mt-2 flex-col">
-    <label
-      htmlFor={labelTitle}
-      className="block text-sm font-medium text-gray-700 dark:text-grey-100">
-      {labelTitle}
-    </label>
+    <div className="relative flex flex-1 items-center gap-1">
+      <label
+        htmlFor={labelTitle}
+        className="block text-sm font-medium text-gray-700 dark:text-grey-100">
+        {labelTitle}
+      </label>
+      {toolTip && <ToolTip data={toolTip} />}
+    </div>
     <div className="mt-1 flex rounded-md shadow-sm border border-gray-300">
       <input
         id={labelTitle}
