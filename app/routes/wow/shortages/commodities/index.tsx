@@ -150,7 +150,7 @@ export const WoWShortageFormFields = ({
   desiredSalesPerDayDefault = 40,
   flipRiskLimitDefault = 100
 }) => (
-  <>
+  <div className="flex flex-1 flex-col mt-7">
     <ItemClassSelect />
     <ItemQualitySelect />
     <InputWithLabel
@@ -199,5 +199,5 @@ export const WoWShortageFormFields = ({
       min={0}
       toolTip="Change how risky something is by reducing the percentage amount"
     />
-  </>
+  </div>
 )

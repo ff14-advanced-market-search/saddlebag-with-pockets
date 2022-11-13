@@ -21,7 +21,7 @@ const CommoditiesResults = ({
             The idea with these items is to take the cheapest items off the
             market and then sell a small amount for profit.
           </p>
-          <div className="flex w-full overflow-x-scroll">
+          <div className="flex w-full overflow-x-scroll gap-3">
             {results.increase.map((item) => WoWShortageItem(item, serverName))}
           </div>
         </div>
@@ -33,7 +33,7 @@ const CommoditiesResults = ({
             The idea with these items is to buy up all the stock and list a
             small amount of items for profit.
           </p>
-          <div className="flex w-full overflow-x-scroll">
+          <div className="flex w-full overflow-x-scroll gap-3">
             {results.reset.map((item) => WoWShortageItem(item, serverName))}
           </div>
         </div>

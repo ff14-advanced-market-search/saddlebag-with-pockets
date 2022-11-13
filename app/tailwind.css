@@ -994,6 +994,10 @@ select {
   margin-top: 0.125rem;
 }
 
+.mt-7 {
+  margin-top: 1.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1344,6 +1348,10 @@ select {
 
 .gap-1 {
   gap: 0.25rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
 }
 
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
@@ -2022,10 +2030,6 @@ select {
   border-style: none;
 }
 
-.hover\:bottom-4:hover {
-  bottom: 1rem;
-}
-
 .hover\:bottom-6:hover {
   bottom: 1.5rem;
 }
@@ -2152,10 +2156,6 @@ select {
 
 .group:focus .group-focus\:visible {
   visibility: visible;
-}
-
-.peer:hover ~ .peer-hover\:bottom-4 {
-  bottom: 1rem;
 }
 
 .peer:hover ~ .peer-hover\:bottom-6 {

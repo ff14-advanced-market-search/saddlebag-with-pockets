@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import WoWServerSelect from './WoWServerSelect'
@@ -353,7 +354,10 @@ export const ItemClassSelect = () => {
 
   return (
     <div className="mt-2 flex-col mb-0.5">
-      <Label htmlFor="itemClass">Item Category</Label>
+      <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+        <Label htmlFor="itemClass">Item Category</Label>
+        <ToolTip data="Pick an item category to search for" />
+      </div>
       <Select
         id={'itemClass'}
         name={'itemClass'}
@@ -369,7 +373,10 @@ export const ItemClassSelect = () => {
           </option>
         ))}
       </Select>
-      <Label htmlFor="itemSubClass">Item Sub Category</Label>
+      <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+        <Label htmlFor="itemSubClass">Item Sub Category</Label>
+        <ToolTip data="Pick an item sub category to search for" />
+      </div>
       <Select
         id={'itemSubClass'}
         name={'itemSubClass'}
@@ -389,7 +396,10 @@ export const ItemClassSelect = () => {
 
 export const ItemQualitySelect = () => (
   <div className="w-full mt-2">
-    <Label htmlFor="item-quality">Item Quality</Label>
+    <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+      <Label htmlFor="item-quality">Item Quality</Label>
+      <ToolTip data="Pick which quality item you would like to search from" />
+    </div>
     <Select id="item-quality" name="itemQuality" defaultValue={'Poor'}>
       {itemQuality.map(({ name, value }) => {
         return (
