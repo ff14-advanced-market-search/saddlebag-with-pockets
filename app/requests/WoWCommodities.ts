@@ -1,4 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
+import type { WoWServerRegion } from './WOWScan'
 
 export interface WoWShortage {
   avg_price: number
@@ -45,6 +46,7 @@ export interface WOWCommodityShortageProps {
   itemQuality: number
   itemClass: number
   itemSubClass: number
+  region: WoWServerRegion
 }
 
 const WoWCommodityShortage: ({
@@ -55,7 +57,8 @@ const WoWCommodityShortage: ({
   flipRiskLimit,
   itemQuality,
   itemClass,
-  itemSubClass
+  itemSubClass,
+  region
 }: WOWCommodityShortageProps) => Promise<Response> = async ({
   desiredAvgPrice,
   desiredSalesPerDay,
@@ -64,7 +67,8 @@ const WoWCommodityShortage: ({
   flipRiskLimit,
   itemQuality,
   itemClass,
-  itemSubClass
+  itemSubClass,
+  region
 }) => {
   return fetch(`${address}/api/wow/commodity`, {
     method: 'POST',
@@ -80,7 +84,8 @@ const WoWCommodityShortage: ({
       flip_risk_limit: flipRiskLimit,
       itemQuality: itemQuality,
       item_class: itemClass,
-      item_subclass: itemSubClass
+      item_subclass: itemSubClass,
+      region
     })
   })
 }

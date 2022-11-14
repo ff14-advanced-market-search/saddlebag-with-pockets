@@ -14,6 +14,8 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ShortageResults from '../ShortageResults'
 import WoWServerSelect from '../../full-scan/WoWServerSelect'
 import { useState } from 'react'
+import { RegionRadioGroup } from '../../full-scan/RegionRadioGroup'
+import type { WoWServerRegion } from '~/requests/WOWScan'
 
 export const validateShortageData = (
   formData: FormData
@@ -110,7 +112,16 @@ export const action: ActionFunction = async ({ request }) => {
     return json(validInput)
   }
 
-  return await WoWCommodityShortage(validInput)
+  const region = formData.get('region')
+  if (
+    !region ||
+    typeof region !== 'string' ||
+    (region !== 'NA' && region !== 'EU')
+  ) {
+    return json({ exception: 'Missing server region' })
+  }
+
+  return await WoWCommodityShortage({ ...validInput, region })
 }
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
@@ -128,6 +139,7 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData<WowShortageResult>()
   const [serverName, setServerName] = useState<string | undefined>()
+  const [region, setRegion] = useState<WoWServerRegion>('NA')
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
@@ -155,6 +167,7 @@ const Index = () => {
           results && 'exception' in results ? results.exception : undefined
         }>
         <WoWShortageFormFields />
+        <RegionRadioGroup onChange={setRegion} defaultChecked={region} />
         <WoWServerSelect
           formName="homeRealmId"
           title="Home Server"
@@ -162,6 +175,7 @@ const Index = () => {
             if (selectValue) setServerName(selectValue.name)
           }}
           toolTip="Select your home world server, type to begin selection."
+          regionValue={region}
         />
       </SmallFormContainer>
     </PageWrapper>
