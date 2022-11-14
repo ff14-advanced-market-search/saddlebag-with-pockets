@@ -1,6 +1,7 @@
 import { findWoWServersIdByName } from '~/utils/WoWServers'
 import { useState } from 'react'
 import { ToolTip } from '~/components/Common/InfoToolTip'
+import type { WoWServerRegion } from '~/requests/WOWScan'
 
 export interface ServerSelected {
   id: number
@@ -16,7 +17,8 @@ const WoWServerSelect = ({
   title,
   toolTip,
   defaultServerId = DEFAULT_SELECT_VALUE,
-  defaultServerName = ''
+  defaultServerName = '',
+  regionValue = 'NA'
 }: {
   onSelectChange?: (selectValue?: ServerSelected) => void
   onTextChange?: (selectValue?: string) => void
@@ -25,10 +27,11 @@ const WoWServerSelect = ({
   toolTip?: string
   defaultServerId?: string
   defaultServerName?: string
+  regionValue?: WoWServerRegion
 }) => {
   const [id, setId] = useState<string>(defaultServerId)
   const [name, setName] = useState(defaultServerName)
-  const servers = findWoWServersIdByName(name)
+  const servers = findWoWServersIdByName(name, regionValue)
 
   const selectIsDisabled =
     !name || name.length < 2 || !servers || !servers.length
@@ -45,11 +48,12 @@ const WoWServerSelect = ({
             </label>
             {toolTip && <ToolTip data={toolTip} />}
           </div>
-
-          <div className={`mt-1 flex rounded-md shadow-sm relative`}>
+        </div>
+        <div className="focus-within:ring-2 focus-within:ring-blue-500 rounded-md">
+          <div className={`mt-1 flex relative`}>
             <input
               type={'text'}
-              id="itemName"
+              id={`serverName-${formName}`}
               value={name}
               placeholder="Search here..."
               onChange={(e) => {
@@ -66,48 +70,47 @@ const WoWServerSelect = ({
                   onSelectChange(undefined)
                 }
               }}
-              className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="flex-1 min-w-0 block w-full px-3 py-2 block w-full sm:text-sm border-gray-300 border-b-0 focus:ring-0 focus:border-gray-300 rounded-tl-md peer"
             />
-            <span
-              className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+            <label
+              htmlFor={`serverName-${formName}`}
+              className={`inline-flex items-center px-3 border border-l-0 border-gray-300 bg-gray-50 border-b-0 text-gray-500 sm:text-sm rounded-tr-md`}>
               Server Name
-            </span>
+            </label>
           </div>
+          <select
+            className="flex-1 min-w-0 block w-full px-3 py-2 disabled:text-gray-500 block w-full sm:text-sm border-gray-300 rounded-b-md "
+            value={id}
+            name={formName}
+            disabled={selectIsDisabled}
+            onChange={(e) => {
+              const value = e.target.value
+
+              const [idChosen, chosenName] = value.split('---')
+
+              if (isNaN(parseInt(idChosen))) {
+                return
+              }
+
+              setId(value)
+
+              if (onSelectChange && idChosen && chosenName) {
+                onSelectChange({ id: parseInt(idChosen), name: chosenName })
+              } else if (onSelectChange) {
+                onSelectChange()
+              }
+            }}>
+            <option disabled value={DEFAULT_SELECT_VALUE}>
+              {selectIsDisabled ? '(nothing found)' : 'Choose item'}
+            </option>
+            {servers &&
+              servers.map(({ name, id }) => (
+                <option key={name} value={`${id}---${name}`} label={name}>
+                  {name}
+                </option>
+              ))}
+          </select>
         </div>
-      </div>
-      <div className="max-w-7xl mt-1 flex rounded-md shadow-sm`">
-        <select
-          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-          value={id}
-          name={formName}
-          disabled={selectIsDisabled}
-          onChange={(e) => {
-            const value = e.target.value
-
-            const [idChosen, chosenName] = value.split('---')
-
-            if (isNaN(parseInt(idChosen))) {
-              return
-            }
-
-            setId(value)
-
-            if (onSelectChange && idChosen && chosenName) {
-              onSelectChange({ id: parseInt(idChosen), name: chosenName })
-            } else if (onSelectChange) {
-              onSelectChange()
-            }
-          }}>
-          <option disabled value={DEFAULT_SELECT_VALUE}>
-            {selectIsDisabled ? '(nothing found)' : 'Choose item'}
-          </option>
-          {servers &&
-            servers.map(({ name, id }) => (
-              <option key={name} value={`${id}---${name}`} label={name}>
-                {name}
-              </option>
-            ))}
-        </select>
       </div>
     </div>
   )

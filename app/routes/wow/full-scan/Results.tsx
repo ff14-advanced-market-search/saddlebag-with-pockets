@@ -8,6 +8,7 @@ import type { ColumnList } from './SmallTable'
 import { Section } from '~/components/Common'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import { getOribosLink } from './getOribosLink'
+import { useEffect, useRef } from 'react'
 
 const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
   <ExternalLink
@@ -78,8 +79,16 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
     }
   ]
 
+  const divRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (divRef.current) {
+      divRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [divRef])
+
   return (
-    <div className="my-4">
+    <div ref={divRef} className="my-4">
       <Section>
         <>
           <SmallTable<WoWProfitableItems>

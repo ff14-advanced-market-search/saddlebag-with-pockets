@@ -1,4 +1,4 @@
-export const data = [
+export const NAdata = [
   { name: 'Azjol-Nerub', id: 121 },
   { name: 'Muradin', id: 121 },
   { name: 'Nordrassil', id: 121 },
@@ -247,12 +247,16 @@ export const data = [
   { name: "Dath'Remar", id: 3726 }
 ]
 
-export const findWoWServersIdByName = (term: string) => {
+export const findWoWServersIdByName = (
+  term: string,
+  region: 'NA' | 'EU' = 'NA'
+) => {
+  const data = region === 'NA' ? NAdata : []
   return data.filter(({ name }) =>
     name.toLowerCase().includes(term.toLowerCase())
   )
 }
 
-export const findWoWServerByID = (idToFind: number) => {
-  return data.find(({ id }) => id === idToFind)
+export const findNAWoWServerByID = (idToFind: number) => {
+  return NAdata.find(({ id }) => id === idToFind)
 }
