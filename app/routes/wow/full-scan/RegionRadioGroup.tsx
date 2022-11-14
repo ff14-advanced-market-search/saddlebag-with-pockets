@@ -18,7 +18,7 @@ export const RegionRadioGroup = ({
 }) => {
   return (
     <div className="flex flex-col flex-1 my-1">
-      <Label className="font-semibold text-sm">{title}</Label>
+      <Label>{title}</Label>
       <div
         className="flex flex-1"
         onChange={(event: React.SyntheticEvent<EventTarget>) => {
