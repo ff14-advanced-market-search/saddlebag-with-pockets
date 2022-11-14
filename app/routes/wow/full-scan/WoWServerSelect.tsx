@@ -1,5 +1,6 @@
 import { findWoWServersIdByName } from '~/utils/WoWServers'
 import { useState } from 'react'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 
 export interface ServerSelected {
   id: number
@@ -12,15 +13,21 @@ const WoWServerSelect = ({
   onSelectChange,
   onTextChange,
   formName,
-  title
+  title,
+  toolTip,
+  defaultServerId = DEFAULT_SELECT_VALUE,
+  defaultServerName = ''
 }: {
   onSelectChange?: (selectValue?: ServerSelected) => void
   onTextChange?: (selectValue?: string) => void
   formName: string
   title?: string
+  toolTip?: string
+  defaultServerId?: string
+  defaultServerName?: string
 }) => {
-  const [id, setId] = useState<string>(DEFAULT_SELECT_VALUE)
-  const [name, setName] = useState('')
+  const [id, setId] = useState<string>(defaultServerId)
+  const [name, setName] = useState(defaultServerName)
   const servers = findWoWServersIdByName(name)
 
   const selectIsDisabled =
@@ -30,12 +37,16 @@ const WoWServerSelect = ({
     <div className="py-2 bg-white dark:bg-slate-700">
       <div className="flex-1 min-w-full dir-col md:max-w-md">
         <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-          <label
-            htmlFor="itemName"
-            className="block text-sm font-medium text-gray-700 dark:text-grey-100">
-            Search for {title || 'server'} by name
-          </label>
-          <div className={`mt-1 flex rounded-md shadow-sm`}>
+          <div className="relative flex flex-1 items-center gap-1 relative">
+            <label
+              htmlFor="itemName"
+              className="block text-sm font-medium text-gray-700 dark:text-grey-100">
+              Search for {title || 'server'} by name
+            </label>
+            {toolTip && <ToolTip data={toolTip} />}
+          </div>
+
+          <div className={`mt-1 flex rounded-md shadow-sm relative`}>
             <input
               type={'text'}
               id="itemName"

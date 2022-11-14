@@ -46,8 +46,8 @@ const navigation = [
   },
 
   {
-    name: 'WoW Scan',
-    href: 'wow/full-scan',
+    name: 'World of Warcraft',
+    href: 'wow',
     icon: HomeIcon
   },
   {
