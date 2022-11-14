@@ -2043,6 +2043,10 @@ select {
   background: linear-gradient(var(--quick-links-hover-bg,#eff6ff),var(--quick-links-hover-bg,#eff6ff)) padding-box,linear-gradient(to top,#facc15,#facc15,#3b82f6) border-box;
 }
 
+.last\:mr-1:last-child {
+  margin-right: 0.25rem;
+}
+
 .last\:border-none:last-child {
   border-style: none;
 }

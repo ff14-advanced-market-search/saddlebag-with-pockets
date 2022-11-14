@@ -3,6 +3,7 @@ import { ToolTip } from '~/components/Common/InfoToolTip'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WoWServerRegion } from '~/requests/WOWScan'
+import Label from './Label'
 import { RegionRadioGroup } from './RegionRadioGroup'
 import WoWServerSelect from './WoWServerSelect'
 
@@ -429,17 +430,5 @@ const Select = (
   <select
     className="mt-1 flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
     {...props}
-  />
-)
-
-const Label = (
-  props: React.DetailedHTMLProps<
-    React.LabelHTMLAttributes<HTMLLabelElement>,
-    HTMLLabelElement
-  >
-) => (
-  <label
-    {...props}
-    className="block text-sm font-medium text-gray-700 dark:text-grey-100 mt-0.5"
   />
 )
