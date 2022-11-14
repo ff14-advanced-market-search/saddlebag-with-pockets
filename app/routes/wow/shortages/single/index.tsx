@@ -82,7 +82,7 @@ const Index = () => {
           desiredSellPriceDefault={20}
           desiredPriceIncreaseDefault={10}
           desiredSalesPerDayDefault={2}
-          flipRiskLimitDefault={100}
+          flipRiskLimitDefault={30}
         />
         <WoWServerSelect
           formName="homeRealmId"
