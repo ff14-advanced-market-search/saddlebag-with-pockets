@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
+import type { WoWServerRegion } from '~/requests/WOWScan'
+import Label from './Label'
+import { RegionRadioGroup } from './RegionRadioGroup'
 import WoWServerSelect from './WoWServerSelect'
 
 interface Props {
@@ -53,85 +56,91 @@ const WoWScanForm = ({
   error,
   onChange,
   clearErrors
-}: Props) => (
-  <SmallFormContainer
-    title="WoW Non-Commodity Server to Server Trade Search"
-    onClick={onClick}
-    loading={loading}
-    disabled={loading}
-    error={error}>
-    <div className="flex flex-col lg:flex-row lg:gap-7">
-      <div className="w-full">
-        <InputWithLabel
-          defaultValue={100000}
-          type="number"
-          labelTitle="Minimum Historic Price"
-          inputTag="Amount"
-          name="minHistoricPrice"
-          onChange={(e) => {
-            onChange(e)
-            clearErrors()
-          }}
-        />
-        <InputWithLabel
-          defaultValue={50}
-          type="number"
-          labelTitle="Return On Investment (%)"
-          inputTag="%"
-          name="roi"
-          onChange={onChange}
-          min={0}
-        />
-        <InputWithLabel
-          defaultValue={0}
-          type="number"
-          labelTitle="Minimum Sales Per Day"
-          inputTag="Min Sales"
-          name="salePerDay"
-          onChange={onChange}
-          min={0}
-        />
-        <InputWithLabel
-          defaultValue={-1}
-          type="number"
-          labelTitle="Minimum Required Level"
-          inputTag="Level"
-          name="requiredLevel"
-          onChange={onChange}
-          min={-1}
-          max={70}
-        />
-        <InputWithLabel
-          defaultValue={-1}
-          type="number"
-          labelTitle="Minimum Item Level (ilvl)"
-          inputTag="Level"
-          name="iLvl"
-          onChange={onChange}
-          min={-1}
-          max={1000}
-        />
-        <ItemQualitySelect />
-      </div>
-      <div className="w-full">
-        <ItemClassSelect />
+}: Props) => {
+  const [region, setRegion] = useState<WoWServerRegion>('NA')
 
-        <WoWServerSelect
-          formName="homeRealmId"
-          title="Home World"
-          onSelectChange={clearErrors}
-          onTextChange={clearErrors}
-        />
-        <WoWServerSelect
-          formName="newRealmId"
-          title="New World"
-          onSelectChange={clearErrors}
-          onTextChange={clearErrors}
-        />
+  return (
+    <SmallFormContainer
+      title="WoW Non-Commodity Server to Server Trade Search"
+      onClick={onClick}
+      loading={loading}
+      disabled={loading}
+      error={error}>
+      <div className="flex flex-col lg:flex-row lg:gap-7">
+        <div className="w-full">
+          <InputWithLabel
+            defaultValue={100000}
+            type="number"
+            labelTitle="Minimum Historic Price"
+            inputTag="Amount"
+            name="minHistoricPrice"
+            onChange={(e) => {
+              onChange(e)
+              clearErrors()
+            }}
+          />
+          <InputWithLabel
+            defaultValue={50}
+            type="number"
+            labelTitle="Return On Investment (%)"
+            inputTag="%"
+            name="roi"
+            onChange={onChange}
+            min={0}
+          />
+          <InputWithLabel
+            defaultValue={0}
+            type="number"
+            labelTitle="Minimum Sales Per Day"
+            inputTag="Min Sales"
+            name="salePerDay"
+            onChange={onChange}
+            min={0}
+          />
+          <InputWithLabel
+            defaultValue={-1}
+            type="number"
+            labelTitle="Minimum Required Level"
+            inputTag="Level"
+            name="requiredLevel"
+            onChange={onChange}
+            min={-1}
+            max={70}
+          />
+          <InputWithLabel
+            defaultValue={-1}
+            type="number"
+            labelTitle="Minimum Item Level (ilvl)"
+            inputTag="Level"
+            name="iLvl"
+            onChange={onChange}
+            min={-1}
+            max={1000}
+          />
+          <ItemQualitySelect />
+        </div>
+        <div className="w-full">
+          <ItemClassSelect />
+          <RegionRadioGroup onChange={setRegion} defaultChecked={region} />
+          <WoWServerSelect
+            formName="homeRealmId"
+            title="Home World"
+            onSelectChange={clearErrors}
+            onTextChange={clearErrors}
+            regionValue={region}
+          />
+          <WoWServerSelect
+            formName="newRealmId"
+            title="New World"
+            onSelectChange={clearErrors}
+            onTextChange={clearErrors}
+            regionValue={region}
+          />
+        </div>
       </div>
-    </div>
-  </SmallFormContainer>
-)
+    </SmallFormContainer>
+  )
+}
 
 export default WoWScanForm
 
@@ -421,17 +430,5 @@ const Select = (
   <select
     className="mt-1 flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
     {...props}
-  />
-)
-
-const Label = (
-  props: React.DetailedHTMLProps<
-    React.LabelHTMLAttributes<HTMLLabelElement>,
-    HTMLLabelElement
-  >
-) => (
-  <label
-    {...props}
-    className="block text-sm font-medium text-gray-700 dark:text-grey-100 mt-0.5"
   />
 )

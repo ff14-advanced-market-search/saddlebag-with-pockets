@@ -1,5 +1,7 @@
 import { address, UserAgent } from '~/requests/client/config'
 
+export type WoWServerRegion = 'NA' | 'EU'
+
 export interface WOWScanProps {
   homeRealmId: number
   homeRealmServerName: string

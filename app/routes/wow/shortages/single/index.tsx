@@ -12,6 +12,8 @@ import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoWSingleItemShortage'
 import WoWSingleItemShortage from '~/requests/WoWSingleItemShortage'
+import { RegionRadioGroup } from '../../full-scan/RegionRadioGroup'
+import type { WoWServerRegion } from '~/requests/WOWScan'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -48,6 +50,8 @@ const DEFAULT_SERVER_NAME = "Kil'jaeden"
 const Index = () => {
   const transition = useTransition()
   const results = useActionData<WowShortageResult>()
+  const [region, setRegion] = useState<WoWServerRegion>('NA')
+
   const [serverName, setServerName] = useState<string | undefined>(
     DEFAULT_SERVER_NAME
   )
@@ -84,6 +88,7 @@ const Index = () => {
           desiredSalesPerDayDefault={2}
           flipRiskLimitDefault={30}
         />
+        <RegionRadioGroup onChange={setRegion} defaultChecked={region} />
         <WoWServerSelect
           formName="homeRealmId"
           title="Home Server"
@@ -93,6 +98,7 @@ const Index = () => {
           toolTip="Select your home world server, type to begin selection."
           defaultServerId="9"
           defaultServerName={DEFAULT_SERVER_NAME}
+          regionValue={region}
         />
         <InputWithLabel
           defaultValue={-1}
