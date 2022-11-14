@@ -63,7 +63,7 @@ const WoWScanForm = ({
     <div className="flex flex-col lg:flex-row lg:gap-7">
       <div className="w-full">
         <InputWithLabel
-          defaultValue={10000}
+          defaultValue={100000}
           type="number"
           labelTitle="Minimum Historic Price"
           inputTag="Amount"
@@ -400,7 +400,7 @@ export const ItemQualitySelect = () => (
       <Label htmlFor="item-quality">Item Quality</Label>
       <ToolTip data="Pick which quality item you would like to search from" />
     </div>
-    <Select id="item-quality" name="itemQuality" defaultValue={'Poor'}>
+    <Select id="item-quality" name="itemQuality" defaultValue={'Rare'}>
       {itemQuality.map(({ name, value }) => {
         return (
           <option key={name + value} value={value}>
