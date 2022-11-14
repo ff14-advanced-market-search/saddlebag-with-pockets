@@ -43,7 +43,7 @@ export const action: ActionFunction = async ({ request }) => {
   return await WoWSingleItemShortage(props)
 }
 
-const DEFAULT_SERVER_NAME = 'Thrall'
+const DEFAULT_SERVER_NAME = "Kil'jaeden"
 
 const Index = () => {
   const transition = useTransition()
@@ -91,7 +91,7 @@ const Index = () => {
             if (selectValue) setServerName(selectValue.name)
           }}
           toolTip="Select your home world server, type to begin selection."
-          defaultServerId="3678"
+          defaultServerId="9"
           defaultServerName={DEFAULT_SERVER_NAME}
         />
         <InputWithLabel
