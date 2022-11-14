@@ -43,7 +43,7 @@ export const action: ActionFunction = async ({ request }) => {
   return await WoWSingleItemShortage(props)
 }
 
-const DEFAULT_SERVER_NAME = "Search here..."
+const DEFAULT_SERVER_NAME = 'Search here...'
 
 const Index = () => {
   const transition = useTransition()
