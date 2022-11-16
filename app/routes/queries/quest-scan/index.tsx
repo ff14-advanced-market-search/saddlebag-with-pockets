@@ -112,6 +112,7 @@ const Index = () => {
             defaultFilters={[-2, -3]}
             defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}
+            defaultRegionWideChecked={true}
             error={results && results.exception ? results.exception : undefined}
           />
         </div>

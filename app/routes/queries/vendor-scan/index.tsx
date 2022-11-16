@@ -93,7 +93,7 @@ const Index = () => {
             defaultPricePerUnit={1000}
             defaultFilters={[-1]}
             defaultHQChecked={false}
-            defaultRegionWideChecked={false}
+            defaultRegionWideChecked={true}
             defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}
             error={results && results.exception ? results.exception : undefined}
