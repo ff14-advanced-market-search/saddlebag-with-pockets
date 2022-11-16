@@ -4,13 +4,6 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
   {
-    name: 'Example Search',
-    description:
-      'A trading search that looks through all items on your local marketboard for items to buy from other servers and sell on your own for a profit!',
-    icon: DocumentSearchIcon,
-    href: '/queries/full-scan'
-  },
-  {
     name: 'Beginner Out of Stock Search',
     description:
       'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
