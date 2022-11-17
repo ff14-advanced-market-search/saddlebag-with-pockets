@@ -30,6 +30,8 @@ export const validateShortageData = (
       itemClass: number
       itemSubClass: number
       homeRealmId: number
+      underMarketPricePercent: number
+      overMarketPricePercent: number
     }
   | { exception: string } => {
   const homeServerData = formData.get('homeRealmId')
@@ -90,6 +92,24 @@ export const validateShortageData = (
   }
   const itemSubClass = parseFloat(itemSubClassData)
 
+  const underMarketPricePercentData = formData.get('underMarketPricePercent')
+  if (
+    !underMarketPricePercentData ||
+    typeof underMarketPricePercentData !== 'string'
+  ) {
+    return { exception: 'Missing under market price percentage' }
+  }
+  const underMarketPricePercent = parseFloat(underMarketPricePercentData)
+
+  const overMarketPricePercentData = formData.get('overMarketPricePercent')
+  if (
+    !overMarketPricePercentData ||
+    typeof overMarketPricePercentData !== 'string'
+  ) {
+    return { exception: 'Missing over market price percentage' }
+  }
+  const overMarketPricePercent = parseFloat(overMarketPricePercentData)
+
   return {
     desiredAvgPrice,
     desiredSalesPerDay,
@@ -99,7 +119,9 @@ export const validateShortageData = (
     itemQuality,
     itemClass,
     itemSubClass,
-    homeRealmId
+    homeRealmId,
+    underMarketPricePercent,
+    overMarketPricePercent
   }
 }
 
@@ -189,7 +211,9 @@ export const WoWShortageFormFields = ({
   desiredSellPriceDefault = 200,
   desiredPriceIncreaseDefault = 50,
   desiredSalesPerDayDefault = 40,
-  flipRiskLimitDefault = 100
+  flipRiskLimitDefault = 100,
+  overMarketPricePercentDefault = 0,
+  underMarketPricePercentDefault = 0
 }) => (
   <div className="flex flex-1 flex-col">
     <ItemClassSelect />
@@ -238,6 +262,24 @@ export const WoWShortageFormFields = ({
       name="flipRiskLimit"
       min={0}
       toolTip="Change how risky something is by reducing the percentage amount.  The limit is the average price multiplied by your Price Risk Limit. Ex: if an item sells for 20g it will not consider any flips or resets over 2000g."
+    />
+    <InputWithLabel
+      defaultValue={underMarketPricePercentDefault}
+      type="number"
+      labelTitle="Under Market Price Percent"
+      inputTag="%"
+      name="underMarketPricePercent"
+      min={0}
+      toolTip=""
+    />
+    <InputWithLabel
+      defaultValue={overMarketPricePercentDefault}
+      type="number"
+      labelTitle="Over Market Price Percent"
+      inputTag="%"
+      name="overMarketPricePercent"
+      min={0}
+      toolTip=""
     />
   </div>
 )
