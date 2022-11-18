@@ -47,6 +47,8 @@ export interface WOWCommodityShortageProps {
   itemClass: number
   itemSubClass: number
   region: WoWServerRegion
+  underMarketPricePercent: number
+  overMarketPricePercent: number
 }
 
 const WoWCommodityShortage: ({
@@ -58,7 +60,9 @@ const WoWCommodityShortage: ({
   itemQuality,
   itemClass,
   itemSubClass,
-  region
+  region,
+  underMarketPricePercent,
+  overMarketPricePercent
 }: WOWCommodityShortageProps) => Promise<Response> = async ({
   desiredAvgPrice,
   desiredSalesPerDay,
@@ -68,7 +72,9 @@ const WoWCommodityShortage: ({
   itemQuality,
   itemClass,
   itemSubClass,
-  region
+  region,
+  underMarketPricePercent,
+  overMarketPricePercent
 }) => {
   return fetch(`${address}/api/wow/commodity`, {
     method: 'POST',
@@ -85,7 +91,9 @@ const WoWCommodityShortage: ({
       itemQuality: itemQuality,
       item_class: itemClass,
       item_subclass: itemSubClass,
-      region
+      region,
+      under_market_price_percent: underMarketPricePercent,
+      over_market_price_percent: overMarketPricePercent
     })
   })
 }

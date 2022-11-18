@@ -12,6 +12,8 @@ export interface WOWSingleItemShortageProps {
   iLvl: number
   requiredLevel: number
   homeRealmId: number
+  underMarketPricePercent: number
+  overMarketPricePercent: number
 }
 
 const WoWSingleItemShortage: ({
@@ -25,7 +27,9 @@ const WoWSingleItemShortage: ({
   itemSubClass,
   iLvl,
   requiredLevel,
-  homeRealmId
+  homeRealmId,
+  underMarketPricePercent,
+  overMarketPricePercent
 }: WOWSingleItemShortageProps) => Promise<Response> = async ({
   desiredAvgPrice,
   desiredSalesPerDay,
@@ -37,7 +41,9 @@ const WoWSingleItemShortage: ({
   itemSubClass,
   iLvl,
   requiredLevel,
-  homeRealmId
+  homeRealmId,
+  underMarketPricePercent,
+  overMarketPricePercent
 }) => {
   return fetch(`${address}/api/wow/single`, {
     method: 'POST',
@@ -56,7 +62,9 @@ const WoWSingleItemShortage: ({
       item_subclass: itemSubClass,
       ilvl: iLvl,
       required_level: requiredLevel,
-      homeRealmId
+      homeRealmId,
+      under_market_price_percent: underMarketPricePercent,
+      over_market_price_percent: overMarketPricePercent
     })
   })
 }
