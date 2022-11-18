@@ -266,20 +266,20 @@ export const WoWShortageFormFields = ({
     <InputWithLabel
       defaultValue={underMarketPricePercentDefault}
       type="number"
-      labelTitle="Under Market Price Percent"
+      labelTitle="Desired Discount Percent vs Average Price"
       inputTag="%"
       name="underMarketPricePercent"
       min={0}
-      toolTip=""
+      toolTip="Find items below the market price by choosing a desired discount vs average price. If price is usually 50g and desired discount is 50% then we look to see if its selling for 25g. Default of 0 skips checking this."
     />
     <InputWithLabel
       defaultValue={overMarketPricePercentDefault}
       type="number"
-      labelTitle="Over Market Price Percent"
+      labelTitle="Desired Increase Percenet vs Average Price"
       inputTag="%"
       name="overMarketPricePercent"
       min={0}
-      toolTip=""
+      toolTip="The percent over the average price you desire to sell at. EX: If an item usually sells for 100g and you choose a 100% increase, then we only show the item if you can sell at 200g. Default of 0 skips checking this."
     />
   </div>
 )
