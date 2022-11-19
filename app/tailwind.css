@@ -807,12 +807,12 @@ select {
   right: 0.75rem;
 }
 
-.left-0 {
-  left: 0px;
-}
-
 .-right-1 {
   right: -0.25rem;
+}
+
+.left-0 {
+  left: 0px;
 }
 
 .z-50 {
