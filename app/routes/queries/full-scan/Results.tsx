@@ -150,7 +150,7 @@ const Results = ({ rows }: ResultTableProps) => {
       header: 'Home Server Info Last Updated At',
       cell: (info) => (
         <DateCell
-          date={info.getValue()}
+          date={parseInt(info.getValue())}
           fixRight={isLastInTable('home_update_time', sortOrder)}
         />
       )
@@ -192,7 +192,7 @@ const Results = ({ rows }: ResultTableProps) => {
       header: 'Lowest Price Last Update Time',
       cell: (info) => (
         <DateCell
-          date={info.getValue()}
+          date={parseInt(info.getValue())}
           fixRight={isLastInTable('update_time', sortOrder)}
         />
       )
