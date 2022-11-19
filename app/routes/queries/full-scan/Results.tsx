@@ -75,6 +75,27 @@ export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
+const returnTimeFromNow = (dateFrom: Date, nowDate: Date) => {
+  const timeDiffSec = Math.round(
+    (nowDate.getTime() - dateFrom.getTime()) / 1000
+  )
+  if (timeDiffSec < 60) {
+    return `${timeDiffSec} seconds ago`
+  }
+  const timeDiffMins = Math.round(timeDiffSec / 60)
+  if (timeDiffMins < 60) {
+    return `${timeDiffMins} minutes ago`
+  }
+
+  const timeDiffHours = Math.round(timeDiffMins / 60)
+  if (timeDiffHours < 24) {
+    return `${timeDiffHours} hours ago`
+  }
+
+  const timeDiffDays = Math.round(timeDiffHours / 24)
+  return `${timeDiffDays} days ago`
+}
+
 const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -94,7 +115,7 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('home_update_time', {
       header: 'Home Server Info Last Updated At',
-      cell: (info) => info.getValue()
+      cell: (info) => returnTimeFromNow(new Date(info.getValue()), new Date())
     }),
     columnHelper.accessor('ppu', {
       header: 'Lowest Price Per Unit',
@@ -131,7 +152,7 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('update_time', {
       header: 'Lowest Price Last Update Time',
-      cell: (info) => info.getValue()
+      cell: (info) => returnTimeFromNow(new Date(info.getValue()), new Date())
     }),
     columnHelper.accessor('ROI', {
       header: 'Return on Investment',
