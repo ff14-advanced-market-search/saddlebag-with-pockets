@@ -811,6 +811,10 @@ select {
   left: 0px;
 }
 
+.-right-1 {
+  right: -0.25rem;
+}
+
 .z-50 {
   z-index: 50;
 }

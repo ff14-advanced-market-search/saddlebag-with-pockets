@@ -75,27 +75,60 @@ export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
-const returnTimeFromNow = (dateFrom: Date, nowDate: Date) => {
+const getPluralEnding = (value: number) => {
+  return value !== 1 ? 's' : ''
+}
+
+const getTimeFromNow = (dateFrom: Date, nowDate: Date) => {
   const timeDiffSec = Math.round(
     (nowDate.getTime() - dateFrom.getTime()) / 1000
   )
   if (timeDiffSec < 60) {
-    return `${timeDiffSec} seconds ago`
+    return `${timeDiffSec} second${getPluralEnding(timeDiffSec)} ago`
   }
   const timeDiffMins = Math.round(timeDiffSec / 60)
   if (timeDiffMins < 60) {
-    return `${timeDiffMins} minutes ago`
+    return `${timeDiffMins} minute${getPluralEnding(timeDiffMins)} ago`
   }
 
   const timeDiffHours = Math.round(timeDiffMins / 60)
   if (timeDiffHours < 24) {
-    return `${timeDiffHours} hours ago`
+    return `${timeDiffHours} hour${getPluralEnding(timeDiffHours)} ago`
   }
 
   const timeDiffDays = Math.round(timeDiffHours / 24)
-  return `${timeDiffDays} days ago`
+  return `${timeDiffDays} day${getPluralEnding(timeDiffDays)} ago`
 }
 
+const DateCell = ({
+  date,
+  fixRight
+}: {
+  date: string | number
+  fixRight: boolean
+}) => {
+  const valueAsDate = new Date(date)
+
+  return (
+    <div className="flex flex-1 justify-between relative">
+      <p className="peer">{getTimeFromNow(valueAsDate, new Date())}</p>
+      <p
+        className={`absolute hidden peer-hover:bottom-6 peer-hover:flex bg-black opacity-80 text-sm text-white rounded px-3 py-1 z-50${
+          fixRight ? ' -right-1' : 'left-0'
+        }`}>
+        {valueAsDate.toLocaleString()}
+      </p>
+    </div>
+  )
+}
+const isLastInTable = (
+  columnId: string,
+  columnOrder: Array<String>
+): boolean => {
+  const columnIndex = columnOrder.findIndex((col) => col === columnId)
+  if (!columnIndex) return false
+  return columnIndex === columnOrder.length - 1
+}
 const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -115,7 +148,12 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('home_update_time', {
       header: 'Home Server Info Last Updated At',
-      cell: (info) => returnTimeFromNow(new Date(info.getValue()), new Date())
+      cell: (info) => (
+        <DateCell
+          date={info.getValue()}
+          fixRight={isLastInTable('home_update_time', sortOrder)}
+        />
+      )
     }),
     columnHelper.accessor('ppu', {
       header: 'Lowest Price Per Unit',
@@ -152,7 +190,12 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('update_time', {
       header: 'Lowest Price Last Update Time',
-      cell: (info) => returnTimeFromNow(new Date(info.getValue()), new Date())
+      cell: (info) => (
+        <DateCell
+          date={info.getValue()}
+          fixRight={isLastInTable('update_time', sortOrder)}
+        />
+      )
     }),
     columnHelper.accessor('ROI', {
       header: 'Return on Investment',
