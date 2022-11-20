@@ -13,7 +13,7 @@ const recommendedQueries = [
   {
     name: 'Low Quality Out of Stock Search',
     description:
-      'Same rules for out of stock search, but this one looks for Low Quality items that can sell for 50k to 70K like furniture or dyes.',
+      'Same rules as the out of stock search, but this one looks for Low Quality items that can sell for like furniture or dyes that can sell for much higher prices than out of stock armor or weapons.',
     icon: DocumentSearchIcon,
     href: '/queries/nq-out-stock-scan'
   },
