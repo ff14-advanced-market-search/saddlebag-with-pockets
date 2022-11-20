@@ -39,6 +39,7 @@ import { setFFScanOrder } from '~/redux/reducers/userSlice'
 import { useDispatch } from 'react-redux'
 import { defaultSortOrder } from '~/redux/localStorage/ffScanOrderHelpers'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import DateCell from './DateCell'
 
 type ResultTableProps = {
   rows: Array<ResponseType>
@@ -75,6 +76,14 @@ export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
+const isLastInTable = (
+  columnId: string,
+  columnOrder: Array<String>
+): boolean => {
+  const columnIndex = columnOrder.findIndex((col) => col === columnId)
+  if (!columnIndex) return false
+  return columnIndex === columnOrder.length - 1
+}
 const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -94,7 +103,12 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('home_update_time', {
       header: 'Home Server Info Last Updated At',
-      cell: (info) => info.getValue()
+      cell: (info) => (
+        <DateCell
+          date={parseInt(info.getValue())}
+          fixRight={isLastInTable('home_update_time', sortOrder)}
+        />
+      )
     }),
     columnHelper.accessor('ppu', {
       header: 'Lowest Price Per Unit',
@@ -131,7 +145,12 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
     columnHelper.accessor('update_time', {
       header: 'Lowest Price Last Update Time',
-      cell: (info) => info.getValue()
+      cell: (info) => (
+        <DateCell
+          date={parseInt(info.getValue())}
+          fixRight={isLastInTable('update_time', sortOrder)}
+        />
+      )
     }),
     columnHelper.accessor('ROI', {
       header: 'Return on Investment',

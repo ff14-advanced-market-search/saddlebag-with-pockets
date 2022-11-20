@@ -19,6 +19,7 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
+import DateCell from '../full-scan/DateCell'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -64,9 +65,9 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
       header: 'Buyer Name',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('human_timestamp', {
+    columnHelper.accessor('timestamp', {
       header: 'Time',
-      cell: (info) => info.getValue()
+      cell: (info) => <DateCell date={info.getValue() * 1000} fixRight={true} />
     })
   ]
 
