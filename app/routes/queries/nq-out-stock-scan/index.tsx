@@ -78,10 +78,14 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-2xl font-semibold text-green-900 py-6">
             NQ Out Of Stock Search - Buy at least 5 to 10 different items not
-            listed on your server which cost under 10k. Sell them on your market
-            board for 70k or more depending on average value. Not all will
-            guarenteed sell before competition shows up, but you only need 1
-            sale to gain a massive profit margin.
+            listed on your server which cost under 15k (even better if you can
+            buy them from the NPC Housing Merchant). Sell them on your market
+            board for any price your want. For more details on a price to choose
+            see the "Item Data" link that appers next to each item name and next
+            to the universalis link for our custom item statistics designed to
+            help you pick prices. Not all items are guarenteed to sell before
+            competition shows up, but you only need 1 sale to gain a massive
+            profit margin.
           </h1>
           {nqOutOfStockScan && !results && (
             <PreviousResultsLink to="/queries/previous-search?query=nqOutOfStockScan" />
