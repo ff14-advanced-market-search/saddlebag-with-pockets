@@ -6,6 +6,10 @@ const getTimeFromNow = (dateFrom: Date, nowDate: Date) => {
   const timeDiffSec = Math.round(
     (nowDate.getTime() - dateFrom.getTime()) / 1000
   )
+  if (timeDiffSec <= 0) {
+    return '0 seconds ago'
+  }
+
   if (timeDiffSec < 60) {
     return `${timeDiffSec} second${getPluralEnding(timeDiffSec)} ago`
   }
