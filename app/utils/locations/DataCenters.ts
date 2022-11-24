@@ -21,39 +21,39 @@ export const DataCenterList: Record<string, Array<{ name: string }>> = {
       name: 'Light'
     }
   ],
-  JP: [
-    {
-      name: 'Elemental'
-    },
-    {
-      name: 'Gaia'
-    },
-    {
-      name: 'Mana'
-    },
-    {
-      name: 'Meteor'
-    }
-  ],
+  // JP: [
+  //   {
+  //     name: 'Elemental'
+  //   },
+  //   {
+  //     name: 'Gaia'
+  //   },
+  //   {
+  //     name: 'Mana'
+  //   },
+  //   {
+  //     name: 'Meteor'
+  //   }
+  // ],
   OCE: [
     {
       name: 'Materia'
     }
-  ],
-  CN: [
-    {
-      name: 'LuXingNiao'
-    },
-    {
-      name: 'MoGuLi'
-    },
-    {
-      name: 'MaoXiaoPang'
-    },
-    {
-      name: 'DouDouChai'
-    }
   ]
+  // CN: [
+  //   {
+  //     name: 'LuXingNiao'
+  //   },
+  //   {
+  //     name: 'MoGuLi'
+  //   },
+  //   {
+  //     name: 'MaoXiaoPang'
+  //   },
+  //   {
+  //     name: 'DouDouChai'
+  //   }
+  // ]
 }
 export type DataCentersList = typeof DataCenterList
 

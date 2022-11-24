@@ -20,6 +20,7 @@ import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
 import { toggleDarkMode } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import { validateWorldAndDataCenter } from '~/utils/locations'
 
 export type SelectWorldInputFields = {
   data_center: GetDeepProp<DataCentersList, 'name'>
@@ -57,7 +58,11 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
-  return json(session.data)
+  const { world, data_center } = validateWorldAndDataCenter(
+    session.get('world'),
+    session.get('data_center')
+  )
+  return json({ ...session.data, world, data_center })
 }
 
 export default function () {
