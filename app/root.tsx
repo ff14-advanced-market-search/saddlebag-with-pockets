@@ -11,7 +11,7 @@ import {
   useLoaderData
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
-import { getSession } from '~/sessions'
+import { getSession, validateWorldAndDataCenter } from '~/sessions'
 import {
   EnsureThemeApplied,
   Theme,
@@ -42,9 +42,13 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, context }) => {
   const session = await getSession(request.headers.get('Cookie'))
   if (session.has('data_center') && session.has('world')) {
+    const { world, data_center } = validateWorldAndDataCenter(
+      session.get('world'),
+      session.get('data_center')
+    )
     return json({
-      data_center: session.get('data_center'),
-      world: session.get('world')
+      data_center,
+      world
     })
   }
   // @todo set safe default for DC and world
@@ -103,6 +107,7 @@ function App() {
       <body className={`h-full bg-gray-100 dark:bg-slate-900`}>
         <noscript>
           <iframe
+            title="GtagManager"
             src="https://www.googletagmanager.com/ns.html?id=GTM-WH4KFG5"
             height="0"
             width="0"

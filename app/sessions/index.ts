@@ -13,26 +13,47 @@ const { getSession, commitSession, destroySession } =
     }
   })
 
+const validateWorldAndDataCenter = (
+  world?: string | null,
+  data_center?: string | null
+) => {
+  if (world && WorldsArray.includes(world)) {
+    if (data_center && DataCenterArray.includes(data_center)) {
+      return { world, data_center }
+    }
+  }
+
+  return { world: WorldsArray.at(0), data_center: DataCenterArray.at(0) }
+}
+
 async function getUserSessionData(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
   return {
     getWorld: () => {
-      try {
-        const world = session.get('world')
-        if (!WorldsArray.includes(world)) {
-          // @todo select a default
-          throw new Error(`World not an available option. [${world}]`)
-        }
-        return world
-      } catch (err) {
-        return WorldsArray.at(0)
-      }
+      const worldSession = session.get('world')
+      const sessionDataCenter = session.get('data_center')
+      const { world } = validateWorldAndDataCenter(
+        worldSession,
+        sessionDataCenter
+      )
+      return world
     },
     getDataCenter: () => {
-      const dataCenter = session.get('data_center')
-      return DataCenterArray.includes(dataCenter) && dataCenter
+      const worldSession = session.get('world')
+      const sessionDataCenter = session.get('data_center')
+      const { data_center } = validateWorldAndDataCenter(
+        worldSession,
+        sessionDataCenter
+      )
+      return data_center
     }
   }
 }
 
-export { getUserSessionData, getSession, commitSession, destroySession }
+export {
+  getUserSessionData,
+  getSession,
+  commitSession,
+  destroySession,
+  validateWorldAndDataCenter
+}
