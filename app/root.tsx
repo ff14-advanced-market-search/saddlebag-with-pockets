@@ -11,7 +11,7 @@ import {
   useLoaderData
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
-import { getSession, validateWorldAndDataCenter } from '~/sessions'
+import { getSession } from '~/sessions'
 import {
   EnsureThemeApplied,
   Theme,
@@ -23,6 +23,7 @@ import { store } from '~/redux/store'
 import { Provider } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
+import { validateWorldAndDataCenter } from './utils/locations'
 
 export const links = () => {
   return [

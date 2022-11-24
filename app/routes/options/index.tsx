@@ -14,16 +14,13 @@ import type { GetDeepProp } from '~/utils/ts'
 import type { DataCentersList } from '~/utils/locations/DataCenters'
 import type { Validator } from 'remix-validated-form'
 import type { WorldsList } from '~/utils/locations/Worlds'
-import {
-  commitSession,
-  getSession,
-  validateWorldAndDataCenter
-} from '~/sessions'
+import { commitSession, getSession } from '~/sessions'
 import { Switch } from '@headlessui/react'
 import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
 import { toggleDarkMode } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import { validateWorldAndDataCenter } from '~/utils/locations'
 
 export type SelectWorldInputFields = {
   data_center: GetDeepProp<DataCentersList, 'name'>

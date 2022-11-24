@@ -1,6 +1,5 @@
 import { createCookieSessionStorage } from '@remix-run/cloudflare'
-import { WorldsArray } from '~/utils/locations/Worlds'
-import { DataCenterArray } from '~/utils/locations/DataCenters'
+import { validateWorldAndDataCenter } from '~/utils/locations'
 
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
@@ -12,19 +11,6 @@ const { getSession, commitSession, destroySession } =
       path: '/'
     }
   })
-
-const validateWorldAndDataCenter = (
-  world?: string | null,
-  data_center?: string | null
-) => {
-  if (world && WorldsArray.includes(world)) {
-    if (data_center && DataCenterArray.includes(data_center)) {
-      return { world, data_center }
-    }
-  }
-
-  return { world: WorldsArray.at(0), data_center: DataCenterArray.at(0) }
-}
 
 async function getUserSessionData(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
@@ -50,10 +36,4 @@ async function getUserSessionData(request: Request) {
   }
 }
 
-export {
-  getUserSessionData,
-  getSession,
-  commitSession,
-  destroySession,
-  validateWorldAndDataCenter
-}
+export { getUserSessionData, getSession, commitSession, destroySession }
