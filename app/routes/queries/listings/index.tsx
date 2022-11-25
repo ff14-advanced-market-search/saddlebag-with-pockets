@@ -150,7 +150,11 @@ const Index = () => {
         </div>
         {listings && listings.listings && listings.listings.length > 0 && (
           <>
-            {resultTitle && <Title title={resultTitle} />}
+            {resultTitle && (
+              <div className="max-w-4xl mx-auto px-4">
+                <Title title={resultTitle} />
+              </div>
+            )}
             <Results data={listings} />
           </>
         )}
