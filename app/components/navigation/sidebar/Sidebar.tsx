@@ -44,6 +44,18 @@ const navigation = [
     href: 'queries/item-history',
     icon: DocumentSearchIcon
   },
+  {
+    name: 'Qualified Sale Alerts',
+    href: 'https://www.patreon.com/indopan',
+    icon: DocumentSearchIcon,
+    external: true
+  },
+  {
+    name: 'Discount Price Sniper',
+    href: 'https://www.patreon.com/indopan',
+    icon: DocumentSearchIcon,
+    external: true
+  },
 
   {
     name: 'World of Warcraft',
