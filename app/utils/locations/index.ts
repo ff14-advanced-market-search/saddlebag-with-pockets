@@ -32,14 +32,17 @@ const WorldsOfDataCenter: (
 const validateWorldAndDataCenter = (
   world?: string | null,
   data_center?: string | null
-) => {
+): { world: string; data_center: string } => {
   if (world && WorldsArray.includes(world)) {
     if (data_center && DataCenterArray.includes(data_center)) {
       return { world, data_center }
     }
   }
 
-  return { world: WorldsArray.at(0), data_center: DataCenterArray.at(0) }
+  return {
+    world: WorldsArray.at(0)!,
+    data_center: DataCenterArray.at(0)!
+  }
 }
 
 export {

@@ -186,7 +186,11 @@ const Index = () => {
         {error === 'No results found' && !itemHistory && (
           <NoResults href={`/queries/item-history`} />
         )}
-        {resultTitle && <Title title={resultTitle} />}
+        {resultTitle && (
+          <div className="max-w-4xl mx-auto px-4">
+            <Title title={resultTitle} />
+          </div>
+        )}
         {itemHistory && 'average_ppu' in itemHistory && (
           <Results data={itemHistory} />
         )}
