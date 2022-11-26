@@ -45,6 +45,12 @@ const navigation = [
     icon: DocumentSearchIcon
   },
   {
+    name: 'Undercut Discord Alerts',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts-Alpha',
+    icon: DocumentSearchIcon,
+    external: true
+  },
+  {
     name: 'Qualified Sale Alerts',
     href: 'https://www.patreon.com/indopan',
     icon: DocumentSearchIcon,
