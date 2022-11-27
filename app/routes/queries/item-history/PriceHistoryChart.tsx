@@ -33,7 +33,7 @@ export default function PriceHistoryChart({
         data: data.map<PointOptionsObject>(({ sales_amount, price_range }) => {
           return [price_range, sales_amount]
         }),
-        name: 'Price Ranges',
+        name: 'No# of Purchases in Price Range',
         type: 'column'
       }
     ],
