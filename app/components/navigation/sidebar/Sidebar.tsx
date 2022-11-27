@@ -152,7 +152,6 @@ const ButtonAccordian = ({
   children: React.ReactNode
 }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const id = title.replace(' ', '-')
   return (
     <div className={`flex flex-col my-1 p-0 bg-gray-700 rounded`}>
       <button
@@ -160,7 +159,7 @@ const ButtonAccordian = ({
           isOpen ? 'text-white' : 'text-gray-300'
         } hover:bg-gray-500 hover:text-white rounded font-semibold`}
         onClick={() => setIsOpen((state) => !state)}>
-        <span id={id}>{title}</span>
+        <span>{title}</span>
         {isOpen ? (
           <ChevronUpIcon className={`h-4 w-4`} />
         ) : (
