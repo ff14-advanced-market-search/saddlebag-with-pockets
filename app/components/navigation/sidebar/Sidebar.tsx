@@ -56,7 +56,7 @@ const navGroups: Array<{
       },
       {
         name: 'Undercut Discord Alerts',
-        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts-Alpha',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
         icon: DocumentSearchIcon,
         external: true
       },
