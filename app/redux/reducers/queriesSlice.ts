@@ -85,7 +85,7 @@ export const queriesSlice = createSlice({
     },
     setOlivia2: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.olivia2 = action.payload
-    }
+    },
     setOlivia3: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.olivia3 = action.payload
     }
