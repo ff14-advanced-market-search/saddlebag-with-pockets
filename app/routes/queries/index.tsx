@@ -18,39 +18,6 @@ const recommendedQueries = [
     href: '/queries/nq-out-stock-scan'
   },
   {
-    name: 'High Value Search',
-    description: 'Search for high value trades.',
-    icon: DocumentSearchIcon,
-    href: '/queries/value-scan'
-  },
-  {
-    name: 'Fast Sales Search',
-    description: 'Search for items with high rate of sales.',
-    icon: DocumentSearchIcon,
-    href: '/queries/fast-scan'
-  },
-  {
-    name: 'Commodities Search',
-    description:
-      'Search for items that sell in larger stack sizes (i.e. larger quantities)',
-    icon: DocumentSearchIcon,
-    href: '/queries/commodity-scan'
-  },
-  {
-    name: 'NPC Vendor Item Search',
-    description:
-      'Search for items sold by NPC Vendors which can be resold on the marketboard.',
-    icon: DocumentSearchIcon,
-    href: '/queries/vendor-scan'
-  },
-  {
-    name: 'Quest Item Search',
-    description:
-      'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
-    icon: DocumentSearchIcon,
-    href: '/queries/quest-scan'
-  },
-  {
     name: 'Mega Value Search',
     description:
       'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
@@ -62,8 +29,49 @@ const recommendedQueries = [
     description: 'Low Investment Vendor Flipping Quick Sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia1'
+  },
+  {
+    name: 'Olivias Class Quest Items Quick Sell',
+    description: 'Low Investment Class Quest Items Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia2'
   }
 ]
+
+  // Save these old searches for a rainy day, now we have olivias instead
+  // {
+  //   name: 'High Value Search',
+  //   description: 'Search for high value trades.',
+  //   icon: DocumentSearchIcon,
+  //   href: '/queries/value-scan'
+  // },
+  // {
+  //   name: 'Fast Sales Search',
+  //   description: 'Search for items with high rate of sales.',
+  //   icon: DocumentSearchIcon,
+  //   href: '/queries/fast-scan'
+  // },
+  // {
+  //   name: 'Commodities Search',
+  //   description:
+  //     'Search for items that sell in larger stack sizes (i.e. larger quantities)',
+  //   icon: DocumentSearchIcon,
+  //   href: '/queries/commodity-scan'
+  // },
+  // {
+  //   name: 'NPC Vendor Item Search',
+  //   description:
+  //     'Search for items sold by NPC Vendors which can be resold on the marketboard.',
+  //   icon: DocumentSearchIcon,
+  //   href: '/queries/vendor-scan'
+  // },
+  // {
+  //   name: 'Quest Item Search',
+  //   description:
+  //     'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
+  //   icon: DocumentSearchIcon,
+  //   href: '/queries/quest-scan'
+  // },
 
 export default function Index() {
   return (
