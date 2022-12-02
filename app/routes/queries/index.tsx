@@ -66,6 +66,12 @@ const recommendedQueries = [
     description: 'Finds medium priced furniture to sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia5'
+  },
+  {
+    name: 'Olivias Consumable Collectables Medium Sell',
+    description: 'Finds medium priced Consumable Collectables to sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia6'
   }
 ]
 
