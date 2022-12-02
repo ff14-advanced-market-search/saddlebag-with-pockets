@@ -97,6 +97,7 @@ const Index = () => {
             defaultHQChecked={false}
             defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}
+            defaultRegionWideChecked={true}
             error={results && results.exception ? results.exception : undefined}
           />
         </div>
