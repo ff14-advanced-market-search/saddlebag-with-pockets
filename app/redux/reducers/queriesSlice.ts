@@ -27,6 +27,7 @@ export interface QueriesState {
   olivia7?: ScanResponse
   olivia8?: ScanResponse
   olivia9?: ScanResponse
+  olivia10?: ScanResponse
 }
 
 const initialState: QueriesState = {}
@@ -112,6 +113,9 @@ export const queriesSlice = createSlice({
     },
     setOlivia9: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.olivia9 = action.payload
+    },
+    setOlivia10: (state, action: PayloadAction<ScanResponse | undefined>) => {
+      state.olivia10 = action.payload
     }
   }
 })
@@ -136,7 +140,8 @@ export const {
   setOlivia6,
   setOlivia7,
   setOlivia8,
-  setOlivia9
+  setOlivia9,
+  setOlivia10
 } = queriesSlice.actions
 
 export default queriesSlice.reducer
