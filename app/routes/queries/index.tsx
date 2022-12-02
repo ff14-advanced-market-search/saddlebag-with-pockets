@@ -69,18 +69,18 @@ const recommendedQueries = [
   },
   {
     name: 'Olivias Consumable Collectables Medium Sell',
-    description: 'Finds medium priced Consumable Collectables to sell.',
+    description: 'Medium priced Consumable Collectables to sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia6'
   },
   {
     name: 'Olivias Glamor Medium Sell',
-    description: 'Finds medium priced glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
+    description: 'Medium priced glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia7'
   },
   {
-    name: 'Olivias High Investment furniture Items',
+    name: 'Olivias High Investment Furniture Items',
     description: 'Furnishing items with big profits but slow sales',
     icon: DocumentSearchIcon,
     href: '/queries/olivia10'
