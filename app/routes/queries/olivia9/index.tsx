@@ -10,7 +10,7 @@ import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { useDispatch } from 'react-redux'
-import { setOlivia5 } from '~/redux/reducers/queriesSlice'
+import { setOlivia9 } from '~/redux/reducers/queriesSlice'
 import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
 import FullScanForm from '../full-scan/FullScanForm'
 
@@ -45,13 +45,13 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
 
-  const Olivia5 = useTypedSelector((state) => state.queries.Olivia5)
+  const Olivia9 = useTypedSelector((state) => state.queries.Olivia9)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (results && results.data) {
-      dispatch(setOlivia5(results.data))
+      dispatch(setOlivia9(results.data))
     }
   }, [results, dispatch])
 
@@ -81,19 +81,19 @@ const Index = () => {
               From Olivias blog post and video!
             </a>
           </h1>
-          {Olivia5 && !results && (
-            <PreviousResultsLink to="/queries/previous-search?query=Olivia5" />
+          {Olivia9 && !results && (
+            <PreviousResultsLink to="/queries/previous-search?query=Olivia9" />
           )}
           <FullScanForm
             loading={transition.state === 'submitting'}
             onClick={onSubmit}
-            defaultHours={168}
-            defaultSalesAmount={2}
+            defaultHours={336}
+            defaultSalesAmount={1}
             defaultROI={25}
             defaultMinimumStackSize={1}
-            defaultMinimumProfitAmount={75000}
-            defaultPricePerUnit={30000}
-            defaultFilters={[56,65,66,67,68,69,70,71,72,81,82]}
+            defaultMinimumProfitAmount={300000}
+            defaultPricePerUnit={300000}
+            defaultFilters={[1,2]}
             defaultHQChecked={false}
             defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}

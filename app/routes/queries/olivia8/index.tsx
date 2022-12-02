@@ -10,7 +10,7 @@ import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { useDispatch } from 'react-redux'
-import { setOlivia4 } from '~/redux/reducers/queriesSlice'
+import { setOlivia8 } from '~/redux/reducers/queriesSlice'
 import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
 import FullScanForm from '../full-scan/FullScanForm'
 
@@ -45,13 +45,13 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
 
-  const Olivia4 = useTypedSelector((state) => state.queries.Olivia4)
+  const Olivia8 = useTypedSelector((state) => state.queries.Olivia8)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (results && results.data) {
-      dispatch(setOlivia4(results.data))
+      dispatch(setOlivia8(results.data))
     }
   }, [results, dispatch])
 
@@ -81,8 +81,8 @@ const Index = () => {
               From Olivias blog post and video!
             </a>
           </h1>
-          {Olivia4 && !results && (
-            <PreviousResultsLink to="/queries/previous-search?query=Olivia4" />
+          {Olivia8 && !results && (
+            <PreviousResultsLink to="/queries/previous-search?query=Olivia8" />
           )}
           <FullScanForm
             loading={transition.state === 'submitting'}
