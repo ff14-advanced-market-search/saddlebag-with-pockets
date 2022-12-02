@@ -59,8 +59,7 @@ const recommendedQueries = [
   },
   {
     name: 'Olivias Vendor Flipping Quick Sell',
-    description:
-      'Low Investment Vendor Flipping Quick Sell.',
+    description: 'Low Investment Vendor Flipping Quick Sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia1'
   }
