@@ -18,6 +18,7 @@ export interface QueriesState {
   questScan?: ScanResponse
   valueScan?: ScanResponse
   vendorScan?: ScanResponse
+  olivia1?: ScanResponse
 }
 
 const initialState: QueriesState = {}
@@ -76,6 +77,9 @@ export const queriesSlice = createSlice({
     },
     setVendorScan: (state, action: PayloadAction<ScanResponse | undefined>) => {
       state.vendorScan = action.payload
+    },
+    setOlivia1: (state, action: PayloadAction<ScanResponse | undefined>) => {
+      state.olivia1 = action.payload
     }
   }
 })
@@ -91,7 +95,8 @@ export const {
   setOutOfStockScan,
   setQuestScan,
   setValueScan,
-  setVendorScan
+  setVendorScan,
+  setOlivia1
 } = queriesSlice.actions
 
 export default queriesSlice.reducer

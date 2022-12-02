@@ -56,6 +56,13 @@ const recommendedQueries = [
       'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
     icon: DocumentSearchIcon,
     href: '/queries/mega-value-scan'
+  },
+  {
+    name: 'Olivias Vendor Flipping Quick Sell',
+    description:
+      'Low Investment Vendor Flipping Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia1'
   }
 ]
 
