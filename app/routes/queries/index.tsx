@@ -54,6 +54,12 @@ const recommendedQueries = [
     description: 'Low Investment Furnishing Items Quick Sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia3'
+  },
+  {
+    name: 'Olivias Furnishing Items Quick Sell',
+    description: 'Low Investment Minions, Mounts, and Collectable Items Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia4'
   }
 ]
 
