@@ -72,6 +72,12 @@ const recommendedQueries = [
     description: 'Finds medium priced Consumable Collectables to sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia6'
+  },
+  {
+    name: 'Olivias Glamor Medium Sell',
+    description: 'Finds medium priced glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia7'
   }
 ]
 
