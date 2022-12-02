@@ -18,6 +18,19 @@ const recommendedQueries = [
     href: '/queries/nq-out-stock-scan'
   },
   {
+    name: 'Fast Sales Search',
+    description: 'Search for items with high rate of sales.',
+    icon: DocumentSearchIcon,
+    href: '/queries/fast-scan'
+  },
+  {
+    name: 'Commodities Search',
+    description:
+      'Search for items that sell in larger stack sizes (i.e. larger quantities)',
+    icon: DocumentSearchIcon,
+    href: '/queries/commodity-scan'
+  },
+  {
     name: 'Mega Value Search',
     description:
       'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
@@ -35,6 +48,12 @@ const recommendedQueries = [
     description: 'Low Investment Class Quest Items Quick Sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia2'
+  },
+  {
+    name: 'Olivias Furnishing Items Quick Sell',
+    description: 'Low Investment Furnishing Items Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia3'
   }
 ]
 
@@ -44,19 +63,6 @@ const recommendedQueries = [
   //   description: 'Search for high value trades.',
   //   icon: DocumentSearchIcon,
   //   href: '/queries/value-scan'
-  // },
-  // {
-  //   name: 'Fast Sales Search',
-  //   description: 'Search for items with high rate of sales.',
-  //   icon: DocumentSearchIcon,
-  //   href: '/queries/fast-scan'
-  // },
-  // {
-  //   name: 'Commodities Search',
-  //   description:
-  //     'Search for items that sell in larger stack sizes (i.e. larger quantities)',
-  //   icon: DocumentSearchIcon,
-  //   href: '/queries/commodity-scan'
   // },
   // {
   //   name: 'NPC Vendor Item Search',

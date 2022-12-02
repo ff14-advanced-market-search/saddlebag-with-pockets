@@ -10,7 +10,7 @@ import NoResults from '~/routes/queries/full-scan/NoResults'
 import Results from '~/routes/queries/full-scan/Results'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { useDispatch } from 'react-redux'
-import { setOlivia2 } from '~/redux/reducers/queriesSlice'
+import { setOlivia3 } from '~/redux/reducers/queriesSlice'
 import { PreviousResultsLink } from '../full-scan/PreviousResultsLink'
 import FullScanForm from '../full-scan/FullScanForm'
 
@@ -45,13 +45,13 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
 
-  const Olivia2 = useTypedSelector((state) => state.queries.Olivia2)
+  const Olivia3 = useTypedSelector((state) => state.queries.Olivia3)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (results && results.data) {
-      dispatch(setOlivia2(results.data))
+      dispatch(setOlivia3(results.data))
     }
   }, [results, dispatch])
 
@@ -78,40 +78,22 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-2xl font-semibold text-green-900 py-6">
             <a href="https://www.uhholivia.com/uhholivia-blog/millions-of-gil-only-with-flipping">
-              From Olivias blog post and video! 
-            </a>{' '}
-            Quest Search: These items are bought by players to turn in for
-            <a
-              target="_blank"
-              rel="noreferrer"
-              className="primary-btn"
-              href="https://ffxiv.gamerescape.com/wiki/Supply_and_Provisioning_Mission">
-              <u> Supply and Provisioning Missions </u>
+              From Olivias blog post and video!
             </a>
-            or
-            <a
-              target="_blank"
-              rel="noreferrer"
-              className="primary-btn"
-              href="https://ffxivgillionaire.com/crafter-class-quest-items-guide">
-              <u> Crafter Class Quests.</u>
-            </a>{' '}
-            Look over those links, as some quests or missions require high
-            quality items.
           </h1>
-          {Olivia2 && !results && (
-            <PreviousResultsLink to="/queries/previous-search?query=Olivia2" />
+          {Olivia3 && !results && (
+            <PreviousResultsLink to="/queries/previous-search?query=Olivia3" />
           )}
           <FullScanForm
             loading={transition.state === 'submitting'}
             onClick={onSubmit}
             defaultHours={48}
-            defaultSalesAmount={2}
+            defaultSalesAmount={5}
             defaultROI={25}
             defaultMinimumStackSize={1}
             defaultMinimumProfitAmount={5000}
             defaultPricePerUnit={5000}
-            defaultFilters={[-2,-3]}
+            defaultFilters={[56,65,66,67,68,69,70,71,72,81,82]}
             defaultHQChecked={false}
             defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}
