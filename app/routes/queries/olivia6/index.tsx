@@ -93,7 +93,7 @@ const Index = () => {
             defaultMinimumStackSize={1}
             defaultMinimumProfitAmount={75000}
             defaultPricePerUnit={30000}
-            defaultFilters={[75,80,90]}
+            defaultFilters={[75, 80, 90]}
             defaultHQChecked={false}
             defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}

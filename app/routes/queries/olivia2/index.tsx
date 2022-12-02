@@ -78,7 +78,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-2xl font-semibold text-green-900 py-6">
             <a href="https://www.uhholivia.com/uhholivia-blog/millions-of-gil-only-with-flipping">
-              From Olivias blog post and video! 
+              From Olivias blog post and video!
             </a>{' '}
             Quest Search: These items are bought by players to turn in for
             <a
@@ -111,7 +111,7 @@ const Index = () => {
             defaultMinimumStackSize={1}
             defaultMinimumProfitAmount={5000}
             defaultPricePerUnit={5000}
-            defaultFilters={[-2,-3]}
+            defaultFilters={[-2, -3]}
             defaultHQChecked={false}
             defaultIncludeVendorChecked={true}
             defaultOutOfStockChecked={true}
