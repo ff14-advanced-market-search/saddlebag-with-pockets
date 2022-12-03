@@ -38,8 +38,15 @@ const recommendedQueries = [
     href: '/queries/mega-value-scan'
   },
   {
-    name: 'Olivias Vendor Flipping Quick Sell',
-    description: 'Low Investment Vendor Flipping Quick Sell.',
+    name: 'NPC Vendor Item Search',
+    description:
+      'Search for items sold by NPC Vendors which can be resold on the marketboard.',
+    icon: DocumentSearchIcon,
+    href: '/queries/vendor-scan'
+  },
+  {
+    name: 'Olivias General Flipping Quick Sell',
+    description: 'Low Investment General Flipping Quick Sell.',
     icon: DocumentSearchIcon,
     href: '/queries/olivia1'
   },
@@ -114,13 +121,6 @@ const recommendedQueries = [
 //   description: 'Search for high value trades.',
 //   icon: DocumentSearchIcon,
 //   href: '/queries/value-scan'
-// },
-// {
-//   name: 'NPC Vendor Item Search',
-//   description:
-//     'Search for items sold by NPC Vendors which can be resold on the marketboard.',
-//   icon: DocumentSearchIcon,
-//   href: '/queries/vendor-scan'
 // },
 // {
 //   name: 'Quest Item Search',
