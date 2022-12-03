@@ -18,12 +18,6 @@ const recommendedQueries = [
     href: '/queries/nq-out-stock-scan'
   },
   {
-    name: 'High Value Search',
-    description: 'Search for high value trades.',
-    icon: DocumentSearchIcon,
-    href: '/queries/value-scan'
-  },
-  {
     name: 'Fast Sales Search',
     description: 'Search for items with high rate of sales.',
     icon: DocumentSearchIcon,
@@ -37,27 +31,104 @@ const recommendedQueries = [
     href: '/queries/commodity-scan'
   },
   {
-    name: 'NPC Vendor Item Search',
-    description:
-      'Search for items sold by NPC Vendors which can be resold on the marketboard.',
-    icon: DocumentSearchIcon,
-    href: '/queries/vendor-scan'
-  },
-  {
-    name: 'Quest Item Search',
-    description:
-      'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
-    icon: DocumentSearchIcon,
-    href: '/queries/quest-scan'
-  },
-  {
     name: 'Mega Value Search',
     description:
       'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
     icon: DocumentSearchIcon,
     href: '/queries/mega-value-scan'
+  },
+  {
+    name: 'Olivias Vendor Flipping Quick Sell',
+    description: 'Low Investment Vendor Flipping Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia1'
+  },
+  {
+    name: 'Olivias Class Quest Items Quick Sell',
+    description: 'Low Investment Class Quest Items Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia2'
+  },
+  {
+    name: 'Olivias Furnishing Items Quick Sell',
+    description: 'Low Investment Furnishing Items Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia3'
+  },
+  {
+    name: 'Olivias Minions, Mounts, and Collectable Items Quick Sell',
+    description:
+      'Low Investment Minions, Mounts, and Collectable Items Quick Sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia4'
+  },
+  {
+    name: 'Olivias Furnishing Items Medium Sell',
+    description: 'Finds medium priced furniture to sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia5'
+  },
+  {
+    name: 'Olivias Consumable Collectables Medium Sell',
+    description: 'Medium priced Consumable Collectables to sell.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia6'
+  },
+  {
+    name: 'Olivias Glamor Medium Sell',
+    description:
+      'Medium priced glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia7'
+  },
+  {
+    name: 'Olivias High Investment Furniture Items',
+    description: 'Furnishing items with big profits but slow sales',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia10'
+  },
+  {
+    name: 'Olivias High Investment Collectable Items',
+    description: 'Collectable items with big profits but slow sales',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia8'
+  },
+  {
+    name: 'Olivias High Value Glamor Items',
+    description:
+      'Finds expensive glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia9'
+  },
+  {
+    name: 'Olivias High Value Materials',
+    description: 'Finds expensive Materials and Trade goods.',
+    icon: DocumentSearchIcon,
+    href: '/queries/olivia11'
   }
 ]
+
+// Save these old searches for a rainy day, now we have olivias instead
+// {
+//   name: 'High Value Search',
+//   description: 'Search for high value trades.',
+//   icon: DocumentSearchIcon,
+//   href: '/queries/value-scan'
+// },
+// {
+//   name: 'NPC Vendor Item Search',
+//   description:
+//     'Search for items sold by NPC Vendors which can be resold on the marketboard.',
+//   icon: DocumentSearchIcon,
+//   href: '/queries/vendor-scan'
+// },
+// {
+//   name: 'Quest Item Search',
+//   description:
+//     'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
+//   icon: DocumentSearchIcon,
+//   href: '/queries/quest-scan'
+// },
 
 export default function Index() {
   return (
