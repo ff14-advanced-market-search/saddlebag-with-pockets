@@ -91,7 +91,7 @@ const Index = () => {
           <FullScanForm
             loading={transition.state === 'submitting'}
             onClick={onSubmit}
-            defaultHours={99}
+            defaultHours={999}
             defaultSalesAmount={2}
             defaultROI={99}
             defaultMinimumProfitAmount={100}
