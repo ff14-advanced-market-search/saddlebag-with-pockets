@@ -154,17 +154,15 @@ const Index = () => {
         disabled={transition.state === 'submitting'}
         error={error}>
         <div className="pt-4">
-          <ItemSelect />
-          <div className="px-4">
-            <InputWithLabel
-              placeholder="Enter retainer name..."
-              type="text"
-              labelTitle="Retainer Name"
-              inputTag="Name"
-              name="retainerName"
-              toolTip="The name of the retainer that is selling your item"
-            />
-          </div>
+          <ItemSelect tooltip="Item that your retainer is selling" />
+          <InputWithLabel
+            placeholder="Enter retainer name..."
+            type="text"
+            labelTitle="Retainer Name"
+            inputTag="Name"
+            name="retainerName"
+            toolTip="The name of the retainer that is selling your item"
+          />
         </div>
       </SmallFormContainer>
     </PageWrapper>
