@@ -35,11 +35,15 @@ export const action: ActionFunction = async ({ request }) => {
 
   const itemId = parseInt(itemIdData)
 
-  return await GetSellerId({
+  const response = await GetSellerId({
     itemId,
     homeServer,
     retainerName
   })
+  if (!response.ok) {
+    return { exception: response.statusText }
+  }
+  return json({ data: await response.json(), homeServer })
 }
 
 const Index = () => {
@@ -51,33 +55,32 @@ const Index = () => {
       e.preventDefault()
     }
   }
+  console.log(results)
+  const error =
+    results && results.exception
+      ? results.exception
+      : results && results.data && results.data.seller_id === null
+      ? 'Seller not found'
+      : undefined
 
-  //   if (results) {
-  //     if (Object.keys(results).length === 0) {
-  //       return <NoResults href={`/wow/shortages/single`} />
-  //     }
-  //   }
-
-  //   if (results && 'increase' in results) {
-  //     return <ShortageResults results={results} serverName={serverName} />
-  //   }
-
-  if (results && results.seller_id) {
+  if (results && results.data) {
+    const jsonData = `{
+        "seller_id": "${results.data.seller_id}",
+        "server": "${results.homeServer}",
+        "add_ids": [],
+        "ignore_ids": [],
+        "hq_only": false 
+    }`
     return (
       <PageWrapper>
         <ContentContainer>
-          <div></div>
+          <pre>
+            <code>{jsonData}</code>
+          </pre>
         </ContentContainer>
       </PageWrapper>
     )
   }
-
-  const error =
-    results && results.exception
-      ? results.exception
-      : results && !results?.seller_id
-      ? 'Seller not found'
-      : undefined
 
   return (
     <PageWrapper>
@@ -90,7 +93,6 @@ const Index = () => {
         error={error}>
         <div className="pt-4">
           <ItemSelect />
-
           <div className="px-4">
             <InputWithLabel
               placeholder="Enter retainer name..."
