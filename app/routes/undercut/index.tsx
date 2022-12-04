@@ -64,13 +64,7 @@ const Index = () => {
       : undefined
 
   if (results && results.data) {
-    const jsonData = `{
-        "seller_id": "${results.data.seller_id}",
-        "server": "${results.homeServer}",
-        "add_ids": [],
-        "ignore_ids": [],
-        "hq_only": false 
-    }`
+    const jsonData = `{\n"seller_id": "${results.data.seller_id}",\n"server": "${results.homeServer}",\n"add_ids": [],\n"ignore_ids": [],\n"hq_only": false\n}`
     return (
       <PageWrapper>
         <ContentContainer>
