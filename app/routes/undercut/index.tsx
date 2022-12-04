@@ -9,6 +9,7 @@ import { getUserSessionData } from '~/sessions'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { useState } from 'react'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import NoResults from './NoResults'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -43,9 +44,9 @@ export const action: ActionFunction = async ({ request }) => {
     retainerName
   })
   if (!response.ok) {
-    return { exception: response.statusText }
+    return json({ exception: response.statusText })
   }
-  return json({ data: await response.json(), homeServer })
+  return json({ data: await response.json(), homeServer, itemId })
 }
 
 const Index = () => {
@@ -67,14 +68,9 @@ const Index = () => {
     }
   }
 
-  const error =
-    results && results.exception
-      ? results.exception
-      : results && results.data && results.data.seller_id === null
-      ? 'Seller not found'
-      : undefined
+  const error = results && results.exception ? results.exception : undefined
 
-  if (results && results.data && !error) {
+  if (results && results.data) {
     const jsonData = `{\n  "seller_id": "${
       results?.data.seller_id ??
       '775e2c68ac04f1da582bfddd3d20be846b31201c7bda8d9187701c47474b5cb2'
@@ -85,12 +81,22 @@ const Index = () => {
     )}],\n  "ignore_ids": [${info.removeIds.join(
       ','
     )}],\n  "hq_only": ${info.hqOnly.toString()}\n}`
+
+    if (results.data.seller_id === null) {
+      const itemId = results?.itemId
+
+      const link = itemId
+        ? `https://universalis.app/market/${itemId}`
+        : 'https://universalis.app'
+
+      return <NoResults href={link} />
+    }
     return (
       <PageWrapper>
         <ContentContainer>
           <div className="flex flex-col my-2 gap-2">
-            <Title title="Discord Undercut payload" />
-            <p className="italic text-sm text-grey-500 mb=1">
+            <Title title="Input for undercut alerts" />
+            <p className="italic text-sm text-grey-500 mb-1">
               Copy the below text to your clipboard and use it in our{' '}
               <a
                 className="underline"
@@ -154,7 +160,10 @@ const Index = () => {
         disabled={transition.state === 'submitting'}
         error={error}>
         <div className="pt-4">
-          <ItemSelect tooltip="Item that your retainer is selling" />
+          <ItemSelect
+            selectId="itemId"
+            tooltip="Item that your retainer is selling"
+          />
           <InputWithLabel
             placeholder="Enter retainer name..."
             type="text"
