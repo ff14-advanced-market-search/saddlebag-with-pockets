@@ -60,8 +60,8 @@ const Index = () => {
 
   const error = results && results.exception ? results.exception : undefined
 
-  if (results && results.data) {
-    if (results.data.seller_id === null) {
+  if (results && results.data && !error) {
+    if (!results.data?.seller_id) {
       const itemId = results?.itemId
 
       const link = itemId
