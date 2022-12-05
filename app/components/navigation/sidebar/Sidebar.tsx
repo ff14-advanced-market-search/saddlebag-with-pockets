@@ -10,7 +10,8 @@ import {
   XIcon,
   DocumentSearchIcon,
   ChevronUpIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  PencilAltIcon
 } from '@heroicons/react/outline'
 import { Link, NavLink } from '@remix-run/react'
 import { classNames } from '~/utils'
@@ -53,6 +54,11 @@ const navGroups: Array<{
         name: 'Item History',
         href: 'queries/item-history',
         icon: DocumentSearchIcon
+      },
+      {
+        name: 'Undercut Alert Input',
+        href: 'undercut',
+        icon: PencilAltIcon
       },
       {
         name: 'Undercut Discord Alerts',

@@ -110,9 +110,7 @@ export const Modal: React.FC<{
             <XMarkIcon />
           </button>
         </div>
-        <div className="overflow-scroll max-h-full shadow-inner">
-          {children}
-        </div>
+        <div className="overflow-scroll max-h-full">{children}</div>
       </div>
       <div
         className="z-[10000] opacity-75 fixed inset-0 bg-black"

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 import { getItemNameById, searchForItemName } from '~/utils/items'
 
 export interface ItemSelected {
@@ -9,10 +10,14 @@ export interface ItemSelected {
 const DEFAULT_SELECT_VALUE = 'default'
 const ItemSelect = ({
   onSelectChange,
-  onTextChange
+  onTextChange,
+  tooltip,
+  selectId
 }: {
   onSelectChange?: (selectValue?: ItemSelected) => void
   onTextChange?: (selectValue?: string) => void
+  tooltip?: string
+  selectId?: string
 }) => {
   const [id, setId] = useState<string>(DEFAULT_SELECT_VALUE)
   const [name, setName] = useState('')
@@ -24,11 +29,14 @@ const ItemSelect = ({
     <div className="py-2 bg-white sm:p-4 dark:bg-slate-700">
       <div className="flex-1 min-w-full dir-col md:max-w-md">
         <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-          <label
-            htmlFor="itemName"
-            className="block text-sm font-medium text-gray-700 dark:text-grey-100">
-            Search for Item by Name
-          </label>
+          <div className="flex gap-2 relative">
+            <label
+              htmlFor="itemName"
+              className="block text-sm font-medium text-gray-700 dark:text-grey-100">
+              Search for Item by Name
+            </label>
+            {tooltip && <ToolTip data={tooltip} />}
+          </div>
           <div className={`mt-1 flex rounded-md shadow-sm`}>
             <input
               type={'text'}
@@ -60,6 +68,7 @@ const ItemSelect = ({
       </div>
       <div className="max-w-7xl mt-1 flex rounded-md shadow-sm`">
         <select
+          id={selectId}
           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           value={id}
           name="itemId"
