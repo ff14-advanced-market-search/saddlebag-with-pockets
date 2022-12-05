@@ -83,7 +83,11 @@ const navGroups: Array<{
   {
     title: 'World of Warcraft',
     links: [
-      { name: 'Server Transfer Trading', href: '/wow/full-scan', icon: DocumentSearchIcon },
+      {
+        name: 'Server Transfer Trading',
+        href: '/wow/full-scan',
+        icon: DocumentSearchIcon
+      },
 
       {
         name: 'Local Market Shortage Finder',
