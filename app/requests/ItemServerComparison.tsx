@@ -46,9 +46,3 @@ const ItemServerComparison: ({
 }
 
 export default ItemServerComparison
-
-// const formPayload = Object.fromEntries(await request.formData())
-// const subscriberSchema = z.object({
-//   name: z.string(),
-//   email: z.string().email(),
-// })

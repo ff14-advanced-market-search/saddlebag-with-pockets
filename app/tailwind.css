@@ -775,14 +775,6 @@ select {
   left: -0.25rem;
 }
 
-.top-0 {
-  top: 0px;
-}
-
-.right-0 {
-  right: 0px;
-}
-
 .top-5 {
   top: 1.25rem;
 }
@@ -807,6 +799,14 @@ select {
   right: 0.75rem;
 }
 
+.top-0 {
+  top: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
 .-right-1 {
   right: -0.25rem;
 }
@@ -819,6 +819,14 @@ select {
   z-index: 50;
 }
 
+.z-\[10001\] {
+  z-index: 10001;
+}
+
+.z-\[10000\] {
+  z-index: 10000;
+}
+
 .z-40 {
   z-index: 40;
 }
@@ -829,14 +837,6 @@ select {
 
 .z-\[inherit\] {
   z-index: inherit;
-}
-
-.z-\[10001\] {
-  z-index: 10001;
-}
-
-.z-\[10000\] {
-  z-index: 10000;
 }
 
 .col-span-6 {
@@ -1812,14 +1812,14 @@ select {
   padding-bottom: 1.25rem;
 }
 
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .py-3\.5 {
@@ -1838,6 +1838,10 @@ select {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pt-1 {
+  padding-top: 0.25rem;
 }
 
 .pt-5 {
@@ -1866,10 +1870,6 @@ select {
 
 .pr-1 {
   padding-right: 0.25rem;
-}
-
-.pt-1 {
-  padding-top: 0.25rem;
 }
 
 .text-left {
@@ -2050,12 +2050,12 @@ select {
   opacity: 0.9;
 }
 
-.opacity-25 {
-  opacity: 0.25;
-}
-
 .opacity-75 {
   opacity: 0.75;
+}
+
+.opacity-25 {
+  opacity: 0.25;
 }
 
 .opacity-100 {
