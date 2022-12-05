@@ -83,7 +83,7 @@ const Index = () => {
     <PageWrapper>
       <SmallFormContainer
         title="Input for undercut alerts"
-        description="Make using your patreon undercut alerts easier. Generate the input needed to activate our discord undercut alerts."
+        description="To setup undercut alerts search universalis for one of your retainers by name (with exact capitilization) and an item they are selling on the Market Board."
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}
