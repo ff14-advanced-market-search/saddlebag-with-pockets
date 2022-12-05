@@ -1,5 +1,9 @@
 import { address, UserAgent } from '~/requests/client/config'
 
+export interface SellerIdResponse {
+  seller_id: number | null
+}
+
 const GetSellerId: ({
   itemId,
   homeServer,
