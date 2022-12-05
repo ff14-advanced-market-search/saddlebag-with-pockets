@@ -77,15 +77,15 @@ const navGroups: Array<{
   {
     title: 'World of Warcraft',
     links: [
-      { name: 'Scan', href: '/wow/full-scan', icon: DocumentSearchIcon },
+      { name: 'Server Transfer Trading', href: '/wow/full-scan', icon: DocumentSearchIcon },
 
       {
-        name: 'Single Shortages',
+        name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
         icon: DocumentSearchIcon
       },
       {
-        name: 'Commodity Shortages',
+        name: 'Region Wide Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
         icon: DocumentSearchIcon
       }
@@ -95,7 +95,7 @@ const navGroups: Array<{
     title: 'Other',
     links: [
       {
-        name: 'Legacy Site',
+        name: 'Legacy FFXIV Site',
         href: 'https://saddlebag.exchange',
         icon: HomeIcon,
         external: true
