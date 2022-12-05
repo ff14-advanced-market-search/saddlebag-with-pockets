@@ -39,7 +39,7 @@ const Results = ({
           <div className="flex flex-col my-2 gap-2">
             <Title title="Input for undercut alerts" />
             <p className="italic text-sm text-grey-500 mb-1">
-              Copy the below text to your clipboard and use it in our{' '}
+              Copy the text below to your clipboard and use it in our{' '}
               <a
                 className="underline"
                 href="https://discord.gg/836C8wDVNq"
@@ -47,7 +47,7 @@ const Results = ({
                 rel="noreferrer">
                 discord server
               </a>{' '}
-              to activate{' '}
+              for the bot slash command /register or /update to activate{' '}
               <a
                 className="underline"
                 href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
