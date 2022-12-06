@@ -8,6 +8,11 @@ import ItemServerComparison from '~/requests/ItemServerComparison'
 import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
 import CheckBox from '~/components/form/CheckBox'
+import { useState } from 'react'
+import Modal from '~/components/form/Modal'
+import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
+import { getItemNameById } from '~/utils/items'
+import ItemSelect from '~/components/form/select/ItemSelect'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -23,7 +28,6 @@ export const action: ActionFunction = async ({ request }) => {
   const homeServer = session.getWorld()
 
   const formPayload = Object.fromEntries(formData)
-  console.log('formPayload', formPayload)
   const inputSchema = z.object({
     itemIds: z
       .string()
@@ -45,7 +49,7 @@ export const action: ActionFunction = async ({ request }) => {
         .join(', ')}`
     })
   }
-  console.log('validData', validInput)
+
   const response = await ItemServerComparison({
     homeServer,
     ...validInput.data
@@ -53,12 +57,17 @@ export const action: ActionFunction = async ({ request }) => {
   if (!response.ok) {
     return json({ exception: response.statusText })
   }
-  return json({ data: await response.json(), homeServer })
+  return json({ ...(await response.json()), homeServer })
 }
 
 const Index = () => {
   const transition = useTransition()
   const results = useActionData()
+  const [modal, setModal] = useState<'exportServers' | 'items' | null>(null)
+  const [state, setState] = useState<{
+    items: string[]
+    exportServers: string[]
+  }>({ items: [], exportServers: [] })
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -66,13 +75,14 @@ const Index = () => {
     }
   }
 
-  console.log(results)
   const error =
     results && results.exception
       ? results.exception
-      : results && results?.data?.data.length === 0
+      : results && results?.data.length === 0
       ? 'No results found'
       : undefined
+
+  console.log(results)
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -83,8 +93,7 @@ const Index = () => {
         disabled={transition.state === 'submitting'}
         error={error}>
         <div className="pt-4">
-          {/* <ItemSelect tooltip="Item that your retainer is selling" /> */}
-          <div className="sm:px-4">
+          <div className="sm:px-4 flex flex-col gap-2">
             <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
 
             <InputWithLabel
@@ -94,14 +103,43 @@ const Index = () => {
               name="exportServers"
             />
 
-            <InputWithLabel
-              type="text"
-              labelTitle="Item Ids"
-              inputTag="Name"
-              name="itemIds"
-            />
+            <div className="flex flex-col max-w-full">
+              <ModalToggleButton
+                type="button"
+                onClick={() => setModal('items')}>
+                Items to compare
+              </ModalToggleButton>
+              <input name="itemIds" hidden value={state.items} />
+              <div className="flex flex-wrap">
+                {state.items.map((id) => getItemNameById(id) || '').join(', ')}
+              </div>
+            </div>
           </div>
         </div>
+        {modal && (
+          <Modal
+            title={
+              modal === 'items'
+                ? 'Choose items to check price on'
+                : 'Choose worlds to compare'
+            }
+            onClose={() => setModal(null)}>
+            {modal === 'items' ? (
+              <div>
+                <ItemSelect
+                  onSelectChange={(selected) => {
+                    if (!selected) return
+
+                    setState({ ...state, items: [...state.items, selected.id] })
+                  }}
+                  tooltip="Item to compare the price against"
+                />
+              </div>
+            ) : (
+              <p>Other</p>
+            )}
+          </Modal>
+        )}
       </SmallFormContainer>
     </PageWrapper>
   )
