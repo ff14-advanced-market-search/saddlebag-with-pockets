@@ -56,6 +56,11 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Item Price Comparison',
+        href: 'queries/world-comparison',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'Undercut Alert Input',
         href: 'undercut',
         icon: PencilAltIcon
