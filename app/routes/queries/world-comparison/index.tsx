@@ -1,9 +1,10 @@
 import { useActionData, useTransition } from '@remix-run/react'
-import { PageWrapper } from '~/components/Common'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import ItemServerComparison from '~/requests/ItemServerComparison'
+import type { ItemServerComparisonList } from '~/requests/ItemServerComparison'
 import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
 import CheckBox from '~/components/form/CheckBox'
@@ -12,7 +13,11 @@ import Modal from '~/components/form/Modal'
 import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 import { getItemNameById } from '~/utils/items'
 import ItemSelect from '~/components/form/select/ItemSelect'
-import { TrashIcon } from '@heroicons/react/outline'
+import {
+  ChevronUpIcon,
+  TrashIcon,
+  ChevronDownIcon
+} from '@heroicons/react/outline'
 import { WorldList } from '~/utils/locations/Worlds'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 
@@ -22,6 +27,17 @@ const pathHash: Record<string, string> = {
   exportServers: 'Export Servers',
   itemIds: 'Items'
 }
+
+const sortByPrice =
+  (desc: boolean) => (first: { price: number }, second: { price: number }) => {
+    if (first.price === second.price) {
+      return 0
+    }
+    if (first.price < second.price) {
+      return desc ? -1 : 1
+    }
+    return desc ? 1 : -1
+  }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -64,7 +80,10 @@ export const action: ActionFunction = async ({ request }) => {
 
 const Index = () => {
   const transition = useTransition()
-  const results = useActionData()
+  const results = useActionData<
+    ItemServerComparisonList | { exception: string } | {}
+  >()
+
   const [modal, setModal] = useState<'exportServers' | 'items' | null>(null)
   const [state, setState] = useState<{
     items: string[]
@@ -78,13 +97,17 @@ const Index = () => {
   }
 
   const error =
-    results && results.exception
+    results && 'exception' in results
       ? results.exception
-      : results && results?.data?.length === 0
+      : results && 'data' in results && results.data.length === 0
       ? 'No results found'
       : undefined
 
-  console.log(results)
+  if (results && 'data' in results && !error) {
+    if (results.data) {
+      return <Results results={results} />
+    }
+  }
 
   const itemsLength = state.items.length
   const serversLength = state.exportServers.length
@@ -185,7 +208,7 @@ const Index = () => {
                     ))}
                   </ul>
                 </>
-              )}{' '}
+              )}
               {modal === 'exportServers' && (
                 <div>
                   {Object.entries(WorldList).map(([dataCenter, worlds]) => (
@@ -254,3 +277,69 @@ const ItemListRow = ({
     </button>
   </li>
 )
+
+const Results = ({ results }: { results: ItemServerComparisonList }) => {
+  const [tableDesc, setTableDesc] = useState(true)
+
+  const getSortedTables = sortByPrice(tableDesc)
+
+  return (
+    <PageWrapper>
+      <ContentContainer>
+        <div className="flex w-full overflow-x-scroll gap-3 p-4">
+          {results.data.map((item) => {
+            const sortedServers = item.export_servers.sort(getSortedTables)
+            return (
+              <div
+                key={item.item_id}
+                className="min-w-max rounded-md shadow-md p-3">
+                <Title title={getItemNameById(item.item_id) as string} />
+                <div>
+                  <table className="table-auto border-separate border-spacing-2">
+                    <tr>
+                      <th className="text-left py-1 px-2">World</th>
+                      <th
+                        className="text-left py-1 px-2 flex items-center"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setTableDesc((state) => !state)
+                        }}>
+                        Price
+                        {tableDesc ? (
+                          <ChevronDownIcon className="h-4 w-4 ml-1" />
+                        ) : (
+                          <ChevronUpIcon className="h-4 w-4 ml-1" />
+                        )}
+                      </th>
+                    </tr>
+                    {sortedServers.map((server) => {
+                      const isHomeServer =
+                        results.homeServer === server.server_name
+                      return (
+                        <tr key={server.server_name}>
+                          <td
+                            className={`text-left py-1 px-2${
+                              isHomeServer ? ' font-semibold' : ''
+                            }`}>
+                            {isHomeServer
+                              ? `${server.server_name}*`
+                              : server.server_name}
+                          </td>
+                          <td className="text-left py-1 px-2">
+                            {server.price === 0
+                              ? 'No Sales found'
+                              : server.price.toLocaleString()}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </table>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </ContentContainer>
+    </PageWrapper>
+  )
+}

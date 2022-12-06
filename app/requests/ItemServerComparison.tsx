@@ -12,6 +12,7 @@ export type ItemServerComparisonResult = {
 
 export type ItemServerComparisonList = {
   data: Array<ItemServerComparisonResult>
+  homeServer: string
 }
 
 const ItemServerComparison: ({
