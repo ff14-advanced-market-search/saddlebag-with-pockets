@@ -1,6 +1,5 @@
 import { useActionData, useTransition } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
-import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
@@ -14,6 +13,8 @@ import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 import { getItemNameById } from '~/utils/items'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { TrashIcon } from '@heroicons/react/outline'
+import { WorldList } from '~/utils/locations/Worlds'
+import TitleTooltip from '~/components/Common/TitleTooltip'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -79,13 +80,14 @@ const Index = () => {
   const error =
     results && results.exception
       ? results.exception
-      : results && results?.data.length === 0
+      : results && results?.data?.length === 0
       ? 'No results found'
       : undefined
 
   console.log(results)
 
   const itemsLength = state.items.length
+  const serversLength = state.exportServers.length
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -96,30 +98,53 @@ const Index = () => {
         disabled={transition.state === 'submitting'}
         error={error}>
         <div className="pt-4">
-          <div className="sm:px-4 flex flex-col gap-2">
-            <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
+          <div className="sm:px-4 flex flex-col gap-4">
+            <div className="flex flex-col max-w-full relative">
+              <TitleTooltip
+                title="Worlds to compare with your home server"
+                toolTip="Choose worlds to see which has the best price for your selected items"
+                relative
+              />
+              <ModalToggleButton
+                type="button"
+                onClick={() => setModal('exportServers')}>
+                Choose Worlds
+              </ModalToggleButton>
+              <input name="exportServers" value={state.exportServers} hidden />
+              <p className="mt-2 ml-1 text-sm text-gray-500">
+                {serversLength > 3 || !serversLength
+                  ? `${serversLength ? serversLength : 'No'} worlds selected`
+                  : state.exportServers.map((name) => name).join(', ')}
+              </p>
+            </div>
 
-            <InputWithLabel
-              type="text"
-              labelTitle="exportServers"
-              inputTag="Server"
-              name="exportServers"
-            />
-
-            <div className="flex flex-col max-w-full">
+            <div className="flex flex-col max-w-full relative">
+              <TitleTooltip
+                title="Items you want to compare"
+                toolTip="Choose worlds to see which has the best price for your selected items"
+                relative
+              />
               <ModalToggleButton
                 type="button"
                 onClick={() => setModal('items')}>
-                Items to compare
+                Choose Items
               </ModalToggleButton>
               <input name="itemIds" hidden value={state.items} />
-              <p className=" ml-1 text-sm text-gray-700">
+              <p className="mt-2 ml-1 text-sm text-gray-500">
                 {itemsLength > 3 || !itemsLength
                   ? `${itemsLength ? itemsLength : 'No'} items selected`
                   : state.items
                       .map((id) => getItemNameById(id) || '')
                       .join(', ')}
               </p>
+            </div>
+            <div className="flex flex-col max-w-full relative">
+              <TitleTooltip
+                title="High quality items only"
+                toolTip="If selected will only return high quality items"
+                relative
+              />
+              <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
             </div>
           </div>
         </div>
@@ -132,7 +157,7 @@ const Index = () => {
             }
             onClose={() => setModal(null)}>
             <div className="mt-2 flex flex-col">
-              {modal === 'items' ? (
+              {modal === 'items' && (
                 <>
                   <ItemSelect
                     onSelectChange={(selected) => {
@@ -160,8 +185,44 @@ const Index = () => {
                     ))}
                   </ul>
                 </>
-              ) : (
-                <p>Other</p>
+              )}{' '}
+              {modal === 'exportServers' && (
+                <div>
+                  {Object.entries(WorldList).map(([dataCenter, worlds]) => (
+                    <div key={dataCenter}>
+                      <p className="text mt-1 font-semibold text-gray-800">
+                        {dataCenter}
+                      </p>
+                      {worlds.map(({ name }) => {
+                        const isSelected = state.exportServers.includes(name)
+
+                        return (
+                          <CheckBox
+                            key={dataCenter + name + state.exportServers}
+                            labelTitle={'-- ' + name}
+                            id={name}
+                            onChange={() => {
+                              if (isSelected) {
+                                setState({
+                                  ...state,
+                                  exportServers: state.exportServers.filter(
+                                    (world) => world !== name
+                                  )
+                                })
+                              } else {
+                                setState({
+                                  ...state,
+                                  exportServers: [...state.exportServers, name]
+                                })
+                              }
+                            }}
+                            checked={isSelected}
+                          />
+                        )
+                      })}
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </Modal>
