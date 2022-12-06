@@ -84,6 +84,8 @@ const Index = () => {
       : undefined
 
   console.log(results)
+
+  const itemsLength = state.items.length
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -112,8 +114,8 @@ const Index = () => {
               </ModalToggleButton>
               <input name="itemIds" hidden value={state.items} />
               <p className=" ml-1 text-sm text-gray-700">
-                {state.items.length > 3
-                  ? `${state.items.length} items selected`
+                {itemsLength > 3 || !itemsLength
+                  ? `${itemsLength ? itemsLength : 'No'} items selected`
                   : state.items
                       .map((id) => getItemNameById(id) || '')
                       .join(', ')}
