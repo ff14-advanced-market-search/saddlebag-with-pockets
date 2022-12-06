@@ -13,6 +13,7 @@ import Modal from '~/components/form/Modal'
 import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 import { getItemNameById } from '~/utils/items'
 import ItemSelect from '~/components/form/select/ItemSelect'
+import { TrashIcon } from '@heroicons/react/outline'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -110,9 +111,13 @@ const Index = () => {
                 Items to compare
               </ModalToggleButton>
               <input name="itemIds" hidden value={state.items} />
-              <div className="flex flex-wrap">
-                {state.items.map((id) => getItemNameById(id) || '').join(', ')}
-              </div>
+              <p className=" ml-1 text-sm text-gray-700">
+                {state.items.length > 3
+                  ? `${state.items.length} items selected`
+                  : state.items
+                      .map((id) => getItemNameById(id) || '')
+                      .join(', ')}
+              </p>
             </div>
           </div>
         </div>
@@ -124,20 +129,39 @@ const Index = () => {
                 : 'Choose worlds to compare'
             }
             onClose={() => setModal(null)}>
-            {modal === 'items' ? (
-              <div>
-                <ItemSelect
-                  onSelectChange={(selected) => {
-                    if (!selected) return
+            <div className="mt-2 flex flex-col">
+              {modal === 'items' ? (
+                <>
+                  <ItemSelect
+                    onSelectChange={(selected) => {
+                      if (!selected) return
 
-                    setState({ ...state, items: [...state.items, selected.id] })
-                  }}
-                  tooltip="Item to compare the price against"
-                />
-              </div>
-            ) : (
-              <p>Other</p>
-            )}
+                      setState({
+                        ...state,
+                        items: [...state.items, selected.id]
+                      })
+                    }}
+                    tooltip="Type in at least 2 characters to search."
+                  />
+                  <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
+                    {state.items.map((id, index) => (
+                      <ItemListRow
+                        key={`${id}-${index}`}
+                        id={id}
+                        onDelete={() =>
+                          setState({
+                            ...state,
+                            items: state.items.filter((item) => item !== id)
+                          })
+                        }
+                      />
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p>Other</p>
+              )}
+            </div>
           </Modal>
         )}
       </SmallFormContainer>
@@ -146,3 +170,24 @@ const Index = () => {
 }
 
 export default Index
+
+const ItemListRow = ({
+  id,
+  onDelete
+}: {
+  id: string | number
+  onDelete: () => void
+}) => (
+  <li className="flex items-center w-full justify-between my-1 px-3 py-2 gap:3 bg-gray-100 rounded-md">
+    <p className="text-ellipsis overflow-hidden no-wrap text-gray-600">
+      {getItemNameById(id)}
+    </p>
+    <button
+      className="rounded p-1 border-gray-300 min-w-fit hover:scale-125 transition ease-in-out duration-300"
+      type="button"
+      onClick={onDelete}
+      aria-label="Delete">
+      <TrashIcon className={`h-4 w-4 text-gray-700 mx-auto`} />
+    </button>
+  </li>
+)
