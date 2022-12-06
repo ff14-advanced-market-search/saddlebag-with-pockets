@@ -114,8 +114,8 @@ const Index = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Compare items across worlds!"
-        description="Find out the price of items across multiple worlds. Discover where it's best to buy and sell!"
+        title="Compare the minimum price of items across worlds!"
+        description="Find out the minimum price of different items across multiple servers. Helps you find the best server to sell your items on, if you have alts on many servers."
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}

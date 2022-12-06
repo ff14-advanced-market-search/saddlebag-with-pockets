@@ -41,22 +41,22 @@ const navGroups: Array<{
     title: 'Final Fantasy XIV',
     links: [
       {
-        name: 'Queries',
+        name: 'Import Trading Searches',
         href: 'queries',
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Listings',
+        name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
         icon: DocumentSearchIcon
       },
       {
-        name: 'Item History',
+        name: 'Item History Statistics and Graphs',
         href: 'queries/item-history',
         icon: DocumentSearchIcon
       },
       {
-        name: 'Item Price Comparison',
+        name: 'Export Trading Search',
         href: 'queries/world-comparison',
         icon: DocumentSearchIcon
       },
@@ -89,7 +89,7 @@ const navGroups: Array<{
     title: 'World of Warcraft',
     links: [
       {
-        name: 'Server Transfer Trading',
+        name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
         icon: DocumentSearchIcon
       },
