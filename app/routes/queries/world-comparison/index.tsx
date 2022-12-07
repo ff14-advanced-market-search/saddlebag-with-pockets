@@ -327,7 +327,7 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
                           </td>
                           <td className="text-left py-1 px-2">
                             {server.price === 0
-                              ? 'No Sales found'
+                              ? 'Out of Stock on this Server'
                               : server.price.toLocaleString()}
                           </td>
                         </tr>
