@@ -207,11 +207,11 @@ const Index = () => {
 export default Index
 
 export const WoWShortageFormFields = ({
-  desiredAvgPriceDefault = 30,
+  desiredAvgPriceDefault = 100,
   desiredSellPriceDefault = 200,
   desiredPriceIncreaseDefault = 50,
   desiredSalesPerDayDefault = 40,
-  flipRiskLimitDefault = 100,
+  flipRiskLimitDefault = 10,
   overMarketPricePercentDefault = 0,
   underMarketPricePercentDefault = 0
 }) => (
