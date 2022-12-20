@@ -1,5 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
-import { Link } from '@remix-run/react'
+import { Link, NavLink } from '@remix-run/react'
 import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
@@ -79,10 +79,17 @@ export default function Index() {
                       <query.icon className={`w-8 h-8 dark:text-white`} />
                       <h2
                         className={`mt-4 font-display text-base text-slate-900 dark:text-white`}>
-                        <Link to={query.href}>
-                          <span className={`absolute -inset-px rounded-xl`} />
-                          {query.name}
-                        </Link>
+                        {query.external ? (
+                          <a href={query.href} target="_blank" rel="noreferrer">
+                            <span className={`absolute -inset-px rounded-xl`} />
+                            {query.name}
+                          </a>
+                        ) : (
+                          <Link to={query.href}>
+                            <span className={`absolute -inset-px rounded-xl`} />
+                            {query.name}
+                          </Link>
+                        )}
                       </h2>
                       <p
                         className={`mt-1 text-sm text-slate-700 dark:text-slate-400`}>
