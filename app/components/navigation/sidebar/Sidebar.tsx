@@ -89,19 +89,24 @@ const navGroups: Array<{
     title: 'World of Warcraft',
     links: [
       {
-        name: 'Server Transfer Trading Search',
-        href: '/wow/full-scan',
-        icon: DocumentSearchIcon
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
       },
-
       {
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
         icon: DocumentSearchIcon
       },
       {
-        name: 'Region Wide Commodity Shortage Finder',
+        name: 'Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Server Transfer Trading Search',
+        href: '/wow/full-scan',
         icon: DocumentSearchIcon
       }
     ]

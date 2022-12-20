@@ -4,25 +4,32 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
   {
-    name: 'Server to Server trades',
-    description:
-      'Search for items that can be bought cheaply on a server and sold at higher cost on another server.',
+    name: 'Undercut Alerts Curseforge Addon',
+    description: 'The addon for our Undercut Alerts!',
     icon: DocumentSearchIcon,
-    href: '/wow/full-scan'
+    href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+    external: true
   },
   {
-    name: 'Shortages - Single items',
+    name: 'Local Realm Shortage Finder',
     description:
-      'Searches for items that can only be sold singularly that a user can buy up all the stock and take over the market for that item.',
+      'Searches for items on your local server / realm that you can flip and take over the market!',
     icon: DocumentSearchIcon,
     href: '/wow/shortages/single'
   },
   {
-    name: 'Shortages - Commodities',
+    name: 'Commodity Shortage Finder',
     description:
-      'Searches for consumable or commodity items that a user can buy up all the stock and take over the market for that item.',
+      'Searches for region wide commodities that you can flip and take over the market!',
     icon: DocumentSearchIcon,
     href: '/wow/shortages/commodities'
+  },
+  {
+    name: 'Server Transfer Trading Search',
+    description:
+      'Search for items that can be bought cheaply on a your home server and sold for a profit when transfering realms.',
+    icon: DocumentSearchIcon,
+    href: '/wow/full-scan'
   }
 ]
 
