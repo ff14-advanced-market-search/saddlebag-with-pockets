@@ -85,8 +85,8 @@ const Index = () => {
           desiredAvgPriceDefault={20}
           desiredSellPriceDefault={20}
           desiredPriceIncreaseDefault={10}
-          desiredSalesPerDayDefault={2}
-          flipRiskLimitDefault={30}
+          desiredSalesPerDayDefault={40}
+          flipRiskLimitDefault={10}
         />
         <RegionRadioGroup onChange={setRegion} defaultChecked={region} />
         <WoWServerSelect
