@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
@@ -13,7 +13,7 @@ import {
   ChevronDownIcon,
   PencilAltIcon
 } from '@heroicons/react/outline'
-import { Link, NavLink } from '@remix-run/react'
+import { Link, NavLink, useMatches } from '@remix-run/react'
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
@@ -33,12 +33,31 @@ interface NavbarLinkProps {
   external?: boolean
 }
 
+const PatreonLink = () => (
+  <a
+    href={'https://www.patreon.com/indopan'}
+    target="_blank"
+    rel="noreferrer"
+    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
+    <PatreonIcon
+      className={classNames(
+        'text-gray-400 group-hover:text-gray-300',
+        'mr-4 flex-shrink-0 h-6 w-6'
+      )}
+      aria-hidden="true"
+    />
+    Patreon
+  </a>
+)
+
 const navGroups: Array<{
   title: string
+  openMatch?: string
   links: Array<NavbarLinkProps>
 }> = [
   {
     title: 'Final Fantasy XIV',
+    openMatch: '/queries/',
     links: [
       {
         name: 'Import Trading Searches',
@@ -92,13 +111,8 @@ const navGroups: Array<{
   },
   {
     title: 'World of Warcraft',
+    openMatch: '/wow/',
     links: [
-      {
-        name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
-        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-        external: true
-      },
       {
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
@@ -113,6 +127,12 @@ const navGroups: Array<{
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
         icon: DocumentSearchIcon
+      },
+      {
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
       }
     ]
   },
@@ -125,12 +145,7 @@ const navGroups: Array<{
         icon: HomeIcon,
         external: true
       },
-      {
-        name: 'Patreon',
-        href: 'https://www.patreon.com/indopan',
-        icon: PatreonIcon,
-        external: true
-      },
+
       {
         name: 'Ko-fi',
         href: 'https://ko-fi.com/indopan',
@@ -171,19 +186,30 @@ const _userNavigation = [
 
 const ButtonAccordian = ({
   title,
-  children
+  children,
+  openOverride
 }: {
   title: string
   children: React.ReactNode
+  openOverride: boolean
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    if (!isOpen && openOverride) {
+      setIsOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openOverride])
+
+  console.log('isOpen', isOpen)
   return (
     <div className={`flex flex-col my-1 p-0 bg-gray-700 rounded`}>
       <button
         className={`flex justify-between items-center cursor-pointer border-0 p-2 ${
           isOpen ? 'text-white' : 'text-gray-300'
         } hover:bg-gray-500 hover:text-white rounded font-semibold`}
-        onClick={() => setIsOpen((state) => !state)}>
+        onClick={() => setIsOpen((current) => !current)}>
         <span>{title}</span>
         {isOpen ? (
           <ChevronUpIcon className={`h-4 w-4`} />
@@ -203,6 +229,10 @@ const ButtonAccordian = ({
 
 export const Sidebar: FC<Props> = ({ children, data }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const matches = useMatches()
+
+  const lastMatch = matches[matches.length - 1]?.pathname
+
   return (
     <>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -264,7 +294,10 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 <div className="mt-5 flex-1 h-0 overflow-y-auto">
                   <nav className="px-2 space-y-1">
                     {navGroups.map((group) => (
-                      <ButtonAccordian key={group.title} title={group.title}>
+                      <ButtonAccordian
+                        key={group.title}
+                        title={group.title}
+                        openOverride={group.openMatch === lastMatch}>
                         {group.links.map((item) =>
                           !item.external ? (
                             <NavLink
@@ -297,7 +330,8 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                             <a
                               key={item.name}
                               href={item.href}
-                              target={`_blank`}
+                              target="_blank"
+                              rel="noreferrer"
                               className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
                               <item.icon
                                 className={classNames(
@@ -312,6 +346,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                         )}
                       </ButtonAccordian>
                     ))}
+                    <PatreonLink />
                   </nav>
                 </div>
               </Dialog.Panel>
@@ -339,7 +374,10 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
           <div className="flex-1 flex flex-col overflow-y-auto">
             <nav className="flex-0 px-2 py-4 space-y-1">
               {navGroups.map((group) => (
-                <ButtonAccordian key={group.title} title={group.title}>
+                <ButtonAccordian
+                  key={group.title}
+                  title={group.title}
+                  openOverride={group.openMatch === lastMatch}>
                   {group.links.map((item) =>
                     !item.external ? (
                       <NavLink
@@ -372,6 +410,8 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                       <a
                         key={item.name}
                         href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
                         className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
                         <item.icon
                           className={classNames(
@@ -386,6 +426,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                   )}
                 </ButtonAccordian>
               ))}
+              <PatreonLink />
             </nav>
           </div>
         </div>
