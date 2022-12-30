@@ -66,6 +66,11 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
+        name: 'Price Sniper Alert Input',
+        href: 'price-sniper',
+        icon: PencilAltIcon
+      },
+      {
         name: 'Undercut Discord Alerts',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
         icon: DocumentSearchIcon,

@@ -9,7 +9,8 @@ const SmallFormContainer = ({
   onClick,
   loading,
   disabled,
-  description
+  description,
+  buttonTitle = 'Search'
 }: {
   children: React.ReactNode
   title: string
@@ -18,6 +19,7 @@ const SmallFormContainer = ({
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
   description?: string
+  buttonTitle?: string
 }) => {
   return (
     <Form method="post">
@@ -37,7 +39,7 @@ const SmallFormContainer = ({
               <div className="flex justify-between">
                 <p className="text-red-500 mx-2">{error}</p>
                 <SubmitButton
-                  title="Search"
+                  title={buttonTitle}
                   onClick={onClick}
                   loading={loading}
                   disabled={disabled}
