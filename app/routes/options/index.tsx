@@ -66,7 +66,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function () {
-  const data = Data()
+  const data = useLoaderData()
   const transition = useTransition()
   const actionData = useActionData()
   const dispatch = useDispatch()
