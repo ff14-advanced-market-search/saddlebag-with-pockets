@@ -202,7 +202,6 @@ const ButtonAccordian = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openOverride])
 
-  console.log('isOpen', isOpen)
   return (
     <div className={`flex flex-col my-1 p-0 bg-gray-700 rounded`}>
       <button
