@@ -196,12 +196,9 @@ const Index = () => {
 
         <div className="max-w-4xl mx-auto px-4">
           <ContentContainer>
-            <>
-              <Title title="Input for price sniper alert" />
-              <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded">
-                <code>{jsonToDisplay}</code>
-              </pre>
-              <div className="max-w-fit my-2">
+            <div className="px-2 sm:px-5 pb-2 sm:pb-4">
+              <div className="flex justify-between pb-2 sm:pb-4">
+                <Title title="Input for price sniper alert" />
                 <SubmitButton
                   title="Copy to clipboard"
                   type="button"
@@ -215,7 +212,10 @@ const Index = () => {
                   }}
                 />
               </div>
-            </>
+              <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded">
+                <code>{jsonToDisplay}</code>
+              </pre>
+            </div>
           </ContentContainer>
         </div>
       </>
