@@ -9,6 +9,8 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import { useState } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
+import Label from '~/components/form/Label'
+import HQCheckbox from '~/components/form/HQCheckbox'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
@@ -22,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 interface Auction {
   itemID: number
   price: number
-  desired_state: 'above' | 'below'
+  desiredState: 'above' | 'below'
   hq: boolean
 }
 
@@ -39,9 +41,11 @@ const parseJSONInput = (input: Array<Auction>) => {
     return ''
   }
 
-  return `,\n  "user_auctions": [${input.map(
-    ({ itemID }) => `\n    { "itemID": ${itemID}}`
-  )}\n  ]`
+  return `,\n  "user_auctions": [${input
+    .map(({ itemID, price, desiredState, hq }) => {
+      return `\n    { "itemID": ${itemID}, "price": ${price}, "desired_state": "${desiredState}", "hq": ${hq} }`
+    })
+    .join(',')}\n  ]`
 }
 
 const Index = () => {
@@ -52,9 +56,9 @@ const Index = () => {
   }>({ server: world, userAuctions: [] })
   const [subForm, setSubForm] = useState<SubFormItem | null>(null)
 
-  const jsonToDisplay = `{\n  \"home_server\": \"${
+  const jsonToDisplay = `{\n  "home_server": "${
     jsonData.server
-  }\"${parseJSONInput(jsonData.userAuctions)}\n}`
+  }"${parseJSONInput(jsonData.userAuctions)}\n}`
 
   return (
     <PageWrapper>
@@ -70,11 +74,13 @@ const Index = () => {
 
             const userAuctions = [...jsonData.userAuctions]
 
+            const { itemID, price, desiredState, hq } = subForm
+
             userAuctions.push({
-              itemID: subForm.itemID,
-              price: subForm.price,
-              desired_state: subForm.desiredState,
-              hq: subForm.hq
+              itemID,
+              price,
+              desiredState,
+              hq
             })
 
             setJsonData({ ...jsonData, userAuctions })
@@ -142,6 +148,7 @@ const Index = () => {
                   }}
                 />
                 <div
+                  className="my-2"
                   onChange={(event: React.SyntheticEvent<EventTarget>) => {
                     const value = (event.target as HTMLInputElement).value
                     if (value === 'above' || value === 'below') {
@@ -151,21 +158,27 @@ const Index = () => {
                       })
                     }
                   }}>
-                  <label> Alert when price is: </label>
-                  <input
-                    type="radio"
-                    value="below"
-                    name="alertOn"
-                    defaultChecked={subForm.desiredState === 'below'}
-                  />{' '}
-                  Below
-                  <input
-                    type="radio"
-                    value="above"
-                    name="alertOn"
-                    defaultChecked={subForm.desiredState === 'above'}
-                  />{' '}
-                  Above
+                  <Label> Alert when price is: </Label>
+                  <Label htmlFor="radio-below">
+                    <input
+                      id="radio-below"
+                      type="radio"
+                      value="below"
+                      name="alertOn"
+                      defaultChecked={subForm.desiredState === 'below'}
+                    />{' '}
+                    Below {subForm.price} Gil
+                  </Label>
+                  <Label htmlFor="radio-above">
+                    <input
+                      id="radio-above"
+                      type="radio"
+                      value="above"
+                      name="alertOn"
+                      defaultChecked={subForm.desiredState === 'above'}
+                    />{' '}
+                    Above {subForm.price} Gil
+                  </Label>
                 </div>
                 <HQCheckbox
                   checked={subForm.hq}
@@ -211,22 +224,3 @@ const Index = () => {
 }
 
 export default Index
-
-const HQCheckbox = ({
-  onChange,
-  checked
-}: {
-  checked: boolean
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-}) => (
-  <div className="flex justify-center items-center max-w-fit">
-    <label htmlFor="hq-only">High Quality Only</label>
-    <input
-      className="ml-2 rounded p-1"
-      id="hq-only"
-      type="checkbox"
-      checked={checked}
-      onChange={onChange}
-    />
-  </div>
-)
