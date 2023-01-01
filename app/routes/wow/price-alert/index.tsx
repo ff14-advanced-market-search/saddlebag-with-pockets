@@ -123,6 +123,7 @@ const Index = () => {
                   price: 1000
                 })
               }}
+              tooltip="Select items to generate an alert for."
             />
 
             {formState && (
@@ -245,6 +246,7 @@ const Index = () => {
 
                   setJsonData({ ...jsonData, homeRealmName: server.name })
                 }}
+                toolTip="To make an alert region wide, you can remove the text from the search box"
               />
             </div>
           </CodeBlock>
