@@ -32,7 +32,9 @@ const parseUserAuctions = (input: Input) => {
 
   return `\n  "user_auctions": [${input.userAuctions
     .map(({ itemID, price, desiredState }) => {
-      return `\n    { "itemID": ${itemID}, "price": ${price}, "desired_state": "${desiredState}" }`
+      return `\n    { "itemID": ${itemID}, "price": ${
+        price * 10000
+      }, "desired_state": "${desiredState}" }`
     })
     .join(',')}\n  ]`
 }
@@ -132,12 +134,12 @@ const Index = () => {
                   labelTitle="Price to alert on"
                   type="number"
                   inputTag="Gold"
-                  min={0}
+                  min={0.0}
                   step={100}
                   value={formState.price}
                   onBlur={(event) => {
                     const value = event.target.value
-                    if (!value || isNaN(parseInt(value, 10))) {
+                    if (!value || isNaN(parseFloat(value))) {
                       setFormState({
                         ...formState,
                         price: 1000
@@ -145,7 +147,7 @@ const Index = () => {
                       return
                     }
 
-                    const price = parseInt(value, 10)
+                    const price = parseFloat(value)
 
                     if (price < 0) {
                       setFormState({
@@ -157,13 +159,13 @@ const Index = () => {
 
                     setFormState({
                       ...formState,
-                      price: parseInt(value, 10)
+                      price: parseFloat(value)
                     })
                   }}
                   onChange={(e) => {
                     setFormState({
                       ...formState,
-                      price: parseInt(e.target.value, 10)
+                      price: parseFloat(e.target.value)
                     })
                   }}
                 />
@@ -187,7 +189,7 @@ const Index = () => {
                       name="alertOn"
                       defaultChecked={formState.desiredState === 'below'}
                     />{' '}
-                    Below {formState.price} Gold
+                    Below {formState.price.toLocaleString()} Gold
                   </Label>
                   <Label htmlFor="radio-above">
                     <input
@@ -197,7 +199,7 @@ const Index = () => {
                       name="alertOn"
                       defaultChecked={formState.desiredState === 'above'}
                     />{' '}
-                    Above {formState.price} Gold
+                    Above {formState.price.toLocaleString()} Gold
                   </Label>
                 </div>
               </div>
