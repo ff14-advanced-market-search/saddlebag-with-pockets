@@ -129,6 +129,11 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Price Alert Input Generator',
+        href: 'wow/price-alert',
+        icon: PencilAltIcon
+      },
+      {
         name: 'Undercut Alerts Curseforge Addon',
         icon: DocumentSearchIcon,
         href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
