@@ -11,6 +11,12 @@ const recommendedQueries = [
     external: true
   },
   {
+    name: 'Price Sniper and Price Spike Alerts',
+    description: 'Alerts you when prices for items go above or below a price you pick!',
+    icon: DocumentSearchIcon,
+    href: '/wow/price-alert',
+  },
+  {
     name: 'Local Realm Shortage Finder',
     description:
       'Searches for items on your local server / realm that you can flip and take over the market!',
