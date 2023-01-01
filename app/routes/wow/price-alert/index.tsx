@@ -32,9 +32,9 @@ const parseUserAuctions = (input: Input) => {
 
   return `\n  "user_auctions": [${input.userAuctions
     .map(({ itemID, price, desiredState }) => {
-      return `\n    { "itemID": ${itemID}, "price": ${
-        price * 10000
-      }, "desired_state": "${desiredState}" }`
+      return `\n    { "itemID": ${itemID}, "price": ${(price * 10000).toFixed(
+        0
+      )}, "desired_state": "${desiredState}" }`
     })
     .join(',')}\n  ]`
 }
@@ -147,7 +147,7 @@ const Index = () => {
                       return
                     }
 
-                    const price = parseFloat(value)
+                    const price = parseFloat(parseFloat(value).toFixed(2))
 
                     if (price < 0) {
                       setFormState({
@@ -159,7 +159,7 @@ const Index = () => {
 
                     setFormState({
                       ...formState,
-                      price: parseFloat(value)
+                      price
                     })
                   }}
                   onChange={(e) => {
