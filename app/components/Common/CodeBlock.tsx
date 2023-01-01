@@ -6,12 +6,14 @@ const CodeBlock = ({
   codeString,
   title,
   buttonTitle,
-  onClick
+  onClick,
+  children
 }: {
   codeString: string
   title: string
   buttonTitle: string
   onClick?: () => void
+  children?: React.ReactNode
 }) => {
   return (
     <ContentContainer>
@@ -31,6 +33,8 @@ const CodeBlock = ({
             }}
           />
         </div>
+        {children}
+
         <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded">
           <code>{codeString}</code>
         </pre>

@@ -36,7 +36,7 @@ interface SubFormItem {
   price: number
 }
 
-const parseJSONInput = (input: Array<Auction>) => {
+export const parseJSONInput = (input: Array<Auction>) => {
   if (!input.length) {
     return ''
   }
