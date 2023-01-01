@@ -47,7 +47,7 @@ const Results = ({
                 rel="noreferrer">
                 discord server
               </a>{' '}
-              for the bot slash command /register or /update to activate{' '}
+              for the bot slash command '/ff register' or '/ff update' to activate{' '}
               <a
                 className="underline"
                 href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"

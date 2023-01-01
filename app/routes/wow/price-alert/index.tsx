@@ -76,7 +76,7 @@ const Index = () => {
       <>
         <SmallFormContainer
           title="WoW price alert input generator"
-          description="Generate the input for our World of Warcraft item price alerts. Join our discord to find out when your being undercut!"
+          description="Generate the input for our World of Warcraft item price alerts. Join our [discord](https://discord.gg/Pbp5xhmBJ7) to use this data for our discord bot with '/ff price-register' or '/ff price-update'!"
           error={error}
           onClick={(e) => {
             e.preventDefault()
