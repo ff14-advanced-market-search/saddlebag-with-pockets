@@ -248,7 +248,7 @@ const Index = () => {
 
                   setJsonData({ ...jsonData, homeRealmName: server.name })
                 }}
-                toolTip="Will make your alert server specific. To make an alert region wide, you can remove the text from the search box"
+                toolTip="Select your home realm name to alert on items on your realms local market or the region wide commodity market!'"
               />
             </div>
           </CodeBlock>
