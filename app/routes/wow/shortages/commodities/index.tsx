@@ -12,9 +12,9 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { ItemClassSelect, ItemQualitySelect } from '../../full-scan/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ShortageResults from '../ShortageResults'
-import WoWServerSelect from '../../full-scan/WoWServerSelect'
+import WoWServerSelect from '../../../../components/form/WoW/WoWServerSelect'
 import { useState } from 'react'
-import { RegionRadioGroup } from '../../full-scan/RegionRadioGroup'
+import { RegionRadioGroup } from '../../../../components/form/WoW/RegionRadioGroup'
 import type { WoWServerRegion } from '~/requests/WOWScan'
 
 export const validateShortageData = (
