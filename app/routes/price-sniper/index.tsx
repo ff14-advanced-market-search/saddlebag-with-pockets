@@ -66,7 +66,7 @@ const Index = () => {
       <>
         <SmallFormContainer
           title="Input for Price Sniper Alerts"
-          description="To setup price sniper alerts search, enter items and a desired price. Copy and paste the below input for the Discord Bot in the Saddlebage Exchange discord server."
+          description="To setup price sniper alerts search, enter items and a desired price. Copy and paste the below input for the Discord Bot in the Saddlebage Exchange discord server for the discord bot commands '/ff price-register' or '/ff price-update'!"
           error={error}
           onClick={(e) => {
             e.preventDefault()
