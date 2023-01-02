@@ -24,7 +24,10 @@ const CodeBlock = ({
             title={buttonTitle}
             type="button"
             onClick={async () => {
-              if (typeof window !== 'undefined') {
+              if (
+                typeof window !== 'undefined' &&
+                typeof document !== 'undefined'
+              ) {
                 if (!window.isSecureContext) {
                   alert('Failed to copy text to clipboard.')
                   return

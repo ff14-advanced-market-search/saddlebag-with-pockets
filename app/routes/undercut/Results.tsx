@@ -47,7 +47,8 @@ const Results = ({
                 rel="noreferrer">
                 discord server
               </a>{' '}
-              for the bot slash command '/ff register' or '/ff update' to activate{' '}
+              for the bot slash command '/ff register' or '/ff update' to
+              activate{' '}
               <a
                 className="underline"
                 href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
@@ -95,12 +96,17 @@ const Results = ({
                 title="Copy to clipboard"
                 type="button"
                 onClick={async () => {
-                  if (!window.isSecureContext) {
-                    alert('Unable to copy.')
-                    return
+                  if (
+                    typeof window !== 'undefined' &&
+                    typeof document !== 'undefined'
+                  ) {
+                    if (!window.isSecureContext) {
+                      alert('Unable to copy.')
+                      return
+                    }
+                    await navigator.clipboard.writeText(jsonData)
+                    alert('Copied to clipboard!')
                   }
-                  await navigator.clipboard.writeText(jsonData)
-                  alert('Copied to clipboard!')
                 }}
               />
             </div>
