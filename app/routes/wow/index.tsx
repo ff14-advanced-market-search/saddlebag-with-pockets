@@ -1,5 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
-import { Link, NavLink } from '@remix-run/react'
+import { Link } from '@remix-run/react'
 import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
@@ -9,6 +9,13 @@ const recommendedQueries = [
     icon: DocumentSearchIcon,
     href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
     external: true
+  },
+  {
+    name: 'Price Sniper and Price Spike Alerts',
+    description:
+      'Alerts you when prices for items go above or below a price you pick!',
+    icon: DocumentSearchIcon,
+    href: '/wow/price-alert'
   },
   {
     name: 'Local Realm Shortage Finder',

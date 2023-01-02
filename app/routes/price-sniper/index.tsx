@@ -1,16 +1,16 @@
 import { useLoaderData } from '@remix-run/react'
-import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getSession } from '~/sessions'
 import ItemSelect from '~/components/form/select/ItemSelect'
-import { SubmitButton } from '~/components/form/SubmitButton'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import { useState } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Label from '~/components/form/Label'
 import HQCheckbox from '~/components/form/HQCheckbox'
+import CodeBlock from '~/components/Common/CodeBlock'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
@@ -36,7 +36,7 @@ interface SubFormItem {
   price: number
 }
 
-const parseJSONInput = (input: Array<Auction>) => {
+export const parseJSONInput = (input: Array<Auction>) => {
   if (!input.length) {
     return ''
   }
@@ -55,6 +55,7 @@ const Index = () => {
     userAuctions: Array<Auction>
   }>({ server: world, userAuctions: [] })
   const [subForm, setSubForm] = useState<SubFormItem | null>(null)
+  const [error, setError] = useState<string | undefined>(undefined)
 
   const jsonToDisplay = `{\n  "home_server": "${
     jsonData.server
@@ -65,10 +66,12 @@ const Index = () => {
       <>
         <SmallFormContainer
           title="Input for Price Sniper Alerts"
-          description="To setup price sniper alerts search, enter items and a desired price. Copy and paste the below input for our Discord Bot."
+          description="To setup price sniper alerts search, enter items and a desired price. Copy and paste the below input for the Discord Bot in the Saddlebage Exchange discord server for the discord bot commands '/ff price-register' or '/ff price-update'!"
+          error={error}
           onClick={(e) => {
             e.preventDefault()
             if (!subForm) {
+              setError('No item selected')
               return
             }
 
@@ -90,7 +93,16 @@ const Index = () => {
           <div className="pt-4">
             <ItemSelect
               tooltip="Select an item to be alerted on"
+              onTextChange={() => {
+                if (error) {
+                  setError(undefined)
+                }
+              }}
               onSelectChange={(item) => {
+                if (error) {
+                  setError(undefined)
+                }
+
                 if (!item) {
                   setSubForm(null)
                   return
@@ -195,28 +207,12 @@ const Index = () => {
         </SmallFormContainer>
 
         <div className="max-w-4xl mx-auto px-4">
-          <ContentContainer>
-            <div className="px-2 sm:px-5 pb-2 sm:pb-4">
-              <div className="flex justify-between pb-2 sm:pb-4">
-                <Title title="Input for price sniper alert" />
-                <SubmitButton
-                  title="Copy to clipboard"
-                  type="button"
-                  onClick={async () => {
-                    if (!window.isSecureContext) {
-                      alert('Unable to copy.')
-                      return
-                    }
-                    await navigator.clipboard.writeText(jsonToDisplay)
-                    alert('Copied to clipboard!')
-                  }}
-                />
-              </div>
-              <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded">
-                <code>{jsonToDisplay}</code>
-              </pre>
-            </div>
-          </ContentContainer>
+          <CodeBlock
+            title="Input for price sniper alert"
+            buttonTitle="Copy to clipboard"
+            codeString={jsonToDisplay}
+            onClick={() => alert('Copied to clipboard!')}
+          />
         </div>
       </>
     </PageWrapper>

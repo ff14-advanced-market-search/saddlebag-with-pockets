@@ -4,8 +4,8 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WoWServerRegion } from '~/requests/WOWScan'
 import Label from './Label'
-import { RegionRadioGroup } from './RegionRadioGroup'
-import WoWServerSelect from './WoWServerSelect'
+import { RegionRadioGroup } from '../../../components/form/WoW/RegionRadioGroup'
+import WoWServerSelect from '../../../components/form/WoW/WoWServerSelect'
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
