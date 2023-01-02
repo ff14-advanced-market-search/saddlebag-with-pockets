@@ -24,12 +24,14 @@ const CodeBlock = ({
             title={buttonTitle}
             type="button"
             onClick={async () => {
-              if (!window.isSecureContext) {
-                alert('Failed to copy text to clipboard.')
-                return
+              if (typeof window !== 'undefined') {
+                if (!window.isSecureContext) {
+                  alert('Failed to copy text to clipboard.')
+                  return
+                }
+                await navigator.clipboard.writeText(codeString)
+                onClick?.()
               }
-              await navigator.clipboard.writeText(codeString)
-              onClick?.()
             }}
           />
         </div>
