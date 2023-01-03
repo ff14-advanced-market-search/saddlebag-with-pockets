@@ -10,7 +10,7 @@ interface StatLookupProps {
   itemQuality: number
   requiredLevel: number
   itemClass: number
-  itemSubclass: number
+  itemSubClass: number
   iLvl: number
 }
 
@@ -41,7 +41,7 @@ const WoWStatLookup: (props: StatLookupProps) => Promise<Response> = async ({
   desiredAvgPrice,
   requiredLevel,
   itemClass,
-  itemSubclass,
+  itemSubClass,
   iLvl
 }) => {
   return fetch(`${address}/api/wow/itemstats`, {
@@ -59,7 +59,7 @@ const WoWStatLookup: (props: StatLookupProps) => Promise<Response> = async ({
       itemQuality,
       required_level: requiredLevel,
       item_class: itemClass,
-      item_subclass: itemSubclass,
+      item_subclass: itemSubClass,
       ilvl: iLvl
     })
   })

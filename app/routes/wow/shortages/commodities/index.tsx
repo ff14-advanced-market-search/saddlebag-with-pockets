@@ -9,7 +9,10 @@ import { PageWrapper } from '~/components/Common'
 import type { WowShortageResult } from '~/requests/WoWCommodities'
 import WoWCommodityShortage from '~/requests/WoWCommodities'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import { ItemClassSelect, ItemQualitySelect } from '../../full-scan/WoWScanForm'
+import {
+  ItemClassSelect,
+  ItemQualitySelect
+} from '../../../../components/form/WoW/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ShortageResults from '../ShortageResults'
 import WoWServerSelect from '../../../../components/form/WoW/WoWServerSelect'
