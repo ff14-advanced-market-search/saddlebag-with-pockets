@@ -14,7 +14,25 @@ interface StatLookupProps {
   iLvl: number
 }
 
-const WOWScan: (props: StatLookupProps) => Promise<Response> = async ({
+export interface ItemStats {
+  currentMarketValue: number
+  historicMarketValue: number
+  historicPrice: number
+  itemID: number
+  itemName: string
+  item_class: number
+  item_subclass: number
+  minPrice: number
+  percentChange: number
+  salesPerDay: number
+  state: 'spiking' | 'increasing' | 'stable' | 'decreasing' | 'crashing'
+}
+
+export interface ItemStatResponse {
+  data: Array<ItemStats>
+}
+
+const WoWStatLookup: (props: StatLookupProps) => Promise<Response> = async ({
   homeRealmId,
   itemQuality,
   desiredSalesPerDay,
@@ -47,4 +65,4 @@ const WOWScan: (props: StatLookupProps) => Promise<Response> = async ({
   })
 }
 
-export default WOWScan
+export default WoWStatLookup
