@@ -1,13 +1,16 @@
 const CheckBox = ({
   labelTitle,
   className,
+  labelClassName,
   ...rest
-}: { labelTitle: string } & React.DetailedHTMLProps<
+}: { labelTitle: string; labelClassName?: string } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >) => (
   <div className="flex justify-center items-center max-w-fit">
-    <label htmlFor={rest?.id}>{labelTitle}</label>
+    <label htmlFor={rest?.id} className={labelClassName}>
+      {labelTitle}
+    </label>
     <input
       className={`ml-2 rounded p-1${className ? ` ${className}` : ''}`}
       type="checkbox"
