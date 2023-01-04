@@ -1,6 +1,7 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { PageWrapper } from '~/components/Common'
+import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
 import { z } from 'zod'
 import { useState } from 'react'
@@ -16,6 +17,8 @@ import {
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import CheckBox from '~/components/form/CheckBox'
 import { ToolTip } from '~/components/Common/InfoToolTip'
+import type { ColumnList } from '../full-scan/SmallTable'
+import SmallTable from '../full-scan/SmallTable'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm Id',
@@ -78,7 +81,9 @@ export const action: ActionFunction = async ({ request }) => {
   if (!validInput.success) {
     return json({
       exception: `Missing: ${validInput.error.issues
-        .map(({ path }) => path.map((field) => inputMap[field] || ''))
+        .map(({ path }) =>
+          path.map((field) => inputMap[field] || 'Unknown input error')
+        )
         .join(', ')}`
     })
   }
@@ -165,9 +170,32 @@ const ItemStatLookupForm = ({
   )
 }
 
+const itemsColumnList: Array<ColumnList<ItemStats>> = [
+  { columnId: 'itemName', header: 'Item Name' },
+  { columnId: 'minPrice', header: 'Minimum Price' },
+  { columnId: 'currentMarketValue', header: 'Market Value' },
+  { columnId: 'historicMarketValue', header: ' Historic Market Value' },
+  {
+    columnId: 'percentChange',
+    header: 'Percent Changed',
+    accessor: ({ getValue }) => <p>{`${getValue()}%`}</p>
+  },
+  {
+    columnId: 'state',
+    header: 'Item Market State'
+  },
+  { columnId: 'historicPrice', header: 'Historic Price' },
+  { columnId: 'item_class', header: 'Item Class' },
+  { columnId: 'item_subclass', header: 'Item Sub Class' },
+  { columnId: 'itemID', header: 'Item ID' },
+  { columnId: 'salesPerDay', header: 'Sales Per Day' }
+]
+
 const Index = () => {
   const transition = useTransition()
-  const results = useActionData<any | { exception: string } | {}>()
+  const results = useActionData<
+    { data: Array<ItemStats> } | { exception: string } | {}
+  >()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -175,7 +203,30 @@ const Index = () => {
     }
   }
 
-  const error = results?.exception || ''
+  if (results && 'data' in results) {
+    if (!results.data.length) {
+      return (
+        <PageWrapper>
+          <h1>No results</h1>
+        </PageWrapper>
+      )
+    }
+
+    return (
+      <PageWrapper>
+        <SmallTable<ItemStats>
+          data={results.data}
+          columnList={itemsColumnList}
+          sortingOrder={[{ id: 'minPrice', desc: true }]}
+          title="Item Statistics"
+          description="This shows items market statistics!"
+        />
+      </PageWrapper>
+    )
+  }
+
+  const error =
+    results && 'exception' in results ? results.exception : undefined
   return (
     <PageWrapper>
       <SmallFormContainer
