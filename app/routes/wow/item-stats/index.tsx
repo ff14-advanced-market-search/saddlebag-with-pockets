@@ -97,7 +97,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 const ItemStatLookupForm = ({
   desiredPriceDefault = 100,
-  desiredSalesDefault = 10,
+  desiredSalesDefault = 500,
   regionDefault = 'NA',
   iLvlDefault = -1,
   requiredLevelDefault = -1,
@@ -236,7 +236,7 @@ const Index = () => {
       <FullTable<ItemStats>
         data={results.data}
         columnList={itemsColumnList}
-        sortingOrder={[{ id: 'minPrice', desc: true }]}
+        sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
         title="Item Statistics"
         description="This shows items market statistics!"
         order={tableSortOrder}

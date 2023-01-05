@@ -17,10 +17,6 @@ interface Props {
 
 const itemQuality = [
   {
-    name: 'Poor',
-    value: 0
-  },
-  {
     name: 'Common',
     value: 1
   },
