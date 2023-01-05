@@ -19,9 +19,10 @@ import CheckBox from '~/components/form/CheckBox'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import type { ColumnList } from '../full-scan/SmallTable'
 import FullTable from '~/components/Tables/FullTable'
+import { getOribosLink } from '~/components/utilities/getOribosLink'
 
 const inputMap: Record<string, string> = {
-  homeRealmId: 'Home Realm Id',
+  homeRealmId: 'Home Realm',
   region: 'Region',
   commodity: 'Commodity Items',
   desiredAvgPrice: 'Average Price',
@@ -88,7 +89,10 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  return await WoWStatLookup(validInput.data)
+  return json({
+    ...(await (await WoWStatLookup(validInput.data)).json()),
+    serverName: (formPayload.homeRealmId as string).split('---')[1]
+  })
 }
 
 const ItemStatLookupForm = ({
@@ -170,31 +174,24 @@ const ItemStatLookupForm = ({
   )
 }
 
-const itemsColumnList: Array<ColumnList<ItemStats>> = [
-  { columnId: 'itemName', header: 'Item Name' },
-  { columnId: 'minPrice', header: 'Minimum Price' },
-  { columnId: 'currentMarketValue', header: 'Market Value' },
-  { columnId: 'historicMarketValue', header: ' Historic Market Value' },
-  {
-    columnId: 'percentChange',
-    header: 'Percent Changed',
-    accessor: ({ getValue }) => <p>{`${getValue()}%`}</p>
-  },
-  {
-    columnId: 'state',
-    header: 'Item Market State'
-  },
-  { columnId: 'historicPrice', header: 'Historic Price' },
-  { columnId: 'item_class', header: 'Item Class' },
-  { columnId: 'item_subclass', header: 'Item Sub Class' },
-  { columnId: 'itemID', header: 'Item ID' },
-  { columnId: 'salesPerDay', header: 'Sales Per Day' }
+const tableSortOrder = [
+  'itemName',
+  'currentMarketValue',
+  'historicMarketValue',
+  'percentChange',
+  'state',
+  'salesPerDay',
+  'minPrice',
+  'historicPrice',
+  'itemID',
+  'item_subclass',
+  'item_class'
 ]
 
 const Index = () => {
   const transition = useTransition()
   const results = useActionData<
-    { data: Array<ItemStats> } | { exception: string } | {}
+    { data: Array<ItemStats>; serverName: string } | { exception: string } | {}
   >()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -212,6 +209,29 @@ const Index = () => {
       )
     }
 
+    const OribosLink = getOribosLink(results.serverName, 'Oribos')
+
+    const itemsColumnList: Array<ColumnList<ItemStats>> = [
+      { columnId: 'itemName', header: 'Item Name' },
+      { columnId: 'minPrice', header: 'Minimum Price' },
+      { columnId: 'currentMarketValue', header: 'Market Value' },
+      { columnId: 'historicMarketValue', header: ' Historic Market Value' },
+      {
+        columnId: 'percentChange',
+        header: 'Percent Changed',
+        accessor: ({ getValue }) => <p>{`${getValue()}%`}</p>
+      },
+      {
+        columnId: 'state',
+        header: 'Market State'
+      },
+      { columnId: 'historicPrice', header: 'Historic Price' },
+      { columnId: 'item_class', header: 'Item Class' },
+      { columnId: 'item_subclass', header: 'Item Sub Class' },
+      { columnId: 'itemID', header: 'Oribos Link', accessor: OribosLink },
+      { columnId: 'salesPerDay', header: 'Sales Per Day' }
+    ]
+
     return (
       <FullTable<ItemStats>
         data={results.data}
@@ -219,6 +239,7 @@ const Index = () => {
         sortingOrder={[{ id: 'minPrice', desc: true }]}
         title="Item Statistics"
         description="This shows items market statistics!"
+        order={tableSortOrder}
       />
     )
   }

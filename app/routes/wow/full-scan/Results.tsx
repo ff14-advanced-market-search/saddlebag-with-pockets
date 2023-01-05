@@ -7,7 +7,7 @@ import SmallTable from './SmallTable'
 import type { ColumnList } from './SmallTable'
 import { Section } from '~/components/Common'
 import ExternalLink from '~/components/utilities/ExternalLink'
-import { getOribosLink } from './getOribosLink'
+import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { useEffect, useRef } from 'react'
 
 const woWHeadLink = ({ row }: { row: { itemID: number } }) => (

@@ -50,20 +50,18 @@ function FullTable<Type>({
   data,
   sortingOrder,
   columnList,
-  title,
-  description,
-  sortOrder
+  order
 }: {
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<ColumnList<Type>>
   title: string
   description: string
-  sortOrder?: Array<string>
+  order?: Array<string>
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
-  const [columnOrder] = useState<ColumnOrderState>(sortOrder || [])
+  const [columnOrder] = useState<ColumnOrderState>(order || [])
 
   const columnHelper = createColumnHelper<Type>()
 
@@ -128,8 +126,8 @@ function FullTable<Type>({
   }, [])
 
   return (
-    <div className="relative mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll">
-      <table className="divide-y divide-gray-300">
+    <div className="mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll">
+      <table className="divide-y divide-gray-300 relative">
         <thead className="bg-gray-50">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
