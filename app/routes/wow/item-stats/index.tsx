@@ -18,7 +18,7 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import CheckBox from '~/components/form/CheckBox'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import type { ColumnList } from '../full-scan/SmallTable'
-import SmallTable from '../full-scan/SmallTable'
+import FullTable from '~/components/Tables/FullTable'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm Id',
@@ -213,15 +213,13 @@ const Index = () => {
     }
 
     return (
-      <PageWrapper>
-        <SmallTable<ItemStats>
-          data={results.data}
-          columnList={itemsColumnList}
-          sortingOrder={[{ id: 'minPrice', desc: true }]}
-          title="Item Statistics"
-          description="This shows items market statistics!"
-        />
-      </PageWrapper>
+      <FullTable<ItemStats>
+        data={results.data}
+        columnList={itemsColumnList}
+        sortingOrder={[{ id: 'minPrice', desc: true }]}
+        title="Item Statistics"
+        description="This shows items market statistics!"
+      />
     )
   }
 

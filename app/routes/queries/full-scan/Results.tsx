@@ -81,9 +81,9 @@ const isLastInTable = (
   columnOrder: Array<String>
 ): boolean => {
   const columnIndex = columnOrder.findIndex((col) => col === columnId)
-  if (!columnIndex) return false
   return columnIndex === columnOrder.length - 1
 }
+
 const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
