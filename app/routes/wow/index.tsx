@@ -4,6 +4,13 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
   {
+    name: 'Dragonflight Marketshare Overview',
+    description:
+      'Find out what Dragonflight items are actually selling and what are the best items to sell.',
+    icon: DocumentSearchIcon,
+    href: '/wow/marketshare'
+  },
+  {
     name: 'Undercut Alerts Curseforge Addon',
     description: 'The addon for our Undercut Alerts!',
     icon: DocumentSearchIcon,

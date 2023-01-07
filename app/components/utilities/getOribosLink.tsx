@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import ExternalLink from '~/components/utilities/ExternalLink'
 
 const parseServerName = (serverName: string) =>

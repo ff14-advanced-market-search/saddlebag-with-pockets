@@ -114,18 +114,8 @@ const navGroups: Array<{
     openMatch: '/wow/',
     links: [
       {
-        name: 'Local Market Shortage Finder',
-        href: '/wow/shortages/single',
-        icon: DocumentSearchIcon
-      },
-      {
-        name: 'Commodity Shortage Finder',
-        href: 'wow/shortages/commodities',
-        icon: DocumentSearchIcon
-      },
-      {
-        name: 'Server Transfer Trading Search',
-        href: '/wow/full-scan',
+        name: 'Dragonflight Marketshare Overview',
+        href: '/wow/marketshare',
         icon: DocumentSearchIcon
       },
       {
@@ -138,6 +128,21 @@ const navGroups: Array<{
         icon: DocumentSearchIcon,
         href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
         external: true
+      },
+      {
+        name: 'Commodity Shortage Finder',
+        href: 'wow/shortages/commodities',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Local Market Shortage Finder',
+        href: '/wow/shortages/single',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Server Transfer Trading Search',
+        href: '/wow/full-scan',
+        icon: DocumentSearchIcon
       }
     ]
   },

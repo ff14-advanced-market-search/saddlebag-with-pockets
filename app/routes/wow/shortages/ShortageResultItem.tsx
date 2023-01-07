@@ -1,5 +1,5 @@
 import type { WoWShortage } from '~/requests/WoWCommodities'
-import { getOribosLink } from '../full-scan/getOribosLink'
+import { getOribosLink } from '../../../components/utilities/getOribosLink'
 
 export const numberToLocaleStringWithDecimal = (value: number) => {
   return value.toLocaleString(undefined, {

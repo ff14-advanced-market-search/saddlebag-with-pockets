@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { ToolTip } from '~/components/Common/InfoToolTip'
-import { InputWithLabel } from '~/components/form/InputWithLabel'
-import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { WoWServerRegion } from '~/requests/WOWScan'
-import Label from './Label'
-import { RegionRadioGroup } from '../../../components/form/WoW/RegionRadioGroup'
-import WoWServerSelect from '../../../components/form/WoW/WoWServerSelect'
+import { InputWithLabel } from '../InputWithLabel'
+import SmallFormContainer from '../SmallFormContainer'
+import type { WoWServerRegion } from '~/requests/WoW/types'
+import Label from '../Label'
+import { RegionRadioGroup } from './RegionRadioGroup'
+import WoWServerSelect from './WoWServerSelect'
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -16,10 +16,6 @@ interface Props {
 }
 
 const itemQuality = [
-  {
-    name: 'Poor',
-    value: 0
-  },
   {
     name: 'Common',
     value: 1
