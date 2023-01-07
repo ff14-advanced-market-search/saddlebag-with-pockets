@@ -114,7 +114,7 @@ const navGroups: Array<{
     openMatch: '/wow/',
     links: [
       {
-        name: 'Marketshare Overview',
+        name: 'Dragonflight Marketshare Overview',
         href: '/wow/marketshare',
         icon: DocumentSearchIcon
       },
