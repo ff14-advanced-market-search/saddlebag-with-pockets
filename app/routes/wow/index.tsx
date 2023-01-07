@@ -25,6 +25,13 @@ const recommendedQueries = [
     href: '/wow/shortages/single'
   },
   {
+    name: 'Item Marketshare Overview',
+    description:
+      'See how detailed stats on items in your region or home world.',
+    icon: DocumentSearchIcon,
+    href: '/wow/marketshare'
+  },
+  {
     name: 'Commodity Shortage Finder',
     description:
       'Searches for region wide commodities that you can flip and take over the market!',
