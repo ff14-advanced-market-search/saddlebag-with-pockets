@@ -216,8 +216,8 @@ const Index = () => {
     const itemsColumnList: Array<ColumnList<ItemStats>> = [
       { columnId: 'itemName', header: 'Item Name' },
       { columnId: 'minPrice', header: 'Minimum Price' },
-      { columnId: 'currentMarketValue', header: 'Market Value' },
-      { columnId: 'historicMarketValue', header: ' Historic Market Value' },
+      { columnId: 'currentMarketValue', header: 'Current Market Value' },
+      { columnId: 'historicMarketValue', header: 'Historic Market Value' },
       {
         columnId: 'percentChange',
         header: 'Percent Changed',
