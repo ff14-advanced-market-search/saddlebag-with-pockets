@@ -129,10 +129,17 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Marketshare Overview',
+        href: '/wow/marketshare',
+        icon: DocumentSearchIcon
+      },
+      //
+      {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon
       },
+
       {
         name: 'Undercut Alerts Curseforge Addon',
         icon: DocumentSearchIcon,

@@ -200,6 +200,8 @@ const Index = () => {
     }
   }
 
+  const pageTitle = 'Item Marketshare Overview'
+
   if (results && 'data' in results) {
     if (!results.data.length) {
       return (
@@ -237,7 +239,7 @@ const Index = () => {
         data={results.data}
         columnList={itemsColumnList}
         sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
-        title="Item Statistics"
+        title={pageTitle}
         description="This shows items market statistics!"
         order={tableSortOrder}
       />
@@ -249,7 +251,7 @@ const Index = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Item Statistics"
+        title={pageTitle}
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         error={error}>
