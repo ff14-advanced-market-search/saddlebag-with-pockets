@@ -114,9 +114,20 @@ const navGroups: Array<{
     openMatch: '/wow/',
     links: [
       {
-        name: 'Local Market Shortage Finder',
-        href: '/wow/shortages/single',
+        name: 'Marketshare Overview',
+        href: '/wow/marketshare',
         icon: DocumentSearchIcon
+      },
+      {
+        name: 'Price Alert Input Generator',
+        href: 'wow/price-alert',
+        icon: PencilAltIcon
+      },
+      {
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
       },
       {
         name: 'Commodity Shortage Finder',
@@ -124,27 +135,14 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Local Market Shortage Finder',
+        href: '/wow/shortages/single',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
         icon: DocumentSearchIcon
-      },
-      {
-        name: 'Marketshare Overview',
-        href: '/wow/marketshare',
-        icon: DocumentSearchIcon
-      },
-      //
-      {
-        name: 'Price Alert Input Generator',
-        href: 'wow/price-alert',
-        icon: PencilAltIcon
-      },
-
-      {
-        name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
-        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-        external: true
       }
     ]
   },

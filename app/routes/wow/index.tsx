@@ -4,6 +4,13 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 
 const recommendedQueries = [
   {
+    name: 'Dragonflight Marketshare Overview',
+    description:
+      'Find out what Dragonflight items are actually selling and what are the best items to sell.',
+    icon: DocumentSearchIcon,
+    href: '/wow/marketshare'
+  },
+  {
     name: 'Undercut Alerts Curseforge Addon',
     description: 'The addon for our Undercut Alerts!',
     icon: DocumentSearchIcon,
@@ -23,13 +30,6 @@ const recommendedQueries = [
       'Searches for items on your local server / realm that you can flip and take over the market!',
     icon: DocumentSearchIcon,
     href: '/wow/shortages/single'
-  },
-  {
-    name: 'Item Marketshare Overview',
-    description:
-      'See how detailed stats on items in your region or home world.',
-    icon: DocumentSearchIcon,
-    href: '/wow/marketshare'
   },
   {
     name: 'Commodity Shortage Finder',
