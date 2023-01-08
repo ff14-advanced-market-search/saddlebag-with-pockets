@@ -255,13 +255,6 @@ const Index = () => {
     return (
       <div>
         <Title title={pageTitle} />
-        <FullTable<ItemStats>
-          data={results.data}
-          columnList={itemsColumnList}
-          sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
-          description="This shows items market statistics!"
-          order={tableSortOrder}
-        />
         <div className="px-2 sm:px-4 my-2 sm:my-4">
           <ContentContainer>
             <TreemapChart
@@ -270,6 +263,13 @@ const Index = () => {
             />
           </ContentContainer>
         </div>
+        <FullTable<ItemStats>
+          data={results.data}
+          columnList={itemsColumnList}
+          sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
+          description="This shows items market statistics!"
+          order={tableSortOrder}
+        />
       </div>
     )
   }
@@ -292,11 +292,11 @@ const Index = () => {
 export default Index
 
 const hexMap = {
-  crashing: '#57fa11',
-  decreasing: '#aff78f',
-  stable: '#fbfc9a',
-  increasing: '#fc9a9a',
-  spiking: '#ff2121'
+  crashing: '#b40606',
+  decreasing: '#d88888',
+  stable: '#ccbb00',
+  increasing: '#a1d888',
+  spiking: '#24b406'
 }
 
 const getChartData = (
@@ -310,10 +310,7 @@ const getChartData = (
       toolTip: `Current Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.currentMarketValue, 0)
         .toLocaleString()}`,
-      value: marketplaceOverviewData.reduce(
-        (total, curr) => total + curr.currentMarketValue,
-        0
-      )
+      value: 1
     },
     {
       id: 'historicMarketValue',
@@ -322,10 +319,7 @@ const getChartData = (
       toolTip: `Historic Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.historicMarketValue, 0)
         .toLocaleString()}`,
-      value: marketplaceOverviewData.reduce(
-        (total, curr) => total + curr.historicMarketValue,
-        0
-      )
+      value: 1
     }
   ]
 

@@ -39,7 +39,7 @@ const TreemapChart = ({
                 textOutline: false
               }
             },
-            borderWidth: 1
+            borderWidth: 8
           }
         ],
         data: chartData,
