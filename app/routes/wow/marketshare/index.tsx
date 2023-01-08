@@ -91,8 +91,19 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
+  const data = await (await WoWStatLookup(validInput.data)).json()
+
+  if (data.exception !== undefined) {
+    return json({ exception: data.exception })
+  }
+
+  if (!data?.data) {
+    return json({ exception: 'Unknown server error' })
+  }
+
   return json({
-    ...(await (await WoWStatLookup(validInput.data)).json()),
+    ...data,
+    chartData: getChartData(data.data),
     serverName: (formPayload.homeRealmId as string).split('---')[1]
   })
 }
@@ -193,7 +204,13 @@ const tableSortOrder = [
 const Index = () => {
   const transition = useTransition()
   const results = useActionData<
-    { data: Array<ItemStats>; serverName: string } | { exception: string } | {}
+    | {
+        data: Array<ItemStats>
+        serverName: string
+        chartData: Array<TreemapNode>
+      }
+    | { exception: string }
+    | {}
   >()
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -235,7 +252,7 @@ const Index = () => {
       { columnId: 'salesPerDay', header: 'Sales Per Day' }
     ]
 
-    const chartData = parseResults(results.data)
+    console.log(results)
 
     return (
       <div>
@@ -250,7 +267,7 @@ const Index = () => {
         <div className="px-2 sm:px-4 my-2 sm:my-4">
           <ContentContainer>
             <TreemapChart
-              chartData={chartData}
+              chartData={results.chartData}
               title="Marketshare Visualisation"
             />
           </ContentContainer>
@@ -278,80 +295,65 @@ export default Index
 
 const hexMap = {
   crashing: '#57fa11',
-  decreasing: '#fc9a9a',
+  decreasing: '#aff78f',
   stable: '#fbfc9a',
   increasing: '#fc9a9a',
   spiking: '#ff2121'
 }
 
-const parseResults = (results: Array<ItemStats>): Array<TreemapNode> => {
-  const parents: Array<TreemapNode> = [
+const getChartData = (
+  marketplaceOverviewData: Array<ItemStats>
+): Array<TreemapNode> => {
+  const result: Array<TreemapNode> = [
     {
       id: 'currentMarketValue',
       name: 'Current Market Value',
       color: '#97EA6C',
-      toolTip: `Current Market: ${results
+      toolTip: `Current Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.currentMarketValue, 0)
         .toLocaleString()}`,
-      value: results.reduce((total, curr) => total + curr.currentMarketValue, 0)
+      value: marketplaceOverviewData.reduce(
+        (total, curr) => total + curr.currentMarketValue,
+        0
+      )
     },
     {
       id: 'historicMarketValue',
       name: 'Historic Market Value',
       color: '#DCEA6C',
-      toolTip: `Historic Market: ${results
+      toolTip: `Historic Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.historicMarketValue, 0)
         .toLocaleString()}`,
-      value: results.reduce(
+      value: marketplaceOverviewData.reduce(
         (total, curr) => total + curr.historicMarketValue,
         0
       )
     }
   ]
 
-  let reduceKeys: Record<string, Array<TreemapNode>> = {}
-  parents.forEach(({ id }) => {
-    reduceKeys[id] = []
+  marketplaceOverviewData.forEach((current) => {
+    const base = {
+      id: current.itemID.toString(),
+      name: current.itemName,
+      color: hexMap[current.state]
+    }
+
+    const historicMarketValue = {
+      ...base,
+      parent: 'historicMarketValue',
+      value: current.historicMarketValue,
+      toolTip: `${base.name}: ${current.historicMarketValue.toLocaleString()}`
+    }
+    result.push(historicMarketValue)
+
+    const currentMarketValue = {
+      ...base,
+      parent: 'currentMarketValue',
+      value: current.currentMarketValue,
+      toolTip: `${base.name}: ${current.currentMarketValue.toLocaleString()}`
+    }
+    result.push(currentMarketValue)
   })
 
-  const mappedResults = results.reduce<Record<string, Array<TreemapNode>>>(
-    (res, current) => {
-      const base = {
-        id: current.itemID.toString(),
-        name: current.itemName,
-        color: hexMap[current.state]
-      }
-
-      const toAdd = parents.map((parent) => {
-        const currentValue = current[parent.id as keyof ItemStats]
-        const value: number =
-          typeof currentValue === 'string'
-            ? parseFloat(currentValue)
-            : currentValue
-
-        return {
-          ...base,
-          parent: parent.id,
-          value,
-          toolTip: `${base.name}: ${value.toLocaleString()}`
-        }
-      })
-
-      const toReturn = { ...res }
-
-      toAdd.forEach((item) => {
-        toReturn[item.parent].push(item)
-      })
-
-      return toReturn
-    },
-    reduceKeys
-  )
-
-  const result = Object.values(mappedResults).reduce(
-    (total, current) => [...total, ...current],
-    []
-  )
-
-  return parents.concat(...result)
+  return result
 }

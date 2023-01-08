@@ -54,7 +54,7 @@ const TreemapChart = ({
     }
   }
 
-  return <HighchartsReact highcharts={Highcharts} options={options} />
+  return <HighchartsReact highcharts={Highcharts} options={options} immutable />
 }
 
 export default TreemapChart
