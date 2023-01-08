@@ -1,6 +1,6 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, Title } from '~/components/Common'
 import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
 import { z } from 'zod'
@@ -20,6 +20,8 @@ import { ToolTip } from '~/components/Common/InfoToolTip'
 import type { ColumnList } from '../full-scan/SmallTable'
 import FullTable from '~/components/Tables/FullTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
+import TreemapChart from '~/components/Charts/Treemap'
+import Modal from '~/components/form/Modal'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -193,7 +195,7 @@ const Index = () => {
   const results = useActionData<
     { data: Array<ItemStats>; serverName: string } | { exception: string } | {}
   >()
-
+  const [modalOpen, setModalOpen] = useState(false)
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
@@ -235,14 +237,26 @@ const Index = () => {
     ]
 
     return (
-      <FullTable<ItemStats>
-        data={results.data}
-        columnList={itemsColumnList}
-        sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
-        title={pageTitle}
-        description="This shows items market statistics!"
-        order={tableSortOrder}
-      />
+      <div>
+        <div className="flex max-w-full justify-between">
+          <Title title={pageTitle} />
+          <button onClick={() => setModalOpen(true)}>Chart</button>
+        </div>
+        <FullTable<ItemStats>
+          data={results.data}
+          columnList={itemsColumnList}
+          sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
+          description="This shows items market statistics!"
+          order={tableSortOrder}
+        />
+        {modalOpen && (
+          <Modal
+            title={'Marketshare Visualisation'}
+            onClose={() => setModalOpen(false)}>
+            <TreemapChart />
+          </Modal>
+        )}
+      </div>
     )
   }
 
