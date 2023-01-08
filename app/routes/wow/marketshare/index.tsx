@@ -252,8 +252,6 @@ const Index = () => {
       { columnId: 'salesPerDay', header: 'Sales Per Day' }
     ]
 
-    console.log(results)
-
     return (
       <div>
         <Title title={pageTitle} />
