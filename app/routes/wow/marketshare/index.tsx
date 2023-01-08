@@ -218,7 +218,7 @@ const Index = () => {
     }
   }
 
-  const pageTitle = 'Item Marketshare Overview'
+  const pageTitle = 'Dragonflight Auction House Marketshare Overview'
 
   if (results && 'data' in results) {
     if (!results.data.length) {
