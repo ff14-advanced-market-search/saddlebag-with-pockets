@@ -19,7 +19,6 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
-import { Title } from '../Common'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -51,13 +50,11 @@ function FullTable<Type>({
   data,
   sortingOrder,
   columnList,
-  order,
-  title
+  order
 }: {
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<ColumnList<Type>>
-  title: string
   description: string
   order?: Array<string>
 }) {
@@ -128,77 +125,74 @@ function FullTable<Type>({
   }, [])
 
   return (
-    <div>
-      {title && <Title title={title} />}
-      <div className="mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll">
-        <table className="divide-y divide-gray-300 relative">
-          <thead className="bg-gray-50">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    scope={`col`}
-                    onClick={header.column.getToggleSortingHandler()}
-                    className={classNames(
-                      header.column.getCanSort() ? 'cursor-pointer' : '',
-                      `px-3 py-3.5 text-left text-sm font-semibold text-gray-900 bg-gray-50 sticky top-0`
-                    )}
-                    key={header.id}>
-                    <div className={`group inline-flex`}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                      <div
-                        className={classNames(
-                          header.column.getIsSorted()
-                            ? 'bg-gray-200 rounded bg-gray-200'
-                            : '',
-                          ` ml-1 flex flex-0 p-1 justify-center items-center`
-                        )}>
-                        {{
-                          asc: (
-                            <span
-                              className={`text-gray-900 group-hover:bg-gray-300`}>
-                              <ChevronUpIcon className={`h-4 w-4`} />
-                            </span>
-                          ),
-                          desc: (
-                            <span
-                              className={`text-gray-900 group-hover:bg-gray-300`}>
-                              <ChevronDownIcon className={`h-4 w-4`} />
-                            </span>
-                          )
-                        }[header.column.getIsSorted() as string] ?? (
+    <div className="mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll">
+      <table className="divide-y divide-gray-300 relative">
+        <thead className="bg-gray-50">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  scope={`col`}
+                  onClick={header.column.getToggleSortingHandler()}
+                  className={classNames(
+                    header.column.getCanSort() ? 'cursor-pointer' : '',
+                    `px-3 py-3.5 text-left text-sm font-semibold text-gray-900 bg-gray-50 sticky top-0`
+                  )}
+                  key={header.id}>
+                  <div className={`group inline-flex`}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                    <div
+                      className={classNames(
+                        header.column.getIsSorted()
+                          ? 'bg-gray-200 rounded bg-gray-200'
+                          : '',
+                        ` ml-1 flex flex-0 p-1 justify-center items-center`
+                      )}>
+                      {{
+                        asc: (
                           <span
-                            className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
+                            className={`text-gray-900 group-hover:bg-gray-300`}>
+                            <ChevronUpIcon className={`h-4 w-4`} />
+                          </span>
+                        ),
+                        desc: (
+                          <span
+                            className={`text-gray-900 group-hover:bg-gray-300`}>
                             <ChevronDownIcon className={`h-4 w-4`} />
                           </span>
-                        )}
-                      </div>
+                        )
+                      }[header.column.getIsSorted() as string] ?? (
+                        <span
+                          className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
+                          <ChevronDownIcon className={`h-4 w-4`} />
+                        </span>
+                      )}
                     </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 text-center">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody className="divide-y divide-gray-200 bg-white">
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.id}
+                  className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 text-center">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

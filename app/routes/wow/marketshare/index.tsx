@@ -1,6 +1,6 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { PageWrapper } from '~/components/Common'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
 import { z } from 'zod'
@@ -20,6 +20,8 @@ import { ToolTip } from '~/components/Common/InfoToolTip'
 import type { ColumnList } from '../full-scan/SmallTable'
 import FullTable from '~/components/Tables/FullTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
+import type { TreemapNode } from '~/components/Charts/Treemap'
+import TreemapChart from '~/components/Charts/Treemap'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -89,15 +91,26 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
+  const data = await (await WoWStatLookup(validInput.data)).json()
+
+  if (data.exception !== undefined) {
+    return json({ exception: data.exception })
+  }
+
+  if (!data?.data) {
+    return json({ exception: 'Unknown server error' })
+  }
+
   return json({
-    ...(await (await WoWStatLookup(validInput.data)).json()),
+    ...data,
+    chartData: getChartData(data.data),
     serverName: (formPayload.homeRealmId as string).split('---')[1]
   })
 }
 
 const ItemStatLookupForm = ({
-  desiredPriceDefault = 100,
-  desiredSalesDefault = 500,
+  desiredPriceDefault = 10,
+  desiredSalesDefault = 300,
   regionDefault = 'NA',
   iLvlDefault = -1,
   requiredLevelDefault = -1,
@@ -191,16 +204,21 @@ const tableSortOrder = [
 const Index = () => {
   const transition = useTransition()
   const results = useActionData<
-    { data: Array<ItemStats>; serverName: string } | { exception: string } | {}
+    | {
+        data: Array<ItemStats>
+        serverName: string
+        chartData: Array<TreemapNode>
+      }
+    | { exception: string }
+    | {}
   >()
-
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
   }
 
-  const pageTitle = 'Item Marketshare Overview'
+  const pageTitle = 'Dragonflight Auction House Marketshare Overview'
 
   if (results && 'data' in results) {
     if (!results.data.length) {
@@ -235,14 +253,24 @@ const Index = () => {
     ]
 
     return (
-      <FullTable<ItemStats>
-        data={results.data}
-        columnList={itemsColumnList}
-        sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
-        title={pageTitle}
-        description="This shows items market statistics!"
-        order={tableSortOrder}
-      />
+      <div>
+        <Title title={pageTitle} />
+        <div className="px-2 sm:px-4 my-2 sm:my-4">
+          <ContentContainer>
+            <TreemapChart
+              chartData={results.chartData}
+              title="Marketshare Visualisation"
+            />
+          </ContentContainer>
+        </div>
+        <FullTable<ItemStats>
+          data={results.data}
+          columnList={itemsColumnList}
+          sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
+          description="This shows items market statistics!"
+          order={tableSortOrder}
+        />
+      </div>
     )
   }
 
@@ -262,3 +290,62 @@ const Index = () => {
 }
 
 export default Index
+
+const hexMap = {
+  crashing: '#b40606',
+  decreasing: '#d88888',
+  stable: '#ccbb00',
+  increasing: '#81AC6D',
+  spiking: '#24b406'
+}
+
+const getChartData = (
+  marketplaceOverviewData: Array<ItemStats>
+): Array<TreemapNode> => {
+  const result: Array<TreemapNode> = [
+    {
+      id: 'currentMarketValue',
+      name: 'Current Market Value',
+      color: '#97EA6C',
+      toolTip: `Current Market: ${marketplaceOverviewData
+        .reduce((total, curr) => total + curr.currentMarketValue, 0)
+        .toLocaleString()}`,
+      value: 1
+    },
+    {
+      id: 'historicMarketValue',
+      name: 'Historic Market Value',
+      color: '#DCEA6C',
+      toolTip: `Historic Market: ${marketplaceOverviewData
+        .reduce((total, curr) => total + curr.historicMarketValue, 0)
+        .toLocaleString()}`,
+      value: 1
+    }
+  ]
+
+  marketplaceOverviewData.forEach((current) => {
+    const base = {
+      id: current.itemID.toString(),
+      name: current.itemName,
+      color: hexMap[current.state]
+    }
+
+    const historicMarketValue = {
+      ...base,
+      parent: 'historicMarketValue',
+      value: current.historicMarketValue,
+      toolTip: `${base.name}: ${current.historicMarketValue.toLocaleString()}`
+    }
+    result.push(historicMarketValue)
+
+    const currentMarketValue = {
+      ...base,
+      parent: 'currentMarketValue',
+      value: current.currentMarketValue,
+      toolTip: `${base.name}: ${current.currentMarketValue.toLocaleString()}`
+    }
+    result.push(currentMarketValue)
+  })
+
+  return result
+}
