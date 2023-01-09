@@ -346,6 +346,26 @@ const itemClasses: Array<{
       { name: 'Aquatic', value: 8 },
       { name: 'Mechanical', value: 9 }
     ]
+  },
+  {
+    name: 'Profession',
+    value: 19,
+    subClasses: [
+      { name: 'Blacksmithing', value: 0 },
+      { name: 'Leatherworking', value: 1 },
+      { name: 'Alchemy', value: 2 },
+      { name: 'Herbalism', value: 3 },
+      { name: 'Cooking', value: 4 },
+      { name: 'Mining', value: 5 },
+      { name: 'Tailoring', value: 6 },
+      { name: 'Engineering', value: 7 },
+      { name: 'Enchanting', value: 8 },
+      { name: 'Fishing', value: 9 },
+      { name: 'Skinning', value: 10 },
+      { name: 'Jewelcrafting', value: 11 },
+      { name: 'Inscription', value: 12 },
+      { name: 'Archaeology', value: 1 }
+    ]
   }
 ]
 
