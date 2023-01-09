@@ -295,7 +295,7 @@ const hexMap = {
   crashing: '#b40606',
   decreasing: '#d88888',
   stable: '#ccbb00',
-  increasing: '#a1d888',
+  increasing: '#81AC6D',
   spiking: '#24b406'
 }
 

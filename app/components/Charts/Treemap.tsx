@@ -24,6 +24,7 @@ const TreemapChart = ({
     title: { text: title },
     series: [
       {
+        name: 'Overview',
         type: 'treemap',
         layoutAlgorithm: 'squarified',
         allowDrillToNode: true,
@@ -45,7 +46,7 @@ const TreemapChart = ({
         data: chartData,
         tooltip: {
           useHTML: true,
-          pointFormat: '<p>{point.toolTip}</p>'
+          pointFormat: '{point.toolTip}'
         }
       }
     ],
