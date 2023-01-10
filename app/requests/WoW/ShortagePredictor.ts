@@ -1,12 +1,12 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { WoWServerRegion } from '../WOWScan'
 
-interface ShortagePredictorProps {
+export interface ShortagePredictorProps {
   desiredAvgPrice: number
   desiredSalesPerDay: number
   itemQuality: number
   itemClass: number
-  itemSubclass: number
+  itemSubClass: number
   region: WoWServerRegion
   homeRealmName: string
   desiredPriceVsAvgPercent: number
@@ -45,14 +45,14 @@ export interface PredictionResponse {
   data: Array<Prediction>
 }
 
-const WoWStatLookup: (
+const WoWShortagePredictor: (
   props: ShortagePredictorProps
 ) => Promise<Response> = async ({
   desiredAvgPrice,
   desiredSalesPerDay,
   itemQuality,
   itemClass,
-  itemSubclass,
+  itemSubClass,
   region,
   homeRealmName,
   desiredPriceVsAvgPercent,
@@ -69,7 +69,7 @@ const WoWStatLookup: (
       desired_sales_per_day: desiredSalesPerDay,
       itemQuality,
       item_class: itemClass,
-      item_subclass: itemSubclass,
+      item_subclass: itemSubClass,
       region,
       homeRealmName,
       desired_price_vs_avg_percent: desiredPriceVsAvgPercent,
@@ -78,4 +78,4 @@ const WoWStatLookup: (
   })
 }
 
-export default WoWStatLookup
+export default WoWShortagePredictor
