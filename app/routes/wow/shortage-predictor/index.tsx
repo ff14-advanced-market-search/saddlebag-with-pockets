@@ -207,7 +207,7 @@ const Index = () => {
               </div>
               {modalIsOpen && (
                 <Modal
-                  title="Remove items"
+                  title="Choose which items you want to be alerted on here!"
                   onClose={() => setModalIsOpen(false)}>
                   <div className="max-w-full flex flex-col gap-3">
                     {results.data
