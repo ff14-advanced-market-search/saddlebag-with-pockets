@@ -119,6 +119,11 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Shortage Alert Input Generator',
+        href: 'wow/shortage-predictor',
+        icon: PencilAltIcon
+      },
+      {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon
