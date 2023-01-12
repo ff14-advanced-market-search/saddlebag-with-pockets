@@ -232,7 +232,7 @@ const Index = () => {
             <FullTable<Prediction>
               data={results.data}
               columnList={columnList}
-              sortingOrder={[{ id: 'current_avg_price', desc: true }]}
+              sortingOrder={[{ id: 'quality', desc: true }]}
               description="Some description"
             />
           </>
