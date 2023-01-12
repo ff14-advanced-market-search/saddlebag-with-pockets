@@ -27,6 +27,7 @@ import Modal from '~/components/form/Modal'
 import ModalButton from '~/components/Common/ModalButton'
 import FullTable from '~/components/Tables/FullTable'
 import type { ColumnList } from '../full-scan/SmallTable'
+import { getOribosLink } from '~/components/utilities/getOribosLink'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -107,34 +108,8 @@ const getCodeString = (alertJson: AlertJson, idsToFiler: Array<number>) => {
     .map(({ itemID, price, desired_state }) => {
       return `\n    { "itemID": ${itemID}, "price": ${price}, "desired_state": "${desired_state}" }`
     })
-    .join(',')}
-    \n  ]
-    \n}`
+    .join(',')}\n  ]\n}`
 }
-
-const columnList: Array<ColumnList<Prediction>> = [
-  { columnId: 'item_name', header: 'Item Name' },
-  { columnId: 'current_price', header: 'Price' },
-  { columnId: 'current_avg_price', header: 'Avg Price' },
-  { columnId: 'current_price_vs_avg_percent', header: 'Prive v Average' },
-
-  { columnId: 'current_quantity', header: 'Quantity' },
-  { columnId: 'avg_quantity', header: 'Avg Quantity' },
-  { columnId: 'current_quantity_vs_avg_percent', header: 'Quality v Average' },
-
-  {
-    columnId: 'hours_til_shortage',
-    header: 'Hours till Shortage Changed'
-  },
-  { columnId: 'quality', header: 'Quality' },
-  {
-    columnId: 'quantity_decline_rate_per_hour',
-    header: 'Decline Rate'
-  },
-  { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
-  { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sale Rate' },
-  { columnId: 'item_id', header: 'Item Id' }
-]
 
 type ActionResponse = PredictionResponse | { exception: string } | {}
 
@@ -163,6 +138,57 @@ const Index = () => {
 
     if ('data' in results) {
       const codeString = getCodeString(results.alert_json, filteredIds)
+
+      const OribosLink = getOribosLink(
+        results.alert_json.homeRealmName,
+        'Oribos'
+      )
+
+      const columnList: Array<ColumnList<Prediction>> = [
+        { columnId: 'item_name', header: 'Item Name' },
+        { columnId: 'current_price', header: 'Price' },
+        { columnId: 'current_avg_price', header: 'Avg Price' },
+        {
+          columnId: 'current_price_vs_avg_percent',
+          header: 'Price v Avg %',
+          accessor: ({ getValue }) => {
+            const value = getValue()
+            if (typeof value === 'string') {
+              return <p>{parseFloat(value).toFixed(2)}%</p>
+            }
+            return <p>{(value as number).toFixed(2)}%</p>
+          }
+        },
+        { columnId: 'current_quantity', header: 'Quantity Sold' },
+        { columnId: 'avg_quantity', header: 'Avg Quantity' },
+        {
+          columnId: 'current_quantity_vs_avg_percent',
+          header: 'Quality v Average',
+          accessor: ({ getValue }) => {
+            const value = getValue()
+            if (typeof value === 'string') {
+              return <p>{parseFloat(value).toFixed(2)}%</p>
+            }
+            return <p>{(value as number).toFixed(2)}%</p>
+          }
+        },
+        {
+          columnId: 'hours_til_shortage',
+          header: 'Hours till Shortage Changed'
+        },
+        { columnId: 'quality', header: 'Quality' },
+        {
+          columnId: 'quantity_decline_rate_per_hour',
+          header: 'Decline Rate'
+        },
+        { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
+        { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sale Rate' },
+        {
+          columnId: 'item_id',
+          header: 'Oribos Link',
+          accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
+        }
+      ]
 
       return (
         <PageWrapper>
@@ -239,7 +265,7 @@ const Index = () => {
             inputTag="Sales"
             name="desiredSalesPerDay"
             min={0}
-            toolTip="Finds items that have this many sales per day on your region."
+            toolTip="Finds items that have this many sales per day"
           />
           <ItemQualitySelect />
           <ItemClassSelect />
@@ -249,18 +275,19 @@ const Index = () => {
           />
           <WoWServerSelect formName="homeRealmName" regionValue={region} />
           <InputWithLabel
-            defaultValue={50}
+            defaultValue={100}
             type="number"
-            labelTitle="Desired Price v Percent"
-            inputTag="Desired Price"
+            labelTitle="Desired Price v Average Price"
+            inputTag="%"
             name="desiredPriceVsAvgPercent"
             min={0}
+            toolTip="Percentage of current prices compared to the average price"
           />
           <InputWithLabel
-            defaultValue={50}
+            defaultValue={100}
             type="number"
-            labelTitle="Desired Quantity v Average Percent"
-            inputTag="Number of Sales"
+            labelTitle="Desired Quantity v Average Quantity"
+            inputTag="%"
             name="desiredQuantityVsAvgPercent"
             min={0}
           />

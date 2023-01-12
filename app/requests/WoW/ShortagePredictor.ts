@@ -14,15 +14,15 @@ export interface ShortagePredictorProps {
 }
 
 export interface Prediction {
-  avg_quantity: number
-  current_avg_price: number
+  item_name: string
   current_price: number
+  current_avg_price: number
   current_price_vs_avg_percent: number
   current_quantity: number
+  avg_quantity: number
   current_quantity_vs_avg_percent: number
   hours_til_shortage: number
   item_id: number
-  item_name: string
   quality: number
   quantity_decline_rate_per_hour: number
   tsm_avg_price: number
