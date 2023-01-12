@@ -1,5 +1,5 @@
 import { useActionData, useTransition } from '@remix-run/react'
-import { PageWrapper, Title } from '~/components/Common'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
   ItemClassSelect,
@@ -21,13 +21,13 @@ import type {
 } from '~/requests/WoW/ShortagePredictor'
 import WoWShortagePredictor from '~/requests/WoW/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
-import CodeBlock from '~/components/Common/CodeBlock'
-import { TrashIcon } from '@heroicons/react/outline'
 import Modal from '~/components/form/Modal'
 import ModalButton from '~/components/Common/ModalButton'
 import FullTable from '~/components/Tables/FullTable'
 import type { ColumnList } from '../full-scan/SmallTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
+import Label from '~/components/form/Label'
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -149,6 +149,27 @@ const Index = () => {
       const columnList: Array<ColumnList<Prediction>> = [
         { columnId: 'item_name', header: 'Item Name' },
         {
+          columnId: 'item_id_filter',
+          header: 'Added to Alert Input',
+          accessor: ({ row }) => {
+            const itemId = row.item_id
+            return (
+              <input
+                className="min-w-[16px] min-h-[16px] mx-20 border-box rounded-md"
+                type="checkbox"
+                checked={!filteredIds.includes(itemId)}
+                onChange={() => {
+                  if (filteredIds.includes(itemId)) {
+                    setFilteredIds(filteredIds.filter((id) => id !== itemId))
+                  } else {
+                    setFilteredIds([...filteredIds, itemId])
+                  }
+                }}
+              />
+            )
+          }
+        },
+        {
           columnId: 'item_id',
           header: 'Oribos Link',
           accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
@@ -198,40 +219,50 @@ const Index = () => {
       return (
         <PageWrapper>
           <>
-            <Title title={pageTitle} />
-            <CodeBlock
-              title="Discord Bot Alert Data --- Plug this into our discord bot with the command '/wow price-register', so we can monitor these items and alert you when the price spike happens!"
-              buttonTitle="Copy"
-              codeString={codeString}>
-              <div className="max-w-[140px] my-3">
-                <ModalButton onClick={() => setModalIsOpen(true)}>
-                  Remove items
-                </ModalButton>
-              </div>
-              {modalIsOpen && (
-                <Modal
-                  title="Choose which items you want to be alerted on here!"
-                  onClose={() => setModalIsOpen(false)}>
-                  <div className="max-w-full flex flex-col gap-3">
-                    {results.data
-                      .filter(
-                        (auction) => !filteredIds.includes(auction.item_id)
-                      )
-                      .map((item) => (
-                        <button
-                          key={item.item_name}
-                          className="flex group gap-1 p-2 items-center justify-between border border-gray-300 rounded-md"
-                          onClick={() =>
-                            setFilteredIds((state) => [...state, item.item_id])
-                          }>
-                          <span className="group-hover:scale-105 transition ease-in-out duration-300">{`${item.item_name}`}</span>
-                          <TrashIcon className="h-4 w-4 shrink-0 ml-2 group-hover:scale-125 transition ease-in-out duration-300" />
-                        </button>
-                      ))}
+            <ContentContainer>
+              <>
+                <Title title={pageTitle} />
+                <Label>
+                  Discord Bot Alert Data --- Plug this into our discord bot with
+                  the command '/wow price-register', so we can monitor these
+                  items and alert you when the price spike happens!
+                </Label>
+                <div className="flex justify-between items-center">
+                  <div className="h-9">
+                    <SubmitButton
+                      title="Copy Input Data"
+                      onClick={async () => {
+                        if (
+                          typeof window !== 'undefined' &&
+                          typeof document !== 'undefined'
+                        ) {
+                          if (!window.isSecureContext) {
+                            alert('Failed to copy text to clipboard')
+                            return
+                          }
+                          await navigator.clipboard.writeText(codeString)
+                          alert('Copied to clipboard')
+                        }
+                      }}
+                    />
                   </div>
-                </Modal>
-              )}
-            </CodeBlock>
+                  <div className="max-w-[140px] my-3">
+                    <ModalButton onClick={() => setModalIsOpen(true)}>
+                      View input
+                    </ModalButton>
+                  </div>
+                </div>
+              </>
+            </ContentContainer>
+
+            {modalIsOpen && (
+              <Modal title="" onClose={() => setModalIsOpen(false)}>
+                <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded w-full">
+                  <code>{codeString}</code>
+                </pre>
+              </Modal>
+            )}
+
             <FullTable<Prediction>
               data={results.data}
               columnList={columnList}
