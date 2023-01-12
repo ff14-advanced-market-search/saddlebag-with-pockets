@@ -37,8 +37,9 @@ const inputMap: Record<keyof ShortagePredictorProps, string> = {
   itemQuality: 'Quality',
   itemClass: 'Item Class',
   itemSubClass: 'Item Sub Class',
-  desiredPriceVsAvgPercent: 'Desired Price v Average Percent',
-  desiredQuantityVsAvgPercent: 'Desired Quantity v Average Percent'
+  desiredPriceVsAvgPercent: 'Desired Current Price Percent vs Average Price',
+  desiredQuantityVsAvgPercent:
+    'Desired Current Quantity Percent vs Average Quantity'
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -121,7 +122,8 @@ const Index = () => {
 
   const [region, setRegion] = useState<WoWServerRegion>('NA')
 
-  const pageTitle = 'Shortage Predictions'
+  const pageTitle =
+    'Commodity Shortage Futures - Find Shortages and Price Spikes before they happen! Get there before prices increase!'
 
   const loading = transition.state === 'submitting'
 
@@ -150,7 +152,7 @@ const Index = () => {
         { columnId: 'current_avg_price', header: 'Avg Price' },
         {
           columnId: 'current_price_vs_avg_percent',
-          header: 'Price v Avg %',
+          header: 'Price vs Avg %',
           accessor: ({ getValue }) => {
             const value = getValue()
             if (typeof value === 'string') {
@@ -163,7 +165,7 @@ const Index = () => {
         { columnId: 'avg_quantity', header: 'Avg Quantity' },
         {
           columnId: 'current_quantity_vs_avg_percent',
-          header: 'Quality v Average',
+          header: 'Quantity vs Average',
           accessor: ({ getValue }) => {
             const value = getValue()
             if (typeof value === 'string') {
@@ -174,12 +176,12 @@ const Index = () => {
         },
         {
           columnId: 'hours_til_shortage',
-          header: 'Hours till Shortage Changed'
+          header: 'ETA Hours untill Shortage'
         },
         { columnId: 'quality', header: 'Quality' },
         {
           columnId: 'quantity_decline_rate_per_hour',
-          header: 'Decline Rate'
+          header: 'Quantity Decline Rate per Hour'
         },
         { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
         { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sale Rate' },
@@ -195,7 +197,7 @@ const Index = () => {
           <>
             <Title title={pageTitle} />
             <CodeBlock
-              title="Prediction alert input"
+              title="Discord Bot Alert Data --- Plug this into our discord bot with the command '/wow price-register', so we can monitor these items and alert you when the price spike happens!"
               buttonTitle="Copy"
               codeString={codeString}>
               <div className="max-w-[140px] my-3">
@@ -277,7 +279,7 @@ const Index = () => {
           <InputWithLabel
             defaultValue={100}
             type="number"
-            labelTitle="Desired Price v Average Price"
+            labelTitle="Desired Price vs Average Price"
             inputTag="%"
             name="desiredPriceVsAvgPercent"
             min={0}
@@ -286,7 +288,7 @@ const Index = () => {
           <InputWithLabel
             defaultValue={100}
             type="number"
-            labelTitle="Desired Quantity v Average Quantity"
+            labelTitle="Desired Quantity vs Average Quantity"
             inputTag="%"
             name="desiredQuantityVsAvgPercent"
             min={0}
