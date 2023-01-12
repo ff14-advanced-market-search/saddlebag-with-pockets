@@ -148,8 +148,40 @@ const Index = () => {
 
       const columnList: Array<ColumnList<Prediction>> = [
         { columnId: 'item_name', header: 'Item Name' },
+        {
+          columnId: 'item_id',
+          header: 'Oribos Link',
+          accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
+        },
+        { columnId: 'quality', header: 'Quality' },
+        {
+          columnId: 'hours_til_shortage',
+          header: 'Estimated Hours until Shortage'
+        },
+        {
+          columnId: 'quantity_decline_rate_per_hour',
+          header: 'Quantity Decline Rate per Hour'
+        },
+        { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sale Rate' },
+        {
+          columnId: 'current_quantity_vs_avg_percent',
+          header: 'Quantity Percent Available',
+          accessor: ({ getValue }) => {
+            const value = getValue()
+            if (typeof value === 'string') {
+              return <p>{parseFloat(value).toFixed(2)}%</p>
+            }
+            return <p>{(value as number).toFixed(2)}%</p>
+          }
+        },
+        {
+          columnId: 'current_quantity',
+          header: 'Current Quantity Amount Available'
+        },
+        { columnId: 'avg_quantity', header: 'Avg Quantity' },
         { columnId: 'current_price', header: 'Price' },
         { columnId: 'current_avg_price', header: 'Avg Price' },
+        { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
         {
           columnId: 'current_price_vs_avg_percent',
           header: 'Price vs Avg %',
@@ -160,35 +192,6 @@ const Index = () => {
             }
             return <p>{(value as number).toFixed(2)}%</p>
           }
-        },
-        { columnId: 'current_quantity', header: 'Quantity Sold' },
-        { columnId: 'avg_quantity', header: 'Avg Quantity' },
-        {
-          columnId: 'current_quantity_vs_avg_percent',
-          header: 'Quantity vs Average',
-          accessor: ({ getValue }) => {
-            const value = getValue()
-            if (typeof value === 'string') {
-              return <p>{parseFloat(value).toFixed(2)}%</p>
-            }
-            return <p>{(value as number).toFixed(2)}%</p>
-          }
-        },
-        {
-          columnId: 'hours_til_shortage',
-          header: 'ETA Hours untill Shortage'
-        },
-        { columnId: 'quality', header: 'Quality' },
-        {
-          columnId: 'quantity_decline_rate_per_hour',
-          header: 'Quantity Decline Rate per Hour'
-        },
-        { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
-        { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sale Rate' },
-        {
-          columnId: 'item_id',
-          header: 'Oribos Link',
-          accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
         }
       ]
 
@@ -251,7 +254,7 @@ const Index = () => {
         loading={loading}>
         <div className="pt-2 md:pt-4">
           <InputWithLabel
-            defaultValue={30}
+            defaultValue={20}
             type="number"
             labelTitle="Desired Avg Price"
             inputTag="Gold"
