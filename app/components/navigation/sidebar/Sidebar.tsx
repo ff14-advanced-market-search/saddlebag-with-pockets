@@ -119,7 +119,7 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
-        name: 'Shortage Alert Input Generator',
+        name: 'Dragonflight Commodity Future Shortage Finder',
         href: 'wow/shortage-predictor',
         icon: PencilAltIcon
       },
