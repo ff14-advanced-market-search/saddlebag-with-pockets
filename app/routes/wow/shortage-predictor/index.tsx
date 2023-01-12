@@ -251,7 +251,7 @@ const Index = () => {
         loading={loading}>
         <div className="pt-2 md:pt-4">
           <InputWithLabel
-            defaultValue={100}
+            defaultValue={30}
             type="number"
             labelTitle="Desired Avg Price"
             inputTag="Gold"
@@ -261,13 +261,13 @@ const Index = () => {
             toolTip="Find items that on average sell for this amount of gold or more."
           />
           <InputWithLabel
-            defaultValue={100}
+            defaultValue={200}
             type="number"
             labelTitle="Desired Sales per Day"
             inputTag="Sales"
             name="desiredSalesPerDay"
             min={0}
-            toolTip="Finds items that have this many sales per day"
+            toolTip="Finds items that have this many sales per day."
           />
           <ItemQualitySelect />
           <ItemClassSelect />
@@ -277,21 +277,22 @@ const Index = () => {
           />
           <WoWServerSelect formName="homeRealmName" regionValue={region} />
           <InputWithLabel
-            defaultValue={100}
+            defaultValue={120}
             type="number"
-            labelTitle="Desired Price vs Average Price"
+            labelTitle="Current Price Percent Above Average"
             inputTag="%"
             name="desiredPriceVsAvgPercent"
             min={0}
-            toolTip="Percentage of current prices compared to the average price"
+            toolTip="What is the maximum price spike to look for? 120% is to only find item that are at most 20% above the average price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher."
           />
           <InputWithLabel
-            defaultValue={100}
+            defaultValue={30}
             type="number"
-            labelTitle="Desired Quantity vs Average Quantity"
+            labelTitle="Current Market Quantity Percentage"
             inputTag="%"
             name="desiredQuantityVsAvgPercent"
             min={0}
+            toolTip="How much of the market quantity is left? For 30% we want to find items which only have 30% of their average quantity remaining in stock."
           />
         </div>
       </SmallFormContainer>
