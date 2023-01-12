@@ -900,6 +900,11 @@ select {
   margin-bottom: 1rem;
 }
 
+.my-3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
 .my-0\.5 {
   margin-top: 0.125rem;
   margin-bottom: 0.125rem;
@@ -1212,6 +1217,10 @@ select {
 
 .max-w-xs {
   max-width: 20rem;
+}
+
+.max-w-\[140px\] {
+  max-width: 140px;
 }
 
 .flex-1 {
@@ -2348,6 +2357,12 @@ select {
 .group:hover .group-hover\:scale-125 {
   --tw-scale-x: 1.25;
   --tw-scale-y: 1.25;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:scale-105 {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 

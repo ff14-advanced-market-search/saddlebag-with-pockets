@@ -35,13 +35,15 @@ export interface PredictionAuction {
   price: number
 }
 
+export interface AlertJson {
+  homeRealmName: string
+  region: WoWServerRegion
+  user_auctions: Array<PredictionAuction>
+}
+
 export interface PredictionResponse {
   alert_item_names: Record<string, number>
-  alert_json: {
-    homeRealmName: string
-    region: WoWServerRegion
-    user_auctions: Array<PredictionAuction>
-  }
+  alert_json: AlertJson
   data: Array<Prediction>
 }
 
