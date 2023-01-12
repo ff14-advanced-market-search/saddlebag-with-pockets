@@ -118,11 +118,11 @@ const navGroups: Array<{
         href: '/wow/marketshare',
         icon: DocumentSearchIcon
       },
-      {
-        name: 'Dragonflight Commodity Future Shortage Finder',
-        href: 'wow/shortage-predictor',
-        icon: PencilAltIcon
-      },
+      // {
+      //   name: 'Dragonflight Commodity Future Shortage Finder',
+      //   href: 'wow/shortage-predictor',
+      //   icon: PencilAltIcon
+      // },
       {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
