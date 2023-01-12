@@ -16,7 +16,8 @@ import { z } from 'zod'
 import type {
   ShortagePredictorProps,
   PredictionResponse,
-  AlertJson
+  AlertJson,
+  Prediction
 } from '~/requests/WoW/ShortagePredictor'
 import WoWShortagePredictor from '~/requests/WoW/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
@@ -24,6 +25,8 @@ import CodeBlock from '~/components/Common/CodeBlock'
 import { TrashIcon } from '@heroicons/react/outline'
 import Modal from '~/components/form/Modal'
 import ModalButton from '~/components/Common/ModalButton'
+import FullTable from '~/components/Tables/FullTable'
+import type { ColumnList } from '../full-scan/SmallTable'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -104,8 +107,34 @@ const getCodeString = (alertJson: AlertJson, idsToFiler: Array<number>) => {
     .map(({ itemID, price, desired_state }) => {
       return `\n    { "itemID": ${itemID}, "price": ${price}, "desired_state": "${desired_state}" }`
     })
-    .join(',')}\n  ]\n}`
+    .join(',')}
+    \n  ]
+    \n}`
 }
+
+const columnList: Array<ColumnList<Prediction>> = [
+  { columnId: 'item_name', header: 'Item Name' },
+  { columnId: 'current_price', header: 'Price' },
+  { columnId: 'current_avg_price', header: 'Avg Price' },
+  { columnId: 'current_price_vs_avg_percent', header: 'Prive v Average' },
+
+  { columnId: 'current_quantity', header: 'Quantity' },
+  { columnId: 'avg_quantity', header: 'Avg Quantity' },
+  { columnId: 'current_quantity_vs_avg_percent', header: 'Quality v Average' },
+
+  {
+    columnId: 'hours_til_shortage',
+    header: 'Hours till Shortage Changed'
+  },
+  { columnId: 'quality', header: 'Quality' },
+  {
+    columnId: 'quantity_decline_rate_per_hour',
+    header: 'Decline Rate'
+  },
+  { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
+  { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sale Rate' },
+  { columnId: 'item_id', header: 'Item Id' }
+]
 
 type ActionResponse = PredictionResponse | { exception: string } | {}
 
@@ -134,12 +163,13 @@ const Index = () => {
 
     if ('data' in results) {
       const codeString = getCodeString(results.alert_json, filteredIds)
+
       return (
         <PageWrapper>
           <>
             <Title title={pageTitle} />
             <CodeBlock
-              title="Prediction input"
+              title="Prediction alert input"
               buttonTitle="Copy"
               codeString={codeString}>
               <div className="max-w-[140px] my-3">
@@ -171,6 +201,12 @@ const Index = () => {
                 </Modal>
               )}
             </CodeBlock>
+            <FullTable<Prediction>
+              data={results.data}
+              columnList={columnList}
+              sortingOrder={[{ id: 'current_avg_price', desc: true }]}
+              description="Some description"
+            />
           </>
         </PageWrapper>
       )
