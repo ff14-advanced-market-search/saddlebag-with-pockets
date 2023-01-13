@@ -109,8 +109,8 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const ItemStatLookupForm = ({
-  desiredPriceDefault = 10,
-  desiredSalesDefault = 1000,
+  desiredPriceDefault = 0,
+  desiredSalesDefault = 10,
   regionDefault = 'NA',
   iLvlDefault = -1,
   requiredLevelDefault = -1,
