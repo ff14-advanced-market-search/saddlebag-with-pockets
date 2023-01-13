@@ -455,7 +455,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
           <div className="flex-1 px-4 flex justify-end">
-            <div className={`ml-4 flex md:ml-6 basis-52`}>
+            <div className={`ml-4 flex md:ml-6 basis-52 max-w-fit`}>
               <NavLink
                 to={'/options'}
                 type="button"
@@ -464,19 +464,22 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                   'hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500'
                 )}>
                 <div className={`flex flex-wrap pl-1.5 flex-1`}>
-                  <div className="flex items-center text-sm text-gray-500 basis-full">
+                  <div className="hidden items-center text-sm text-gray-500 basis-full md:flex">
                     <EarthIcon
                       className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                       aria-hidden="true"
                     />
                     {data.data_center}
                   </div>
-                  <div className="flex items-center text-sm text-gray-500 basis-full">
+                  <div className="hidden md:flex items-center text-sm text-gray-500 basis-full">
                     <LocationMarkerIcon
                       className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                       aria-hidden="true"
                     />
                     {data.world}
+                  </div>
+                  <div className="flex md:hidden items-center text-sm text-gray-500 basis-full mr-1.5">
+                    Settings
                   </div>
                 </div>
                 <div className={`flex items-center pr-1.5`}>
