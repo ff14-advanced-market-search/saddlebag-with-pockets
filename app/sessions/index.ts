@@ -1,5 +1,7 @@
+import type { Session } from '@remix-run/cloudflare'
 import { createCookieSessionStorage } from '@remix-run/cloudflare'
 import { validateWorldAndDataCenter } from '~/utils/locations'
+import { validateServerAndRegion } from '~/utils/WoWServers'
 
 export const DATA_CENTER = 'data_center'
 export const FF14_WORLD = 'world'
@@ -17,35 +19,34 @@ const { getSession, commitSession, destroySession } =
     }
   })
 
+const getFF14WorldAndDataCenter = (session: Session) => {
+  const worldSession = session.get(FF14_WORLD)
+  const sessionDataCenter = session.get(DATA_CENTER)
+  return validateWorldAndDataCenter(worldSession, sessionDataCenter)
+}
+
+const getUserWoWSessionData = (session: Session) => {
+  const sessionWoWRegion = session.has(WOW_REALM)
+    ? session.get(WOW_REALM)
+    : 'NA'
+
+  const sessionWoWRealm = session.has(WOW_REGION)
+    ? session.get(WOW_REGION)
+    : undefined
+
+  return validateServerAndRegion(sessionWoWRegion, sessionWoWRealm)
+}
+
 async function getUserSessionData(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
   return {
-    getWorld: () => {
-      const worldSession = session.get(FF14_WORLD)
-      const sessionDataCenter = session.get(DATA_CENTER)
-      const { world } = validateWorldAndDataCenter(
-        worldSession,
-        sessionDataCenter
-      )
-      return world
-    },
-    getDataCenter: () => {
-      const worldSession = session.get(FF14_WORLD)
-      const sessionDataCenter = session.get(DATA_CENTER)
-      const { data_center } = validateWorldAndDataCenter(
-        worldSession,
-        sessionDataCenter
-      )
-      return data_center
-    },
-    getWoWRegion: () => {
-      const regionSession = session.get(WOW_REGION)
-      return regionSession
-    },
-    getWoWHomeRealm: () => {
-      const realmSession = session.get(WOW_REALM)
-      return realmSession
-    }
+    getWorld: () => getFF14WorldAndDataCenter(session).world,
+    getDataCenter: () => getFF14WorldAndDataCenter(session).data_center,
+    getWoWSessionData: () => getUserWoWSessionData(session),
+    getAllUserSessionData: () => ({
+      ...getFF14WorldAndDataCenter(session),
+      ...getUserWoWSessionData(session)
+    })
   }
 }
 

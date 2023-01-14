@@ -14,13 +14,18 @@ import type { GetDeepProp } from '~/utils/ts'
 import type { DataCentersList } from '~/utils/locations/DataCenters'
 import type { Validator } from 'remix-validated-form'
 import type { WorldsList } from '~/utils/locations/Worlds'
-import { commitSession, getSession } from '~/sessions'
+import {
+  commitSession,
+  DATA_CENTER,
+  FF14_WORLD,
+  getSession,
+  getUserSessionData
+} from '~/sessions'
 import { Switch } from '@headlessui/react'
 import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
 import { toggleDarkMode } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import { validateWorldAndDataCenter } from '~/utils/locations'
 
 export type SelectWorldInputFields = {
   data_center: GetDeepProp<DataCentersList, 'name'>
@@ -46,8 +51,8 @@ export const action: ActionFunction = async ({ request }) => {
     return redirect('/')
   }
 
-  session.set('data_center', result.data.data_center)
-  session.set('world', result.data.world)
+  session.set(DATA_CENTER, result.data.data_center)
+  session.set(FF14_WORLD, result.data.world)
   // Set the new option, yeet back to index (but save against session data within the cookie)
   return redirect('/', {
     headers: {
@@ -58,11 +63,20 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
-  const { world, data_center } = validateWorldAndDataCenter(
-    session.get('world'),
-    session.get('data_center')
-  )
-  return json({ ...session.data, world, data_center })
+  const { getWorld, getDataCenter, getWoWSessionData } =
+    await getUserSessionData(request)
+
+  const data_center = getDataCenter()
+  const world = getWorld()
+  const { server, region } = getWoWSessionData()
+
+  return json({
+    ...session.data,
+    data_center,
+    world,
+    wowRealm: server,
+    wowRegion: region
+  })
 }
 
 export default function () {

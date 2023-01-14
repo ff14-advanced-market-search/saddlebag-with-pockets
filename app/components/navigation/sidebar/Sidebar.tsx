@@ -482,7 +482,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                         {data.world}
                       </div>
                     </div>
-                    <div className="border border-gray-200 w-0 m-2 shrink-0 rounded:md" />
+                    <div className="border-l border-gray-200 w-0 m-2 shrink-0 rounded:md" />
                     <div className="flex flex-col w-fit min-w-[150px]">
                       <div className="flex items-center text-sm text-gray-500 basis-full">
                         <EarthIcon

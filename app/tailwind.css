@@ -843,6 +843,10 @@ select {
   grid-column: span 6 / span 6;
 }
 
+.m-3 {
+  margin: 0.75rem;
+}
+
 .m-12 {
   margin: 3rem;
 }
@@ -1678,6 +1682,10 @@ select {
 
 .border-b-0 {
   border-bottom-width: 0px;
+}
+
+.border-l {
+  border-left-width: 1px;
 }
 
 .border-b {
