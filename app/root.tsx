@@ -31,6 +31,7 @@ import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import { validateWorldAndDataCenter } from './utils/locations'
 import type { WoWServerRegion } from './requests/WoW/types'
+import { validateServerAndRegion } from './utils/WoWServers'
 
 export const links = () => {
   return [
@@ -41,33 +42,50 @@ export const links = () => {
   ]
 }
 
-type LoaderData = {
+export type LoaderData = {
   site_name: string
   data_center: string
   world: string
-  wowRealm: string
+  wowRealm: { name: string; id: number }
   wowRegion: WoWServerRegion
 }
 
 export const loader: LoaderFunction = async ({ request, context }) => {
   const session = await getSession(request.headers.get('Cookie'))
-  if (session.has(DATA_CENTER) && session.has(FF14_WORLD)) {
-    const { world, data_center } = validateWorldAndDataCenter(
-      session.get(FF14_WORLD),
-      session.get(DATA_CENTER)
-    )
-    return json({
-      data_center,
-      world
-    })
-  }
+
+  const sessionWorld = session.has(FF14_WORLD)
+    ? session.get(FF14_WORLD)
+    : undefined
+
+  const sessionDataCenter = session.has(DATA_CENTER)
+    ? session.get(DATA_CENTER)
+    : undefined
+
+  const { world, data_center } = validateWorldAndDataCenter(
+    sessionWorld,
+    sessionDataCenter
+  )
+
+  const sessionWoWRegion = session.has(WOW_REALM)
+    ? session.get(WOW_REALM)
+    : 'NA'
+
+  const sessionWoWRealm = session.has(WOW_REGION)
+    ? session.get(WOW_REGION)
+    : undefined
+
+  const { server, region } = validateServerAndRegion(
+    sessionWoWRegion,
+    sessionWoWRealm
+  )
+
   // @todo set safe default for DC and world
   return json<LoaderData>({
     site_name: (context.SITE_NAME as string) ?? 'Saddlebag',
-    data_center: session.has(DATA_CENTER) ? session.get(DATA_CENTER) : 'Aether',
-    world: session.has(FF14_WORLD) ? session.get(FF14_WORLD) : 'Adamantoise',
-    wowRealm: session.has(WOW_REALM) ? session.get(WOW_REALM) : '3678',
-    wowRegion: session.has(WOW_REGION) ? session.get(WOW_REGION) : 'NA'
+    data_center,
+    world,
+    wowRealm: server,
+    wowRegion: region
   })
 }
 

@@ -855,6 +855,10 @@ select {
   margin: 0.25rem;
 }
 
+.m-2 {
+  margin: 0.5rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1166,16 +1170,22 @@ select {
   width: 3.5rem;
 }
 
+.w-0 {
+  width: 0px;
+}
+
+.w-fit {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
 .w-64 {
   width: 16rem;
 }
 
 .w-\[95\%\] {
   width: 95%;
-}
-
-.w-0 {
-  width: 0px;
 }
 
 .w-4\/5 {
@@ -1194,6 +1204,10 @@ select {
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
+}
+
+.min-w-\[150px\] {
+  min-width: 150px;
 }
 
 .min-w-\[100px\] {

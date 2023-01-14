@@ -1,4 +1,4 @@
-import type { WoWServerRegion } from '~/requests/WoW/types'
+import type { WoWServerRegion } from '~/requests/WOWScan'
 
 interface WoWServerData {
   name: string
@@ -540,9 +540,9 @@ export const findNAWoWServerByID = (idToFind: number) => {
 
 export const validateServerAndRegion = (
   region: WoWServerRegion,
-  serverId: number | string
+  serverId: number | string | undefined
 ) => {
-  const data = region === 'NA' ? NAdata : EUData
+  const data = region === 'EU' ? EUData : NAdata
 
   const serverIdToCompare =
     typeof serverId === 'string' ? parseInt(serverId, 10) : serverId
@@ -551,6 +551,9 @@ export const validateServerAndRegion = (
   if (server) {
     return { server, region }
   } else {
-    return { server: { name: 'Thrall', id: 3678 }, region: 'NA' }
+    return {
+      server: { name: 'Thrall', id: 3678 },
+      region: 'NA' as const
+    }
   }
 }
