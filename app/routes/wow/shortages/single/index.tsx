@@ -1,19 +1,19 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WowShortageResult } from '~/requests/WoWCommodities'
 import NoResults from '~/routes/queries/listings/NoResults'
-import WoWServerSelect from '../../../../components/form/WoW/WoWServerSelect'
 import { validateShortageData, WoWShortageFormFields } from '../commodities'
 import ShortageResults from '../ShortageResults'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoWSingleItemShortage'
 import WoWSingleItemShortage from '~/requests/WoWSingleItemShortage'
-import { RegionRadioGroup } from '../../../../components/form/WoW/RegionRadioGroup'
-import type { WoWServerRegion } from '~/requests/WOWScan'
+import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
+import { getUserSessionData } from '~/sessions'
+import type { WoWLoaderData } from '~/requests/WoW/types'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -45,15 +45,19 @@ export const action: ActionFunction = async ({ request }) => {
   return await WoWSingleItemShortage(props)
 }
 
-const DEFAULT_SERVER_NAME = "Kil'jaeden"
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getWoWSessionData } = await getUserSessionData(request)
+  const { server, region } = getWoWSessionData()
+  return json({ wowRealm: server, wowRegion: region })
+}
 
 const Index = () => {
   const transition = useTransition()
+  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<WowShortageResult>()
-  const [region, setRegion] = useState<WoWServerRegion>('NA')
 
   const [serverName, setServerName] = useState<string | undefined>(
-    DEFAULT_SERVER_NAME
+    wowRealm.name
   )
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -88,17 +92,15 @@ const Index = () => {
           desiredSalesPerDayDefault={40}
           flipRiskLimitDefault={10}
         />
-        <RegionRadioGroup onChange={setRegion} defaultChecked={region} />
-        <WoWServerSelect
-          formName="homeRealmId"
-          title="Home Server"
-          onSelectChange={(selectValue) => {
+        <RegionAndServerSelect
+          defaultRealm={wowRealm}
+          region={wowRegion}
+          serverSelectFormName="homeRealmId"
+          severSelectTitle="Home Server"
+          onServerSelectChange={(selectValue) => {
             if (selectValue) setServerName(selectValue.name)
           }}
-          toolTip="Select your home world server, type to begin selection."
-          defaultServerId="9"
-          defaultServerName={DEFAULT_SERVER_NAME}
-          regionValue={region}
+          serverSelectTooltip="Select your home world server, type to begin selection."
         />
         <InputWithLabel
           defaultValue={-1}
