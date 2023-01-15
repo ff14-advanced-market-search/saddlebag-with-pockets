@@ -61,7 +61,6 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 
 const Index = () => {
   const transition = useTransition()
-
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<
     WoWScanResponseWithPayload | { exception: string }

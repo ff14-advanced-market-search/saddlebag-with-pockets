@@ -1,15 +1,16 @@
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
 import { z } from 'zod'
-import { useState } from 'react'
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import { RegionRadioGroup } from '~/components/form/WoW/RegionRadioGroup'
-import type { WoWServerRegion } from '~/requests/WoW/types'
-import WoWServerSelect from '~/components/form/WoW/WoWServerSelect'
+import type {
+  WoWLoaderData,
+  WoWServerData,
+  WoWServerRegion
+} from '~/requests/WoW/types'
 import {
   ItemClassSelect,
   ItemQualitySelect
@@ -22,6 +23,8 @@ import FullTable from '~/components/Tables/FullTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import type { TreemapNode } from '~/components/Charts/Treemap'
 import TreemapChart from '~/components/Charts/Treemap'
+import { getUserSessionData } from '~/sessions'
+import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -34,6 +37,12 @@ const inputMap: Record<string, string> = {
   itemClass: 'Item Class',
   itemSubclass: 'Item Sub Class',
   iLvl: 'iLevel'
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getWoWSessionData } = await getUserSessionData(request)
+  const { server, region } = getWoWSessionData()
+  return json({ wowRealm: server, wowRegion: region })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -114,7 +123,8 @@ const ItemStatLookupForm = ({
   regionDefault = 'NA',
   iLvlDefault = -1,
   requiredLevelDefault = -1,
-  commodityDefault = true
+  commodityDefault = true,
+  homeRealm
 }: {
   desiredPriceDefault?: number
   desiredSalesDefault?: number
@@ -122,9 +132,8 @@ const ItemStatLookupForm = ({
   iLvlDefault?: number
   requiredLevelDefault?: number
   commodityDefault?: boolean
+  homeRealm: WoWServerData
 }) => {
-  const [region, setRegion] = useState<WoWServerRegion>(regionDefault)
-
   return (
     <div className="pt-2 md:pt-4">
       <InputWithLabel
@@ -145,13 +154,11 @@ const ItemStatLookupForm = ({
         min={0}
         step={1}
       />
-      <RegionRadioGroup
-        defaultChecked={region}
-        onChange={(region) => {
-          setRegion(region)
-        }}
+      <RegionAndServerSelect
+        region={regionDefault}
+        defaultRealm={homeRealm}
+        serverSelectFormLabel="homeRealmId"
       />
-      <WoWServerSelect formName="homeRealmId" regionValue={region} />
       <ItemClassSelect />
       <ItemQualitySelect />
       <InputWithLabel
@@ -203,6 +210,8 @@ const tableSortOrder = [
 
 const Index = () => {
   const transition = useTransition()
+  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+
   const results = useActionData<
     | {
         data: Array<ItemStats>
@@ -283,7 +292,7 @@ const Index = () => {
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         error={error}>
-        <ItemStatLookupForm />
+        <ItemStatLookupForm regionDefault={wowRegion} homeRealm={wowRealm} />
       </SmallFormContainer>
     </PageWrapper>
   )
