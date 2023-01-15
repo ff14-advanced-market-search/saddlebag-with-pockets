@@ -188,7 +188,10 @@ const Index = () => {
           columnId: 'quantity_decline_rate_per_hour',
           header: 'Quantity Decline Rate per Hour'
         },
-        { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sales Per Hour' },
+        {
+          columnId: 'tsm_avg_sale_rate_per_hour',
+          header: 'TSM Sales Per Hour'
+        },
         {
           columnId: 'current_quantity_vs_avg_percent',
           header: 'Quantity Percent Available',
