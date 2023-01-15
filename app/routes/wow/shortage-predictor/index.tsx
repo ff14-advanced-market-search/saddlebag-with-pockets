@@ -1,16 +1,14 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
   ItemClassSelect,
   ItemQualitySelect
 } from '~/components/form/WoW/WoWScanForm'
-import { RegionRadioGroup } from '~/components/form/WoW/RegionRadioGroup'
-import WoWServerSelect from '~/components/form/WoW/WoWServerSelect'
 import { useState } from 'react'
-import type { WoWServerRegion } from '~/requests/WoW/types'
+import type { WoWLoaderData } from '~/requests/WoW/types'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import type {
@@ -28,6 +26,8 @@ import type { ColumnList } from '../full-scan/SmallTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import Label from '~/components/form/Label'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
+import { getUserSessionData } from '~/sessions'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -114,13 +114,18 @@ const getCodeString = (alertJson: AlertJson, idsToFiler: Array<number>) => {
 
 type ActionResponse = PredictionResponse | { exception: string } | {}
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getWoWSessionData } = await getUserSessionData(request)
+  const { server, region } = getWoWSessionData()
+  return json({ wowRealm: server, wowRegion: region })
+}
+
 const Index = () => {
   const transition = useTransition()
+  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<ActionResponse>()
   const [filteredIds, setFilteredIds] = useState<Array<number>>([])
   const [modalIsOpen, setModalIsOpen] = useState(false)
-
-  const [region, setRegion] = useState<WoWServerRegion>('NA')
 
   const pageTitle =
     'Commodity Shortage Futures - Find Shortages and Price Spikes before they happen! Get there before prices increase!'
@@ -183,7 +188,10 @@ const Index = () => {
           columnId: 'quantity_decline_rate_per_hour',
           header: 'Quantity Decline Rate per Hour'
         },
-        { columnId: 'tsm_avg_sale_rate_per_hour', header: 'TSM Sales Per Hour' },
+        {
+          columnId: 'tsm_avg_sale_rate_per_hour',
+          header: 'TSM Sales Per Hour'
+        },
         {
           columnId: 'current_quantity_vs_avg_percent',
           header: 'Quantity Percent Available',
@@ -305,11 +313,11 @@ const Index = () => {
           />
           <ItemQualitySelect />
           <ItemClassSelect />
-          <RegionRadioGroup
-            defaultChecked={region}
-            onChange={(val) => setRegion(val)}
+          <RegionAndServerSelect
+            serverSelectFormName="homeRealmName"
+            region={wowRegion}
+            defaultRealm={wowRealm}
           />
-          <WoWServerSelect formName="homeRealmName" regionValue={region} />
           <InputWithLabel
             defaultValue={120}
             type="number"

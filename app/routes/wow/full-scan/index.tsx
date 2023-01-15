@@ -1,7 +1,8 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import type {
   ActionFunction,
-  ErrorBoundaryComponent
+  ErrorBoundaryComponent,
+  LoaderFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WoWScanResponseWithPayload } from '~/requests/WOWScan'
@@ -15,6 +16,14 @@ import { Results } from './Results'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { setWoWScan } from '~/redux/reducers/wowSlice'
+import { getUserSessionData } from '~/sessions'
+import type { WoWLoaderData } from '~/requests/WoW/types'
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getWoWSessionData } = await getUserSessionData(request)
+  const { server, region } = getWoWSessionData()
+  return json({ wowRealm: server, wowRegion: region })
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -52,6 +61,7 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 
 const Index = () => {
   const transition = useTransition()
+  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<
     WoWScanResponseWithPayload | { exception: string }
   >()
@@ -90,6 +100,8 @@ const Index = () => {
           loading={transition.state === 'submitting'}
           error={error}
           clearErrors={() => setError(undefined)}
+          defaultRegion={wowRegion}
+          defaultServer={wowRealm}
         />
         {wowScan && 'out_of_stock' in wowScan && <Results data={wowScan} />}
       </>

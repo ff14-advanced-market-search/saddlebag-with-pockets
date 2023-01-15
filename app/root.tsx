@@ -11,7 +11,7 @@ import {
   useLoaderData
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
-import { getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions'
 import {
   EnsureThemeApplied,
   Theme,
@@ -23,7 +23,7 @@ import { store } from '~/redux/store'
 import { Provider } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
-import { validateWorldAndDataCenter } from './utils/locations'
+import type { WoWServerRegion } from './requests/WoW/types'
 
 export const links = () => {
   return [
@@ -34,31 +34,28 @@ export const links = () => {
   ]
 }
 
-type LoaderData = {
+export type LoaderData = {
   site_name: string
   data_center: string
   world: string
+  wowRealm: { name: string; id: number }
+  wowRegion: WoWServerRegion
 }
 
 export const loader: LoaderFunction = async ({ request, context }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  if (session.has('data_center') && session.has('world')) {
-    const { world, data_center } = validateWorldAndDataCenter(
-      session.get('world'),
-      session.get('data_center')
-    )
-    return json({
-      data_center,
-      world
-    })
-  }
-  // @todo set safe default for DC and world
+  const { getWorld, getDataCenter, getWoWSessionData } =
+    await getUserSessionData(request)
+
+  const data_center = getDataCenter()
+  const world = getWorld()
+  const { server, region } = getWoWSessionData()
+
   return json<LoaderData>({
     site_name: (context.SITE_NAME as string) ?? 'Saddlebag',
-    data_center: session.has('data_center')
-      ? session.get('data_center')
-      : 'Aether',
-    world: session.has('world') ? session.get('world') : 'Adamantoise'
+    data_center,
+    world,
+    wowRealm: server,
+    wowRegion: region
   })
 }
 

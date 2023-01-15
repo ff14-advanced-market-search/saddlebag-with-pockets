@@ -2,15 +2,17 @@ import { useLoaderData } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { LoaderFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import ItemSelect from '~/components/Common/ItemSelect'
 import { useState } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Label from '~/components/form/Label'
 import CodeBlock from '~/components/Common/CodeBlock'
 import WoWGetItems from '~/requests/WoWGetItems'
-import { RegionRadioGroup } from '~/components/form/WoW/RegionRadioGroup'
-import WoWServerSelect from '~/components/form/WoW/WoWServerSelect'
 import { findWoWServersIdByName } from '~/utils/WoWServers'
+import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
+import { getUserSessionData } from '~/sessions'
+import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
 
 interface Auction {
   itemName: string
@@ -54,16 +56,27 @@ const getInputString = (input: Input) => {
   )}${parseUserAuctions(input)}\n}`
 }
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getWoWSessionData } = await getUserSessionData(request)
+  const { server, region } = getWoWSessionData()
+
   const items = await WoWGetItems()
-  return Object.entries(await items.json())
+
+  return json({
+    data: Object.entries(await items.json()),
+    wowRealm: server,
+    wowRegion: region
+  })
+}
+type LoaderData = WoWLoaderData & {
+  data: Array<[string, string]>
 }
 
 const Index = () => {
-  const data = useLoaderData<Array<[string, string]>>()
+  const { data, wowRealm, wowRegion } = useLoaderData<LoaderData>()
   const [jsonData, setJsonData] = useState<Input>({
-    homeRealmName: undefined,
-    region: 'NA',
+    homeRealmName: wowRealm.name,
+    region: wowRegion,
     userAuctions: []
   })
   const [formState, setFormState] = useState<Auction | null>(null)
@@ -71,6 +84,34 @@ const Index = () => {
 
   const jsonToDisplay = getInputString(jsonData)
 
+  const handleRegionChange = (region: WoWServerRegion) => {
+    if (!region) return
+
+    const hasServer = jsonData.homeRealmName
+      ? findWoWServersIdByName(jsonData.homeRealmName, region).length > 0
+      : false
+
+    const homeRealmName = hasServer ? jsonData.homeRealmName : undefined
+
+    setJsonData({ ...jsonData, region, homeRealmName })
+    return
+  }
+
+  const handleTextChange = (homeRealmName?: string) => {
+    if (!homeRealmName) {
+      setJsonData({ ...jsonData, homeRealmName })
+      return
+    }
+  }
+
+  const handleSelectChange = (server?: { name: string; id: number }) => {
+    if (!server) {
+      setJsonData({ ...jsonData, homeRealmName: undefined })
+      return
+    }
+
+    setJsonData({ ...jsonData, homeRealmName: server.name })
+  }
   return (
     <PageWrapper>
       <>
@@ -213,42 +254,14 @@ const Index = () => {
             codeString={jsonToDisplay}
             onClick={() => alert('Copied to clipboard!')}>
             <div className="mb-1">
-              <RegionRadioGroup
-                onChange={(region) => {
-                  if (!region) return
-
-                  const hasServer = jsonData.homeRealmName
-                    ? findWoWServersIdByName(jsonData.homeRealmName, region)
-                        .length > 0
-                    : false
-
-                  const homeRealmName = hasServer
-                    ? jsonData.homeRealmName
-                    : undefined
-
-                  setJsonData({ ...jsonData, region, homeRealmName })
-                  return
-                }}
-                defaultChecked={jsonData.region}
-              />
-              <WoWServerSelect
-                formName="wow-server-select"
-                regionValue={jsonData.region}
-                onTextChange={(homeRealmName) => {
-                  if (!homeRealmName) {
-                    setJsonData({ ...jsonData, homeRealmName })
-                    return
-                  }
-                }}
-                onSelectChange={(server) => {
-                  if (!server) {
-                    setJsonData({ ...jsonData, homeRealmName: undefined })
-                    return
-                  }
-
-                  setJsonData({ ...jsonData, homeRealmName: server.name })
-                }}
-                toolTip="Select your home realm name to alert on items on your realms local market or the region wide commodity market!'"
+              <RegionAndServerSelect
+                region={jsonData.region}
+                serverSelectFormName="wow-server-select"
+                defaultRealm={wowRealm}
+                regionOnChange={handleRegionChange}
+                onServerTextChange={handleTextChange}
+                onServerSelectChange={handleSelectChange}
+                serverSelectTooltip="Select your home realm name to alert on items on your realms local market or the region wide commodity market!'"
               />
             </div>
           </CodeBlock>

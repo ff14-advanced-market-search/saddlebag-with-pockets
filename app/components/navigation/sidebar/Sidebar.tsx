@@ -21,9 +21,10 @@ import EarthIcon from '~/icons/EarthIcon'
 import GithubIcon from '~/icons/GithubIcon'
 import { LocationMarkerIcon } from '@heroicons/react/solid'
 import DiscordIcon from '~/icons/DiscordIcon'
+import type { LoaderData } from '~/root'
 
 type Props = PropsWithChildren<any> & {
-  data: any
+  data: LoaderData
 }
 
 interface NavbarLinkProps {
@@ -455,7 +456,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
           <div className="flex-1 px-4 flex justify-end">
-            <div className={`ml-4 flex md:ml-6 basis-52`}>
+            <div className={`ml-4 flex md:ml-6 basis-52 max-w-fit`}>
               <NavLink
                 to={'/options'}
                 type="button"
@@ -464,19 +465,44 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                   'hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500'
                 )}>
                 <div className={`flex flex-wrap pl-1.5 flex-1`}>
-                  <div className="flex items-center text-sm text-gray-500 basis-full">
-                    <EarthIcon
-                      className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    {data.data_center}
+                  <div className="hidden md:flex">
+                    <div className="flex flex-col min-w-[150px]">
+                      <div className="flex items-center text-sm text-gray-500 basis-full">
+                        <EarthIcon
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        {data.data_center}
+                      </div>
+                      <div className=" md:flex items-center text-sm text-gray-500 basis-full">
+                        <LocationMarkerIcon
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        {data.world}
+                      </div>
+                    </div>
+                    <div className="border-l border-gray-200 w-0 m-2 shrink-0 rounded:md" />
+                    <div className="flex flex-col w-fit min-w-[150px]">
+                      <div className="flex items-center text-sm text-gray-500 basis-full">
+                        <EarthIcon
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        {data.wowRegion === 'NA' ? 'North America' : 'Europe'}
+                      </div>
+                      <div className=" md:flex items-center text-sm text-gray-500 basis-full">
+                        <LocationMarkerIcon
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        {data.wowRealm.name}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center text-sm text-gray-500 basis-full">
-                    <LocationMarkerIcon
-                      className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    {data.world}
+
+                  <div className="flex md:hidden items-center text-sm text-gray-500 basis-full mr-1.5">
+                    Settings
                   </div>
                 </div>
                 <div className={`flex items-center pr-1.5`}>
