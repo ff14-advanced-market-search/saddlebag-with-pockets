@@ -1,9 +1,4 @@
-import type { WoWServerRegion } from '~/requests/WOWScan'
-
-interface WoWServerData {
-  name: string
-  id: number
-}
+import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 
 export const NAdata: Array<WoWServerData> = [
   { name: 'Azjol-Nerub', id: 121 },

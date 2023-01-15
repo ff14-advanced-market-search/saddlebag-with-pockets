@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import { InputWithLabel } from '../InputWithLabel'
 import SmallFormContainer from '../SmallFormContainer'
-import type { WoWServerRegion } from '~/requests/WoW/types'
+import type { WoWServerRegion, WoWServerData } from '~/requests/WoW/types'
 import Label from '../Label'
 import { RegionRadioGroup } from './RegionRadioGroup'
 import WoWServerSelect from './WoWServerSelect'
@@ -13,6 +13,8 @@ interface Props {
   loading: boolean
   error?: string
   clearErrors: () => void
+  defaultRegion?: WoWServerRegion
+  defaultServer?: WoWServerData
 }
 
 const itemQuality = [
@@ -51,9 +53,14 @@ const WoWScanForm = ({
   loading,
   error,
   onChange,
-  clearErrors
+  clearErrors,
+  defaultRegion,
+  defaultServer
 }: Props) => {
-  const [region, setRegion] = useState<WoWServerRegion>('NA')
+  const [region, setRegion] = useState<WoWServerRegion>(defaultRegion || 'NA')
+
+  const serverName = defaultServer?.name || 'Thrall'
+  const serverId = defaultServer?.id?.toString?.() || '3678'
 
   return (
     <SmallFormContainer
@@ -117,13 +124,18 @@ const WoWScanForm = ({
         </div>
         <div className="w-full">
           <ItemClassSelect />
-          <RegionRadioGroup onChange={setRegion} defaultChecked={region} />
+          <RegionRadioGroup
+            onChange={setRegion}
+            defaultChecked={defaultRegion}
+          />
           <WoWServerSelect
             formName="homeRealmId"
             title="Home World"
             onSelectChange={clearErrors}
             onTextChange={clearErrors}
             regionValue={region}
+            defaultServerId={serverId}
+            defaultServerName={serverName}
           />
           <WoWServerSelect
             formName="newRealmId"

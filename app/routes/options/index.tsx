@@ -49,8 +49,6 @@ export const action: ActionFunction = async ({ request }) => {
 
   const [homeRealmId, homeRealmName] = result.data.homeRealm.split('---')
 
-  console.log({ homeRealmId, homeRealmName })
-
   const session = await getSession(request.headers.get('Cookie'))
 
   const { server, region } = validateServerAndRegion(
