@@ -157,7 +157,7 @@ const ItemStatLookupForm = ({
       <RegionAndServerSelect
         region={regionDefault}
         defaultRealm={homeRealm}
-        serverSelectFormLabel="homeRealmId"
+        serverSelectFormName="homeRealmId"
       />
       <ItemClassSelect />
       <ItemQualitySelect />

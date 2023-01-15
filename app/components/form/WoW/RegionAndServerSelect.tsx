@@ -7,17 +7,22 @@ import type { WoWServerData } from '~/requests/WoW/types'
 interface Props {
   region: WoWServerRegion
   regionTitle?: string
-  serverSelectFormLabel: string
+  serverSelectFormName: string
   defaultRealm: WoWServerData
+  serverSelectTooltip?: string
+  severSelectTitle?: string
 }
 
 export default function RegionAndServerSelect({
   region,
   regionTitle,
-  serverSelectFormLabel,
-  defaultRealm
+  serverSelectFormName,
+  defaultRealm,
+  serverSelectTooltip,
+  severSelectTitle
 }: Props) {
   const [regionValue, setRegionValue] = useState<WoWServerRegion>(region)
+
   return (
     <>
       <RegionRadioGroup
@@ -26,10 +31,12 @@ export default function RegionAndServerSelect({
         onChange={(val) => setRegionValue(val)}
       />
       <ServerSelect
-        formName={serverSelectFormLabel}
+        formName={serverSelectFormName}
         regionValue={regionValue}
         defaultServerName={defaultRealm.name}
         defaultServerId={defaultRealm.id.toString()}
+        toolTip={serverSelectTooltip}
+        title={severSelectTitle}
       />
     </>
   )
