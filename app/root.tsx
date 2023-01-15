@@ -66,7 +66,7 @@ export const meta: MetaFunction = ({ data }) => {
     title: site_name,
     viewport: 'width=device-width,initial-scale=1',
     description:
-      'SaddleBag Exchange is a data analysis engine for the Final Fantasy 14 marketplace!'
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW, FFXIV and more!'
   }
 }
 
