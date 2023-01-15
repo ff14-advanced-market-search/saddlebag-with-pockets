@@ -540,14 +540,17 @@ export const findNAWoWServerByID = (idToFind: number) => {
 
 export const validateServerAndRegion = (
   region: WoWServerRegion,
-  serverId: number | string | undefined
+  serverId: number | string | undefined,
+  serverName: string | undefined
 ) => {
   const data = region === 'EU' ? EUData : NAdata
 
   const serverIdToCompare =
     typeof serverId === 'string' ? parseInt(serverId, 10) : serverId
 
-  const server = data.find(({ id }) => id === serverIdToCompare)
+  const servers = data.filter(({ id }) => id === serverIdToCompare)
+  const server = servers.find(({ name }) => name === serverName)
+
   if (server) {
     return { server, region }
   } else {

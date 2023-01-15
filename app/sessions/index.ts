@@ -6,7 +6,8 @@ import { validateServerAndRegion } from '~/utils/WoWServers'
 export const DATA_CENTER = 'data_center'
 export const FF14_WORLD = 'world'
 export const WOW_REGION = 'wow_region'
-export const WOW_REALM = 'wow_realm'
+export const WOW_REALM_ID = 'wow_realm_id'
+export const WOW_REALM_NAME = 'wow_realm_name'
 
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
@@ -26,15 +27,23 @@ const getFF14WorldAndDataCenter = (session: Session) => {
 }
 
 const getUserWoWSessionData = (session: Session) => {
-  const sessionWoWRegion = session.has(WOW_REALM)
-    ? session.get(WOW_REALM)
+  const sessionWoWRealm = session.has(WOW_REALM_ID)
+    ? session.get(WOW_REALM_ID)
     : 'NA'
 
-  const sessionWoWRealm = session.has(WOW_REGION)
+  const sessionWoWRegion = session.has(WOW_REGION)
     ? session.get(WOW_REGION)
     : undefined
 
-  return validateServerAndRegion(sessionWoWRegion, sessionWoWRealm)
+  const sessionWoWRealmName = session.has(WOW_REALM_NAME)
+    ? session.get(WOW_REALM_NAME)
+    : undefined
+
+  return validateServerAndRegion(
+    sessionWoWRegion,
+    sessionWoWRealm,
+    sessionWoWRealmName
+  )
 }
 
 async function getUserSessionData(request: Request) {

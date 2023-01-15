@@ -8,57 +8,122 @@ import {
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json, redirect } from '@remix-run/cloudflare'
-import { withZod } from '@remix-validated-form/with-zod'
 import { z } from 'zod'
-import type { GetDeepProp } from '~/utils/ts'
-import type { DataCentersList } from '~/utils/locations/DataCenters'
-import type { Validator } from 'remix-validated-form'
-import type { WorldsList } from '~/utils/locations/Worlds'
 import {
   commitSession,
   DATA_CENTER,
   FF14_WORLD,
   getSession,
-  getUserSessionData
+  getUserSessionData,
+  WOW_REALM_ID,
+  WOW_REALM_NAME,
+  WOW_REGION
 } from '~/sessions'
 import { Switch } from '@headlessui/react'
 import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
 import { toggleDarkMode } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import React, { useState } from 'react'
+import { RegionRadioGroup } from '~/components/form/WoW/RegionRadioGroup'
+import WoWServerSelect from '~/components/form/WoW/WoWServerSelect'
+import { validateServerAndRegion } from '~/utils/WoWServers'
+import { validateWorldAndDataCenter } from '~/utils/locations'
 
-export type SelectWorldInputFields = {
-  data_center: GetDeepProp<DataCentersList, 'name'>
-  world: GetDeepProp<WorldsList, 'name'>
-  // dark_mode: boolean
-}
-// @ts-ignore
-export const validator: Validator<SelectWorldInputFields> = withZod(
-  z.object({
-    data_center: z.string().min(1),
-    world: z.string().min(1) /*dark_mode: z.boolean()*/
-  })
-)
+export const validator = z.object({
+  data_center: z.string().min(1),
+  world: z.string().min(1),
+  region: z.union([z.literal('NA'), z.literal('EU')]),
+  homeRealm: z.string().min(1)
+})
 
 export const action: ActionFunction = async ({ request }) => {
-  const result = await validator.validate(await request.formData())
-  if (result.error) {
+  const formData = await request.formData()
+  const formPayload = Object.fromEntries(formData)
+
+  const result = validator.safeParse(formPayload)
+
+  if (!result.success) {
     return json(result)
   }
-  const session = await getSession(request.headers.get('Cookie'))
-  if (session.data === result.data) {
-    // Options already match existing stored session data. Yeet back to index.
-    return redirect('/')
-  }
 
-  session.set(DATA_CENTER, result.data.data_center)
-  session.set(FF14_WORLD, result.data.world)
+  const [homeRealmId, homeRealmName] = result.data.homeRealm.split('---')
+
+  console.log({ homeRealmId, homeRealmName })
+
+  const session = await getSession(request.headers.get('Cookie'))
+
+  const { server, region } = validateServerAndRegion(
+    result.data.region,
+    homeRealmId,
+    homeRealmName
+  )
+
+  const { data_center, world } = validateWorldAndDataCenter(
+    result.data.world,
+    result.data.data_center
+  )
+
+  session.set(DATA_CENTER, data_center)
+  session.set(FF14_WORLD, world)
+  session.set(WOW_REALM_ID, server.id)
+  session.set(WOW_REALM_NAME, server.name)
+  session.set(WOW_REGION, region)
+
   // Set the new option, yeet back to index (but save against session data within the cookie)
   return redirect('/', {
     headers: {
       'Set-Cookie': await commitSession(session)
     }
   })
+}
+
+const OptionSection = ({
+  title,
+  description,
+  children,
+  hideHRule
+}: {
+  title: string
+  description: string
+  children: React.ReactNode
+  hideHRule?: boolean
+}) => {
+  return (
+    <div className="py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <>
+          <div>
+            <div className="md:grid md:grid-cols-3 md:gap-6">
+              <div className="md:col-span-1">
+                <div className="px-4 sm:px-0">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    {title}
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-600">{description}</p>
+                </div>
+              </div>
+              <div className="mt-5 md:mt-0 md:col-span-2">
+                <div className="shadow sm:rounded-md sm:overflow-hidden">
+                  <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+                    {children}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {!hideHRule && (
+            <div className="hidden sm:block" aria-hidden="true">
+              <div className="py-5">
+                <div className="border-t border-gray-200" />
+              </div>
+            </div>
+          )}
+        </>
+      </div>
+    </div>
+  )
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -85,7 +150,7 @@ export default function () {
   const actionData = useActionData()
   const dispatch = useDispatch()
   const { darkmode } = useTypedSelector((state) => state.user)
-
+  const [region, setRegion] = useState(data.wowRegion)
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode())
   }
@@ -121,116 +186,71 @@ export default function () {
               </div>
             </div>
           </div>
-
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <>
-                <div>
-                  <div className="md:grid md:grid-cols-3 md:gap-6">
-                    <div className="md:col-span-1">
-                      <div className="px-4 sm:px-0">
-                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                          World Selection
-                        </h3>
-                        <p className="mt-1 text-sm text-gray-600">
-                          The selected server will change what marketplace your
-                          queries are run against.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-5 md:mt-0 md:col-span-2">
-                      <div className="shadow sm:rounded-md sm:overflow-hidden">
-                        <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                          <SelectDCandWorld
-                            transition={transition}
-                            actionData={actionData}
-                            sessionData={data}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="hidden sm:block" aria-hidden="true">
-                  <div className="py-5">
-                    <div className="border-t border-gray-200" />
-                  </div>
-                </div>
-              </>
-            </div>
-          </div>
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <>
-                <div>
-                  <div className="md:grid md:grid-cols-3 md:gap-6">
-                    <div className="md:col-span-1">
-                      <div className="px-4 sm:px-0">
-                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                          Theme
-                        </h3>
-                        <p className="mt-1 text-sm text-gray-600">
-                          Needs more sparkles.. ✨✨✨✨
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-5 md:mt-0 md:col-span-2">
-                      <div className="shadow sm:rounded-md sm:overflow-hidden">
-                        <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                          <Switch.Group
-                            as={`div`}
-                            className={`flex items-center justify-between`}>
-                            <span className={`flex-grow flex flex-col`}>
-                              <Switch.Label
-                                as={`span`}
-                                className={`txt-sm font-meidum text-gray-900`}
-                                passive>
-                                Enable Dark Mode
-                              </Switch.Label>
-                              <Switch.Description
-                                as={`span`}
-                                className={`text-sm text-gray-500`}>
-                                I confirm, I have weak eyeballs. But also
-                                confirm that I don't mind how currently broken
-                                this is. (page refreshes currently clear)
-                              </Switch.Description>
-                            </span>
-                            {typeof document !== 'undefined' && (
-                              <Switch
-                                key={darkmode.toString()}
-                                checked={darkmode}
-                                onChange={handleDarkModeToggle}
-                                className={classNames(
-                                  darkmode ? `bg-blue-500` : `bg-gray-200`,
-                                  `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
-                                )}>
-                                <span
-                                  aria-hidden={true}
-                                  className={classNames(
-                                    darkmode
-                                      ? `translate-x-5`
-                                      : `translate-x-0`,
-                                    `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
-                                  )}
-                                />
-                              </Switch>
-                            )}
-                          </Switch.Group>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="hidden sm:block" aria-hidden="true">
-                  <div className="py-5">
-                    <div className="border-t border-gray-200" />
-                  </div>
-                </div>
-              </>
-            </div>
-          </div>
+          <OptionSection
+            title="FFXIV World Selection"
+            description="The selected server will change what marketplace your queries are run against.">
+            <SelectDCandWorld
+              transition={transition}
+              actionData={actionData}
+              sessionData={data}
+            />
+          </OptionSection>
+          <OptionSection
+            title="WoW Home Realm Selection"
+            description="Your region and home realm that will be the default on WoW queries.">
+            <RegionRadioGroup
+              defaultChecked={region}
+              onChange={(value) => setRegion(value)}
+            />
+            <WoWServerSelect
+              formName="homeRealm"
+              regionValue={region}
+              defaultServerId={data.wowRealm.id}
+              defaultServerName={data.wowRealm.name}
+            />
+          </OptionSection>
+          <OptionSection
+            title="Theme"
+            description="Needs more sparkles.. ✨✨✨✨"
+            hideHRule={true}>
+            <Switch.Group
+              as={`div`}
+              className={`flex items-center justify-between`}>
+              <span className={`flex-grow flex flex-col`}>
+                <Switch.Label
+                  as={`span`}
+                  className={`txt-sm font-meidum text-gray-900`}
+                  passive>
+                  Enable Dark Mode
+                </Switch.Label>
+                <Switch.Description
+                  as={`span`}
+                  className={`text-sm text-gray-500`}>
+                  I confirm, I have weak eyeballs. But also confirm that I don't
+                  mind how currently broken this is. (page refreshes currently
+                  clear)
+                </Switch.Description>
+              </span>
+              {typeof document !== 'undefined' && (
+                <Switch
+                  key={darkmode.toString()}
+                  checked={darkmode}
+                  onChange={handleDarkModeToggle}
+                  className={classNames(
+                    darkmode ? `bg-blue-500` : `bg-gray-200`,
+                    `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
+                  )}>
+                  <span
+                    aria-hidden={true}
+                    className={classNames(
+                      darkmode ? `translate-x-5` : `translate-x-0`,
+                      `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
+                    )}
+                  />
+                </Switch>
+              )}
+            </Switch.Group>
+          </OptionSection>
         </Form>
       </main>
     </div>
