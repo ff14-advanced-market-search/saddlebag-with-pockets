@@ -1,6 +1,6 @@
 import React from 'react'
 import type { WoWServerRegion } from '~/requests/WOWScan'
-import Label from '../../../routes/wow/full-scan/Label'
+import Label from '../Label'
 
 const regions: Array<{ label: string; value: WoWServerRegion }> = [
   { label: 'North America', value: 'NA' },

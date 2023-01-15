@@ -24,11 +24,10 @@ import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
 import { toggleDarkMode } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import React, { useState } from 'react'
-import { RegionRadioGroup } from '~/components/form/WoW/RegionRadioGroup'
-import WoWServerSelect from '~/components/form/WoW/WoWServerSelect'
+import React from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
+import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 
 export const validator = z.object({
   data_center: z.string().min(1),
@@ -146,9 +145,10 @@ export default function () {
   const data = useLoaderData()
   const transition = useTransition()
   const actionData = useActionData()
+
   const dispatch = useDispatch()
   const { darkmode } = useTypedSelector((state) => state.user)
-  const [region, setRegion] = useState(data.wowRegion)
+
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode())
   }
@@ -196,15 +196,10 @@ export default function () {
           <OptionSection
             title="WoW Home Realm Selection"
             description="Your region and home realm that will be the default on WoW queries.">
-            <RegionRadioGroup
-              defaultChecked={region}
-              onChange={(value) => setRegion(value)}
-            />
-            <WoWServerSelect
-              formName="homeRealm"
-              regionValue={region}
-              defaultServerId={data.wowRealm.id}
-              defaultServerName={data.wowRealm.name}
+            <RegionAndServerSelect
+              region={data.wowRegion}
+              defaultRealm={data.wowRealm}
+              serverSelectFormName="homeRealm"
             />
           </OptionSection>
           <OptionSection

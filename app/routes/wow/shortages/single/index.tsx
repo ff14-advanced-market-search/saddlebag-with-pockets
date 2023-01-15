@@ -96,7 +96,7 @@ const Index = () => {
           defaultRealm={wowRealm}
           region={wowRegion}
           serverSelectFormName="homeRealmId"
-          severSelectTitle="Home Server"
+          serverSelectTitle="Home Server"
           onServerSelectChange={(selectValue) => {
             if (selectValue) setServerName(selectValue.name)
           }}

@@ -1,7 +1,8 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import type {
   ActionFunction,
-  ErrorBoundaryComponent
+  ErrorBoundaryComponent,
+  LoaderFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '../../../queries/listings/NoResults'
@@ -15,10 +16,10 @@ import {
 } from '../../../../components/form/WoW/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ShortageResults from '../ShortageResults'
-import WoWServerSelect from '../../../../components/form/WoW/WoWServerSelect'
 import { useState } from 'react'
-import { RegionRadioGroup } from '../../../../components/form/WoW/RegionRadioGroup'
-import type { WoWServerRegion } from '~/requests/WOWScan'
+import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
+import { getUserSessionData } from '~/sessions'
+import type { WoWLoaderData } from '~/requests/WoW/types'
 
 export const validateShortageData = (
   formData: FormData
@@ -160,11 +161,19 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
   )
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getWoWSessionData } = await getUserSessionData(request)
+  const { server, region } = getWoWSessionData()
+  return json({ wowRealm: server, wowRegion: region })
+}
+
 const Index = () => {
   const transition = useTransition()
   const results = useActionData<WowShortageResult>()
+  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+
   const [serverName, setServerName] = useState<string | undefined>()
-  const [region, setRegion] = useState<WoWServerRegion>('NA')
+
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
@@ -192,15 +201,15 @@ const Index = () => {
           results && 'exception' in results ? results.exception : undefined
         }>
         <WoWShortageFormFields />
-        <RegionRadioGroup onChange={setRegion} defaultChecked={region} />
-        <WoWServerSelect
-          formName="homeRealmId"
-          title="Home Server"
-          onSelectChange={(selectValue) => {
+        <RegionAndServerSelect
+          region={wowRegion}
+          serverSelectFormName="homeRealmId"
+          defaultRealm={wowRealm}
+          serverSelectTitle="Home Server"
+          onServerSelectChange={(selectValue) => {
             if (selectValue) setServerName(selectValue.name)
           }}
-          toolTip="Select your home world server, type to begin selection."
-          regionValue={region}
+          serverSelectTooltip="Select your home world server, type to begin selection."
         />
       </SmallFormContainer>
     </PageWrapper>

@@ -12,7 +12,7 @@ interface Props {
   serverSelectFormName: string
   defaultRealm: WoWServerData
   serverSelectTooltip?: string
-  severSelectTitle?: string
+  serverSelectTitle?: string
   regionOnChange?: (region: WoWServerRegion) => void
   onServerTextChange?: (selectValue?: string) => void
   onServerSelectChange?: (selectValue?: ServerSelected) => void
@@ -24,7 +24,7 @@ export default function RegionAndServerSelect({
   serverSelectFormName,
   defaultRealm,
   serverSelectTooltip,
-  severSelectTitle,
+  serverSelectTitle,
   regionOnChange,
   onServerTextChange,
   onServerSelectChange
@@ -47,7 +47,7 @@ export default function RegionAndServerSelect({
         defaultServerName={defaultRealm.name}
         defaultServerId={defaultRealm.id.toString()}
         toolTip={serverSelectTooltip}
-        title={severSelectTitle}
+        title={serverSelectTitle}
         onTextChange={onServerTextChange}
         onSelectChange={onServerSelectChange}
       />

@@ -4,8 +4,8 @@ import { InputWithLabel } from '../InputWithLabel'
 import SmallFormContainer from '../SmallFormContainer'
 import type { WoWServerRegion, WoWServerData } from '~/requests/WoW/types'
 import Label from '../Label'
-import { RegionRadioGroup } from './RegionRadioGroup'
 import WoWServerSelect from './WoWServerSelect'
+import RegionAndServerSelect from './RegionAndServerSelect'
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -54,14 +54,9 @@ const WoWScanForm = ({
   error,
   onChange,
   clearErrors,
-  defaultRegion,
-  defaultServer
+  defaultRegion = 'NA',
+  defaultServer = { name: 'Thrall', id: 3678 }
 }: Props) => {
-  const [region, setRegion] = useState<WoWServerRegion>(defaultRegion || 'NA')
-
-  const serverName = defaultServer?.name || 'Thrall'
-  const serverId = defaultServer?.id?.toString?.() || '3678'
-
   return (
     <SmallFormContainer
       title="WoW Non-Commodity Server to Server Trade Search"
@@ -124,25 +119,20 @@ const WoWScanForm = ({
         </div>
         <div className="w-full">
           <ItemClassSelect />
-          <RegionRadioGroup
-            onChange={setRegion}
-            defaultChecked={defaultRegion}
-          />
-          <WoWServerSelect
-            formName="homeRealmId"
-            title="Home World"
-            onSelectChange={clearErrors}
-            onTextChange={clearErrors}
-            regionValue={region}
-            defaultServerId={serverId}
-            defaultServerName={serverName}
+          <RegionAndServerSelect
+            serverSelectFormName="homeRealmId"
+            serverSelectTitle="Home World"
+            region={defaultRegion}
+            defaultRealm={defaultServer}
+            onServerSelectChange={clearErrors}
+            onServerTextChange={clearErrors}
           />
           <WoWServerSelect
             formName="newRealmId"
             title="New World"
             onSelectChange={clearErrors}
             onTextChange={clearErrors}
-            regionValue={region}
+            regionValue={defaultRegion}
           />
         </div>
       </div>
