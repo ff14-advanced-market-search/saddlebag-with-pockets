@@ -529,6 +529,12 @@ export const findWoWServersIdByName = (
   )
 }
 
+export const findRegionByWorldId = (worldId: number) => {
+  const isEu = EUData.find(({ id }) => id === worldId)
+
+  return isEu ? 'EU' : 'NA'
+}
+
 export const findNAWoWServerByID = (idToFind: number) => {
   return NAdata.find(({ id }) => id === idToFind)
 }
