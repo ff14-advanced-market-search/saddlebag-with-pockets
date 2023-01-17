@@ -9,6 +9,7 @@ import { Section } from '~/components/Common'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { useEffect, useRef } from 'react'
+import { findRegionByWorldId } from '~/utils/WoWServers'
 
 const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
   <ExternalLink
@@ -18,13 +19,16 @@ const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
 )
 
 export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
+  const region = findRegionByWorldId(data.payload.homeRealmId)
   const newOribosLink = getOribosLink(
     data?.payload.newRealmServerName,
-    'New World'
+    'New World',
+    region
   )
   const homeOribosLink = getOribosLink(
     data?.payload.homeRealmServerName,
-    'Home World'
+    'Home World',
+    region
   )
   const oosColumnList: Array<ColumnList<WoWOutOfStock>> = [
     { columnId: 'name', header: 'Item Name' },

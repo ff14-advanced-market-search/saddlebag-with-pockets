@@ -24,6 +24,15 @@ export const action: ActionFunction = async ({ request }) => {
     return json(validInput)
   }
 
+  const region = formData.get('region')
+  if (
+    !region ||
+    typeof region !== 'string' ||
+    (region !== 'NA' && region !== 'EU')
+  ) {
+    return json({ exception: 'Missing server region' })
+  }
+
   const requiredLevelData = formData.get('requiredLevel')
   if (!requiredLevelData || typeof requiredLevelData !== 'string') {
     return { exception: 'Missing required level' }
@@ -41,8 +50,8 @@ export const action: ActionFunction = async ({ request }) => {
     requiredLevel,
     iLvl
   }
-
-  return await WoWSingleItemShortage(props)
+  const res = await WoWSingleItemShortage(props)
+  return json({ ...(await res.json()), region })
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -72,7 +81,13 @@ const Index = () => {
   }
 
   if (results && 'increase' in results) {
-    return <ShortageResults results={results} serverName={serverName} />
+    return (
+      <ShortageResults
+        results={results}
+        serverName={serverName}
+        region={results.region}
+      />
+    )
   }
 
   return (

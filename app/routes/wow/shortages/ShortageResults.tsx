@@ -1,16 +1,19 @@
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import type { WoWServerRegion } from '~/requests/WoW/types'
 import type { WoWShortage } from '~/requests/WoWCommodities'
 import { WoWShortageItem } from './ShortageResultItem'
 
 const ShortageResults = ({
   results,
-  serverName
+  serverName,
+  region = 'NA'
 }: {
   results: {
     increase: Array<WoWShortage>
     reset: Array<WoWShortage>
   }
   serverName?: string
+  region?: WoWServerRegion
 }) => (
   <PageWrapper>
     <>
@@ -22,7 +25,9 @@ const ShortageResults = ({
             market and then sell a small amount for profit.
           </p>
           <div className="flex w-full overflow-x-scroll gap-3">
-            {results.increase.map((item) => WoWShortageItem(item, serverName))}
+            {results.increase.map((item) =>
+              WoWShortageItem(item, serverName, region)
+            )}
           </div>
         </div>
       </ContentContainer>
@@ -34,7 +39,9 @@ const ShortageResults = ({
             small amount of items for profit.
           </p>
           <div className="flex w-full overflow-x-scroll gap-3">
-            {results.reset.map((item) => WoWShortageItem(item, serverName))}
+            {results.reset.map((item) =>
+              WoWShortageItem(item, serverName, region)
+            )}
           </div>
         </div>
       </ContentContainer>

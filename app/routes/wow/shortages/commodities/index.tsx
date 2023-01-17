@@ -147,7 +147,11 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ exception: 'Missing server region' })
   }
 
-  return await WoWCommodityShortage({ ...validInput, region })
+  const res = await WoWCommodityShortage({ ...validInput, region })
+  return json({
+    ...(await res.json()),
+    region
+  })
 }
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
@@ -172,13 +176,14 @@ const Index = () => {
   const results = useActionData<WowShortageResult>()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
 
-  const [serverName, setServerName] = useState<string | undefined>()
+  const [serverName, setServerName] = useState<string>(wowRealm.name)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
   }
+  console.log(results)
 
   if (results) {
     if (Object.keys(results).length === 0) {
@@ -187,7 +192,13 @@ const Index = () => {
   }
 
   if (results && 'increase' in results) {
-    return <ShortageResults results={results} serverName={serverName} />
+    return (
+      <ShortageResults
+        results={results}
+        serverName={serverName}
+        region={results.region}
+      />
+    )
   }
 
   return (

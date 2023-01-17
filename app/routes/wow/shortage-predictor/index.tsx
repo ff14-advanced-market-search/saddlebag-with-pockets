@@ -148,7 +148,8 @@ const Index = () => {
 
       const OribosLink = getOribosLink(
         results.alert_json.homeRealmName,
-        'Oribos'
+        'Oribos',
+        results.alert_json.region
       )
 
       const columnList: Array<ColumnList<Prediction>> = [
