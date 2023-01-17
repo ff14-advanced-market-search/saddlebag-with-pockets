@@ -113,7 +113,8 @@ export const action: ActionFunction = async ({ request }) => {
   return json({
     ...data,
     chartData: getChartData(data.data),
-    serverName: (formPayload.homeRealmId as string).split('---')[1]
+    serverName: (formPayload.homeRealmId as string).split('---')[1],
+    region: validInput.data.region
   })
 }
 
@@ -217,6 +218,7 @@ const Index = () => {
         data: Array<ItemStats>
         serverName: string
         chartData: Array<TreemapNode>
+        region: WoWServerRegion
       }
     | { exception: string }
     | {}
@@ -238,7 +240,11 @@ const Index = () => {
       )
     }
 
-    const OribosLink = getOribosLink(results.serverName, 'Oribos')
+    const OribosLink = getOribosLink(
+      results.serverName,
+      'Oribos',
+      results.region
+    )
 
     const itemsColumnList: Array<ColumnList<ItemStats>> = [
       { columnId: 'itemName', header: 'Item Name' },
