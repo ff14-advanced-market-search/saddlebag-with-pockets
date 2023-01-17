@@ -1,5 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
-import type { WoWServerRegion } from './WOWScan'
+import type { WoWServerRegion } from '~/requests/WoW/types'
 
 export interface WoWShortage {
   avg_price: number
@@ -33,6 +33,7 @@ export type WowShortageResult =
   | {
       increase: Array<WoWShortage>
       reset: Array<WoWShortage>
+      region: WoWServerRegion
     }
   | { exception: string }
   | {}

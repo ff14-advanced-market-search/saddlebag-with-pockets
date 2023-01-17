@@ -1,3 +1,4 @@
+import type { WoWServerRegion } from '~/requests/WoW/types'
 import type { WoWShortage } from '~/requests/WoWCommodities'
 import { getOribosLink } from '../../../components/utilities/getOribosLink'
 
@@ -26,8 +27,13 @@ export const TextRow = ({
   </div>
 )
 
-export const WoWShortageItem = (item: WoWShortage, homeServer?: string) => {
-  const OribosLink = getOribosLink(homeServer, 'Oribos')
+export const WoWShortageItem = (
+  item: WoWShortage,
+  homeServer?: string,
+  region = 'NA' as WoWServerRegion
+) => {
+  console.log('homeServer', homeServer)
+  const OribosLink = getOribosLink(homeServer, 'Oribos', region)
   return (
     <div
       key={item.item_id + '-increase'}
