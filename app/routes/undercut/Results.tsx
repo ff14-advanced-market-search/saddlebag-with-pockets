@@ -63,7 +63,9 @@ const Results = ({
                 aria-label="Choose filters"
                 type="button"
                 onClick={() => setModal('addIds')}>
-                Items to include
+                Select your most important items to alert on (warning this may
+                break your alerts, dont touch this unless an item is not showing
+                up in any alerts)
               </button>
             </div>
             <div className={`mt-1 flex rounded-md shadow-sm  max-w-fit`}>
@@ -72,7 +74,8 @@ const Results = ({
                 aria-label="Choose filters"
                 type="button"
                 onClick={() => setModal('removeIds')}>
-                Items to ignore
+                Select Items to Ignore (you will no longer be alerted for any
+                items added to this list)
               </button>
             </div>
             <div className="flex justify-center items-center max-w-fit">
