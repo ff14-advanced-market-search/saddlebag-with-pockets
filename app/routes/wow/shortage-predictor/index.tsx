@@ -296,7 +296,7 @@ const Index = () => {
           <InputWithLabel
             defaultValue={20}
             type="number"
-            labelTitle="Desired Avg Price"
+            labelTitle="Minimum Desired Avg Price"
             inputTag="Gold"
             name="desiredAvgPrice"
             min={0}
@@ -306,7 +306,7 @@ const Index = () => {
           <InputWithLabel
             defaultValue={200}
             type="number"
-            labelTitle="Desired Sales per Day"
+            labelTitle="Minimum Desired Sales per Day"
             inputTag="Sales"
             name="desiredSalesPerDay"
             min={0}

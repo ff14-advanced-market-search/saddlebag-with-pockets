@@ -140,7 +140,7 @@ const ItemStatLookupForm = ({
       <InputWithLabel
         defaultValue={desiredPriceDefault}
         type="number"
-        labelTitle="Desired average price"
+        labelTitle="Minimum Desired average price"
         inputTag="Gold"
         name="desiredAvgPrice"
         min={0.0}
@@ -149,7 +149,7 @@ const ItemStatLookupForm = ({
       <InputWithLabel
         defaultValue={desiredSalesDefault}
         type="number"
-        labelTitle="Desired sales per day"
+        labelTitle="Minimum Desired sales per day"
         inputTag="Sales"
         name="desiredSalesPerDay"
         min={0}
