@@ -329,13 +329,13 @@ const Index = () => {
             toolTip="What is the maximum price spike to look for? 120% is to only find item that are at most 20% above the average price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher."
           />
           <InputWithLabel
-            defaultValue={30}
+            defaultValue={50}
             type="number"
             labelTitle="Current Market Quantity Percentage"
             inputTag="%"
             name="desiredQuantityVsAvgPercent"
             min={0}
-            toolTip="How much of the market quantity is left? For 30% we want to find items which only have 30% of their average quantity remaining in stock."
+            toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
           />
         </div>
       </SmallFormContainer>
