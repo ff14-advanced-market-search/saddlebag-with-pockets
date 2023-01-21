@@ -46,7 +46,7 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)
-
+  // CAN WE USE ZOD HERE??
   const input = {
     hours: url.searchParams.has('hours')
       ? parseFloat(url.searchParams.get('hours') as string)
@@ -67,7 +67,10 @@ export const loader: LoaderFunction = ({ request }) => {
       ? parseFloat(url.searchParams.get('pricePerUnit') as string)
       : undefined,
     filters: url.searchParams.has('filters')
-      ? url.searchParams.get('filters')?.split(',')
+      ? url.searchParams
+          .get('filters')
+          ?.split(',')
+          .map((str) => parseInt(str))
       : undefined,
     hQChecked: url.searchParams.has('hQChecked')
       ? url.searchParams.get('hQChecked') === 'true'
