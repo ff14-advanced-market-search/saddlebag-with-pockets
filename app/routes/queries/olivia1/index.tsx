@@ -45,7 +45,7 @@ const Index = () => {
   const transition = useTransition()
   const results = useActionData()
 
-  const Olivia1 = useTypedSelector((state) => state.queries.Olivia1)
+  const Olivia1 = useTypedSelector((state) => state.queries.olivia1)
 
   const dispatch = useDispatch()
 

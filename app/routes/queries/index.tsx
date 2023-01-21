@@ -28,7 +28,7 @@ const recommendedQueries = [
     description:
       'Search for items that sell in larger stack sizes (i.e. larger quantities)',
     icon: DocumentSearchIcon,
-    href: '/queries/commodity-scan'
+    href: '/queries/full-scan?minimumStackSize=2&minimumProfitAmount=1000&pricePerUnit=1000'
   },
   {
     name: 'Mega Value Search',
