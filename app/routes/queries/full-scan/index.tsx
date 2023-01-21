@@ -1,8 +1,10 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import type {
   ActionFunction,
-  ErrorBoundaryComponent
+  ErrorBoundaryComponent,
+  LoaderFunction
 } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
 
@@ -42,8 +44,51 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
   )
 }
 
+export const loader: LoaderFunction = ({ request }) => {
+  const url = new URL(request.url)
+
+  const input = {
+    hours: url.searchParams.has('hours')
+      ? parseFloat(url.searchParams.get('hours') as string)
+      : undefined,
+    salesAmount: url.searchParams.has('salesAmount')
+      ? parseFloat(url.searchParams.get('salesAmount') as string)
+      : undefined,
+    ROI: url.searchParams.has('ROI')
+      ? parseFloat(url.searchParams.get('ROI') as string)
+      : undefined,
+    minimumStackSize: url.searchParams.has('minimumStackSize')
+      ? parseFloat(url.searchParams.get('minimumStackSize') as string)
+      : undefined,
+    minimumProfitAmount: url.searchParams.has('minimumProfitAmount')
+      ? parseFloat(url.searchParams.get('minimumProfitAmount') as string)
+      : undefined,
+    pricePerUnit: url.searchParams.has('pricePerUnit')
+      ? parseFloat(url.searchParams.get('pricePerUnit') as string)
+      : undefined,
+    filters: url.searchParams.has('filters')
+      ? url.searchParams.get('filters')?.split(',')
+      : undefined,
+    hQChecked: url.searchParams.has('hQChecked')
+      ? url.searchParams.get('hQChecked') === 'true'
+      : undefined,
+    regionWideChecked: url.searchParams.has('regionWideChecked')
+      ? url.searchParams.get('regionWideChecked') === 'true'
+      : undefined,
+    includeVendorChecked: url.searchParams.has('includeVendorChecked')
+      ? url.searchParams.get('includeVendorChecked') === 'true'
+      : undefined,
+    outOfStockChecked: url.searchParams.has('outOfStockChecked')
+      ? url.searchParams.get('outOfStockChecked') === 'true'
+      : undefined
+  }
+
+  return json(input)
+}
+
 const Index = () => {
   const transition = useTransition()
+  const searchParams = useLoaderData()
   const results = useActionData()
   const fullScan = useTypedSelector((state) => state.queries.fullScan)
 
@@ -87,6 +132,17 @@ const Index = () => {
             error={
               results && 'exception' in results ? results.exception : undefined
             }
+            defaultHours={searchParams.hours}
+            defaultSalesAmount={searchParams.salesAmount}
+            defaultROI={searchParams.ROI}
+            defaultMinimumStackSize={searchParams.minimumStackSize}
+            defaultMinimumProfitAmount={searchParams.minimumProfitAmount}
+            defaultPricePerUnit={searchParams.pricePerUnit}
+            defaultFilters={searchParams.filters}
+            defaultHQChecked={searchParams.hQChecked}
+            defaultRegionWideChecked={searchParams.regionWideChecked}
+            defaultIncludeVendorChecked={searchParams.includeVendorChecked}
+            defaultOutOfStockChecked={searchParams.outOfStockChecked}
           />
         </div>
       </div>
