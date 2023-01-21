@@ -1,6 +1,7 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import { Link } from '@remix-run/react'
 import { InformationCircleIcon } from '@heroicons/react/solid'
+import { COMMODITY_SCAN_PATH, FAST_SCAN_PATH } from '~/utils/redirectOnPath'
 
 const recommendedQueries = [
   {
@@ -21,14 +22,14 @@ const recommendedQueries = [
     name: 'Fast Sales Search',
     description: 'Search for items with high rate of sales.',
     icon: DocumentSearchIcon,
-    href: '/queries/fast-scan'
+    href: FAST_SCAN_PATH
   },
   {
     name: 'Commodities Search',
     description:
       'Search for items that sell in larger stack sizes (i.e. larger quantities)',
     icon: DocumentSearchIcon,
-    href: '/queries/full-scan?minimumStackSize=2&minimumProfitAmount=1000&pricePerUnit=1000'
+    href: COMMODITY_SCAN_PATH
   },
   {
     name: 'Mega Value Search',
