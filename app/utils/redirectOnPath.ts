@@ -12,6 +12,9 @@ export const OUT_OF_STOCK_PATH =
 export const NQ_OUT_OF_STOCK_PATH =
   '/queries/full-scan?salesAmount=2&hours=99&ROI=99&minimumProfitAmount=100&pricePerUnit=100&filters=7,54&includeVendorChecked=true&outOfStockChecked=true'
 
+export const MEGA_VALUE_PATH =
+  '/queries/full-scan?hours=999&salesAmount=1&ROI=25&minimumProfitAmount=1000000&pricePerUnit=1000000&regionWideChecked=true&includeVendorChecked=true&outOfStockChecked=true'
+
 export const redirectOnPath = (path: string): RedirectOnPath => {
   const needsRedirect = replacedPages.find(
     ({ oldPath }) => path === oldPath || path === `${oldPath}/`
@@ -28,5 +31,6 @@ const replacedPages: Array<{ oldPath: string; newPath: string }> = [
   { oldPath: '/queries/commodity-scan', newPath: COMMODITY_SCAN_PATH },
   { oldPath: '/queries/fast-scan', newPath: FAST_SCAN_PATH },
   { oldPath: '/queries/out-stock-scan', newPath: OUT_OF_STOCK_PATH },
-  { oldPath: '/queries/nq-out-stock-scan', newPath: NQ_OUT_OF_STOCK_PATH }
+  { oldPath: '/queries/nq-out-stock-scan', newPath: NQ_OUT_OF_STOCK_PATH },
+  { oldPath: '/queries/mega-value-scan', newPath: MEGA_VALUE_PATH }
 ]

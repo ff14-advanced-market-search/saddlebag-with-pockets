@@ -4,6 +4,7 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 import {
   COMMODITY_SCAN_PATH,
   FAST_SCAN_PATH,
+  MEGA_VALUE_PATH,
   NQ_OUT_OF_STOCK_PATH,
   OUT_OF_STOCK_PATH
 } from '~/utils/redirectOnPath'
@@ -41,7 +42,7 @@ const recommendedQueries = [
     description:
       'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
     icon: DocumentSearchIcon,
-    href: '/queries/mega-value-scan'
+    href: MEGA_VALUE_PATH
   },
   {
     name: 'NPC Vendor Item Search',
