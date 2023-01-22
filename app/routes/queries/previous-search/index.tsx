@@ -1,7 +1,6 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
-import type { QueriesState } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import NoResults from './NoResults'
 import Results from '../full-scan/Results'
@@ -18,13 +17,13 @@ const PreviousSearch = () => {
 
   const queries = useTypedSelector((state) => state.queries)
 
-  if (!data || !data.query) {
+  if (!data || !data.query || data.query !== 'fullScan') {
     return <NoResults href="/" />
   }
 
-  const dataToUse = queries[data.query as keyof QueriesState]
+  const dataToUse = queries.fullScan
 
-  if (!dataToUse || 'listings' in dataToUse || 'dirty_sales' in dataToUse) {
+  if (!dataToUse) {
     return <NoResults href="/" />
   }
 
