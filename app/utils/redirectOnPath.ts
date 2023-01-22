@@ -23,6 +23,11 @@ export const OLIVIA_3_PATH = `/queries/full-scan?hours=48&salesAmount=5&ROI=25&m
 export const OLIVIA_4_PATH = `/queries/full-scan?hours=48&salesAmount=5&ROI=25&minimumStackSize=1&minimumProfitAmount=5000&pricePerUnit=5000&filters=75,80,90&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true`
 export const OLIVIA_5_PATH = `/queries/full-scan?hours=168&salesAmount=2&ROI=25&minimumStackSize=1&minimumProfitAmount=75000&pricePerUnit=30000&filters=56,65,66,67,68,69,70,71,72,81,82&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
 export const OLIVIA_6_PATH = `/queries/full-scan?hours=168&salesAmount=2&ROI=25&minimumStackSize=1&minimumProfitAmount=75000&pricePerUnit=30000&filters=75,80,90&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
+export const OLIVIA_7_PATH = `/queries/full-scan?hours=168&salesAmount=2&ROI=25&minimumStackSize=1&minimumProfitAmount=75000&pricePerUnit=30000&filters=1,2&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
+export const OLIVIA_8_PATH = `/queries/full-scan?hours=336&salesAmount=1&ROI=25&minimumStackSize=1&minimumProfitAmount=300000&pricePerUnit=300000&filters=75,80,90&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
+export const OLIVIA_9_PATH = `/queries/full-scan?hours=336&salesAmount=1&ROI=25&minimumStackSize=1&minimumProfitAmount=300000&pricePerUnit=300000&filters=1,2&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
+export const OLIVIA_10_PATH = `/queries/full-scan?hours=336&salesAmount=1&ROI=25&minimumStackSize=1&minimumProfitAmount=300000&pricePerUnit=300000&filters=56,65,66,67,68,69,70,71,72,81,82&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
+export const OLIVIA_11_PATH = `/queries/full-scan?hours=336&salesAmount=1&ROI=25&minimumStackSize=1&minimumProfitAmount=300000&pricePerUnit=300000&filters=6&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
 
 export const redirectOnPath = (path: string): RedirectOnPath => {
   const needsRedirect = replacedPages.find(
@@ -48,5 +53,10 @@ const replacedPages: Array<{ oldPath: string; newPath: string }> = [
   { oldPath: '/queries/olivia3', newPath: OLIVIA_3_PATH },
   { oldPath: '/queries/olivia4', newPath: OLIVIA_4_PATH },
   { oldPath: '/queries/olivia5', newPath: OLIVIA_5_PATH },
-  { oldPath: '/queries/olivia6', newPath: OLIVIA_6_PATH }
+  { oldPath: '/queries/olivia6', newPath: OLIVIA_6_PATH },
+  { oldPath: '/queries/olivia7', newPath: OLIVIA_7_PATH },
+  { oldPath: '/queries/olivia8', newPath: OLIVIA_8_PATH },
+  { oldPath: '/queries/olivia9', newPath: OLIVIA_9_PATH },
+  { oldPath: '/queries/olivia10', newPath: OLIVIA_10_PATH },
+  { oldPath: '/queries/olivia11', newPath: OLIVIA_11_PATH }
 ]

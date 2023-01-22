@@ -6,12 +6,17 @@ import {
   FAST_SCAN_PATH,
   MEGA_VALUE_PATH,
   NQ_OUT_OF_STOCK_PATH,
+  OLIVIA_10_PATH,
+  OLIVIA_11_PATH,
   OLIVIA_1_PATH,
   OLIVIA_2_PATH,
   OLIVIA_3_PATH,
   OLIVIA_4_PATH,
   OLIVIA_5_PATH,
   OLIVIA_6_PATH,
+  OLIVIA_7_PATH,
+  OLIVIA_8_PATH,
+  OLIVIA_9_PATH,
   OUT_OF_STOCK_PATH,
   VENDOR_PATH
 } from '~/utils/redirectOnPath'
@@ -100,32 +105,32 @@ const recommendedQueries = [
     description:
       'Medium priced glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia7'
+    href: OLIVIA_7_PATH
   },
   {
     name: 'Olivias High Investment Furniture Items',
     description: 'Furnishing items with big profits but slow sales',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia10'
+    href: OLIVIA_10_PATH
   },
   {
     name: 'Olivias High Investment Collectable Items',
     description: 'Collectable items with big profits but slow sales',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia8'
+    href: OLIVIA_8_PATH
   },
   {
     name: 'Olivias High Value Glamor Items',
     description:
       'Finds expensive glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia9'
+    href: OLIVIA_9_PATH
   },
   {
     name: 'Olivias High Value Materials',
     description: 'Finds expensive Materials and Trade goods.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia11'
+    href: OLIVIA_11_PATH
   }
 ]
 
