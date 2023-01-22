@@ -77,7 +77,7 @@ const FullScanForm = ({
             <div className="px-4 py-5 bg-white sm:p-6">
               <div className="flex justify-end mb-2">
                 <SubmitButton
-                  title="Copy query address"
+                  title="Save this search!"
                   onClick={handleCopyButton}
                   type="button"
                 />
