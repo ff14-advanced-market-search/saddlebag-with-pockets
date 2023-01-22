@@ -124,7 +124,7 @@ const Index = () => {
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-2xl font-semibold text-green-900 py-6">
-            FFXIV Search
+            FFXIV Import Search
           </h1>
           {fullScan && !results && (
             <PreviousResultsLink to="/queries/previous-search?query=fullScan" />
