@@ -104,7 +104,7 @@ const Index = () => {
           desiredAvgPriceDefault={20}
           desiredSellPriceDefault={20}
           desiredPriceIncreaseDefault={10}
-          desiredSalesPerDayDefault={40}
+          desiredSalesPerDayDefault={10}
           flipRiskLimitDefault={10}
         />
         <RegionAndServerSelect
