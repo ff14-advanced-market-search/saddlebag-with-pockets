@@ -32,7 +32,6 @@ export const WoWShortageItem = (
   homeServer?: string,
   region = 'NA' as WoWServerRegion
 ) => {
-  console.log('homeServer', homeServer)
   const OribosLink = getOribosLink(homeServer, 'Oribos', region)
   return (
     <div
