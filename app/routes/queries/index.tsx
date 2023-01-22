@@ -9,6 +9,9 @@ import {
   OLIVIA_1_PATH,
   OLIVIA_2_PATH,
   OLIVIA_3_PATH,
+  OLIVIA_4_PATH,
+  OLIVIA_5_PATH,
+  OLIVIA_6_PATH,
   OUT_OF_STOCK_PATH,
   VENDOR_PATH
 } from '~/utils/redirectOnPath'
@@ -78,19 +81,19 @@ const recommendedQueries = [
     description:
       'Low Investment Minions, Mounts, and Collectable Items Quick Sell.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia4'
+    href: OLIVIA_4_PATH
   },
   {
     name: 'Olivias Furnishing Items Medium Sell',
     description: 'Finds medium priced furniture to sell.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia5'
+    href: OLIVIA_5_PATH
   },
   {
     name: 'Olivias Consumable Collectables Medium Sell',
     description: 'Medium priced Consumable Collectables to sell.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia6'
+    href: OLIVIA_6_PATH
   },
   {
     name: 'Olivias Glamor Medium Sell',

@@ -18,10 +18,11 @@ export const MEGA_VALUE_PATH =
 export const VENDOR_PATH = `/queries/full-scan?hours=999&salesAmount=1&ROI=25&minimumStackSize=1&minimumProfitAmount=1000&pricePerUnit=1000&filters=-1&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true`
 
 export const OLIVIA_1_PATH = `/queries/full-scan?hours=48&salesAmount=5&ROI=25&minimumStackSize=1&minimumProfitAmount=5000&pricePerUnit=5000&filters=0&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true`
-
 export const OLIVIA_2_PATH = `/queries/full-scan?hours=48&salesAmount=2&ROI=25&minimumStackSize=1&minimumProfitAmount=5000&pricePerUnit=5000&filters=-2,-3&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true`
-
 export const OLIVIA_3_PATH = `/queries/full-scan?hours=48&salesAmount=5&ROI=25&minimumStackSize=1&minimumProfitAmount=5000&pricePerUnit=5000&filters=56,65,66,67,68,69,70,71,72,81,82&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true`
+export const OLIVIA_4_PATH = `/queries/full-scan?hours=48&salesAmount=5&ROI=25&minimumStackSize=1&minimumProfitAmount=5000&pricePerUnit=5000&filters=75,80,90&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true`
+export const OLIVIA_5_PATH = `/queries/full-scan?hours=168&salesAmount=2&ROI=25&minimumStackSize=1&minimumProfitAmount=75000&pricePerUnit=30000&filters=56,65,66,67,68,69,70,71,72,81,82&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
+export const OLIVIA_6_PATH = `/queries/full-scan?hours=168&salesAmount=2&ROI=25&minimumStackSize=1&minimumProfitAmount=75000&pricePerUnit=30000&filters=75,80,90&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true&regionWideChecked=true`
 
 export const redirectOnPath = (path: string): RedirectOnPath => {
   const needsRedirect = replacedPages.find(
@@ -44,5 +45,8 @@ const replacedPages: Array<{ oldPath: string; newPath: string }> = [
   { oldPath: '/queries/vendor-scan', newPath: VENDOR_PATH },
   { oldPath: '/queries/olivia1', newPath: OLIVIA_1_PATH },
   { oldPath: '/queries/olivia2', newPath: OLIVIA_2_PATH },
-  { oldPath: '/queries/olivia3', newPath: OLIVIA_3_PATH }
+  { oldPath: '/queries/olivia3', newPath: OLIVIA_3_PATH },
+  { oldPath: '/queries/olivia4', newPath: OLIVIA_4_PATH },
+  { oldPath: '/queries/olivia5', newPath: OLIVIA_5_PATH },
+  { oldPath: '/queries/olivia6', newPath: OLIVIA_6_PATH }
 ]
