@@ -1,7 +1,12 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import { Link } from '@remix-run/react'
 import { InformationCircleIcon } from '@heroicons/react/solid'
-import { COMMODITY_SCAN_PATH, FAST_SCAN_PATH } from '~/utils/redirectOnPath'
+import {
+  COMMODITY_SCAN_PATH,
+  FAST_SCAN_PATH,
+  NQ_OUT_OF_STOCK_PATH,
+  OUT_OF_STOCK_PATH
+} from '~/utils/redirectOnPath'
 
 const recommendedQueries = [
   {
@@ -9,14 +14,14 @@ const recommendedQueries = [
     description:
       'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
     icon: DocumentSearchIcon,
-    href: '/queries/out-stock-scan'
+    href: OUT_OF_STOCK_PATH
   },
   {
     name: 'Low Quality Out of Stock Search',
     description:
       'Same rules as the out of stock search, but this one looks for Low Quality items that can sell for like furniture or dyes that can sell for much higher prices than out of stock armor or weapons.',
     icon: DocumentSearchIcon,
-    href: '/queries/nq-out-stock-scan'
+    href: NQ_OUT_OF_STOCK_PATH
   },
   {
     name: 'Fast Sales Search',
