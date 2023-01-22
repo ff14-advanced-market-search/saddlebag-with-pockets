@@ -146,7 +146,7 @@ const recommendedQueries = [
 //   description:
 //     'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
 //   icon: DocumentSearchIcon,
-//   href: '/queries/quest-scan'
+//   href: QUEST_SCAN_PATH
 // },
 
 export default function Index() {
