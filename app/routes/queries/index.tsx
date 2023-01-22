@@ -6,7 +6,11 @@ import {
   FAST_SCAN_PATH,
   MEGA_VALUE_PATH,
   NQ_OUT_OF_STOCK_PATH,
-  OUT_OF_STOCK_PATH
+  OLIVIA_1_PATH,
+  OLIVIA_2_PATH,
+  OLIVIA_3_PATH,
+  OUT_OF_STOCK_PATH,
+  VENDOR_PATH
 } from '~/utils/redirectOnPath'
 
 const recommendedQueries = [
@@ -49,25 +53,25 @@ const recommendedQueries = [
     description:
       'Search for items sold by NPC Vendors which can be resold on the marketboard.',
     icon: DocumentSearchIcon,
-    href: '/queries/vendor-scan'
+    href: VENDOR_PATH
   },
   {
     name: 'Olivias General Flipping Quick Sell',
     description: 'Low Investment General Flipping Quick Sell.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia1'
+    href: OLIVIA_1_PATH
   },
   {
     name: 'Olivias Class Quest Items Quick Sell',
     description: 'Low Investment Class Quest Items Quick Sell.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia2'
+    href: OLIVIA_2_PATH
   },
   {
     name: 'Olivias Furnishing Items Quick Sell',
     description: 'Low Investment Furnishing Items Quick Sell.',
     icon: DocumentSearchIcon,
-    href: '/queries/olivia3'
+    href: OLIVIA_3_PATH
   },
   {
     name: 'Olivias Minions, Mounts, and Collectable Items Quick Sell',
