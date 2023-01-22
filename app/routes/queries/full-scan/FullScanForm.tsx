@@ -53,12 +53,35 @@ const FullScanForm = ({
     window.history.replaceState({}, '', url.toString())
   }
 
+  const handleCopyButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (!window || !document) {
+      return
+    }
+
+    if (!window.isSecureContext) {
+      alert('Failed to copy address to clipboard.')
+      return
+    }
+
+    await navigator.clipboard.writeText(document.URL)
+
+    alert('Address copied to clipboard')
+  }
+
   return (
     <>
       <Form method="post">
         <div className="mt-5 md:mt-0 md:col-span-3 py-6">
           <div className="shadow overflow-hidden sm:rounded-md">
             <div className="px-4 py-5 bg-white sm:p-6">
+              <div className="flex justify-end mb-2">
+                <SubmitButton
+                  title="Copy query address"
+                  onClick={handleCopyButton}
+                  type="button"
+                />
+              </div>
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
