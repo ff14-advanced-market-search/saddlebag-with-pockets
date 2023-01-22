@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { Modal, ModalContent } from './CheckBoxModal'
 
+const noop = () => {}
+
 const FullScanForm = ({
   loading,
   onClick,
@@ -36,7 +38,21 @@ const FullScanForm = ({
 }) => {
   const [ids, setIds] = useState(defaultFilters)
   const [isOpen, setIsOpen] = useState(false)
-  const noop = () => {}
+
+  const handleSearchParamChange = (
+    paramName: string,
+    newValue: string | undefined
+  ) => {
+    if (!document || !window) return
+    const url = new window.URL(document.URL)
+
+    if (newValue) {
+      url.searchParams.set(paramName, newValue)
+    }
+
+    window.history.replaceState({}, '', url.toString())
+  }
+
   return (
     <>
       <Form method="post">
@@ -55,6 +71,15 @@ const FullScanForm = ({
                       type="number"
                       id="scan-hours"
                       defaultValue={defaultHours}
+                      onChange={(event) => {
+                        const value = parseFloat(event.target.value)
+                        if (isNaN(value)) {
+                          handleSearchParamChange('hours', '')
+                          return
+                        }
+
+                        handleSearchParamChange('hours', value.toString())
+                      }}
                       name="scan_hours"
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -79,6 +104,14 @@ const FullScanForm = ({
                     type="number"
                     id="sale-amt"
                     defaultValue={defaultSalesAmount}
+                    onChange={(event) => {
+                      const value = parseFloat(event.target.value)
+                      if (isNaN(value)) {
+                        handleSearchParamChange('salesAmount', '')
+                        return
+                      }
+                      handleSearchParamChange('salesAmount', value.toString())
+                    }}
                     name="sale_amount"
                     className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
@@ -100,6 +133,14 @@ const FullScanForm = ({
                       type="number"
                       name="roi"
                       defaultValue={defaultROI}
+                      onChange={(event) => {
+                        const value = parseFloat(event.target.value)
+                        if (isNaN(value)) {
+                          handleSearchParamChange('ROI', '')
+                          return
+                        }
+                        handleSearchParamChange('ROI', value.toString())
+                      }}
                       id="roi"
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -126,6 +167,18 @@ const FullScanForm = ({
                       type="number"
                       name="minimum_stack_size"
                       defaultValue={defaultMinimumStackSize}
+                      onChange={(event) => {
+                        const value = parseFloat(event.target.value)
+                        if (isNaN(value)) {
+                          handleSearchParamChange('minimumStackSize', '')
+                          return
+                        }
+                        handleSearchParamChange(
+                          'minimumStackSize',
+
+                          value.toString()
+                        )
+                      }}
                       id="minimum_stack_size"
                       className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -148,6 +201,22 @@ const FullScanForm = ({
                       type="number"
                       name="minimum_profit_amount"
                       defaultValue={defaultMinimumProfitAmount}
+                      onChange={(event) => {
+                        const value = parseFloat(event.target.value)
+                        if (isNaN(value)) {
+                          handleSearchParamChange(
+                            'minimumProfitAmount',
+
+                            ''
+                          )
+                          return
+                        }
+                        handleSearchParamChange(
+                          'minimumProfitAmount',
+
+                          value.toString()
+                        )
+                      }}
                       id="minimum_profit_amount"
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -174,6 +243,18 @@ const FullScanForm = ({
                       type="number"
                       name="price_per_unit"
                       defaultValue={defaultPricePerUnit}
+                      onChange={(event) => {
+                        const value = parseFloat(event.target.value)
+                        if (isNaN(value)) {
+                          handleSearchParamChange('pricePerUnit', '')
+                          return
+                        }
+                        handleSearchParamChange(
+                          'pricePerUnit',
+
+                          value.toString()
+                        )
+                      }}
                       id="price_per_unit"
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -226,6 +307,12 @@ const FullScanForm = ({
                           name="hq_only"
                           type="checkbox"
                           defaultChecked={defaultHQChecked}
+                          onChange={(event) => {
+                            const value =
+                              event.target.value === 'on' ? 'true' : 'false'
+
+                            handleSearchParamChange('hQChecked', value)
+                          }}
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                         />
                       </div>
@@ -254,6 +341,12 @@ const FullScanForm = ({
                           name="region_wide"
                           type="checkbox"
                           defaultChecked={defaultRegionWideChecked}
+                          onChange={(event) => {
+                            const value =
+                              event.target.value === 'on' ? 'true' : 'false'
+
+                            handleSearchParamChange('regionWideChecked', value)
+                          }}
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                         />
                       </div>
@@ -282,6 +375,15 @@ const FullScanForm = ({
                           name="include_vendor"
                           type="checkbox"
                           defaultChecked={defaultIncludeVendorChecked}
+                          onChange={(event) => {
+                            const value =
+                              event.target.value === 'on' ? 'true' : 'false'
+
+                            handleSearchParamChange(
+                              'includeVendorChecked',
+                              value
+                            )
+                          }}
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                         />
                       </div>
@@ -311,6 +413,12 @@ const FullScanForm = ({
                           name="out_of_stock"
                           type="checkbox"
                           defaultChecked={defaultOutOfStockChecked}
+                          onChange={(event) => {
+                            const value =
+                              event.target.value === 'on' ? 'true' : 'false'
+
+                            handleSearchParamChange('outOfStockChecked', value)
+                          }}
                           className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                         />
                       </div>
@@ -343,7 +451,13 @@ const FullScanForm = ({
         <Modal
           onClose={() => setIsOpen(false)}
           title={`Filters Selected: ${ids.length}`}>
-          <ModalContent ids={ids} setIds={setIds} />
+          <ModalContent
+            ids={ids}
+            setIds={(newIds) => {
+              setIds(newIds)
+              handleSearchParamChange('filters', newIds.join(','))
+            }}
+          />
         </Modal>
       )}
     </>
