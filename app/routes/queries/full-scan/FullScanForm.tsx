@@ -1,7 +1,7 @@
 import { Form } from '@remix-run/react'
 import React, { useState } from 'react'
 import { Disclosure, Transition } from '@headlessui/react'
-import { ChevronRightIcon } from '@heroicons/react/solid'
+import { ChevronDownIcon } from '@heroicons/react/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import { Modal, ModalContent } from './CheckBoxModal'
@@ -41,6 +41,7 @@ const FullScanForm = ({
 }) => {
   const [ids, setIds] = useState(defaultFilters)
   const [isOpen, setIsOpen] = useState(false)
+  const [hqChecked, setHQChecked] = useState(defaultHQChecked)
 
   const handleSearchParamChange = (
     paramName: string,
@@ -265,10 +266,10 @@ const FullScanForm = ({
                     <>
                       <Disclosure.Button className="col-span-6 text-center text-sm font-medium flex justify-center items-center">
                         Advanced Search Options
-                        <ChevronRightIcon
+                        <ChevronDownIcon
                           className={
                             'h-4 w-4 transition duration-200 ' +
-                            (open ? 'transform rotate-90' : '')
+                            (open ? 'transform rotate-180' : '')
                           }
                         />
                       </Disclosure.Button>
@@ -356,15 +357,14 @@ const FullScanForm = ({
                                     type="checkbox"
                                     defaultChecked={defaultHQChecked}
                                     onChange={(event) => {
-                                      const value =
-                                        event.target.value === 'on'
-                                          ? 'true'
-                                          : 'false'
+                                      const value = event.target.checked
 
                                       handleSearchParamChange(
                                         'hQChecked',
-                                        value
+                                        value.toString()
                                       )
+                                      setHQChecked(value)
+                                      console.log(value, event)
                                     }}
                                     className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                                   />
@@ -397,14 +397,11 @@ const FullScanForm = ({
                                     type="checkbox"
                                     defaultChecked={defaultRegionWideChecked}
                                     onChange={(event) => {
-                                      const value =
-                                        event.target.value === 'on'
-                                          ? 'true'
-                                          : 'false'
+                                      const value = event.target.checked
 
                                       handleSearchParamChange(
                                         'regionWideChecked',
-                                        value
+                                        value.toString()
                                       )
                                     }}
                                     className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
@@ -425,7 +422,11 @@ const FullScanForm = ({
                             </fieldset>
                           </div>
 
-                          <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                          <div
+                            className={
+                              'col-span-6 sm:col-span-3 xl:col-span-2 ' +
+                              (hqChecked == true ? 'hidden' : '')
+                            }>
                             <fieldset className="space-y-5">
                               <legend className="sr-only">
                                 Include Vendor Prices
@@ -439,14 +440,11 @@ const FullScanForm = ({
                                     type="checkbox"
                                     defaultChecked={defaultIncludeVendorChecked}
                                     onChange={(event) => {
-                                      const value =
-                                        event.target.value === 'on'
-                                          ? 'true'
-                                          : 'false'
+                                      const value = event.target.checked
 
                                       handleSearchParamChange(
                                         'includeVendorChecked',
-                                        value
+                                        value.toString()
                                       )
                                     }}
                                     className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
@@ -481,14 +479,11 @@ const FullScanForm = ({
                                     type="checkbox"
                                     defaultChecked={defaultOutOfStockChecked}
                                     onChange={(event) => {
-                                      const value =
-                                        event.target.value === 'on'
-                                          ? 'true'
-                                          : 'false'
+                                      const value = event.target.checked
 
                                       handleSearchParamChange(
                                         'outOfStockChecked',
-                                        value
+                                        value.toString()
                                       )
                                     }}
                                     className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
