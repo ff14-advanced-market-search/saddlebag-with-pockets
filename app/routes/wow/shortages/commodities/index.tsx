@@ -183,7 +183,6 @@ const Index = () => {
       e.preventDefault()
     }
   }
-  console.log(results)
 
   if (results) {
     if (Object.keys(results).length === 0) {
