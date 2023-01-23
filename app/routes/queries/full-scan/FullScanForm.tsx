@@ -1,6 +1,7 @@
 import { Form } from '@remix-run/react'
 import React, { useState } from 'react'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import TitleTooltip from '~/components/Common/TitleTooltip'
 import { Modal, ModalContent } from './CheckBoxModal'
 
 const noop = () => {}
@@ -83,11 +84,16 @@ const FullScanForm = ({
                 />
               </div>
               <div className="grid grid-cols-6 gap-6">
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                <div className="col-span-6 sm:col-span-3">
                   <label
                     htmlFor="scan-hours"
                     className="block text-sm font-medium text-gray-700">
-                    Scan Hours
+                    <TitleTooltip
+                      title="Scan Hours"
+                      toolTip="The time period to search over. ex: <code class='font-mono'>24</code> is the past 24 hours. For more items to sell choose a higher number."
+                      relative
+                      parseTooltipTags={true}
+                    />
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
@@ -111,17 +117,17 @@ const FullScanForm = ({
                       hours
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    The time period to search over. ex: <code>24</code> is the
-                    past 24 hours. For more items to sell choose a higher
-                    number.
-                  </p>
                 </div>
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                <div className="col-span-6 sm:col-span-3">
                   <label
                     htmlFor="sale-amt"
                     className="block text-sm font-medium text-gray-700">
-                    Sale Amount
+                    <TitleTooltip
+                      title="Sale Amount"
+                      toolTip="Number of sales in that time. ex: <code class='font-mono'>5</code> is 5 sales in that selected time period. For more items to sell choose a lower number."
+                      relative
+                      parseTooltipTags={true}
+                    />
                   </label>
                   <input
                     type="number"
@@ -138,18 +144,18 @@ const FullScanForm = ({
                     name="sale_amount"
                     className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                  <p className="mt-2 text-sm text-gray-500">
-                    Number of sales in that time. ex: `5` is 5 sales in that
-                    selected time period. For more items to sell choose a lower
-                    number.
-                  </p>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
                     htmlFor="roi"
                     className="block text-sm font-medium text-gray-700">
-                    Return on Investment
+                    <TitleTooltip
+                      title="Return on Investment"
+                      toolTip="Desired R.O.I (return on investment): ex: <code class='font-mono'>50</code> means that 50% of the revenue you get from a sale should be all profit (after tax). For more profit, choose a higher number from 1 to 100."
+                      relative
+                      parseTooltipTags={true}
+                    />
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
@@ -172,52 +178,54 @@ const FullScanForm = ({
                       %
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Desired R.O.I (return on investment): ex: `50` means that
-                    50% of the revenue you get from a sale should be all profit
-                    (after tax). For more profit, choose a higher number from 1
-                    to 100.
-                  </p>
                 </div>
                 <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
-                    htmlFor="minimum_stack_size"
+                    htmlFor="price_per_unit"
                     className="block text-sm font-medium text-gray-700">
-                    Minimum Stack Size
+                    <TitleTooltip
+                      title="Average Price Per Unit"
+                      toolTip="Desired Average Price Per Unit. ex: <code class='font-mono'>10000</code> is only show deals that sell on average for 10000 gil or greater. For more items to sell choose a lower number."
+                      relative
+                      parseTooltipTags={true}
+                    />
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
                       type="number"
-                      name="minimum_stack_size"
-                      defaultValue={defaultMinimumStackSize}
+                      name="price_per_unit"
+                      defaultValue={defaultPricePerUnit}
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
                         if (isNaN(value)) {
-                          handleSearchParamChange('minimumStackSize', '')
+                          handleSearchParamChange('pricePerUnit', '')
                           return
                         }
                         handleSearchParamChange(
-                          'minimumStackSize',
+                          'pricePerUnit',
 
                           value.toString()
                         )
                       }}
-                      id="minimum_stack_size"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      id="price_per_unit"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
+                    <span
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                      gil
+                    </span>
                   </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Desired Min Stack Size. ex: `10` is only show deals you can
-                    get in stacks of 10 or greater. For more items to sell
-                    choose a lower number.
-                  </p>
                 </div>
-
                 <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
                     htmlFor="minimum_profit_amount"
                     className="block text-sm font-medium text-gray-700">
-                    Minimum Profit Amount
+                    <TitleTooltip
+                      title="Minimum Profit Amount"
+                      toolTip="Desired Min Profit Amount. ex: <code class='font-mono'>10000</code> is only show deals that yields 10000 gil profit or greater. For more items to sell choose a lower number."
+                      relative
+                      parseTooltipTags={true}
+                    />
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
@@ -248,49 +256,40 @@ const FullScanForm = ({
                       gil
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Desired Min Profit Amount. ex: `10000` is only show deals
-                    that yields 10000 gil profit or greater. For more items to
-                    sell choose a lower number.
-                  </p>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
-                    htmlFor="price_per_unit"
+                    htmlFor="minimum_stack_size"
                     className="block text-sm font-medium text-gray-700">
-                    Average Price Per Unit
+                    <TitleTooltip
+                      title="Minimum Stack Size"
+                      toolTip="Desired Min Stack Size. ex: <code class='font-mono'>10</code> is only show deals you can get in stacks of 10 or greater. For more items to sell choose a lower number."
+                      relative
+                      parseTooltipTags={true}
+                    />
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
                       type="number"
-                      name="price_per_unit"
-                      defaultValue={defaultPricePerUnit}
+                      name="minimum_stack_size"
+                      defaultValue={defaultMinimumStackSize}
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
                         if (isNaN(value)) {
-                          handleSearchParamChange('pricePerUnit', '')
+                          handleSearchParamChange('minimumStackSize', '')
                           return
                         }
                         handleSearchParamChange(
-                          'pricePerUnit',
+                          'minimumStackSize',
 
                           value.toString()
                         )
                       }}
-                      id="price_per_unit"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      id="minimum_stack_size"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
-                    <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
-                      gil
-                    </span>
                   </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Desired Average Price Per Unit. ex: `10000` is only show
-                    deals that sell on average for 10000 gil or greater. For
-                    more items to sell choose a lower number.
-                  </p>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3 xl:col-span-2">
