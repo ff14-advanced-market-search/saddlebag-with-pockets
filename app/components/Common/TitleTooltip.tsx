@@ -4,12 +4,14 @@ export default function TitleTooltip({
   title,
   toolTip,
   className,
-  relative
+  relative,
+  parseTooltipTags
 }: {
   title: string
   toolTip: string
   className?: string
   relative?: boolean
+  parseTooltipTags?: boolean
 }) {
   return (
     <div
@@ -20,7 +22,7 @@ export default function TitleTooltip({
         }`}>
         {title}
       </p>
-      <ToolTip data={toolTip} />
+      <ToolTip data={toolTip} parseTags={parseTooltipTags} />
     </div>
   )
 }
