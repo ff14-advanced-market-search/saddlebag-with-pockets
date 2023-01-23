@@ -1,5 +1,7 @@
 import { Form } from '@remix-run/react'
 import React, { useState } from 'react'
+import { Disclosure, Transition } from '@headlessui/react'
+import { ChevronRightIcon } from '@heroicons/react/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import { Modal, ModalContent } from './CheckBoxModal'
@@ -258,207 +260,260 @@ const FullScanForm = ({
                   </div>
                 </div>
 
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                  <label
-                    htmlFor="minimum_stack_size"
-                    className="block text-sm font-medium text-gray-700">
-                    <TitleTooltip
-                      title="Minimum Stack Size"
-                      toolTip="Desired Min Stack Size. ex: <code class='font-mono'>10</code> is only show deals you can get in stacks of 10 or greater. For more items to sell choose a lower number."
-                      relative
-                      parseTooltipTags={true}
-                    />
-                  </label>
-                  <div className={`mt-1 flex rounded-md shadow-sm`}>
-                    <input
-                      type="number"
-                      name="minimum_stack_size"
-                      defaultValue={defaultMinimumStackSize}
-                      onChange={(event) => {
-                        const value = parseFloat(event.target.value)
-                        if (isNaN(value)) {
-                          handleSearchParamChange('minimumStackSize', '')
-                          return
-                        }
-                        handleSearchParamChange(
-                          'minimumStackSize',
-
-                          value.toString()
-                        )
-                      }}
-                      id="minimum_stack_size"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                  <label
-                    htmlFor="filters"
-                    className="block text-sm font-medium text-gray-700">
-                    Item Filter
-                  </label>
-                  <div className={`mt-1 flex rounded-md shadow-sm`}>
-                    <input
-                      name="filters"
-                      value={ids.map((item) => item.toString())}
-                      hidden
-                      onChange={noop}
-                    />
-                    <button
-                      className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left"
-                      aria-label="Choose filters"
-                      type="button"
-                      onClick={() => setIsOpen(true)}>
-                      Choose Filters
-                    </button>
-                  </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Filters applied: {ids.length}
-                  </p>
-                </div>
-
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                  <fieldset className="space-y-5">
-                    <legend className="sr-only">Force HQ only</legend>
-                    <div className="relative flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="hq_only"
-                          aria-describedby="comments-description"
-                          name="hq_only"
-                          type="checkbox"
-                          defaultChecked={defaultHQChecked}
-                          onChange={(event) => {
-                            const value =
-                              event.target.value === 'on' ? 'true' : 'false'
-
-                            handleSearchParamChange('hQChecked', value)
-                          }}
-                          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                <Disclosure>
+                  {({ open }) => (
+                    <>
+                      <Disclosure.Button className="col-span-6 text-center text-sm font-medium flex justify-center items-center">
+                        Advanced Search Options
+                        <ChevronRightIcon
+                          className={
+                            'h-4 w-4 transition duration-200 ' +
+                            (open ? 'transform rotate-90' : '')
+                          }
                         />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          htmlFor="hq_only"
-                          className="font-medium text-gray-700">
-                          Enable HQ only
-                        </label>
-                        <p className="mt-2 text-sm text-gray-500">
-                          Only search for hq prices
-                        </p>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
+                      </Disclosure.Button>
+                      <Transition
+                        className="w-full col-span-6"
+                        enter="transition duration-100 ease-out"
+                        enterFrom="transform scale-95 opacity-0"
+                        enterTo="transform scale-100 opacity-100"
+                        leave="transition duration-75 ease-out"
+                        leaveFrom="transform scale-100 opacity-100"
+                        leaveTo="transform scale-95 opacity-0">
+                        <Disclosure.Panel className="w-full grid grid-cols-6 gap-6">
+                          <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                            <label
+                              htmlFor="minimum_stack_size"
+                              className="block text-sm font-medium text-gray-700">
+                              <TitleTooltip
+                                title="Minimum Stack Size"
+                                toolTip="Desired Min Stack Size. ex: <code class='font-mono'>10</code> is only show deals you can get in stacks of 10 or greater. For more items to sell choose a lower number."
+                                relative
+                                parseTooltipTags={true}
+                              />
+                            </label>
+                            <div className={`mt-1 flex rounded-md shadow-sm`}>
+                              <input
+                                type="number"
+                                name="minimum_stack_size"
+                                defaultValue={defaultMinimumStackSize}
+                                onChange={(event) => {
+                                  const value = parseFloat(event.target.value)
+                                  if (isNaN(value)) {
+                                    handleSearchParamChange(
+                                      'minimumStackSize',
+                                      ''
+                                    )
+                                    return
+                                  }
+                                  handleSearchParamChange(
+                                    'minimumStackSize',
 
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                  <fieldset className="space-y-5">
-                    <legend className="sr-only">Region Wide Search</legend>
-                    <div className="relative flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="region_wide"
-                          aria-describedby="comments-description"
-                          name="region_wide"
-                          type="checkbox"
-                          defaultChecked={defaultRegionWideChecked}
-                          onChange={(event) => {
-                            const value =
-                              event.target.value === 'on' ? 'true' : 'false'
+                                    value.toString()
+                                  )
+                                }}
+                                id="minimum_stack_size"
+                                className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+                            </div>
+                          </div>
 
-                            handleSearchParamChange('regionWideChecked', value)
-                          }}
-                          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          htmlFor="region_wide"
-                          className="font-medium text-gray-700">
-                          Region Wide Search
-                        </label>
-                        <p className="mt-2 text-sm text-gray-500">
-                          Search all servers in all DataCenters in your region.
-                        </p>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
+                          <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                            <label
+                              htmlFor="filters"
+                              className="block text-sm font-medium text-gray-700">
+                              Item Filter
+                            </label>
+                            <div className={`mt-1 flex rounded-md shadow-sm`}>
+                              <input
+                                name="filters"
+                                value={ids.map((item) => item.toString())}
+                                hidden
+                                onChange={noop}
+                              />
+                              <button
+                                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left"
+                                aria-label="Choose filters"
+                                type="button"
+                                onClick={() => setIsOpen(true)}>
+                                Choose Filters
+                              </button>
+                            </div>
+                            <p className="mt-2 text-sm text-gray-500">
+                              Filters applied: {ids.length}
+                            </p>
+                          </div>
 
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                  <fieldset className="space-y-5">
-                    <legend className="sr-only">Include Vendor Prices</legend>
-                    <div className="relative flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="include_vendor"
-                          aria-describedby="comments-description"
-                          name="include_vendor"
-                          type="checkbox"
-                          defaultChecked={defaultIncludeVendorChecked}
-                          onChange={(event) => {
-                            const value =
-                              event.target.value === 'on' ? 'true' : 'false'
+                          <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                            <fieldset className="space-y-5">
+                              <legend className="sr-only">Force HQ only</legend>
+                              <div className="relative flex items-start">
+                                <div className="flex items-center h-5">
+                                  <input
+                                    id="hq_only"
+                                    aria-describedby="comments-description"
+                                    name="hq_only"
+                                    type="checkbox"
+                                    defaultChecked={defaultHQChecked}
+                                    onChange={(event) => {
+                                      const value =
+                                        event.target.value === 'on'
+                                          ? 'true'
+                                          : 'false'
 
-                            handleSearchParamChange(
-                              'includeVendorChecked',
-                              value
-                            )
-                          }}
-                          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          htmlFor="include_vendor"
-                          className="font-medium text-gray-700">
-                          Include Vendor Prices
-                        </label>
-                        <p className="mt-2 text-sm text-gray-500">
-                          Compare market prices vs vendor prices on NQ items
-                          that can be purchased from vendors.
-                        </p>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
+                                      handleSearchParamChange(
+                                        'hQChecked',
+                                        value
+                                      )
+                                    }}
+                                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                                  />
+                                </div>
+                                <div className="ml-3 text-sm">
+                                  <label
+                                    htmlFor="hq_only"
+                                    className="font-medium text-gray-700">
+                                    Enable HQ only
+                                  </label>
+                                  <p className="mt-2 text-sm text-gray-500">
+                                    Only search for hq prices
+                                  </p>
+                                </div>
+                              </div>
+                            </fieldset>
+                          </div>
 
-                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                  <fieldset className="space-y-5">
-                    <legend className="sr-only">Include Out of Stock</legend>
-                    <div className="relative flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="out_of_stock"
-                          aria-describedby="comments-description"
-                          name="out_of_stock"
-                          type="checkbox"
-                          defaultChecked={defaultOutOfStockChecked}
-                          onChange={(event) => {
-                            const value =
-                              event.target.value === 'on' ? 'true' : 'false'
+                          <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                            <fieldset className="space-y-5">
+                              <legend className="sr-only">
+                                Region Wide Search
+                              </legend>
+                              <div className="relative flex items-start">
+                                <div className="flex items-center h-5">
+                                  <input
+                                    id="region_wide"
+                                    aria-describedby="comments-description"
+                                    name="region_wide"
+                                    type="checkbox"
+                                    defaultChecked={defaultRegionWideChecked}
+                                    onChange={(event) => {
+                                      const value =
+                                        event.target.value === 'on'
+                                          ? 'true'
+                                          : 'false'
 
-                            handleSearchParamChange('outOfStockChecked', value)
-                          }}
-                          className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          htmlFor="out_of_stock"
-                          className="font-medium text-gray-700">
-                          Include Out of Stock
-                        </label>
-                        <p className="mt-2 text-sm text-gray-500">
-                          Include out of stock items from the list (they will
-                          show up as having 100% profit margins and 1 bil gil
-                          profit).
-                        </p>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
+                                      handleSearchParamChange(
+                                        'regionWideChecked',
+                                        value
+                                      )
+                                    }}
+                                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                                  />
+                                </div>
+                                <div className="ml-3 text-sm">
+                                  <label
+                                    htmlFor="region_wide"
+                                    className="font-medium text-gray-700">
+                                    Region Wide Search
+                                  </label>
+                                  <p className="mt-2 text-sm text-gray-500">
+                                    Search all servers in all DataCenters in
+                                    your region.
+                                  </p>
+                                </div>
+                              </div>
+                            </fieldset>
+                          </div>
+
+                          <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                            <fieldset className="space-y-5">
+                              <legend className="sr-only">
+                                Include Vendor Prices
+                              </legend>
+                              <div className="relative flex items-start">
+                                <div className="flex items-center h-5">
+                                  <input
+                                    id="include_vendor"
+                                    aria-describedby="comments-description"
+                                    name="include_vendor"
+                                    type="checkbox"
+                                    defaultChecked={defaultIncludeVendorChecked}
+                                    onChange={(event) => {
+                                      const value =
+                                        event.target.value === 'on'
+                                          ? 'true'
+                                          : 'false'
+
+                                      handleSearchParamChange(
+                                        'includeVendorChecked',
+                                        value
+                                      )
+                                    }}
+                                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                                  />
+                                </div>
+                                <div className="ml-3 text-sm">
+                                  <label
+                                    htmlFor="include_vendor"
+                                    className="font-medium text-gray-700">
+                                    Include Vendor Prices
+                                  </label>
+                                  <p className="mt-2 text-sm text-gray-500">
+                                    Compare market prices vs vendor prices on NQ
+                                    items that can be purchased from vendors.
+                                  </p>
+                                </div>
+                              </div>
+                            </fieldset>
+                          </div>
+
+                          <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                            <fieldset className="space-y-5">
+                              <legend className="sr-only">
+                                Include Out of Stock
+                              </legend>
+                              <div className="relative flex items-start">
+                                <div className="flex items-center h-5">
+                                  <input
+                                    id="out_of_stock"
+                                    aria-describedby="comments-description"
+                                    name="out_of_stock"
+                                    type="checkbox"
+                                    defaultChecked={defaultOutOfStockChecked}
+                                    onChange={(event) => {
+                                      const value =
+                                        event.target.value === 'on'
+                                          ? 'true'
+                                          : 'false'
+
+                                      handleSearchParamChange(
+                                        'outOfStockChecked',
+                                        value
+                                      )
+                                    }}
+                                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                                  />
+                                </div>
+                                <div className="ml-3 text-sm">
+                                  <label
+                                    htmlFor="out_of_stock"
+                                    className="font-medium text-gray-700">
+                                    Include Out of Stock
+                                  </label>
+                                  <p className="mt-2 text-sm text-gray-500">
+                                    Include out of stock items from the list
+                                    (they will show up as having 100% profit
+                                    margins and 1 bil gil profit).
+                                  </p>
+                                </div>
+                              </div>
+                            </fieldset>
+                          </div>
+                        </Disclosure.Panel>
+                      </Transition>
+                    </>
+                  )}
+                </Disclosure>
               </div>
             </div>
           </div>
