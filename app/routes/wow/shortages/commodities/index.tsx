@@ -230,8 +230,8 @@ export default Index
 
 export const WoWShortageFormFields = ({
   desiredAvgPriceDefault = 100,
-  desiredSellPriceDefault = 200,
-  desiredPriceIncreaseDefault = 50,
+  desiredSellPriceDefault = 40,
+  desiredPriceIncreaseDefault = 20,
   desiredSalesPerDayDefault = 40,
   flipRiskLimitDefault = 10,
   overMarketPricePercentDefault = 0,
