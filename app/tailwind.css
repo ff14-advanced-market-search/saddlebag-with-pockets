@@ -1331,6 +1331,11 @@ select {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.rotate-180 {
+  --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .scale-95 {
   --tw-scale-x: .95;
   --tw-scale-y: .95;
@@ -1968,6 +1973,10 @@ select {
   vertical-align: text-bottom;
 }
 
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -2285,8 +2294,8 @@ select {
   bottom: 1.5rem;
 }
 
-.hover\:flex:hover {
-  display: flex;
+.hover\:block:hover {
+  display: block;
 }
 
 .hover\:scale-125:hover {
@@ -2428,6 +2437,10 @@ select {
 
 .peer:hover ~ .peer-hover\:bottom-6 {
   bottom: 1.5rem;
+}
+
+.peer:hover ~ .peer-hover\:block {
+  display: block;
 }
 
 .peer:hover ~ .peer-hover\:flex {

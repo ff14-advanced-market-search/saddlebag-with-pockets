@@ -7,7 +7,7 @@ export default function TitleTooltip({
   relative
 }: {
   title: string
-  toolTip: string
+  toolTip: React.ReactNode
   className?: string
   relative?: boolean
 }) {
