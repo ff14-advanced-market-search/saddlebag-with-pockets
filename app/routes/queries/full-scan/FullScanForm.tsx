@@ -364,7 +364,6 @@ const FullScanForm = ({
                                         value.toString()
                                       )
                                       setHQChecked(value)
-                                      console.log(value, event)
                                     }}
                                     className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                                   />
@@ -425,7 +424,7 @@ const FullScanForm = ({
                           <div
                             className={
                               'col-span-6 sm:col-span-3 xl:col-span-2 ' +
-                              (hqChecked == true ? 'hidden' : '')
+                              (hqChecked === true ? 'hidden' : '')
                             }>
                             <fieldset className="space-y-5">
                               <legend className="sr-only">
