@@ -5,13 +5,13 @@ export default function TitleTooltip({
   toolTip,
   className,
   relative,
-  parseTooltipTags
+  children
 }: {
   title: string
   toolTip: string
   className?: string
   relative?: boolean
-  parseTooltipTags?: boolean
+  children?: React.ReactNode
 }) {
   return (
     <div
@@ -22,7 +22,7 @@ export default function TitleTooltip({
         }`}>
         {title}
       </p>
-      <ToolTip data={toolTip} parseTags={parseTooltipTags} />
+      <ToolTip data={children ? children : toolTip} />
     </div>
   )
 }

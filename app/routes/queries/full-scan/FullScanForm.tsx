@@ -91,12 +91,11 @@ const FullScanForm = ({
                   <label
                     htmlFor="scan-hours"
                     className="block text-sm font-medium text-gray-700">
-                    <TitleTooltip
-                      title="Scan Hours"
-                      toolTip="The time period to search over. ex: <code class='font-mono'>24</code> is the past 24 hours. For more items to sell choose a higher number."
-                      relative
-                      parseTooltipTags={true}
-                    />
+                    <TitleTooltip title="Scan Hours" toolTip="" relative>
+                      The time period to search over. ex:{' '}
+                      <code className="font-mono">24</code> is the past 24
+                      hours. For more items to sell choose a higher number.
+                    </TitleTooltip>
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
@@ -125,12 +124,12 @@ const FullScanForm = ({
                   <label
                     htmlFor="sale-amt"
                     className="block text-sm font-medium text-gray-700">
-                    <TitleTooltip
-                      title="Sale Amount"
-                      toolTip="Number of sales in that time. ex: <code class='font-mono'>5</code> is 5 sales in that selected time period. For more items to sell choose a lower number."
-                      relative
-                      parseTooltipTags={true}
-                    />
+                    <TitleTooltip title="Sale Amount" toolTip="" relative>
+                      Number of sales in that time. ex:{' '}
+                      <code className="font-mono">5</code> is 5 sales in that
+                      selected time period. For more items to sell choose a
+                      lower number.
+                    </TitleTooltip>
                   </label>
                   <input
                     type="number"
@@ -155,10 +154,14 @@ const FullScanForm = ({
                     className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
                       title="Return on Investment"
-                      toolTip="Desired R.O.I (return on investment): ex: <code class='font-mono'>50</code> means that 50% of the revenue you get from a sale should be all profit (after tax). For more profit, choose a higher number from 1 to 100."
-                      relative
-                      parseTooltipTags={true}
-                    />
+                      toolTip=""
+                      relative>
+                      Desired R.O.I (return on investment): ex:{' '}
+                      <code className="font-mono">50</code> means that 50% of
+                      the revenue you get from a sale should be all profit
+                      (after tax). For more profit, choose a higher number from
+                      1 to 100.
+                    </TitleTooltip>
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
@@ -188,10 +191,13 @@ const FullScanForm = ({
                     className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
                       title="Average Price Per Unit"
-                      toolTip="Desired Average Price Per Unit. ex: <code class='font-mono'>10000</code> is only show deals that sell on average for 10000 gil or greater. For more items to sell choose a lower number."
-                      relative
-                      parseTooltipTags={true}
-                    />
+                      toolTip=""
+                      relative>
+                      Desired Average Price Per Unit. ex:{' '}
+                      <code className="font-mono">10000</code> is only show
+                      deals that sell on average for 10000 gil or greater. For
+                      more items to sell choose a lower number.
+                    </TitleTooltip>
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
@@ -225,10 +231,13 @@ const FullScanForm = ({
                     className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
                       title="Minimum Profit Amount"
-                      toolTip="Desired Min Profit Amount. ex: <code class='font-mono'>10000</code> is only show deals that yields 10000 gil profit or greater. For more items to sell choose a lower number."
-                      relative
-                      parseTooltipTags={true}
-                    />
+                      toolTip=""
+                      relative>
+                      Desired Min Profit Amount. ex:{' '}
+                      <code className="font-mono">10000</code> is only show
+                      deals that yields 10000 gil profit or greater. For more
+                      items to sell choose a lower number.
+                    </TitleTooltip>
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
@@ -288,10 +297,14 @@ const FullScanForm = ({
                               className="block text-sm font-medium text-gray-700">
                               <TitleTooltip
                                 title="Minimum Stack Size"
-                                toolTip="Desired Min Stack Size. ex: <code class='font-mono'>10</code> is only show deals you can get in stacks of 10 or greater. For more items to sell choose a lower number."
-                                relative
-                                parseTooltipTags={true}
-                              />
+                                toolTip=""
+                                relative>
+                                Desired Min Stack Size. ex:{' '}
+                                <code className="font-mono">10</code> is only
+                                show deals you can get in stacks of 10 or
+                                greater. For more items to sell choose a lower
+                                number.
+                              </TitleTooltip>
                             </label>
                             <div className={`mt-1 flex rounded-md shadow-sm`}>
                               <input
