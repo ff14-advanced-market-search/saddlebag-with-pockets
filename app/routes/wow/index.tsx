@@ -10,13 +10,13 @@ const recommendedQueries = [
     icon: DocumentSearchIcon,
     href: '/wow/marketshare'
   },
-  // {
-  //   name: 'Dragonflight Commodity Future Shortage Finder',
-  //   description:
-  //     'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!',
-  //   icon: DocumentSearchIcon,
-  //   href: '/wow/shortage-predictor'
-  // },
+  {
+    name: 'Dragonflight Commodity Shortage Futures',
+    description:
+      'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!',
+    icon: DocumentSearchIcon,
+    href: '/wow/shortage-predictor'
+  },
   {
     name: 'Undercut Alerts Curseforge Addon',
     description: 'The addon for our Undercut Alerts!',
