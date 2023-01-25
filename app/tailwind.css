@@ -863,6 +863,10 @@ select {
   margin: 0.5rem;
 }
 
+.m-0 {
+  margin: 0px;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1116,6 +1120,10 @@ select {
   max-height: 100%;
 }
 
+.max-h-0 {
+  max-height: 0px;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -1288,6 +1296,10 @@ select {
 
 .grow {
   flex-grow: 1;
+}
+
+.grow-0 {
+  flex-grow: 0;
 }
 
 .basis-52 {
