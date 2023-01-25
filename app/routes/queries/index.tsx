@@ -23,18 +23,16 @@ import {
 
 const recommendedQueries = [
   {
-    name: 'Beginner Out of Stock Search',
-    description:
-      'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
+    name: 'Olivias Furnishing Items Medium Sell',
+    description: 'Finds medium priced furniture to sell.',
     icon: DocumentSearchIcon,
-    href: OUT_OF_STOCK_PATH
+    href: OLIVIA_5_PATH
   },
   {
-    name: 'Low Quality Out of Stock Search',
-    description:
-      'Same rules as the out of stock search, but this one looks for Low Quality items that can sell for like furniture or dyes that can sell for much higher prices than out of stock armor or weapons.',
+    name: 'Olivias Consumable Collectables Medium Sell',
+    description: 'Medium priced Consumable Collectables to sell.',
     icon: DocumentSearchIcon,
-    href: NQ_OUT_OF_STOCK_PATH
+    href: OLIVIA_6_PATH
   },
   {
     name: 'Fast Sales Search',
@@ -64,6 +62,20 @@ const recommendedQueries = [
     href: VENDOR_PATH
   },
   {
+    name: 'Beginner Out of Stock Search',
+    description:
+      'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
+    icon: DocumentSearchIcon,
+    href: OUT_OF_STOCK_PATH
+  },
+  {
+    name: 'Low Quality Out of Stock Search',
+    description:
+      'Same rules as the out of stock search, but this one looks for Low Quality items that can sell for like furniture or dyes that can sell for much higher prices than out of stock armor or weapons.',
+    icon: DocumentSearchIcon,
+    href: NQ_OUT_OF_STOCK_PATH
+  },
+  {
     name: 'Olivias General Flipping Quick Sell',
     description: 'Low Investment General Flipping Quick Sell.',
     icon: DocumentSearchIcon,
@@ -87,18 +99,6 @@ const recommendedQueries = [
       'Low Investment Minions, Mounts, and Collectable Items Quick Sell.',
     icon: DocumentSearchIcon,
     href: OLIVIA_4_PATH
-  },
-  {
-    name: 'Olivias Furnishing Items Medium Sell',
-    description: 'Finds medium priced furniture to sell.',
-    icon: DocumentSearchIcon,
-    href: OLIVIA_5_PATH
-  },
-  {
-    name: 'Olivias Consumable Collectables Medium Sell',
-    description: 'Medium priced Consumable Collectables to sell.',
-    icon: DocumentSearchIcon,
-    href: OLIVIA_6_PATH
   },
   {
     name: 'Olivias Glamor Medium Sell',
