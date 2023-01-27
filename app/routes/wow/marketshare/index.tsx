@@ -221,6 +221,8 @@ const Index = () => {
     'state'
   )
 
+  const [currentMarketValue, setCurrentMarketValue] = useState(true)
+
   const results = useActionData<
     | {
         data: Array<ItemStats>
@@ -254,7 +256,9 @@ const Index = () => {
       results.region
     )
 
-    const chartData = getChartData(results.data, colorValue)
+    const chartData = currentMarketValue
+      ? getChartData(results.data, colorValue)
+      : getHistoryChartData(results.data, colorValue)
 
     const itemsColumnList: Array<ColumnList<ItemStats>> = [
       { columnId: 'itemName', header: 'Item Name' },
@@ -299,6 +303,28 @@ const Index = () => {
               <TreemapChart
                 chartData={chartData}
                 title="Marketshare Visualisation"
+              />
+              <RadioButtons
+                title={'Market values to show'}
+                name="valuesToShow"
+                radioOptions={[
+                  {
+                    label: 'Current Market Value',
+                    value: 'currentMarketValue'
+                  },
+                  {
+                    label: 'Historic Market Value',
+                    value: 'historicMarketValue'
+                  }
+                ]}
+                defaultChecked={
+                  currentMarketValue
+                    ? 'currentMarketValue'
+                    : 'historicMarketValue'
+                }
+                onChange={() => {
+                  setCurrentMarketValue((state) => !state)
+                }}
               />
               <RadioButtons
                 title="Color Visualisation"
@@ -353,26 +379,17 @@ const hexMap = {
   spiking: '#24b406'
 }
 
-const getChartData = (
+const getHistoryChartData = (
   marketplaceOverviewData: Array<ItemStats>,
   colorValue: 'state' | 'quantityState' = 'state'
 ): Array<TreemapNode> => {
   const result: Array<TreemapNode> = [
     {
-      id: 'currentMarketValue',
-      name: 'Current Market Value',
-      toolTip: `Current Market: ${marketplaceOverviewData
-        .reduce((total, curr) => total + curr.currentMarketValue, 0)
-        .toLocaleString()}`,
-      value: 1
-    },
-    {
       id: 'historicMarketValue',
       name: 'Historic Market Value',
       toolTip: `Historic Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.historicMarketValue, 0)
-        .toLocaleString()}`,
-      value: 1
+        .toLocaleString()}`
     }
   ]
 
@@ -390,6 +407,32 @@ const getChartData = (
       toolTip: `${base.name}: ${current.historicMarketValue.toLocaleString()}`
     }
     result.push(historicMarketValue)
+  })
+
+  return result
+}
+
+const getChartData = (
+  marketplaceOverviewData: Array<ItemStats>,
+  colorValue: 'state' | 'quantityState' = 'state'
+): Array<TreemapNode> => {
+  const result: Array<TreemapNode> = [
+    {
+      id: 'historicMarketValue',
+      name: 'Historic Market Value',
+      toolTip: `Historic Market: ${marketplaceOverviewData
+        .reduce((total, curr) => total + curr.historicMarketValue, 0)
+        .toLocaleString()}`,
+      value: 1
+    }
+  ]
+
+  marketplaceOverviewData.forEach((current) => {
+    const base = {
+      id: current.itemID.toString(),
+      name: current.itemName,
+      color: hexMap[current[colorValue]]
+    }
 
     const currentMarketValue = {
       ...base,
