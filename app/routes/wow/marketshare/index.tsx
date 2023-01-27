@@ -25,6 +25,8 @@ import type { TreemapNode } from '~/components/Charts/Treemap'
 import TreemapChart from '~/components/Charts/Treemap'
 import { getUserSessionData } from '~/sessions'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
+import { useState } from 'react'
+import { RadioButtons } from '~/components/Common/RadioButtons'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -112,7 +114,6 @@ export const action: ActionFunction = async ({ request }) => {
 
   return json({
     ...data,
-    chartData: getChartData(data.data),
     serverName: (formPayload.homeRealmId as string).split('---')[1],
     region: validInput.data.region
   })
@@ -204,6 +205,9 @@ const tableSortOrder = [
   'salesPerDay',
   'minPrice',
   'historicPrice',
+  'avgQuantity',
+  'currentQuantity',
+  'currentVsAvgQuantityPercent',
   'itemID',
   'item_subclass',
   'item_class'
@@ -212,6 +216,10 @@ const tableSortOrder = [
 const Index = () => {
   const transition = useTransition()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+
+  const [colorValue, setColorValue] = useState<'state' | 'quantityState'>(
+    'state'
+  )
 
   const results = useActionData<
     | {
@@ -246,6 +254,8 @@ const Index = () => {
       results.region
     )
 
+    const chartData = getChartData(results.data, colorValue)
+
     const itemsColumnList: Array<ColumnList<ItemStats>> = [
       { columnId: 'itemName', header: 'Item Name' },
       { columnId: 'minPrice', header: 'Minimum Price' },
@@ -264,7 +274,20 @@ const Index = () => {
       { columnId: 'item_class', header: 'Item Class' },
       { columnId: 'item_subclass', header: 'Item Sub Class' },
       { columnId: 'itemID', header: 'Oribos Link', accessor: OribosLink },
-      { columnId: 'salesPerDay', header: 'Sales Per Day' }
+      { columnId: 'salesPerDay', header: 'Sales Per Day' },
+      {
+        columnId: 'avgQuantity',
+        header: 'Average Quantity'
+      },
+      {
+        columnId: 'currentQuantity',
+        header: 'Current Quantity'
+      },
+      {
+        columnId: 'currentVsAvgQuantityPercent',
+        header: 'Curr v Avg Quantity',
+        accessor: ({ getValue }) => <p>{`${getValue()}%`}</p>
+      }
     ]
 
     return (
@@ -272,10 +295,26 @@ const Index = () => {
         <Title title={pageTitle} />
         <div className="px-2 sm:px-4 my-2 sm:my-4">
           <ContentContainer>
-            <TreemapChart
-              chartData={results.chartData}
-              title="Marketshare Visualisation"
-            />
+            <>
+              <TreemapChart
+                chartData={chartData}
+                title="Marketshare Visualisation"
+              />
+              <RadioButtons
+                title="Color Visualisation"
+                name="chartColor"
+                radioOptions={[
+                  { label: 'Market Value', value: 'state' },
+                  { label: 'Market Quantity', value: 'quantityState' }
+                ]}
+                defaultChecked={colorValue}
+                onChange={(value) => {
+                  if (value === 'state' || value === 'quantityState') {
+                    setColorValue(value)
+                  }
+                }}
+              />
+            </>
           </ContentContainer>
         </div>
         <FullTable<ItemStats>
@@ -315,13 +354,13 @@ const hexMap = {
 }
 
 const getChartData = (
-  marketplaceOverviewData: Array<ItemStats>
+  marketplaceOverviewData: Array<ItemStats>,
+  colorValue: 'state' | 'quantityState' = 'state'
 ): Array<TreemapNode> => {
   const result: Array<TreemapNode> = [
     {
       id: 'currentMarketValue',
       name: 'Current Market Value',
-      color: '#97EA6C',
       toolTip: `Current Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.currentMarketValue, 0)
         .toLocaleString()}`,
@@ -330,7 +369,6 @@ const getChartData = (
     {
       id: 'historicMarketValue',
       name: 'Historic Market Value',
-      color: '#DCEA6C',
       toolTip: `Historic Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.historicMarketValue, 0)
         .toLocaleString()}`,
@@ -342,7 +380,7 @@ const getChartData = (
     const base = {
       id: current.itemID.toString(),
       name: current.itemName,
-      color: hexMap[current.state]
+      color: hexMap[current[colorValue]]
     }
 
     const historicMarketValue = {
