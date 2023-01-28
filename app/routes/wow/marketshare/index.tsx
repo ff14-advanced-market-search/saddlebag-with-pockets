@@ -115,7 +115,8 @@ export const action: ActionFunction = async ({ request }) => {
   return json({
     ...data,
     serverName: (formPayload.homeRealmId as string).split('---')[1],
-    region: validInput.data.region
+    region: validInput.data.region,
+    commodity: validInput.data.commodity
   })
 }
 
@@ -229,6 +230,7 @@ const Index = () => {
         serverName: string
         chartData: Array<TreemapNode>
         region: WoWServerRegion
+        commodity: boolean
       }
     | { exception: string }
     | {}
@@ -256,9 +258,29 @@ const Index = () => {
       results.region
     )
 
-    const chartData = currentMarketValue
+    const hideHistory = currentMarketValue || !results.commodity
+
+    const chartData = hideHistory
       ? getChartData(results.data, colorValue)
       : getHistoryChartData(results.data, colorValue)
+
+    const currentMarketOptions = results.commodity
+      ? [
+          {
+            label: 'Current Market Value',
+            value: 'currentMarketValue'
+          },
+          {
+            label: 'Historic Market Value',
+            value: 'historicMarketValue'
+          }
+        ]
+      : [
+          {
+            label: 'Current Market Value',
+            value: 'currentMarketValue'
+          }
+        ]
 
     const itemsColumnList: Array<ColumnList<ItemStats>> = [
       { columnId: 'itemName', header: 'Item Name' },
@@ -307,20 +329,9 @@ const Index = () => {
               <RadioButtons
                 title={'Market values to show'}
                 name="valuesToShow"
-                radioOptions={[
-                  {
-                    label: 'Current Market Value',
-                    value: 'currentMarketValue'
-                  },
-                  {
-                    label: 'Historic Market Value',
-                    value: 'historicMarketValue'
-                  }
-                ]}
+                radioOptions={currentMarketOptions}
                 defaultChecked={
-                  currentMarketValue
-                    ? 'currentMarketValue'
-                    : 'historicMarketValue'
+                  hideHistory ? 'currentMarketValue' : 'historicMarketValue'
                 }
                 onChange={() => {
                   setCurrentMarketValue((state) => !state)
