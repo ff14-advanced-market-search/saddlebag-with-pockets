@@ -28,6 +28,8 @@ const TreemapChart = ({
         type: 'treemap',
         layoutAlgorithm: 'squarified',
         allowDrillToNode: true,
+        animation: false,
+        shadow: false,
         dataLabels: {
           enabled: false
         },
@@ -35,12 +37,12 @@ const TreemapChart = ({
           {
             level: 1,
             dataLabels: {
-              enabled: true,
+              enabled: false,
               style: {
                 textOutline: false
               }
             },
-            borderWidth: 8
+            borderWidth: 2
           }
         ],
         data: chartData,

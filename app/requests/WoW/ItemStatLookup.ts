@@ -13,7 +13,12 @@ interface StatLookupProps {
   itemSubClass: number
   iLvl: number
 }
-
+type MarketState =
+  | 'spiking'
+  | 'increasing'
+  | 'stable'
+  | 'decreasing'
+  | 'crashing'
 export interface ItemStats {
   currentMarketValue: number
   historicMarketValue: number
@@ -25,7 +30,11 @@ export interface ItemStats {
   minPrice: number
   percentChange: number
   salesPerDay: number
-  state: 'spiking' | 'increasing' | 'stable' | 'decreasing' | 'crashing'
+  state: MarketState
+  avgQuantity: number
+  currentQuantity: number
+  currentVsAvgQuantityPercent: number
+  quantityState: MarketState
 }
 
 export interface ItemStatResponse {
