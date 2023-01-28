@@ -257,30 +257,27 @@ const Index = () => {
       'Oribos',
       results.region
     )
-
-    const hideHistory = currentMarketValue || !results.commodity
-
-    const chartData = hideHistory
+    const chartData = currentMarketValue
       ? getChartData(results.data, colorValue)
       : getHistoryChartData(results.data, colorValue)
 
-    const currentMarketOptions = results.commodity
+    const currentMarketOptions = [
+      {
+        label: 'Current Market Value',
+        value: 'currentMarketValue'
+      },
+      {
+        label: 'Historic Market Value',
+        value: 'historicMarketValue'
+      }
+    ]
+
+    const currentColorOptions = results.commodity
       ? [
-          {
-            label: 'Current Market Value',
-            value: 'currentMarketValue'
-          },
-          {
-            label: 'Historic Market Value',
-            value: 'historicMarketValue'
-          }
+          { label: 'Market Value', value: 'state' },
+          { label: 'Market Quantity', value: 'quantityState' }
         ]
-      : [
-          {
-            label: 'Current Market Value',
-            value: 'currentMarketValue'
-          }
-        ]
+      : [{ label: 'Market Value', value: 'state' }]
 
     const itemsColumnList: Array<ColumnList<ItemStats>> = [
       { columnId: 'itemName', header: 'Item Name' },
@@ -331,7 +328,9 @@ const Index = () => {
                 name="valuesToShow"
                 radioOptions={currentMarketOptions}
                 defaultChecked={
-                  hideHistory ? 'currentMarketValue' : 'historicMarketValue'
+                  currentMarketValue
+                    ? 'currentMarketValue'
+                    : 'historicMarketValue'
                 }
                 onChange={() => {
                   setCurrentMarketValue((state) => !state)
@@ -340,11 +339,8 @@ const Index = () => {
               <RadioButtons
                 title="Color Visualisation"
                 name="chartColor"
-                radioOptions={[
-                  { label: 'Market Value', value: 'state' },
-                  { label: 'Market Quantity', value: 'quantityState' }
-                ]}
-                defaultChecked={colorValue}
+                radioOptions={currentColorOptions}
+                defaultChecked={!results.commodity ? colorValue : 'state'}
                 onChange={(value) => {
                   if (value === 'state' || value === 'quantityState') {
                     setColorValue(value)
