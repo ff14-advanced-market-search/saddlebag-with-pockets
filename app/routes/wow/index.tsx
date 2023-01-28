@@ -6,7 +6,7 @@ const recommendedQueries = [
   {
     name: 'Dragonflight Marketshare Overview',
     description:
-      'Find out what Dragonflight items are actually selling and what are the best items to sell.',
+      'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
     icon: DocumentSearchIcon,
     href: '/wow/marketshare'
   },
