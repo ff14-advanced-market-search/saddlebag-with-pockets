@@ -24,11 +24,11 @@ const SmallFormContainer = ({
   return (
     <Form method="post">
       <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-blue-300">
+        <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">
           {title}
         </h1>
         {description && (
-          <p className="italic text-sm text-grey-500 px-3 py-1">
+          <p className="italic text-sm text-grey-500 px-3 py-1 dark:text-gray-300">
             {description}
           </p>
         )}
@@ -37,7 +37,7 @@ const SmallFormContainer = ({
             {children}
             <div className="px-4 py-4 bg-white dark:bg-slate-700">
               <div className="flex justify-between">
-                <p className="text-red-500 mx-2">{error}</p>
+                <p className="text-red-500 dark:text-red-300 mx-2">{error}</p>
                 <SubmitButton
                   title={buttonTitle}
                   onClick={onClick}
