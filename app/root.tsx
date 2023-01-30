@@ -102,7 +102,7 @@ function App() {
         <Links />
         <EnsureThemeApplied />
       </head>
-      <body className={`h-full bg-gray-100 dark:bg-slate-900`}>
+      <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
         <noscript>
           <iframe
             title="GtagManager"
