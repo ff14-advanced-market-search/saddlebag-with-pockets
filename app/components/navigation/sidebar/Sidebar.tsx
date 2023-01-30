@@ -507,7 +507,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 </div>
                 <div className={`flex items-center pr-1.5`}>
                   <CogIcon
-                    className="h-5 w-5 text-gray-400 dark:text-gray-200 basis-full dark:group-hover:text-gray-100"
+                    className="h-5 w-5 text-gray-400 dark:text-gray-200 basis-full group-hover:text-blue-500 dark:group-hover:text-gray-100"
                     aria-hidden="true"
                   />
                 </div>
@@ -519,7 +519,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 className="bg-white dark:bg-slate-900 p-1 dark:hover:bg-slate-800 rounded-full text-gray-400 dark:text-gray-200 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <span className="sr-only">View notifications</span>
                 <BellIcon
-                  className="h-6 w-6 hover:text-gray-100"
+                  className="h-6 w-6 hover:text-blue-500 dark:hover:text-gray-100"
                   aria-hidden="true"
                 />
               </button>
