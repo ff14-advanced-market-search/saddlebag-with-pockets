@@ -25,7 +25,7 @@ export const SelectDataCenter: FC<SelectDataCenterProps> = ({
       name="data_center"
       autoComplete="data_center"
       placeholder={'Select your Data Center'}
-      className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300 dark:text-gray-300"
+      className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300 dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
       defaultValue={dataCenterDefaultValue}
       onChange={(event) => {
         onSelect(event.target.value)
