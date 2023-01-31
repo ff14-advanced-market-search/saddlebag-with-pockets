@@ -370,7 +370,7 @@ const FullScanForm = ({
                         onChange={noop}
                       />
                       <button
-                        className="w-full py-2 px-4 text-sm bg-gray-100 hover:bg-gray-300 border border-gray-300 rounded text-left dark:bg-gray-900 dark:border-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
+                        className="w-full py-2 px-4 text-sm bg-gray-100 hover:bg-gray-300 border border-gray-300 rounded text-left dark:bg-gray-500 dark:border-gray-500 dark:text-gray-200 dark:hover:bg-gray-400"
                         aria-label="Choose filters"
                         type="button"
                         onClick={() => setIsOpen(true)}>
