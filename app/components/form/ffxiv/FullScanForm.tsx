@@ -78,7 +78,7 @@ const FullScanForm = ({
       <Form method="post">
         <div className="mt-5 md:mt-0 md:col-span-3 py-6">
           <div className="shadow sm:rounded-md">
-            <div className="px-4 py-5 bg-white sm:p-6 dark:bg-slate-700">
+            <div className="px-4 py-5 shadow sm:rounded-md bg-white sm:p-6 dark:bg-slate-700">
               <div className="flex justify-end mb-2">
                 <SubmitButton
                   title="Share this search!"

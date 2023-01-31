@@ -2460,16 +2460,6 @@ select {
   display: flex;
 }
 
-.dark .dark\:divide-gray-400 > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-opacity: 1;
-  border-color: rgb(156 163 175 / var(--tw-divide-opacity));
-}
-
-.dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-opacity: 1;
-  border-color: rgb(55 65 81 / var(--tw-divide-opacity));
-}
-
 .dark .dark\:divide-gray-600 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-divide-opacity));
@@ -2542,18 +2532,13 @@ select {
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-gray-800 {
+.dark .dark\:bg-gray-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 .dark .dark\:bg-transparent {
   background-color: transparent;
-}
-
-.dark .dark\:bg-gray-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 .dark .dark\:font-medium {
@@ -2648,14 +2633,9 @@ select {
   border-color: rgb(243 244 246 / var(--tw-border-opacity));
 }
 
-.dark .group:hover .dark\:group-hover\:bg-gray-600 {
+.dark .group:hover .dark\:group-hover\:bg-gray-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
-}
-
-.dark .group:hover .dark\:group-hover\:text-gray-200 {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 .dark .group:hover .dark\:group-hover\:text-gray-100 {

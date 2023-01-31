@@ -313,20 +313,20 @@ const Results = ({ rows }: ResultTableProps) => {
                               <div
                                 className={classNames(
                                   header.column.getIsSorted()
-                                    ? 'bg-gray-200 rounded dark:bg-gray-800'
+                                    ? 'bg-gray-200 rounded dark:bg-gray-500'
                                     : '',
                                   ` ml-1 flex flex-0 p-1 justify-center items-center`
                                 )}>
                                 {{
                                   asc: (
                                     <span
-                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-600 dark:text-gray-300 dark:group-hover:text-gray-200`}>
+                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                       <ChevronUpIcon className={`h-4 w-4`} />
                                     </span>
                                   ),
                                   desc: (
                                     <span
-                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-600 dark:text-gray-300 dark:group-hover:text-gray-200`}>
+                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                       <ChevronDownIcon className={`h-4 w-4`} />
                                     </span>
                                   )
