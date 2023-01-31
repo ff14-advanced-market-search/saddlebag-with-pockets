@@ -19,7 +19,7 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
-import DateCell from '../full-scan/DateCell'
+import DateCell from '../../../components/FFXIVResults/FullScan/DateCell'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {

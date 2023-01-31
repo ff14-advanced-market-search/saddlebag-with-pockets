@@ -4,7 +4,7 @@ import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemNameById } from '~/utils/items'
-import { Modal } from '../queries/full-scan/CheckBoxModal'
+import { Modal } from '../../components/form/ffxiv/CheckBoxModal'
 
 const Results = ({
   sellerId,

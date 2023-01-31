@@ -3,10 +3,7 @@ import React, { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
-import {
-  Modal,
-  ModalContent
-} from '../../../routes/queries/full-scan/CheckBoxModal'
+import { Modal, ModalContent } from './CheckBoxModal'
 
 const noop = () => {}
 

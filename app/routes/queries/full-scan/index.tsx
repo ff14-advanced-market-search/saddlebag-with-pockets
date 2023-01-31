@@ -10,7 +10,7 @@ import FullScanRequest, { FormValues } from '~/requests/FullScan'
 
 import { useEffect } from 'react'
 import NoResults from '~/routes/queries/full-scan/NoResults'
-import Results from '~/routes/queries/full-scan/Results'
+import Results from '~/components/FFXIVResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
