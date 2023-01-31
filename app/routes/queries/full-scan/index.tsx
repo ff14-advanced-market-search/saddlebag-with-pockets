@@ -14,8 +14,8 @@ import Results from '~/routes/queries/full-scan/Results'
 import { useDispatch } from 'react-redux'
 import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import { PreviousResultsLink } from './PreviousResultsLink'
-import FullScanForm from './FullScanForm'
+import { PreviousResultsLink } from '../../../components/FFXIVResults/FullScan/PreviousResultsLink'
+import FullScanForm from '../../../components/form/ffxiv/FullScanForm'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -123,7 +123,7 @@ const Index = () => {
     <main className="flex-1">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <h1 className="text-2xl font-semibold text-green-900 py-6">
+          <h1 className="text-2xl font-semibold text-green-900 py-6 dark:text-gray-100">
             FFXIV Import Search
           </h1>
           {fullScan && !results && (
