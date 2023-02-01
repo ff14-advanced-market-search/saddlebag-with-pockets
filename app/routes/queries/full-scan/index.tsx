@@ -7,6 +7,7 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
+import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
 
 import { useEffect } from 'react'
 import NoResults from '~/components/Common/NoResults'
@@ -33,16 +34,9 @@ export const action: ActionFunction = async ({ request, params }) => {
   })
 }
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  console.error('errorBoundary', error)
-  return (
-    <pre>
-      If you're seeing this, it'd be appreciated if you could report in our
-      Discord's <span className={`font-bold`}>#bug-reporting</span> channel.
-      Much thank
-    </pre>
-  )
-}
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
+  <ErrorBounds error={error} />
+)
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)
