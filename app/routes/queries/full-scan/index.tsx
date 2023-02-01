@@ -9,7 +9,7 @@ import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
 
 import { useEffect } from 'react'
-import NoResults from '~/routes/queries/full-scan/NoResults'
+import NoResults from '~/components/Common/NoResults'
 import Results from '~/components/FFXIVResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { setFullScan } from '~/redux/reducers/queriesSlice'
@@ -111,7 +111,16 @@ const Index = () => {
 
   if (results) {
     if (Object.keys(results).length === 0) {
-      return <NoResults href={`/queries/full-scan`} />
+      const url = window && document ? new URL(window.location.href) : ''
+      if (url) {
+        return (
+          <NoResults href={'/queries/full-scan?' + url.searchParams.toString()}>
+            A quick suggestion would be expanding the{' '}
+            <span className={`font-bold`}>Scan Hours</span> to a higher number,
+            or lowering the <span className={`font-bold`}>Sale Amount</span>.
+          </NoResults>
+        )
+      }
     }
     if ('data' in results) {
       const data = results.data
