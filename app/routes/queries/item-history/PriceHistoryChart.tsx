@@ -37,8 +37,7 @@ export default function PriceHistoryChart({
     yAxis: {
       title: {
         text: 'No# of sales',
-        style: { color: styles?.color, textAlign: 'center' },
-        align: 'middle'
+        style: { color: styles?.color, textAlign: 'center' }
       },
       labels: { style: { color: styles?.color }, align: 'center' },
       lineColor: styles?.color
@@ -48,10 +47,9 @@ export default function PriceHistoryChart({
       categories: xAxisCategories,
       title: {
         text: 'Price Ranges in Gil',
-        style: { color: styles?.color, textAlign: 'left' },
-        align: 'middle'
+        style: { color: styles?.color, textAlign: 'center' }
       },
-      labels: { style: { color: styles?.color }, align: 'left' },
+      labels: { style: { color: styles?.color }, align: 'center' },
       lineColor: styles?.color
     },
 

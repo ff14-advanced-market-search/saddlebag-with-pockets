@@ -125,11 +125,11 @@ function SmallTable<Type>({
       className={`mt-0 flex flex-col my-6 bg-white p-4 sm:rounded-md shadow`}>
       <h2 className="text-xl font-semibold text-blue-900 py-2 ml-8">{title}</h2>
       <p className="italic text-sm text-grey-500 px-3">{description}</p>
-      <div className="overflow-x-auto max-h-96 my-2">
+      <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5">
-            <table className="min-w-full divide-y divide-gray-300 overflow-hidden">
-              <thead className="bg-gray-50 sticky top-0">
+          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
+            <table className="min-w-full relative divide-y divide-gray-300 overflow-hidden">
+              <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
@@ -138,7 +138,7 @@ function SmallTable<Type>({
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
+                          `px-3 py-3.5 sticky bg-gray-50 top-0 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600`
                         )}
                         key={header.id}>
                         <div className={`group inline-flex`}>

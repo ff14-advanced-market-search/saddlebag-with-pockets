@@ -111,6 +111,7 @@ const Index = () => {
   const results = useActionData<GetHistoryResponse>()
   const [formState, setFormState] = useState<ItemSelected | undefined>()
   const [error, setError] = useState<string | undefined>()
+  const { darkmode } = useTypedSelector((state) => state.user)
 
   const { itemHistory } = useTypedSelector((state) => state.queries)
 
@@ -192,7 +193,7 @@ const Index = () => {
           </div>
         )}
         {itemHistory && 'average_ppu' in itemHistory && (
-          <Results data={itemHistory} />
+          <Results data={itemHistory} darkMode={darkmode} />
         )}
       </>
     </PageWrapper>
