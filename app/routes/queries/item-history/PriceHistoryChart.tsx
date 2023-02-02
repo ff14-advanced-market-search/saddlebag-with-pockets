@@ -4,28 +4,55 @@ import HighchartsReact from 'highcharts-react-official'
 import type { PriceHistory } from '~/requests/GetHistory'
 
 export default function PriceHistoryChart({
-  data
+  data,
+  darkMode
 }: {
   data: Array<PriceHistory>
+  darkMode: boolean
 }) {
   const xAxisCategories = data.map(({ price_range }) => price_range)
 
+  const styles = darkMode
+    ? {
+        backgroundColor: '#334155',
+        color: 'white',
+        hoverColor: '#f8f8f8'
+      }
+    : {}
+
   const options: Options = {
     chart: {
-      type: 'column'
+      type: 'column',
+      backgroundColor: styles?.backgroundColor
+    },
+    legend: {
+      itemStyle: { color: styles?.color },
+      align: 'center',
+      itemHoverStyle: { color: styles?.hoverColor }
     },
     title: {
-      text: undefined
+      text: undefined,
+      style: { color: styles?.color }
     },
     yAxis: {
       title: {
-        text: 'No# of sales'
-      }
+        text: 'No# of sales',
+        style: { color: styles?.color, textAlign: 'center' },
+        align: 'middle'
+      },
+      labels: { style: { color: styles?.color }, align: 'center' },
+      lineColor: styles?.color
     },
 
     xAxis: {
       categories: xAxisCategories,
-      title: { text: 'Price Ranges in Gil' }
+      title: {
+        text: 'Price Ranges in Gil',
+        style: { color: styles?.color, textAlign: 'left' },
+        align: 'middle'
+      },
+      labels: { style: { color: styles?.color }, align: 'left' },
+      lineColor: styles?.color
     },
 
     series: [
