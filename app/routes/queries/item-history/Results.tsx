@@ -50,7 +50,7 @@ const Results = ({
     <ContentContainer>
       <>
         <Title title="Region Price History" />
-        <PriceHistoryChart data={data.price_history} darkMode={true} />
+        <PriceHistoryChart data={data.price_history} darkMode={darkMode} />
       </>
     </ContentContainer>
 
