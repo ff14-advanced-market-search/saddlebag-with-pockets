@@ -255,7 +255,8 @@ const itemClasses: Array<{
       { name: 'Elemental', value: 10 },
       { name: 'Other', value: 11 },
       { name: 'Enchanting', value: 12 },
-      { name: 'Inscription', value: 16 }
+      { name: 'Inscription', value: 16 },
+      { name: 'Embellishments', value: 18 }
     ]
   },
   {
