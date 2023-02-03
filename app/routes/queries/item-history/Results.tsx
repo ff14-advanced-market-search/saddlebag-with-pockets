@@ -72,7 +72,7 @@ const Results = ({
         {data.dirty_sales.length ? (
           <SuspiciousSaleTable data={data.dirty_sales} />
         ) : (
-          <p className="italic text-sm text-grey-500 px-3 dark:text-grey-200">
+          <p className="italic text-sm text-grey-500 px-3 dark:text-gray-200">
             No suspicious sales found
           </p>
         )}
