@@ -12,8 +12,8 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             diffAmount={`${data.listing_price_diff.avg_price_diff.toLocaleString()} gil`}
             className={
               data.listing_price_diff.avg_price_diff >= 10000
-                ? 'bg-red-100 font-semibold text-red-800'
-                : 'bg-green-100 font-semibold text-green-800'
+                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
+                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
             }
           />
         )}
@@ -23,8 +23,8 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             diffAmount={`${data.listing_price_diff.median_price_diff.toLocaleString()} gil`}
             className={
               data.listing_price_diff.median_price_diff >= 10000
-                ? 'bg-red-100 font-semibold text-red-800'
-                : 'bg-green-100 font-semibold text-green-800'
+                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
+                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
             }
           />
         )}
@@ -34,8 +34,8 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             diffAmount={`${data.listing_time_diff.avg_time_diff.toLocaleString()} minutes`}
             className={
               data.listing_time_diff.avg_time_diff >= 30
-                ? 'bg-green-100 font-semibold text-green-800'
-                : 'bg-red-100 font-semibold text-red-800'
+                ? 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
+                : 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
             }
           />
         )}
@@ -45,8 +45,8 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             diffAmount={`${data.listing_time_diff.median_time_diff.toLocaleString()} minutes`}
             className={
               data.listing_time_diff.median_time_diff >= 30
-                ? 'bg-green-100 font-semibold text-green-800'
-                : 'bg-red-100 font-semibold text-red-800'
+                ? 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
+                : 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
             }
           />
         )}
@@ -54,7 +54,9 @@ const Results = ({ data }: { data: ListingResponseType }) => {
           <Differences
             diffTitle="Minimum Price"
             diffAmount={`${data.min_price.toLocaleString()} gil`}
-            className={'bg-blue-100 font-semibold text-blue-800'}
+            className={
+              'bg-blue-100 font-semibold text-blue-600  dark:bg-blue-600 dark:text-gray-100'
+            }
           />
         )}
       </div>

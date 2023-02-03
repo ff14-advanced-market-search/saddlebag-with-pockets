@@ -109,9 +109,9 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
     <div className={`mt-0 flex flex-col`}>
       <div className="overflow-x-auto">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead className="bg-gray-50">
+          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table className="min-w-full divide-y relative divide-gray-300">
+              <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
@@ -120,7 +120,7 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
+                          `whitespace-nowrap px-3 sticky top-0 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600 z-50`
                         )}
                         key={header.id}>
                         <div className={`group inline-flex`}>
@@ -133,20 +133,20 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                           <div
                             className={classNames(
                               header.column.getIsSorted()
-                                ? 'bg-gray-200 rounded bg-gray-200'
+                                ? 'bg-gray-200 rounded bg-gray-200 dark:bg-gray-500'
                                 : '',
                               ` ml-1 flex-none p-1`
                             )}>
                             {{
                               asc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300`}>
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronUpIcon className={`h-4 w-4`} />
                                 </span>
                               ),
                               desc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300`}>
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronDownIcon className={`h-4 w-4`} />
                                 </span>
                               )
@@ -163,13 +163,13 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                   </tr>
                 ))}
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
+              <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800">
                 {table.getRowModel().rows.map((row) => (
                   <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                        className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100 text-center">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -182,7 +182,8 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
             </table>
           </div>
           <div>
-            <p className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>
+            <p
+              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
               {`${data.listings.length} results found`}
             </p>
           </div>
