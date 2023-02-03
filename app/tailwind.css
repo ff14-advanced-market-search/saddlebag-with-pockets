@@ -2649,14 +2649,14 @@ select {
   color: rgb(254 202 202 / var(--tw-text-opacity));
 }
 
-.dark .dark\:placeholder-gray-300::-moz-placeholder {
+.dark .dark\:placeholder-gray-400::-moz-placeholder {
   --tw-placeholder-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-placeholder-opacity));
+  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
 }
 
-.dark .dark\:placeholder-gray-300::placeholder {
+.dark .dark\:placeholder-gray-400::placeholder {
   --tw-placeholder-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-placeholder-opacity));
+  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
 }
 
 .dark .dark\:opacity-50 {
