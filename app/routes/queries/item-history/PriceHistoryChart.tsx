@@ -39,7 +39,7 @@ export default function PriceHistoryChart({
         text: 'No# of sales',
         style: { color: styles?.color, textAlign: 'center' }
       },
-      labels: { style: { color: styles?.color }, align: 'center' },
+      labels: { style: { color: styles?.color } },
       lineColor: styles?.color
     },
 
@@ -49,7 +49,7 @@ export default function PriceHistoryChart({
         text: 'Price Ranges in Gil',
         style: { color: styles?.color, textAlign: 'center' }
       },
-      labels: { style: { color: styles?.color }, align: 'center' },
+      labels: { style: { color: styles?.color } },
       lineColor: styles?.color
     },
 
