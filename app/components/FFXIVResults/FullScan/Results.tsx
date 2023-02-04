@@ -343,7 +343,7 @@ const Results = ({ rows }: ResultTableProps) => {
                       </tr>
                     ))}
                   </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800">
+                  <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
                     {table.getRowModel().rows.map((row) => (
                       <tr key={row.id}>
                         {row.getVisibleCells().map((cell) => (
