@@ -124,10 +124,15 @@ function SmallTable<Type>({
   return (
     <div
       className={`mt-0 flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md shadow`}>
-      <Title title={title} />
-      <p className="italic text-sm text-grey-500 px-3 dark:text-gray-300">
-        {description}
-      </p>
+      <div className="mx-3">
+        <Title title={title} />
+      </div>
+      <div className="mx-3">
+        <p className="italic text-sm text-grey-500 dark:text-gray-300">
+          {description}
+        </p>
+      </div>
+
       <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
           <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
