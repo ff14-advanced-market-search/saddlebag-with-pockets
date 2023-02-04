@@ -32,7 +32,7 @@ const ItemSelect = ({
           <div className="flex gap-2 relative">
             <label
               htmlFor="itemName"
-              className="block text-sm font-medium text-gray-700 dark:text-grey-200">
+              className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               Search for Item by Name
             </label>
             {tooltip && <ToolTip data={tooltip} />}
