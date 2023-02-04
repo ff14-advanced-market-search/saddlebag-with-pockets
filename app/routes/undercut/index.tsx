@@ -7,7 +7,7 @@ import { json } from '@remix-run/cloudflare'
 import GetSellerId from '~/requests/GetSellerId'
 import { getUserSessionData } from '~/sessions'
 import ItemSelect from '~/components/form/select/ItemSelect'
-import NoResults from './NoResults'
+import NoResults from '~/components/Common/NoResults'
 import Results from './Results'
 
 export const action: ActionFunction = async ({ request }) => {

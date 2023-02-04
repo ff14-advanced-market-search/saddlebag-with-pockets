@@ -2526,6 +2526,11 @@ select {
   border-color: rgb(127 29 29 / var(--tw-border-opacity));
 }
 
+.dark .dark\:border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
 .dark .dark\:border-gray-500 {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));

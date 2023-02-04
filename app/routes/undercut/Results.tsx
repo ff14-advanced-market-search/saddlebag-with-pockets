@@ -38,7 +38,7 @@ const Results = ({
         <>
           <div className="flex flex-col my-2 gap-2">
             <Title title="Input for undercut alerts" />
-            <p className="italic text-sm text-grey-500 mb-1">
+            <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
               Copy the text below to your clipboard and use it in our{' '}
               <a
                 className="underline"
@@ -59,7 +59,7 @@ const Results = ({
             </p>
             <div className={`mt-1 flex rounded-md shadow-sm max-w-fit`}>
               <button
-                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left"
+                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
                 aria-label="Choose filters"
                 type="button"
                 onClick={() => setModal('addIds')}>
@@ -70,7 +70,7 @@ const Results = ({
             </div>
             <div className={`mt-1 flex rounded-md shadow-sm  max-w-fit`}>
               <button
-                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left"
+                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
                 aria-label="Choose filters"
                 type="button"
                 onClick={() => setModal('removeIds')}>
@@ -78,7 +78,7 @@ const Results = ({
                 items added to this list)
               </button>
             </div>
-            <div className="flex justify-center items-center max-w-fit">
+            <div className="flex justify-center items-center max-w-fit dark:text-gray-300">
               <label htmlFor="hq-only">High Quality Only</label>
               <input
                 className="ml-2 rounded p-1"
@@ -91,7 +91,7 @@ const Results = ({
               />
             </div>
 
-            <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded">
+            <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{jsonData}</code>
             </pre>
             <div className="max-w-fit my-2">
@@ -119,7 +119,7 @@ const Results = ({
               title={isAddModal ? 'Include Items' : 'Ignore Items'}
               onClose={() => setModal(null)}>
               <div>
-                <p className="text-sm text-grey-500 my-1">
+                <p className="text-sm text-grey-500 my-1 dark:text-gray-200">
                   {isAddModal
                     ? 'Please search for items that you would like to include in your alert.'
                     : 'Please search for items that you do not wish to be included in your undercut alerts.'}
@@ -141,7 +141,7 @@ const Results = ({
                   {info[modal].map((id, index) => (
                     <li
                       key={`${id}-${index}`}
-                      className="flex items-center justify-between my-1 px-2 py-1 gap:3">
+                      className="flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200">
                       <p className="text-ellipsis">{getItemNameById(id)}</p>
                       <button
                         className="rounded p-1 border-gray-300 min-w-fit"
@@ -154,7 +154,7 @@ const Results = ({
                         }}
                         aria-label="Delete">
                         <TrashIcon
-                          className={`h-4 w-4 text-gray-500 mx-auto`}
+                          className={`h-4 w-4 text-gray-500 mx-auto dark:text-gray-300`}
                         />
                       </button>
                     </li>
