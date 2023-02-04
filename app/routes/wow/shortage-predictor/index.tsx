@@ -20,7 +20,6 @@ import type {
 import WoWShortagePredictor from '~/requests/WoW/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
 import Modal from '~/components/form/Modal'
-import ModalButton from '~/components/Common/ModalButton'
 import FullTable from '~/components/Tables/FullTable'
 import type { ColumnList } from '../full-scan/SmallTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
@@ -28,6 +27,7 @@ import Label from '~/components/form/Label'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
+import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -256,9 +256,9 @@ const Index = () => {
                     />
                   </div>
                   <div className="max-w-[140px] my-3">
-                    <ModalButton onClick={() => setModalIsOpen(true)}>
+                    <ModalToggleButton onClick={() => setModalIsOpen(true)}>
                       View input
-                    </ModalButton>
+                    </ModalToggleButton>
                   </div>
                 </div>
               </>
@@ -266,7 +266,7 @@ const Index = () => {
 
             {modalIsOpen && (
               <Modal title="" onClose={() => setModalIsOpen(false)}>
-                <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded w-full">
+                <pre className="overflow-x-scroll bg-slate-700 dark:bg-slate-900 text-gray-200 p-4 rounded-md w-full">
                   <code>{codeString}</code>
                 </pre>
               </Modal>
