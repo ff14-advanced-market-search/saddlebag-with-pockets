@@ -8,7 +8,9 @@ const CheckBox = ({
   HTMLInputElement
 >) => (
   <div className="flex justify-center items-center max-w-fit">
-    <label htmlFor={rest?.id} className={labelClassName}>
+    <label
+      htmlFor={rest?.id}
+      className={`dark:text-gray-200 ${labelClassName}`}>
       {labelTitle}
     </label>
     <input

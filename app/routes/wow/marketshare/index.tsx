@@ -10,6 +10,8 @@ import { getUserSessionData } from '~/sessions'
 import type { WoWMarketShareActionResults } from '~/components/WoWResults/MarketshareResults'
 import MarketshareResults from '~/components/WoWResults/MarketshareResults'
 import MarketShareForm from '~/components/form/WoW/MarketshareForm'
+import NoResults from '~/components/Common/NoResults'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -106,6 +108,7 @@ export const action: ActionFunction = async ({ request }) => {
 const Index = () => {
   const transition = useTransition()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const { darkmode } = useTypedSelector((state) => state.user)
 
   const results = useActionData<
     WoWMarketShareActionResults | { exception: string } | {}
@@ -122,12 +125,18 @@ const Index = () => {
     if (!results.data.length) {
       return (
         <PageWrapper>
-          <h1>No results</h1>
+          <NoResults href="/wow/marketshare" />
         </PageWrapper>
       )
     }
 
-    return <MarketshareResults results={results} pageTitle={pageTitle} />
+    return (
+      <MarketshareResults
+        results={results}
+        pageTitle={pageTitle}
+        darkMode={darkmode}
+      />
+    )
   }
 
   const error =

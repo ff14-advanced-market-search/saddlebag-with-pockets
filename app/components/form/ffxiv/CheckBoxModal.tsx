@@ -11,7 +11,7 @@ interface CheckboxRowProps {
 
 const CheckBoxRow = ({ selected, onChange, id, title }: CheckboxRowProps) => {
   return (
-    <div className="w-[95%] flex px-1 py-2 z-[inherit] shadow-sm mb-0.5 content-between items-center min-h-12">
+    <div className="w-[95%] flex px-1 py-2 z-[inherit] shadow-sm mb-0.5 content-between items-center min-h-12 dark:text-gray-300 dark:border-b dark:border-gray-500">
       <label htmlFor={`${title}-${id}`} className="grow text-left">
         {title}
       </label>
@@ -96,14 +96,14 @@ export const Modal: React.FC<{
   return (
     <>
       <div
-        className="z-[10001] bg-white fixed rounded top-5 bottom-5 left-3.5 right-3.5 sm:translate-y-[-50%] sm:top-2/4 sm:bottom-[none] sm:right-[none] sm:translate-x-[-50%] sm:left-2/4 p-4 pt-1 flex flex-col sm:max-w-fit sm:h-[90vh]"
+        className="z-[10001] bg-white fixed rounded top-5 bottom-5 left-3.5 right-3.5 sm:translate-y-[-50%] sm:top-2/4 sm:bottom-[none] sm:right-[none] sm:translate-x-[-50%] sm:left-2/4 p-4 pt-1 flex flex-col sm:max-w-fit sm:h-[90vh] dark:bg-slate-700 dark:text-gray-200"
         onClick={(e) => {
           e.stopPropagation()
         }}>
         <div className="flex justify-between items-center m-1 mt-0 py-0">
           <p className="font-semibold">{title}</p>
           <button
-            className="flex text-gray-700 rounded p-2 justify-between items-center"
+            className="flex text-gray-700 rounded p-2 justify-between items-center dark:text-gray-400"
             type="button"
             aria-label="Close filter selection"
             onClick={onClose}>
@@ -113,7 +113,7 @@ export const Modal: React.FC<{
         <div className="overflow-scroll max-h-full">{children}</div>
       </div>
       <div
-        className="z-[10000] opacity-75 fixed inset-0 bg-black"
+        className="z-[10000] opacity-75 fixed inset-0 bg-black dark:opacity-50"
         onClick={onClose}></div>
     </>
   )

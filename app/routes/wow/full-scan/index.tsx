@@ -7,7 +7,7 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import type { WoWScanResponseWithPayload } from '~/requests/WOWScan'
 import WOWScanRequest from '~/requests/WOWScan'
-import NoResults from '../../queries/listings/NoResults'
+import NoResults from '~/components/Common/NoResults'
 import { PageWrapper } from '~/components/Common'
 import { validateWoWScanInput } from './validateWoWScanInput'
 import { useEffect, useState } from 'react'

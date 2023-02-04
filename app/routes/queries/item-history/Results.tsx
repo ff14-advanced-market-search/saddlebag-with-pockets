@@ -6,7 +6,13 @@ import SaleHistoryTable from './SaleHistoryTable'
 import SalesByHourChart from './SalesByHourChart'
 import SuspiciousSaleTable from './SuspiciousSalesTable'
 
-const Results = ({ data }: { data: HistoryResponse }) => (
+const Results = ({
+  data,
+  darkMode
+}: {
+  data: HistoryResponse
+  darkMode: boolean
+}) => (
   <div className="max-w-4xl mx-auto px-4">
     <Title title="Region Wide Pricing and Sales" />
     <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
@@ -14,29 +20,29 @@ const Results = ({ data }: { data: HistoryResponse }) => (
         <Differences
           diffTitle="Average Price Per Unit Sold"
           diffAmount={data.average_ppu}
-          className="bg-blue-100 text-blue-900 font-semibold "
+          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
         <Differences
           diffTitle="Median Price Per Unit Sold"
           diffAmount={data.median_ppu}
-          className="bg-blue-100 text-blue-900 font-semibold "
+          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
       </div>
       <div className="flex flex-col max-w-full">
         <Differences
           diffTitle="Average quantity of indivitual items sold per day"
           diffAmount={data.average_quantity_sold_per_day}
-          className="bg-blue-100 text-blue-900 font-semibold "
+          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
         <Differences
           diffTitle="Average amount total purchases per day"
           diffAmount={data.average_sales_per_day}
-          className="bg-blue-100 text-blue-900 font-semibold "
+          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
         <Differences
           diffTitle="Total Sold"
           diffAmount={data.total_quantity_sold}
-          className="bg-blue-100 text-blue-900 font-semibold "
+          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
       </div>
     </div>
@@ -44,7 +50,7 @@ const Results = ({ data }: { data: HistoryResponse }) => (
     <ContentContainer>
       <>
         <Title title="Region Price History" />
-        <PriceHistoryChart data={data.price_history} />
+        <PriceHistoryChart data={data.price_history} darkMode={darkMode} />
       </>
     </ContentContainer>
 
@@ -53,7 +59,10 @@ const Results = ({ data }: { data: HistoryResponse }) => (
     <ContentContainer>
       <>
         <Title title="Home Server Sales per Hour" />
-        <SalesByHourChart data={data.home_server_sales_by_hour_chart} />
+        <SalesByHourChart
+          data={data.home_server_sales_by_hour_chart}
+          darkMode={darkMode}
+        />
       </>
     </ContentContainer>
 
@@ -63,7 +72,7 @@ const Results = ({ data }: { data: HistoryResponse }) => (
         {data.dirty_sales.length ? (
           <SuspiciousSaleTable data={data.dirty_sales} />
         ) : (
-          <p className="italic text-sm text-grey-500 px-3 dark:text-grey-200">
+          <p className="italic text-sm text-grey-500 px-3 dark:text-gray-200">
             No suspicious sales found
           </p>
         )}

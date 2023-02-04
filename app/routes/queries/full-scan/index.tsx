@@ -7,15 +7,16 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
+import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
 
 import { useEffect } from 'react'
-import NoResults from '~/routes/queries/full-scan/NoResults'
-import Results from '~/routes/queries/full-scan/Results'
+import NoResults from '~/components/Common/NoResults'
+import Results from '~/components/FFXIVResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import { PreviousResultsLink } from './PreviousResultsLink'
-import FullScanForm from './FullScanForm'
+import { PreviousResultsLink } from '../../../components/FFXIVResults/FullScan/PreviousResultsLink'
+import FullScanForm from '../../../components/form/ffxiv/FullScanForm'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -33,16 +34,9 @@ export const action: ActionFunction = async ({ request, params }) => {
   })
 }
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  console.error('errorBoundary', error)
-  return (
-    <pre>
-      If you're seeing this, it'd be appreciated if you could report in our
-      Discord's <span className={`font-bold`}>#bug-reporting</span> channel.
-      Much thank
-    </pre>
-  )
-}
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
+  <ErrorBounds error={error} />
+)
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)
@@ -111,7 +105,16 @@ const Index = () => {
 
   if (results) {
     if (Object.keys(results).length === 0) {
-      return <NoResults href={`/queries/full-scan`} />
+      const url = window && document ? new URL(window.location.href) : ''
+      if (url) {
+        return (
+          <NoResults href={'/queries/full-scan?' + url.searchParams.toString()}>
+            A quick suggestion would be expanding the{' '}
+            <span className={`font-bold`}>Scan Hours</span> to a higher number,
+            or lowering the <span className={`font-bold`}>Sale Amount</span>.
+          </NoResults>
+        )
+      }
     }
     if ('data' in results) {
       const data = results.data
@@ -123,7 +126,7 @@ const Index = () => {
     <main className="flex-1">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <h1 className="text-2xl font-semibold text-green-900 py-6">
+          <h1 className="text-2xl font-semibold text-green-900 py-6 dark:text-gray-100">
             FFXIV Import Search
           </h1>
           {fullScan && !results && (

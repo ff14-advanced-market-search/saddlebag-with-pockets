@@ -1,4 +1,7 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  ErrorBoundaryComponent,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import {
@@ -14,10 +17,14 @@ import GetListing from '~/requests/GetListing'
 import { getUserSessionData } from '~/sessions'
 import { getItemNameById } from '~/utils/items'
 import HistoryResults from '../item-history/Results'
-import NoResults from '../listings/NoResults'
+import NoResults from '~/components/Common/NoResults'
 import ListingResults from '../listings/Results'
+import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
-export { ErrorBoundary } from '~/components/utilities/ErrorBoundary'
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
+  <ErrorBounds error={error} />
+)
 
 type ItemPageData =
   | {
@@ -79,6 +86,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 const ItemPage = () => {
   const data = useLoaderData<ItemPageData>()
+  const { darkmode } = useTypedSelector(({ user }) => user)
 
   if ('exception' in data) {
     return (
@@ -98,7 +106,7 @@ const ItemPage = () => {
         <Section>
           <Title title={data.itemName} />
         </Section>
-        <HistoryResults data={data.history} />
+        <HistoryResults data={data.history} darkMode={darkmode} />
         <Section>
           <ContentContainer>
             <>

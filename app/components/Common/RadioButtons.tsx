@@ -27,13 +27,14 @@ export function RadioButtons({
           <label
             key={label}
             htmlFor={`radio-${value}`}
-            className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1">
+            className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-200">
             <input
               id={`radio-${value}`}
               type="radio"
               value={value}
               name={name}
               defaultChecked={defaultChecked === value}
+              className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
             />
             <span>{label}</span>
           </label>

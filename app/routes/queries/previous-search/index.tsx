@@ -2,8 +2,8 @@ import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import NoResults from './NoResults'
-import Results from '../full-scan/Results'
+import NoResults from '~/components/Common/NoResults'
+import Results from '../../../components/FFXIVResults/FullScan/Results'
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)

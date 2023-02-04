@@ -19,10 +19,12 @@ export interface WoWMarketShareActionResults {
 
 const MarketshareResults = ({
   results,
-  pageTitle
+  pageTitle,
+  darkMode
 }: {
   results: WoWMarketShareActionResults
   pageTitle: string
+  darkMode: boolean
 }) => {
   const [colorValue, setColorValue] = useState<'state' | 'quantityState'>(
     'state'
@@ -96,6 +98,7 @@ const MarketshareResults = ({
             <TreemapChart
               chartData={chartData}
               title="Marketshare Visualisation"
+              darkMode={darkMode}
             />
             <RadioButtons
               title={'Market values to show'}

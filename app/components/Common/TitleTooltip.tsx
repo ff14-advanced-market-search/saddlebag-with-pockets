@@ -15,7 +15,7 @@ export default function TitleTooltip({
     <div
       className={`flex items-center my-1 gap-3${relative ? ' relative' : ''}`}>
       <p
-        className={`text-sm font-semibold text-grey-800${
+        className={`text-sm font-semibold text-grey-800 dark:text-gray-200${
           className ? ` ${className}` : ''
         }`}>
         {title}
