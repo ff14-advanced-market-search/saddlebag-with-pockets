@@ -128,7 +128,7 @@ const Index = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
   const pageTitle =
-    'Commodity Shortage Futures - Find Shortages and Price Spikes before they happen! Get there before prices increase!'
+    'Commodity Shortage Futures - Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!'
 
   const loading = transition.state === 'submitting'
 
