@@ -292,10 +292,10 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
             return (
               <div
                 key={item.item_id}
-                className="min-w-max rounded-md shadow-md p-3">
+                className="min-w-max rounded-md shadow-md p-3 dark:bg-slate-600">
                 <Title title={getItemNameById(item.item_id) as string} />
                 <div>
-                  <table className="table-auto border-separate border-spacing-2">
+                  <table className="table-auto border-separate border-spacing-2 dark:text-gray-200">
                     <tr>
                       <th className="text-left py-1 px-2">World</th>
                       <th
