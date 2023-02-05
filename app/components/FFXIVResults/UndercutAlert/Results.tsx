@@ -9,7 +9,7 @@ import { Modal } from '../../form/ffxiv/CheckBoxModal'
 
 const Results = ({
   sellerId,
-  homeServer = 'abcdefghijkl'
+  homeServer
 }: {
   sellerId: string
   homeServer: string
