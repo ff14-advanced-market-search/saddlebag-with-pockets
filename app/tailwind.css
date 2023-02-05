@@ -1116,18 +1116,18 @@ select {
   max-height: 100%;
 }
 
+.max-h-fit {
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+}
+
 .max-h-0 {
   max-height: 0px;
 }
 
 .max-h-96 {
   max-height: 24rem;
-}
-
-.max-h-fit {
-  max-height: -webkit-fit-content;
-  max-height: -moz-fit-content;
-  max-height: fit-content;
 }
 
 .min-h-0 {
@@ -1290,12 +1290,12 @@ select {
   flex-grow: 1;
 }
 
-.grow {
-  flex-grow: 1;
-}
-
 .grow-0 {
   flex-grow: 0;
+}
+
+.grow {
+  flex-grow: 1;
 }
 
 .basis-52 {
@@ -1586,6 +1586,10 @@ select {
 
 .self-start {
   align-self: flex-start;
+}
+
+.self-center {
+  align-self: center;
 }
 
 .overflow-hidden {

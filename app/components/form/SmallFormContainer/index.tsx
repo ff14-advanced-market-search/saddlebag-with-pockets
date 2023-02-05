@@ -43,6 +43,7 @@ const SmallFormContainer = ({
                   onClick={onClick}
                   loading={loading}
                   disabled={disabled}
+                  className="max-h-fit grow-0 shrink-0 self-center"
                 />
               </div>
             </div>

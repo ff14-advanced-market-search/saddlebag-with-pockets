@@ -45,6 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (!response.ok) {
     return json({ exception: response.statusText })
   }
+
   return json({ data: await response.json(), homeServer, itemId })
 }
 
@@ -58,7 +59,8 @@ const Index = () => {
     }
   }
 
-  const error = results && results.exception ? results.exception : undefined
+  const error =
+    results && results.data.exception ? results.data.exception : undefined
 
   if (results && results.data && !error) {
     if (!results.data?.seller_id) {
