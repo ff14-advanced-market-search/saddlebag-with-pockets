@@ -20,14 +20,14 @@ const Results = ({
     hqOnly: boolean
   }>({
     addIds: [],
-    removeIds: ['-1'],
+    removeIds: [],
     hqOnly: false
   })
 
   const [modal, setModal] = useState<{
     form: 'addIds' | 'removeIds'
     open: boolean
-  }>({ form: 'addIds', open: false })
+  }>({ form: 'removeIds', open: false })
   const jsonData = `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "add_ids": [${info.addIds.join(
     ','
   )}],\n  "ignore_ids": [${info.removeIds.join(
@@ -35,7 +35,6 @@ const Results = ({
   )}],\n  "hq_only": ${info.hqOnly.toString()}\n}`
 
   const isAddModal = modal.form === 'addIds'
-  console.log(modal)
   return (
     <PageWrapper>
       <ContentContainer>
