@@ -112,6 +112,7 @@ const Results = ({
               <SubmitButton
                 title="Copy to clipboard"
                 type="button"
+                disabled={isAddModal && info.addIds.length === 0}
                 onClick={async () => {
                   if (
                     typeof window !== 'undefined' &&
