@@ -50,8 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 const Index = () => {
   const transition = useTransition()
-  // const results = useActionData()
-  const results = { homeServer: 'Server1', data: { seller_id: 'abcdefghijkl' } }
+  const results = useActionData()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
