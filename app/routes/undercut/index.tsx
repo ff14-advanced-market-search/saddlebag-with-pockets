@@ -8,7 +8,7 @@ import GetSellerId from '~/requests/GetSellerId'
 import { getUserSessionData } from '~/sessions'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import NoResults from '~/components/Common/NoResults'
-import Results from './Results'
+import Results from '../../components/FFXIVResults/UndercutAlert/Results'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -50,7 +50,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 const Index = () => {
   const transition = useTransition()
-  const results = useActionData()
+  // const results = useActionData()
+  const results = { homeServer: 'Server1', data: { seller_id: 'abcdefghijkl' } }
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
