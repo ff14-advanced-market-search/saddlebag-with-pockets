@@ -90,7 +90,7 @@ const Results = ({
                 onClick={() => {
                   setModal({ ...modal, open: true })
                 }}>
-                {isAddModal ? 'Alert items' : 'Filter Items'}
+                {isAddModal ? 'Alert on these items' : 'Filter out these items'}
               </button>
             </div>
             <div className="flex justify-center mt-2 items-center max-w-fit dark:text-gray-300">
