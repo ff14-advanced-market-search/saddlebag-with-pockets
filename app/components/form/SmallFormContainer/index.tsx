@@ -35,14 +35,17 @@ const SmallFormContainer = ({
         <div className="mt-0 md:col-span-3">
           <div className="shadow rounded-md px-4 bg-white dark:bg-slate-700">
             {children}
-            <div className="px-4 py-4 bg-white dark:bg-slate-700">
-              <div className="flex justify-between">
-                <p className="text-red-500 dark:text-red-300 mx-2">{error}</p>
+            <div className="px-0 sm:px-4 py-4 bg-white dark:bg-slate-700">
+              <div className="flex flex-col justify-between items-start sm:flex-row">
+                <p className="text-red-500 dark:text-red-300 mx-0 sm:mx-0 shrink-1">
+                  {error}
+                </p>
                 <SubmitButton
                   title={buttonTitle}
                   onClick={onClick}
                   loading={loading}
                   disabled={disabled}
+                  className="max-h-fit grow-0 ml-0 sm:ml-3 mt-2 sm:mt-0 shrink-0 self-start sm:self-center"
                 />
               </div>
             </div>
