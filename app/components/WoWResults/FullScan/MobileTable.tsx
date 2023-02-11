@@ -47,7 +47,7 @@ export type ColumnList<Type> = {
   }) => JSX.Element | null
 }
 
-function SmallTable<Type>({
+function MobileTable<Type>({
   data,
   sortingOrder,
   columnList,
@@ -123,7 +123,7 @@ function SmallTable<Type>({
 
   return (
     <div
-      className={`sm:hidden mt-0 flex flex-col m3-6 bg-white dark:bg-slate-700 p-2 sm:rounded-md shadow`}>
+      className={`flex flex-col sm:hidden my-1 bg-white dark:bg-slate-700 p-2 sm:rounded-md shadow`}>
       <div className="mx-2">
         <Title title={title} />
       </div>
@@ -219,4 +219,4 @@ function SmallTable<Type>({
   )
 }
 
-export default SmallTable
+export default MobileTable

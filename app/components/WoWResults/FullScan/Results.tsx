@@ -52,6 +52,10 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
       accessor: homeOribosLink
     }
   ]
+  const mobileOosList: Array<ColumnList<WoWOutOfStock>> = [
+    { columnId: 'name', header: 'Item Name' },
+    { columnId: 'historicPrice', header: 'Historic Price' }
+  ]
 
   const profitableItemsColumnList: Array<ColumnList<WoWProfitableItems>> = [
     { columnId: 'name', header: 'Item Name' },
@@ -83,6 +87,11 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
     }
   ]
 
+  const mobileProfitableItemsList: Array<ColumnList<WoWProfitableItems>> = [
+    { columnId: 'name', header: 'Item Name' },
+    { columnId: 'profit', header: 'Profit Per Sale' }
+  ]
+
   const divRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -98,6 +107,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
           <SmallTable<WoWProfitableItems>
             data={data.profitable_items}
             columnList={profitableItemsColumnList}
+            mobileColumnList={mobileProfitableItemsList}
             sortingOrder={[{ id: 'profit', desc: true }]}
             title="Profitable Items"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
@@ -105,6 +115,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
           <SmallTable<WoWOutOfStock>
             data={data.out_of_stock}
             columnList={oosColumnList}
+            mobileColumnList={mobileOosList}
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
             title="Out of Stock Items"
             description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
@@ -112,6 +123,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
           <SmallTable<WoWProfitableItems>
             data={data.profit_w_sales}
             columnList={profitableItemsColumnList}
+            mobileColumnList={mobileProfitableItemsList}
             sortingOrder={[{ id: 'profit', desc: true }]}
             title="Profitable Items With Sales"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
@@ -119,6 +131,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
           <SmallTable<WoWOutOfStock>
             data={data.out_w_sales}
             columnList={oosColumnList}
+            mobileColumnList={mobileOosList}
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
             title="Out of Stock Items With Sales"
             description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"

@@ -20,6 +20,7 @@ import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
 import { Title } from '~/components/Common'
+import MobileTable from './MobileTable'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -47,7 +48,7 @@ export type ColumnList<Type> = {
   }) => JSX.Element | null
 }
 
-function SmallTable<Type>({
+function DesktopTable<Type>({
   data,
   sortingOrder,
   columnList,
@@ -123,7 +124,7 @@ function SmallTable<Type>({
 
   return (
     <div
-      className={`mt-0 flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md shadow`}>
+      className={`hidden mt-0 sm:flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md shadow`}>
       <div className="mx-3">
         <Title title={title} />
       </div>
@@ -216,6 +217,42 @@ function SmallTable<Type>({
         </div>
       </div>
     </div>
+  )
+}
+
+const SmallTable = <Type extends {}>({
+  data,
+  sortingOrder,
+  columnList,
+  title,
+  description,
+  mobileColumnList
+}: {
+  data: Array<Type>
+  sortingOrder: Array<{ id: keyof Type; desc: boolean }>
+  columnList: Array<ColumnList<Type>>
+  mobileColumnList: Array<ColumnList<Type>>
+  title: string
+  description: string
+}) => {
+  return (
+    <>
+      <MobileTable<Type>
+        data={data}
+        sortingOrder={sortingOrder}
+        columnList={mobileColumnList}
+        title={title}
+        description={description}
+      />
+
+      <DesktopTable<Type>
+        data={data}
+        sortingOrder={sortingOrder}
+        columnList={columnList}
+        title={title}
+        description={description}
+      />
+    </>
   )
 }
 
