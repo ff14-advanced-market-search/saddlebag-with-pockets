@@ -231,7 +231,7 @@ const SmallTable = <Type extends {}>({
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<ColumnList<Type>>
-  mobileColumnList: Array<ColumnList<Type>>
+  mobileColumnList: any
   title: string
   description: string
 }) => {
@@ -243,6 +243,7 @@ const SmallTable = <Type extends {}>({
         columnList={mobileColumnList}
         title={title}
         description={description}
+        rowLabels={columnList}
       />
 
       <DesktopTable<Type>

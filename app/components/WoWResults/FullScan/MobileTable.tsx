@@ -1,50 +1,16 @@
-import type {
-  FilterFn,
-  ColumnFiltersState,
-  ColumnOrderState,
-  Getter
-} from '@tanstack/table-core'
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getSortedRowModel
-} from '@tanstack/table-core'
-import { useEffect, useState } from 'react'
-import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { RankingInfo } from '@tanstack/match-sorter-utils'
-import { rankItem } from '@tanstack/match-sorter-utils'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
-import { classNames } from '~/utils'
+import { useState } from 'react'
 import { Title } from '~/components/Common'
+import Modal from '~/components/form/Modal'
 
-declare module '@tanstack/table-core' {
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>
+const parseToLocaleString = (value: any) => {
+  if (typeof value === 'number') {
+    return value.toLocaleString()
+  }
+  if (typeof value === 'string' && !isNaN(parseFloat(value))) {
+    return parseFloat(value).toLocaleString()
   }
 
-  interface FilterMeta {
-    itemRank: RankingInfo
-  }
-}
-
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  const itemRank = rankItem(row.getValue(columnId), value)
-
-  addMeta({ itemRank })
-  return itemRank.passed
-}
-
-export type ColumnList<Type> = {
-  columnId: string
-  header: string
-  accessor?: (props: {
-    row: Type
-    getValue: Getter<unknown>
-  }) => JSX.Element | null
+  return value
 }
 
 function MobileTable<Type>({
@@ -52,78 +18,35 @@ function MobileTable<Type>({
   sortingOrder,
   columnList,
   title,
-  description
+  description,
+  rowLabels
 }: {
   data: Array<Type>
-  sortingOrder: Array<{ id: keyof Type; desc: boolean }>
-  columnList: Array<ColumnList<Type>>
+  sortingOrder: Array<{ id: string; desc: boolean }>
+  columnList: Array<{ header: string; columnId: string }>
   title: string
   description: string
+  rowLabels: Array<{
+    columnId: string
+    header: string
+    accessor?: (props: any) => JSX.Element
+  }>
 }) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
-  const [columnOrder] = useState<ColumnOrderState>([])
+  const [modal, setModal] = useState<{ title: string; data: Type } | null>(null)
 
-  const columnHelper = createColumnHelper<Type>()
-
-  const parseToLocaleString = (value: any) => {
-    if (typeof value === 'number') {
-      return value.toLocaleString()
-    }
-    if (typeof value === 'string' && !isNaN(parseFloat(value))) {
-      return parseFloat(value).toLocaleString()
-    }
-
-    return value
-  }
-
-  const columns = columnList.map((col) => {
-    // @ts-ignore
-    return columnHelper.accessor(col.columnId, {
-      header: col.header,
-      cell: (props) =>
-        col.accessor
-          ? col.accessor({
-              row: props.row.original,
-              getValue: () => parseToLocaleString(props.getValue())
-            })
-          : parseToLocaleString(props.getValue())
-    })
-  })
-
-  const table = useReactTable({
-    data: data,
-    columns,
-    filterFns: {
-      fuzzy: fuzzyFilter
-    },
-    state: {
-      columnFilters,
-      globalFilter,
-      columnOrder
-    },
-    onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: fuzzyFilter,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false
-  })
-
-  useEffect(() => {
-    // @ts-ignore
-    table.setSorting(sortingOrder)
-  }, [table, sortingOrder])
-
+  const sortingColumn = sortingOrder.length ? sortingOrder[0] : undefined
+  const sortedData = sortingColumn
+    ? data
+        .map((self) => self)
+        .sort((a, b) => {
+          return sortingColumn.desc
+            ? b[sortingColumn.id] - a[sortingColumn.id]
+            : a[sortingColumn.id] - b[sortingColumn.id]
+        })
+    : data
   return (
     <div
-      className={`flex flex-col sm:hidden my-1 bg-white dark:bg-slate-700 p-2 sm:rounded-md shadow`}>
+      className={`flex flex-col sm:hidden my-4 bg-white dark:bg-slate-700 p-2 sm:rounded-md shadow max-w-screen`}>
       <div className="mx-2">
         <Title title={title} />
       </div>
@@ -132,89 +55,70 @@ function MobileTable<Type>({
           {description}
         </p>
       </div>
-
-      <div className="overflow-x-auto my-1">
-        <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll max-h-screen shadow ring-1 ring-black ring-opacity-5">
-            <table className="min-w-full relative divide-y divide-gray-300">
-              <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <th
-                        scope={`col`}
-                        onClick={header.column.getToggleSortingHandler()}
-                        className={classNames(
-                          header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `px-2 py-2 sticky bg-gray-50 top-0 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600`
-                        )}
-                        key={header.id}>
-                        <div className={`group inline-flex`}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                          <div
-                            className={classNames(
-                              header.column.getIsSorted()
-                                ? 'bg-gray-200 rounded dark:bg-gray-500'
-                                : '',
-                              ` ml-1 flex flex-0 p-1 justify-center items-center`
-                            )}>
-                            {{
-                              asc: (
-                                <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
-                                  <ChevronUpIcon className={`h-4 w-4`} />
-                                </span>
-                              ),
-                              desc: (
-                                <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
-                                  <ChevronDownIcon className={`h-4 w-4`} />
-                                </span>
-                              )
-                            }[header.column.getIsSorted() as string] ?? (
-                              <span
-                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
-                                <ChevronDownIcon className={`h-4 w-4`} />
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
-                {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <td
-                        key={cell.id}
-                        className="whitespace-nowrap px-1 py-1 text-sm text-gray-900 dark:text-gray-100 text-center">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+      <div className="overflow-y-scroll max-h-96">
+        <table className="max-w-screen relative divide-y divide-gray-300 dark:divide-gray-600">
+          <thead className="max-w-screen">
+            <tr className="text-gray-900 font-semibold dark:text-gray-100">
+              {columnList.map((col) => (
+                <th
+                  key={col.columnId}
+                  className="p-2 sticky bg-gray-50 top-0 dark:bg-gray-600">
+                  {col.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-300 dark:divide-gray-700 bg-white dark:bg-slate-800 dark:divide-gray-500 max-w-screen">
+            {sortedData.map((row, rowIndex) => {
+              return (
+                <tr
+                  key={`${rowIndex}-row`}
+                  className="text-gray-700 dark:text-gray-300"
+                  onClick={() => {
+                    setModal({ title, data: row })
+                  }}>
+                  {columnList.map((col, i) => {
+                    return (
+                      <td key={`cell-${rowIndex}-${i}`} className="p-2">
+                        {parseToLocaleString(row[col.columnId])}
                       </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <p
-              className={`whitespace-nowrap px-2 py-2 text-sm text-gray-500 dark:text-gray-300`}>
-              {`${data.length} results found`}
-            </p>
-          </div>
-        </div>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </div>
+
+      {modal && (
+        <Modal onClose={() => setModal(null)} title={modal.title}>
+          <div className="bg-white dark:bg-slate-800 text-xs text-gray-800 dark:text-gray-200">
+            {rowLabels.map((item, index) => {
+              const modalItem =
+                parseToLocaleString(modal.data[item.columnId]) || 'n/a'
+              return (
+                <div
+                  key={`${index}-${item.header}`}
+                  className="dark:border-b dark:border-gray-500 shadow my-2 p-1 rounded">
+                  <p className="text-gray-900 dark:text-gray-100 font-semibold">
+                    {item.header}:
+                  </p>
+
+                  <p>
+                    {item.accessor
+                      ? item.accessor({
+                          row: modal.data,
+                          getValue: () => modalItem
+                        })
+                      : modalItem}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </Modal>
+      )}
     </div>
   )
 }
