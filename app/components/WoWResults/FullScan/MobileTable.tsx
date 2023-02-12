@@ -31,7 +31,7 @@ function MobileTable({
   columnList: Array<{ header: string; columnId: string }>
   title?: string
   description?: string
-  rowLabels: Array<ColumnList<Type>>
+  rowLabels: Array<ColumnList<any>>
   columnSelectOptions: Array<string>
 }) {
   const [modal, setModal] = useState<{ title?: string; data: Type } | null>(
