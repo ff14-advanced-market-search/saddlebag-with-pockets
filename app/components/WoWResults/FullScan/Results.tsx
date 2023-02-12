@@ -30,6 +30,9 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
     'Home World',
     region
   )
+
+  const oosSelectOptions = ['price', 'historicPrice', 'salesPerDay']
+
   const oosColumnList: Array<ColumnList<WoWOutOfStock>> = [
     { columnId: 'name', header: 'Item Name' },
     { columnId: 'itemID', header: 'Item ID' },
@@ -52,9 +55,19 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
       accessor: homeOribosLink
     }
   ]
+
   const mobileOosList: Array<ColumnList<WoWOutOfStock>> = [
     { columnId: 'name', header: 'Item Name' },
     { columnId: 'historicPrice', header: 'Historic Price' }
+  ]
+
+  const profiableSelectOptions = [
+    'profit',
+    'historicPrice',
+    'roi',
+    'home_price',
+    'new_price',
+    'salesPerDay'
   ]
 
   const profitableItemsColumnList: Array<ColumnList<WoWProfitableItems>> = [
@@ -108,6 +121,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             data={data.profitable_items}
             columnList={profitableItemsColumnList}
             mobileColumnList={mobileProfitableItemsList}
+            columnSelectOptions={profiableSelectOptions}
             sortingOrder={[{ id: 'profit', desc: true }]}
             title="Profitable Items"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
@@ -116,6 +130,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             data={data.out_of_stock}
             columnList={oosColumnList}
             mobileColumnList={mobileOosList}
+            columnSelectOptions={oosSelectOptions}
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
             title="Out of Stock Items"
             description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
@@ -124,6 +139,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             data={data.profit_w_sales}
             columnList={profitableItemsColumnList}
             mobileColumnList={mobileProfitableItemsList}
+            columnSelectOptions={profiableSelectOptions}
             sortingOrder={[{ id: 'profit', desc: true }]}
             title="Profitable Items With Sales"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
@@ -132,6 +148,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             data={data.out_w_sales}
             columnList={oosColumnList}
             mobileColumnList={mobileOosList}
+            columnSelectOptions={oosSelectOptions}
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
             title="Out of Stock Items With Sales"
             description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"

@@ -218,7 +218,8 @@ const SmallTable = ({
   columnList,
   title,
   description,
-  mobileColumnList
+  mobileColumnList,
+  columnSelectOptions
 }: {
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
@@ -226,6 +227,7 @@ const SmallTable = ({
   mobileColumnList: Array<ColumnList<any>>
   title: string
   description: string
+  columnSelectOptions: Array<string>
 }) => {
   return (
     <>
@@ -236,6 +238,7 @@ const SmallTable = ({
         title={title}
         description={description}
         rowLabels={columnList}
+        columnSelectOptions={columnSelectOptions}
       />
 
       <DesktopTable

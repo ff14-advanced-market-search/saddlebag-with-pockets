@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Title } from '~/components/Common'
+import Label from '~/components/form/Label'
 import Modal from '~/components/form/Modal'
 import type { ColumnList } from '~/components/types'
 
@@ -22,7 +23,8 @@ function MobileTable({
   columnList,
   title,
   description,
-  rowLabels
+  rowLabels,
+  columnSelectOptions
 }: {
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
@@ -30,16 +32,23 @@ function MobileTable({
   title: string
   description: string
   rowLabels: Array<ColumnList<Type>>
+  columnSelectOptions: Array<string>
 }) {
   const [modal, setModal] = useState<{ title: string; data: Type } | null>(null)
+  const [columnSort, setColumnSort] = useState<string | undefined>(
+    sortingOrder[0]?.id
+  )
 
-  const sortingColumn = sortingOrder.length ? sortingOrder[0] : undefined
+  const [columns, setColumns] =
+    useState<Array<{ header: string; columnId: string }>>(columnList)
+
+  const sortingColumn = columnSort
   const sortedData = sortingColumn
     ? data
         .map((self) => self)
         .sort((a, b) => {
-          const aValue = a[sortingColumn.id]
-          const bValue = b[sortingColumn.id]
+          const aValue = a[sortingColumn]
+          const bValue = b[sortingColumn]
           if (!aValue || typeof aValue !== 'number') {
             return 0
           }
@@ -48,9 +57,10 @@ function MobileTable({
             return 0
           }
 
-          return sortingColumn.desc ? bValue - aValue : aValue - bValue
+          return bValue - aValue
         })
     : data
+
   return (
     <div
       className={`flex flex-col sm:hidden my-4 bg-white dark:bg-slate-700 p-2 sm:rounded-md shadow max-w-screen`}>
@@ -62,11 +72,46 @@ function MobileTable({
           {description}
         </p>
       </div>
+      <div className="mx-1 my-2 flex flex-col">
+        <Label>Table sort by</Label>
+        <select
+          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400"
+          defaultValue={columnSort}
+          onChange={(e) => {
+            e.preventDefault()
+            const value = e.target.value
+
+            if (!value) return
+
+            const filteredColumns = columns.filter(
+              (col) => col.columnId !== columnSort
+            )
+
+            setColumnSort(value)
+
+            const newColumn = rowLabels.find((row) => row.columnId === value)
+
+            if (!newColumn) return
+
+            setColumns([...filteredColumns, newColumn])
+          }}>
+          {columnSelectOptions.map((option, index) => {
+            const row = rowLabels.find(({ columnId }) => columnId === option)
+            if (!row) return <></>
+
+            return (
+              <option key={row.columnId + index} value={row.columnId}>
+                {row.header}
+              </option>
+            )
+          })}
+        </select>
+      </div>
       <div className="overflow-y-scroll max-h-96">
         <table className="max-w-screen relative divide-y divide-gray-300 dark:divide-gray-600">
           <thead className="max-w-screen">
             <tr className="text-gray-900 font-semibold dark:text-gray-100">
-              {columnList.map((col) => (
+              {columns.map((col) => (
                 <th
                   key={col.columnId}
                   className="p-2 sticky bg-gray-50 top-0 dark:bg-gray-600">
@@ -84,7 +129,7 @@ function MobileTable({
                   onClick={() => {
                     setModal({ title, data: row })
                   }}>
-                  {columnList.map((col, i) => {
+                  {columns.map((col, i) => {
                     return (
                       <td key={`cell-${rowIndex}-${i}`} className="p-2">
                         {parseToLocaleString(row[col.columnId])}
