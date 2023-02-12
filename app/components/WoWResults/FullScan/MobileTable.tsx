@@ -63,7 +63,7 @@ function MobileTable({
 
   return (
     <div
-      className={`flex flex-col sm:hidden my-4 bg-white dark:bg-slate-700 p-2 sm:rounded-md shadow max-w-screen`}>
+      className={`flex flex-col sm:hidden my-4 bg-white dark:bg-slate-700 sm:rounded-md shadow max-w-screen`}>
       <div className="mx-2">
         <Title title={title} />
       </div>
@@ -72,7 +72,7 @@ function MobileTable({
           {description}
         </p>
       </div>
-      <div className="mx-1 my-2 flex flex-col">
+      <div className="m-2 flex flex-col">
         <Label>Table sort by</Label>
         <select
           className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400"
