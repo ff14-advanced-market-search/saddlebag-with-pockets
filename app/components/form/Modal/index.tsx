@@ -3,7 +3,7 @@ import XMarkIcon from '~/icons/XMarkIcon'
 const Modal: React.FC<{
   onClose: () => void
   children: React.ReactNode
-  title: string
+  title?: string
 }> = ({ children, onClose, title }) => {
   return (
     <>

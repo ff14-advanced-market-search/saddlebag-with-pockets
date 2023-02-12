@@ -29,12 +29,14 @@ function MobileTable({
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<{ header: string; columnId: string }>
-  title: string
-  description: string
+  title?: string
+  description?: string
   rowLabels: Array<ColumnList<Type>>
   columnSelectOptions: Array<string>
 }) {
-  const [modal, setModal] = useState<{ title: string; data: Type } | null>(null)
+  const [modal, setModal] = useState<{ title?: string; data: Type } | null>(
+    null
+  )
   const [columnSort, setColumnSort] = useState<string | undefined>(
     sortingOrder[0]?.id
   )
@@ -64,14 +66,18 @@ function MobileTable({
   return (
     <div
       className={`flex flex-col sm:hidden my-4 bg-white dark:bg-slate-700 sm:rounded-md shadow max-w-screen`}>
-      <div className="mx-2">
-        <Title title={title} />
-      </div>
-      <div className="mx-2">
-        <p className="italic text-sm text-grey-500 dark:text-gray-300">
-          {description}
-        </p>
-      </div>
+      {!!title && (
+        <div className="mx-2">
+          <Title title={title} />
+        </div>
+      )}
+      {!!description && (
+        <div className="mx-2">
+          <p className="italic text-sm text-grey-500 dark:text-gray-300">
+            {description}
+          </p>
+        </div>
+      )}
       <div className="m-2 flex flex-col">
         <Label>Table sort by</Label>
         <select
