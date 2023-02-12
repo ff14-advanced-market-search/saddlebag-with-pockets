@@ -21,13 +21,14 @@ import WoWShortagePredictor from '~/requests/WoW/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
 import Modal from '~/components/form/Modal'
 import FullTable from '~/components/Tables/FullTable'
-import type { ColumnList } from '../full-scan/SmallTable'
+import type { ColumnList } from '~/components/types'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import Label from '~/components/form/Label'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
+import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -161,10 +162,10 @@ const Index = () => {
             const itemId = row.item_id
             return (
               <input
-                className="min-w-[16px] min-h-[16px] mx-20 border-box rounded-md"
+                className="min-w-4 min-h-4 border-box rounded-md"
                 type="checkbox"
                 checked={!filteredIds.includes(itemId)}
-                onChange={() => {
+                onChange={(e) => {
                   if (filteredIds.includes(itemId)) {
                     setFilteredIds(filteredIds.filter((id) => id !== itemId))
                   } else {
@@ -225,6 +226,26 @@ const Index = () => {
         }
       ]
 
+      const mobileColumnList = [
+        { columnId: 'item_name', header: 'Item Name' },
+        { columnId: 'quality', header: 'Quality' }
+      ]
+
+      const mobileSelectOptions = [
+        'quality',
+        'current_quantity',
+        'hours_til_shortage',
+        'quantity_decline_rate_per_hour',
+        'tsm_avg_sale_rate_per_hour',
+        'tsm_avg_sale_rate_per_hour',
+        'current_quantity_vs_avg_percent',
+        'avg_quantity',
+        'current_price',
+        'current_avg_price',
+        'tsm_avg_price',
+        'current_price_vs_avg_percent'
+      ]
+
       return (
         <PageWrapper>
           <>
@@ -271,12 +292,19 @@ const Index = () => {
                 </pre>
               </Modal>
             )}
-
-            <FullTable<Prediction>
+            <div className="hidden sm:block">
+              <FullTable<Prediction>
+                data={results.data}
+                columnList={columnList}
+                sortingOrder={[{ id: 'quality', desc: true }]}
+              />
+            </div>
+            <MobileTable
               data={results.data}
-              columnList={columnList}
+              columnList={mobileColumnList}
+              rowLabels={columnList}
+              columnSelectOptions={mobileSelectOptions}
               sortingOrder={[{ id: 'quality', desc: true }]}
-              description="Some description"
             />
           </>
         </PageWrapper>

@@ -917,11 +917,6 @@ select {
   margin-right: 0px;
 }
 
-.mx-20 {
-  margin-left: 5rem;
-  margin-right: 5rem;
-}
-
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -1143,10 +1138,6 @@ select {
   min-height: 0px;
 }
 
-.min-h-\[16px\] {
-  min-height: 16px;
-}
-
 .w-6 {
   width: 1.5rem;
 }
@@ -1239,10 +1230,6 @@ select {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
-}
-
-.min-w-\[16px\] {
-  min-width: 16px;
 }
 
 .min-w-\[260px\] {

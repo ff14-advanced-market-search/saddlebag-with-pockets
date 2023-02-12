@@ -55,7 +55,7 @@ function FullTable<Type>({
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<ColumnList<Type>>
-  description: string
+  description?: string
   order?: Array<string>
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
