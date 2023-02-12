@@ -1,8 +1,7 @@
 import type {
   FilterFn,
   ColumnFiltersState,
-  ColumnOrderState,
-  Getter
+  ColumnOrderState
 } from '@tanstack/table-core'
 import {
   createColumnHelper,
@@ -21,6 +20,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
 import { Title } from '~/components/Common'
 import MobileTable from './MobileTable'
+import type { ColumnList } from '~/components/types'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -38,26 +38,18 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   addMeta({ itemRank })
   return itemRank.passed
 }
+type DataType = Record<string, string | number | null | undefined>
 
-export type ColumnList<Type> = {
-  columnId: string
-  header: string
-  accessor?: (props: {
-    row: Type
-    getValue: Getter<unknown>
-  }) => JSX.Element | null
-}
-
-function DesktopTable<Type>({
+function DesktopTable({
   data,
   sortingOrder,
   columnList,
   title,
   description
 }: {
-  data: Array<Type>
-  sortingOrder: Array<{ id: keyof Type; desc: boolean }>
-  columnList: Array<ColumnList<Type>>
+  data: Array<DataType>
+  sortingOrder: Array<{ id: string; desc: boolean }>
+  columnList: Array<ColumnList<any>>
   title: string
   description: string
 }) {
@@ -65,7 +57,7 @@ function DesktopTable<Type>({
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder] = useState<ColumnOrderState>([])
 
-  const columnHelper = createColumnHelper<Type>()
+  const columnHelper = createColumnHelper<DataType>()
 
   const parseToLocaleString = (value: any) => {
     if (typeof value === 'number') {
@@ -220,7 +212,7 @@ function DesktopTable<Type>({
   )
 }
 
-const SmallTable = <Type extends {}>({
+const SmallTable = ({
   data,
   sortingOrder,
   columnList,
@@ -228,16 +220,16 @@ const SmallTable = <Type extends {}>({
   description,
   mobileColumnList
 }: {
-  data: Array<Type>
-  sortingOrder: Array<{ id: keyof Type; desc: boolean }>
-  columnList: Array<ColumnList<Type>>
-  mobileColumnList: any
+  data: Array<DataType>
+  sortingOrder: Array<{ id: string; desc: boolean }>
+  columnList: Array<ColumnList<any>>
+  mobileColumnList: Array<ColumnList<any>>
   title: string
   description: string
 }) => {
   return (
     <>
-      <MobileTable<Type>
+      <MobileTable
         data={data}
         sortingOrder={sortingOrder}
         columnList={mobileColumnList}
@@ -246,7 +238,7 @@ const SmallTable = <Type extends {}>({
         rowLabels={columnList}
       />
 
-      <DesktopTable<Type>
+      <DesktopTable
         data={data}
         sortingOrder={sortingOrder}
         columnList={columnList}

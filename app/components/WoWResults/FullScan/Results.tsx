@@ -4,7 +4,7 @@ import type {
   WoWScanResponseWithPayload
 } from '~/requests/WOWScan'
 import SmallTable from './SmallTable'
-import type { ColumnList } from './SmallTable'
+import type { ColumnList } from '~/components/types'
 import { Section } from '~/components/Common'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
@@ -104,7 +104,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
     <div ref={divRef} className="my-4">
       <Section>
         <>
-          <SmallTable<WoWProfitableItems>
+          <SmallTable
             data={data.profitable_items}
             columnList={profitableItemsColumnList}
             mobileColumnList={mobileProfitableItemsList}
@@ -112,7 +112,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             title="Profitable Items"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
           />
-          <SmallTable<WoWOutOfStock>
+          <SmallTable
             data={data.out_of_stock}
             columnList={oosColumnList}
             mobileColumnList={mobileOosList}
@@ -120,7 +120,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             title="Out of Stock Items"
             description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
           />
-          <SmallTable<WoWProfitableItems>
+          <SmallTable
             data={data.profit_w_sales}
             columnList={profitableItemsColumnList}
             mobileColumnList={mobileProfitableItemsList}
@@ -128,7 +128,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             title="Profitable Items With Sales"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
           />
-          <SmallTable<WoWOutOfStock>
+          <SmallTable
             data={data.out_w_sales}
             columnList={oosColumnList}
             mobileColumnList={mobileOosList}

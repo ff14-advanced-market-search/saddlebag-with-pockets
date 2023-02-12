@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Title } from '~/components/Common'
 import Modal from '~/components/form/Modal'
+import type { ColumnList } from '~/components/types'
 
 const parseToLocaleString = (value: any) => {
   if (typeof value === 'number') {
@@ -13,7 +14,9 @@ const parseToLocaleString = (value: any) => {
   return value
 }
 
-function MobileTable<Type>({
+type Type = Record<string, any>
+
+function MobileTable({
   data,
   sortingOrder,
   columnList,
@@ -22,15 +25,11 @@ function MobileTable<Type>({
   rowLabels
 }: {
   data: Array<Type>
-  sortingOrder: Array<{ id: string; desc: boolean }>
+  sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<{ header: string; columnId: string }>
   title: string
   description: string
-  rowLabels: Array<{
-    columnId: string
-    header: string
-    accessor?: (props: any) => JSX.Element
-  }>
+  rowLabels: Array<ColumnList<Type>>
 }) {
   const [modal, setModal] = useState<{ title: string; data: Type } | null>(null)
 
@@ -39,9 +38,17 @@ function MobileTable<Type>({
     ? data
         .map((self) => self)
         .sort((a, b) => {
-          return sortingColumn.desc
-            ? b[sortingColumn.id] - a[sortingColumn.id]
-            : a[sortingColumn.id] - b[sortingColumn.id]
+          const aValue = a[sortingColumn.id]
+          const bValue = b[sortingColumn.id]
+          if (!aValue || typeof aValue !== 'number') {
+            return 0
+          }
+
+          if (!bValue || typeof bValue !== 'number') {
+            return 0
+          }
+
+          return sortingColumn.desc ? bValue - aValue : aValue - bValue
         })
     : data
   return (
