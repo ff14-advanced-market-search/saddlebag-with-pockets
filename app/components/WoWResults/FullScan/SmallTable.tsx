@@ -1,8 +1,7 @@
 import type {
   FilterFn,
   ColumnFiltersState,
-  ColumnOrderState,
-  Getter
+  ColumnOrderState
 } from '@tanstack/table-core'
 import {
   createColumnHelper,
@@ -20,6 +19,8 @@ import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
 import { Title } from '~/components/Common'
+import MobileTable from './MobileTable'
+import type { ColumnList } from '~/components/types'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -37,26 +38,18 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   addMeta({ itemRank })
   return itemRank.passed
 }
+type DataType = Record<string, string | number | null | undefined>
 
-export type ColumnList<Type> = {
-  columnId: string
-  header: string
-  accessor?: (props: {
-    row: Type
-    getValue: Getter<unknown>
-  }) => JSX.Element | null
-}
-
-function SmallTable<Type>({
+function DesktopTable({
   data,
   sortingOrder,
   columnList,
   title,
   description
 }: {
-  data: Array<Type>
-  sortingOrder: Array<{ id: keyof Type; desc: boolean }>
-  columnList: Array<ColumnList<Type>>
+  data: Array<DataType>
+  sortingOrder: Array<{ id: string; desc: boolean }>
+  columnList: Array<ColumnList<any>>
   title: string
   description: string
 }) {
@@ -64,7 +57,7 @@ function SmallTable<Type>({
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder] = useState<ColumnOrderState>([])
 
-  const columnHelper = createColumnHelper<Type>()
+  const columnHelper = createColumnHelper<DataType>()
 
   const parseToLocaleString = (value: any) => {
     if (typeof value === 'number') {
@@ -123,7 +116,7 @@ function SmallTable<Type>({
 
   return (
     <div
-      className={`mt-0 flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md shadow`}>
+      className={`hidden mt-0 sm:flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md shadow`}>
       <div className="mx-3">
         <Title title={title} />
       </div>
@@ -216,6 +209,46 @@ function SmallTable<Type>({
         </div>
       </div>
     </div>
+  )
+}
+
+const SmallTable = ({
+  data,
+  sortingOrder,
+  columnList,
+  title,
+  description,
+  mobileColumnList,
+  columnSelectOptions
+}: {
+  data: Array<DataType>
+  sortingOrder: Array<{ id: string; desc: boolean }>
+  columnList: Array<ColumnList<any>>
+  mobileColumnList: Array<ColumnList<any>>
+  title: string
+  description: string
+  columnSelectOptions: Array<string>
+}) => {
+  return (
+    <>
+      <MobileTable
+        data={data}
+        sortingOrder={sortingOrder}
+        columnList={mobileColumnList}
+        title={title}
+        description={description}
+        rowLabels={columnList}
+        columnSelectOptions={columnSelectOptions}
+      />
+
+      <DesktopTable
+        data={data}
+        sortingOrder={sortingOrder}
+        columnList={columnList}
+        title={title}
+        description={description}
+      />
+    </>
   )
 }
 

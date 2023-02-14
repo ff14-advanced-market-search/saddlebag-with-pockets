@@ -18,6 +18,7 @@ export interface WOWScanProps {
 }
 
 export interface WoWOutOfStock {
+  [key: string]: number | string
   historicPrice: number
   itemID: number
   name: string
@@ -26,6 +27,8 @@ export interface WoWOutOfStock {
 }
 
 export interface WoWProfitableItems {
+  [key: string]: number | string
+
   historicPrice: number
   home_price: number
   itemID: number

@@ -8,6 +8,7 @@ import FullTable from '~/components/Tables/FullTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
+import MobileTable from '../FullScan/MobileTable'
 
 export interface WoWMarketShareActionResults {
   data: Array<ItemStats>
@@ -89,6 +90,25 @@ const MarketshareResults = ({
     }
   ]
 
+  const mobileColumnList = [
+    { columnId: 'itemName', header: 'Item Name' },
+    { columnId: 'currentMarketValue', header: 'Current Market Value' }
+  ]
+
+  const mobileSelectOptions = [
+    'currentMarketValue',
+    'minPrice',
+    'historicMarketValue',
+    'percentChange',
+    'historicPrice',
+    'item_class',
+    'item_subclass',
+    'salesPerDay',
+    'avgQuantity',
+    'currentQuantity',
+    'currentVsAvgQuantityPercent'
+  ]
+
   return (
     <div>
       <Title title={pageTitle} />
@@ -127,12 +147,21 @@ const MarketshareResults = ({
           </>
         </ContentContainer>
       </div>
-      <FullTable<ItemStats>
+      <div className="hidden sm:block">
+        <FullTable<ItemStats>
+          data={results.data}
+          columnList={itemsColumnList}
+          sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
+          description="This shows items market statistics!"
+          order={tableSortOrder}
+        />
+      </div>
+      <MobileTable
         data={results.data}
-        columnList={itemsColumnList}
         sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
-        description="This shows items market statistics!"
-        order={tableSortOrder}
+        columnList={mobileColumnList}
+        rowLabels={itemsColumnList}
+        columnSelectOptions={mobileSelectOptions}
       />
     </div>
   )
