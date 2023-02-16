@@ -1,3 +1,4 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { Title } from '~/components/Common'
 import Label from '~/components/form/Label'
@@ -41,6 +42,8 @@ function MobileTable({
     sortingOrder[0]?.id
   )
 
+  const [desc, setDesc] = useState<boolean>(sortingOrder[0].desc || true)
+
   const [columns, setColumns] =
     useState<Array<{ header: string; columnId: string }>>(columnList)
 
@@ -59,7 +62,7 @@ function MobileTable({
             return 0
           }
 
-          return bValue - aValue
+          return desc ? bValue - aValue : aValue - bValue
         })
     : data
 
@@ -117,13 +120,34 @@ function MobileTable({
         <table className="max-w-screen relative divide-y divide-gray-300 dark:divide-gray-600">
           <thead className="max-w-screen">
             <tr className="text-gray-900 font-semibold dark:text-gray-100">
-              {columns.map((col) => (
-                <th
-                  key={col.columnId}
-                  className="p-2 sticky bg-gray-50 top-0 dark:bg-gray-600">
-                  {col.header}
-                </th>
-              ))}
+              {columns.map((col) => {
+                if (col.columnId === sortingColumn) {
+                  return (
+                    <th
+                      key={col.columnId}
+                      onClick={() => setDesc((state) => !state)}
+                      className="py-2 px-3 sticky bg-gray-50 top-0 text-center cursor-pointer text-gray-900 dark:text-gray-100 dark:bg-gray-600">
+                      <div className="flex justify-center items-center p-2">
+                        {col.header}
+                        <div className="bg-gray-200 rounded dark:bg-gray-500 p-2">
+                          {desc ? (
+                            <ChevronDownIcon className="h-4 w-4" />
+                          ) : (
+                            <ChevronUpIcon className="h-4 w-4" />
+                          )}
+                        </div>
+                      </div>
+                    </th>
+                  )
+                }
+                return (
+                  <th
+                    key={col.columnId}
+                    className="p-2 sticky bg-gray-50 top-0 dark:bg-gray-600">
+                    {col.header}
+                  </th>
+                )
+              })}
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-300 dark:divide-gray-700 bg-white dark:bg-slate-800 dark:divide-gray-500 max-w-screen">
@@ -137,7 +161,11 @@ function MobileTable({
                   }}>
                   {columns.map((col, i) => {
                     return (
-                      <td key={`cell-${rowIndex}-${i}`} className="p-2">
+                      <td
+                        key={`cell-${rowIndex}-${i}`}
+                        className={`p-2 ${
+                          i !== 0 ? 'text-center' : 'text-left'
+                        }`}>
                         {parseToLocaleString(row[col.columnId])}
                       </td>
                     )
