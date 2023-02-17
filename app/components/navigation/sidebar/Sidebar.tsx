@@ -53,7 +53,9 @@ const PatreonLink = () => (
 
 const WikiLink = () => (
   <a
-    href={'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki'}
+    href={
+      'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki'
+    }
     target="_blank"
     rel="noreferrer"
     className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
