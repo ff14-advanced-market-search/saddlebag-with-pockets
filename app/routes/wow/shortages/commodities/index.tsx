@@ -5,7 +5,7 @@ import type {
   LoaderFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import NoResults from '../../../queries/listings/NoResults'
+import NoResults from '~/components/Common/NoResults'
 import { PageWrapper } from '~/components/Common'
 import type { WowShortageResult } from '~/requests/WoWCommodities'
 import WoWCommodityShortage from '~/requests/WoWCommodities'

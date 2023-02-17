@@ -94,15 +94,17 @@ const OptionSection = ({
             <div className="md:grid md:grid-cols-3 md:gap-6">
               <div className="md:col-span-1">
                 <div className="px-4 sm:px-0">
-                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-200">
                     {title}
                   </h3>
-                  <p className="mt-1 text-sm text-gray-600">{description}</p>
+                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                    {description}
+                  </p>
                 </div>
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <div className="shadow sm:rounded-md sm:overflow-hidden">
-                  <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+                  <div className="px-4 py-5 bg-white dark:bg-slate-700 space-y-6 sm:p-6">
                     {children}
                   </div>
                 </div>
@@ -159,12 +161,14 @@ export default function () {
         <Form method="post">
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900">Options</h1>
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                Options
+              </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <div className="lg:flex lg:items-center lg:justify-between">
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+                  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate dark:text-gray-300">
                     Site Configuration
                   </h2>
                 </div>
@@ -212,16 +216,14 @@ export default function () {
               <span className={`flex-grow flex flex-col`}>
                 <Switch.Label
                   as={`span`}
-                  className={`txt-sm font-meidum text-gray-900`}
+                  className={`txt-sm font-meidum text-gray-900 dark:text-gray-100`}
                   passive>
                   Enable Dark Mode
                 </Switch.Label>
                 <Switch.Description
                   as={`span`}
-                  className={`text-sm text-gray-500`}>
-                  I confirm, I have weak eyeballs. But also confirm that I don't
-                  mind how currently broken this is. (page refreshes currently
-                  clear)
+                  className={`text-sm text-gray-500 dark:text-gray-300`}>
+                  I confirm, I have weak eyeballs.
                 </Switch.Description>
               </span>
               {typeof document !== 'undefined' && (
@@ -230,7 +232,7 @@ export default function () {
                   checked={darkmode}
                   onChange={handleDarkModeToggle}
                   className={classNames(
-                    darkmode ? `bg-blue-500` : `bg-gray-200`,
+                    darkmode ? `bg-black` : `bg-gray-200`,
                     `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
                   )}>
                   <span

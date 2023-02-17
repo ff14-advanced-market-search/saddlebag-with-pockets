@@ -40,7 +40,7 @@ const DateCell = ({
     <div className="flex flex-1 justify-between relative">
       <p className="peer">{getTimeFromNow(valueAsDate, new Date())}</p>
       <p
-        className={`absolute hidden peer-hover:bottom-6 peer-hover:flex bg-black opacity-80 text-sm text-white rounded px-3 py-1 z-50${
+        className={`absolute hidden peer-hover:bottom-6 peer-hover:flex bg-black opacity-80 text-sm text-white rounded px-3 py-1 ${
           fixRight ? ' -right-1' : 'left-0'
         }`}>
         {valueAsDate.toLocaleString()}

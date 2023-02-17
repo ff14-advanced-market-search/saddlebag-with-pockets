@@ -334,7 +334,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 <div className="flex-shrink-0 flex items-center px-4">
                   <Link to={`/`}>
                     <img
-                      className="h-8 w-auto"
+                      className="h-10 w-auto"
                       src="/images/tiny-chocobo.png"
                       alt={data.site_name}
                     />
@@ -413,10 +413,10 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
-          <div className="flex items-center h-24 flex-shrink-0 px-4 bg-gray-900">
+          <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900 dark:bg-slate-900">
             <Link to={`/`}>
               <img
-                className="h-24 w-auto"
+                className="h-16 w-auto"
                 src="/images/tiny-chocobo.png"
                 alt={data.site_name}
               />
@@ -485,10 +485,10 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
         </div>
       </div>
       <div className="md:pl-64 flex flex-col">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
+        <nav className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
           <button
             type="button"
-            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
+            className="px-4 border-r border-gray-200 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
             onClick={() => setSidebarOpen(true)}>
             <span className="sr-only">Open sidebar</span>
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
@@ -500,38 +500,38 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 type="button"
                 className={classNames(
                   `group content-between flex flex-1`,
-                  'hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500'
+                  'hover:bg-gray-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500'
                 )}>
                 <div className={`flex flex-wrap pl-1.5 flex-1`}>
                   <div className="hidden md:flex">
                     <div className="flex flex-col min-w-[150px]">
-                      <div className="flex items-center text-sm text-gray-500 basis-full">
+                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
                         <EarthIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
                         {data.data_center}
                       </div>
-                      <div className=" md:flex items-center text-sm text-gray-500 basis-full">
+                      <div className=" md:flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
                         <LocationMarkerIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
                         {data.world}
                       </div>
                     </div>
-                    <div className="border-l border-gray-200 w-0 m-2 shrink-0 rounded:md" />
+                    <div className="border-l border-gray-200 w-0 m-2 shrink-0 rounded:md dark:group-hover:border-gray-100" />
                     <div className="flex flex-col w-fit min-w-[150px]">
-                      <div className="flex items-center text-sm text-gray-500 basis-full">
+                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
                         <EarthIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
                         {data.wowRegion === 'NA' ? 'North America' : 'Europe'}
                       </div>
-                      <div className=" md:flex items-center text-sm text-gray-500 basis-full">
+                      <div className=" md:flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
                         <LocationMarkerIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
                         {data.wowRealm.name}
@@ -539,13 +539,13 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     </div>
                   </div>
 
-                  <div className="flex md:hidden items-center text-sm text-gray-500 basis-full mr-1.5">
+                  <div className="flex md:hidden items-center text-sm text-gray-500 dark:text-gray-200 basis-full mr-1.5 dark:group-hover:text-gray-100">
                     Settings
                   </div>
                 </div>
                 <div className={`flex items-center pr-1.5`}>
                   <CogIcon
-                    className="h-5 w-5 text-gray-400 basis-full group-hover:text-blue-500"
+                    className="h-5 w-5 text-gray-400 dark:text-gray-200 basis-full group-hover:text-blue-500 dark:group-hover:text-gray-100"
                     aria-hidden="true"
                   />
                 </div>
@@ -554,15 +554,18 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
             <div className="ml-4 flex items-center md:ml-6">
               <button
                 type="button"
-                className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                className="bg-white dark:bg-slate-900 p-1 dark:hover:bg-slate-800 rounded-full text-gray-400 dark:text-gray-200 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <span className="sr-only">View notifications</span>
-                <BellIcon className="h-6 w-6" aria-hidden="true" />
+                <BellIcon
+                  className="h-6 w-6 hover:text-blue-500 dark:hover:text-gray-100"
+                  aria-hidden="true"
+                />
               </button>
 
               {/* Profile dropdown */}
               <Menu as="div" className="ml-3 relative">
                 <div>
-                  <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <Menu.Button className="max-w-xs bg-white dark:bg-slate-900 dark:hover:bg-slate-800 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
@@ -579,8 +582,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95">
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <p className={`text-gray-700 text-sm py-2 px-4`}>
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <p
+                      className={`text-gray-700 dark:text-gray-200 text-sm py-2 px-4`}>
                       <strong>Welcome to Saddlebag!</strong> We're super
                       freaking hyped to see where this journey together goes.
                       Hoping you make it big! Join our Discord for spicy news!
@@ -598,7 +602,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               </Menu>
             </div>
           </div>
-        </div>
+        </nav>
         {children}
       </div>
     </>

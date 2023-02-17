@@ -7,17 +7,18 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import type { WoWScanResponseWithPayload } from '~/requests/WOWScan'
 import WOWScanRequest from '~/requests/WOWScan'
-import NoResults from '../../queries/listings/NoResults'
+import NoResults from '~/components/Common/NoResults'
 import { PageWrapper } from '~/components/Common'
 import { validateWoWScanInput } from './validateWoWScanInput'
 import { useEffect, useState } from 'react'
 import WoWScanForm from '../../../components/form/WoW/WoWScanForm'
-import { Results } from './Results'
+import { Results } from '../../../components/WoWResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { setWoWScan } from '~/redux/reducers/wowSlice'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
+import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
@@ -48,16 +49,9 @@ export const action: ActionFunction = async ({ request }) => {
     return err
   }
 }
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  console.error('errorBoundary', error)
-  return (
-    <pre>
-      If you're seeing this, it'd be appreciated if you could report in our
-      Discord's <span className={`font-bold`}>#bug-reporting</span> channel.
-      Much thank
-    </pre>
-  )
-}
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
+  <ErrorBounds error={error} />
+)
 
 const Index = () => {
   const transition = useTransition()

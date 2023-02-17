@@ -77,8 +77,8 @@ const FullScanForm = ({
     <>
       <Form method="post">
         <div className="mt-5 md:mt-0 md:col-span-3 py-6">
-          <div className="shadow overflow-hidden sm:rounded-md">
-            <div className="px-4 py-5 bg-white sm:p-6">
+          <div className="shadow sm:rounded-md">
+            <div className="px-4 py-5 shadow sm:rounded-md bg-white sm:p-6 dark:bg-slate-700">
               <div className="flex justify-end mb-2">
                 <SubmitButton
                   title="Share this search!"
@@ -118,10 +118,10 @@ const FullScanForm = ({
                         handleSearchParamChange('hours', value.toString())
                       }}
                       name="scan_hours"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       hours
                     </span>
                   </div>
@@ -156,7 +156,7 @@ const FullScanForm = ({
                       handleSearchParamChange('salesAmount', value.toString())
                     }}
                     name="sale_amount"
-                    className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                   />
                 </div>
 
@@ -192,10 +192,10 @@ const FullScanForm = ({
                         handleSearchParamChange('ROI', value.toString())
                       }}
                       id="roi"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       %
                     </span>
                   </div>
@@ -235,10 +235,10 @@ const FullScanForm = ({
                         )
                       }}
                       id="price_per_unit"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       gil
                     </span>
                   </div>
@@ -282,10 +282,10 @@ const FullScanForm = ({
                         )
                       }}
                       id="minimum_profit_amount"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm`}>
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       gil
                     </span>
                   </div>
@@ -295,13 +295,13 @@ const FullScanForm = ({
               <>
                 <div className="w-full flex justify-center items-center">
                   <button
-                    className="text-center text-sm font-medium flex grow-0 shrink-0 justify-center items-center my-2"
+                    className="text-center text-sm font-medium flex grow-0 shrink-0 justify-center items-center my-2 dark:text-gray-200"
                     type="button"
                     onClick={() => setFormOpened((state) => !state)}>
                     Advanced Search Options
                     <ChevronDownIcon
                       className={
-                        'h-4 w-4 transition duration-200 ' +
+                        'h-4 w-4 transition duration-200' +
                         (formOpened ? 'transform rotate-180' : '')
                       }
                     />
@@ -348,7 +348,7 @@ const FullScanForm = ({
                           )
                         }}
                         id="minimum_stack_size"
-                        className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                       />
                     </div>
                   </div>
@@ -356,7 +356,7 @@ const FullScanForm = ({
                   <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                     <label
                       htmlFor="filters"
-                      className="block text-sm font-medium text-gray-700">
+                      className="block text-sm my-1 font-medium text-gray-700 dark:text-gray-300">
                       Item Filter
                     </label>
                     <div className={`mt-1 flex rounded-md shadow-sm`}>
@@ -367,14 +367,14 @@ const FullScanForm = ({
                         onChange={noop}
                       />
                       <button
-                        className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left"
+                        className="w-full py-2 px-4 text-sm bg-gray-100 hover:bg-gray-300 border border-gray-300 rounded text-left dark:bg-gray-500 dark:border-gray-500 dark:text-gray-200 dark:hover:bg-gray-400"
                         aria-label="Choose filters"
                         type="button"
                         onClick={() => setIsOpen(true)}>
                         Choose Filters
                       </button>
                     </div>
-                    <p className="mt-2 text-sm text-gray-500">
+                    <p className="mt-2 text-sm text-gray-400">
                       Filters applied: {ids.length}
                     </p>
                   </div>
@@ -405,10 +405,10 @@ const FullScanForm = ({
                         <div className="ml-3 text-sm">
                           <label
                             htmlFor="hq_only"
-                            className="font-medium text-gray-700">
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Enable HQ only
                           </label>
-                          <p className="mt-2 text-sm text-gray-500">
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Only search for hq prices
                           </p>
                         </div>
@@ -441,10 +441,10 @@ const FullScanForm = ({
                         <div className="ml-3 text-sm">
                           <label
                             htmlFor="region_wide"
-                            className="font-medium text-gray-700">
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Region Wide Search
                           </label>
-                          <p className="mt-2 text-sm text-gray-500">
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Search all servers in all DataCenters in your
                             region.
                           </p>
@@ -478,10 +478,10 @@ const FullScanForm = ({
                         <div className="ml-3 text-sm">
                           <label
                             htmlFor="out_of_stock"
-                            className="font-medium text-gray-700">
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Include Out of Stock
                           </label>
-                          <p className="mt-2 text-sm text-gray-500">
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Include out of stock items from the list (they will
                             show up as having 100% profit margins and 1 bil gil
                             profit).
@@ -521,10 +521,10 @@ const FullScanForm = ({
                         <div className="ml-3 text-sm">
                           <label
                             htmlFor="include_vendor"
-                            className="font-medium text-gray-700">
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Include Vendor Prices
                           </label>
-                          <p className="mt-2 text-sm text-gray-500">
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Compare market prices vs vendor prices on NQ items
                             that can be purchased from vendors.
                           </p>
@@ -539,7 +539,9 @@ const FullScanForm = ({
         </div>
 
         <div className="flex justify-end">
-          {error && <p className="self-start text-red-500">{error}</p>}
+          {error && (
+            <p className="self-start text-red-500 dark:text-red-300">{error}</p>
+          )}
           <SubmitButton title="Search" loading={loading} onClick={onClick} />
         </div>
       </Form>

@@ -127,7 +127,9 @@ const Results = ({ rows }: ResultTableProps) => {
     columnHelper.accessor('real_name', {
       header: 'Item Name',
       cell: ({ getValue }) => (
-        <span className={`font-bold select-all`}>{getValue()}</span>
+        <span className={`font-bold dark:font-medium select-all`}>
+          {getValue()}
+        </span>
       ),
       footer: (props) => props.column.id
     }),
@@ -283,8 +285,8 @@ const Results = ({ rows }: ResultTableProps) => {
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300 mt-2 bg-gray-50">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
+                  <thead className="bg-gray-50 dark:bg-gray-600">
                     {table.getHeaderGroups().map((headerGroup) => (
                       <tr key={headerGroup.id}>
                         {headerGroup.headers.map((header, i) => (
@@ -299,7 +301,7 @@ const Results = ({ rows }: ResultTableProps) => {
                               header.column.getCanSort()
                                 ? 'cursor-pointer'
                                 : '',
-                              `px-3 py-3.5 text-left text-sm font-semibold text-gray-900`
+                              `px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100`
                             )}>
                             <div className={`group inline-flex  min-w-[100px]`}>
                               {header.isPlaceholder
@@ -311,20 +313,20 @@ const Results = ({ rows }: ResultTableProps) => {
                               <div
                                 className={classNames(
                                   header.column.getIsSorted()
-                                    ? 'bg-gray-200 rounded bg-gray-200'
+                                    ? 'bg-gray-200 rounded dark:bg-gray-500'
                                     : '',
                                   ` ml-1 flex flex-0 p-1 justify-center items-center`
                                 )}>
                                 {{
                                   asc: (
                                     <span
-                                      className={`text-gray-900 group-hover:bg-gray-300`}>
+                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                       <ChevronUpIcon className={`h-4 w-4`} />
                                     </span>
                                   ),
                                   desc: (
                                     <span
-                                      className={`text-gray-900 group-hover:bg-gray-300`}>
+                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                       <ChevronDownIcon className={`h-4 w-4`} />
                                     </span>
                                   )
@@ -341,13 +343,13 @@ const Results = ({ rows }: ResultTableProps) => {
                       </tr>
                     ))}
                   </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
+                  <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
                     {table.getRowModel().rows.map((row) => (
                       <tr key={row.id}>
                         {row.getVisibleCells().map((cell) => (
                           <td
                             key={cell.id}
-                            className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                            className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100">
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()
@@ -361,7 +363,7 @@ const Results = ({ rows }: ResultTableProps) => {
               </div>
               <div className="flex flex-0 ">
                 <p
-                  className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500`}>
+                  className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
                   {`${rows.length} results found`}
                 </p>
               </div>

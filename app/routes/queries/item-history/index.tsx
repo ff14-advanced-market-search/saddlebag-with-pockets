@@ -6,10 +6,10 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import GetHistoryRequest from '~/requests/GetHistory'
 import type { GetHistoryProps, GetHistoryResponse } from '~/requests/GetHistory'
-import NoResults from '~/routes/queries/listings/NoResults'
+import NoResults from '~/components/Common/NoResults'
 import { getUserSessionData } from '~/sessions'
-import ItemSelect from '~/components/form/select/ItemSelect'
-import type { ItemSelected } from '~/components/form/select/ItemSelect'
+import ItemSelect from '~/components/Common/ItemSelect'
+import type { ItemSelected } from '~/components/Common/ItemSelect'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import Results from './Results'
@@ -111,6 +111,7 @@ const Index = () => {
   const results = useActionData<GetHistoryResponse>()
   const [formState, setFormState] = useState<ItemSelected | undefined>()
   const [error, setError] = useState<string | undefined>()
+  const { darkmode } = useTypedSelector((state) => state.user)
 
   const { itemHistory } = useTypedSelector((state) => state.queries)
 
@@ -167,7 +168,7 @@ const Index = () => {
               <div className="my-1 flex flex-1 px-4">
                 <select
                   id="itemType"
-                  className="flex-1 min-w-0 block px-3 py-2 rounded-l-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-l-md"
+                  className="flex-1 min-w-0 block px-3 py-2 rounded-l-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-l-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400"
                   name="itemType"
                   defaultValue={'all'}>
                   <option value="all">All</option>
@@ -176,7 +177,7 @@ const Index = () => {
                 </select>
                 <label
                   htmlFor="itemType"
-                  className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm shadow-sm">
+                  className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm shadow-sm dark:border-gray-400 dark:text-gray-300 dark:bg-gray-700">
                   Item Quality
                 </label>
               </div>
@@ -192,7 +193,7 @@ const Index = () => {
           </div>
         )}
         {itemHistory && 'average_ppu' in itemHistory && (
-          <Results data={itemHistory} />
+          <Results data={itemHistory} darkMode={darkmode} />
         )}
       </>
     </PageWrapper>

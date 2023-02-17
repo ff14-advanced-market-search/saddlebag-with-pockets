@@ -40,7 +40,7 @@ const CodeBlock = ({
         </div>
         {children}
 
-        <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded">
+        <pre className="overflow-x-scroll bg-slate-700 text-gray-200 dark:bg-slate-900 p-4 rounded">
           <code>{codeString}</code>
         </pre>
       </div>

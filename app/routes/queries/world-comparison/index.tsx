@@ -134,7 +134,7 @@ const Index = () => {
                 Choose Worlds
               </ModalToggleButton>
               <input name="exportServers" value={state.exportServers} hidden />
-              <p className="mt-2 ml-1 text-sm text-gray-500">
+              <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
                 {serversLength > 3 || !serversLength
                   ? `${serversLength ? serversLength : 'No'} worlds selected`
                   : state.exportServers.map((name) => name).join(', ')}
@@ -153,7 +153,7 @@ const Index = () => {
                 Choose Items
               </ModalToggleButton>
               <input name="itemIds" hidden value={state.items} />
-              <p className="mt-2 ml-1 text-sm text-gray-500">
+              <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
                 {itemsLength > 3 || !itemsLength
                   ? `${itemsLength ? itemsLength : 'No'} items selected`
                   : state.items
@@ -264,8 +264,8 @@ const ItemListRow = ({
   id: string | number
   onDelete: () => void
 }) => (
-  <li className="flex items-center w-full justify-between my-1 px-3 py-2 gap:3 bg-gray-100 rounded-md">
-    <p className="text-ellipsis overflow-hidden no-wrap text-gray-600">
+  <li className="flex items-center w-full justify-between my-1 px-3 py-2 gap:3 bg-gray-100 dark:bg-slate-700 rounded-md">
+    <p className="text-ellipsis overflow-hidden no-wrap text-gray-600 dark:text-gray-200">
       {getItemNameById(id)}
     </p>
     <button
@@ -292,10 +292,10 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
             return (
               <div
                 key={item.item_id}
-                className="min-w-max rounded-md shadow-md p-3">
+                className="min-w-max rounded-md shadow-md p-3 dark:bg-slate-600">
                 <Title title={getItemNameById(item.item_id) as string} />
                 <div>
-                  <table className="table-auto border-separate border-spacing-2">
+                  <table className="table-auto border-separate border-spacing-2 dark:text-gray-200">
                     <tr>
                       <th className="text-left py-1 px-2">World</th>
                       <th

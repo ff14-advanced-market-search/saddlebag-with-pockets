@@ -33,16 +33,16 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
 
   return (
     <fieldset
-      className="mt-6 dark:bg-slate-800 bg-white"
+      className="mt-6 bg-white dark:bg-transparent"
       disabled={transition.state === 'submitting'}>
-      <legend className="block text-sm font-medium text-gray-700">
+      <legend className="block text-sm font-medium text-gray-700 dark:text-gray-100">
         Data Center
       </legend>
       <div className="mt-1 shadow-sm">
         <SelectDataCenter onSelect={setDataCenter} dataCenter={dataCenter} />
       </div>
       <div className={`mt-6`}>
-        <legend className="block text-sm font-medium text-gray-700">
+        <legend className="block text-sm font-medium text-gray-700 dark:text-gray-100">
           World
         </legend>
         <SelectWorld

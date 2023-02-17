@@ -10,29 +10,51 @@ const makeDateString = (timeStampInSeconds: number) => {
 }
 
 export default function SalesByHourChart({
-  data
+  data,
+  darkMode
 }: {
   data: Array<HomeServerSalesByHour>
+  darkMode: boolean
 }) {
   const xAxisCategories = data.map(
     ({ time }) => makeDateString(time).split(' ')[1]
   )
 
+  const styles = darkMode
+    ? {
+        backgroundColor: '#334155',
+        color: 'white',
+        hoverColor: '#f8f8f8'
+      }
+    : {}
+
   const options: Options = {
     chart: {
-      type: 'line'
+      type: 'line',
+      backgroundColor: styles?.backgroundColor
+    },
+    legend: {
+      itemStyle: { color: styles?.color },
+      align: 'center',
+      itemHoverStyle: { color: styles?.hoverColor }
     },
     title: {
-      text: undefined
+      text: undefined,
+      style: { color: styles?.color }
     },
     yAxis: {
       title: {
-        text: 'No# of Sales'
-      }
+        text: 'No# of Sales',
+        style: { color: styles?.color, textAlign: 'center' }
+      },
+      labels: { style: { color: styles?.color }, align: 'center' },
+      lineColor: styles?.color
     },
 
     xAxis: {
-      categories: xAxisCategories
+      categories: xAxisCategories,
+      labels: { style: { color: styles?.color }, align: 'center' },
+      lineColor: styles?.color
     },
 
     series: [
