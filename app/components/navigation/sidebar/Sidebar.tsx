@@ -40,7 +40,7 @@ const PatreonLink = () => (
     target="_blank"
     rel="noreferrer"
     className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
-    <PatreonIcon
+    <DiscordIcon
       className={classNames(
         'text-gray-400 group-hover:text-gray-300',
         'mr-4 flex-shrink-0 h-6 w-6'
@@ -59,7 +59,7 @@ const WikiLink = () => (
     target="_blank"
     rel="noreferrer"
     className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
-    <PatreonIcon
+    <GithubIcon
       className={classNames(
         'text-gray-400 group-hover:text-gray-300',
         'mr-4 flex-shrink-0 h-6 w-6'
