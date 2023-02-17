@@ -51,6 +51,42 @@ const PatreonLink = () => (
   </a>
 )
 
+const WikiLink = () => (
+  <a
+    href={
+      'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki'
+    }
+    target="_blank"
+    rel="noreferrer"
+    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
+    <GithubIcon
+      className={classNames(
+        'text-gray-400 group-hover:text-gray-300',
+        'mr-4 flex-shrink-0 h-6 w-6'
+      )}
+      aria-hidden="true"
+    />
+    Guides and Tutorials
+  </a>
+)
+
+const DiscordLink = () => (
+  <a
+    href={'https://discord.gg/836C8wDVNq'}
+    target="_blank"
+    rel="noreferrer"
+    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
+    <DiscordIcon
+      className={classNames(
+        'text-gray-400 group-hover:text-gray-300',
+        'mr-4 flex-shrink-0 h-6 w-6'
+      )}
+      aria-hidden="true"
+    />
+    Join our Discord
+  </a>
+)
+
 const navGroups: Array<{
   title: string
   openMatch?: string
@@ -362,6 +398,8 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                       </ButtonAccordian>
                     ))}
                     <PatreonLink />
+                    <WikiLink />
+                    <DiscordLink />
                   </nav>
                 </div>
               </Dialog.Panel>
@@ -442,6 +480,8 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 </ButtonAccordian>
               ))}
               <PatreonLink />
+              <WikiLink />
+              <DiscordLink />
             </nav>
           </div>
         </div>
