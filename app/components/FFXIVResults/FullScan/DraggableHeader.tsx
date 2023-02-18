@@ -29,6 +29,7 @@ const DraggableHeader = ({
     })
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_props, drag, preview] = useDrag({
     type: ItemTypes.COLUMN,
     item: () => {
