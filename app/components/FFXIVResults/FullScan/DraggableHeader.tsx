@@ -28,7 +28,7 @@ const DraggableHeader = ({
     })
   })
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [_props, drag, preview] = useDrag({
     type: ItemTypes.COLUMN,
     item: () => {
       return {
@@ -53,9 +53,7 @@ const DraggableHeader = ({
       ref={ref}
       style={{
         cursor: 'move',
-        outline: isOver ? 'solid 2px rgb(55 65 81)' : '',
-        opacity: isDragging || isOver ? 0.5 : 1,
-        borderRadius: '0.375rem'
+        outline: isOver ? 'solid 2px rgb(55 65 81)' : ''
       }}
       {...rest}>
       {children}

@@ -284,9 +284,9 @@ const Results = ({ rows }: ResultTableProps) => {
         <ScrollingComponent>
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
-              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
-                  <thead className="bg-gray-50 dark:bg-gray-600">
+              <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-screen">
+                <table className="min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
+                  <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                       <tr key={headerGroup.id}>
                         {headerGroup.headers.map((header, i) => (
@@ -301,7 +301,7 @@ const Results = ({ rows }: ResultTableProps) => {
                               header.column.getCanSort()
                                 ? 'cursor-pointer'
                                 : '',
-                              `px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100`
+                              `px-3 py-3.5 text-left bg-gray-50 dark:bg-gray-600 text-sm font-semibold text-gray-900 dark:text-gray-100 sticky top-0`
                             )}>
                             <div className={`group inline-flex  min-w-[100px]`}>
                               {header.isPlaceholder
@@ -313,7 +313,7 @@ const Results = ({ rows }: ResultTableProps) => {
                               <div
                                 className={classNames(
                                   header.column.getIsSorted()
-                                    ? 'bg-gray-200 rounded dark:bg-gray-500'
+                                    ? 'bg-gray-200 dark:bg-gray-500'
                                     : '',
                                   ` ml-1 flex flex-0 p-1 justify-center items-center`
                                 )}>
