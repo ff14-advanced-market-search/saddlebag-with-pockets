@@ -11,6 +11,7 @@ const DraggableHeader = ({
   column,
   index,
   reorder,
+  darkMode,
   children,
   ...rest
 }: any) => {
@@ -42,6 +43,8 @@ const DraggableHeader = ({
     })
   })
 
+  const outlineColor = darkMode ? 'rgb(121, 124, 128)' : 'rgb(55, 65, 81)'
+
   drag(drop(ref))
 
   useEffect(() => {
@@ -53,7 +56,7 @@ const DraggableHeader = ({
       ref={ref}
       style={{
         cursor: 'move',
-        outline: isOver ? 'solid 2px rgb(55 65 81)' : ''
+        outline: isOver ? `solid 2px ${outlineColor}` : ''
       }}
       {...rest}>
       {children}

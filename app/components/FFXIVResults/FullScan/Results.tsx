@@ -89,6 +89,7 @@ const Results = ({ rows }: ResultTableProps) => {
   const [globalFilter, setGlobalFilter] = useState('')
   const touchBackendRef = useRef(false)
   const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
+  const darkMode = useTypedSelector((state) => state.user.darkmode)
 
   const columnHelper = createColumnHelper<ResponseType>()
   const columns = [
@@ -284,7 +285,7 @@ const Results = ({ rows }: ResultTableProps) => {
         <ScrollingComponent>
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
-              <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-screen">
+              <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-[calc(100vh-120px)]">
                 <table className="min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
                   <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -296,12 +297,13 @@ const Results = ({ rows }: ResultTableProps) => {
                             key={header.id}
                             column={header}
                             index={i}
+                            darkMode={darkMode}
                             onClick={header.column.getToggleSortingHandler()}
                             className={classNames(
                               header.column.getCanSort()
                                 ? 'cursor-pointer'
                                 : '',
-                              `px-3 py-3.5 text-left bg-gray-50 dark:bg-gray-600 text-sm font-semibold text-gray-900 dark:text-gray-100 sticky top-0`
+                              `px-3 py-3.5 text-left bg-gray-50 dark:bg-gray-600 text-sm font-semibold text-gray-900 dark:text-gray-100 sticky top-0 z-10`
                             )}>
                             <div className={`group inline-flex  min-w-[100px]`}>
                               {header.isPlaceholder
