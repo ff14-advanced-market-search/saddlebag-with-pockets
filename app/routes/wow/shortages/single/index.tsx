@@ -105,7 +105,7 @@ const Index = () => {
           desiredSellPriceDefault={20}
           desiredPriceIncreaseDefault={10}
           desiredSalesPerDayDefault={10}
-          flipRiskLimitDefault={10}
+          flipRiskLimitDefault={3}
         />
         <RegionAndServerSelect
           defaultRealm={wowRealm}
