@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   sortingFns
 } from '@tanstack/table-core'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
 import type { ResponseType } from '~/requests/FullScan'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
@@ -40,6 +40,8 @@ import { useDispatch } from 'react-redux'
 import { defaultSortOrder } from '~/redux/localStorage/ffScanOrderHelpers'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import DateCell from './DateCell'
+import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
+import type { ColumnList } from '~/components/types'
 
 type ResultTableProps = {
   rows: Array<ResponseType>
@@ -89,9 +91,24 @@ const Results = ({ rows }: ResultTableProps) => {
   const [globalFilter, setGlobalFilter] = useState('')
   const touchBackendRef = useRef(false)
   const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
+  const darkMode = useTypedSelector((state) => state.user.darkmode)
 
   const columnHelper = createColumnHelper<ResponseType>()
   const columns = [
+    columnHelper.accessor('real_name', {
+      header: 'Item Name',
+      cell: ({ getValue }) => (
+        <span className={`font-bold dark:font-medium select-all`}>
+          {getValue()}
+        </span>
+      ),
+      footer: (props) => props.column.id
+    }),
+    columnHelper.accessor('profit_amount', {
+      header: 'Profit Amount',
+      cell: (info) =>
+        info.getValue() === 99999999999 ? '∞' : info.getValue().toLocaleString()
+    }),
     columnHelper.accessor('avg_ppu', {
       header: 'Average Price Per Unit',
       cell: (info) => info.getValue().toLocaleString()
@@ -114,25 +131,13 @@ const Results = ({ rows }: ResultTableProps) => {
       header: 'Lowest Price Per Unit',
       cell: (info) => info.getValue().toLocaleString()
     }),
-    columnHelper.accessor('profit_amount', {
-      header: 'Profit Amount',
-      cell: (info) =>
-        info.getValue() === 99999999999 ? '∞' : info.getValue().toLocaleString()
-    }),
+
     columnHelper.accessor('profit_raw_percent', {
       header: 'Profit Percentage',
       cell: (info) =>
         info.getValue() === 99999999999 ? '∞' : info.getValue().toLocaleString()
     }),
-    columnHelper.accessor('real_name', {
-      header: 'Item Name',
-      cell: ({ getValue }) => (
-        <span className={`font-bold dark:font-medium select-all`}>
-          {getValue()}
-        </span>
-      ),
-      footer: (props) => props.column.id
-    }),
+
     columnHelper.accessor('sale_rates', {
       header: 'Sale Rates',
       cell: (info) => info.getValue().toLocaleString()
@@ -178,6 +183,11 @@ const Results = ({ rows }: ResultTableProps) => {
     })
   ]
 
+  const mobileColumns = columns.map((item) => ({
+    columnId: item?.accessorKey,
+    header: item.header,
+    accessor: item.cell
+  }))
   const table = useReactTable({
     // @ts-ignore
     data: rows,
@@ -204,14 +214,35 @@ const Results = ({ rows }: ResultTableProps) => {
     debugColumns: false
   })
 
-  useEffect(() => {
-    table.setSorting([
+  const defaultSorting = useMemo(
+    () => [
       {
         id: 'profit_amount',
         desc: true
       }
-    ])
-  }, [table])
+    ],
+    []
+  )
+
+  const mobileColumnList = [
+    { columnId: 'real_name', header: 'Item Name' },
+    { columnId: 'profit_amount', header: 'Profit Amount' }
+  ]
+
+  const mobileSelectOptions = [
+    'profit_amount',
+    'avg_ppu',
+    'home_server_price',
+    'ppu',
+    'profit_raw_percent',
+    'sale_rates',
+    'stack_size',
+    'ROI'
+  ]
+
+  useEffect(() => {
+    table.setSorting(defaultSorting)
+  }, [table, defaultSorting])
 
   const dispatch = useDispatch()
 
@@ -239,140 +270,155 @@ const Results = ({ rows }: ResultTableProps) => {
   const handleColumnReset = () => dispatch(setFFScanOrder(defaultSortOrder))
 
   return (
-    <div key={`${touchBackendRef.current}`} className={`mt-0 flex flex-col`}>
-      <div className="py-2 sm:py-5">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
-            <div className="flex flex-wrap items-center justify-between">
-              <div className="flex w-0 flex-1 items-center">
-                <span className="flex rounded-lg bg-blue-800 p-2">
-                  <ChevronDoubleRightIcon
-                    className="h-6 w-6 text-white"
-                    aria-hidden="true"
-                  />
-                </span>
-                <p className="ml-3 truncate font-medium text-white flex flex-1 flex-col">
-                  <span className="md:hidden">This is a wide table!</span>
-                  <span className="md:hidden">
-                    Drag a column name to move it!
+    <>
+      <div
+        key={`${touchBackendRef.current}`}
+        className={`hidden sm:flex flex-col mt-0`}>
+        <div className="py-2 sm:py-5">
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
+              <div className="flex flex-wrap items-center justify-between">
+                <div className="flex w-0 flex-1 items-center">
+                  <span className="flex rounded-lg bg-blue-800 p-2">
+                    <ChevronDoubleRightIcon
+                      className="h-6 w-6 text-white"
+                      aria-hidden="true"
+                    />
                   </span>
-                  <span className="hidden md:inline">
-                    Heads up, this table is pretty wide. You'll probably need to
-                    scroll horizontally (left & right).
-                  </span>
-                  <span className="hidden md:inline">
-                    Click a column name to sort by that column. Drag a column
-                    name to move it!
-                  </span>
-                </p>
+                  <p className="ml-3 truncate font-medium text-white flex flex-1 flex-col">
+                    <span className="md:hidden">This is a wide table!</span>
+                    <span className="md:hidden">
+                      Drag a column name to move it!
+                    </span>
+                    <span className="hidden md:inline">
+                      Heads up, this table is pretty wide. You'll probably need
+                      to scroll horizontally (left & right).
+                    </span>
+                    <span className="hidden md:inline">
+                      Click a column name to sort by that column. Drag a column
+                      name to move it!
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-fit my-2">
-        <SubmitButton
-          onClick={handleColumnReset}
-          title={'Reset table columns'}
-          type="button"
-        />
-      </div>
+        <div className="max-w-fit my-2">
+          <SubmitButton
+            onClick={handleColumnReset}
+            title={'Reset table columns'}
+            type="button"
+          />
+        </div>
 
-      <DndProvider
-        backend={touchBackendRef.current ? TouchBackend : HTML5Backend}>
-        <ScrollingComponent>
-          <div className="overflow-x-auto">
-            <div className="inline-block min-w-full align-middle">
-              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
-                  <thead className="bg-gray-50 dark:bg-gray-600">
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header, i) => (
-                          <DraggableHeader
-                            scope={`col`}
-                            reorder={handleReorder}
-                            key={header.id}
-                            column={header}
-                            index={i}
-                            onClick={header.column.getToggleSortingHandler()}
-                            className={classNames(
-                              header.column.getCanSort()
-                                ? 'cursor-pointer'
-                                : '',
-                              `px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100`
-                            )}>
-                            <div className={`group inline-flex  min-w-[100px]`}>
-                              {header.isPlaceholder
-                                ? null
-                                : flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext()
-                                  )}
+        <DndProvider
+          backend={touchBackendRef.current ? TouchBackend : HTML5Backend}>
+          <ScrollingComponent>
+            <div className="overflow-x-auto">
+              <div className="inline-block min-w-full align-middle">
+                <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-[calc(100vh-120px)]">
+                  <table className="min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
+                    <thead>
+                      {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                          {headerGroup.headers.map((header, i) => (
+                            <DraggableHeader
+                              scope={`col`}
+                              reorder={handleReorder}
+                              key={header.id}
+                              column={header}
+                              index={i}
+                              darkMode={darkMode}
+                              onClick={header.column.getToggleSortingHandler()}
+                              className={classNames(
+                                header.column.getCanSort()
+                                  ? 'cursor-pointer'
+                                  : '',
+                                `px-3 py-3.5 text-left bg-gray-50 dark:bg-gray-600 text-sm font-semibold text-gray-900 dark:text-gray-100 sticky top-0 z-10`
+                              )}>
                               <div
-                                className={classNames(
-                                  header.column.getIsSorted()
-                                    ? 'bg-gray-200 rounded dark:bg-gray-500'
-                                    : '',
-                                  ` ml-1 flex flex-0 p-1 justify-center items-center`
-                                )}>
-                                {{
-                                  asc: (
+                                className={`group inline-flex  min-w-[100px]`}>
+                                {header.isPlaceholder
+                                  ? null
+                                  : flexRender(
+                                      header.column.columnDef.header,
+                                      header.getContext()
+                                    )}
+                                <div
+                                  className={classNames(
+                                    header.column.getIsSorted()
+                                      ? 'bg-gray-200 dark:bg-gray-500'
+                                      : '',
+                                    ` ml-1 flex flex-0 p-1 justify-center items-center`
+                                  )}>
+                                  {{
+                                    asc: (
+                                      <span
+                                        className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
+                                        <ChevronUpIcon className={`h-4 w-4`} />
+                                      </span>
+                                    ),
+                                    desc: (
+                                      <span
+                                        className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
+                                        <ChevronDownIcon
+                                          className={`h-4 w-4`}
+                                        />
+                                      </span>
+                                    )
+                                  }[header.column.getIsSorted() as string] ?? (
                                     <span
-                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
-                                      <ChevronUpIcon className={`h-4 w-4`} />
-                                    </span>
-                                  ),
-                                  desc: (
-                                    <span
-                                      className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
+                                      className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
                                       <ChevronDownIcon className={`h-4 w-4`} />
                                     </span>
-                                  )
-                                }[header.column.getIsSorted() as string] ?? (
-                                  <span
-                                    className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
-                                    <ChevronDownIcon className={`h-4 w-4`} />
-                                  </span>
-                                )}
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          </DraggableHeader>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
-                    {table.getRowModel().rows.map((row) => (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map((cell) => (
-                          <td
-                            key={cell.id}
-                            className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100">
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="flex flex-0 ">
-                <p
-                  className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
-                  {`${rows.length} results found`}
-                </p>
+                            </DraggableHeader>
+                          ))}
+                        </tr>
+                      ))}
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
+                      {table.getRowModel().rows.map((row) => (
+                        <tr key={row.id}>
+                          {row.getVisibleCells().map((cell) => (
+                            <td
+                              key={cell.id}
+                              className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100">
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="flex flex-0 ">
+                  <p
+                    className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
+                    {`${rows.length} results found`}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </ScrollingComponent>
-        <Preview />
-      </DndProvider>
-    </div>
+          </ScrollingComponent>
+          <Preview />
+        </DndProvider>
+      </div>
+      <MobileTable
+        data={rows}
+        sortingOrder={defaultSorting}
+        columnList={mobileColumnList}
+        rowLabels={mobileColumns}
+        columnSelectOptions={mobileSelectOptions}
+      />
+    </>
   )
 }
 

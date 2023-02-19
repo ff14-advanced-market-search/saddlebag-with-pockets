@@ -116,7 +116,7 @@ function MobileTable({
           })}
         </select>
       </div>
-      <div className="overflow-y-scroll max-h-96">
+      <div className="overflow-y-scroll max-h-[calc(100vh-160px)]">
         <table className="max-w-screen relative divide-y divide-gray-300 dark:divide-gray-600">
           <thead className="max-w-screen">
             <tr className="text-gray-900 font-semibold dark:text-gray-100">
@@ -160,13 +160,21 @@ function MobileTable({
                     setModal({ title, data: row })
                   }}>
                   {columns.map((col, i) => {
+                    const maybeRow = rowLabels.find(
+                      ({ columnId }) => columnId === col.columnId
+                    )
                     return (
                       <td
                         key={`cell-${rowIndex}-${i}`}
                         className={`p-2 ${
                           i !== 0 ? 'text-center' : 'text-left'
                         }`}>
-                        {parseToLocaleString(row[col.columnId])}
+                        {maybeRow?.accessor
+                          ? maybeRow.accessor({
+                              row,
+                              getValue: () => row[col.columnId]
+                            })
+                          : parseToLocaleString(row[col.columnId])}
                       </td>
                     )
                   })}
@@ -181,8 +189,9 @@ function MobileTable({
         <Modal onClose={() => setModal(null)} title={modal.title}>
           <div className="bg-white dark:bg-slate-800 text-xs text-gray-800 dark:text-gray-200">
             {rowLabels.map((item, index) => {
-              const modalItem =
-                parseToLocaleString(modal.data[item.columnId]) || 'n/a'
+              const modalItem = item.accessor
+                ? modal.data[item.columnId]
+                : parseToLocaleString(modal.data[item.columnId]) || 'n/a'
               return (
                 <div
                   key={`${index}-${item.header}`}
@@ -191,14 +200,14 @@ function MobileTable({
                     {item.header}:
                   </p>
 
-                  <p>
-                    {item.accessor
-                      ? item.accessor({
-                          row: modal.data,
-                          getValue: () => modalItem
-                        })
-                      : modalItem}
-                  </p>
+                  {item.accessor ? (
+                    item.accessor({
+                      row: modal.data,
+                      getValue: () => modalItem
+                    })
+                  ) : (
+                    <p>{modalItem}</p>
+                  )}
                 </div>
               )
             })}

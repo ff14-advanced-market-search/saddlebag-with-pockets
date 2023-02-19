@@ -11,6 +11,7 @@ const DraggableHeader = ({
   column,
   index,
   reorder,
+  darkMode,
   children,
   ...rest
 }: any) => {
@@ -28,7 +29,8 @@ const DraggableHeader = ({
     })
   })
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_props, drag, preview] = useDrag({
     type: ItemTypes.COLUMN,
     item: () => {
       return {
@@ -42,6 +44,8 @@ const DraggableHeader = ({
     })
   })
 
+  const outlineColor = darkMode ? 'rgb(121, 124, 128)' : 'rgb(55, 65, 81)'
+
   drag(drop(ref))
 
   useEffect(() => {
@@ -53,9 +57,7 @@ const DraggableHeader = ({
       ref={ref}
       style={{
         cursor: 'move',
-        outline: isOver ? 'solid 2px rgb(55 65 81)' : '',
-        opacity: isDragging || isOver ? 0.5 : 1,
-        borderRadius: '0.375rem'
+        outline: isOver ? `solid 2px ${outlineColor}` : ''
       }}
       {...rest}>
       {children}
