@@ -29,6 +29,8 @@ import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
+import PriceQuantityLineChart from '~/components/Charts/PriceQuantityLineChart'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -125,9 +127,16 @@ const Index = () => {
   const transition = useTransition()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<ActionResponse>()
+
   const [filteredIds, setFilteredIds] = useState<Array<number>>([])
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [chartData, setChartData] = useState<{
+    p: Array<number>
+    q: Array<number>
+    title: string
+  } | null>(null)
 
+  const { darkmode } = useTypedSelector((state) => state.user)
   const pageTitle =
     'Commodity Shortage Futures - Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!'
 
@@ -145,6 +154,7 @@ const Index = () => {
     }
 
     if ('data' in results) {
+      console.log(results)
       const codeString = getCodeString(results.alert_json, filteredIds)
 
       const OribosLink = getOribosLink(
@@ -175,6 +185,23 @@ const Index = () => {
               />
             )
           }
+        },
+        {
+          columnId: 'chart_button',
+          header: 'Last 24 Hours',
+          accessor: ({ row }) => (
+            <button
+              className="inline-flex items-center rounded-md bg-black px-2.5 py-2 text-sm font-medium text-white"
+              onClick={() =>
+                setChartData({
+                  title: row.item_name,
+                  p: row.chart_p,
+                  q: row.chart_q
+                })
+              }>
+              Price V Quantity
+            </button>
+          )
         },
         {
           columnId: 'item_id',
@@ -306,6 +333,20 @@ const Index = () => {
               columnSelectOptions={mobileSelectOptions}
               sortingOrder={[{ id: 'quality', desc: true }]}
             />
+            {chartData && (
+              <Modal
+                title="Price & Quantity"
+                onClose={() => setChartData(null)}>
+                <div className="min-w-72 sm:min-w-96 md:min-w-[480px]">
+                  <PriceQuantityLineChart
+                    itemName={chartData.title}
+                    prices={chartData.p}
+                    quantities={chartData.q}
+                    darkMode={darkmode}
+                  />
+                </div>
+              </Modal>
+            )}
           </>
         </PageWrapper>
       )
