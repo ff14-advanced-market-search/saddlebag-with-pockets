@@ -27,6 +27,8 @@ export interface Prediction {
   quantity_decline_rate_per_hour: number
   tsm_avg_price: number
   tsm_avg_sale_rate_per_hour: number
+  chart_p: Array<number>
+  chart_q: Array<number>
 }
 
 export interface PredictionAuction {
