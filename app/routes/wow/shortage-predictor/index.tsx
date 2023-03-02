@@ -1,11 +1,10 @@
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
-import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
   ItemClassSelect,
   ItemQualitySelect
 } from '~/components/form/WoW/WoWScanForm'
-import { useState } from 'react'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
@@ -13,24 +12,13 @@ import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import type {
   ShortagePredictorProps,
-  PredictionResponse,
-  AlertJson,
-  Prediction
+  PredictionResponse
 } from '~/requests/WoW/ShortagePredictor'
 import WoWShortagePredictor from '~/requests/WoW/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
-import Modal from '~/components/form/Modal'
-import FullTable from '~/components/Tables/FullTable'
-import type { ColumnList } from '~/components/types'
-import { getOribosLink } from '~/components/utilities/getOribosLink'
-import Label from '~/components/form/Label'
-import { SubmitButton } from '~/components/form/SubmitButton'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
-import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
-import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
-import PriceQuantityLineChart from '~/components/Charts/PriceQuantityLineChart'
-import { useTypedSelector } from '~/redux/useTypedSelector'
+import { Results } from '~/components/WoWResults/ShortagePredictor/Results'
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
   homeRealmName: 'Home Realm Name',
@@ -44,6 +32,10 @@ const inputMap: Record<keyof ShortagePredictorProps, string> = {
   desiredQuantityVsAvgPercent:
     'Desired Current Quantity Percent vs Average Quantity'
 }
+
+const pageTitle = 'Commodity Shortage Futures'
+const pageDescription =
+  'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -104,17 +96,6 @@ export const action: ActionFunction = async ({ request }) => {
   return WoWShortagePredictor(validInput.data)
 }
 
-const getCodeString = (alertJson: AlertJson, idsToFiler: Array<number>) => {
-  return `{\n  "homeRealmName": "${alertJson.homeRealmName}",\n  "region": "${
-    alertJson.region
-  }",\n  "user_auctions": [${alertJson.user_auctions
-    .filter((auction) => !idsToFiler.includes(auction.itemID))
-    .map(({ itemID, price, desired_state }) => {
-      return `\n    { "itemID": ${itemID}, "price": ${price}, "desired_state": "${desired_state}" }`
-    })
-    .join(',')}\n  ]\n}`
-}
-
 type ActionResponse = PredictionResponse | { exception: string } | {}
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -127,18 +108,6 @@ const Index = () => {
   const transition = useTransition()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<ActionResponse>()
-
-  const [filteredIds, setFilteredIds] = useState<Array<number>>([])
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [chartData, setChartData] = useState<{
-    p: Array<number>
-    q: Array<number>
-    title: string
-  } | null>(null)
-
-  const { darkmode } = useTypedSelector((state) => state.user)
-  const pageTitle =
-    'Commodity Shortage Futures - Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!'
 
   const loading = transition.state === 'submitting'
 
@@ -154,202 +123,7 @@ const Index = () => {
     }
 
     if ('data' in results) {
-      console.log(results)
-      const codeString = getCodeString(results.alert_json, filteredIds)
-
-      const OribosLink = getOribosLink(
-        results.alert_json.homeRealmName,
-        'Oribos',
-        results.alert_json.region
-      )
-
-      const columnList: Array<ColumnList<Prediction>> = [
-        { columnId: 'item_name', header: 'Item Name' },
-        {
-          columnId: 'item_id_filter',
-          header: 'Added to Alert Input',
-          accessor: ({ row }) => {
-            const itemId = row.item_id
-            return (
-              <input
-                className="min-w-4 min-h-4 border-box rounded-md"
-                type="checkbox"
-                checked={!filteredIds.includes(itemId)}
-                onChange={(e) => {
-                  if (filteredIds.includes(itemId)) {
-                    setFilteredIds(filteredIds.filter((id) => id !== itemId))
-                  } else {
-                    setFilteredIds([...filteredIds, itemId])
-                  }
-                }}
-              />
-            )
-          }
-        },
-        {
-          columnId: 'chart_button',
-          header: 'Last 24 Hours',
-          accessor: ({ row }) => (
-            <button
-              className="inline-flex items-center rounded-md bg-black px-2.5 py-2 text-sm font-medium text-white"
-              onClick={() =>
-                setChartData({
-                  title: row.item_name,
-                  p: row.chart_p,
-                  q: row.chart_q
-                })
-              }>
-              Price V Quantity
-            </button>
-          )
-        },
-        {
-          columnId: 'item_id',
-          header: 'Oribos Link',
-          accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
-        },
-        { columnId: 'quality', header: 'Quality' },
-        {
-          columnId: 'hours_til_shortage',
-          header: 'Estimated Hours until Shortage'
-        },
-        {
-          columnId: 'quantity_decline_rate_per_hour',
-          header: 'Quantity Decline Rate per Hour'
-        },
-        {
-          columnId: 'tsm_avg_sale_rate_per_hour',
-          header: 'TSM Sales Per Hour'
-        },
-        {
-          columnId: 'current_quantity_vs_avg_percent',
-          header: 'Quantity Percent Available',
-          accessor: ({ getValue }) => {
-            const value = getValue()
-            if (typeof value === 'string') {
-              return <p>{parseFloat(value).toFixed(2)}%</p>
-            }
-            return <p>{(value as number).toFixed(2)}%</p>
-          }
-        },
-        {
-          columnId: 'current_quantity',
-          header: 'Current Quantity Amount Available'
-        },
-        { columnId: 'avg_quantity', header: 'Avg Quantity' },
-        { columnId: 'current_price', header: 'Price' },
-        { columnId: 'current_avg_price', header: 'Avg Price' },
-        { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
-        {
-          columnId: 'current_price_vs_avg_percent',
-          header: 'Price vs Avg %',
-          accessor: ({ getValue }) => {
-            const value = getValue()
-            if (typeof value === 'string') {
-              return <p>{parseFloat(value).toFixed(2)}%</p>
-            }
-            return <p>{(value as number).toFixed(2)}%</p>
-          }
-        }
-      ]
-
-      const mobileColumnList = [
-        { columnId: 'item_name', header: 'Item Name' },
-        { columnId: 'quality', header: 'Quality' }
-      ]
-
-      const mobileSelectOptions = [
-        'quality',
-        'current_quantity',
-        'hours_til_shortage',
-        'quantity_decline_rate_per_hour',
-        'tsm_avg_sale_rate_per_hour',
-        'tsm_avg_sale_rate_per_hour',
-        'current_quantity_vs_avg_percent',
-        'avg_quantity',
-        'current_price',
-        'current_avg_price',
-        'tsm_avg_price',
-        'current_price_vs_avg_percent'
-      ]
-
-      return (
-        <PageWrapper>
-          <>
-            <ContentContainer>
-              <>
-                <Title title={pageTitle} />
-                <Label>
-                  Discord Bot Alert Data --- Plug this into our discord bot with
-                  the command '/wow price-register', so we can monitor these
-                  items and alert you when the price spike happens!
-                </Label>
-                <div className="flex justify-between items-center">
-                  <div className="h-9">
-                    <SubmitButton
-                      title="Copy Input Data"
-                      onClick={async () => {
-                        if (
-                          typeof window !== 'undefined' &&
-                          typeof document !== 'undefined'
-                        ) {
-                          if (!window.isSecureContext) {
-                            alert('Failed to copy text to clipboard')
-                            return
-                          }
-                          await navigator.clipboard.writeText(codeString)
-                          alert('Copied to clipboard')
-                        }
-                      }}
-                    />
-                  </div>
-                  <div className="max-w-[140px] my-3">
-                    <ModalToggleButton onClick={() => setModalIsOpen(true)}>
-                      View input
-                    </ModalToggleButton>
-                  </div>
-                </div>
-              </>
-            </ContentContainer>
-
-            {modalIsOpen && (
-              <Modal title="" onClose={() => setModalIsOpen(false)}>
-                <pre className="overflow-x-scroll bg-slate-700 dark:bg-slate-900 text-gray-200 p-4 rounded-md w-full">
-                  <code>{codeString}</code>
-                </pre>
-              </Modal>
-            )}
-            <div className="hidden sm:block">
-              <FullTable<Prediction>
-                data={results.data}
-                columnList={columnList}
-                sortingOrder={[{ id: 'quality', desc: true }]}
-              />
-            </div>
-            <MobileTable
-              data={results.data}
-              columnList={mobileColumnList}
-              rowLabels={columnList}
-              columnSelectOptions={mobileSelectOptions}
-              sortingOrder={[{ id: 'quality', desc: true }]}
-            />
-            {chartData && (
-              <Modal
-                title="Price & Quantity"
-                onClose={() => setChartData(null)}>
-                <div className="min-w-72 sm:min-w-96 md:min-w-[480px]">
-                  <PriceQuantityLineChart
-                    itemName={chartData.title}
-                    prices={chartData.p}
-                    quantities={chartData.q}
-                    darkMode={darkmode}
-                  />
-                </div>
-              </Modal>
-            )}
-          </>
-        </PageWrapper>
-      )
+      return <Results results={results} pageTitle={pageTitle} />
     }
   }
   const error =
@@ -358,6 +132,7 @@ const Index = () => {
     <PageWrapper>
       <SmallFormContainer
         title={pageTitle}
+        description={pageDescription}
         onClick={onSubmit}
         error={error}
         loading={loading}>

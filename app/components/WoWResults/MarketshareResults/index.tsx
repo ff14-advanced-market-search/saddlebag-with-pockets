@@ -6,7 +6,7 @@ import { RadioButtons } from '~/components/Common/RadioButtons'
 import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
-import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
+import type { ItemStats } from '~/components/WoWResults/ShortagePredictor/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import MobileTable from '../FullScan/MobileTable'
 

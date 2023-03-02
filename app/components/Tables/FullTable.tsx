@@ -116,7 +116,8 @@ function FullTable<Type>({
   useEffect(() => {
     // @ts-ignore
     table.setSorting(sortingOrder)
-  }, [table, sortingOrder])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (document !== undefined && window !== undefined) {
