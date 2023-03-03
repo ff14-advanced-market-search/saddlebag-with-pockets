@@ -2,6 +2,7 @@ import { TrashIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import { RadioButtons } from '~/components/Common/RadioButtons'
+import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemNameById } from '~/utils/items'
@@ -18,10 +19,12 @@ const Results = ({
     addIds: Array<string>
     removeIds: Array<string>
     hqOnly: boolean
+    ignoreDataAfterHours: number
   }>({
     addIds: [],
     removeIds: [],
-    hqOnly: false
+    hqOnly: false,
+    ignoreDataAfterHours: 24 * 30
   })
 
   const [modal, setModal] = useState<{
@@ -32,7 +35,9 @@ const Results = ({
     ','
   )}],\n  "ignore_ids": [${info.removeIds.join(
     ','
-  )}],\n  "hq_only": ${info.hqOnly.toString()}\n}`
+  )}],\n  "hq_only": ${info.hqOnly.toString()},\n  "ignore_data_after_hours": ${
+    info.ignoreDataAfterHours
+  }\n}`
 
   const isAddModal = modal.form === 'addIds'
   return (
@@ -69,7 +74,6 @@ const Results = ({
                 { label: 'Selected sales', value: 'addIds' }
               ]}
               onChange={(value) => {
-                console.log(value)
                 if (value !== 'addIds' && value !== 'removeIds') return
                 setModal({ form: value, open: false })
                 setInfo({
@@ -102,6 +106,23 @@ const Results = ({
                 onChange={() =>
                   setInfo((state) => ({ ...state, hqOnly: !state.hqOnly }))
                 }
+              />
+            </div>
+            <div className="max-w-sm">
+              <InputWithLabel
+                type="number"
+                labelTitle="Stop alerting after:"
+                inputTag={'Hours'}
+                toolTip="Dont alert me after data is this many hours old"
+                min={1}
+                step={1}
+                value={info.ignoreDataAfterHours}
+                onChange={(e) => {
+                  setInfo((state) => ({
+                    ...state,
+                    ignoreDataAfterHours: parseInt(e.target.value, 10)
+                  }))
+                }}
               />
             </div>
 
