@@ -111,8 +111,9 @@ const Results = ({
             <div className="max-w-sm">
               <InputWithLabel
                 type="number"
-                labelTitle="Hours to alert on"
+                labelTitle="Stop alerting after:"
                 inputTag={'Hours'}
+                toolTip="Dont alert me after data is this many hours old"
                 min={1}
                 step={1}
                 value={info.ignoreDataAfterHours}
