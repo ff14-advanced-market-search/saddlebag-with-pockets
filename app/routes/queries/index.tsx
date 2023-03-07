@@ -64,6 +64,13 @@ const ffxivPages = [
     description: 'Compare prices on items between servers to find the best server to sell your items on.',
     Icon: ChartSquareBarIcon,
     href: '/queries/world-comparison'
+  },
+  {
+    name: 'Qualified Sale Leads',
+    href: 'https://www.patreon.com/indopan',
+    description: 'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
+    Icon: DocumentSearchIcon,
+    external: true
   }
 ]
 
