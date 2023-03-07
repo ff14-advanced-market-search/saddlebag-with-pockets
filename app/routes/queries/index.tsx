@@ -1,153 +1,85 @@
-import { DocumentSearchIcon } from '@heroicons/react/outline'
 import {
-  COMMODITY_SCAN_PATH,
-  FAST_SCAN_PATH,
-  MEGA_VALUE_PATH,
-  NQ_OUT_OF_STOCK_PATH,
-  OLIVIA_10_PATH,
-  OLIVIA_11_PATH,
-  OLIVIA_1_PATH,
-  OLIVIA_2_PATH,
-  OLIVIA_3_PATH,
-  OLIVIA_4_PATH,
-  OLIVIA_5_PATH,
-  OLIVIA_6_PATH,
-  OLIVIA_7_PATH,
-  OLIVIA_8_PATH,
-  OLIVIA_9_PATH,
-  OUT_OF_STOCK_PATH,
-  VENDOR_PATH
-} from '~/utils/redirectOnPath'
+  DocumentSearchIcon,
+  ChartSquareBarIcon,
+  PencilAltIcon
+} from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
-const recommendedQueries = [
+const ffxivPages = [
   {
-    name: 'Olivias Furnishing Items Medium Sell',
-    description: 'Finds medium priced furniture to sell.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_5_PATH
-  },
-  {
-    name: 'Olivias Consumable Collectables Medium Sell',
-    description: 'Medium priced Consumable Collectables to sell.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_6_PATH
-  },
-  {
-    name: 'Fast Sales Search',
-    description: 'Search for items with high rate of sales.',
-    Icon: DocumentSearchIcon,
-    href: FAST_SCAN_PATH
-  },
-  {
-    name: 'Commodities Search',
+    name: 'Reselling Trading Searches',
     description:
-      'Search for items that sell in larger stack sizes (i.e. larger quantities)',
-    Icon: DocumentSearchIcon,
-    href: COMMODITY_SCAN_PATH
+      'Find items you can buy on other servers and resell on your own for a profit!',
+    Icon: ChartSquareBarIcon,
+    href: '/queries/recommended'
   },
   {
-    name: 'Mega Value Search',
+    name: 'Guides on how to use Saddlebag Exchange!',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
+    description: 'A link to all of our wiki guides on how to use the website.',
+    Icon: DocumentSearchIcon,
+    external: true
+  },
+  {
+    name: 'Discord Undercut Alert Generator',
     description:
-      'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
-    Icon: DocumentSearchIcon,
-    href: MEGA_VALUE_PATH
+      'Undercut Alerts will notify you via discord direct message when you are undercut.',
+    Icon: PencilAltIcon,
+    href: '/undercut'
   },
   {
-    name: 'NPC Vendor Item Search',
+    name: 'Undercut Alerts Guide',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
+    description: 'A guide on how to setup and use Undercut Alerts.',
+    Icon: DocumentSearchIcon,
+    external: true
+  },
+  {
+    name: 'Discord Price Discount Sniper and Price Spike Alert Generator',
     description:
-      'Search for items sold by NPC Vendors which can be resold on the marketboard.',
-    Icon: DocumentSearchIcon,
-    href: VENDOR_PATH
+      'Price Discount Sniper and Price Spike Alerts will notify you via discord direct message when items go above or below prices you set.',
+    Icon: PencilAltIcon,
+    href: '/price-sniper'
   },
   {
-    name: 'Beginner Out of Stock Search',
+    name: 'Price Discount Sniper and Price Spike Alerts Guide',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Price-Sniper-and-Item-Price-Alerts',
     description:
-      'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
+      'A guide on how to setup and use Price Discount Sniper and Price Spike Alerts.',
     Icon: DocumentSearchIcon,
-    href: OUT_OF_STOCK_PATH
+    external: true
   },
   {
-    name: 'Low Quality Out of Stock Search',
+    name: 'Item History Statistics and Graphs',
     description:
-      'Same rules as the out of stock search, but this one looks for Low Quality items that can sell for like furniture or dyes that can sell for much higher prices than out of stock armor or weapons.',
-    Icon: DocumentSearchIcon,
-    href: NQ_OUT_OF_STOCK_PATH
+      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
+    Icon: ChartSquareBarIcon,
+    href: '/queries/item-history'
   },
   {
-    name: 'Olivias General Flipping Quick Sell',
-    description: 'Low Investment General Flipping Quick Sell.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_1_PATH
-  },
-  {
-    name: 'Olivias Class Quest Items Quick Sell',
-    description: 'Low Investment Class Quest Items Quick Sell.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_2_PATH
-  },
-  {
-    name: 'Olivias Furnishing Items Quick Sell',
-    description: 'Low Investment Furnishing Items Quick Sell.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_3_PATH
-  },
-  {
-    name: 'Olivias Minions, Mounts, and Collectable Items Quick Sell',
+    name: 'Listings Comparison and Competition Metric',
     description:
-      'Low Investment Minions, Mounts, and Collectable Items Quick Sell.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_4_PATH
+      'Shows you how tough the undercutting competition is on specific items.',
+    Icon: ChartSquareBarIcon,
+    href: '/queries/listings'
   },
   {
-    name: 'Olivias Glamor Medium Sell',
+    name: 'Export Trading Search',
     description:
-      'Medium priced glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_7_PATH
+      'Compare prices on items between servers to find the best server to sell your items on.',
+    Icon: ChartSquareBarIcon,
+    href: '/queries/world-comparison'
   },
   {
-    name: 'Olivias High Investment Furniture Items',
-    description: 'Furnishing items with big profits but slow sales',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_10_PATH
-  },
-  {
-    name: 'Olivias High Investment Collectable Items',
-    description: 'Collectable items with big profits but slow sales',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_8_PATH
-  },
-  {
-    name: 'Olivias High Value Glamor Items',
+    name: 'Qualified Sale Leads',
+    href: 'https://www.patreon.com/indopan',
     description:
-      'Finds expensive glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
+      'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
     Icon: DocumentSearchIcon,
-    href: OLIVIA_9_PATH
-  },
-  {
-    name: 'Olivias High Value Materials',
-    description: 'Finds expensive Materials and Trade goods.',
-    Icon: DocumentSearchIcon,
-    href: OLIVIA_11_PATH
+    external: true
   }
 ]
-
-// Save these old searches for a rainy day, now we have olivias instead
-// {
-//   name: 'High Value Search',
-//   description: 'Search for high value trades.',
-//   Icon: DocumentSearchIcon,
-//   href: '/queries/value-scan'
-// },
-// {
-//   name: 'Quest Item Search',
-//   description:
-//     'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
-//   Icon: DocumentSearchIcon,
-//   href: QUEST_SCAN_PATH
-// },
 
 export default function Index() {
   return (
@@ -157,11 +89,11 @@ export default function Index() {
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              Recommended Queries
+              FFXIV Marketplace Tools
             </h1>
             <div
               className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
-              {recommendedQueries.map((query) => {
+              {ffxivPages.map((query) => {
                 return <TileLink key={query.name} {...query} />
               })}
             </div>
