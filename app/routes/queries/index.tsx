@@ -15,16 +15,37 @@ const ffxivPages = [
     href: '/queries/recommended'
   },
   {
+    name: 'Guides on how to use Saddlebag Exchange!',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
+    description: 'A link to all of our wiki guides on how to use the website.',
+    Icon: PencilAltIcon,
+    external: true
+  },
+  {
     name: 'Discord Undercut Alert Generator',
     description: 'Undercut Alerts will notify you via discord direct message when you are undercut.',
     Icon: PencilAltIcon,
     href: '/undercut'
   },
   {
-    name: 'Discord Price Sniper and Sale Alert Generator',
-    description: 'Price Sniper and Sale Alerts will notify you via discord direct message when items go above or below prices you set.',
+    name: 'Undercut Alerts Guide',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
+    description: 'A guide on how to setup and use Undercut Alerts.',
+    Icon: PencilAltIcon,
+    external: true
+  },
+  {
+    name: 'Discord Price Discount Sniper and Price Spike Alert Generator',
+    description: 'Price Discount Sniper and Price Spike Alerts will notify you via discord direct message when items go above or below prices you set.',
     Icon: PencilAltIcon,
     href: '/price-sniper'
+  },
+  {
+    name: 'Price Discount Sniper and Price Spike Alerts Guide',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Price-Sniper-and-Item-Price-Alerts',
+    description: 'A guide on how to setup and use Price Sniper and Sale Alerts.',
+    Icon: PencilAltIcon,
+    external: true
   },
   {
     name: 'Item History Statistics and Graphs',
