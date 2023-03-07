@@ -8,41 +8,41 @@ import TileLink from '~/components/Common/TileLink'
 
 const ffxivPages = [
   {
-    name: 'Recommended Queries',
+    name: 'Reselling Trading Searches',
     description:
-      'Find some useful marketplace searches to find items to sell on your world.',
+      'Find items you can buy on other servers and resell on your own for a profit!',
     Icon: ChartSquareBarIcon,
     href: '/queries/recommended'
   },
   {
-    name: 'Item listing details search',
-    description: 'Find recent listings for specific items.',
-    Icon: DocumentSearchIcon,
-    href: '/queries/listings'
-  },
-  {
-    name: 'Item history search',
-    description: 'Find historical data for specific items.',
-    Icon: DocumentSearchIcon,
-    href: '/queries/item-history'
-  },
-  {
-    name: 'Item world comparison',
-    description: 'Compare marketplace information for items between worlds.',
-    Icon: DocumentSearchIcon,
-    href: '/queries/world-comparison'
-  },
-  {
-    name: 'Discord undercut alerts',
-    description: 'Generate the input for our patreon undercut alerts.',
+    name: 'Discord Undercut Alert Generator',
+    description: 'Undercut Alerts will notify you via discord direct message when you are undercut.',
     Icon: PencilAltIcon,
     href: '/undercut'
   },
   {
-    name: 'Discord price sniper alerts',
-    description: 'Generate the input for our patreon price sniper alerts.',
+    name: 'Discord Price Sniper and Sale Alert Generator',
+    description: 'Price Sniper and Sale Alerts will notify you via discord direct message when items go above or below prices you set.',
     Icon: PencilAltIcon,
     href: '/price-sniper'
+  }
+  {
+    name: 'Item History Statistics and Graphs',
+    description: 'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
+    Icon: DocumentSearchIcon,
+    href: '/queries/item-history'
+  },
+  {
+    name: 'Listings Comparison and Competition Metric',
+    description: 'Shows you how tough the undercutting competition is on specific items.',
+    Icon: DocumentSearchIcon,
+    href: '/queries/listings'
+  },
+  {
+    name: 'Export Trading Search',
+    description: 'Compare prices on items between servers to find the best server to sell your items on.',
+    Icon: DocumentSearchIcon,
+    href: '/queries/world-comparison'
   }
 ]
 
