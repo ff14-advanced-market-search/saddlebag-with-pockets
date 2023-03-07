@@ -37,9 +37,8 @@ const recommendedQueries = [
   {
     name: 'Undercut Discord Alerts',
     description: 'Alerts you whenever you are undercut!'
-    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
-    icon: DocumentSearchIcon,
-    external: true
+    href: 'undercut',
+    icon: DocumentSearchIcon
   },
   {
     name: 'Item History Statistics and Graphs',
