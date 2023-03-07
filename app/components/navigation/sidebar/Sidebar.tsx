@@ -97,7 +97,7 @@ const navGroups: Array<{
     openMatch: '/queries/',
     links: [
       {
-        name: 'Import Trading Searches',
+        name: 'Reselling Trading Searches',
         href: 'queries',
         icon: ChartSquareBarIcon
       },
@@ -133,7 +133,7 @@ const navGroups: Array<{
         external: true
       },
       {
-        name: 'Qualified Sale Alerts',
+        name: 'Qualified Sale Leads',
         href: 'https://www.patreon.com/indopan',
         icon: DocumentSearchIcon,
         external: true

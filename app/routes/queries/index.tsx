@@ -35,6 +35,19 @@ const recommendedQueries = [
     href: OLIVIA_6_PATH
   },
   {
+    name: 'Undercut Discord Alerts',
+    description: 'Alerts you whenever you are undercut!'
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
+    icon: DocumentSearchIcon,
+    external: true
+  },
+  {
+    name: 'Item History Statistics and Graphs',
+    description: 'Helps you figure out if something is worth selling based on sale history.'
+    href: 'queries/item-history',
+    icon: DocumentSearchIcon
+  },
+  {
     name: 'Fast Sales Search',
     description: 'Search for items with high rate of sales.',
     Icon: DocumentSearchIcon,
