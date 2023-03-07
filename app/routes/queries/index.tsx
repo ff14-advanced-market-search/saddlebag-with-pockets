@@ -37,13 +37,13 @@ const recommendedQueries = [
   {
     name: 'Undercut Discord Alerts',
     description: 'Alerts you whenever you are undercut!'
-    href: 'undercut',
+    href: '/undercut',
     icon: DocumentSearchIcon
   },
   {
     name: 'Item History Statistics and Graphs',
     description: 'Helps you figure out if something is worth selling based on sale history.'
-    href: 'queries/item-history',
+    href: '/queries/item-history',
     icon: DocumentSearchIcon
   },
   {
