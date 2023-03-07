@@ -25,7 +25,7 @@ const ffxivPages = [
     description: 'Price Sniper and Sale Alerts will notify you via discord direct message when items go above or below prices you set.',
     Icon: PencilAltIcon,
     href: '/price-sniper'
-  }
+  },
   {
     name: 'Item History Statistics and Graphs',
     description: 'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
