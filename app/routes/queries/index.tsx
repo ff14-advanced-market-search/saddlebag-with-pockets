@@ -18,7 +18,7 @@ const ffxivPages = [
     name: 'Guides on how to use Saddlebag Exchange!',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
     description: 'A link to all of our wiki guides on how to use the website.',
-    Icon: PencilAltIcon,
+    Icon: DocumentSearchIcon,
     external: true
   },
   {
@@ -31,7 +31,7 @@ const ffxivPages = [
     name: 'Undercut Alerts Guide',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
     description: 'A guide on how to setup and use Undercut Alerts.',
-    Icon: PencilAltIcon,
+    Icon: DocumentSearchIcon,
     external: true
   },
   {
@@ -43,26 +43,26 @@ const ffxivPages = [
   {
     name: 'Price Discount Sniper and Price Spike Alerts Guide',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Price-Sniper-and-Item-Price-Alerts',
-    description: 'A guide on how to setup and use Price Sniper and Sale Alerts.',
-    Icon: PencilAltIcon,
+    description: 'A guide on how to setup and use Price Discount Sniper and Price Spike Alerts.',
+    Icon: DocumentSearchIcon,
     external: true
   },
   {
     name: 'Item History Statistics and Graphs',
     description: 'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
-    Icon: DocumentSearchIcon,
+    Icon: ChartSquareBarIcon,
     href: '/queries/item-history'
   },
   {
     name: 'Listings Comparison and Competition Metric',
     description: 'Shows you how tough the undercutting competition is on specific items.',
-    Icon: DocumentSearchIcon,
+    Icon: ChartSquareBarIcon,
     href: '/queries/listings'
   },
   {
     name: 'Export Trading Search',
     description: 'Compare prices on items between servers to find the best server to sell your items on.',
-    Icon: DocumentSearchIcon,
+    Icon: ChartSquareBarIcon,
     href: '/queries/world-comparison'
   }
 ]
