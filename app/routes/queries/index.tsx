@@ -23,7 +23,8 @@ const ffxivPages = [
   },
   {
     name: 'Discord Undercut Alert Generator',
-    description: 'Undercut Alerts will notify you via discord direct message when you are undercut.',
+    description:
+      'Undercut Alerts will notify you via discord direct message when you are undercut.',
     Icon: PencilAltIcon,
     href: '/undercut'
   },
@@ -36,39 +37,45 @@ const ffxivPages = [
   },
   {
     name: 'Discord Price Discount Sniper and Price Spike Alert Generator',
-    description: 'Price Discount Sniper and Price Spike Alerts will notify you via discord direct message when items go above or below prices you set.',
+    description:
+      'Price Discount Sniper and Price Spike Alerts will notify you via discord direct message when items go above or below prices you set.',
     Icon: PencilAltIcon,
     href: '/price-sniper'
   },
   {
     name: 'Price Discount Sniper and Price Spike Alerts Guide',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Price-Sniper-and-Item-Price-Alerts',
-    description: 'A guide on how to setup and use Price Discount Sniper and Price Spike Alerts.',
+    description:
+      'A guide on how to setup and use Price Discount Sniper and Price Spike Alerts.',
     Icon: DocumentSearchIcon,
     external: true
   },
   {
     name: 'Item History Statistics and Graphs',
-    description: 'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
+    description:
+      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
     Icon: ChartSquareBarIcon,
     href: '/queries/item-history'
   },
   {
     name: 'Listings Comparison and Competition Metric',
-    description: 'Shows you how tough the undercutting competition is on specific items.',
+    description:
+      'Shows you how tough the undercutting competition is on specific items.',
     Icon: ChartSquareBarIcon,
     href: '/queries/listings'
   },
   {
     name: 'Export Trading Search',
-    description: 'Compare prices on items between servers to find the best server to sell your items on.',
+    description:
+      'Compare prices on items between servers to find the best server to sell your items on.',
     Icon: ChartSquareBarIcon,
     href: '/queries/world-comparison'
   },
   {
     name: 'Qualified Sale Leads',
     href: 'https://www.patreon.com/indopan',
-    description: 'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
+    description:
+      'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
     Icon: DocumentSearchIcon,
     external: true
   }
