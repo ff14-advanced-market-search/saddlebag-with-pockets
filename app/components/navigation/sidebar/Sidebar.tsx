@@ -98,7 +98,7 @@ const navGroups: Array<{
     links: [
       {
         name: 'Import Trading Searches',
-        href: 'queries',
+        href: 'queries/recommended',
         icon: ChartSquareBarIcon
       },
       {
