@@ -1,4 +1,8 @@
-import { DocumentSearchIcon } from '@heroicons/react/outline'
+import {
+  DocumentSearchIcon,
+  ChartSquareBarIcon,
+  PencilAltIcon
+} from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -7,7 +11,7 @@ const ffxivPages = [
     name: 'Recommended Queries',
     description:
       'Find some useful marketplace searches to find items to sell on your world.',
-    Icon: DocumentSearchIcon,
+    Icon: ChartSquareBarIcon,
     href: '/queries/recommended'
   },
   {
@@ -31,13 +35,13 @@ const ffxivPages = [
   {
     name: 'Discord undercut alerts',
     description: 'Generate the input for our patreon undercut alerts.',
-    Icon: DocumentSearchIcon,
+    Icon: PencilAltIcon,
     href: '/undercut'
   },
   {
     name: 'Discord price sniper alerts',
     description: 'Generate the input for our patreon price sniper alerts.',
-    Icon: DocumentSearchIcon,
+    Icon: PencilAltIcon,
     href: '/price-sniper'
   }
 ]

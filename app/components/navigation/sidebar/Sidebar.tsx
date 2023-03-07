@@ -97,7 +97,7 @@ const navGroups: Array<{
     openMatch: '/queries/',
     links: [
       {
-        name: 'Import Trading Searches',
+        name: 'Reselling Trading Searches',
         href: 'queries/recommended',
         icon: ChartSquareBarIcon
       },
