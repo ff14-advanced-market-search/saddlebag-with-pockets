@@ -3,9 +3,7 @@ import React, { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
-import { Modal, ModalContent } from './CheckBoxModal'
-
-const noop = () => {}
+import ItemsFilter from './ItemsFilter'
 
 const FullScanForm = ({
   loading,
@@ -38,8 +36,6 @@ const FullScanForm = ({
   defaultOutOfStockChecked?: boolean
   error?: string
 }) => {
-  const [ids, setIds] = useState(defaultFilters)
-  const [isOpen, setIsOpen] = useState(false)
   const [formOpened, setFormOpened] = useState(false)
   const [hqChecked, setHQChecked] = useState(defaultHQChecked)
 
@@ -352,33 +348,12 @@ const FullScanForm = ({
                       />
                     </div>
                   </div>
-
-                  <div className="col-span-6 sm:col-span-3 xl:col-span-2">
-                    <label
-                      htmlFor="filters"
-                      className="block text-sm my-1 font-medium text-gray-700 dark:text-gray-300">
-                      Item Filter
-                    </label>
-                    <div className={`mt-1 flex rounded-md shadow-sm`}>
-                      <input
-                        name="filters"
-                        value={ids.map((item) => item.toString())}
-                        hidden
-                        onChange={noop}
-                      />
-                      <button
-                        className="w-full py-2 px-4 text-sm bg-gray-100 hover:bg-gray-300 border border-gray-300 rounded text-left dark:bg-gray-500 dark:border-gray-500 dark:text-gray-200 dark:hover:bg-gray-400"
-                        aria-label="Choose filters"
-                        type="button"
-                        onClick={() => setIsOpen(true)}>
-                        Choose Filters
-                      </button>
-                    </div>
-                    <p className="mt-2 text-sm text-gray-400">
-                      Filters applied: {ids.length}
-                    </p>
-                  </div>
-
+                  <ItemsFilter
+                    onChange={(newIds) =>
+                      handleSearchParamChange('filters', newIds.join(','))
+                    }
+                    defaultFilters={defaultFilters}
+                  />
                   <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                     <fieldset className="space-y-5">
                       <legend className="sr-only">Force HQ only</legend>
@@ -545,19 +520,6 @@ const FullScanForm = ({
           <SubmitButton title="Search" loading={loading} onClick={onClick} />
         </div>
       </Form>
-      {isOpen && (
-        <Modal
-          onClose={() => setIsOpen(false)}
-          title={`Filters Selected: ${ids.length}`}>
-          <ModalContent
-            ids={ids}
-            setIds={(newIds) => {
-              setIds(newIds)
-              handleSearchParamChange('filters', newIds.join(','))
-            }}
-          />
-        </Modal>
-      )}
     </>
   )
 }
