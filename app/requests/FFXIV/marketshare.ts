@@ -21,7 +21,7 @@ export type MarketshareSortBy =
   | 'purchaseAmount'
   | 'quantitySold'
 
-const GetHistory: ({
+const MarketShare: ({
   server,
   timePeriod,
   salesAmount,
@@ -60,4 +60,4 @@ const GetHistory: ({
   })
 }
 
-export default GetHistory
+export default MarketShare
