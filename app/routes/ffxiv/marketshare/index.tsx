@@ -13,6 +13,7 @@ import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
 import MarketShare from '~/requests/FFXIV/marketshare'
 import NoResults from '~/components/Common/NoResults'
+import { Results } from '~/components/FFXIVResults/Marketshare'
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
   <ErrorBounds error={error} />
@@ -115,6 +116,11 @@ export default function Index() {
   if (results && !error) {
     if (!Object.keys(results).length) {
       return <NoResults href="/ffvix/marketshare" />
+    }
+
+    if (results) {
+      console.log(results)
+      return <Results data={results} />
     }
   }
 
