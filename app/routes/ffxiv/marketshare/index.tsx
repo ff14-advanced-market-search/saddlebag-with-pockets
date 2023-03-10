@@ -12,8 +12,19 @@ import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBounda
 import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
 import MarketShare from '~/requests/FFXIV/marketshare'
+import type {
+  MarketshareResult,
+  MarketshareSortBy
+} from '~/requests/FFXIV/marketshare'
 import NoResults from '~/components/Common/NoResults'
-import { Results } from '~/components/FFXIVResults/Marketshare'
+import { Results, sortByOptions } from '~/components/FFXIVResults/Marketshare'
+import Label from '~/components/form/Label'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+
+type MarketshareActionResult =
+  | {}
+  | { exception: string }
+  | { data: MarketshareResult; server: string; sortBy: MarketshareSortBy }
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
   <ErrorBounds error={error} />
@@ -27,14 +38,6 @@ const inputMap: Record<string, string> = {
   sortBy: 'Sort Data By',
   filters: 'Filters'
 }
-
-const sortByOptions = [
-  { label: 'Average Price', value: 'avg' },
-  { label: 'Market Value', value: 'marketValue' },
-  { label: 'Purchase Amount', value: 'purchaseAmount' },
-  { label: 'Quantity Sold', value: 'quantitySold' },
-  { label: 'Median', value: 'median' }
-]
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -101,7 +104,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Index() {
   const transition = useTransition()
-  const results = useActionData()
+  const results = useActionData<MarketshareActionResult>()
+  const { darkmode } = useTypedSelector((state) => state.user)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -111,16 +115,23 @@ export default function Index() {
 
   const pageTitle = 'Marketshare Overview'
 
-  const error = results?.exception
+  const error =
+    results && 'exception' in results ? results?.exception : undefined
 
   if (results && !error) {
     if (!Object.keys(results).length) {
       return <NoResults href="/ffvix/marketshare" />
     }
 
-    if (results) {
-      console.log(results)
-      return <Results data={results} />
+    if ('data' in results) {
+      return (
+        <Results
+          data={results.data}
+          pageTitle={pageTitle}
+          darkmode={darkmode}
+          sortByValue={results.sortBy}
+        />
+      )
     }
   }
 
@@ -154,11 +165,12 @@ export default function Index() {
             inputTag="Gil"
           />
           <ItemsFilter />
-          <div className="my-2">
+          <div className="mt-2">
+            <Label htmlFor="sortBy">Sort Results By</Label>
             <select
               name="sortBy"
               defaultValue={'avg'}
-              className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
+              className="flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
               {sortByOptions.map(({ label, value }) => (
                 <option key={value} value={value}>
                   {label}
