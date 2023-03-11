@@ -214,16 +214,7 @@ const getChartData = (
   marketplaceOverviewData: Array<ItemStats>,
   colorValue: 'state' | 'quantityState' = 'state'
 ): Array<TreemapNode> => {
-  const result: Array<TreemapNode> = [
-    {
-      id: 'historicMarketValue',
-      name: 'Historic Market Value',
-      toolTip: `Historic Market: ${marketplaceOverviewData
-        .reduce((total, curr) => total + curr.historicMarketValue, 0)
-        .toLocaleString()}`,
-      value: 1
-    }
-  ]
+  const result: Array<TreemapNode> = []
 
   marketplaceOverviewData.forEach((current) => {
     const base = {

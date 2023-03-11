@@ -2,6 +2,14 @@ import { address, UserAgent } from '~/requests/client/config'
 
 export type MarketshareResult = Array<MarketshareItem>
 
+export type MarketState =
+  | 'spiking'
+  | 'increasing'
+  | 'stable'
+  | 'decreasing'
+  | 'crashing'
+  | 'out of stock'
+
 export interface MarketshareItem {
   avg: number
   itemID: string
@@ -12,6 +20,9 @@ export interface MarketshareItem {
   purchaseAmount: number
   quantitySold: number
   url: string
+  minPrice: number
+  percentChange: number
+  state: MarketState
 }
 
 export type MarketshareSortBy =
@@ -20,6 +31,7 @@ export type MarketshareSortBy =
   | 'median'
   | 'purchaseAmount'
   | 'quantitySold'
+  | 'minPrice'
 
 const MarketShare: ({
   server,

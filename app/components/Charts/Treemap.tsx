@@ -17,7 +17,7 @@ const TreemapChart = ({
   darkMode
 }: {
   chartData: Array<TreemapNode>
-  title: string
+  title?: string
   darkMode: boolean
 }) => {
   addHighchartsTreemap(Highcharts)
