@@ -97,7 +97,6 @@ const TabbedButtons = ({
 
 const columnList: Array<ColumnList<MarketshareItem>> = [
   { columnId: 'name', header: 'Item Name' },
-  { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'marketValue', header: 'Market Value' },
   {
     columnId: 'percentChange',
@@ -116,7 +115,10 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
     header: 'Market State'
   },
   { columnId: 'avg', header: 'Average Price' },
+  { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'median', header: 'Median' },
+  { columnId: 'purchaseAmount', header: 'Purchase Amount' },
+  { columnId: 'quantitySold', header: 'Quantity Sold' },
   {
     columnId: 'npc_vendor_info',
     header: 'NPC Vendor',
@@ -127,8 +129,6 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
       return <ExternalLink text={'Vendor Link'} link={link} />
     }
   },
-  { columnId: 'purchaseAmount', header: 'Purchase Amount' },
-
   {
     columnId: 'url',
     header: 'Universalis Link',
