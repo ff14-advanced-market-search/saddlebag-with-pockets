@@ -24,7 +24,7 @@ const hexMap = {
   stable: '#ccbb00',
   increasing: '#81AC6D',
   spiking: '#24b406',
-  'out of stock': '#2dfa02'
+  'out of stock': '#28C706'
 }
 
 export const SortBySelect = ({
