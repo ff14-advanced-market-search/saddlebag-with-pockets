@@ -17,7 +17,7 @@ import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
     { label: 'Market Value', value: 'marketValue' },
-    { label: 'Price Change Percent', value: 'percentChange' },
+    { label: 'Price Increase Percent', value: 'percentChange' },
     { label: 'Purchase Amount', value: 'purchaseAmount' },
     { label: 'Quantity Sold', value: 'quantitySold' },
     { label: 'Average Price', value: 'avg' },
