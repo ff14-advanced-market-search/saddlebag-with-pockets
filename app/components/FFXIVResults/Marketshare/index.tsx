@@ -131,7 +131,7 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
 
   {
     columnId: 'url',
-    header: 'Oribos Link',
+    header: 'Universalis Link',
     accessor: ({ getValue }) => {
       const link = getValue()
       if (!link || typeof link !== 'string') return null
