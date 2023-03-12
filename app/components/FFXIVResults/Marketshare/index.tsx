@@ -1,5 +1,6 @@
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import type {
+  MarketshareItem,
   MarketshareResult,
   MarketshareSortBy
 } from '~/requests/FFXIV/marketshare'
@@ -7,6 +8,10 @@ import TreemapChart from '~/components/Charts/Treemap'
 import type { TreemapNode } from '~/components/Charts/Treemap'
 import { useState } from 'react'
 import Label from '~/components/form/Label'
+import type { ColumnList } from '~/components/Tables/FullTable'
+import FullTable from '~/components/Tables/FullTable'
+import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
+import ExternalLink from '~/components/utilities/ExternalLink'
 
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
@@ -89,6 +94,52 @@ const TabbedButtons = ({
   </div>
 )
 
+const columnList: Array<ColumnList<MarketshareItem>> = [
+  { columnId: 'name', header: 'Item Name' },
+  { columnId: 'minPrice', header: 'Minimum Price' },
+  { columnId: 'marketValue', header: 'Market Value' },
+  {
+    columnId: 'percentChange',
+    header: 'Percent Changed',
+    accessor: ({ getValue }) => {
+      const value = getValue()
+      if (!value || typeof value !== 'number') return null
+
+      if (value >= 9999999) return <p>∞</p>
+
+      return <p>{`${value}%`}</p>
+    }
+  },
+  {
+    columnId: 'state',
+    header: 'Market State'
+  },
+  { columnId: 'avg', header: 'Average Price' },
+  { columnId: 'median', header: 'Median' },
+  {
+    columnId: 'npc_vendor_info',
+    header: 'NPC Vendor',
+    accessor: ({ getValue }) => {
+      const link = getValue()
+      if (!link || typeof link !== 'string') return null
+
+      return <ExternalLink text={'Vendor Link'} link={link} />
+    }
+  },
+  { columnId: 'purchaseAmount', header: 'Purchase Amount' },
+
+  {
+    columnId: 'url',
+    header: 'Oribos Link',
+    accessor: ({ getValue }) => {
+      const link = getValue()
+      if (!link || typeof link !== 'string') return null
+
+      return <UniversalisBadgedLink link={link} />
+    }
+  }
+]
+
 export const Results = ({
   data,
   pageTitle,
@@ -111,6 +162,8 @@ export const Results = ({
     ? `Marketshare Overview - ${sortByTitleValue}`
     : 'Marketshare Overview'
 
+  console.log(data)
+
   return (
     <PageWrapper>
       <>
@@ -130,6 +183,12 @@ export const Results = ({
             />
           </>
         </ContentContainer>
+
+        <FullTable<MarketshareItem>
+          data={data}
+          sortingOrder={[{ id: sortBy, desc: true }]}
+          columnList={columnList}
+        />
       </>
     </PageWrapper>
   )
