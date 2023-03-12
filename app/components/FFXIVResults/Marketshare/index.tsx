@@ -6,6 +6,7 @@ import type {
 import TreemapChart from '~/components/Charts/Treemap'
 import type { TreemapNode } from '~/components/Charts/Treemap'
 import { useState } from 'react'
+import Label from '~/components/form/Label'
 
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
@@ -26,6 +27,68 @@ const hexMap = {
   'out of stock': '#2dfa02'
 }
 
+export const SortBySelect = ({
+  label = 'Sort Results By',
+  onChange
+}: {
+  label?: string
+  onChange?: (value: MarketshareSortBy) => void
+}) => (
+  <div className="mt-2">
+    <Label htmlFor="sortBy">{label}</Label>
+    <select
+      name="sortBy"
+      defaultValue={'avg'}
+      onChange={(event) => {
+        if (onChange) {
+          const newValue = event.target.value
+          const validSortByOptions = sortByOptions.map(({ value }) => value)
+
+          const option = validSortByOptions.find((opt) => opt === newValue)
+
+          if (option) {
+            onChange(option)
+          }
+        }
+      }}
+      className="flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
+      {sortByOptions.map(({ label, value }) => (
+        <option key={value} value={value}>
+          {label}
+        </option>
+      ))}
+    </select>
+  </div>
+)
+
+const TabbedButtons = ({
+  currentValue,
+  onClick
+}: {
+  currentValue: MarketshareSortBy
+  onClick: (value: MarketshareSortBy) => void
+}) => (
+  <div className="hidden md:flex mt-2 gap-2 overflow-x-scroll">
+    {sortByOptions.map(({ value, label }) => {
+      const selected = value === currentValue
+      return (
+        <button
+          key={`chartTable-${label}`}
+          className={`${
+            selected
+              ? 'text-blue-800 bg-gray-100 dark:text-blue-200 dark:bg-gray-800'
+              : 'bg-gray-200 text-gray-700 dark:bg-slate-700 dark:text-gray-200 shadow-[inset_0_-2px_0_rgba(0,0,0,0.1)]'
+          } px-2 py-1 grow w-1/3 rounded-t-md`}
+          disabled={value === currentValue}
+          type="button"
+          onClick={() => onClick(value)}>
+          {label}
+        </button>
+      )
+    })}
+  </div>
+)
+
 export const Results = ({
   data,
   pageTitle,
@@ -38,9 +101,6 @@ export const Results = ({
   sortByValue: MarketshareSortBy
 }) => {
   const [sortBy, setSortBy] = useState<MarketshareSortBy>(sortByValue)
-
-  console.log(data)
-
   const chartData = getChartData(data, sortBy)
 
   const sortByTitleValue = sortByOptions.find(
@@ -58,26 +118,16 @@ export const Results = ({
         <ContentContainer>
           <>
             <Title title={chartTitle} />
-            <div className="flex my-2 gap-2 overflow-x-scroll">
-              {sortByOptions.map(({ value, label }) => {
-                const selected = value === sortBy
-                return (
-                  <button
-                    key={`chartTable-${label}`}
-                    className={`${
-                      selected
-                        ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-200'
-                    } underline grow w-1/3`}
-                    disabled={value === sortBy}
-                    type="button"
-                    onClick={() => setSortBy(value)}>
-                    {label}
-                  </button>
-                )
-              })}
+            <TabbedButtons currentValue={sortBy} onClick={setSortBy} />
+            <div className="md:hidden py-2">
+              <SortBySelect onChange={setSortBy} label="Sort By" />
             </div>
-            <TreemapChart chartData={chartData} darkMode={darkmode} />
+
+            <TreemapChart
+              chartData={chartData}
+              darkMode={darkmode}
+              backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+            />
           </>
         </ContentContainer>
       </>

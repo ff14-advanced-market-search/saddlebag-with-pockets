@@ -17,8 +17,7 @@ import type {
   MarketshareSortBy
 } from '~/requests/FFXIV/marketshare'
 import NoResults from '~/components/Common/NoResults'
-import { Results, sortByOptions } from '~/components/FFXIVResults/Marketshare'
-import Label from '~/components/form/Label'
+import { Results, SortBySelect } from '~/components/FFXIVResults/Marketshare'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 
 type MarketshareActionResult =
@@ -165,19 +164,7 @@ export default function Index() {
             inputTag="Gil"
           />
           <ItemsFilter />
-          <div className="mt-2">
-            <Label htmlFor="sortBy">Sort Results By</Label>
-            <select
-              name="sortBy"
-              defaultValue={'avg'}
-              className="flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
-              {sortByOptions.map(({ label, value }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SortBySelect />
         </div>
       </SmallFormContainer>
     </PageWrapper>
