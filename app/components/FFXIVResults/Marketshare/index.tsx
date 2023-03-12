@@ -101,13 +101,13 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
   {
     columnId: 'percentChange',
     header: 'Percent Changed',
-    accessor: ({ getValue }) => {
-      const value = getValue()
-      if (!value || typeof value !== 'number') return null
+    accessor: ({ row }) => {
+      const value = row.percentChange
+      if (!value) return null
 
       if (value >= 9999999) return <p>∞</p>
 
-      return <p>{`${value}%`}</p>
+      return <p>{`${value.toLocaleString()}%`}</p>
     }
   },
   {
