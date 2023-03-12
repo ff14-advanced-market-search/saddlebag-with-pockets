@@ -64,7 +64,8 @@ export const action: ActionFunction = async ({ request }) => {
       z.literal('marketValue'),
       z.literal('median'),
       z.literal('purchaseAmount'),
-      z.literal('quantitySold')
+      z.literal('quantitySold'),
+      z.literal('percentChange')
     ]),
     filters: z
       .string()

@@ -32,6 +32,7 @@ export type MarketshareSortBy =
   | 'purchaseAmount'
   | 'quantitySold'
   | 'minPrice'
+  | 'percentChange'
 
 const MarketShare: ({
   server,
