@@ -2045,11 +2045,6 @@ select {
   line-height: 1.75rem;
 }
 
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -2241,9 +2236,9 @@ select {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.shadow-\[inset_0_-2px_0_rgba\(0\2c 0\2c 0\2c 0\.1\)\] {
-  --tw-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
-  --tw-shadow-colored: inset 0 -2px 0 var(--tw-shadow-color);
+.shadow-\[inset_0_-3px_3px_rgba\(0\2c 0\2c 0\2c 0\.2\)\] {
+  --tw-shadow: inset 0 -3px 3px rgba(0,0,0,0.2);
+  --tw-shadow-colored: inset 0 -3px 3px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 

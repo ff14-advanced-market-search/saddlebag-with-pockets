@@ -12,6 +12,7 @@ import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ExternalLink from '~/components/utilities/ExternalLink'
+import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
@@ -29,7 +30,7 @@ const hexMap = {
   stable: '#ccbb00',
   increasing: '#81AC6D',
   spiking: '#24b406',
-  'out of stock': '#28C706'
+  'out of stock': '#87ceeb'
 }
 
 export const SortBySelect = ({
@@ -82,7 +83,7 @@ const TabbedButtons = ({
           className={`${
             selected
               ? 'text-blue-800 bg-gray-100 dark:text-blue-200 dark:bg-gray-800'
-              : 'bg-gray-200 text-gray-700 dark:bg-slate-700 dark:text-gray-200 shadow-[inset_0_-2px_0_rgba(0,0,0,0.1)]'
+              : 'bg-gray-200 text-gray-700 dark:bg-slate-700 dark:text-gray-200 shadow-[inset_0_-3px_3px_rgba(0,0,0,0.2)]'
           } px-2 py-1 grow w-1/3 rounded-t-md`}
           disabled={value === currentValue}
           type="button"
@@ -140,6 +141,21 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
   }
 ]
 
+const getMobileColumns = (sortBy: MarketshareSortBy) => {
+  const sortByName = sortByOptions.find(({ value }) => sortBy === value)
+  if (!sortByName) {
+    return [
+      { columnId: 'name', header: 'Item Name' },
+      { header: 'Average Price', columnId: 'avg' }
+    ]
+  }
+
+  return [
+    { columnId: 'name', header: 'Item Name' },
+    { header: sortByName.label, columnId: sortByName.value }
+  ]
+}
+
 export const Results = ({
   data,
   pageTitle,
@@ -162,7 +178,7 @@ export const Results = ({
     ? `Marketshare Overview - ${sortByTitleValue}`
     : 'Marketshare Overview'
 
-  console.log(data)
+  const mobileColumnList = getMobileColumns(sortBy)
 
   return (
     <PageWrapper>
@@ -184,10 +200,19 @@ export const Results = ({
           </>
         </ContentContainer>
 
-        <FullTable<MarketshareItem>
+        <div className="hidden sm:block">
+          <FullTable<MarketshareItem>
+            data={data}
+            sortingOrder={[{ id: sortBy, desc: true }]}
+            columnList={columnList}
+          />
+        </div>
+        <MobileTable
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}
-          columnList={columnList}
+          columnList={mobileColumnList}
+          rowLabels={columnList}
+          columnSelectOptions={sortByOptions.map(({ value }) => value)}
         />
       </>
     </PageWrapper>

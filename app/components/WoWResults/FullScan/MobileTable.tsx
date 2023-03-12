@@ -187,7 +187,7 @@ function MobileTable({
 
       {modal && (
         <Modal onClose={() => setModal(null)} title={modal.title}>
-          <div className="bg-white dark:bg-slate-800 text-xs text-gray-800 dark:text-gray-200">
+          <div className="bg-white dark:bg-slate-800 text-sm text-gray-800 dark:text-gray-200">
             {rowLabels.map((item, index) => {
               const modalItem = item.accessor
                 ? modal.data[item.columnId]
