@@ -119,8 +119,8 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
     header: 'Market State'
   },
   { columnId: 'avg', header: 'Average Price' },
-  { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'median', header: 'Median' },
+  { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'purchaseAmount', header: 'Purchase Amount' },
   { columnId: 'quantitySold', header: 'Quantity Sold' },
   {
@@ -134,7 +134,16 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
       return <ItemDataLink link={`/queries/item-data/${itemID}`} />
     }
   },
+  {
+    columnId: 'url',
+    header: 'Universalis Link',
+    accessor: ({ getValue }) => {
+      const link = getValue()
+      if (!link || typeof link !== 'string') return null
 
+      return <UniversalisBadgedLink link={link} />
+    }
+  },
   {
     columnId: 'npc_vendor_info',
     header: 'NPC Vendor',
@@ -144,16 +153,6 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
       if (!link || typeof link !== 'string') return null
 
       return <ExternalLink text={'Vendor Link'} link={link} />
-    }
-  },
-  {
-    columnId: 'url',
-    header: 'Universalis Link',
-    accessor: ({ getValue }) => {
-      const link = getValue()
-      if (!link || typeof link !== 'string') return null
-
-      return <UniversalisBadgedLink link={link} />
     }
   }
 ]
