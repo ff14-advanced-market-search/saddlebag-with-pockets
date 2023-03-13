@@ -78,8 +78,8 @@ const recommendedQueries = [
     href: searchParams.bestFurniture
   },
   {
-    name: 'Best Selling Consumables (Weekly).',
-    description: 'See the best selling consumable items from the last week.',
+    name: 'Best Selling Collectible Items (Weekly).',
+    description: 'See the best selling collectible items from the last week.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestConsumables
   },
