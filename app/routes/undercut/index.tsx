@@ -49,6 +49,23 @@ export const action: ActionFunction = async ({ request }) => {
   return json({ data: await response.json(), homeServer, itemId })
 }
 
+const Description = () => {
+  return (
+    <p className="italic text-sm text-grey-700 px-3 py-1 dark:text-gray-300">
+      To setup undercut alerts search{' '}
+      <a
+        className="text-blue-500 dark:text-blue-300 hover:underline"
+        href="https://universalis.app/"
+        target={'_black'}
+        rel="noreferrer">
+        universalis
+      </a>{' '}
+      for one of your retainers by name (with exact capitilization) and an item
+      they are selling on the Market Board.
+    </p>
+  )
+}
+
 const Index = () => {
   const transition = useTransition()
   const results = useActionData()
@@ -85,7 +102,7 @@ const Index = () => {
     <PageWrapper>
       <SmallFormContainer
         title="Input for undercut alerts"
-        description="To setup undercut alerts search universalis for one of your retainers by name (with exact capitilization) and an item they are selling on the Market Board."
+        description={Description()}
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}

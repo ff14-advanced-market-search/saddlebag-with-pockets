@@ -8,7 +8,7 @@ import TileLink from '~/components/Common/TileLink'
 
 const ffxivPages = [
   {
-    name: 'Reselling Trading Searches',
+    name: 'Reselling Trade Searches',
     description:
       'Find items you can buy on other servers and resell on your own for a profit!',
     Icon: ChartSquareBarIcon,

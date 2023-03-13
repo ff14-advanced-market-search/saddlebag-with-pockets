@@ -18,20 +18,25 @@ const SmallFormContainer = ({
   loading?: boolean
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
-  description?: string
+  description?: string | JSX.Element
   buttonTitle?: string
 }) => {
+  const descriptionForDisplay = description ? (
+    typeof description === 'string' ? (
+      <p className="italic text-sm text-grey-500 px-3 py-1 dark:text-gray-300">
+        {description}
+      </p>
+    ) : (
+      description
+    )
+  ) : undefined
   return (
     <Form method="post">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">
           {title}
         </h1>
-        {description && (
-          <p className="italic text-sm text-grey-500 px-3 py-1 dark:text-gray-300">
-            {description}
-          </p>
-        )}
+        {!!descriptionForDisplay && descriptionForDisplay}
         <div className="mt-0 md:col-span-3">
           <div className="shadow rounded-md px-4 bg-white dark:bg-slate-700">
             {children}
