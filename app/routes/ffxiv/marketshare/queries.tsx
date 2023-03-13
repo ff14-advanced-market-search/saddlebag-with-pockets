@@ -12,7 +12,7 @@ const searchParams = {
   marketView:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=10000&filters=0&sortBy=marketValue',
   percentChange:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=1000000&filters=0&sortBy=percentChange',
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=10000&filters=0&sortBy=percentChange',
   megaValue:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=1000000&filters=0&sortBy=marketValue',
   lastHour:
