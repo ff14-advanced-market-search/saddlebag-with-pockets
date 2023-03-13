@@ -10,9 +10,9 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
 
 const searchParams = {
   marketView:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=10000&filters=0&sortBy=marketValue',
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=0&sortBy=marketValue',
   percentChange:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=10000&filters=0&sortBy=percentChange',
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=0&sortBy=percentChange',
   megaValue:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=1000000&filters=0&sortBy=marketValue',
   lastHour:
@@ -22,13 +22,13 @@ const searchParams = {
   mostQuantity:
     '/ffxiv/marketshare?timePeriod=24&salesAmount=40&averagePrice=10&filters=0&sortBy=quantitySold',
   bestFurniture:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=2&averagePrice=10000&filters=56,65,66,67,68,69,70,71,72,81,82&sortBy=marketValue',
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=56,65,66,67,68,69,70,71,72,81,82&sortBy=marketValue',
   bestConsumables:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=2&averagePrice=10000&filters=75,80,90&sortBy=marketValue',
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=75,80,90&sortBy=marketValue',
   bestVendorItems:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=2&averagePrice=10000&filters=-1&sortBy=marketValue',
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=-1&sortBy=marketValue',
   bestGear:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=2&averagePrice=10000&filters=1,2,3,4&sortBy=marketValue'
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4&sortBy=marketValue'
 }
 const recommendedQueries = [
   {
