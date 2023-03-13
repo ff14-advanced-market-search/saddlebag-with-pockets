@@ -23,7 +23,7 @@ const ffxivPages = [
   },
   {
     name: 'Marketshare Overview',
-    href: '/ffxiv/marketshare',
+    href: '/ffxiv/marketshare/queries',
     description:
       'Finds the best items to sell! Shows the top 200 best selling items on your home server.',
     Icon: ChartSquareBarIcon,

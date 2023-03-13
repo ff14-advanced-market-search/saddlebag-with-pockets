@@ -103,7 +103,7 @@ const navGroups: Array<{
       },
       {
         name: 'Marketshare Overview',
-        href: 'ffxiv/marketshare',
+        href: 'ffxiv/marketshare/queries',
         icon: DocumentSearchIcon
       },
       {
