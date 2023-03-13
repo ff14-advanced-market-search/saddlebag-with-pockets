@@ -32,21 +32,21 @@ const searchParams = {
 }
 const recommendedQueries = [
   {
-    name: 'Weekly Total Market View (Weekly)',
+    name: 'Total Market View (Weekly)',
     description:
       'See an general overview of your servers market by revenue earned.',
     Icon: DocumentSearchIcon,
     href: searchParams.marketView
   },
   {
-    name: 'Highet Price Increases (Weekly)',
+    name: 'Highest Price Increases (Weekly)',
     description:
       'Find the best selling items that are out of stock or have had massive price increases!',
     Icon: DocumentSearchIcon,
     href: searchParams.percentChange
   },
   {
-    name: 'Weekly Mega Value Marketshare (Weekly)',
+    name: 'Mega Value Marketshare (Weekly)',
     description:
       'Find the ultra high value items with the most revenue based on the last 7 days sales.',
     Icon: DocumentSearchIcon,
