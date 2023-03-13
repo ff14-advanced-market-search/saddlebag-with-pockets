@@ -1,9 +1,10 @@
 import type {
   ActionFunction,
-  ErrorBoundaryComponent
+  ErrorBoundaryComponent,
+  LoaderFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -14,11 +15,13 @@ import { z } from 'zod'
 import MarketShare from '~/requests/FFXIV/marketshare'
 import type {
   MarketshareResult,
-  MarketshareSortBy
+  MarketshareSortBy,
+  MarketshareProps
 } from '~/requests/FFXIV/marketshare'
 import NoResults from '~/components/Common/NoResults'
 import { Results, SortBySelect } from '~/components/FFXIVResults/Marketshare'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 type MarketshareActionResult =
   | {}
@@ -102,8 +105,86 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
+const defaultParams = {
+  timePeriod: 168,
+  salesAmount: 2,
+  averagePrice: 10000,
+  sortBy: 'avg',
+  filters: [0]
+}
+
+const searchParamsType = z.object({
+  timePeriod: z.union([z.string(), z.null()]).transform((value) => {
+    if (value === null || isNaN(Number(value))) return defaultParams.timePeriod
+    return Number(value)
+  }),
+  salesAmount: z.union([z.string(), z.null()]).transform((value) => {
+    if (value === null || isNaN(Number(value))) return defaultParams.salesAmount
+    return Number(value)
+  }),
+  averagePrice: z.union([z.string(), z.null()]).transform((value) => {
+    if (value === null || isNaN(Number(value)))
+      return defaultParams.averagePrice
+    return Number(value)
+  }),
+  sortBy: z
+    .union([
+      z.literal('avg'),
+      z.literal('marketValue'),
+      z.literal('median'),
+      z.literal('purchaseAmount'),
+      z.literal('quantitySold'),
+      z.literal('percentChange'),
+      z.null()
+    ])
+    .transform((value) => {
+      if (value === null) return defaultParams.sortBy
+      return value
+    }),
+  filters: z.union([z.string(), z.null()]).transform((value) => {
+    if (value === null) return defaultParams.filters
+    return value
+      .split(',')
+      .map((val) => Number(val))
+      .filter((num) => !isNaN(num))
+  })
+})
+
+export const loader: LoaderFunction = ({ request }) => {
+  const params = new URL(request.url).searchParams
+
+  const input = {
+    timePeriod: params.get('timePeriod'),
+    salesAmount: params.get('salesAmount'),
+    averagePrice: params.get('averagePrice'),
+    sortBy: params.get('sortBy'),
+    filters: params.get('filters')
+  }
+
+  const result = searchParamsType.safeParse(input)
+
+  if (result.success) {
+    return result.data
+  } else return defaultParams
+}
+
+const handleSearchParamChange = (
+  paramName: string,
+  newValue: string | undefined
+) => {
+  if (!document || !window) return
+  const url = new window.URL(document.URL)
+
+  if (newValue) {
+    url.searchParams.set(paramName, newValue)
+  }
+
+  window.history.replaceState({}, '', url.toString())
+}
+
 export default function Index() {
   const transition = useTransition()
+  const searchParams = useLoaderData<Omit<MarketshareProps, 'server'>>()
   const results = useActionData<MarketshareActionResult>()
   const { darkmode } = useTypedSelector((state) => state.user)
 
@@ -135,6 +216,22 @@ export default function Index() {
     }
   }
 
+  const handleCopyButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (!window || !document) {
+      return
+    }
+
+    if (!window.isSecureContext) {
+      alert('Failed to copy address to clipboard.')
+      return
+    }
+
+    await navigator.clipboard.writeText(document.URL)
+
+    alert('Address copied to clipboard')
+  }
+
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -143,29 +240,68 @@ export default function Index() {
         loading={transition.state === 'submitting'}
         error={error}>
         <div className="pt-4">
+          <div className="flex justify-end mb-2">
+            <SubmitButton
+              title="Share this search!"
+              onClick={handleCopyButton}
+              type="button"
+            />
+          </div>
           <InputWithLabel
             name="timePeriod"
             labelTitle="Time Period"
             type="number"
-            defaultValue={168}
+            defaultValue={searchParams.timePeriod}
             inputTag="Hours"
+            onChange={(e) => {
+              const value = e.target.value
+              if (value !== undefined) {
+                handleSearchParamChange('timePeriod', value)
+              }
+            }}
           />
           <InputWithLabel
             name="salesAmount"
             labelTitle="Sales Amount"
             type="number"
-            defaultValue={2}
+            defaultValue={searchParams.salesAmount}
             inputTag="No# of sales"
+            onChange={(e) => {
+              const value = e.target.value
+              if (value !== undefined) {
+                handleSearchParamChange('salesAmount', value)
+              }
+            }}
           />
           <InputWithLabel
             name="averagePrice"
             labelTitle="Average Price"
             type="number"
-            defaultValue={100000}
+            defaultValue={searchParams.averagePrice}
             inputTag="Gil"
+            onChange={(e) => {
+              const value = e.target.value
+              if (value !== undefined) {
+                handleSearchParamChange('averagePrice', value)
+              }
+            }}
           />
-          <ItemsFilter />
-          <SortBySelect />
+          <ItemsFilter
+            defaultFilters={searchParams.filters}
+            onChange={(value) => {
+              if (value !== undefined) {
+                handleSearchParamChange('filters', value.join(','))
+              }
+            }}
+          />
+          <SortBySelect
+            defaultValue={searchParams.sortBy}
+            onChange={(value) => {
+              if (value !== undefined) {
+                handleSearchParamChange('sortBy', value)
+              }
+            }}
+          />
         </div>
       </SmallFormContainer>
     </PageWrapper>

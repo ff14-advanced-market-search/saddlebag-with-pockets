@@ -34,6 +34,15 @@ export type MarketshareSortBy =
   | 'minPrice'
   | 'percentChange'
 
+export interface MarketshareProps {
+  server: string
+  timePeriod: number
+  salesAmount: number
+  sortBy: MarketshareSortBy
+  averagePrice: number
+  filters: Array<number>
+}
+
 const MarketShare: ({
   server,
   timePeriod,

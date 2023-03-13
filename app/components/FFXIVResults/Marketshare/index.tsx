@@ -36,16 +36,18 @@ const hexMap = {
 
 export const SortBySelect = ({
   label = 'Sort Results By',
-  onChange
+  onChange,
+  defaultValue = 'avg'
 }: {
   label?: string
   onChange?: (value: MarketshareSortBy) => void
+  defaultValue?: MarketshareSortBy
 }) => (
   <div className="mt-2">
     <Label htmlFor="sortBy">{label}</Label>
     <select
       name="sortBy"
-      defaultValue={'avg'}
+      defaultValue={defaultValue}
       onChange={(event) => {
         if (onChange) {
           const newValue = event.target.value
