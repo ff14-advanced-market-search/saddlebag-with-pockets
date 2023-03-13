@@ -127,8 +127,8 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
     columnId: 'itemID',
     header: 'Item data',
 
-    accessor: ({ getValue }) => {
-      const itemID = getValue()
+    accessor: ({ row }) => {
+      const itemID = row.itemID
       if (!itemID || typeof itemID !== 'string') return null
 
       return <ItemDataLink link={`/queries/item-data/${itemID}`} />
