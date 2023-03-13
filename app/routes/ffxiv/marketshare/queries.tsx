@@ -32,65 +32,66 @@ const searchParams = {
 }
 const recommendedQueries = [
   {
-    name: 'Weekly Total Market View',
+    name: 'Weekly Total Market View (Weekly)',
     description:
       'See an general overview of your servers market by revenue earned.',
     Icon: DocumentSearchIcon,
     href: searchParams.marketView
   },
   {
-    name: 'Highet Price Increases',
+    name: 'Highet Price Increases (Weekly)',
     description:
       'Find the best selling items that are out of stock or have had massive price increases!',
     Icon: DocumentSearchIcon,
     href: searchParams.percentChange
   },
   {
-    name: 'Weekly Mega Value Marketshare',
+    name: 'Weekly Mega Value Marketshare (Weekly)',
     description:
       'Find the ultra high value items with the most revenue based on the last 7 days sales.',
     Icon: DocumentSearchIcon,
     href: searchParams.megaValue
   },
   {
-    name: 'Best Selling Items (last hour)',
+    name: 'Best Selling Items (Last Hour)',
     description: 'See the items with the top revenue from the last hour.',
     Icon: DocumentSearchIcon,
     href: searchParams.lastHour
   },
   {
-    name: 'Fastest Selling Items (daily)',
+    name: 'Fastest Selling Items (Daily)',
     description: 'See the fastest selling items from the last 24 hours.',
     Icon: DocumentSearchIcon,
     href: searchParams.mostPurchases
   },
   {
-    name: 'Most Quantity Purchased (daily).',
+    name: 'Most Quantity Purchased (Daily).',
     description:
       'See the items that sell in bulk with the most quantity sold in the last 24 hours.',
     Icon: DocumentSearchIcon,
     href: searchParams.mostQuantity
   },
   {
-    name: 'Best selling funiture.',
+    name: 'Best Selling Funiture (Weekly).',
     description: 'See the best selling furniture items from the last week.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestFurniture
   },
   {
-    name: 'Best selling consumables.',
+    name: 'Best Selling Consumables (Weekly).',
     description: 'See the best selling consumable items from the last week.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestConsumables
   },
   {
-    name: 'Best selling vendor items.',
-    description: 'See the best selling vendor items from the last week.',
+    name: 'Best Selling Vendor Items (Weekly).',
+    description:
+      'See the best selling items you can buy from vendors from the last week.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestVendorItems
   },
   {
-    name: 'Best selling gear, weapons, armor and glamors .',
+    name: 'Best Selling Gear, Weapons, Armor and Glamors (Weekly).',
     description:
       'See the best selling gear, weapons, armor and glamors from the last week.',
     Icon: DocumentSearchIcon,
