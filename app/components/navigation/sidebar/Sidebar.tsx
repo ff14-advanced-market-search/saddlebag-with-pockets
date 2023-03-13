@@ -104,22 +104,22 @@ const navGroups: Array<{
       {
         name: 'Marketshare Overview',
         href: 'ffxiv/marketshare/queries',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Item History Statistics and Graphs',
         href: 'queries/item-history',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Export Trading Search',
         href: 'queries/world-comparison',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Undercut Alert Input',
@@ -132,19 +132,13 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
-        name: 'Undercut Discord Alerts',
-        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
-        icon: DocumentSearchIcon,
-        external: true
-      },
-      {
-        name: 'Qualified Sale Alerts',
+        name: 'Qualified Sale Leads',
         href: 'https://www.patreon.com/indopan',
         icon: DocumentSearchIcon,
         external: true
       },
       {
-        name: 'Discount Price Sniper',
+        name: 'Experimental Discount Price Sniper',
         href: 'https://www.patreon.com/indopan',
         icon: DocumentSearchIcon,
         external: true
