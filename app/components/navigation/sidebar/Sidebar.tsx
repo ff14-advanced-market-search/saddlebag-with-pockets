@@ -102,6 +102,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Marketshare Overview',
+        href: 'ffxiv/marketshare',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
         icon: DocumentSearchIcon

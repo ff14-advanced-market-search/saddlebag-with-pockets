@@ -15,6 +15,13 @@ const ffxivPages = [
     href: '/queries/recommended'
   },
   {
+    name: 'Marketshare Overview',
+    href: '/ffxiv/marketshare',
+    description:
+      'Find out what items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
+    Icon: DocumentSearchIcon
+  },
+  {
     name: 'Guides on how to use Saddlebag Exchange!',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
     description: 'A link to all of our wiki guides on how to use the website.',

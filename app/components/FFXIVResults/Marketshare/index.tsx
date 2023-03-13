@@ -13,6 +13,7 @@ import FullTable from '~/components/Tables/FullTable'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
+import ItemDataLink from '~/components/utilities/ItemDataLink'
 
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
@@ -123,8 +124,21 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
   { columnId: 'purchaseAmount', header: 'Purchase Amount' },
   { columnId: 'quantitySold', header: 'Quantity Sold' },
   {
+    columnId: 'itemID',
+    header: 'Item data',
+
+    accessor: ({ getValue }) => {
+      const itemID = getValue()
+      if (!itemID || typeof itemID !== 'string') return null
+
+      return <ItemDataLink link={`/queries/item-data/${itemID}`} />
+    }
+  },
+
+  {
     columnId: 'npc_vendor_info',
     header: 'NPC Vendor',
+
     accessor: ({ getValue }) => {
       const link = getValue()
       if (!link || typeof link !== 'string') return null
