@@ -9,15 +9,17 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
 )
 
 const searchParams = {
-  megaValue:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=1000000&filters=0&sortBy=marketValue',
   marketView:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=10000&filters=0&sortBy=marketValue',
-  fastestSelling:
-    '/ffxiv/marketshare?timePeriod=24&salesAmount=40&averagePrice=10&filters=0&sortBy=purchaseAmount',
+  percentChange:
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=1000000&filters=0&sortBy=percentChange',
+  megaValue:
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=1&averagePrice=1000000&filters=0&sortBy=marketValue',
   lastHour:
     '/ffxiv/marketshare?timePeriod=1&salesAmount=1&averagePrice=10&filters=0&sortBy=marketValue',
-  mostSold:
+  mostPurchases:
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=40&averagePrice=10&filters=0&sortBy=purchaseAmount',
+  mostQuantity:
     '/ffxiv/marketshare?timePeriod=24&salesAmount=40&averagePrice=10&filters=0&sortBy=quantitySold',
   bestFurniture:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=2&averagePrice=10000&filters=56,65,66,67,68,69,70,71,72,81,82&sortBy=marketValue',
@@ -30,62 +32,69 @@ const searchParams = {
 }
 const recommendedQueries = [
   {
-    name: 'Weekly mega value marketshare',
-    description: 'Find the best value items based on the last 7 days sales.',
+    name: 'Weekly Total Market View',
+    description:
+      'See an general overview of your servers market by revenue earned.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.marketView
+  },
+  {
+    name: 'Highet Price Increases',
+    description:
+      'Find the best selling items that are out of stock or have had massive price increases!',
+    Icon: DocumentSearchIcon,
+    href: searchParams.percentChange
+  },
+  {
+    name: 'Weekly Mega Value Marketshare',
+    description:
+      'Find the ultra high value items with the most revenue based on the last 7 days sales.',
     Icon: DocumentSearchIcon,
     href: searchParams.megaValue
   },
   {
-    name: 'Weekly total market view',
-    description: 'See an overview of the market.',
-    Icon: DocumentSearchIcon,
-    href: searchParams.megaValue
-  },
-  {
-    name: 'Fastest Selling items (daily)',
-    description: 'See the fastest selling items from the last 24 hours.',
-    Icon: DocumentSearchIcon,
-    href: searchParams.fastestSelling
-  },
-  {
-    name: 'Best form last hour',
-    description: 'See the best items sold in the last hour.',
+    name: 'Best Selling Items (last hour)',
+    description: 'See the items with the top revenue from the last hour.',
     Icon: DocumentSearchIcon,
     href: searchParams.lastHour
   },
   {
-    name: 'Most sold in last day.',
-    description: 'See the items that have sold the most in the last day.',
+    name: 'Fastest Selling Items (daily)',
+    description: 'See the fastest selling items from the last 24 hours.',
     Icon: DocumentSearchIcon,
-    href: searchParams.mostSold
+    href: searchParams.mostPurchases
+  },
+  {
+    name: 'Most Quantity Purchased (daily).',
+    description:
+      'See the items that sell in bulk with the most quantity sold in the last 24 hours.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.mostQuantity
   },
   {
     name: 'Best selling funiture.',
-    description:
-      'See the furniture items that are selling the most in the last week.',
+    description: 'See the best selling furniture items from the last week.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestFurniture
   },
   {
     name: 'Best selling consumables.',
-    description:
-      'See the consumable items that are selling the most in the last week.',
+    description: 'See the best selling consumable items from the last week.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestConsumables
   },
   {
     name: 'Best selling vendor items.',
-    description:
-      'See the vendor items that are selling the most in the last week.',
+    description: 'See the best selling vendor items from the last week.',
     Icon: DocumentSearchIcon,
-    href: searchParams.bestConsumables
+    href: searchParams.bestVendorItems
   },
   {
-    name: 'Best selling gear, weapons, armor and glamors.',
+    name: 'Best selling gear, weapons, armor and glamors .',
     description:
-      'See the gear, weapons, armor and glamors items that are selling the most in the last week.',
+      'See the best selling gear, weapons, armor and glamors from the last week.',
     Icon: DocumentSearchIcon,
-    href: searchParams.bestConsumables
+    href: searchParams.bestGear
   }
 ]
 
