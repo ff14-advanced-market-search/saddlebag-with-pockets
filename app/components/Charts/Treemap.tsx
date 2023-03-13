@@ -14,21 +14,23 @@ export interface TreemapNode {
 const TreemapChart = ({
   chartData,
   title,
-  darkMode
+  darkMode,
+  backgroundColor
 }: {
   chartData: Array<TreemapNode>
-  title: string
+  title?: string
   darkMode: boolean
+  backgroundColor?: string
 }) => {
   addHighchartsTreemap(Highcharts)
 
   const styles = darkMode
     ? {
-        backgroundColor: '#334155',
+        backgroundColor: backgroundColor ?? '#334155',
         color: 'white',
         hoverColor: '#f8f8f8'
       }
-    : {}
+    : { backgroundColor }
 
   const options = {
     title: { text: title, style: { color: styles?.color } },

@@ -8,6 +8,13 @@ import TileLink from '~/components/Common/TileLink'
 
 const ffxivPages = [
   {
+    name: 'Guides on how to use Saddlebag Exchange!',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
+    description: 'A link to all of our wiki guides on how to use the website.',
+    Icon: DocumentSearchIcon,
+    external: true
+  },
+  {
     name: 'Reselling Trade Searches',
     description:
       'Find items you can buy on other servers and resell on your own for a profit!',
@@ -15,11 +22,18 @@ const ffxivPages = [
     href: '/queries/recommended'
   },
   {
-    name: 'Guides on how to use Saddlebag Exchange!',
-    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
-    description: 'A link to all of our wiki guides on how to use the website.',
-    Icon: DocumentSearchIcon,
-    external: true
+    name: 'Marketshare Overview',
+    href: '/ffxiv/marketshare/queries',
+    description:
+      'Finds the best items to sell! Shows the top 200 best selling items on your home server.',
+    Icon: ChartSquareBarIcon
+  },
+  {
+    name: 'Item History Statistics and Graphs',
+    description:
+      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
+    Icon: ChartSquareBarIcon,
+    href: '/queries/item-history'
   },
   {
     name: 'Discord Undercut Alert Generator',
@@ -49,13 +63,6 @@ const ffxivPages = [
       'A guide on how to setup and use Price Discount Sniper and Price Spike Alerts.',
     Icon: DocumentSearchIcon,
     external: true
-  },
-  {
-    name: 'Item History Statistics and Graphs',
-    description:
-      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
-    Icon: ChartSquareBarIcon,
-    href: '/queries/item-history'
   },
   {
     name: 'Listings Comparison and Competition Metric',

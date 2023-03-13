@@ -188,6 +188,7 @@ const Results = ({ rows }: ResultTableProps) => {
     header: item.header,
     accessor: item.cell
   }))
+
   const table = useReactTable({
     // @ts-ignore
     data: rows,

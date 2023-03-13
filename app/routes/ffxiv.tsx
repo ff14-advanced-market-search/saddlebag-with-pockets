@@ -1,6 +1,6 @@
 import { Outlet } from '@remix-run/react'
 
-export default function Options() {
+export default function FFXIV() {
   return (
     <div>
       <Outlet />

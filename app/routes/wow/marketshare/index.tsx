@@ -113,6 +113,7 @@ const Index = () => {
   const results = useActionData<
     WoWMarketShareActionResults | { exception: string } | {}
   >()
+
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
