@@ -56,7 +56,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 
   const itemType = 'all' as const
-  const initialDays = 14
+  const initialDays = 7
   const endDays = 0
   const input = { itemId: parsedItemId, world, itemType, initialDays, endDays }
 
