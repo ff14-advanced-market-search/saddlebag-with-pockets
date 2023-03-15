@@ -107,9 +107,9 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
         Region Wide Stack Size History
       </h2>
       <p className="italic text-sm text-grey-500 px-3 dark:text-gray-300">
-        This table shows the sale history for the last 14 days in your region by
+        This table shows the sale history for the last 7 days in your region by
         stack size. Including which stack size is most popular by number of
-        sales and total quantity sold.
+        purchases and total quantity sold.
       </p>
       <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
