@@ -22,8 +22,7 @@ export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
     { label: 'Purchase Amount', value: 'purchaseAmount' },
     { label: 'Quantity Sold', value: 'quantitySold' },
     { label: 'Average Price', value: 'avg' },
-    { label: 'Median', value: 'median' },
-    { label: 'Minimum Price', value: 'minPrice' }
+    { label: 'Median', value: 'median' }
   ]
 
 const hexMap = {
