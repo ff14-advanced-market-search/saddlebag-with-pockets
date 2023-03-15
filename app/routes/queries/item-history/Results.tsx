@@ -30,17 +30,17 @@ const Results = ({
       </div>
       <div className="flex flex-col max-w-full">
         <Differences
-          diffTitle="Average quantity of individual items sold per day"
+          diffTitle="Average Quantity Sold per day"
           diffAmount={data.average_quantity_sold_per_day}
           className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
         <Differences
-          diffTitle="Average amount total purchases per day"
+          diffTitle="Average Amount Purchases per day"
           diffAmount={data.average_sales_per_day}
           className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
         <Differences
-          diffTitle="Total Sold"
+          diffTitle="Total Quantity Sold per week"
           diffAmount={data.total_quantity_sold}
           className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
