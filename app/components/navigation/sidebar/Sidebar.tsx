@@ -152,12 +152,12 @@ const navGroups: Array<{
       {
         name: 'Dragonflight Marketshare Overview',
         href: '/wow/marketshare',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Dragonflight Commodity Shortage Futures',
         href: 'wow/shortage-predictor',
-        icon: PencilAltIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Price Alert Input Generator',
@@ -173,17 +173,17 @@ const navGroups: Array<{
       {
         name: 'Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
-        icon: DocumentSearchIcon
+        icon: ChartSquareBarIcon
       }
     ]
   },
