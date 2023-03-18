@@ -55,7 +55,7 @@ const Results = ({
                 rel="noreferrer">
                 discord server
               </a>{' '}
-              for the bot slash command '/ff register' or '/ff update' to
+              for the bot slash command '/ff undercut-register' or '/ff undercut-update' to
               activate{' '}
               <a
                 className="underline"
