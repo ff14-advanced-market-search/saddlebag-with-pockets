@@ -120,7 +120,7 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 sticky top-0 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600 z-50`
+                          `whitespace-nowrap px-3 sticky top-0 bg-gray-50 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600 z-50`
                         )}
                         key={header.id}>
                         <div className={`group inline-flex`}>
