@@ -133,7 +133,7 @@ const navGroups: Array<{
       },
       {
         name: 'Qualified Sale Leads',
-        href: 'https://www.patreon.com/indopan',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
         icon: DocumentSearchIcon,
         external: true
       },

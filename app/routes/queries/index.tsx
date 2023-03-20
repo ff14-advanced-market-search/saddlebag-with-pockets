@@ -80,7 +80,7 @@ const ffxivPages = [
   },
   {
     name: 'Qualified Sale Leads',
-    href: 'https://www.patreon.com/indopan',
+    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
     description:
       'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
     Icon: DocumentSearchIcon,
