@@ -132,7 +132,7 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
-        name: 'Qualified Sale Leads',
+        name: 'Secret Sale Leads',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
         icon: DocumentSearchIcon,
         external: true

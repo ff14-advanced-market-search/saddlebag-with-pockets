@@ -79,7 +79,7 @@ const ffxivPages = [
     href: '/queries/world-comparison'
   },
   {
-    name: 'Qualified Sale Leads',
+    name: 'Secret Sale Leads',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
     description:
       'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
