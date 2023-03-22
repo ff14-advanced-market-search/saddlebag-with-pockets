@@ -154,9 +154,13 @@ const itemClasses: Array<{
       { name: 'Generic', value: 0 },
       { name: 'Potion', value: 1 },
       { name: 'Elixir', value: 2 },
+      { name: 'Flasks & Phials', value: 3 },
       { name: 'Food & Drink', value: 4 },
+      { name: 'Food & Drink 2', value: 5 },
       { name: 'Bandage', value: 6 },
-      { name: 'Other', value: 7 }
+      { name: 'Other', value: 7 },
+      { name: 'Other 2', value: 8 },
+      { name: 'Vantus Rune', value: 9 }
     ]
   },
   {
