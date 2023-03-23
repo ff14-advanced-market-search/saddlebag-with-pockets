@@ -214,6 +214,12 @@ const navGroups: Array<{
         href: 'https://github.com/ff14-advanced-market-search',
         external: true,
         icon: GithubIcon
+      },
+      {
+        name: 'Instagram',
+        href: 'https://www.instagram.com/saddlebagexchange/',
+        external: true,
+        icon: DiscordIcon
       }
     ]
   }
