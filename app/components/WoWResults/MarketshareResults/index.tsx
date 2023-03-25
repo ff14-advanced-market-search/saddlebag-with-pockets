@@ -111,7 +111,7 @@ const MarketshareResults = ({
   ]
 
   const csvColumns = itemsColumnList
-    .filter((col) => col.columnId === 'itemID')
+    .filter((col) => col.columnId !== 'itemID')
     .map(({ header, columnId }) => ({
       title: header,
       value: columnId as keyof ItemStats
