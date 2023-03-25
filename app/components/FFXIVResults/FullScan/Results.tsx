@@ -435,6 +435,13 @@ const Results = ({ rows }: ResultTableProps) => {
           <Preview />
         </DndProvider>
       </div>
+      <div className="flex sm:hidden mt-4">
+        <CSVButton
+          data={rows}
+          columns={cvsFileList}
+          filename="saddlebag-fullscan.csv"
+        />
+      </div>
       <MobileTable
         data={rows}
         sortingOrder={defaultSorting}

@@ -5,6 +5,7 @@ import { ContentContainer, Title } from '~/components/Common'
 import { RadioButtons } from '~/components/Common/RadioButtons'
 import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
+import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import type { ItemStats } from '~/components/WoWResults/ShortagePredictor/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
@@ -109,6 +110,13 @@ const MarketshareResults = ({
     'currentVsAvgQuantityPercent'
   ]
 
+  const csvColumns = itemsColumnList
+    .filter((col) => col.columnId === 'itemID')
+    .map(({ header, columnId }) => ({
+      title: header,
+      value: columnId as keyof ItemStats
+    }))
+
   return (
     <div>
       <Title title={pageTitle} />
@@ -146,6 +154,13 @@ const MarketshareResults = ({
             />
           </>
         </ContentContainer>
+      </div>
+      <div>
+        <CSVButton
+          data={results.data}
+          columns={csvColumns}
+          filename="saddlebag_wow_marketshare.csv"
+        />
       </div>
       <div className="hidden sm:block">
         <FullTable<ItemStats>
