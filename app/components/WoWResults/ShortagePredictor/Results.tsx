@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
+import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { InputGenerator } from '~/requests/WoW/InputGenerator'
 import type {
@@ -81,6 +82,8 @@ export const Results = ({
     </PageWrapper>
   )
 }
+
+const excludeCols = ['item_id_filter', 'item_id', 'chart_button']
 
 const PredictionTable = ({
   results,
@@ -195,8 +198,22 @@ const PredictionTable = ({
     }
   ]
 
+  const csvColumns = columnList
+    .filter((col) => !excludeCols.includes(col.columnId))
+    .map(({ header, columnId }) => ({
+      title: header,
+      value: columnId as keyof Prediction
+    }))
+
   return (
     <>
+      <div>
+        <CSVButton
+          data={results.data}
+          columns={csvColumns}
+          filename="saddlebag_wow_shortagePredictor.csv"
+        />
+      </div>
       <div className="hidden sm:block">
         <FullTable<Prediction>
           data={results.data}
