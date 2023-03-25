@@ -319,8 +319,6 @@ const Results = ({ rows }: ResultTableProps) => {
     })
 
     downloadCSV(result.join('\r\n'), 'saddlebag_fullscan.csv')
-
-    console.log('Result')
   }
 
   return (
