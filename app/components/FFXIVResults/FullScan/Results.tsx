@@ -41,21 +41,10 @@ import { defaultSortOrder } from '~/redux/localStorage/ffScanOrderHelpers'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import DateCell from './DateCell'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
+import CSVButton from '~/components/utilities/CSVButton'
 
 type ResultTableProps = {
   rows: Array<ResponseType>
-}
-
-function downloadCSV(content: string, filename: string) {
-  // Create a blob
-  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' })
-  const url = URL.createObjectURL(blob)
-
-  // Create a link to download it
-  const pom = document.createElement('a')
-  pom.href = url
-  pom.setAttribute('download', filename)
-  pom.click()
 }
 
 const ScrollingComponent = withScrolling('div')
@@ -299,28 +288,6 @@ const Results = ({ rows }: ResultTableProps) => {
 
   const handleColumnReset = () => dispatch(setFFScanOrder(defaultSortOrder))
 
-  const handleFileDownload = () => {
-    const result: Array<string> = [
-      cvsFileList.map((row) => `"${row.title}"`).join(',')
-    ]
-    rows.forEach((row) => {
-      result.push(
-        cvsFileList
-          .map((list) => {
-            const hasValue = row[list.value]
-            if (hasValue !== undefined) {
-              return `"${hasValue.toString()}"`
-            } else {
-              return '""'
-            }
-          })
-          .join(',')
-      )
-    })
-
-    downloadCSV(result.join('\r\n'), 'saddlebag_fullscan.csv')
-  }
-
   return (
     <>
       <div
@@ -363,10 +330,10 @@ const Results = ({ rows }: ResultTableProps) => {
             title={'Reset table columns'}
             type="button"
           />
-          <SubmitButton
-            type="button"
-            title="Download as .CSV file"
-            onClick={handleFileDownload}
+          <CSVButton
+            data={rows}
+            columns={cvsFileList}
+            filename="saddlebag-fullscan.csv"
           />
         </div>
 

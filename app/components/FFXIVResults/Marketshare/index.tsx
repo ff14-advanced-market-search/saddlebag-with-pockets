@@ -14,6 +14,7 @@ import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
+import CSVButton from '~/components/utilities/CSVButton'
 
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
@@ -24,6 +25,21 @@ export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
     { label: 'Average Price', value: 'avg' },
     { label: 'Median', value: 'median' }
   ]
+
+const csvColumns: Array<{ title: string; value: keyof MarketshareItem }> = [
+  { title: 'Item ID', value: 'itemID' },
+  { title: 'Item Name', value: 'name' },
+  { title: 'Market Value', value: 'marketValue' },
+  { title: '% Change', value: 'percentChange' },
+  { title: 'Market State', value: 'state' },
+  { title: 'Minimum Price', value: 'minPrice' },
+  { title: 'Average', value: 'avg' },
+  { title: 'Median', value: 'median' },
+  { title: 'Purchase Amount', value: 'purchaseAmount' },
+  { title: 'Quantity Sold', value: 'quantitySold' },
+  { title: 'Universalis Link', value: 'url' },
+  { title: 'NPC Vendor Info', value: 'npc_vendor_info' }
+]
 
 const hexMap = {
   crashing: '#b40606',
@@ -214,6 +230,14 @@ export const Results = ({
             />
           </>
         </ContentContainer>
+
+        <div className="my-2">
+          <CSVButton
+            filename="saddlebag-marketshare.csv"
+            data={data}
+            columns={csvColumns}
+          />
+        </div>
 
         <div className="hidden sm:block">
           <FullTable<MarketshareItem>
