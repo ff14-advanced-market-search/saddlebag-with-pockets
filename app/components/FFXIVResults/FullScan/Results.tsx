@@ -41,10 +41,21 @@ import { defaultSortOrder } from '~/redux/localStorage/ffScanOrderHelpers'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import DateCell from './DateCell'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
-import type { ColumnList } from '~/components/types'
 
 type ResultTableProps = {
   rows: Array<ResponseType>
+}
+
+function downloadCSV(content: string, filename: string) {
+  // Create a blob
+  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+
+  // Create a link to download it
+  const pom = document.createElement('a')
+  pom.href = url
+  pom.setAttribute('download', filename)
+  pom.click()
 }
 
 const ScrollingComponent = withScrolling('div')
@@ -58,6 +69,24 @@ declare module '@tanstack/table-core' {
     itemRank: RankingInfo
   }
 }
+
+const cvsFileList: Array<{ title: string; value: keyof ResponseType }> = [
+  { title: 'Item Id', value: 'item_id' },
+  { title: 'Item Name', value: 'real_name' },
+  { title: 'Profit Amount', value: 'profit_amount' },
+  { title: 'Avg Price Per Unit', value: 'avg_ppu' },
+  { title: 'Home Price', value: 'home_server_price' },
+  { title: 'Home Updated', value: 'home_update_time' },
+  { title: 'Lowest Price', value: 'ppu' },
+  { title: 'Profit %', value: 'profit_raw_percent' },
+  { title: 'Return on Investment %', value: 'ROI' },
+  { title: 'Sales Rates', value: 'sale_rates' },
+  { title: 'Lowest Price Server', value: 'server' },
+  { title: 'Lowest Price Stack Size', value: 'stack_size' },
+  { title: 'Lowest Price Last Update Time', value: 'update_time' },
+  { title: 'Universalis Link', value: 'url' },
+  { title: 'NPC Vendor Info', value: 'npc_vendor_info' }
+]
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
@@ -270,6 +299,30 @@ const Results = ({ rows }: ResultTableProps) => {
 
   const handleColumnReset = () => dispatch(setFFScanOrder(defaultSortOrder))
 
+  const handleFileDownload = () => {
+    const result: Array<string> = [
+      cvsFileList.map((row) => `"${row.title}"`).join(',')
+    ]
+    rows.forEach((row) => {
+      result.push(
+        cvsFileList
+          .map((list) => {
+            const hasValue = row[list.value]
+            if (hasValue !== undefined) {
+              return `"${hasValue.toString()}"`
+            } else {
+              return '""'
+            }
+          })
+          .join(',')
+      )
+    })
+
+    downloadCSV(result.join('\r\n'), 'saddlebag_fullscan.csv')
+
+    console.log('Result')
+  }
+
   return (
     <>
       <div
@@ -306,11 +359,16 @@ const Results = ({ rows }: ResultTableProps) => {
           </div>
         </div>
 
-        <div className="max-w-fit my-2">
+        <div className="max-w-fit my-2 flex ">
           <SubmitButton
             onClick={handleColumnReset}
             title={'Reset table columns'}
             type="button"
+          />
+          <SubmitButton
+            type="button"
+            title="Download as .CSV file"
+            onClick={handleFileDownload}
           />
         </div>
 
