@@ -20,11 +20,13 @@ const Results = ({
     removeIds: Array<string>
     hqOnly: boolean
     ignoreDataAfterHours: number
+    ignoreStackSize: number
   }>({
     addIds: [],
     removeIds: [],
     hqOnly: false,
-    ignoreDataAfterHours: 24 * 30
+    ignoreDataAfterHours: 24 * 30,
+    ignoreStackSize: 9999
   })
 
   const [modal, setModal] = useState<{
@@ -37,7 +39,7 @@ const Results = ({
     ','
   )}],\n  "hq_only": ${info.hqOnly.toString()},\n  "ignore_data_after_hours": ${
     info.ignoreDataAfterHours
-  }\n}`
+  },\n  "ignore_undercuts_with_quantity_over": ${info.ignoreStackSize}\n}`
 
   const isAddModal = modal.form === 'addIds'
   return (
@@ -70,8 +72,8 @@ const Results = ({
               title="I want to be alerted on"
               name="alert-type"
               radioOptions={[
-                { label: 'All sales', value: 'removeIds' },
-                { label: 'Selected sales', value: 'addIds' }
+                { label: 'All items', value: 'removeIds' },
+                { label: 'Selected items', value: 'addIds' }
               ]}
               onChange={(value) => {
                 if (value !== 'addIds' && value !== 'removeIds') return
@@ -113,7 +115,7 @@ const Results = ({
                 type="number"
                 labelTitle="Stop alerting after:"
                 inputTag={'Hours'}
-                toolTip="Dont alert me after data is this many hours old"
+                toolTip="Don't alert me after data is this many hours old"
                 min={1}
                 step={1}
                 value={info.ignoreDataAfterHours}
@@ -121,6 +123,24 @@ const Results = ({
                   setInfo((state) => ({
                     ...state,
                     ignoreDataAfterHours: parseInt(e.target.value, 10)
+                  }))
+                }}
+              />
+            </div>
+            <div className="max-w-sm mb-2">
+              <InputWithLabel
+                type="number"
+                labelTitle="Ignore stacks larger than this:"
+                inputTag={'Stack Size'}
+                toolTip="Don't alert me when undercut by large stacks at cheap prices."
+                min={1}
+                step={1}
+                max={9999}
+                value={info.ignoreStackSize}
+                onChange={(e) => {
+                  setInfo((state) => ({
+                    ...state,
+                    ignoreStackSize: parseInt(e.target.value, 10)
                   }))
                 }}
               />
