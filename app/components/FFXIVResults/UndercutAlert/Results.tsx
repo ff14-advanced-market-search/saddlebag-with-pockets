@@ -72,8 +72,8 @@ const Results = ({
               title="I want to be alerted on"
               name="alert-type"
               radioOptions={[
-                { label: 'All sales', value: 'removeIds' },
-                { label: 'Selected sales', value: 'addIds' }
+                { label: 'All items', value: 'removeIds' },
+                { label: 'Selected items', value: 'addIds' }
               ]}
               onChange={(value) => {
                 if (value !== 'addIds' && value !== 'removeIds') return
@@ -130,9 +130,9 @@ const Results = ({
             <div className="max-w-sm mb-2">
               <InputWithLabel
                 type="number"
-                labelTitle="Ignore stacks larger than:"
+                labelTitle="Ignore stacks larger than this:"
                 inputTag={'Stack Size'}
-                toolTip="Don't alert me when stacks are bigger than this value."
+                toolTip="Don't alert me when undercut by large stacks at cheap prices."
                 min={1}
                 step={1}
                 max={9999}
