@@ -7,13 +7,13 @@ export const FAST_SCAN_PATH =
   '/queries/full-scan?salesAmount=20&minimumProfitAmount=500&pricePerUnit=500'
 
 export const OUT_OF_STOCK_PATH =
-  '/queries/full-scan?hours=99&salesAmount=2&ROI=99&minimumProfitAmount=100&pricePerUnit=100&filters=1,2,3,4,7&hQChecked=true&outOfStockChecked=true'
+  '/queries/full-scan?hours=168&salesAmount=2&ROI=99&minimumProfitAmount=100&pricePerUnit=100&filters=1,2,3,4,7&hQChecked=true&outOfStockChecked=true'
 
 export const NQ_OUT_OF_STOCK_PATH =
-  '/queries/full-scan?salesAmount=2&hours=99&ROI=99&minimumProfitAmount=100&pricePerUnit=100&filters=7,54&includeVendorChecked=true&outOfStockChecked=true'
+  '/queries/full-scan?salesAmount=2&hours=168&ROI=99&minimumProfitAmount=100&pricePerUnit=100&filters=7,54&includeVendorChecked=true&outOfStockChecked=true'
 
 export const MEGA_VALUE_PATH =
-  '/queries/full-scan?hours=999&salesAmount=1&ROI=25&minimumProfitAmount=1000000&pricePerUnit=1000000&regionWideChecked=true&includeVendorChecked=true&outOfStockChecked=true'
+  '/queries/full-scan?hours=336&salesAmount=1&ROI=25&minimumProfitAmount=1000000&pricePerUnit=1000000&regionWideChecked=true&includeVendorChecked=true&outOfStockChecked=true'
 
 export const VENDOR_PATH = `/queries/full-scan?hours=48&salesAmount=5&ROI=50&minimumStackSize=1&minimumProfitAmount=1000&pricePerUnit=1000&filters=-1&hQChecked=false&includeVendorChecked=true&outOfStockChecked=true`
 
