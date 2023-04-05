@@ -2,7 +2,8 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { z } from 'zod'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, Title } from '~/components/Common'
+import NoResults from '~/components/Common/NoResults'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Select from '~/components/form/Select'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
@@ -11,7 +12,11 @@ import {
   ItemClassSelect,
   ItemQualitySelect
 } from '~/components/form/WoW/WoWScanForm'
-import type { LegacyMarketshareResponse } from '~/requests/WoW/LegacyMarketshare'
+import type {
+  LegacyMarketshareResponse,
+  LegacyMarketshareItem,
+  LegacyMarketshareSortBy
+} from '~/requests/WoW/LegacyMarketshare'
 import LegacyMarketshare from '~/requests/WoW/LegacyMarketshare'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 // import { useTypedSelector } from '~/redux/useTypedSelector'
@@ -27,9 +32,15 @@ const inputMap: Record<string, string> = {
   sortBy: 'Sort By'
 }
 
-const sortByOptions: Array<{ label: string; value: string }> = [
-  { value: 'currentMarketValue', label: 'Current Market Value' }
-]
+const sortByOptions: Array<{ label: string; value: LegacyMarketshareSortBy }> =
+  [
+    { value: 'currentMarketValue', label: 'Current Market Value' },
+    { value: 'historicMarketValue', label: 'Historic Market Value' },
+    { value: 'historicPrice', label: 'Historic Price' },
+    { value: 'minPrice', label: 'Minimum Price' },
+    { value: 'percentChange', label: 'Percent Change' },
+    { value: 'salesPerDay', label: 'Sales Per Day' }
+  ]
 
 const validateFormData = z.object({
   homeRealmId: z
@@ -52,8 +63,17 @@ const validateFormData = z.object({
     .string()
     .min(1)
     .transform((value) => parseInt(value, 10)),
-  sortBy: z.string()
+  sortBy: z.union([
+    z.literal('currentMarketValue'),
+    z.literal('historicMarketValue'),
+    z.literal('historicPrice'),
+    z.literal('minPrice'),
+    z.literal('percentChange'),
+    z.literal('percentCsalesPerDayhange')
+  ])
 })
+
+const pageTitle = 'Legacy Item Marksetshare'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
@@ -97,8 +117,6 @@ const Index = () => {
   //   const { darkmode } = useTypedSelector(({ user }) => user)
   const transition = useTransition()
 
-  const pageTitle = 'Legacy Item Marksetshare'
-
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
@@ -109,7 +127,19 @@ const Index = () => {
     LegacyMarketshareResponse | { exception: string } | {}
   >()
 
-  console.log({ results })
+  if (results) {
+    if (Object.keys(results).length === 0) {
+      return (
+        <PageWrapper>
+          <NoResults href="/wow/legacy-marketshare" />
+        </PageWrapper>
+      )
+    }
+
+    if ('data' in results) {
+      return <Results data={results.data} />
+    }
+  }
 
   const error =
     results && 'exception' in results ? results.exception : undefined
@@ -160,3 +190,12 @@ const Index = () => {
 }
 
 export default Index
+
+const Results = ({ data }: { data: Array<LegacyMarketshareItem> }) => {
+  console.log(data)
+  return (
+    <PageWrapper>
+      <Title title={pageTitle} />
+    </PageWrapper>
+  )
+}

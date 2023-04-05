@@ -2,22 +2,30 @@ import { address, UserAgent } from '~/requests/client/config'
 import type { MarketState } from '../FFXIV/marketshare'
 
 export interface LegacyMarketshareResponse {
-  data: Array<MarketshareItem>
+  data: Array<LegacyMarketshareItem>
 }
 
-export interface MarketshareItem {
+export interface LegacyMarketshareItem {
+  itemID: number
+  itemName: string
   currentMarketValue: number
   historicMarketValue: number
   historicPrice: number
-  itemID: number
-  itemName: string
-  item_class: number
-  item_subclass: number
   minPrice: number
   percentChange: number
   salesPerDay: number
+  item_class: number
+  item_subclass: number
   state: MarketState
 }
+
+export type LegacyMarketshareSortBy =
+  | 'currentMarketValue'
+  | 'historicMarketValue'
+  | 'historicPrice'
+  | 'minPrice'
+  | 'percentChange'
+  | 'salesPerDay'
 
 interface LegacyMarketshareProps {
   homeRealmId: number
