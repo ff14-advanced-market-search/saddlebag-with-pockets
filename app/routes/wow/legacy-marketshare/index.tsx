@@ -1,9 +1,12 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useState } from 'react'
 import { z } from 'zod'
-import { PageWrapper, Title } from '~/components/Common'
+import type { TreemapNode } from '~/components/Charts/Treemap'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
+import { TabbedButtons, hexMap } from '~/components/FFXIVResults/Marketshare'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Select from '~/components/form/Select'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
@@ -19,8 +22,9 @@ import type {
 } from '~/requests/WoW/LegacyMarketshare'
 import LegacyMarketshare from '~/requests/WoW/LegacyMarketshare'
 import type { WoWLoaderData } from '~/requests/WoW/types'
-// import { useTypedSelector } from '~/redux/useTypedSelector'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
+import TreemapChart from '~/components/Charts/Treemap'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -41,6 +45,12 @@ const sortByOptions: Array<{ label: string; value: LegacyMarketshareSortBy }> =
     { value: 'percentChange', label: 'Percent Change' },
     { value: 'salesPerDay', label: 'Sales Per Day' }
   ]
+
+const assertIsSortBy = (
+  sortOption: string
+): sortOption is LegacyMarketshareSortBy => {
+  return sortByOptions.some(({ value }) => value === sortOption)
+}
 
 const validateFormData = z.object({
   homeRealmId: z
@@ -99,17 +109,17 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  const data = await (await LegacyMarketshare(validInput.data)).json()
+  const response = await (await LegacyMarketshare(validInput.data)).json()
 
-  if (data.exception !== undefined) {
-    return json({ exception: data.exception })
+  if (response.exception !== undefined) {
+    return json({ exception: response.exception })
   }
 
-  if (!data?.data) {
+  if (!response?.data) {
     return json({ exception: 'Unknown server error' })
   }
 
-  return json({ data })
+  return json({ data: response.data, sortBy: validInput.data.sortBy })
 }
 
 const Index = () => {
@@ -124,7 +134,9 @@ const Index = () => {
   }
 
   const results = useActionData<
-    LegacyMarketshareResponse | { exception: string } | {}
+    | (LegacyMarketshareResponse & { sortBy: LegacyMarketshareSortBy })
+    | { exception: string }
+    | {}
   >()
 
   if (results) {
@@ -137,7 +149,7 @@ const Index = () => {
     }
 
     if ('data' in results) {
-      return <Results data={results.data} />
+      return <Results data={results.data} sortByValue={results.sortBy} />
     }
   }
 
@@ -191,11 +203,58 @@ const Index = () => {
 
 export default Index
 
-const Results = ({ data }: { data: Array<LegacyMarketshareItem> }) => {
-  console.log(data)
+const Results = ({
+  data,
+  sortByValue
+}: {
+  data: Array<LegacyMarketshareItem>
+  sortByValue: LegacyMarketshareSortBy
+}) => {
+  const { darkmode } = useTypedSelector(({ user }) => user)
+  const [sortBy, setSortBy] = useState<LegacyMarketshareSortBy>(sortByValue)
+
+  const chartData = getChartData(data, sortBy)
   return (
     <PageWrapper>
       <Title title={pageTitle} />
+      <ContentContainer>
+        <>
+          <Title title={pageTitle} />
+          <TabbedButtons
+            currentValue={sortBy}
+            onClick={(value) => {
+              if (assertIsSortBy(value)) setSortBy(value)
+            }}
+            options={sortByOptions}
+          />
+          <div className="md:hidden py-2">
+            <Select
+              title="Sort Results By"
+              options={sortByOptions}
+              name="sortBy"
+              id="sortBy"
+            />
+          </div>
+          <TreemapChart
+            chartData={chartData}
+            darkMode={darkmode}
+            backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+          />
+        </>
+      </ContentContainer>
     </PageWrapper>
   )
+}
+
+const getChartData = (
+  data: Array<LegacyMarketshareItem>,
+  sortByValue: LegacyMarketshareSortBy
+): Array<TreemapNode> => {
+  return data.map((current) => ({
+    id: current.itemID,
+    value: current[sortByValue],
+    name: current.itemName,
+    toolTip: `${current.itemName}: ${current[sortByValue].toLocaleString()}`,
+    color: hexMap[current.state]
+  }))
 }
