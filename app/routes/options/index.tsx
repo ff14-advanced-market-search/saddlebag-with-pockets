@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useTransition
 } from '@remix-run/react'
-import SelectDCandWorld from '~/components/form/select/SelectWorld'
+import SelectDCandWorld from '~/components/form/Select/SelectWorld'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json, redirect } from '@remix-run/cloudflare'
 import { z } from 'zod'

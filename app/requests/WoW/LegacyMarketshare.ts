@@ -2,10 +2,10 @@ import { address, UserAgent } from '~/requests/client/config'
 import type { MarketState } from '../FFXIV/marketshare'
 
 export interface LegacyMarketshareResponse {
-  data: Array<ItemMarketshare>
+  data: Array<MarketshareItem>
 }
 
-interface ItemMarketshare {
+export interface MarketshareItem {
   currentMarketValue: number
   historicMarketValue: number
   historicPrice: number
@@ -24,7 +24,7 @@ interface LegacyMarketshareProps {
   desiredAvgPrice: number
   desiredSalesPerDay: number
   itemClass: number
-  itemSubclass: number
+  itemSubClass: number
   sortBy: string
 }
 
@@ -35,10 +35,10 @@ const LegacyMarketshare: (
   desiredSalesPerDay,
   desiredAvgPrice,
   itemClass,
-  itemSubclass,
+  itemSubClass,
   sortBy
 }) => {
-  return fetch(`${address}/api/wow/itemstats`, {
+  return fetch(`${address}/api/wow/legacymarket`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const LegacyMarketshare: (
       desired_avg_price: desiredAvgPrice,
       desired_sales_per_day: desiredSalesPerDay,
       item_class: itemClass,
-      item_subclass: itemSubclass,
+      item_subclass: itemSubClass,
       sort_by: sortBy
     })
   })

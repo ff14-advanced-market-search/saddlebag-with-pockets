@@ -12,7 +12,7 @@ import { useState } from 'react'
 import Modal from '~/components/form/Modal'
 import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 import { getItemNameById } from '~/utils/items'
-import ItemSelect from '~/components/form/select/ItemSelect'
+import ItemSelect from '~/components/form/Select/ItemSelect'
 import {
   ChevronUpIcon,
   TrashIcon,
