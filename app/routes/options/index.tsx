@@ -5,7 +5,6 @@ import {
   useLoaderData,
   useTransition
 } from '@remix-run/react'
-import SelectDCandWorld from '~/components/form/Select/SelectWorld'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json, redirect } from '@remix-run/cloudflare'
 import { z } from 'zod'
@@ -28,6 +27,7 @@ import React from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
+import SelectDCandWorld from '~/components/form/Select/SelectWorld'
 
 export const validator = z.object({
   data_center: z.string().min(1),
