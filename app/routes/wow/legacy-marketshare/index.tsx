@@ -1,4 +1,8 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  ErrorBoundaryComponent,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { useState } from 'react'
@@ -25,6 +29,10 @@ import type { WoWLoaderData } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
 import TreemapChart from '~/components/Charts/Treemap'
+import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import FullTable from '~/components/Tables/FullTable'
+import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
+import type { ColumnList } from '~/components/types'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -84,6 +92,10 @@ const validateFormData = z.object({
 })
 
 const pageTitle = 'Legacy Item Marksetshare'
+
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
+  <ErrorBounds error={error} />
+)
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
@@ -203,6 +215,48 @@ const Index = () => {
 
 export default Index
 
+const getColumnList = (): Array<ColumnList<LegacyMarketshareItem>> => {
+  return [
+    { columnId: 'itemName', header: 'Item Name' },
+    { columnId: 'currentMarketValue', header: 'Current Market Value' },
+    { columnId: 'historicMarketValue', header: 'Historic Market Value' },
+    { columnId: 'historicPrice', header: 'Historic Price' },
+    { columnId: 'minPrice', header: 'Minimum Price' },
+    {
+      columnId: 'percentChange',
+      header: 'Minimum Price',
+      accessor: ({ row }) => {
+        const value = row.percentChange
+        if (!value) return null
+
+        if (value >= 9999999) return <p>∞</p>
+
+        return <p>{`${value.toLocaleString()}%`}</p>
+      }
+    },
+    { columnId: 'salesPerDay', header: 'Sales Per Day' },
+    { columnId: 'state', header: 'State in Market' }
+  ]
+}
+
+const getMobileColumns = (
+  sortBy: LegacyMarketshareSortBy,
+  options: Array<{ label: string; value: string }>
+) => {
+  const sortByName = options.find(({ value }) => sortBy === value)
+  if (!sortByName) {
+    return [
+      { columnId: 'itemName', header: 'Item Name' },
+      { header: 'Current Market Value', columnId: 'currentMarketValue' }
+    ]
+  }
+
+  return [
+    { columnId: 'itemName', header: 'Item Name' },
+    { header: sortByName.label, columnId: sortByName.value }
+  ]
+}
+
 const Results = ({
   data,
   sortByValue
@@ -214,12 +268,13 @@ const Results = ({
   const [sortBy, setSortBy] = useState<LegacyMarketshareSortBy>(sortByValue)
 
   const chartData = getChartData(data, sortBy)
+
+  const columnList = getColumnList()
   return (
     <PageWrapper>
       <Title title={pageTitle} />
       <ContentContainer>
         <>
-          <Title title={pageTitle} />
           <TabbedButtons
             currentValue={sortBy}
             onClick={(value) => {
@@ -233,6 +288,10 @@ const Results = ({
               options={sortByOptions}
               name="sortBy"
               id="sortBy"
+              onChange={(e) => {
+                const value = e.target.value
+                if (assertIsSortBy(value)) setSortBy(value)
+              }}
             />
           </div>
           <TreemapChart
@@ -242,6 +301,21 @@ const Results = ({
           />
         </>
       </ContentContainer>
+
+      <div className="hidden sm:block">
+        <FullTable<LegacyMarketshareItem>
+          data={data}
+          sortingOrder={[{ id: sortBy, desc: true }]}
+          columnList={columnList}
+        />
+      </div>
+      <MobileTable
+        data={data}
+        sortingOrder={[{ id: sortBy, desc: true }]}
+        columnList={getMobileColumns(sortBy, sortByOptions)}
+        rowLabels={columnList}
+        columnSelectOptions={sortByOptions.map(({ value }) => value)}
+      />
     </PageWrapper>
   )
 }
