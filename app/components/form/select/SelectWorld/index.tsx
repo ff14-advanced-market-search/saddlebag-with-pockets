@@ -6,8 +6,8 @@ import type { ValidationResult } from 'remix-validated-form'
 import type { SelectWorldInputFields } from '~/routes/options'
 import type { GetDeepProp } from '~/utils/ts'
 import type { WorldsList } from '~/utils/locations/Worlds'
-import { SelectDataCenter } from '~/components/form/Select/SelectWorld/SelectDataCenter'
-import { SelectWorld } from '~/components/form/Select/SelectWorld/SelectWorld'
+import { SelectDataCenter } from '~/components/form/select/SelectWorld/SelectDataCenter'
+import { SelectWorld } from '~/components/form/select/SelectWorld/SelectWorld'
 import type { SessionData } from '@remix-run/cloudflare'
 
 type SelectWorldProps = PropsWithoutRef<{

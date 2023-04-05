@@ -6,7 +6,7 @@ import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import GetSellerId from '~/requests/GetSellerId'
 import { getUserSessionData } from '~/sessions'
-import ItemSelect from '~/components/form/Select/ItemSelect'
+import ItemSelect from '~/components/form/select/ItemSelect'
 import NoResults from '~/components/Common/NoResults'
 import Results from '../../components/FFXIVResults/UndercutAlert/Results'
 

@@ -12,7 +12,7 @@ import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import { TabbedButtons, hexMap } from '~/components/FFXIVResults/Marketshare'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import Select from '~/components/form/Select'
+import Select from '~/components/form/select'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import {

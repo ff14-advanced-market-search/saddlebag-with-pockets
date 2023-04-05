@@ -27,7 +27,7 @@ import React from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import SelectDCandWorld from '~/components/form/Select/SelectWorld'
+import SelectDCandWorld from '~/components/form/select/SelectWorld'
 
 export const validator = z.object({
   data_center: z.string().min(1),

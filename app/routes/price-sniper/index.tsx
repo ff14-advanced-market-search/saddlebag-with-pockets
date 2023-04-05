@@ -10,7 +10,7 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Label from '~/components/form/Label'
 import HQCheckbox from '~/components/form/HQCheckbox'
 import CodeBlock from '~/components/Common/CodeBlock'
-import ItemSelect from '~/components/form/Select/ItemSelect'
+import ItemSelect from '~/components/form/select/ItemSelect'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
