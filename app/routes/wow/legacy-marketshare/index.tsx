@@ -25,7 +25,7 @@ import type {
   LegacyMarketshareSortBy
 } from '~/requests/WoW/LegacyMarketshare'
 import LegacyMarketshare from '~/requests/WoW/LegacyMarketshare'
-import type { WoWLoaderData } from '~/requests/WoW/types'
+import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
 import TreemapChart from '~/components/Charts/Treemap'
@@ -33,6 +33,7 @@ import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBounda
 import FullTable from '~/components/Tables/FullTable'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import type { ColumnList } from '~/components/types'
+import { getOribosLink } from '~/components/utilities/getOribosLink'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -161,7 +162,14 @@ const Index = () => {
     }
 
     if ('data' in results) {
-      return <Results data={results.data} sortByValue={results.sortBy} />
+      return (
+        <Results
+          data={results.data}
+          sortByValue={results.sortBy}
+          server={wowRealm.name}
+          region={wowRegion}
+        />
+      )
     }
   }
 
@@ -177,7 +185,7 @@ const Index = () => {
         error={error}>
         <div className="pt-4">
           <InputWithLabel
-            defaultValue={1000}
+            defaultValue={100}
             type="number"
             labelTitle="Minimum Desired average price"
             inputTag="Gold"
@@ -186,7 +194,7 @@ const Index = () => {
             step={0.01}
           />
           <InputWithLabel
-            defaultValue={10}
+            defaultValue={1}
             type="number"
             labelTitle="Minimum Desired sales per day"
             inputTag="Sales"
@@ -215,7 +223,10 @@ const Index = () => {
 
 export default Index
 
-const getColumnList = (): Array<ColumnList<LegacyMarketshareItem>> => {
+const getColumnList = (
+  region: WoWServerRegion,
+  server: string
+): Array<ColumnList<LegacyMarketshareItem>> => {
   return [
     { columnId: 'itemName', header: 'Item Name' },
     { columnId: 'currentMarketValue', header: 'Current Market Value' },
@@ -235,6 +246,14 @@ const getColumnList = (): Array<ColumnList<LegacyMarketshareItem>> => {
       }
     },
     { columnId: 'salesPerDay', header: 'Sales Per Day' },
+    {
+      columnId: 'itemID',
+      header: 'Oribos Link',
+      accessor: ({ row }) => {
+        const link = getOribosLink(server, '', region)
+        return link({ row })
+      }
+    },
     { columnId: 'state', header: 'State in Market' }
   ]
 }
@@ -259,17 +278,21 @@ const getMobileColumns = (
 
 const Results = ({
   data,
-  sortByValue
+  sortByValue,
+  server,
+  region
 }: {
   data: Array<LegacyMarketshareItem>
   sortByValue: LegacyMarketshareSortBy
+  server: string
+  region: WoWServerRegion
 }) => {
   const { darkmode } = useTypedSelector(({ user }) => user)
   const [sortBy, setSortBy] = useState<LegacyMarketshareSortBy>(sortByValue)
 
   const chartData = getChartData(data, sortBy)
 
-  const columnList = getColumnList()
+  const columnList = getColumnList(region, server)
   return (
     <PageWrapper>
       <Title title={pageTitle} />
