@@ -18,6 +18,13 @@ const recommendedQueries = [
     href: '/wow/shortage-predictor'
   },
   {
+    name: 'Legacy Marketshare Overview',
+    description:
+      'Find out what Legacy items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/legacy-marketshare'
+  },
+  {
     name: 'Undercut Alerts Curseforge Addon',
     description: 'The addon for our Undercut Alerts!',
     Icon: DocumentSearchIcon,

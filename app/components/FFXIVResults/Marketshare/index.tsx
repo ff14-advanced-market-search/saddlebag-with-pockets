@@ -41,13 +41,18 @@ const csvColumns: Array<{ title: string; value: keyof MarketshareItem }> = [
   { title: 'NPC Vendor Info', value: 'npc_vendor_info' }
 ]
 
-const hexMap = {
+export const hexMap = {
   crashing: '#b40606',
   decreasing: '#d88888',
   stable: '#ccbb00',
   increasing: '#81AC6D',
   spiking: '#24b406',
   'out of stock': '#87ceeb'
+}
+const assertIsSortBy = (
+  sortOption: string
+): sortOption is MarketshareSortBy => {
+  return sortByOptions.some(({ value }) => value === sortOption)
 }
 
 export const SortBySelect = ({
@@ -86,15 +91,17 @@ export const SortBySelect = ({
   </div>
 )
 
-const TabbedButtons = ({
+export const TabbedButtons = ({
   currentValue,
-  onClick
+  onClick,
+  options
 }: {
-  currentValue: MarketshareSortBy
-  onClick: (value: MarketshareSortBy) => void
+  currentValue: string
+  onClick: (value: string) => void
+  options: Array<{ value: string; label: string }>
 }) => (
   <div className="hidden md:flex mt-2 gap-2 overflow-x-scroll">
-    {sortByOptions.map(({ value, label }) => {
+    {options.map(({ value, label }) => {
       const selected = value === currentValue
       return (
         <button
@@ -218,7 +225,13 @@ export const Results = ({
         <ContentContainer>
           <>
             <Title title={chartTitle} />
-            <TabbedButtons currentValue={sortBy} onClick={setSortBy} />
+            <TabbedButtons
+              currentValue={sortBy}
+              onClick={(value) => {
+                if (assertIsSortBy(value)) setSortBy(value)
+              }}
+              options={sortByOptions}
+            />
             <div className="md:hidden py-2">
               <SortBySelect onChange={setSortBy} label="Sort By" />
             </div>

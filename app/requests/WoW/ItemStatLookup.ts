@@ -1,5 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
-import type { WoWServerRegion } from '../../../requests/WOWScan'
+import type { WoWServerRegion } from '../WOWScan'
 
 interface StatLookupProps {
   homeRealmId: number

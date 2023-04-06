@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { PageWrapper } from '~/components/Common'
-import WoWStatLookup from '~/components/WoWResults/ShortagePredictor/ItemStatLookup'
+import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
 import { z } from 'zod'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'

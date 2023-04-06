@@ -3,7 +3,7 @@ import addHighchartsTreemap from 'highcharts/modules/treemap'
 import HighchartsReact from 'highcharts-react-official'
 
 export interface TreemapNode {
-  id: string
+  id: string | number
   name: string
   value?: number
   color?: string

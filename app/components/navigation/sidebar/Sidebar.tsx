@@ -160,6 +160,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Legacy Marketshare Overview',
+        href: '/wow/legacy-marketshare',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon

@@ -7,7 +7,7 @@ import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
-import type { ItemStats } from '~/components/WoWResults/ShortagePredictor/ItemStatLookup'
+import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import MobileTable from '../FullScan/MobileTable'
 

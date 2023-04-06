@@ -4,7 +4,7 @@ import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
-import { InputGenerator } from '~/requests/WoW/InputGenerator'
+import { InputGenerator } from '~/components/WoWResults/ShortagePredictor/InputGenerator'
 import type {
   AlertJson,
   Prediction,
