@@ -230,12 +230,13 @@ const getColumnList = (
   return [
     { columnId: 'itemName', header: 'Item Name' },
     { columnId: 'currentMarketValue', header: 'Current Market Value' },
+    { columnId: 'minPrice', header: 'Minimum Price' },
+    { columnId: 'salesPerDay', header: 'Sales Per Day' },
     { columnId: 'historicMarketValue', header: 'Historic Market Value' },
     { columnId: 'historicPrice', header: 'Historic Price' },
-    { columnId: 'minPrice', header: 'Minimum Price' },
     {
       columnId: 'percentChange',
-      header: 'Minimum Price',
+      header: 'Percent Changed',
       accessor: ({ row }) => {
         const value = row.percentChange
         if (!value) return null
@@ -245,7 +246,7 @@ const getColumnList = (
         return <p>{`${value.toLocaleString()}%`}</p>
       }
     },
-    { columnId: 'salesPerDay', header: 'Sales Per Day' },
+    { columnId: 'state', header: 'State in Market' },
     {
       columnId: 'itemID',
       header: 'Oribos Link',
@@ -253,8 +254,7 @@ const getColumnList = (
         const link = getOribosLink(server, 'Oribos', region)
         return link({ row })
       }
-    },
-    { columnId: 'state', header: 'State in Market' }
+    }
   ]
 }
 
