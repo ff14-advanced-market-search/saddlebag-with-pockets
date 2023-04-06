@@ -88,7 +88,7 @@ const validateFormData = z.object({
     z.literal('historicPrice'),
     z.literal('minPrice'),
     z.literal('percentChange'),
-    z.literal('percentCsalesPerDayhange')
+    z.literal('salesPerDay')
   ])
 })
 
