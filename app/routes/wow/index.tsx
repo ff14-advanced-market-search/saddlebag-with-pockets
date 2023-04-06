@@ -22,7 +22,7 @@ const recommendedQueries = [
     description:
       'Find out what Legacy items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
     Icon: DocumentSearchIcon,
-    href: '/wow/legacymarket'
+    href: '/wow/legacy-marketshare'
   },
   {
     name: 'Undercut Alerts Curseforge Addon',
