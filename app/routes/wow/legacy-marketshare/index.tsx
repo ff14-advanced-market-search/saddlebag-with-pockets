@@ -250,7 +250,7 @@ const getColumnList = (
       columnId: 'itemID',
       header: 'Oribos Link',
       accessor: ({ row }) => {
-        const link = getOribosLink(server, '', region)
+        const link = getOribosLink(server, 'Oribos', region)
         return link({ row })
       }
     },
