@@ -118,6 +118,7 @@ const Results = ({
                 toolTip="Don't alert me after data is this many hours old"
                 min={1}
                 step={1}
+                max={720}
                 value={info.ignoreDataAfterHours}
                 onChange={(e) => {
                   setInfo((state) => ({
