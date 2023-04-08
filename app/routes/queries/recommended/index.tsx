@@ -16,7 +16,8 @@ import {
   OLIVIA_8_PATH,
   OLIVIA_9_PATH,
   OUT_OF_STOCK_PATH,
-  VENDOR_PATH
+  VENDOR_PATH,
+  VENDOR_FURNITURE_PATH
 } from '~/utils/redirectOnPath'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -60,6 +61,13 @@ const recommendedQueries = [
       'Search for items sold by NPC Vendors which can be resold on the marketboard.',
     Icon: DocumentSearchIcon,
     href: VENDOR_PATH
+  },
+  {
+    name: 'NPC Vendor Furniture Item Search',
+    description:
+      'Search for items sold by Housing Vendors which can be resold on the marketboard.',
+    Icon: DocumentSearchIcon,
+    href: VENDOR_FURNITURE_PATH
   },
   {
     name: 'Beginner Out of Stock Search',
