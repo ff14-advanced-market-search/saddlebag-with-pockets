@@ -8,6 +8,8 @@ import { getItemNameById } from '~/utils/items'
 import { Modal } from '../../form/ffxiv/CheckBoxModal'
 import ItemSelect from '~/components/form/select/ItemSelect'
 
+const MAX_HOURS = 24 * 30
+
 const Results = ({
   sellerId,
   homeServer
@@ -25,7 +27,7 @@ const Results = ({
     addIds: [],
     removeIds: [],
     hqOnly: false,
-    ignoreDataAfterHours: 24 * 30,
+    ignoreDataAfterHours: MAX_HOURS,
     ignoreStackSize: 9999
   })
 
@@ -118,12 +120,15 @@ const Results = ({
                 toolTip="Don't alert me after data is this many hours old"
                 min={1}
                 step={1}
-                max={720}
+                max={MAX_HOURS}
                 value={info.ignoreDataAfterHours}
                 onChange={(e) => {
                   setInfo((state) => ({
                     ...state,
-                    ignoreDataAfterHours: parseInt(e.target.value, 10)
+                    ignoreDataAfterHours: Math.min(
+                      parseInt(e.target.value, 10),
+                      MAX_HOURS
+                    )
                   }))
                 }}
               />
