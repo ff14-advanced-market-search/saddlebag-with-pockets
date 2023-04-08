@@ -32,6 +32,11 @@ const filters: FiltersList = [
     id: -1
   },
   {
+    name: 'Furniture Purchasable from NPC Vendor',
+    data: [],
+    id: -4
+  },
+  {
     name: 'Supply and Provisioning Mission Quest Items',
     data: [],
     id: -2
