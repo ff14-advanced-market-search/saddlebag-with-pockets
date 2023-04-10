@@ -23,7 +23,7 @@ const SmallFormContainer = ({
 }) => {
   const descriptionForDisplay = description ? (
     typeof description === 'string' ? (
-      <p className="italic text-sm text-grey-500 px-3 py-1 dark:text-gray-300">
+      <p className="italic text-sm text-grey-500 px-3 py-1 dark:text-gray-300 mb-1">
         {description}
       </p>
     ) : (

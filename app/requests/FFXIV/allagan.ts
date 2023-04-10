@@ -4,11 +4,9 @@ export interface AllaganProps {
   server: string
   allaganJson: Array<{
     Id: number
-    Name: string
-    'MB Average Price NQ/HQ': string
-    Type: string
-    Quantity: number
-    Source: string
+    Type?: string
+    Quantity?: number | string
+    Source?: string
     Location: string
   }>
 }
