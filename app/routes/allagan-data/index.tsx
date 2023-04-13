@@ -141,11 +141,11 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
 
 const CheckValue = ({ getValue }: { getValue: () => unknown }) => {
   const value = getValue()
-  if (value === 999999999) {
+  if (value === '999,999,999') {
     return <p>Out of Stock</p>
   }
 
-  if (value === 0) {
+  if (value === '0') {
     return <p>Quantity Unknown</p>
   }
 
@@ -162,7 +162,7 @@ const CheckValue = ({ getValue }: { getValue: () => unknown }) => {
 
 const CheckMinPrice = ({ getValue }: { getValue: () => unknown }) => {
   const value = getValue()
-  if (value === 999999999) {
+  if (value === '999,999,999') {
     return <p>Out of Stock</p>
   }
 
@@ -185,7 +185,7 @@ const columnList: Array<ColumnList<InBagsReport>> = [
   {
     columnId: 'hq',
     header: 'High Quality',
-    accessor: ({ getValue }) => (getValue() === 'true' ? <p>Yes</p> : null)
+    accessor: ({ getValue }) => (getValue() === true ? <p>Yes</p> : null)
   }
 ]
 
