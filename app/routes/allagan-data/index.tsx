@@ -6,8 +6,12 @@ import { json } from '@remix-run/cloudflare'
 import { useActionData, useTransition } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import { ToolTip } from '~/components/Common/InfoToolTip'
+import NoResults from '~/components/Common/NoResults'
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
+import type { ColumnList } from '~/components/types'
 import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
 import { getUserSessionData } from '~/sessions'
 
@@ -65,15 +69,19 @@ export const action: ActionFunction = async ({ request }) => {
     }
   }
 }
+type ActionResponse = AllaganResults | { exception: string } | {}
 
 const Index = () => {
   const transition = useTransition()
-  const results = useActionData()
+  const results = useActionData<ActionResponse>()
+  const isLoading = transition.state === 'submitting'
 
   const handleSubmit = (
-    _event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    console.log('Fired')
+    if (isLoading) {
+      event.preventDefault()
+    }
   }
 
   console.log(results)
@@ -81,13 +89,23 @@ const Index = () => {
   const error =
     results && 'exception' in results ? results.exception : undefined
 
+  if (results) {
+    if (Object.keys(results).length === 0) {
+      return <NoResults href="/allagan-data" />
+    }
+
+    if ('in_bags_report' in results) {
+      return <Results results={results} />
+    }
+  }
+
   return (
     <PageWrapper>
       <SmallFormContainer
         title="Allagan Data"
         description="Input your Allagan generated data here, and we will turn it into useful stuff!"
         onClick={handleSubmit}
-        loading={transition.state === 'submitting'}
+        loading={isLoading}
         error={error}>
         <div className="pt-2 flex-col">
           <div className="relative flex flex-1 items-center gap-1">
@@ -120,3 +138,76 @@ export default Index
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
   <ErrorBounds error={error} />
 )
+
+const CheckValue = ({ getValue }: { getValue: () => unknown }) => {
+  const value = getValue()
+  if (value === 999999999) {
+    return <p>Out of Stock</p>
+  }
+
+  if (value === 0) {
+    return <p>Quantity Unknown</p>
+  }
+
+  if (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
+  ) {
+    return <p>{value}</p>
+  }
+
+  return null
+}
+
+const CheckMinPrice = ({ getValue }: { getValue: () => unknown }) => {
+  const value = getValue()
+  if (value === 999999999) {
+    return <p>Out of Stock</p>
+  }
+
+  if (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
+  ) {
+    return <p>{value}</p>
+  }
+
+  return null
+}
+
+const columnList: Array<ColumnList<InBagsReport>> = [
+  { columnId: 'name', header: 'Item Name' },
+  { columnId: 'itemID', header: 'Item ID' },
+  { columnId: 'value', header: 'Value', accessor: CheckValue },
+  { columnId: 'min_price', header: 'Minimum Price', accessor: CheckMinPrice },
+  {
+    columnId: 'hq',
+    header: 'High Quality',
+    accessor: ({ getValue }) => (getValue() === 'true' ? <p>Yes</p> : null)
+  }
+]
+
+const mobileList: Array<ColumnList<InBagsReport>> = [
+  { columnId: 'name', header: 'Item Name' },
+  { columnId: 'value', header: 'Value', accessor: CheckValue }
+]
+
+const selectOptions = ['value', 'min_price']
+
+const Results = ({ results }: { results: AllaganResults }) => {
+  return (
+    <PageWrapper>
+      <SmallTable
+        title="In Bags Report"
+        description="A report showing the value and minimum price of items in your bags"
+        data={results.in_bags_report}
+        sortingOrder={[{ id: 'value', desc: true }]}
+        columnList={columnList}
+        mobileColumnList={mobileList}
+        columnSelectOptions={selectOptions}
+      />
+    </PageWrapper>
+  )
+}

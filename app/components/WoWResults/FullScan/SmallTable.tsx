@@ -38,7 +38,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   addMeta({ itemRank })
   return itemRank.passed
 }
-type DataType = Record<string, string | number | null | undefined>
+type DataType = Record<string, string | number | boolean | null | undefined>
 
 function DesktopTable({
   data,

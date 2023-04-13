@@ -11,6 +11,19 @@ export interface AllaganProps {
   }>
 }
 
+export interface InBagsReport {
+  [key: string]: number | string | boolean
+  hq: boolean
+  itemID: string | number
+  min_price: number
+  name: string
+  value: number
+}
+
+export interface AllaganResults {
+  in_bags_report: Array<InBagsReport>
+}
+
 const AllaganRequest: ({
   server,
   allaganJson
