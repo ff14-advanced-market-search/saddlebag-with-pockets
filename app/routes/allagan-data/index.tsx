@@ -211,7 +211,7 @@ const Results = ({ results }: { results: AllaganResults }) => {
     <PageWrapper>
       <ContentContainer>
         <>
-          <Title title="Undercut alert input" />
+          <Title title="Undercut Alert Input" />
           {objectHasProperties(results.undercut_alert_json) ? (
             <>
               <UndercutDescription />
@@ -246,7 +246,7 @@ const Results = ({ results }: { results: AllaganResults }) => {
 
       <ContentContainer>
         <>
-          <Title title="Sale alert input" />
+          <Title title="Sale Alert Input" />
           {objectHasProperties(results.sale_alert_json) ? (
             <>
               <DescriptionText
