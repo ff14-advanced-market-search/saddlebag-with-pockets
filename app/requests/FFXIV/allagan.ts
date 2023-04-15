@@ -34,10 +34,32 @@ export interface SaleAlertJson {
   seller_id: string
   server: string
 }
+
+export interface UndercutOutOfDate {
+  itemID: string
+  link: string
+  my_last_update_time: string
+  my_ppu: string
+  my_retainer: string
+  ppu: string
+  real_name: string
+  undercut: boolean
+  undercut_last_update_time: string
+  undercut_retainer: string
+}
+
+export interface SaleOutOfDate {
+  itemID: string
+  link: string
+  min_price: number
+  name: string
+}
 export interface AllaganResults {
   in_bags_report: Array<InBagsReport>
   undercut_alert_json: UndercutAlertJson
+  undercut_items_not_up_to_date: Array<UndercutOutOfDate>
   sale_alert_json: SaleAlertJson
+  sale_items_not_up_to_date: Array<SaleOutOfDate>
 }
 
 const AllaganRequest: ({

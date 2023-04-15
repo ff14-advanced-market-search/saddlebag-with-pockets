@@ -4,6 +4,7 @@ import type {
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useTransition } from '@remix-run/react'
+import type { ReactNode } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import NoResults from '~/components/Common/NoResults'
@@ -13,6 +14,7 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import type { ColumnList } from '~/components/types'
 import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
 import { getUserSessionData } from '~/sessions'
@@ -89,8 +91,6 @@ const Index = () => {
       event.preventDefault()
     }
   }
-
-  console.log(results)
 
   const error =
     results && 'exception' in results ? results.exception : undefined
@@ -237,6 +237,22 @@ const Results = ({ results }: { results: AllaganResults }) => {
                   }}
                 />
               </div>
+              {results.undercut_items_not_up_to_date.length > 0 ? (
+                <>
+                  <h4 className="font-semibold text-blue-900 py-2 dark:text-gray-100">
+                    Items below have out of date data
+                  </h4>
+                  <DescriptionText description="Please search for these items in game to ensure you have the most up to date data" />
+                  <SimpleTable
+                    data={results.undercut_items_not_up_to_date.map((curr) => ({
+                      name: curr.real_name,
+                      link: curr.link
+                    }))}
+                  />
+                </>
+              ) : (
+                <DescriptionText description="All items up to date!" />
+              )}
             </>
           ) : (
             <DescriptionText description="No undercut alert data found" />
@@ -275,6 +291,17 @@ const Results = ({ results }: { results: AllaganResults }) => {
                   }}
                 />
               </div>
+              {results.sale_items_not_up_to_date.length > 0 ? (
+                <>
+                  <h4 className="font-semibold text-blue-900 py-2 dark:text-gray-100">
+                    Items below have out of date data
+                  </h4>
+                  <DescriptionText description="Please search for these items in game to ensure you have the most up to date data" />
+                  <SimpleTable data={results.sale_items_not_up_to_date} />
+                </>
+              ) : (
+                <DescriptionText description="All items up to date!" />
+              )}
             </>
           ) : (
             <DescriptionText description="No sale alert data found" />
@@ -299,4 +326,43 @@ const DescriptionText = ({ description }: { description: string }) => (
   <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     {description}
   </p>
+)
+
+const SimpleTable = ({
+  data
+}: {
+  data: Array<{ name: string; link: string }>
+}) => {
+  return (
+    <div className="overflow-y-scroll max-h-48">
+      <table className="w-full relative divide-y divide-gray-300 dark:divide-gray-600">
+        <thead className="w-screen">
+          <tr className="text-gray-900 font-semibold dark:text-gray-100">
+            <THead>Name</THead>
+            <THead>Universalis Link</THead>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-300 dark:divide-gray-700 bg-white dark:bg-slate-800 dark:divide-gray-500 max-w-full">
+          {data.map(({ name, link }) => {
+            return (
+              <tr
+                key={`${name}-row`}
+                className="text-gray-700 dark:text-gray-300">
+                <td className="text-center p-2">{name}</td>
+                <td className="text-center p-2">
+                  <UniversalisBadgedLink link={link} />
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+const THead = ({ children }: { children: ReactNode }) => (
+  <th className="py-2 px-3 sticky bg-gray-50 top-0 text-center cursor-pointer text-gray-900 dark:text-gray-100 dark:bg-gray-600">
+    {children}
+  </th>
 )

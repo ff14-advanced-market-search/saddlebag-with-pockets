@@ -117,8 +117,8 @@ function MobileTable({
         </select>
       </div>
       <div className="overflow-y-scroll max-h-[calc(100vh-160px)]">
-        <table className="max-w-screen relative divide-y divide-gray-300 dark:divide-gray-600">
-          <thead className="max-w-screen">
+        <table className="w-screen relative divide-y divide-gray-300 dark:divide-gray-600">
+          <thead className="w-screen">
             <tr className="text-gray-900 font-semibold dark:text-gray-100">
               {columns.map((col) => {
                 if (col.columnId === sortingColumn) {
