@@ -50,25 +50,7 @@ const Results = ({
         <>
           <div className="flex flex-col my-2 gap-2">
             <Title title="Input for undercut alerts" />
-            <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
-              Copy the text below to your clipboard and use it in our{' '}
-              <a
-                className="underline"
-                href="https://discord.gg/836C8wDVNq"
-                target="_blank"
-                rel="noreferrer">
-                discord server
-              </a>{' '}
-              for the bot slash command '/ff undercut-register' or '/ff
-              undercut-update' to activate{' '}
-              <a
-                className="underline"
-                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
-                target="_blank"
-                rel="noreferrer">
-                patreon undercut alerts.
-              </a>
-            </p>
+            <UndercutDescription />
             <p className="text-gray-900 dark:text-gray-100"></p>
             <RadioButtons
               title="I want to be alerted on"
@@ -239,3 +221,25 @@ const Results = ({
 }
 
 export default Results
+
+export const UndercutDescription = () => (
+  <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
+    Copy this to your clipboard and use it in our{' '}
+    <a
+      className="underline"
+      href="https://discord.gg/836C8wDVNq"
+      target="_blank"
+      rel="noreferrer">
+      discord server
+    </a>{' '}
+    for the bot slash command '/ff undercut-register' or '/ff undercut-update'
+    to activate{' '}
+    <a
+      className="underline"
+      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
+      target="_blank"
+      rel="noreferrer">
+      patreon undercut alerts.
+    </a>
+  </p>
+)

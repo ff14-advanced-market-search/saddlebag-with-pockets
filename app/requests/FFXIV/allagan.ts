@@ -20,8 +20,19 @@ export interface InBagsReport {
   value: number
 }
 
+export interface UndercutAlertJson {
+  add_ids: Array<number | string>
+  hq_only: boolean
+  ignore_data_after_hours: number
+  ignore_ids: Array<string | number>
+  ignore_undercuts_with_quantity_over: number
+  seller_id: string
+  server: string
+}
+
 export interface AllaganResults {
   in_bags_report: Array<InBagsReport>
+  undercut_alert_json: UndercutAlertJson
 }
 
 const AllaganRequest: ({

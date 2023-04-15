@@ -4,11 +4,13 @@ import type {
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useTransition } from '@remix-run/react'
-import { PageWrapper } from '~/components/Common'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import NoResults from '~/components/Common/NoResults'
+import { UndercutDescription } from '~/components/FFXIVResults/UndercutAlert/Results'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
+import { SubmitButton } from '~/components/form/SubmitButton'
 import type { ColumnList } from '~/components/types'
 import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
 import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
@@ -16,6 +18,10 @@ import AllaganRequest from '~/requests/FFXIV/allagan'
 import { getUserSessionData } from '~/sessions'
 
 const formName = 'allaganData'
+
+const objectHasProperties = (object: Object) => {
+  return Object.keys(object).length > 0
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -199,6 +205,40 @@ const selectOptions = ['value', 'min_price']
 const Results = ({ results }: { results: AllaganResults }) => {
   return (
     <PageWrapper>
+      <ContentContainer>
+        <>
+          <Title title="Undercut alert input" />
+          {objectHasProperties(results.undercut_alert_json) ? (
+            <>
+              <UndercutDescription />
+              <div className="my-2">
+                <SubmitButton
+                  title="Copy to clipboard"
+                  type="button"
+                  onClick={async (e) => {
+                    e.preventDefault()
+                    if (
+                      typeof window !== 'undefined' &&
+                      typeof document !== 'undefined'
+                    ) {
+                      if (!window.isSecureContext) {
+                        alert('Unable to copy.')
+                        return
+                      }
+                      await navigator.clipboard.writeText(
+                        JSON.stringify(results.undercut_alert_json)
+                      )
+                      alert('Copied to clipboard!')
+                    }
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <p>No Undercut alert data found</p>
+          )}
+        </>
+      </ContentContainer>
       <SmallTable
         title="In Bags Report"
         description="A report showing the value and minimum price of items in your bags"
