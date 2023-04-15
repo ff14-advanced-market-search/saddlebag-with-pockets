@@ -132,6 +132,11 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
+        name: 'Allagan Data Reports',
+        href: 'allagan-data',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Secret Sale Leads',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
         icon: DocumentSearchIcon,
