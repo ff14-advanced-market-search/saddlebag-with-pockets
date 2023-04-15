@@ -232,8 +232,7 @@ export const UndercutDescription = () => (
       rel="noreferrer">
       discord server
     </a>{' '}
-    for the bot slash command '/ff undercut-register' or '/ff undercut-update'
-    to activate{' '}
+    for the bot slash command '/ff undercut-register' to activate or update{' '}
     <a
       className="underline"
       href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"

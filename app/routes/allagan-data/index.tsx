@@ -251,7 +251,7 @@ const Results = ({ results }: { results: AllaganResults }) => {
             <>
               <DescriptionText
                 description="Copy this to your clipboard and use it in our discord server for
-            the bot slash command '/ff sale-register'"
+            the bot slash command '/ff sale-register' to register and update sale alerts!"
               />
               <div className="my-2">
                 <SubmitButton
