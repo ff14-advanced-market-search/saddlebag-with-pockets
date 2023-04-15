@@ -29,10 +29,15 @@ export interface UndercutAlertJson {
   seller_id: string
   server: string
 }
-
+export interface SaleAlertJson {
+  item_ids: Array<number>
+  seller_id: string
+  server: string
+}
 export interface AllaganResults {
   in_bags_report: Array<InBagsReport>
   undercut_alert_json: UndercutAlertJson
+  sale_alert_json: SaleAlertJson
 }
 
 const AllaganRequest: ({

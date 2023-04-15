@@ -96,7 +96,7 @@ const Index = () => {
     results && 'exception' in results ? results.exception : undefined
 
   if (results) {
-    if (Object.keys(results).length === 0) {
+    if (!objectHasProperties(results)) {
       return <NoResults href="/allagan-data" />
     }
 
@@ -239,10 +239,49 @@ const Results = ({ results }: { results: AllaganResults }) => {
               </div>
             </>
           ) : (
-            <p>No Undercut alert data found</p>
+            <DescriptionText description="No undercut alert data found" />
           )}
         </>
       </ContentContainer>
+
+      <ContentContainer>
+        <>
+          <Title title="Sale alert input" />
+          {objectHasProperties(results.sale_alert_json) ? (
+            <>
+              <DescriptionText
+                description="Copy this to your clipboard and use it in our discord server for
+            the bot slash command '/ff' or '/ff sale-update'"
+              />
+              <div className="my-2">
+                <SubmitButton
+                  title="Copy to clipboard"
+                  type="button"
+                  onClick={async (e) => {
+                    e.preventDefault()
+                    if (
+                      typeof window !== 'undefined' &&
+                      typeof document !== 'undefined'
+                    ) {
+                      if (!window.isSecureContext) {
+                        alert('Unable to copy.')
+                        return
+                      }
+                      await navigator.clipboard.writeText(
+                        JSON.stringify(results.sale_alert_json)
+                      )
+                      alert('Copied to clipboard!')
+                    }
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <DescriptionText description="No sale alert data found" />
+          )}
+        </>
+      </ContentContainer>
+
       <SmallTable
         title="In Bags Report"
         description="A report showing the value and minimum price of items in your bags"
@@ -255,3 +294,9 @@ const Results = ({ results }: { results: AllaganResults }) => {
     </PageWrapper>
   )
 }
+
+const DescriptionText = ({ description }: { description: string }) => (
+  <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
+    {description}
+  </p>
+)
