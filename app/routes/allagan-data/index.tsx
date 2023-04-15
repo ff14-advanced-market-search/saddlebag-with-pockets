@@ -145,13 +145,13 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
   <ErrorBounds error={error} />
 )
 
-const CheckValue = ({ getValue }: { getValue: () => unknown }) => {
-  const value = getValue()
-  if (value === '999,999,999') {
+const CheckValue = ({ row }: { row: InBagsReport }) => {
+  const value = row.value
+  if (value === 999999999) {
     return <p>Out of Stock</p>
   }
 
-  if (value === '0') {
+  if (value === 0) {
     return <p>Quantity Unknown</p>
   }
 
@@ -160,15 +160,15 @@ const CheckValue = ({ getValue }: { getValue: () => unknown }) => {
     typeof value === 'number' ||
     typeof value === 'boolean'
   ) {
-    return <p>{value}</p>
+    return <p>{value.toLocaleString()}</p>
   }
 
   return null
 }
 
-const CheckMinPrice = ({ getValue }: { getValue: () => unknown }) => {
-  const value = getValue()
-  if (value === '999,999,999') {
+const CheckMinPrice = ({ row }: { row: InBagsReport }) => {
+  const value = row.min_price
+  if (value === 999999999) {
     return <p>Out of Stock</p>
   }
 
@@ -177,7 +177,7 @@ const CheckMinPrice = ({ getValue }: { getValue: () => unknown }) => {
     typeof value === 'number' ||
     typeof value === 'boolean'
   ) {
-    return <p>{value}</p>
+    return <p>{value.toLocaleString()}</p>
   }
 
   return null
@@ -185,7 +185,11 @@ const CheckMinPrice = ({ getValue }: { getValue: () => unknown }) => {
 
 const columnList: Array<ColumnList<InBagsReport>> = [
   { columnId: 'name', header: 'Item Name' },
-  { columnId: 'itemID', header: 'Item ID' },
+  {
+    columnId: 'itemID',
+    header: 'Item ID',
+    accessor: ({ row }) => <p>{row.itemID}</p>
+  },
   { columnId: 'value', header: 'Value', accessor: CheckValue },
   { columnId: 'min_price', header: 'Minimum Price', accessor: CheckMinPrice },
   {
