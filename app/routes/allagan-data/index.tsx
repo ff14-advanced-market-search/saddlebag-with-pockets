@@ -217,7 +217,11 @@ const Results = ({ results }: { results: AllaganResults }) => {
           <Title title="Undercut Alert Input" />
           {objectHasProperties(results.undercut_alert_json) ? (
             <>
-              <CommandInstructions cmd="/ff undercut-register" />
+              <CommandInstructions
+                cmd="/ff undercut-register"
+                title="Patreon undercut alerts."
+                link="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
+              />
               <div className="my-2">
                 <SubmitButton
                   title="Copy to clipboard"
@@ -269,7 +273,10 @@ const Results = ({ results }: { results: AllaganResults }) => {
           <Title title="Sale Alert Input" />
           {objectHasProperties(results.sale_alert_json) ? (
             <>
-              <CommandInstructions cmd="/ff sale-register" />
+              <CommandInstructions
+                cmd="/ff sale-register"
+                title="Patreon sale alerts."
+              />
               <div className="my-2">
                 <SubmitButton
                   title="Copy to clipboard"
@@ -377,7 +384,15 @@ const TCell = ({ children }: { children: ReactNode }) => (
   <td className="text-center p-2">{children}</td>
 )
 
-const CommandInstructions = ({ cmd }: { cmd: string }) => (
+const CommandInstructions = ({
+  cmd,
+  link,
+  title
+}: {
+  cmd: string
+  link?: string
+  title: string
+}) => (
   <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     Copy this to your clipboard and use it in our{' '}
     <a
@@ -388,12 +403,12 @@ const CommandInstructions = ({ cmd }: { cmd: string }) => (
       discord server
     </a>{' '}
     for the bot slash command '{cmd}' to activate or update{' '}
-    <a
-      className="underline"
-      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
-      target="_blank"
-      rel="noreferrer">
-      patreon undercut alerts.
-    </a>
+    {link ? (
+      <a className="underline" href={link} target="_blank" rel="noreferrer">
+        {title}
+      </a>
+    ) : (
+      title
+    )}
   </p>
 )
