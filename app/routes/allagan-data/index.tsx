@@ -8,7 +8,6 @@ import type { ReactNode } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import NoResults from '~/components/Common/NoResults'
-import { UndercutDescription } from '~/components/FFXIVResults/UndercutAlert/Results'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SubmitButton } from '~/components/form/SubmitButton'
@@ -218,7 +217,7 @@ const Results = ({ results }: { results: AllaganResults }) => {
           <Title title="Undercut Alert Input" />
           {objectHasProperties(results.undercut_alert_json) ? (
             <>
-              <UndercutDescription />
+              <CommandInstructions cmd="/ff undercut-register" />
               <div className="my-2">
                 <SubmitButton
                   title="Copy to clipboard"
@@ -270,10 +269,7 @@ const Results = ({ results }: { results: AllaganResults }) => {
           <Title title="Sale Alert Input" />
           {objectHasProperties(results.sale_alert_json) ? (
             <>
-              <DescriptionText
-                description="Copy this to your clipboard and use it in our discord server for
-            the bot slash command '/ff sale-register' to register and update sale alerts!"
-              />
+              <CommandInstructions cmd="/ff sale-register" />
               <div className="my-2">
                 <SubmitButton
                   title="Copy to clipboard"
@@ -379,4 +375,25 @@ const THead = ({ children }: { children: ReactNode }) => (
 
 const TCell = ({ children }: { children: ReactNode }) => (
   <td className="text-center p-2">{children}</td>
+)
+
+const CommandInstructions = ({ cmd }: { cmd: string }) => (
+  <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
+    Copy this to your clipboard and use it in our{' '}
+    <a
+      className="underline"
+      href="https://discord.gg/836C8wDVNq"
+      target="_blank"
+      rel="noreferrer">
+      discord server
+    </a>{' '}
+    for the bot slash command '{cmd}' to activate or update{' '}
+    <a
+      className="underline"
+      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
+      target="_blank"
+      rel="noreferrer">
+      patreon undercut alerts.
+    </a>
+  </p>
 )
