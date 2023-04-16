@@ -185,17 +185,21 @@ const CheckMinPrice = ({ row }: { row: InBagsReport }) => {
 
 const columnList: Array<ColumnList<InBagsReport>> = [
   { columnId: 'name', header: 'Item Name' },
-  {
-    columnId: 'itemID',
-    header: 'Item ID',
-    accessor: ({ row }) => <p>{row.itemID}</p>
-  },
   { columnId: 'value', header: 'Value', accessor: CheckValue },
   { columnId: 'min_price', header: 'Minimum Price', accessor: CheckMinPrice },
   {
     columnId: 'hq',
     header: 'High Quality',
     accessor: ({ getValue }) => (getValue() === true ? <p>Yes</p> : null)
+  },
+  {
+    columnId: 'itemID',
+    header: 'Universalis Link',
+    accessor: ({ row }) => (
+      <UniversalisBadgedLink
+        link={`https://universalis.app/market/${row.itemID}`}
+      />
+    )
   }
 ]
 
@@ -244,6 +248,7 @@ const Results = ({ results }: { results: AllaganResults }) => {
                   </h4>
                   <DescriptionText description="Please search for these items in game to ensure you have the most up to date data" />
                   <SimpleTable
+                    tableKey="undercut"
                     data={results.undercut_items_not_up_to_date.map((curr) => ({
                       name: curr.real_name,
                       link: curr.link
@@ -297,7 +302,10 @@ const Results = ({ results }: { results: AllaganResults }) => {
                     Items below have out of date data
                   </h4>
                   <DescriptionText description="Please search for these items in game to ensure you have the most up to date data" />
-                  <SimpleTable data={results.sale_items_not_up_to_date} />
+                  <SimpleTable
+                    data={results.sale_items_not_up_to_date}
+                    tableKey="sales"
+                  />
                 </>
               ) : (
                 <DescriptionText description="All items up to date!" />
@@ -329,8 +337,10 @@ const DescriptionText = ({ description }: { description: string }) => (
 )
 
 const SimpleTable = ({
+  tableKey,
   data
 }: {
+  tableKey: string
   data: Array<{ name: string; link: string }>
 }) => {
   return (
@@ -346,12 +356,12 @@ const SimpleTable = ({
           {data.map(({ name, link }) => {
             return (
               <tr
-                key={`${name}-row`}
+                key={`${tableKey}-${name}`}
                 className="text-gray-700 dark:text-gray-300">
-                <td className="text-center p-2">{name}</td>
-                <td className="text-center p-2">
+                <TCell>{name}</TCell>
+                <TCell>
                   <UniversalisBadgedLink link={link} />
-                </td>
+                </TCell>
               </tr>
             )
           })}
@@ -365,4 +375,8 @@ const THead = ({ children }: { children: ReactNode }) => (
   <th className="py-2 px-3 sticky bg-gray-50 top-0 text-center cursor-pointer text-gray-900 dark:text-gray-100 dark:bg-gray-600">
     {children}
   </th>
+)
+
+const TCell = ({ children }: { children: ReactNode }) => (
+  <td className="text-center p-2">{children}</td>
 )
