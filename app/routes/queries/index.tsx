@@ -65,6 +65,13 @@ const ffxivPages = [
     external: true
   },
   {
+    name: 'Allagan Data Reports',
+    href: '/allagan-data',
+    description:
+      'Use data from the Allagan Tools Plugin to create sale alerts and find valuable items in your bags you may have forgotten about.',
+    Icon: ChartSquareBarIcon
+  },
+  {
     name: 'Listings Comparison and Competition Metric',
     description:
       'Shows you how tough the undercutting competition is on specific items.',
