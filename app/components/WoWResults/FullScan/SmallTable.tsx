@@ -38,7 +38,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   addMeta({ itemRank })
   return itemRank.passed
 }
-type DataType = Record<string, string | number | null | undefined>
+type DataType = Record<string, string | number | boolean | null | undefined>
 
 function DesktopTable({
   data,
@@ -139,7 +139,7 @@ function DesktopTable({
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `px-3 py-3.5 sticky bg-gray-50 top-0 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600`
+                          `px-3 py-3.5 sticky bg-gray-50 top-0 text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600 text-center`
                         )}
                         key={header.id}>
                         <div className={`group inline-flex`}>
