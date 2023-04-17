@@ -144,7 +144,7 @@ const navGroups: Array<{
       },
       {
         name: 'Experimental Discount Price Sniper',
-        href: 'https://www.patreon.com/indopan',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Experimental-Discount-Price-Sniper',
         icon: DocumentSearchIcon,
         external: true
       }
