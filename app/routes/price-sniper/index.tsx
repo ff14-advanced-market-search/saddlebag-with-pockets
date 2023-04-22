@@ -133,26 +133,28 @@ const Index = () => {
                     if (value === 'quantity') setIsPrice(false)
                   }}>
                   <Label>Alert on Price or Quantity of item: </Label>
-                  <Label htmlFor="radio-price">
-                    <input
-                      id="radio-price"
-                      type="radio"
-                      value="price"
-                      name="price-quantity"
-                      defaultChecked={isPrice === true}
-                    />{' '}
-                    Price
-                  </Label>
-                  <Label htmlFor="radio-quantity">
-                    <input
-                      id="radio-quantity"
-                      type="radio"
-                      value="quantity"
-                      name="price-quantity"
-                      defaultChecked={isPrice === false}
-                    />{' '}
-                    Quantity
-                  </Label>
+                  <div className="flex gap-2">
+                    <Label htmlFor="radio-price">
+                      <input
+                        id="radio-price"
+                        type="radio"
+                        value="price"
+                        name="price-quantity"
+                        defaultChecked={isPrice === true}
+                      />{' '}
+                      Price
+                    </Label>
+                    <Label htmlFor="radio-quantity">
+                      <input
+                        id="radio-quantity"
+                        type="radio"
+                        value="quantity"
+                        name="price-quantity"
+                        defaultChecked={isPrice === false}
+                      />{' '}
+                      Quantity
+                    </Label>
+                  </div>
                 </div>
                 <InputWithLabel
                   labelTitle={`${isPrice ? 'Price' : 'Quantity'} to alert on`}
