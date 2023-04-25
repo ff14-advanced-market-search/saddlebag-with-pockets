@@ -66,12 +66,16 @@ const Index = () => {
 
   const isPriceValue = isPrice ? 'price' : 'quantity'
 
+  const description = `To setup ${isPriceValue} alerts search, enter items and a desired
+  ${isPriceValue}. Copy and paste the below input for the Discord Bot in the
+  Saddlebage Exchange discord server.`
+
   return (
     <PageWrapper>
       <>
         <SmallFormContainer
           title="Input for Price Sniper Alerts"
-          description="To setup price sniper alerts search, enter items and a desired price. Copy and paste the below input for the Discord Bot in the Saddlebage Exchange discord server for the discord bot commands '/ff price-register' or '/ff price-update'!"
+          description={description}
           error={error}
           onClick={(e) => {
             e.preventDefault()
@@ -247,8 +251,22 @@ const Index = () => {
             title={`Input for ${isPriceValue} sniper alert`}
             buttonTitle="Copy to clipboard"
             codeString={jsonToDisplay}
-            onClick={() => alert('Copied to clipboard!')}
-          />
+            onClick={() => alert('Copied to clipboard!')}>
+            <p className="italic text-sm text-blue-900 py-2 dark:text-gray-100">
+              For the discord bot, use the{' '}
+              {isPrice ? (
+                <span>
+                  commands <b>'/ff price-register'</b> or{' '}
+                  <b>'/ff price-update'</b>
+                </span>
+              ) : (
+                <span>
+                  command <b>'/ff quantity-register'</b>
+                </span>
+              )}
+              !
+            </p>
+          </CodeBlock>
         </div>
       </>
     </PageWrapper>
