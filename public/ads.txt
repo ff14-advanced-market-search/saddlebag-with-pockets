@@ -1,4 +1,8 @@
 #Ads.txt saddlebagexchange.com
+#Ads.txt managed by AdsTxtManager.com - the free ads.txt management tool for publishers
+ownerdomain=saddlebagexchange.com
+contact=directsales@ezoic.com
+managerdomain=ezoic.co.uk
 
 152media.info, 152M7, RESELLER
 33across.com, 0013300001kQj2HAAS, RESELLER, bbea06d9c4d2853c
@@ -51,6 +55,8 @@ conversantmedia.com, 100357, RESELLER, 03113cd04947736d
 conversantmedia.com, 100435, RESELLER, 03113cd04947736d
 criteo.com, B-062427, DIRECT, 9fac4a4a87c2a44f
 emxdgt.com, 2014, RESELLER, 1e1d41537f7cad7f
+ezoic.co.uk, 16b9c1b7931ef530aa3c9eeb300de0fe, DIRECT
+ezoic.co.uk, f27c08526c720fbbc7f5f4b9f5ff3008, DIRECT
 freewheel.tv, 1064705, RESELLER
 freewheel.tv, 1220655, RESELLER
 freewheel.tv, 144617, RESELLER, 74e8e47458f74754
