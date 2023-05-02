@@ -101,6 +101,7 @@ function App() {
         <Meta />
         <Links />
         <EnsureThemeApplied />
+        <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
       </head>
       <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
         <noscript>

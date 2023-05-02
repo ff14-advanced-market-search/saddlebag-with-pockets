@@ -427,7 +427,6 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
