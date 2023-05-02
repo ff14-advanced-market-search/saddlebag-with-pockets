@@ -21,6 +21,7 @@ export default function Index() {
       <main className="flex-1">
         <Banner />
         <div className="py-6">
+          <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
               Saddlebag Exchange
@@ -35,6 +36,7 @@ export default function Index() {
                 return <TileLink key={query.name} {...query} />
               })}
             </div>
+            <div id="ezoic-pub-ad-placeholder-107"> </div>
           </div>
         </div>
       </main>
