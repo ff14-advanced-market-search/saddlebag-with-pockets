@@ -102,14 +102,15 @@ function App() {
         <Links />
         <EnsureThemeApplied />
         <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-        <script>
-          window.ezstandalone = window.ezstandalone || {};
+        <script dangerouslySetInnerHTML={{
+          __html: `window.ezstandalone = window.ezstandalone || {};
           ezstandalone.cmd = ezstandalone.cmd || [];
           ezstandalone.cmd.push(function() {
               ezstandalone.define(118,107);
               ezstandalone.enable();
               ezstandalone.display();
-          });
+          });`
+          }}>
         </script>
       </head>
       <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
