@@ -101,6 +101,18 @@ function App() {
         <Meta />
         <Links />
         <EnsureThemeApplied />
+        <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ezstandalone = window.ezstandalone || {};
+          ezstandalone.cmd = ezstandalone.cmd || [];
+          ezstandalone.cmd.push(function() {
+              ezstandalone.define(118,116);
+              ezstandalone.enable();
+              ezstandalone.display();
+          });`
+          }}
+        />
       </head>
       <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
         <noscript>

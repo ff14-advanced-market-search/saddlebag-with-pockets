@@ -35,6 +35,7 @@ export default function Index() {
                 return <TileLink key={query.name} {...query} />
               })}
             </div>
+            <div id="ezoic-pub-ad-placeholder-116"> </div>
           </div>
         </div>
       </main>

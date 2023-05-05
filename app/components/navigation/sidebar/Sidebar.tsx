@@ -622,6 +622,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
         </nav>
         {children}
       </div>
+      <div id="ezoic-pub-ad-placeholder-118"> </div>
     </>
   )
 }
