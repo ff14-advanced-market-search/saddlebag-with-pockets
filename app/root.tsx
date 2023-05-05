@@ -107,7 +107,7 @@ function App() {
             __html: `window.ezstandalone = window.ezstandalone || {};
           ezstandalone.cmd = ezstandalone.cmd || [];
           ezstandalone.cmd.push(function() {
-              ezstandalone.define(118,107);
+              ezstandalone.define(118,116);
               ezstandalone.enable();
               ezstandalone.display();
           });`
