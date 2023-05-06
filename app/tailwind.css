@@ -2001,6 +2001,10 @@ select {
   padding-bottom: 1rem;
 }
 
+.pb-24 {
+  padding-bottom: 6rem;
+}
+
 .pl-1\.5 {
   padding-left: 0.375rem;
 }

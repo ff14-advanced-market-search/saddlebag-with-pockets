@@ -439,7 +439,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               />
             </Link>
           </div>
-          <div className="flex-1 flex flex-col overflow-y-auto">
+          <div className="flex-1 flex flex-col overflow-y-auto pb-24">
             <nav className="flex-0 px-2 py-4 space-y-1">
               {navGroups.map((group) => (
                 <ButtonAccordian
