@@ -964,6 +964,10 @@ select {
   margin-right: 0.5rem;
 }
 
+.mb-24 {
+  margin-bottom: 6rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }

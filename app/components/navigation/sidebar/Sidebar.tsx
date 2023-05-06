@@ -497,6 +497,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               <PatreonLink />
               <WikiLink />
               <DiscordLink />
+              <div id="ezoic-pub-ad-placeholder-118" />
             </nav>
           </div>
         </div>
@@ -622,7 +623,6 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
         </nav>
         {children}
       </div>
-      <div id="ezoic-pub-ad-placeholder-118"> </div>
     </>
   )
 }
