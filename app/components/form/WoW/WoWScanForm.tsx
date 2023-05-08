@@ -260,7 +260,8 @@ const itemClasses: Array<{
       { name: 'Other', value: 11 },
       { name: 'Enchanting', value: 12 },
       { name: 'Inscription', value: 16 },
-      { name: 'Embellishments', value: 18 }
+      { name: 'Embellishments', value: 18 },
+      { name: 'Optional Reagents': 19}
     ]
   },
   {
