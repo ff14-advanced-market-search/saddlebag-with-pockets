@@ -47,6 +47,11 @@ const filters: FiltersList = [
     id: -3
   },
   {
+    name: 'Exclude Crafted Gear',
+    data: [],
+    id: -5
+  },
+  {
     name: 'Arms',
     data: arms,
     id: 1
