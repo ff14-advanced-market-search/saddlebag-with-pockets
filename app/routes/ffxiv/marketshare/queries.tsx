@@ -28,7 +28,7 @@ const searchParams = {
   bestVendorItems:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=-1&sortBy=marketValue',
   bestGear:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4&sortBy=marketValue'
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4,-5&sortBy=marketValue'
 }
 const recommendedQueries = [
   {
@@ -93,7 +93,7 @@ const recommendedQueries = [
   {
     name: 'Best Selling Gear, Weapons, Armor and Glamors (Weekly).',
     description:
-      'See the best selling gear, weapons, armor and glamors from the last week.',
+      'See the best selling gear, weapons, armor and glamors from the last week. Excluding crafted raid gear.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestGear
   }
