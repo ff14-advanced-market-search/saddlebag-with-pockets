@@ -108,6 +108,7 @@ function App() {
           ezstandalone.cmd = ezstandalone.cmd || [];
           ezstandalone.cmd.push(function() {
               ezstandalone.define(118,116);
+              ezstandalone.refresh();
               ezstandalone.enable();
               ezstandalone.display();
           });`
