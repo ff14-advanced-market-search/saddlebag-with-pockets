@@ -1,4 +1,5 @@
 export const WorldList: Record<string, Array<{ name: string }>> = {
+  // // North-America
   Aether: [
     { name: 'Adamantoise' },
     { name: 'Cactuar' },
@@ -35,6 +36,7 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
     { name: 'Mateus' },
     { name: 'Zalera' }
   ],
+  // // Europe
   Chaos: [
     { name: 'Cerberus' },
     { name: 'Louisoix' },
@@ -55,6 +57,7 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
     { name: 'Alpha' },
     { name: 'Raiden' }
   ],
+  // // Japan
   Elemental: [
     { name: 'Aegis' },
     { name: 'Atomos' },
@@ -95,6 +98,7 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
     { name: 'Yojimbo' },
     { name: 'Zeromus' }
   ],
+  // // Oceania
   Materia: [
     { name: 'Bismarck' },
     { name: 'Ravana' },
@@ -102,6 +106,7 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
     { name: 'Sophia' },
     { name: 'Zurvan' }
   ]
+  // // China
   // LuXingNiao: [
   //   { name: 'HongYuHai' },
   //   { name: 'ShenYiZhiDi' },
