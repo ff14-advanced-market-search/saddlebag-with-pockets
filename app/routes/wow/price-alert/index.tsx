@@ -19,7 +19,6 @@ interface Auction {
   itemID: number
   price: number
   desiredState: 'above' | 'below'
-  isPrice: boolean
 }
 
 interface Input {
@@ -28,20 +27,18 @@ interface Input {
   userAuctions: Array<Auction>
 }
 
-const PRICE_COMMANDS = "'/wow price-register' or '/wow price-update'!"
-const QUANTITY_COMMAND = '/wow quantity-register!'
 const IS_PRICE_DEFAULT = true
 
-const parseUserAuctions = (input: Input) => {
+const parseUserAuctions = (input: Input, isPrice: boolean) => {
   if (!input.userAuctions.length) {
     return ''
   }
 
   return `\n  "user_auctions": [${input.userAuctions
     .map(({ itemID, price, desiredState }) => {
-      return `\n    { "itemID": ${itemID}, "price": ${(price * 10000).toFixed(
-        0
-      )}, "desired_state": "${desiredState}" }`
+      return `\n    { "itemID": ${itemID}, "${
+        isPrice ? 'price' : 'quantity'
+      }": ${(price * 10000).toFixed(0)}, "desired_state": "${desiredState}" }`
     })
     .join(',')}\n  ]`
 }
@@ -55,10 +52,10 @@ const getHomeWorldString = (input: Input) => {
   return `,\n  "homeRealmName": "${input.homeRealmName}"${hasAuctionsComma}`
 }
 
-const getInputString = (input: Input) => {
+const getInputString = (input: Input, isPrice: boolean) => {
   return `{\n  "region": "${input.region}"${getHomeWorldString(
     input
-  )}${parseUserAuctions(input)}\n}`
+  )}${parseUserAuctions(input, isPrice)}\n}`
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -79,7 +76,8 @@ type LoaderData = WoWLoaderData & {
 
 const Index = () => {
   const { data, wowRealm, wowRegion } = useLoaderData<LoaderData>()
-  const [jsonData, setJsonData] = useState<Input>({
+  const [isPrice, setIsPrice] = useState(IS_PRICE_DEFAULT)
+  const [jsonData, setJsonData] = useState<Omit<Input, 'isPrice'>>({
     homeRealmName: wowRealm.name,
     region: wowRegion,
     userAuctions: []
@@ -87,7 +85,7 @@ const Index = () => {
   const [formState, setFormState] = useState<Auction | null>(null)
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const jsonToDisplay = getInputString(jsonData)
+  const jsonToDisplay = getInputString(jsonData, isPrice)
 
   const handleRegionChange = (region: WoWServerRegion) => {
     if (!region) return
@@ -118,8 +116,7 @@ const Index = () => {
     setJsonData({ ...jsonData, homeRealmName: server.name })
   }
 
-  const priceOrQuantity =
-    (formState && formState.isPrice) || !formState ? 'price' : 'quantity'
+  const priceOrQuantity = isPrice ? 'price' : 'quantity'
 
   return (
     <PageWrapper>
@@ -137,14 +134,13 @@ const Index = () => {
 
             const userAuctions = [...jsonData.userAuctions]
 
-            const { itemID, price, desiredState, itemName, isPrice } = formState
+            const { itemID, price, desiredState, itemName } = formState
 
             userAuctions.push({
               itemID,
               itemName,
               price,
-              desiredState,
-              isPrice
+              desiredState
             })
 
             setJsonData({ ...jsonData, userAuctions })
@@ -152,6 +148,37 @@ const Index = () => {
           }}
           buttonTitle="Add">
           <>
+            <div
+              className="p-4"
+              onChange={(event: React.SyntheticEvent<EventTarget>) => {
+                const value = (event.target as HTMLInputElement).value
+                if (value === 'price') setIsPrice(true)
+                if (value === 'quantity') setIsPrice(false)
+              }}>
+              <Label>Alert on Price or Quantity of item: </Label>
+              <div className="flex gap-2">
+                <Label htmlFor="radio-price">
+                  <input
+                    id="radio-price"
+                    type="radio"
+                    value="price"
+                    name="price-quantity"
+                    defaultChecked={isPrice === true}
+                  />{' '}
+                  Price
+                </Label>
+                <Label htmlFor="radio-quantity">
+                  <input
+                    id="radio-quantity"
+                    type="radio"
+                    value="quantity"
+                    name="price-quantity"
+                    defaultChecked={isPrice === false}
+                  />{' '}
+                  Quantity
+                </Label>
+              </div>
+            </div>
             <ItemSelect
               itemList={data}
               onTextChange={() => {
@@ -173,8 +200,7 @@ const Index = () => {
                   itemName: item.name,
                   itemID: parseInt(item.id, 10),
                   desiredState: 'below',
-                  price: 1000,
-                  isPrice: IS_PRICE_DEFAULT
+                  price: 1000
                 })
               }}
               tooltip="Select items to generate an alert for"
@@ -183,9 +209,7 @@ const Index = () => {
             {formState && (
               <div className="sm:px-4">
                 <InputWithLabel
-                  labelTitle={`${
-                    formState.isPrice ? 'Price' : 'Quantity'
-                  } to alert on`}
+                  labelTitle={`${isPrice ? 'Price' : 'Quantity'} to alert on`}
                   type="number"
                   inputTag="Gold"
                   min={0.0}
@@ -223,39 +247,6 @@ const Index = () => {
                     })
                   }}
                 />
-                <div
-                  className="my-2"
-                  onChange={(event: React.SyntheticEvent<EventTarget>) => {
-                    const value = (event.target as HTMLInputElement).value
-                    if (value === 'price')
-                      setFormState({ ...formState, isPrice: true })
-                    if (value === 'quantity')
-                      setFormState({ ...formState, isPrice: false })
-                  }}>
-                  <Label>Alert on Price or Quantity of item: </Label>
-                  <div className="flex gap-2">
-                    <Label htmlFor="radio-price">
-                      <input
-                        id="radio-price"
-                        type="radio"
-                        value="price"
-                        name="price-quantity"
-                        defaultChecked={formState.isPrice === true}
-                      />{' '}
-                      Price
-                    </Label>
-                    <Label htmlFor="radio-quantity">
-                      <input
-                        id="radio-quantity"
-                        type="radio"
-                        value="quantity"
-                        name="price-quantity"
-                        defaultChecked={formState.isPrice === false}
-                      />{' '}
-                      Quantity
-                    </Label>
-                  </div>
-                </div>
                 <div
                   className="my-2"
                   onChange={(event: React.SyntheticEvent<EventTarget>) => {
@@ -300,6 +291,20 @@ const Index = () => {
             codeString={jsonToDisplay}
             onClick={() => alert('Copied to clipboard!')}>
             <div className="mb-1">
+              <p className="italic text-sm text-blue-900 py-2 dark:text-gray-100">
+                For the discord bot, use the{' '}
+                {isPrice ? (
+                  <span>
+                    commands <b>'/wow price-register'</b> or{' '}
+                    <b>'/wow price-update'</b>
+                  </span>
+                ) : (
+                  <span>
+                    command <b>'/wow quantity-register'</b>
+                  </span>
+                )}
+                !
+              </p>
               <RegionAndServerSelect
                 region={jsonData.region}
                 serverSelectFormName="wow-server-select"
