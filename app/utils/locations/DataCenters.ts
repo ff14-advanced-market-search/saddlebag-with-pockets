@@ -21,20 +21,20 @@ export const DataCenterList: Record<string, Array<{ name: string }>> = {
       name: 'Light'
     }
   ],
-  // JP: [
-  //   {
-  //     name: 'Elemental'
-  //   },
-  //   {
-  //     name: 'Gaia'
-  //   },
-  //   {
-  //     name: 'Mana'
-  //   },
-  //   {
-  //     name: 'Meteor'
-  //   }
-  // ],
+  JP: [
+    {
+      name: 'Elemental'
+    },
+    {
+      name: 'Gaia'
+    },
+    {
+      name: 'Mana'
+    },
+    {
+      name: 'Meteor'
+    }
+  ],
   OCE: [
     {
       name: 'Materia'
