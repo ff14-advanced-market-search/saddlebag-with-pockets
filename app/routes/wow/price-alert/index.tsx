@@ -19,6 +19,7 @@ interface Auction {
   itemID: number
   price: number
   desiredState: 'above' | 'below'
+  isPrice: boolean
 }
 
 interface Input {
@@ -26,6 +27,10 @@ interface Input {
   region: 'NA' | 'EU'
   userAuctions: Array<Auction>
 }
+
+const PRICE_COMMANDS = "'/wow price-register' or '/wow price-update'!"
+const QUANTITY_COMMAND = '/wow quantity-register!'
+const IS_PRICE_DEFAULT = true
 
 const parseUserAuctions = (input: Input) => {
   if (!input.userAuctions.length) {
@@ -112,12 +117,16 @@ const Index = () => {
 
     setJsonData({ ...jsonData, homeRealmName: server.name })
   }
+
+  const priceOrQuantity =
+    (formState && formState.isPrice) || !formState ? 'price' : 'quantity'
+
   return (
     <PageWrapper>
       <>
         <SmallFormContainer
-          title="WoW price alert input generator"
-          description="Generate the input for our World of Warcraft item price alerts. Join the Saddlebage Exchange discord server to use this for the discord bot commands '/wow price-register' or '/wow price-update'!"
+          title={`WoW ${priceOrQuantity} alert input generator`}
+          description={`Generate the input for our World of Warcraft ${priceOrQuantity} alerts. Join the Saddlebage Exchange discord server to use this for the discord bot commands.`}
           error={error}
           onClick={(e) => {
             e.preventDefault()
@@ -128,13 +137,14 @@ const Index = () => {
 
             const userAuctions = [...jsonData.userAuctions]
 
-            const { itemID, price, desiredState, itemName } = formState
+            const { itemID, price, desiredState, itemName, isPrice } = formState
 
             userAuctions.push({
               itemID,
               itemName,
               price,
-              desiredState
+              desiredState,
+              isPrice
             })
 
             setJsonData({ ...jsonData, userAuctions })
@@ -163,7 +173,8 @@ const Index = () => {
                   itemName: item.name,
                   itemID: parseInt(item.id, 10),
                   desiredState: 'below',
-                  price: 1000
+                  price: 1000,
+                  isPrice: IS_PRICE_DEFAULT
                 })
               }}
               tooltip="Select items to generate an alert for"
@@ -172,7 +183,9 @@ const Index = () => {
             {formState && (
               <div className="sm:px-4">
                 <InputWithLabel
-                  labelTitle="Price to alert on"
+                  labelTitle={`${
+                    formState.isPrice ? 'Price' : 'Quantity'
+                  } to alert on`}
                   type="number"
                   inputTag="Gold"
                   min={0.0}
@@ -214,6 +227,39 @@ const Index = () => {
                   className="my-2"
                   onChange={(event: React.SyntheticEvent<EventTarget>) => {
                     const value = (event.target as HTMLInputElement).value
+                    if (value === 'price')
+                      setFormState({ ...formState, isPrice: true })
+                    if (value === 'quantity')
+                      setFormState({ ...formState, isPrice: false })
+                  }}>
+                  <Label>Alert on Price or Quantity of item: </Label>
+                  <div className="flex gap-2">
+                    <Label htmlFor="radio-price">
+                      <input
+                        id="radio-price"
+                        type="radio"
+                        value="price"
+                        name="price-quantity"
+                        defaultChecked={formState.isPrice === true}
+                      />{' '}
+                      Price
+                    </Label>
+                    <Label htmlFor="radio-quantity">
+                      <input
+                        id="radio-quantity"
+                        type="radio"
+                        value="quantity"
+                        name="price-quantity"
+                        defaultChecked={formState.isPrice === false}
+                      />{' '}
+                      Quantity
+                    </Label>
+                  </div>
+                </div>
+                <div
+                  className="my-2"
+                  onChange={(event: React.SyntheticEvent<EventTarget>) => {
+                    const value = (event.target as HTMLInputElement).value
                     if (value === 'above' || value === 'below') {
                       setFormState({
                         ...formState,
@@ -221,7 +267,7 @@ const Index = () => {
                       })
                     }
                   }}>
-                  <Label> Alert when price is: </Label>
+                  <Label> Alert when {priceOrQuantity} is: </Label>
                   <Label htmlFor="radio-below">
                     <input
                       id="radio-below"
@@ -249,7 +295,7 @@ const Index = () => {
         </SmallFormContainer>
         <div className="max-w-4xl mx-auto px-4">
           <CodeBlock
-            title="Input for price alerts"
+            title={`Input for ${priceOrQuantity} alerts`}
             buttonTitle="Copy"
             codeString={jsonToDisplay}
             onClick={() => alert('Copied to clipboard!')}>
