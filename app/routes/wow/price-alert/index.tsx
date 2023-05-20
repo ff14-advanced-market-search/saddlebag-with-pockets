@@ -77,7 +77,7 @@ type LoaderData = WoWLoaderData & {
 const Index = () => {
   const { data, wowRealm, wowRegion } = useLoaderData<LoaderData>()
   const [isPrice, setIsPrice] = useState(IS_PRICE_DEFAULT)
-  const [jsonData, setJsonData] = useState<Omit<Input, 'isPrice'>>({
+  const [jsonData, setJsonData] = useState<Input>({
     homeRealmName: wowRealm.name,
     region: wowRegion,
     userAuctions: []
