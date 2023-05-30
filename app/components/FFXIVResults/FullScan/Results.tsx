@@ -157,7 +157,7 @@ const Results = ({ rows }: ResultTableProps) => {
     }),
 
     columnHelper.accessor('sale_rates', {
-      header: 'Sale Rates',
+      header: 'Avg Sales Per Hour',
       cell: (info) => info.getValue().toLocaleString()
     }),
     columnHelper.accessor('server', {
