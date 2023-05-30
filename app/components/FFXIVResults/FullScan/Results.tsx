@@ -69,7 +69,7 @@ const cvsFileList: Array<{ title: string; value: keyof ResponseType }> = [
   { title: 'Lowest Price', value: 'ppu' },
   { title: 'Profit %', value: 'profit_raw_percent' },
   { title: 'Return on Investment %', value: 'ROI' },
-  { title: 'Sales Rates', value: 'sale_rates' },
+  { title: 'Average Sales Per Hour', value: 'sale_rates' },
   { title: 'Lowest Price Server', value: 'server' },
   { title: 'Lowest Price Stack Size', value: 'stack_size' },
   { title: 'Lowest Price Last Update Time', value: 'update_time' },
