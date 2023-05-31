@@ -38,7 +38,9 @@ const parseUserAuctions = (input: Input, isPrice: boolean) => {
     .map(({ itemID, price, desiredState }) => {
       return `\n    { "itemID": ${itemID}, "${
         isPrice ? 'price' : 'quantity'
-      }": ${(price * 10000).toFixed(0)}, "desired_state": "${desiredState}" }`
+      }": ${
+        isPrice ? (price * 10000).toFixed(0) : price.toFixed(0)
+      }, "desired_state": "${desiredState}" }`
     })
     .join(',')}\n  ]`
 }
@@ -267,7 +269,8 @@ const Index = () => {
                       name="alertOn"
                       defaultChecked={formState.desiredState === 'below'}
                     />{' '}
-                    Below {formState.price.toLocaleString()} Gold
+                    Below {formState.price.toLocaleString()}
+                    {isPrice ? ' Gold' : ''}
                   </Label>
                   <Label htmlFor="radio-above">
                     <input
@@ -277,7 +280,8 @@ const Index = () => {
                       name="alertOn"
                       defaultChecked={formState.desiredState === 'above'}
                     />{' '}
-                    Above {formState.price.toLocaleString()} Gold
+                    Above {formState.price.toLocaleString()}
+                    {isPrice ? ' Gold' : ''}
                   </Label>
                 </div>
               </div>
