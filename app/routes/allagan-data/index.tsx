@@ -44,22 +44,22 @@ export const action: ActionFunction = async ({ request }) => {
     }
     const trimmedInput = parsedInput.map(
       (current: {
-        Id?: number
-        Location?: string
-        Source?: string
-        Quantity?: number
-        Type?: string
+        id?: number
+        location?: string
+        source?: string
+        quantity?: number
+        type?: string
       }) => {
         if (!current.Id || !current.Location) {
           throw new Error('Invalid input, missing required fields.')
         }
 
         return {
-          Id: current.Id,
-          Location: current.Location,
-          Source: current.Source,
-          Quantity: current.Quantity,
-          Type: current.Type
+          id: current.id,
+          location: current.location,
+          source: current.source,
+          quantity: current.quantity,
+          type: current.type
         }
       }
     )
