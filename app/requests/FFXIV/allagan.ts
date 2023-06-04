@@ -3,11 +3,11 @@ import { address, UserAgent } from '~/requests/client/config'
 export interface AllaganProps {
   server: string
   allaganJson: Array<{
-    Id: number
-    Type?: string
-    Quantity?: number | string
-    Source?: string
-    Location: string
+    id: number
+    type?: string
+    quantity?: number | string
+    source?: string
+    location: string
   }>
 }
 
