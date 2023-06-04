@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
         quantity?: number
         type?: string
       }) => {
-        if (!current.Id || !current.Location) {
+        if (!current.id || !current.location) {
           throw new Error('Invalid input, missing required fields.')
         }
 
