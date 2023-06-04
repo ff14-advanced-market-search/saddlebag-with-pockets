@@ -21,9 +21,9 @@ import {
 import { Switch } from '@headlessui/react'
 import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
-import { toggleDarkMode } from '~/redux/reducers/userSlice'
+import { setFFxivWorld, toggleDarkMode } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import React from 'react'
+import React, { useState } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
@@ -143,13 +143,18 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 }
 
-export default function () {
+export default function Options() {
   const data = useLoaderData()
   const transition = useTransition()
   const actionData = useActionData()
 
   const dispatch = useDispatch()
   const { darkmode } = useTypedSelector((state) => state.user)
+
+  const [ffxivWorld, setFfxivWorld] = useState<{
+    data_center: string
+    world: string
+  }>({ data_center: data.data_center, world: data.world })
 
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode())
@@ -158,7 +163,15 @@ export default function () {
   return (
     <div>
       <main className="flex-1">
-        <Form method="post">
+        <Form
+          method="post"
+          onSubmit={(e) => {
+            if (transition.state === 'submitting') {
+              e.preventDefault()
+              return
+            }
+            dispatch(setFFxivWorld(ffxivWorld))
+          }}>
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
@@ -195,6 +208,9 @@ export default function () {
               transition={transition}
               actionData={actionData}
               sessionData={data}
+              onChange={(newWorld) => {
+                setFfxivWorld(newWorld)
+              }}
             />
           </OptionSection>
           <OptionSection

@@ -1,4 +1,9 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction
+} from '@remix-run/cloudflare'
+import { redirect } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import {
@@ -8,7 +13,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData
+  useActionData,
+  useLoaderData,
+  useSubmit,
+  useTransition
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
 import { getUserSessionData } from '~/sessions'
@@ -24,6 +32,12 @@ import { Provider } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
+import { getSession } from '~/sessions'
+import { DATA_CENTER } from '~/sessions'
+import { FF14_WORLD } from '~/sessions'
+import { commitSession } from '~/sessions'
+import { z } from 'zod'
+import { validateWorldAndDataCenter } from './utils/locations'
 
 export const links = () => {
   return [
@@ -59,6 +73,40 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   })
 }
 
+const validator = z.object({
+  data_center: z.string().min(1),
+  world: z.string().min(1)
+  // region: z.union([z.literal('NA'), z.literal('EU')]),
+  // homeRealm: z.string().min(1)
+})
+
+export const action: ActionFunction = async ({ request, context, params }) => {
+  const formData = await request.formData()
+  const formPayload = Object.fromEntries(formData)
+
+  const result = validator.safeParse(formPayload)
+
+  if (!result.success) {
+    return json({ update: 'failed' })
+  }
+
+  const session = await getSession(request.headers.get('Cookie'))
+
+  const { data_center, world } = validateWorldAndDataCenter(
+    result.data.world,
+    result.data.data_center
+  )
+
+  session.set(DATA_CENTER, data_center)
+  session.set(FF14_WORLD, world)
+
+  return redirect('/', {
+    headers: {
+      'Set-Cookie': await commitSession(session)
+    }
+  })
+}
+
 export const meta: MetaFunction = ({ data }) => {
   const { site_name } = data
   return {
@@ -73,7 +121,9 @@ export const meta: MetaFunction = ({ data }) => {
 function App() {
   const data = useLoaderData<LoaderData>()
   const [theme, setTheme] = useTheme()
-  const { darkmode } = useTypedSelector((state) => state.user)
+  const { darkmode, ffxivWorld } = useTypedSelector((state) => state.user)
+  const submit = useSubmit()
+  const transition = useTransition()
 
   /**
    * Setup theme for app
@@ -85,6 +135,24 @@ function App() {
       setTheme(Theme.LIGHT)
     }
   }, [setTheme, darkmode])
+
+  /**
+   *
+   * Sync server and data centers between local storage and session cookies.
+   */
+  useEffect(() => {
+    if (
+      (ffxivWorld.world !== data.world ||
+        ffxivWorld.data_center !== data.data_center) &&
+      transition.state !== 'submitting'
+    ) {
+      const formData = new FormData()
+      formData.set('data_center', ffxivWorld.data_center)
+      formData.set('world', ffxivWorld.world)
+
+      submit(formData, { method: 'post' })
+    }
+  }, [])
 
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
