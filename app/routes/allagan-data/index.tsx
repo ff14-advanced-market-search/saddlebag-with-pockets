@@ -51,7 +51,9 @@ export const action: ActionFunction = async ({ request }) => {
         type?: string
       }) => {
         if (!current.id || !current.location) {
-          throw new Error('Invalid input, missing required fields.')
+          throw new Error(
+            "Missing required fields 'id' or 'location' from allagan tools. Make sure those columns are enabled in your plugin!"
+          )
         }
 
         return {
