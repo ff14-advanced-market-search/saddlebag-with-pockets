@@ -157,8 +157,7 @@ function App() {
   }, [setTheme, darkmode])
 
   /**
-   *
-   * Sync server and data centers between local storage and session cookies.
+   * Sync ffxiv servers and wow realms between local storage and session cookies.
    */
   useEffect(() => {
     const ffxivDataMatches =
