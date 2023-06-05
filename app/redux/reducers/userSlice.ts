@@ -18,6 +18,7 @@ import {
   setWoWRealmDataInLocalStorage
 } from '../localStorage/wowRealmHelpers'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
+import { validateServerAndRegion } from '~/utils/WoWServers'
 
 export interface UserState {
   darkmode: boolean
@@ -68,9 +69,15 @@ export const userSlice = createSlice({
         payload
       }: PayloadAction<{ server: WoWServerData; region: WoWServerRegion }>
     ) => {
-      setWoWRealmDataInLocalStorage(payload.server, payload.region)
+      const { server, region } = validateServerAndRegion(
+        payload.region,
+        payload.server.id,
+        payload.server.name
+      )
 
-      state.wowRealm = payload
+      setWoWRealmDataInLocalStorage(server, region)
+
+      state.wowRealm = { server, region }
     }
   }
 })

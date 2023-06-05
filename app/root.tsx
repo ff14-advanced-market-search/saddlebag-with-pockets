@@ -13,7 +13,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useActionData,
   useLoaderData,
   useSubmit,
   useTransition
@@ -32,12 +31,18 @@ import { Provider } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
-import { getSession } from '~/sessions'
-import { DATA_CENTER } from '~/sessions'
-import { FF14_WORLD } from '~/sessions'
-import { commitSession } from '~/sessions'
+import {
+  getSession,
+  DATA_CENTER,
+  FF14_WORLD,
+  commitSession,
+  WOW_REGION,
+  WOW_REALM_ID,
+  WOW_REALM_NAME
+} from '~/sessions'
 import { z } from 'zod'
 import { validateWorldAndDataCenter } from './utils/locations'
+import { validateServerAndRegion } from './utils/WoWServers'
 
 export const links = () => {
   return [
@@ -75,9 +80,13 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 
 const validator = z.object({
   data_center: z.string().min(1),
-  world: z.string().min(1)
-  // region: z.union([z.literal('NA'), z.literal('EU')]),
-  // homeRealm: z.string().min(1)
+  world: z.string().min(1),
+  wow_region: z.union([z.literal('NA'), z.literal('EU')]),
+  wow_realm_name: z.string().min(1),
+  wow_realm_id: z
+    .string()
+    .min(1)
+    .transform((val) => parseInt(val, 10))
 })
 
 export const action: ActionFunction = async ({ request, context, params }) => {
@@ -97,8 +106,17 @@ export const action: ActionFunction = async ({ request, context, params }) => {
     result.data.data_center
   )
 
+  const { server, region } = validateServerAndRegion(
+    result.data.wow_region,
+    result.data.wow_realm_id,
+    result.data.wow_realm_name
+  )
+
   session.set(DATA_CENTER, data_center)
   session.set(FF14_WORLD, world)
+  session.set(WOW_REGION, region)
+  session.set(WOW_REALM_NAME, server.name)
+  session.set(WOW_REALM_ID, server.id)
 
   return redirect('/', {
     headers: {
@@ -121,7 +139,9 @@ export const meta: MetaFunction = ({ data }) => {
 function App() {
   const data = useLoaderData<LoaderData>()
   const [theme, setTheme] = useTheme()
-  const { darkmode, ffxivWorld } = useTypedSelector((state) => state.user)
+  const { darkmode, ffxivWorld, wowRealm } = useTypedSelector(
+    (state) => state.user
+  )
   const submit = useSubmit()
   const transition = useTransition()
 
@@ -141,17 +161,30 @@ function App() {
    * Sync server and data centers between local storage and session cookies.
    */
   useEffect(() => {
+    const ffxivDataMatches =
+      ffxivWorld.world === data.world &&
+      ffxivWorld.data_center === data.data_center
+
+    const wowDataMatches =
+      wowRealm.region === data.wowRegion &&
+      wowRealm.server.id === data.wowRealm.id &&
+      wowRealm.server.name === data.wowRealm.name
+
     if (
-      (ffxivWorld.world !== data.world ||
-        ffxivWorld.data_center !== data.data_center) &&
+      (!ffxivDataMatches || !wowDataMatches) &&
       transition.state !== 'submitting'
     ) {
       const formData = new FormData()
-      formData.set('data_center', ffxivWorld.data_center)
-      formData.set('world', ffxivWorld.world)
+
+      formData.set(DATA_CENTER, ffxivWorld.data_center)
+      formData.set(FF14_WORLD, ffxivWorld.world)
+      formData.set(WOW_REGION, wowRealm.region)
+      formData.set(WOW_REALM_NAME, wowRealm.server.name)
+      formData.set(WOW_REALM_ID, wowRealm.server.id.toString())
 
       submit(formData, { method: 'post' })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

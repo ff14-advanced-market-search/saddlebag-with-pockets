@@ -21,13 +21,18 @@ import {
 import { Switch } from '@headlessui/react'
 import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
-import { setFFxivWorld, toggleDarkMode } from '~/redux/reducers/userSlice'
+import {
+  setFFxivWorld,
+  setWoWRealmData,
+  toggleDarkMode
+} from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import React, { useState } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
+import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 
 export const validator = z.object({
   data_center: z.string().min(1),
@@ -156,6 +161,14 @@ export default function Options() {
     world: string
   }>({ data_center: data.data_center, world: data.world })
 
+  const [wowRealm, setWoWRealm] = useState<{
+    server: WoWServerData
+    region: WoWServerRegion
+  }>({
+    region: data.wowRegion,
+    server: data.wowRealm
+  })
+
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode())
   }
@@ -171,6 +184,7 @@ export default function Options() {
               return
             }
             dispatch(setFFxivWorld(ffxivWorld))
+            dispatch(setWoWRealmData(wowRealm))
           }}>
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -220,6 +234,16 @@ export default function Options() {
               region={data.wowRegion}
               defaultRealm={data.wowRealm}
               serverSelectFormName="homeRealm"
+              onServerSelectChange={(newServer) => {
+                if (newServer) {
+                  setWoWRealm((state) => ({ ...state, sever: newServer }))
+                }
+              }}
+              regionOnChange={(newRegion) => {
+                if (newRegion) {
+                  setWoWRealm((state) => ({ ...state, region: newRegion }))
+                }
+              }}
             />
           </OptionSection>
           <OptionSection
