@@ -89,7 +89,7 @@ const validator = z.object({
     .transform((val) => parseInt(val, 10))
 })
 
-export const action: ActionFunction = async ({ request, context, params }) => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 

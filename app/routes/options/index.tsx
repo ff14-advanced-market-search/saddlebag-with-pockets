@@ -236,7 +236,7 @@ export default function Options() {
               serverSelectFormName="homeRealm"
               onServerSelectChange={(newServer) => {
                 if (newServer) {
-                  setWoWRealm((state) => ({ ...state, sever: newServer }))
+                  setWoWRealm((state) => ({ ...state, server: newServer }))
                 }
               }}
               regionOnChange={(newRegion) => {
