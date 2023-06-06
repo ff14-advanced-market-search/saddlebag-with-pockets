@@ -8,15 +8,30 @@ import {
   getFFScanSortOrderInLocalStorage,
   setFFScanOrderInLocalStorage
 } from '../localStorage/ffScanOrderHelpers'
+import {
+  getFFWorldDataFromLocalStorage,
+  setFFWorldDataInLocalStorage
+} from '../localStorage/ffxivWorldDataHelpers'
+import { validateWorldAndDataCenter } from '~/utils/locations'
+import {
+  getWoWRealmDataFromLocalStorage,
+  setWoWRealmDataInLocalStorage
+} from '../localStorage/wowRealmHelpers'
+import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
+import { validateServerAndRegion } from '~/utils/WoWServers'
 
 export interface UserState {
   darkmode: boolean
   ffScanSortOrder: Array<string>
+  ffxivWorld: { data_center: string; world: string }
+  wowRealm: { server: WoWServerData; region: WoWServerRegion }
 }
 
 const initialState: UserState = {
   darkmode: getDarkModeFromLocalStorage(),
-  ffScanSortOrder: getFFScanSortOrderInLocalStorage()
+  ffScanSortOrder: getFFScanSortOrderInLocalStorage(),
+  ffxivWorld: getFFWorldDataFromLocalStorage(),
+  wowRealm: getWoWRealmDataFromLocalStorage()
 }
 
 export const userSlice = createSlice({
@@ -36,10 +51,43 @@ export const userSlice = createSlice({
     setFFScanOrder: (state, { payload }: PayloadAction<Array<string>>) => {
       setFFScanOrderInLocalStorage(payload)
       state.ffScanSortOrder = payload
+    },
+    setFFxivWorld: (
+      state,
+      { payload }: PayloadAction<{ data_center: string; world: string }>
+    ) => {
+      const { world, data_center } = validateWorldAndDataCenter(
+        payload.world,
+        payload.data_center
+      )
+      setFFWorldDataInLocalStorage(world, data_center)
+      state.ffxivWorld = validateWorldAndDataCenter(world, data_center)
+    },
+    setWoWRealmData: (
+      state,
+      {
+        payload
+      }: PayloadAction<{ server: WoWServerData; region: WoWServerRegion }>
+    ) => {
+      const { server, region } = validateServerAndRegion(
+        payload.region,
+        payload.server.id,
+        payload.server.name
+      )
+
+      setWoWRealmDataInLocalStorage(server, region)
+
+      state.wowRealm = { server, region }
     }
   }
 })
 
-export const { toggleDarkMode, setDarkMode, setFFScanOrder } = userSlice.actions
+export const {
+  toggleDarkMode,
+  setDarkMode,
+  setFFScanOrder,
+  setFFxivWorld,
+  setWoWRealmData
+} = userSlice.actions
 
 export default userSlice.reducer

@@ -1,4 +1,9 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction
+} from '@remix-run/cloudflare'
+import { redirect } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import {
@@ -8,7 +13,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData
+  useLoaderData,
+  useSubmit,
+  useTransition
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
 import { getUserSessionData } from '~/sessions'
@@ -24,6 +31,18 @@ import { Provider } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
+import {
+  getSession,
+  DATA_CENTER,
+  FF14_WORLD,
+  commitSession,
+  WOW_REGION,
+  WOW_REALM_ID,
+  WOW_REALM_NAME
+} from '~/sessions'
+import { z } from 'zod'
+import { validateWorldAndDataCenter } from './utils/locations'
+import { validateServerAndRegion } from './utils/WoWServers'
 
 export const links = () => {
   return [
@@ -59,6 +78,53 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   })
 }
 
+const validator = z.object({
+  data_center: z.string().min(1),
+  world: z.string().min(1),
+  wow_region: z.union([z.literal('NA'), z.literal('EU')]),
+  wow_realm_name: z.string().min(1),
+  wow_realm_id: z
+    .string()
+    .min(1)
+    .transform((val) => parseInt(val, 10))
+})
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData()
+  const formPayload = Object.fromEntries(formData)
+
+  const result = validator.safeParse(formPayload)
+
+  if (!result.success) {
+    return json({ update: 'failed' })
+  }
+
+  const session = await getSession(request.headers.get('Cookie'))
+
+  const { data_center, world } = validateWorldAndDataCenter(
+    result.data.world,
+    result.data.data_center
+  )
+
+  const { server, region } = validateServerAndRegion(
+    result.data.wow_region,
+    result.data.wow_realm_id,
+    result.data.wow_realm_name
+  )
+
+  session.set(DATA_CENTER, data_center)
+  session.set(FF14_WORLD, world)
+  session.set(WOW_REGION, region)
+  session.set(WOW_REALM_NAME, server.name)
+  session.set(WOW_REALM_ID, server.id)
+
+  return redirect('/', {
+    headers: {
+      'Set-Cookie': await commitSession(session)
+    }
+  })
+}
+
 export const meta: MetaFunction = ({ data }) => {
   const { site_name } = data
   return {
@@ -73,7 +139,11 @@ export const meta: MetaFunction = ({ data }) => {
 function App() {
   const data = useLoaderData<LoaderData>()
   const [theme, setTheme] = useTheme()
-  const { darkmode } = useTypedSelector((state) => state.user)
+  const { darkmode, ffxivWorld, wowRealm } = useTypedSelector(
+    (state) => state.user
+  )
+  const submit = useSubmit()
+  const transition = useTransition()
 
   /**
    * Setup theme for app
@@ -85,6 +155,36 @@ function App() {
       setTheme(Theme.LIGHT)
     }
   }, [setTheme, darkmode])
+
+  /**
+   * Sync ffxiv servers and wow realms between local storage and session cookies.
+   */
+  useEffect(() => {
+    const ffxivDataMatches =
+      ffxivWorld.world === data.world &&
+      ffxivWorld.data_center === data.data_center
+
+    const wowDataMatches =
+      wowRealm.region === data.wowRegion &&
+      wowRealm.server.id === data.wowRealm.id &&
+      wowRealm.server.name === data.wowRealm.name
+
+    if (
+      (!ffxivDataMatches || !wowDataMatches) &&
+      transition.state !== 'submitting'
+    ) {
+      const formData = new FormData()
+
+      formData.set(DATA_CENTER, ffxivWorld.data_center)
+      formData.set(FF14_WORLD, ffxivWorld.world)
+      formData.set(WOW_REGION, wowRealm.region)
+      formData.set(WOW_REALM_NAME, wowRealm.server.name)
+      formData.set(WOW_REALM_ID, wowRealm.server.id.toString())
+
+      submit(formData, { method: 'post' })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
