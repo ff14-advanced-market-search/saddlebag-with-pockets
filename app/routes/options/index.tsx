@@ -33,6 +33,7 @@ import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
+import { PageWrapper } from '~/components/Common'
 
 export const validator = z.object({
   data_center: z.string().min(1),
@@ -174,120 +175,118 @@ export default function Options() {
   }
 
   return (
-    <div>
-      <main className="flex-1">
-        <Form
-          method="post"
-          onSubmit={(e) => {
-            if (transition.state === 'submitting') {
-              e.preventDefault()
-              return
-            }
-            dispatch(setFFxivWorld(ffxivWorld))
-            dispatch(setWoWRealmData(wowRealm))
-          }}>
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-                Options
-              </h1>
-            </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="lg:flex lg:items-center lg:justify-between">
-                <div className="flex-1 min-w-0">
-                  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate dark:text-gray-300">
-                    Site Configuration
-                  </h2>
-                </div>
-                <div className="mt-5 flex lg:mt-0 lg:ml-4">
-                  <span className="block">
-                    <button
-                      type="submit"
-                      className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                      <CheckIcon
-                        className="-ml-1 mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                      Save
-                    </button>
-                  </span>
-                </div>
+    <PageWrapper>
+      <Form
+        method="post"
+        onSubmit={(e) => {
+          if (transition.state === 'submitting') {
+            e.preventDefault()
+            return
+          }
+          dispatch(setFFxivWorld(ffxivWorld))
+          dispatch(setWoWRealmData(wowRealm))
+        }}>
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+              Options
+            </h1>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="lg:flex lg:items-center lg:justify-between">
+              <div className="flex-1 min-w-0">
+                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate dark:text-gray-300">
+                  Site Configuration
+                </h2>
+              </div>
+              <div className="mt-5 flex lg:mt-0 lg:ml-4">
+                <span className="block">
+                  <button
+                    type="submit"
+                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <CheckIcon
+                      className="-ml-1 mr-2 h-5 w-5"
+                      aria-hidden="true"
+                    />
+                    Save
+                  </button>
+                </span>
               </div>
             </div>
           </div>
-          <OptionSection
-            title="FFXIV World Selection"
-            description="The selected server will change what marketplace your queries are run against.">
-            <SelectDCandWorld
-              transition={transition}
-              actionData={actionData}
-              sessionData={data}
-              onChange={(newWorld) => {
-                setFfxivWorld(newWorld)
-              }}
-            />
-          </OptionSection>
-          <OptionSection
-            title="WoW Home Realm Selection"
-            description="Your region and home realm that will be the default on WoW queries.">
-            <RegionAndServerSelect
-              region={data.wowRegion}
-              defaultRealm={data.wowRealm}
-              serverSelectFormName="homeRealm"
-              onServerSelectChange={(newServer) => {
-                if (newServer) {
-                  setWoWRealm((state) => ({ ...state, server: newServer }))
-                }
-              }}
-              regionOnChange={(newRegion) => {
-                if (newRegion) {
-                  setWoWRealm((state) => ({ ...state, region: newRegion }))
-                }
-              }}
-            />
-          </OptionSection>
-          <OptionSection
-            title="Theme"
-            description="Needs more sparkles.. ✨✨✨✨"
-            hideHRule={true}>
-            <Switch.Group
-              as={`div`}
-              className={`flex items-center justify-between`}>
-              <span className={`flex-grow flex flex-col`}>
-                <Switch.Label
-                  as={`span`}
-                  className={`txt-sm font-meidum text-gray-900 dark:text-gray-100`}
-                  passive>
-                  Enable Dark Mode
-                </Switch.Label>
-                <Switch.Description
-                  as={`span`}
-                  className={`text-sm text-gray-500 dark:text-gray-300`}>
-                  I confirm, I have weak eyeballs.
-                </Switch.Description>
-              </span>
-              {typeof document !== 'undefined' && (
-                <Switch
-                  key={darkmode.toString()}
-                  checked={darkmode}
-                  onChange={handleDarkModeToggle}
+        </div>
+        <OptionSection
+          title="FFXIV World Selection"
+          description="The selected server will change what marketplace your queries are run against.">
+          <SelectDCandWorld
+            transition={transition}
+            actionData={actionData}
+            sessionData={data}
+            onChange={(newWorld) => {
+              setFfxivWorld(newWorld)
+            }}
+          />
+        </OptionSection>
+        <OptionSection
+          title="WoW Home Realm Selection"
+          description="Your region and home realm that will be the default on WoW queries.">
+          <RegionAndServerSelect
+            region={data.wowRegion}
+            defaultRealm={data.wowRealm}
+            serverSelectFormName="homeRealm"
+            onServerSelectChange={(newServer) => {
+              if (newServer) {
+                setWoWRealm((state) => ({ ...state, server: newServer }))
+              }
+            }}
+            regionOnChange={(newRegion) => {
+              if (newRegion) {
+                setWoWRealm((state) => ({ ...state, region: newRegion }))
+              }
+            }}
+          />
+        </OptionSection>
+        <OptionSection
+          title="Theme"
+          description="Needs more sparkles.. ✨✨✨✨"
+          hideHRule={true}>
+          <Switch.Group
+            as={`div`}
+            className={`flex items-center justify-between`}>
+            <span className={`flex-grow flex flex-col`}>
+              <Switch.Label
+                as={`span`}
+                className={`txt-sm font-meidum text-gray-900 dark:text-gray-100`}
+                passive>
+                Enable Dark Mode
+              </Switch.Label>
+              <Switch.Description
+                as={`span`}
+                className={`text-sm text-gray-500 dark:text-gray-300`}>
+                I confirm, I have weak eyeballs.
+              </Switch.Description>
+            </span>
+            {typeof document !== 'undefined' && (
+              <Switch
+                key={darkmode.toString()}
+                checked={darkmode}
+                onChange={handleDarkModeToggle}
+                className={classNames(
+                  darkmode ? `bg-black` : `bg-gray-200`,
+                  `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
+                )}>
+                <span
+                  aria-hidden={true}
                   className={classNames(
-                    darkmode ? `bg-black` : `bg-gray-200`,
-                    `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
-                  )}>
-                  <span
-                    aria-hidden={true}
-                    className={classNames(
-                      darkmode ? `translate-x-5` : `translate-x-0`,
-                      `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
-                    )}
-                  />
-                </Switch>
-              )}
-            </Switch.Group>
-          </OptionSection>
-        </Form>
-      </main>
-    </div>
+                    darkmode ? `translate-x-5` : `translate-x-0`,
+                    `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
+                  )}
+                />
+              </Switch>
+            )}
+          </Switch.Group>
+        </OptionSection>
+      </Form>
+    </PageWrapper>
   )
 }
