@@ -18,9 +18,9 @@ const searchParams = {
   lastHour:
     '/ffxiv/marketshare?timePeriod=1&salesAmount=1&averagePrice=10&filters=0&sortBy=marketValue',
   mostPurchases:
-    '/ffxiv/marketshare?timePeriod=24&salesAmount=40&averagePrice=10&filters=0&sortBy=purchaseAmount',
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=35&averagePrice=10&filters=0&sortBy=purchaseAmount',
   mostQuantity:
-    '/ffxiv/marketshare?timePeriod=24&salesAmount=40&averagePrice=10&filters=0&sortBy=quantitySold',
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=35&averagePrice=10&filters=0&sortBy=quantitySold',
   bestFurniture:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=56,65,66,67,68,69,70,71,72,81,82&sortBy=marketValue',
   bestConsumables:
