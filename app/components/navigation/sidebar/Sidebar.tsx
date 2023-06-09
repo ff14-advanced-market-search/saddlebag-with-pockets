@@ -206,12 +206,17 @@ const navGroups: Array<{
         icon: HomeIcon,
         external: true
       },
-
       {
         name: 'Ko-fi',
         href: 'https://ko-fi.com/indopan',
         icon: KofiIcon,
         external: true
+      },
+      {
+        name: 'PayPal',
+        href: 'https://www.paypal.me/alexcohen1',
+        external: true,
+        icon: KofiIcon
       },
       {
         name: 'Discord',
@@ -224,12 +229,6 @@ const navGroups: Array<{
         href: 'https://github.com/ff14-advanced-market-search',
         external: true,
         icon: GithubIcon
-      },
-      {
-        name: 'Instagram',
-        href: 'https://www.instagram.com/saddlebagexchange/',
-        external: true,
-        icon: DiscordIcon
       }
     ]
   }
