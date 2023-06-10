@@ -1989,6 +1989,10 @@ select {
   padding-top: 0.5rem;
 }
 
+.pb-24 {
+  padding-bottom: 6rem;
+}
+
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -1999,10 +2003,6 @@ select {
 
 .pb-4 {
   padding-bottom: 1rem;
-}
-
-.pb-24 {
-  padding-bottom: 6rem;
 }
 
 .pl-1\.5 {
