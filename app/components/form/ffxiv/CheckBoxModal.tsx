@@ -96,7 +96,7 @@ export const Modal: React.FC<{
   return (
     <>
       <div
-        className="z-[10001] bg-white fixed rounded top-5 bottom-5 left-3.5 right-3.5 sm:translate-y-[-50%] sm:top-2/4 sm:bottom-[none] sm:right-[none] sm:translate-x-[-50%] sm:left-2/4 p-4 pt-1 flex flex-col sm:max-w-fit sm:h-[90vh] dark:bg-slate-700 dark:text-gray-200"
+        className="z-[10001] bg-white fixed rounded top-5 bottom-24 md:bottom-5 left-3.5 right-3.5 sm:translate-y-[-50%] sm:top-2/4 sm:bottom-[none] sm:right-[none] sm:translate-x-[-50%] sm:left-2/4 p-4 pt-1 flex flex-col sm:max-w-fit sm:h-[90vh] dark:bg-slate-700 dark:text-gray-200"
         onClick={(e) => {
           e.stopPropagation()
         }}>
