@@ -791,8 +791,8 @@ select {
   top: 1.25rem;
 }
 
-.bottom-5 {
-  bottom: 1.25rem;
+.bottom-24 {
+  bottom: 6rem;
 }
 
 .left-3\.5 {
@@ -901,14 +901,14 @@ select {
   margin-right: 0.25rem;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mx-3 {
@@ -2998,6 +2998,10 @@ select {
   .md\:inset-y-0 {
     top: 0px;
     bottom: 0px;
+  }
+
+  .md\:bottom-5 {
+    bottom: 1.25rem;
   }
 
   .md\:col-span-1 {

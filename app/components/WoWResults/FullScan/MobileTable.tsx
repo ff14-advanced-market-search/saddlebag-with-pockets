@@ -68,7 +68,7 @@ function MobileTable({
 
   return (
     <div
-      className={`flex flex-col sm:hidden my-4 bg-white dark:bg-slate-700 sm:rounded-md shadow max-w-screen`}>
+      className={`flex flex-col sm:hidden mt-4 bg-white dark:bg-slate-700 sm:rounded-md shadow max-w-screen mb-24`}>
       {!!title && (
         <div className="mx-2">
           <Title title={title} />
