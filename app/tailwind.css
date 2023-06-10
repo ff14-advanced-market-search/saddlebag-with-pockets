@@ -901,14 +901,14 @@ select {
   margin-right: 0.25rem;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mx-3 {
@@ -1989,10 +1989,6 @@ select {
   padding-top: 0.5rem;
 }
 
-.pb-24 {
-  padding-bottom: 6rem;
-}
-
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -2003,6 +1999,10 @@ select {
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pb-24 {
+  padding-bottom: 6rem;
 }
 
 .pl-1\.5 {
