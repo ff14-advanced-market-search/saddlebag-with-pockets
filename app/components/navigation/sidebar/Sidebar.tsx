@@ -117,6 +117,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Self Purchase Records',
+        href: 'ffxiv/self-purchase',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Export Trading Search',
         href: 'queries/world-comparison',
         icon: ChartSquareBarIcon

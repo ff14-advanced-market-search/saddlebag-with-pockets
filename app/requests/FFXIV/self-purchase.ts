@@ -16,10 +16,13 @@ export interface SelfPurchase {
   timestamp: number
 }
 
-export interface SelfPurchaseResults {
-  data: Array<SelfPurchase>
-  total_spent: number
-}
+export type SelfPurchaseResults =
+  | {
+      data: Array<SelfPurchase>
+      total_spent: number
+    }
+  | { exception: string }
+  | {}
 
 const SelfPurchaseRequest: ({
   server,
