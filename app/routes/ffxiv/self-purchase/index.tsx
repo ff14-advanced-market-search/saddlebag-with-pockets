@@ -4,12 +4,19 @@ import type {
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useTransition } from '@remix-run/react'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, Title } from '~/components/Common'
+import NoResults from '~/components/Common/NoResults'
+import DateCell from '~/components/FFXIVResults/FullScan/DateCell'
+import FullTable from '~/components/Tables/FullTable'
+import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
+import type { ColumnList } from '~/components/types'
 import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import ItemDataLink from '~/components/utilities/ItemDataLink'
 import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
+import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions'
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
@@ -32,7 +39,7 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
-export default function SelfPurchase() {
+export default function Index() {
   const transition = useTransition()
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
@@ -41,6 +48,16 @@ export default function SelfPurchase() {
 
   const error =
     results && 'exception' in results ? results.exception : undefined
+
+  if (results && !error) {
+    if (!Object.keys(results).length) {
+      return <NoResults href="/ffxiv/self-purchase" />
+    }
+
+    if ('data' in results) {
+      return <Results data={results.data} totalSpent={results.total_spent} />
+    }
+  }
 
   return (
     <PageWrapper>
@@ -62,6 +79,65 @@ export default function SelfPurchase() {
           />
         </div>
       </SmallFormContainer>
+    </PageWrapper>
+  )
+}
+
+const sortByOptions: Array<string> = ['pricePerUnit', 'quantity', 'timestamp']
+
+const columnList: Array<ColumnList<SelfPurchase>> = [
+  { columnId: 'item_name', header: 'Item Name' },
+  {
+    columnId: 'timestamp',
+    header: 'Updated At',
+    accessor: ({ row }) => <DateCell date={row.timestamp * 1000} />
+  },
+  { columnId: 'pricePerUnit', header: 'Price Per Unit' },
+  { columnId: 'quantity', header: 'Quantity' },
+  {
+    columnId: 'hq',
+    header: 'Quality',
+    accessor: ({ row }) => (row.hq ? <>High</> : <></>)
+  },
+  {
+    columnId: 'onMannequin',
+    header: 'Retailer',
+    accessor: ({ row }) => (row.onMannequin ? <>Mannequin</> : <>Retainer</>)
+  },
+  {
+    columnId: 'itemID',
+    header: 'Item data',
+    accessor: ({ row }) => {
+      const itemID = row.itemID
+      if (!itemID || typeof itemID !== 'string') return null
+      return <ItemDataLink link={`/queries/item-data/${itemID}`} />
+    }
+  }
+]
+
+const Results = ({
+  data
+}: {
+  data: Array<SelfPurchase>
+  totalSpent: number
+}) => {
+  return (
+    <PageWrapper>
+      <Title title="Self Purchase Items" />
+      <div className="hidden sm:block">
+        <FullTable<SelfPurchase>
+          data={data}
+          sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
+          columnList={columnList}
+        />
+      </div>
+      <MobileTable
+        data={data}
+        sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
+        columnList={columnList}
+        rowLabels={columnList}
+        columnSelectOptions={sortByOptions}
+      />
     </PageWrapper>
   )
 }
