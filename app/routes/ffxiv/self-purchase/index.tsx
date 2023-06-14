@@ -44,8 +44,6 @@ export default function Index() {
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
 
-  console.log('results', results)
-
   const error =
     results && 'exception' in results ? results.exception : undefined
 
@@ -87,11 +85,7 @@ const sortByOptions: Array<string> = ['pricePerUnit', 'quantity', 'timestamp']
 
 const columnList: Array<ColumnList<SelfPurchase>> = [
   { columnId: 'item_name', header: 'Item Name' },
-  {
-    columnId: 'timestamp',
-    header: 'Updated At',
-    accessor: ({ row }) => <DateCell date={row.timestamp * 1000} />
-  },
+
   { columnId: 'pricePerUnit', header: 'Price Per Unit' },
   { columnId: 'quantity', header: 'Quantity' },
   {
@@ -112,11 +106,22 @@ const columnList: Array<ColumnList<SelfPurchase>> = [
       if (!itemID || typeof itemID !== 'string') return null
       return <ItemDataLink link={`/queries/item-data/${itemID}`} />
     }
+  },
+  {
+    columnId: 'timestamp',
+    header: 'Updated At',
+    accessor: ({ row }) => <DateCell date={row.timestamp * 1000} />
   }
 ]
 
+const mobileColumnList = [
+  { columnId: 'item_name', header: 'Item name' },
+  { columnId: 'pricePerUnit', header: 'Price per unit' }
+]
+
 const Results = ({
-  data
+  data,
+  totalSpent
 }: {
   data: Array<SelfPurchase>
   totalSpent: number
@@ -124,6 +129,10 @@ const Results = ({
   return (
     <PageWrapper>
       <Title title="Self Purchase Items" />
+      <Title
+        title={`Total spent: ${totalSpent.toLocaleString()} gil`}
+        className="text-xl"
+      />
       <div className="hidden sm:block">
         <FullTable<SelfPurchase>
           data={data}
@@ -134,7 +143,7 @@ const Results = ({
       <MobileTable
         data={data}
         sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
-        columnList={columnList}
+        columnList={mobileColumnList}
         rowLabels={columnList}
         columnSelectOptions={sortByOptions}
       />
