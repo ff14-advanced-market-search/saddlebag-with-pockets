@@ -206,12 +206,6 @@ const navGroups: Array<{
     title: 'Other',
     links: [
       {
-        name: 'Legacy FFXIV Site',
-        href: 'https://saddlebag.exchange',
-        icon: HomeIcon,
-        external: true
-      },
-      {
         name: 'Ko-fi',
         href: 'https://ko-fi.com/indopan',
         icon: KofiIcon,
@@ -222,12 +216,6 @@ const navGroups: Array<{
         href: 'https://www.paypal.me/alexcohen1',
         external: true,
         icon: KofiIcon
-      },
-      {
-        name: 'Discord',
-        href: 'https://discord.gg/836C8wDVNq',
-        external: true,
-        icon: DiscordIcon
       },
       {
         name: 'Github',
