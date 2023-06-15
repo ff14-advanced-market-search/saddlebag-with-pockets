@@ -88,7 +88,7 @@ const ffxivPages = [
   {
     name: 'Self Purchase Records',
     description:
-      'See a record of your recent past purchases on any server that we have stored in our DB. Note we only store the last 40 sales, some sales may not appear.',
+      'See a record of your recent past purchases from our stored data. Note we only store the last 40 sales of any single item, some purchases may not appear.',
     Icon: ChartSquareBarIcon,
     href: '/queries/self-purchase'
   },
