@@ -5,7 +5,6 @@ import {
   BellIcon,
   ChartSquareBarIcon,
   CogIcon,
-  HomeIcon,
   MenuAlt2Icon,
   XIcon,
   DocumentSearchIcon,
