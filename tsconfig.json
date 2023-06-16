@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "app/types/*.d.ts"],
   "files": ["types.d.ts"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019", "ES2021.String"],
