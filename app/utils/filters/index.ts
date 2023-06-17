@@ -1,17 +1,18 @@
 import { arms } from '~/utils/filters/arms'
 import { tools } from '~/utils/filters/tools'
-import { ReactNode } from 'react'
 import { armor } from '~/utils/filters/armor'
 import { accessories } from '~/utils/filters/accessories'
 import { materials } from '~/utils/filters/materials'
 import { medicinesMeals } from '~/utils/filters/medicines-meals'
 import { other } from '~/utils/filters/other'
+import type { FC } from 'react'
 
 export type FilterFormat = {
-  // @todo reencforce ID once all set.
   name: string
   abbreviation?: string
-  icon: ReactNode
+  icon: FC<{
+    className?: string
+  }>
   id?: number
 }
 type FiltersList = {
