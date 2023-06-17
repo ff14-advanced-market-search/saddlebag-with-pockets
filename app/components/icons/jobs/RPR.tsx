@@ -1,5 +1,5 @@
 import RPRIcon from './svg/class_job_039.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

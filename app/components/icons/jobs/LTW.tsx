@@ -1,5 +1,5 @@
 import LTWIcon from './svg/ItemCategory_LTW.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

@@ -1,5 +1,5 @@
 import SGEIcon from './svg/class_job_040.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

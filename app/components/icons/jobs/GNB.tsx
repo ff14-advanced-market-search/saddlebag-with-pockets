@@ -1,5 +1,5 @@
 import GNBIcon from './svg/class_job_037.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

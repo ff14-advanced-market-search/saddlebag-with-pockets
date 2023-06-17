@@ -1,5 +1,5 @@
 import RDMIcon from './svg/ItemCategory_RDM.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

@@ -1,5 +1,5 @@
 import GSMIcon from './svg/ItemCategory_GSM.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

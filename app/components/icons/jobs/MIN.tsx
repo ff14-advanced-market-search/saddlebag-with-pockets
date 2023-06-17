@@ -1,5 +1,5 @@
 import MINIcon from './svg/ItemCategory_MIN.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

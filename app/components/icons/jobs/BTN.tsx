@@ -1,5 +1,5 @@
 import BTNIcon from './svg/ItemCategory_BTN.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

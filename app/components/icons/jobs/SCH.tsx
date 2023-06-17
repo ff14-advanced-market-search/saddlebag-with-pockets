@@ -1,5 +1,5 @@
 import SCHIcon from './svg/ItemCategory_SCH.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string
