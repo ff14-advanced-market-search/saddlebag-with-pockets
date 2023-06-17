@@ -1,4 +1,4 @@
-import { FilterFormat } from '~/utils/filters/index'
+import type { FilterFormat } from '~/utils/filters/index'
 import { Shields } from '~/components/icons/armor/Shields'
 import { Head } from '~/components/icons/armor/Head'
 import { Body } from '~/components/icons/armor/Body'
