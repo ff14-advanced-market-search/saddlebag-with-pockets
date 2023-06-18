@@ -5,7 +5,6 @@ import {
   BellIcon,
   ChartSquareBarIcon,
   CogIcon,
-  HomeIcon,
   MenuAlt2Icon,
   XIcon,
   DocumentSearchIcon,
@@ -13,7 +12,7 @@ import {
   ChevronDownIcon,
   PencilAltIcon
 } from '@heroicons/react/outline'
-import { Link, NavLink, useMatches } from '@remix-run/react'
+import { Form, Link, NavLink, useMatches } from '@remix-run/react'
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
@@ -22,9 +21,17 @@ import GithubIcon from '~/icons/GithubIcon'
 import { LocationMarkerIcon } from '@heroicons/react/solid'
 import DiscordIcon from '~/icons/DiscordIcon'
 import type { LoaderData } from '~/root'
+import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
+import { items } from '~/utils/items/id_to_item'
+import { SubmitButton } from '~/components/form/SubmitButton'
+
+export const ITEM_DATA_FORM_NAME = 'item-data-from'
+
+const ffxivItemsList = items.map(([value, label]) => ({ label, value }))
 
 type Props = PropsWithChildren<any> & {
   data: LoaderData
+  itemNotFoundError?: string
 }
 
 interface NavbarLinkProps {
@@ -285,8 +292,9 @@ const ButtonAccordian = ({
   )
 }
 
-export const Sidebar: FC<Props> = ({ children, data }) => {
+export const Sidebar: FC<Props> = ({ children, data, itemNotFoundError }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [itemName, setItemName] = useState('')
   const matches = useMatches()
 
   const lastMatch = matches[matches.length - 1]?.pathname
@@ -503,7 +511,27 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
             <span className="sr-only">Open sidebar</span>
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
+
           <div className="flex-1 px-4 flex justify-end">
+            <div className="flex px-2 justify-self-start">
+              <Form method="post" className="flex my-2">
+                <DebouncedSelectInput
+                  selectOptions={ffxivItemsList}
+                  formName={ITEM_DATA_FORM_NAME}
+                  onSelect={(debounced) => setItemName(debounced)}
+                  error={itemNotFoundError}
+                />
+                <SubmitButton
+                  title="Go"
+                  onClick={(e) => {
+                    if (!itemName.length) {
+                      e.preventDefault()
+                      return
+                    }
+                  }}
+                />
+              </Form>
+            </div>
             <div className={`ml-4 flex md:ml-6 basis-52 max-w-fit`}>
               <NavLink
                 to={'/options'}
