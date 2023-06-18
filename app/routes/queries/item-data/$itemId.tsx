@@ -28,8 +28,8 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
 
 type ItemPageData =
   | {
-      history: HistoryResponse
-      listing: ListingResponseType | {}
+      history?: HistoryResponse | {}
+      listing?: ListingResponseType | {}
       itemName: string
     }
   | { exception: string }
@@ -98,7 +98,13 @@ const ItemPage = () => {
     )
   }
 
-  const listing = data.listing
+  const listing = data?.listing
+
+  const noResults =
+    data.history &&
+    'price_history' in data.history &&
+    listing &&
+    'listings' in listing
 
   return (
     <PageWrapper>
@@ -106,7 +112,12 @@ const ItemPage = () => {
         <Section>
           <Title title={data.itemName} />
         </Section>
-        <HistoryResults data={data.history} darkMode={darkmode} />
+        {noResults && <Title title="No results found" />}
+        {data.history && 'price_history' in data.history ? (
+          <HistoryResults data={data.history} darkMode={darkmode} />
+        ) : (
+          <NoResults title={`No hitorical data for ${data.itemName}`} />
+        )}
         <Section>
           <ContentContainer>
             <>
@@ -116,7 +127,7 @@ const ItemPage = () => {
               listing.listings.length > 0 ? (
                 <ListingResults data={listing} />
               ) : (
-                <NoResults href="/" />
+                <NoResults title={`No listings data for ${data.itemName}`} />
               )}
             </>
           </ContentContainer>

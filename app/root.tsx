@@ -13,6 +13,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useActionData,
   useLoaderData,
   useSubmit,
   useTransition
@@ -43,6 +44,8 @@ import {
 import { z } from 'zod'
 import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
+import { ITEM_DATA_FORM_NAME } from './components/navigation/sidebar/Sidebar'
+import { getItemIDByName } from './utils/items'
 
 export const links = () => {
   return [
@@ -93,6 +96,15 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 
+  const itemDataToNavigate = formPayload[ITEM_DATA_FORM_NAME]
+
+  if (itemDataToNavigate && typeof itemDataToNavigate === 'string') {
+    const itemId = getItemIDByName(itemDataToNavigate.trim())
+    if (itemId) {
+      return redirect('/queries/item-data/' + itemId)
+    } else return json({ noItemFoundError: 'Could not find item' })
+  }
+
   const result = validator.safeParse(formPayload)
 
   if (!result.success) {
@@ -138,6 +150,7 @@ export const meta: MetaFunction = ({ data }) => {
 
 function App() {
   const data = useLoaderData<LoaderData>()
+  const actionData = useActionData()
   const [theme, setTheme] = useTheme()
   const { darkmode, ffxivWorld, wowRealm } = useTypedSelector(
     (state) => state.user
@@ -224,7 +237,7 @@ function App() {
             width="0"
             className={`hidden invisible`}></iframe>
         </noscript>
-        <Sidebar data={data}>
+        <Sidebar data={data} itemNotFoundError={actionData?.noItemFoundError}>
           <Outlet />
         </Sidebar>
         <ScrollRestoration />
