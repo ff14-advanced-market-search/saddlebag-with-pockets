@@ -101,18 +101,21 @@ const ItemPage = () => {
   const listing = data?.listing
 
   const noResults =
-    data.history &&
-    'price_history' in data.history &&
-    listing &&
-    'listings' in listing
+    (!data.history || !('price_history' in data.history)) &&
+    (!listing || !('listings' in listing))
 
   return (
     <PageWrapper>
       <>
         <Section>
-          <Title title={data.itemName} />
+          <>
+            <Title title={data.itemName} />
+            {noResults && (
+              <Title title="No results found" className="text-xl" />
+            )}
+          </>
         </Section>
-        {noResults && <Title title="No results found" />}
+
         {data.history && 'price_history' in data.history ? (
           <HistoryResults data={data.history} darkMode={darkmode} />
         ) : (

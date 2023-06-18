@@ -12,7 +12,7 @@ import {
   ChevronDownIcon,
   PencilAltIcon
 } from '@heroicons/react/outline'
-import { Form, Link, NavLink, useMatches } from '@remix-run/react'
+import { Form, Link, NavLink, useMatches, useNavigate } from '@remix-run/react'
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
@@ -24,6 +24,7 @@ import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { items } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import { getItemIDByName } from '~/utils/items'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -31,7 +32,6 @@ const ffxivItemsList = items.map(([value, label]) => ({ label, value }))
 
 type Props = PropsWithChildren<any> & {
   data: LoaderData
-  itemNotFoundError?: string
 }
 
 interface NavbarLinkProps {
@@ -292,12 +292,33 @@ const ButtonAccordian = ({
   )
 }
 
-export const Sidebar: FC<Props> = ({ children, data, itemNotFoundError }) => {
+export const Sidebar: FC<Props> = ({ children, data }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [itemName, setItemName] = useState('')
+  const [searchError, setSearchError] = useState<string | undefined>(undefined)
   const matches = useMatches()
+  const navigate = useNavigate()
 
   const lastMatch = matches[matches.length - 1]?.pathname
+
+  const handleSearchSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    if (!itemName.length) {
+      event.preventDefault()
+      return
+    }
+
+    const itemId = getItemIDByName(itemName.trim())
+
+    if (!itemId) {
+      event.preventDefault()
+      setSearchError(`Item ${itemName} found`)
+      return
+    }
+
+    navigate('/queries/item-data/' + itemId)
+  }
 
   return (
     <>
@@ -518,17 +539,17 @@ export const Sidebar: FC<Props> = ({ children, data, itemNotFoundError }) => {
                 <DebouncedSelectInput
                   selectOptions={ffxivItemsList}
                   formName={ITEM_DATA_FORM_NAME}
-                  onSelect={(debounced) => setItemName(debounced)}
-                  error={itemNotFoundError}
+                  onSelect={(debounced) => {
+                    setItemName(debounced)
+                    setSearchError(undefined)
+                  }}
+                  error={searchError}
+                  placeholder="search items..."
                 />
                 <SubmitButton
-                  title="Go"
-                  onClick={(e) => {
-                    if (!itemName.length) {
-                      e.preventDefault()
-                      return
-                    }
-                  }}
+                  title="Find"
+                  type="button"
+                  onClick={handleSearchSubmit}
                 />
               </Form>
             </div>

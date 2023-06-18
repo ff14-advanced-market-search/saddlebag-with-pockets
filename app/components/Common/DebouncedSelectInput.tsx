@@ -35,7 +35,8 @@ export default function DebouncedSelectInput({
   onSelect,
   selectOptions,
   formName,
-  error
+  error,
+  placeholder
 }: {
   title?: string
   tooltip?: string
@@ -43,6 +44,7 @@ export default function DebouncedSelectInput({
   selectOptions: Array<SelectInputOption>
   onSelect?: (debouncedValue: string) => void
   error?: string
+  placeholder?: string
 }) {
   const [name, setName] = useState('')
 
@@ -62,9 +64,10 @@ export default function DebouncedSelectInput({
       {title && <TitleTooltip title={title} toolTip={tooltip} />}
       <DebouncedInput
         onDebouncedChange={handleDebounceChange}
-        className={`p-2 w-full border-0 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600`}
+        className={`p-2 h-full w-full border-0 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600`}
         list="items"
         name={formName}
+        placeholder={placeholder}
       />
       {items.length > 0 && (
         <datalist id="items">
