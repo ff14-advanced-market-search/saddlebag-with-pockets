@@ -10,7 +10,8 @@ import {
   DocumentSearchIcon,
   ChevronUpIcon,
   ChevronDownIcon,
-  PencilAltIcon
+  PencilAltIcon,
+  SearchIcon
 } from '@heroicons/react/outline'
 import { Form, Link, NavLink, useMatches, useNavigate } from '@remix-run/react'
 import { classNames } from '~/utils'
@@ -657,9 +658,9 @@ const ItemSearch = () => {
 
   return (
     <Menu as="div" className={'md:relative'}>
-      <Menu.Button className="w-12 flex group pt-3">
+      <Menu.Button className="h-full w-12 flex group items-center justify-center">
         <div className="bg-none flex group-hover:bg-slate-100 dark:group-hover:bg-slate-800 p-2 rounded-full items-center justify-center">
-          <DocumentSearchIcon className="h-6 w-6 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
+          <SearchIcon className="h-6 w-6 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
         </div>
       </Menu.Button>
       <Transition
@@ -714,7 +715,7 @@ const ItemSearch = () => {
                 setSearchError(undefined)
               }}
               error={searchError}
-              placeholder="search items..."
+              placeholder="Search items..."
               containerClassNames="w-40"
             />
 
