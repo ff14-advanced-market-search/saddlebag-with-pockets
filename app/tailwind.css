@@ -815,6 +815,10 @@ select {
   right: 0px;
 }
 
+.left-2 {
+  left: 0.5rem;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -1228,6 +1232,10 @@ select {
   width: 16rem;
 }
 
+.w-40 {
+  width: 10rem;
+}
+
 .w-4\/5 {
   width: 80%;
 }
@@ -1616,10 +1624,6 @@ select {
   align-self: flex-start;
 }
 
-.justify-self-start {
-  justify-self: start;
-}
-
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1892,6 +1896,10 @@ select {
   --tw-bg-opacity: 0.75;
 }
 
+.bg-none {
+  background-image: none;
+}
+
 .p-4 {
   padding: 1rem;
 }
@@ -2028,6 +2036,10 @@ select {
 
 .pr-1 {
   padding-right: 0.25rem;
+}
+
+.pt-3 {
+  padding-top: 0.75rem;
 }
 
 .text-left {
@@ -2531,6 +2543,11 @@ select {
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
+.group:hover .group-hover\:bg-slate-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
 .group:hover .group-hover\:text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
@@ -2832,6 +2849,11 @@ select {
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
+.dark .group:hover .dark\:group-hover\:bg-slate-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
 .dark .group:hover .dark\:group-hover\:text-gray-100 {
   --tw-text-opacity: 1;
   color: rgb(243 244 246 / var(--tw-text-opacity));
@@ -3002,6 +3024,10 @@ select {
 @media (min-width: 768px) {
   .md\:fixed {
     position: fixed;
+  }
+
+  .md\:relative {
+    position: relative;
   }
 
   .md\:inset-y-0 {

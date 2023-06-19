@@ -36,7 +36,8 @@ export default function DebouncedSelectInput({
   selectOptions,
   formName,
   error,
-  placeholder
+  placeholder,
+  containerClassNames
 }: {
   title?: string
   tooltip?: string
@@ -45,6 +46,7 @@ export default function DebouncedSelectInput({
   onSelect?: (debouncedValue: string) => void
   error?: string
   placeholder?: string
+  containerClassNames?: string
 }) {
   const [name, setName] = useState('')
 
@@ -56,7 +58,8 @@ export default function DebouncedSelectInput({
 
   const className = classNames(
     'flex flex-col rounded-md shadow-sm focus:ring-blue-500 focus:border-2 focus:border-blue-500 border border-gray-300 dark:border-gray-400 justify-center items-center',
-    error ? 'border-red-500' : ''
+    error ? 'border-red-500' : '',
+    containerClassNames || ''
   )
 
   return (

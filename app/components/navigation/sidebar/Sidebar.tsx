@@ -294,34 +294,13 @@ const ButtonAccordian = ({
 
 export const Sidebar: FC<Props> = ({ children, data }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [itemName, setItemName] = useState('')
-  const [searchError, setSearchError] = useState<string | undefined>(undefined)
   const matches = useMatches()
-  const navigate = useNavigate()
 
   const lastMatch = matches[matches.length - 1]?.pathname
 
-  const handleSearchSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    if (!itemName.length) {
-      event.preventDefault()
-      return
-    }
-
-    const itemId = getItemIDByName(itemName.trim())
-
-    if (!itemId) {
-      event.preventDefault()
-      setSearchError(`Item ${itemName} found`)
-      return
-    }
-
-    navigate('/queries/item-data/' + itemId)
-  }
-
   return (
     <>
+      {/* Mobile View and toggle */}
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -523,6 +502,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
           </div>
         </div>
       </div>
+      {/* Nav bar */}
       <div className="md:pl-64 flex flex-col">
         <nav className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
           <button
@@ -534,25 +514,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
           </button>
 
           <div className="flex-1 px-4 flex justify-end">
-            <div className="flex px-2 justify-self-start">
-              <Form method="post" className="flex my-2">
-                <DebouncedSelectInput
-                  selectOptions={ffxivItemsList}
-                  formName={ITEM_DATA_FORM_NAME}
-                  onSelect={(debounced) => {
-                    setItemName(debounced)
-                    setSearchError(undefined)
-                  }}
-                  error={searchError}
-                  placeholder="search items..."
-                />
-                <SubmitButton
-                  title="Find"
-                  type="button"
-                  onClick={handleSearchSubmit}
-                />
-              </Form>
-            </div>
+            <ItemSearch />
             <div className={`ml-4 flex md:ml-6 basis-52 max-w-fit`}>
               <NavLink
                 to={'/options'}
@@ -665,5 +627,105 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
         {children}
       </div>
     </>
+  )
+}
+
+const ItemSearch = () => {
+  const [itemName, setItemName] = useState('')
+  const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
+  const [searchError, setSearchError] = useState<string | undefined>(undefined)
+  const navigate = useNavigate()
+
+  const handleSearchSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    if (!itemName.length) {
+      event.preventDefault()
+      return
+    }
+
+    const itemId = getItemIDByName(itemName.trim())
+
+    if (!itemId) {
+      event.preventDefault()
+      setSearchError(`Item ${itemName} found`)
+      return
+    }
+
+    navigate('/queries/item-data/' + itemId)
+  }
+
+  return (
+    <Menu as="div" className={'md:relative'}>
+      <Menu.Button className="w-12 flex group pt-3">
+        <div className="bg-none flex group-hover:bg-slate-100 dark:group-hover:bg-slate-800 p-2 rounded-full items-center justify-center">
+          <DocumentSearchIcon className="h-6 w-6 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
+        </div>
+      </Menu.Button>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95">
+        <Menu.Items className="absolute left-2 mt-2 px-2 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Form method="post" className="flex my-2">
+            <div
+              className="flex flex-col max-h-fit gap-1 justify-center"
+              onChange={(event: React.SyntheticEvent<EventTarget>) => {
+                const value = (event.target as HTMLInputElement).value
+                if (value === 'ffxiv' || value === 'wow') setGame(value)
+              }}>
+              <label
+                htmlFor={`radio-ffxiv`}
+                className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
+                <input
+                  id={`radio-ffxiv`}
+                  type="radio"
+                  value={'ffxiv'}
+                  name="game-items"
+                  defaultChecked={game === 'ffxiv'}
+                  className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
+                />
+                <span>FFXIV</span>
+              </label>
+              <label
+                htmlFor={`radio-wow`}
+                className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
+                <input
+                  id={`radio-wow`}
+                  type="radio"
+                  value={'wow'}
+                  name="game-items"
+                  defaultChecked={game === 'wow'}
+                  className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
+                />
+                <span>WoW</span>
+              </label>
+            </div>
+
+            <DebouncedSelectInput
+              selectOptions={ffxivItemsList}
+              formName={ITEM_DATA_FORM_NAME}
+              onSelect={(debounced) => {
+                setItemName(debounced)
+                setSearchError(undefined)
+              }}
+              error={searchError}
+              placeholder="search items..."
+              containerClassNames="w-40"
+            />
+
+            <SubmitButton
+              title="Find"
+              type="button"
+              onClick={handleSearchSubmit}
+            />
+          </Form>
+        </Menu.Items>
+      </Transition>
+    </Menu>
   )
 }
