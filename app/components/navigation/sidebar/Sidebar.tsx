@@ -221,6 +221,12 @@ const navGroups: Array<{
         href: 'https://github.com/ff14-advanced-market-search',
         external: true,
         icon: GithubIcon
+      },
+      {
+        name: 'Join Our Team - Help Wanted!',
+        href: 'https://drive.google.com/file/d/1R9J51hNuwMfPuLi0u1snaLvQnJiZ2jRo/view?usp=sharing',
+        external: true,
+        icon: GithubIcon
       }
     ]
   }
