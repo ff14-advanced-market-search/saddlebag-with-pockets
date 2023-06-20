@@ -13,7 +13,14 @@ import {
   PencilAltIcon,
   SearchIcon
 } from '@heroicons/react/outline'
-import { Form, Link, NavLink, useMatches, useNavigate } from '@remix-run/react'
+import {
+  Form,
+  Link,
+  NavLink,
+  useMatches,
+  useNavigate,
+  useTransition
+} from '@remix-run/react'
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
@@ -632,6 +639,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
 }
 
 const ItemSearch = () => {
+  const transition = useTransition()
   const [itemName, setItemName] = useState('')
   const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
@@ -656,6 +664,18 @@ const ItemSearch = () => {
     navigate('/queries/item-data/' + itemId)
   }
 
+  const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
+    const value = (event.target as HTMLInputElement).value
+    if (value === 'ffxiv' || value === 'wow') setGame(value)
+  }
+
+  const handleSelect = (debounced: string) => {
+    setItemName(debounced)
+    setSearchError(undefined)
+  }
+
+  const isLoading = transition.state === 'loading'
+
   return (
     <Menu as="div" className={'md:relative'}>
       <Menu.Button className="h-full w-12 flex group items-center justify-center">
@@ -675,10 +695,7 @@ const ItemSearch = () => {
           <Form method="post" className="flex my-2">
             <div
               className="flex flex-col max-h-fit gap-1 justify-center"
-              onChange={(event: React.SyntheticEvent<EventTarget>) => {
-                const value = (event.target as HTMLInputElement).value
-                if (value === 'ffxiv' || value === 'wow') setGame(value)
-              }}>
+              onChange={handleFormChange}>
               <label
                 htmlFor={`radio-ffxiv`}
                 className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
@@ -710,10 +727,7 @@ const ItemSearch = () => {
             <DebouncedSelectInput
               selectOptions={ffxivItemsList}
               formName={ITEM_DATA_FORM_NAME}
-              onSelect={(debounced) => {
-                setItemName(debounced)
-                setSearchError(undefined)
-              }}
+              onSelect={handleSelect}
               error={searchError}
               placeholder="Search items..."
               containerClassNames="w-40"
@@ -723,6 +737,7 @@ const ItemSearch = () => {
               title="Find"
               type="button"
               onClick={handleSearchSubmit}
+              loading={isLoading}
             />
           </Form>
         </Menu.Items>
