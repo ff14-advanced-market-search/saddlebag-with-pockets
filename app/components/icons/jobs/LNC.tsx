@@ -1,5 +1,5 @@
 import LNCIcon from './svg/ItemCategory_LNC.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

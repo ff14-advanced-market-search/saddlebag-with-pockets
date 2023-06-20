@@ -1,5 +1,5 @@
 import PGLIcon from './svg/ItemCategory_PGL.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

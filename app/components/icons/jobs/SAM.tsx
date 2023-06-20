@@ -1,5 +1,5 @@
 import SAMIcon from './svg/ItemCategory_SAM.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

@@ -1,5 +1,5 @@
 import MCHIcon from './svg/ItemCategory_MCH.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

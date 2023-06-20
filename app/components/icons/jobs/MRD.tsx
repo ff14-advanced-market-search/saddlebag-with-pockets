@@ -1,5 +1,5 @@
 import MRDIcon from './svg/ItemCategory_MRD.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

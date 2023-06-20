@@ -1,5 +1,5 @@
 import CNJIcon from './svg/ItemCategory_CNJ.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

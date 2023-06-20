@@ -1,5 +1,5 @@
 import ACNIcon from './svg/ItemCategory_ACN.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

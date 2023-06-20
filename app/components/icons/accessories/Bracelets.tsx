@@ -1,5 +1,5 @@
 import Icon from './svg/Armoury_Bracelets.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

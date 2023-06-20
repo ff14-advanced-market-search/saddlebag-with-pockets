@@ -1,5 +1,5 @@
 import ARMIcon from './svg/ItemCategory_ARM.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string
