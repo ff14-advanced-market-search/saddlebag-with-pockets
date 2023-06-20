@@ -3,16 +3,17 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import ItemSelect from '~/components/Common/ItemSelect'
 import { useState } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Label from '~/components/form/Label'
 import CodeBlock from '~/components/Common/CodeBlock'
-import WoWGetItems from '~/requests/WoWGetItems'
 import { findWoWServersIdByName } from '~/utils/WoWServers'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
+import { getItemIDByName } from '~/utils/items'
 
 interface Auction {
   itemName: string
@@ -64,10 +65,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
 
-  const items = await WoWGetItems()
-
   return json({
-    data: Object.entries(await items.json()),
     wowRealm: server,
     wowRegion: region
   })
@@ -77,7 +75,8 @@ type LoaderData = WoWLoaderData & {
 }
 
 const Index = () => {
-  const { data, wowRealm, wowRegion } = useLoaderData<LoaderData>()
+  const { wowRealm, wowRegion } = useLoaderData<LoaderData>()
+  const { wowItems } = useTypedSelector((state) => state.user)
   const [isPrice, setIsPrice] = useState(IS_PRICE_DEFAULT)
   const [jsonData, setJsonData] = useState<Input>({
     homeRealmName: wowRealm.name,
@@ -181,33 +180,33 @@ const Index = () => {
                 </Label>
               </div>
             </div>
-            <ItemSelect
-              itemList={data}
-              onTextChange={() => {
-                if (error) {
+            <div className="px-4">
+              <DebouncedSelectInput
+                id="wow-item-search"
+                title="Search for item by name"
+                tooltip="Select items to generate an alert for"
+                placeholder="Search for items..."
+                label="Items"
+                selectOptions={wowItems.map(([value, label]) => ({
+                  value,
+                  label
+                }))}
+                onSelect={(name) => {
                   setError(undefined)
-                }
-              }}
-              onSelectChange={(item) => {
-                if (error) {
-                  setError(undefined)
-                }
 
-                if (!item) {
-                  setFormState(null)
-                  return
-                }
+                  const itemId = getItemIDByName(name, wowItems)
 
-                setFormState({
-                  itemName: item.name,
-                  itemID: parseInt(item.id, 10),
-                  desiredState: 'below',
-                  price: 1000
-                })
-              }}
-              tooltip="Select items to generate an alert for"
-            />
-
+                  if (itemId) {
+                    setFormState({
+                      itemName: name,
+                      itemID: parseInt(itemId, 10),
+                      desiredState: 'below',
+                      price: 1000
+                    })
+                  }
+                }}
+              />
+            </div>
             {formState && (
               <div className="sm:px-4">
                 <InputWithLabel

@@ -151,8 +151,6 @@ function App() {
   const transition = useTransition()
   const dispatch = useDispatch()
 
-  console.log(data.wowItems)
-
   /**
    * Setup theme for app
    */

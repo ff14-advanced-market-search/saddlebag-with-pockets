@@ -1,5 +1,6 @@
+import Label from '../form/Label'
 import DebouncedInput from './DebouncedInput'
-import TitleTooltip from './TitleTooltip'
+import { ToolTip } from './InfoToolTip'
 import { useState } from 'react'
 import { classNames } from '~/utils'
 
@@ -37,16 +38,20 @@ export default function DebouncedSelectInput({
   formName,
   error,
   placeholder,
-  containerClassNames
+  containerClassNames,
+  label,
+  id
 }: {
   title?: string
   tooltip?: string
   formName?: string
+  id: string
   selectOptions: Array<SelectInputOption>
   onSelect?: (debouncedValue: string) => void
   error?: string
   placeholder?: string
   containerClassNames?: string
+  label?: string
 }) {
   const [name, setName] = useState('')
 
@@ -57,23 +62,47 @@ export default function DebouncedSelectInput({
   }
 
   const className = classNames(
-    'flex flex-col rounded-md shadow-sm focus:ring-blue-500 focus:border-2 focus:border-blue-500 border border-gray-300 dark:border-gray-400 justify-center items-center',
+    'flex flex-col rounded-md shadow-sm',
     error ? 'border-red-500' : '',
     containerClassNames || ''
   )
 
+  const inputClassname = classNames(
+    'p-2 w-full',
+    label
+      ? 'rounded-l-md border-gray-300 border-0 border-r'
+      : 'border-0 rounded-md',
+    'focus:ring-blue-500 focus:border-2 focus:border-blue-500 dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
+  )
+
   return (
     <div className={className}>
-      {title && <TitleTooltip title={title} toolTip={tooltip} />}
-      <DebouncedInput
-        onDebouncedChange={handleDebounceChange}
-        className={`p-2 h-full w-full border-0 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600`}
-        list="items"
-        name={formName}
-        placeholder={placeholder}
-      />
+      {title && (
+        <>
+          <div className="flex gap-1 relative items-center">
+            <Label htmlFor={id}>{title}</Label>
+            {tooltip && <ToolTip data={tooltip} />}
+          </div>
+        </>
+      )}
+      <div className="flex rounded-md shadow-sm border border-gray-300 dark:border-gray-400 mt-1">
+        <DebouncedInput
+          id={id}
+          onDebouncedChange={handleDebounceChange}
+          className={inputClassname}
+          list={'items-' + id}
+          name={formName}
+          placeholder={placeholder}
+        />
+        {label && (
+          <span
+            className={`inline-flex items-center justify-center text-center px-3 rounded-r-md bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700`}>
+            {label}
+          </span>
+        )}
+      </div>
       {items.length > 0 && (
-        <datalist id="items">
+        <datalist id={'items-' + id}>
           {items.map((item) => (
             <option key={item.value + '-' + item.label} value={item.label} />
           ))}

@@ -678,10 +678,11 @@ const ItemSearch = () => {
 
   return (
     <Menu as="div" className={'md:relative'}>
-      <Menu.Button className="h-full w-12 flex group items-center justify-center">
-        <div className="bg-none flex group-hover:bg-slate-100 dark:group-hover:bg-slate-800 p-2 rounded-full items-center justify-center">
-          <SearchIcon className="h-6 w-6 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
-        </div>
+      <Menu.Button className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
+        <SearchIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
+        <p className="hidden md:block shrink-0 text-sm text-gray-500 dark:text-gray-200">
+          Item Search
+        </p>
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -725,6 +726,7 @@ const ItemSearch = () => {
             </div>
 
             <DebouncedSelectInput
+              id="nav-search"
               selectOptions={ffxivItemsList}
               formName={ITEM_DATA_FORM_NAME}
               onSelect={handleSelect}
