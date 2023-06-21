@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useMemo } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
@@ -33,10 +33,15 @@ import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { items } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
-const ffxivItemsList = items.map(([value, label]) => ({ label, value }))
+const parseItemsForDataListSelect = ([value, label]: [string, string]) => ({
+  value,
+  label
+})
+const ffxivItemsList = items.map(parseItemsForDataListSelect)
 
 type Props = PropsWithChildren<any> & {
   data: LoaderData
@@ -639,11 +644,21 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
 }
 
 const ItemSearch = () => {
+  const { wowItems } = useTypedSelector((state) => state.user)
   const transition = useTransition()
   const [itemName, setItemName] = useState('')
   const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
   const navigate = useNavigate()
+
+  const wowItemsForList = useMemo(
+    () => wowItems.map(parseItemsForDataListSelect),
+    [wowItems]
+  )
+
+  const isWoW = game === 'wow'
+
+  const dataFormItemList = isWoW ? wowItemsForList : ffxivItemsList
 
   const handleSearchSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -653,7 +668,10 @@ const ItemSearch = () => {
       return
     }
 
-    const itemId = getItemIDByName(itemName.trim())
+    const itemId = getItemIDByName(
+      itemName.trim(),
+      isWoW ? wowItems : undefined
+    )
 
     if (!itemId) {
       event.preventDefault()
@@ -661,7 +679,8 @@ const ItemSearch = () => {
       return
     }
 
-    navigate('/queries/item-data/' + itemId)
+    const path = isWoW ? 'wow/item-data/' : '/queries/item-data/'
+    navigate(path + itemId)
   }
 
   const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
@@ -727,7 +746,7 @@ const ItemSearch = () => {
 
             <DebouncedSelectInput
               id="nav-search"
-              selectOptions={ffxivItemsList}
+              selectOptions={dataFormItemList}
               formName={ITEM_DATA_FORM_NAME}
               onSelect={handleSelect}
               error={searchError}
