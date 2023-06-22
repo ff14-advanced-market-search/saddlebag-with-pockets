@@ -1,5 +1,6 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { WoWServerRegion } from '../WOWScan'
+import type { WoWMarketState } from './types'
 
 interface StatLookupProps {
   homeRealmId: number
@@ -13,12 +14,7 @@ interface StatLookupProps {
   itemSubClass: number
   iLvl: number
 }
-type MarketState =
-  | 'spiking'
-  | 'increasing'
-  | 'stable'
-  | 'decreasing'
-  | 'crashing'
+
 export interface ItemStats {
   currentMarketValue: number
   historicMarketValue: number
@@ -30,11 +26,11 @@ export interface ItemStats {
   minPrice: number
   percentChange: number
   salesPerDay: number
-  state: MarketState
+  state: WoWMarketState
   avgQuantity: number
   currentQuantity: number
   currentVsAvgQuantityPercent: number
-  quantityState: MarketState
+  quantityState: WoWMarketState
 }
 
 export interface ItemStatResponse {

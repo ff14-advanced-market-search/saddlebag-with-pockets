@@ -8,3 +8,10 @@ export interface WoWLoaderData {
   wowRealm: WoWServerData
   wowRegion: WoWServerRegion
 }
+
+export type WoWMarketState =
+  | 'spiking'
+  | 'increasing'
+  | 'stable'
+  | 'decreasing'
+  | 'crashing'
