@@ -90,7 +90,7 @@ const ffxivPages = [
     description:
       'See a record of your recent past purchases from our stored data. Note we only store the last 40 sales of any single item, some purchases may not appear.',
     Icon: ChartSquareBarIcon,
-    href: '/queries/self-purchase'
+    href: '/ffxiv/self-purchase'
   },
   {
     name: 'Secret Sale Leads',
