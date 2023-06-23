@@ -67,9 +67,9 @@ const WoWScanForm = ({
       <div className="flex flex-col lg:flex-row lg:gap-7">
         <div className="w-full">
           <InputWithLabel
-            defaultValue={100000}
+            defaultValue={10000}
             type="number"
-            labelTitle="Minimum Historic Price"
+            labelTitle="Minimum Average TSM Price"
             inputTag="Amount"
             name="minHistoricPrice"
             onChange={(e) => {
