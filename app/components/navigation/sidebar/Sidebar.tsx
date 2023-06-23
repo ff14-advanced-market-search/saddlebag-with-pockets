@@ -205,6 +205,12 @@ const navGroups: Array<{
     title: 'Other',
     links: [
       {
+        name: 'Alpha Build Early Access Site',
+        href: 'https://temp.saddlebagexchange.com',
+        icon: HomeIcon,
+        external: true
+      },
+      {
         name: 'Ko-fi',
         href: 'https://ko-fi.com/indopan',
         icon: KofiIcon,
