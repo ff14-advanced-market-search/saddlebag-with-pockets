@@ -207,7 +207,7 @@ const navGroups: Array<{
       {
         name: 'Alpha Build Early Access Site',
         href: 'https://temp.saddlebagexchange.com',
-        icon: HomeIcon,
+        icon: GithubIcon,
         external: true
       },
       {
