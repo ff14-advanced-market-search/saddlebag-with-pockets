@@ -3,16 +3,33 @@ import type {
   LoaderFunction
 } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
-import { PageWrapper, Title } from '~/components/Common'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
 import type { ItemListingResponse } from '~/requests/WoW/ItemListingsData'
 import ItemListingsData from '~/requests/WoW/ItemListingsData'
+import { Differences } from '~/routes/queries/listings/Differences'
 import { getUserSessionData } from '~/sessions'
+import type { Options, PointOptionsObject } from 'highcharts'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { format, subHours } from 'date-fns'
 
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
   <ErrorBounds error={error} />
 )
+
+const makeTimeString = ({
+  date,
+  hoursToDeduct
+}: {
+  date: Date
+  hoursToDeduct: number
+}) => {
+  const newDate = subHours(date, hoursToDeduct)
+  return format(newDate, 'dd/MM h aaaa')
+}
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId
@@ -38,6 +55,7 @@ type ResponseType = ItemListingResponse | { exception: string }
 
 export default function Index() {
   const result = useLoaderData<ResponseType>()
+  const { darkmode } = useTypedSelector((state) => state.user)
   console.log(result)
 
   const error = result && 'exception' in result ? result.exception : undefined
@@ -57,10 +75,261 @@ export default function Index() {
   const listing = 'data' in result ? result.data : undefined
 
   if (listing) {
+    const xCategories = listing.priceTimeData.map((_, hoursToDeduct, arr) =>
+      makeTimeString({
+        date: new Date(),
+        hoursToDeduct: arr.length - hoursToDeduct
+      })
+    )
     return (
       <PageWrapper>
-        <Title title={listing.itemName} />
+        <Title title={'Listing data for ' + listing.itemName} />
+        <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
+          <div className="flex flex-col max-w-full">
+            <Differences
+              diffTitle="Minimum Price"
+              diffAmount={listing.minPrice.toLocaleString()}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+            <Differences
+              diffTitle="Historic Price"
+              diffAmount={listing.historicPrice.toLocaleString()}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+          </div>
+          <div className="flex flex-col max-w-full">
+            <Differences
+              diffTitle="Current Market Value"
+              diffAmount={listing.currentMarketValue.toLocaleString()}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+            <Differences
+              diffTitle="Historic Market Value"
+              diffAmount={listing.historicMarketValue.toLocaleString()}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+          </div>
+          <div className="flex flex-col max-w-full">
+            <Differences
+              diffTitle="Sales Per Day"
+              diffAmount={listing.salesPerDay.toLocaleString()}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+            <Differences
+              diffTitle="Percent Change"
+              diffAmount={listing.percentChange.toLocaleString() + '%'}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+          </div>
+          <div className="flex flex-col max-w-full">
+            <Differences
+              diffTitle="Current Quantity"
+              diffAmount={listing.currentQuantity.toLocaleString()}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+            <Differences
+              diffTitle="Average Quantity"
+              diffAmount={listing.avgQuantity.toLocaleString()}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+            <Differences
+              diffTitle="Avg v Current Quantity"
+              diffAmount={
+                listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
+              }
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+          </div>
+        </div>
+        {listing.priceTimeData.length > 0 && (
+          <ContentContainer>
+            <GenericLineChart
+              chartTitle="Price Over Time"
+              darkMode={darkmode}
+              data={listing.priceTimeData}
+              dataIterator={(val, ind) => [xCategories[ind], val]}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
+        {listing.quantityTimeData.length > 0 && (
+          <ContentContainer>
+            <GenericLineChart
+              chartTitle="Quantity Over Time"
+              darkMode={darkmode}
+              data={listing.quantityTimeData}
+              dataIterator={(val, ind) => [xCategories[ind], val]}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
+        {listing.listingData.length > 3 && (
+          <ContentContainer>
+            <PriceLineChart
+              darkMode={darkmode}
+              listings={listing.listingData}
+            />
+          </ContentContainer>
+        )}
       </PageWrapper>
     )
   }
+}
+const GenericLineChart = ({
+  darkMode,
+  data,
+  chartTitle,
+  xTitle,
+  yTitle,
+  xLabelFormat,
+  yLabelFormat,
+  dataIterator,
+  xCategories
+}: {
+  darkMode: boolean
+  data: Array<number>
+  chartTitle?: string
+  xTitle?: string
+  yTitle?: string
+  xLabelFormat?: string
+  yLabelFormat?: string
+  dataIterator?: (value: number, index: number) => PointOptionsObject
+  xCategories?: Array<string>
+}) => {
+  const styles = darkMode
+    ? {
+        backgroundColor: '#334155',
+        color: 'white',
+        hoverColor: '#f8f8f8'
+      }
+    : {}
+  const options: Options = {
+    chart: {
+      type: 'line',
+      backgroundColor: styles?.backgroundColor
+    },
+    legend: {
+      itemStyle: { color: styles?.color },
+      align: 'center',
+      itemHoverStyle: { color: styles?.hoverColor }
+    },
+    title: {
+      text: chartTitle,
+      style: { color: styles?.color }
+    },
+    yAxis: {
+      title: {
+        text: yTitle,
+        style: {
+          color: styles?.color,
+          textAlign: 'center'
+        }
+      },
+      labels: {
+        style: { color: styles?.color },
+        align: 'center',
+        format: yLabelFormat
+      },
+      lineColor: styles?.color
+    },
+    xAxis: {
+      title: {
+        text: xTitle,
+        style: {
+          color: styles?.color,
+          textAlign: 'center'
+        }
+      },
+      categories: xCategories,
+      labels: {
+        style: { color: styles?.color },
+        align: 'center',
+        format: xLabelFormat
+      },
+      lineColor: styles?.color
+    },
+    series: [
+      {
+        data: dataIterator ? data.map<PointOptionsObject>(dataIterator) : data,
+        name: chartTitle,
+        type: 'line'
+      }
+    ],
+    credits: {
+      enabled: false
+    }
+  }
+  return <HighchartsReact highcharts={Highcharts} options={options} />
+}
+
+const PriceLineChart = ({
+  darkMode,
+  listings
+}: {
+  darkMode: boolean
+  listings: ItemListingResponse['data']['listingData']
+}) => {
+  const styles = darkMode
+    ? {
+        backgroundColor: '#334155',
+        color: 'white',
+        hoverColor: '#f8f8f8'
+      }
+    : {}
+  const options: Options = {
+    chart: {
+      type: 'scatter',
+      backgroundColor: styles?.backgroundColor
+    },
+    legend: {
+      itemStyle: { color: styles?.color },
+      align: 'center',
+      itemHoverStyle: { color: styles?.hoverColor }
+    },
+    title: {
+      text: 'Price v Quantity',
+      style: { color: styles?.color }
+    },
+    yAxis: {
+      title: {
+        text: 'Price',
+        style: {
+          color: styles?.color,
+          textAlign: 'center'
+        }
+      },
+      labels: {
+        style: { color: styles?.color },
+        align: 'center'
+      },
+      lineColor: styles?.color
+    },
+    xAxis: {
+      title: {
+        text: 'Quantity',
+        style: {
+          color: styles?.color,
+          textAlign: 'center'
+        }
+      },
+      labels: {
+        style: { color: styles?.color },
+        align: 'center'
+      },
+      lineColor: styles?.color
+    },
+    series: [
+      {
+        data: listings.map<PointOptionsObject>(({ price, quantity }) => {
+          return [quantity, price]
+        }),
+        name: 'Price v Quantity',
+        type: 'scatter'
+      }
+    ],
+    credits: {
+      enabled: false
+    }
+  }
+  return <HighchartsReact highcharts={Highcharts} options={options} />
 }

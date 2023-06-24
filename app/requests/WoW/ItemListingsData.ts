@@ -14,21 +14,21 @@ interface ListingData {
 }
 
 interface ItemListing {
-  avgQuantity: number
-  currentMarketValue: number
-  currentQuantity: number
-  currentVsAvgQuantityPercent: number
-  historicMarketValue: number
-  historicPrice: number
   itemID: number
   itemName: string
+  avgQuantity: number
+  currentQuantity: number
+  quantityState: WoWMarketState
+  currentVsAvgQuantityPercent: number
+  currentMarketValue: number
+  historicMarketValue: number
   listingData: Array<ListingData>
+  historicPrice: number
   minPrice: number
+  salesPerDay: number
   percentChange: number
   priceTimeData: Array<number>
-  quantityState: WoWMarketState
   quantityTimeData: Array<number>
-  salesPerDay: number
   state: WoWMarketState
 }
 
