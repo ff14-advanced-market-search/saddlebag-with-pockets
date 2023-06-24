@@ -22,13 +22,15 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
 
 const makeTimeString = ({
   date,
-  hoursToDeduct
+  hoursToDeduct,
+  formatString = 'dd/MM h aaaa'
 }: {
   date: Date
   hoursToDeduct: number
+  formatString?: string
 }) => {
   const newDate = subHours(date, hoursToDeduct)
-  return format(newDate, 'dd/MM h aaaa')
+  return format(newDate, formatString)
 }
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -75,9 +77,10 @@ export default function Index() {
   const listing = 'data' in result ? result.data : undefined
 
   if (listing) {
+    const now = new Date()
     const xCategories = listing.priceTimeData.map((_, hoursToDeduct, arr) =>
       makeTimeString({
-        date: new Date(),
+        date: now,
         hoursToDeduct: arr.length - hoursToDeduct
       })
     )
@@ -147,7 +150,13 @@ export default function Index() {
               chartTitle="Price Over Time"
               darkMode={darkmode}
               data={listing.priceTimeData}
-              dataIterator={(val, ind) => [xCategories[ind], val]}
+              dataIterator={(val, ind) => [
+                makeTimeString({
+                  date: now,
+                  hoursToDeduct: listing.priceTimeData.length - ind
+                }),
+                val
+              ]}
               xCategories={xCategories}
             />
           </ContentContainer>
@@ -158,16 +167,14 @@ export default function Index() {
               chartTitle="Quantity Over Time"
               darkMode={darkmode}
               data={listing.quantityTimeData}
-              dataIterator={(val, ind) => [xCategories[ind], val]}
+              dataIterator={(val, ind) => [
+                makeTimeString({
+                  date: now,
+                  hoursToDeduct: listing.quantityTimeData.length - ind
+                }),
+                val
+              ]}
               xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-        {listing.listingData.length > 3 && (
-          <ContentContainer>
-            <PriceLineChart
-              darkMode={darkmode}
-              listings={listing.listingData}
             />
           </ContentContainer>
         )}
@@ -175,6 +182,7 @@ export default function Index() {
     )
   }
 }
+
 const GenericLineChart = ({
   darkMode,
   data,
@@ -243,7 +251,7 @@ const GenericLineChart = ({
       categories: xCategories,
       labels: {
         style: { color: styles?.color },
-        align: 'center',
+        align: 'right',
         format: xLabelFormat
       },
       lineColor: styles?.color
@@ -253,78 +261,6 @@ const GenericLineChart = ({
         data: dataIterator ? data.map<PointOptionsObject>(dataIterator) : data,
         name: chartTitle,
         type: 'line'
-      }
-    ],
-    credits: {
-      enabled: false
-    }
-  }
-  return <HighchartsReact highcharts={Highcharts} options={options} />
-}
-
-const PriceLineChart = ({
-  darkMode,
-  listings
-}: {
-  darkMode: boolean
-  listings: ItemListingResponse['data']['listingData']
-}) => {
-  const styles = darkMode
-    ? {
-        backgroundColor: '#334155',
-        color: 'white',
-        hoverColor: '#f8f8f8'
-      }
-    : {}
-  const options: Options = {
-    chart: {
-      type: 'scatter',
-      backgroundColor: styles?.backgroundColor
-    },
-    legend: {
-      itemStyle: { color: styles?.color },
-      align: 'center',
-      itemHoverStyle: { color: styles?.hoverColor }
-    },
-    title: {
-      text: 'Price v Quantity',
-      style: { color: styles?.color }
-    },
-    yAxis: {
-      title: {
-        text: 'Price',
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      labels: {
-        style: { color: styles?.color },
-        align: 'center'
-      },
-      lineColor: styles?.color
-    },
-    xAxis: {
-      title: {
-        text: 'Quantity',
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      labels: {
-        style: { color: styles?.color },
-        align: 'center'
-      },
-      lineColor: styles?.color
-    },
-    series: [
-      {
-        data: listings.map<PointOptionsObject>(({ price, quantity }) => {
-          return [quantity, price]
-        }),
-        name: 'Price v Quantity',
-        type: 'scatter'
       }
     ],
     credits: {
