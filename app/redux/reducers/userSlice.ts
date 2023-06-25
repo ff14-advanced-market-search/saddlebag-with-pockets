@@ -25,13 +25,15 @@ export interface UserState {
   ffScanSortOrder: Array<string>
   ffxivWorld: { data_center: string; world: string }
   wowRealm: { server: WoWServerData; region: WoWServerRegion }
+  wowItems: [string, string][]
 }
 
 const initialState: UserState = {
   darkmode: getDarkModeFromLocalStorage(),
   ffScanSortOrder: getFFScanSortOrderInLocalStorage(),
   ffxivWorld: getFFWorldDataFromLocalStorage(),
-  wowRealm: getWoWRealmDataFromLocalStorage()
+  wowRealm: getWoWRealmDataFromLocalStorage(),
+  wowItems: []
 }
 
 export const userSlice = createSlice({
@@ -78,6 +80,12 @@ export const userSlice = createSlice({
       setWoWRealmDataInLocalStorage(server, region)
 
       state.wowRealm = { server, region }
+    },
+    setWoWItems: (
+      state,
+      { payload }: PayloadAction<Record<string, string>>
+    ) => {
+      state.wowItems = Object.entries(payload)
     }
   }
 })
@@ -87,7 +95,8 @@ export const {
   setDarkMode,
   setFFScanOrder,
   setFFxivWorld,
-  setWoWRealmData
+  setWoWRealmData,
+  setWoWItems
 } = userSlice.actions
 
 export default userSlice.reducer

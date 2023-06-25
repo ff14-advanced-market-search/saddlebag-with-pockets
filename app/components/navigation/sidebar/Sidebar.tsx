@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useMemo, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
@@ -10,9 +10,17 @@ import {
   DocumentSearchIcon,
   ChevronUpIcon,
   ChevronDownIcon,
-  PencilAltIcon
+  PencilAltIcon,
+  SearchIcon
 } from '@heroicons/react/outline'
-import { Link, NavLink, useMatches } from '@remix-run/react'
+import {
+  Form,
+  Link,
+  NavLink,
+  useMatches,
+  useNavigate,
+  useTransition
+} from '@remix-run/react'
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
@@ -21,6 +29,19 @@ import GithubIcon from '~/icons/GithubIcon'
 import { LocationMarkerIcon } from '@heroicons/react/solid'
 import DiscordIcon from '~/icons/DiscordIcon'
 import type { LoaderData } from '~/root'
+import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
+import { items } from '~/utils/items/id_to_item'
+import { SubmitButton } from '~/components/form/SubmitButton'
+import { getItemIDByName } from '~/utils/items'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+
+export const ITEM_DATA_FORM_NAME = 'item-data-from'
+
+const parseItemsForDataListSelect = ([value, label]: [string, string]) => ({
+  value,
+  label
+})
+const ffxivItemsList = items.map(parseItemsForDataListSelect)
 
 type Props = PropsWithChildren<any> & {
   data: LoaderData
@@ -304,6 +325,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
 
   return (
     <>
+      {/* Mobile View and toggle */}
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -505,6 +527,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
           </div>
         </div>
       </div>
+      {/* Nav bar */}
       <div className="md:pl-64 flex flex-col">
         <nav className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
           <button
@@ -514,7 +537,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
             <span className="sr-only">Open sidebar</span>
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
+
           <div className="flex-1 px-4 flex justify-end">
+            <ItemSearch />
             <div className={`ml-4 flex md:ml-6 basis-52 max-w-fit`}>
               <NavLink
                 to={'/options'}
@@ -627,5 +652,138 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
         {children}
       </div>
     </>
+  )
+}
+
+const ItemSearch = () => {
+  const { wowItems } = useTypedSelector((state) => state.user)
+  const transition = useTransition()
+  const [itemName, setItemName] = useState('')
+  const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
+  const [searchError, setSearchError] = useState<string | undefined>(undefined)
+  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  const wowItemsForList = useMemo(
+    () => wowItems.map(parseItemsForDataListSelect),
+    [wowItems]
+  )
+
+  const isWoW = game === 'wow'
+
+  const dataFormItemList = isWoW ? wowItemsForList : ffxivItemsList
+
+  const handleSearchSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    if (!itemName.length) {
+      event.preventDefault()
+      return
+    }
+
+    const itemId = getItemIDByName(
+      itemName.trim(),
+      isWoW ? wowItems : undefined
+    )
+
+    if (!itemId) {
+      event.preventDefault()
+      setSearchError(`Item ${itemName} found`)
+      return
+    }
+
+    const path = isWoW ? 'wow/item-data/' : '/queries/item-data/'
+    navigate(path + itemId)
+  }
+
+  const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
+    const value = (event.target as HTMLInputElement).value
+    if (value === 'ffxiv' || value === 'wow') setGame(value)
+  }
+
+  const handleSelect = (debounced: string) => {
+    setItemName(debounced)
+    setSearchError(undefined)
+  }
+
+  const handleFormToggle = () => {
+    setIsOpen((state) => !state)
+  }
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+      console.log(inputRef.current)
+    }
+  }, [isOpen])
+
+  const isLoading = transition.state === 'loading'
+  return (
+    <div className={'md:relative'}>
+      <button
+        type="button"
+        onClick={handleFormToggle}
+        className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
+        <SearchIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
+        <p className="hidden md:block shrink-0 text-sm text-gray-500 dark:text-gray-200">
+          Item Search
+        </p>
+      </button>
+      {isOpen && (
+        <div className="absolute left-2 mt-2 px-2 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Form method="post" className="flex my-2">
+            <div
+              className="flex flex-col max-h-fit gap-1 justify-center"
+              onChange={handleFormChange}>
+              <label
+                htmlFor={`radio-ffxiv`}
+                className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
+                <input
+                  id={`radio-ffxiv`}
+                  type="radio"
+                  value={'ffxiv'}
+                  name="game-items"
+                  defaultChecked={game === 'ffxiv'}
+                  className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
+                />
+                <span>FFXIV</span>
+              </label>
+              <label
+                htmlFor={`radio-wow`}
+                className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
+                <input
+                  id={`radio-wow`}
+                  type="radio"
+                  value={'wow'}
+                  name="game-items"
+                  defaultChecked={game === 'wow'}
+                  className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
+                />
+                <span>WoW</span>
+              </label>
+            </div>
+
+            <DebouncedSelectInput
+              ref={inputRef}
+              id="nav-search"
+              selectOptions={dataFormItemList}
+              formName={ITEM_DATA_FORM_NAME}
+              onSelect={handleSelect}
+              error={searchError}
+              placeholder="Search items..."
+              containerClassNames="w-40"
+            />
+
+            <SubmitButton
+              title="Find"
+              type="button"
+              onClick={handleSearchSubmit}
+              loading={isLoading}
+            />
+          </Form>
+        </div>
+      )}
+    </div>
   )
 }

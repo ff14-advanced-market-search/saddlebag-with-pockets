@@ -26,3 +26,16 @@ export const getItemNameById = (
 
   return name[1]
 }
+
+export const getItemIDByName = (
+  name: string,
+  itemList = items
+): string | undefined => {
+  const item = itemList.find(([_, itemName]) => name === itemName)
+
+  if (!item) {
+    return
+  }
+
+  return item[0]
+}

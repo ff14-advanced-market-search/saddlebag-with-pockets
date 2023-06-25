@@ -27,7 +27,7 @@ import {
 } from '~/utils/providers/theme-provider'
 import { classNames } from '~/utils'
 import { store } from '~/redux/store'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
@@ -43,6 +43,8 @@ import {
 import { z } from 'zod'
 import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
+import WoWGetItems from './requests/WoWGetItems'
+import { setWoWItems } from './redux/reducers/userSlice'
 
 export const links = () => {
   return [
@@ -65,6 +67,7 @@ export type LoaderData = {
   world: string
   wowRealm: { name: string; id: number }
   wowRegion: WoWServerRegion
+  wowItems: Record<string, string>
 }
 
 export const loader: LoaderFunction = async ({ request, context }) => {
@@ -74,13 +77,15 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   const data_center = getDataCenter()
   const world = getWorld()
   const { server, region } = getWoWSessionData()
+  const wowItems = await (await WoWGetItems()).json()
 
   return json<LoaderData>({
     site_name: (context.SITE_NAME as string) ?? 'Saddlebag',
     data_center,
     world,
     wowRealm: server,
-    wowRegion: region
+    wowRegion: region,
+    wowItems
   })
 }
 
@@ -150,6 +155,7 @@ function App() {
   )
   const submit = useSubmit()
   const transition = useTransition()
+  const dispatch = useDispatch()
 
   /**
    * Setup theme for app
@@ -191,6 +197,16 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  /**
+   * Set WoW items into local state.
+   */
+
+  useEffect(() => {
+    if (data && data.wowItems) {
+      dispatch(setWoWItems(data.wowItems))
+    }
+  }, [data, dispatch])
 
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
