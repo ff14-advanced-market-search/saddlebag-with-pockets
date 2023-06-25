@@ -1,5 +1,5 @@
 import ARCIcon from './svg/ItemCategory_ARC.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

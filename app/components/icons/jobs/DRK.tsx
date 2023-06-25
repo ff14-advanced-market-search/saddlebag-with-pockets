@@ -1,5 +1,5 @@
 import DRKIcon from './svg/ItemCategory_DRK.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

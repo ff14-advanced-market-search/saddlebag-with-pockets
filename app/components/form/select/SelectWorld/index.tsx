@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import * as locations from '~/utils/locations'
 import type { Transition } from '@remix-run/react/dist/transition'
 import type { ValidationResult } from 'remix-validated-form'
-import type { SelectWorldInputFields } from '~/routes/options'
+import type SelectWorldInputFields from '~/routes/options'
 import type { GetDeepProp } from '~/utils/ts'
 import type { WorldsList } from '~/utils/locations/Worlds'
 import { SelectDataCenter } from '~/components/form/select/SelectWorld/SelectDataCenter'
@@ -12,7 +12,7 @@ import type { SessionData } from '@remix-run/cloudflare'
 
 type SelectWorldProps = PropsWithoutRef<{
   transition: Transition
-  actionData: ValidationResult<SelectWorldInputFields>
+  actionData: ValidationResult<typeof SelectWorldInputFields>
   sessionData: SessionData
   onChange?: (ffxiv: { world: string; data_center: string }) => void
 }>

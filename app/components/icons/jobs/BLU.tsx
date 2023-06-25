@@ -1,5 +1,5 @@
 import BLUIcon from './svg/ItemCategory_BLU.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

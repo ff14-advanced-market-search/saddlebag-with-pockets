@@ -37,11 +37,11 @@ module.exports = {
         },
         grow: {
           '0%': {
-            opactiy: 0,
+            opacity: 0,
             transform: 'scaleY(0)'
           },
           '30%': {
-            opactiy: 0,
+            opacity: 0,
             transform: 'scaleY(0)'
           },
           '70%': {

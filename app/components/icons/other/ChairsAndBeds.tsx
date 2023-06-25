@@ -1,5 +1,5 @@
 import Icon from './svg/ItemCategory_ChairsandBeds.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

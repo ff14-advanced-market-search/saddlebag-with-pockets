@@ -1,5 +1,5 @@
 import ROGIcon from './svg/ItemCategory_ROG.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

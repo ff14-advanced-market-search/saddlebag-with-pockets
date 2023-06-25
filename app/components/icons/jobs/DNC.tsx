@@ -1,5 +1,5 @@
 import DNCIcon from './svg/class_job_038.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

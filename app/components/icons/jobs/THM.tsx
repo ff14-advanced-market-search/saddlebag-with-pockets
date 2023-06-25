@@ -1,5 +1,5 @@
 import THMIcon from './svg/ItemCategory_THM.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

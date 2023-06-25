@@ -52,7 +52,7 @@ const validateInput = ({
     return { exception: 'Invalid item type selected' }
   }
 
-  return { itemId: parsedItemId, world, itemType, initialDays: 14, endDays: 0 }
+  return { itemId: parsedItemId, world, itemType, initialDays: 7, endDays: 0 }
 }
 
 export const action: ActionFunction = async ({ request }) => {

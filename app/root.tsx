@@ -51,6 +51,12 @@ export const links = () => {
     {
       rel: 'stylesheet',
       href: styles
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      href: '/images/32x32_chocobo.png'
     }
   ]
 }

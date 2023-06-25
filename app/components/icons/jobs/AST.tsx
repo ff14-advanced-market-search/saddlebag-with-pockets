@@ -1,5 +1,5 @@
 import ASTIcon from './svg/ItemCategory_AST.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

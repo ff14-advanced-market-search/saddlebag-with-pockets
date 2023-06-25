@@ -1,5 +1,5 @@
 import GLAIcon from './svg/ItemCategory_GLA.svg'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 type Props = {
   className?: string

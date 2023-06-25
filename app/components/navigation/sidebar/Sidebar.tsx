@@ -226,6 +226,12 @@ const navGroups: Array<{
     title: 'Other',
     links: [
       {
+        name: 'Alpha Build Early Access Site',
+        href: 'https://temp.saddlebagexchange.com',
+        icon: GithubIcon,
+        external: true
+      },
+      {
         name: 'Ko-fi',
         href: 'https://ko-fi.com/indopan',
         icon: KofiIcon,
@@ -240,6 +246,12 @@ const navGroups: Array<{
       {
         name: 'Github',
         href: 'https://github.com/ff14-advanced-market-search',
+        external: true,
+        icon: GithubIcon
+      },
+      {
+        name: 'Join Our Team - Help Wanted!',
+        href: 'https://drive.google.com/file/d/1R9J51hNuwMfPuLi0u1snaLvQnJiZ2jRo/view?usp=sharing',
         external: true,
         icon: GithubIcon
       }
