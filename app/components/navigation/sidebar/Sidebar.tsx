@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
-import React, { Fragment, useState, useEffect, useMemo } from 'react'
+import React, { Fragment, useState, useEffect, useMemo, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
@@ -650,6 +650,8 @@ const ItemSearch = () => {
   const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const wowItemsForList = useMemo(
     () => wowItems.map(parseItemsForDataListSelect),
@@ -693,25 +695,31 @@ const ItemSearch = () => {
     setSearchError(undefined)
   }
 
-  const isLoading = transition.state === 'loading'
+  const handleFormToggle = () => {
+    setIsOpen((state) => !state)
+  }
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+      console.log(inputRef.current)
+    }
+  }, [isOpen])
+
+  const isLoading = transition.state === 'loading'
   return (
-    <Menu as="div" className={'md:relative'}>
-      <Menu.Button className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
+    <div className={'md:relative'}>
+      <button
+        type="button"
+        onClick={handleFormToggle}
+        className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
         <SearchIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
         <p className="hidden md:block shrink-0 text-sm text-gray-500 dark:text-gray-200">
           Item Search
         </p>
-      </Menu.Button>
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95">
-        <Menu.Items className="absolute left-2 mt-2 px-2 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
+      </button>
+      {isOpen && (
+        <div className="absolute left-2 mt-2 px-2 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Form method="post" className="flex my-2">
             <div
               className="flex flex-col max-h-fit gap-1 justify-center"
@@ -745,6 +753,7 @@ const ItemSearch = () => {
             </div>
 
             <DebouncedSelectInput
+              ref={inputRef}
               id="nav-search"
               selectOptions={dataFormItemList}
               formName={ITEM_DATA_FORM_NAME}
@@ -761,8 +770,8 @@ const ItemSearch = () => {
               loading={isLoading}
             />
           </Form>
-        </Menu.Items>
-      </Transition>
-    </Menu>
+        </div>
+      )}
+    </div>
   )
 }

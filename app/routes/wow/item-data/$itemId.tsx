@@ -58,7 +58,6 @@ type ResponseType = ItemListingResponse | { exception: string }
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
-  console.log(result)
 
   const error = result && 'exception' in result ? result.exception : undefined
 
