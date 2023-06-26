@@ -12,6 +12,14 @@ const recommendedQueries = [
     external: true
   },
   {
+    name: 'Ultra Fast Mega-Alerts Sniper',
+    description:
+      'Try our standalone Mega-Alerts Sniper, designed to snipe across all realms for the best deals seconds after the Blizzard AH API updates so you get there first!',
+    Icon: DocumentSearchIcon,
+    href: 'https://github.com/ff14-advanced-market-search/mega-alerts',
+    external: true
+  },
+  {
     name: 'Dragonflight Marketshare Overview',
     description:
       'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
