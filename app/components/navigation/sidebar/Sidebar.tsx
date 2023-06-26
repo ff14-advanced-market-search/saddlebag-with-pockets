@@ -695,6 +695,7 @@ const ItemSearch = () => {
 
     const path = isWoW ? 'wow/item-data/' : '/queries/item-data/'
     navigate(path + itemId)
+    setIsOpen(false)
   }
 
   const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
@@ -714,7 +715,6 @@ const ItemSearch = () => {
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
-      console.log(inputRef.current)
     }
   }, [isOpen])
 
