@@ -4,6 +4,14 @@ import TileLink from '~/components/Common/TileLink'
 
 const recommendedQueries = [
   {
+    name: 'Alpha Build Cross Server Trade Tools',
+    description:
+      'Check out the latest and greatest Alpha versions of our server to server trade tools just in time for 10.1.5 cross realm trading!',
+    Icon: DocumentSearchIcon,
+    href: 'https://temp.saddlebagexchange.com/',
+    external: true
+  },
+  {
     name: 'Dragonflight Marketshare Overview',
     description:
       'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
