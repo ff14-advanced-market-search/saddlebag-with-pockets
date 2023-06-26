@@ -12,8 +12,8 @@ import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import { getItemIDByName } from '~/utils/items'
+import type { ItemSelected } from '~/components/Common/ItemSelect'
+import ItemSelect from '~/components/Common/ItemSelect'
 
 interface Auction {
   itemName: string
@@ -119,6 +119,24 @@ const Index = () => {
 
   const priceOrQuantity = isPrice ? 'price' : 'quantity'
 
+  const handleInputChange = (item: ItemSelected | undefined) => {
+    if (error) {
+      setError(undefined)
+    }
+
+    if (!item) {
+      setFormState(null)
+      return
+    }
+
+    setFormState({
+      itemName: item.name,
+      itemID: parseInt(item.id, 10),
+      desiredState: 'below',
+      price: 1000
+    })
+  }
+
   return (
     <PageWrapper>
       <>
@@ -181,30 +199,15 @@ const Index = () => {
               </div>
             </div>
             <div className="px-4">
-              <DebouncedSelectInput
-                id="wow-item-search"
-                title="Search for item by name"
-                tooltip="Select items to generate an alert for"
-                placeholder="Search for items..."
-                label="Items"
-                selectOptions={wowItems.map(([value, label]) => ({
-                  value,
-                  label
-                }))}
-                onSelect={(name) => {
-                  setError(undefined)
-
-                  const itemId = getItemIDByName(name, wowItems)
-
-                  if (itemId) {
-                    setFormState({
-                      itemName: name,
-                      itemID: parseInt(itemId, 10),
-                      desiredState: 'below',
-                      price: 1000
-                    })
+              <ItemSelect
+                itemList={wowItems}
+                onTextChange={() => {
+                  if (error) {
+                    setError(undefined)
                   }
                 }}
+                onSelectChange={handleInputChange}
+                tooltip="Select items to generate an alert for"
               />
             </div>
             {formState && (
