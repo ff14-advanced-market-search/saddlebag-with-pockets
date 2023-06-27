@@ -773,6 +773,7 @@ const ItemSearch = () => {
               error={searchError}
               placeholder="Search items..."
               containerClassNames="w-40"
+              useDebounce={true}
             />
 
             <SubmitButton

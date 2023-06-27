@@ -41,6 +41,8 @@ interface Props {
   placeholder?: string
   containerClassNames?: string
   label?: string
+  useDebounce?: boolean
+  debounceTimer?: number
 }
 
 const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
@@ -55,16 +57,25 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
       placeholder,
       containerClassNames,
       label,
-      id
+      id,
+      useDebounce = false,
+      debounceTimer
     },
     ref
   ) => {
     const [name, setName] = useState('')
 
     const items = getItems(name, selectOptions)
+
     const handleDebounceChange = (debouncedValue: string) => {
       setName(debouncedValue)
       onSelect?.(debouncedValue)
+    }
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
+      setName(value)
+      onSelect?.(value)
     }
 
     const className = classNames(
@@ -92,15 +103,28 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
           </>
         )}
         <div className="flex rounded-md shadow-sm border border-gray-300 dark:border-gray-400 mt-1">
-          <DebouncedInput
-            ref={ref}
-            id={id}
-            onDebouncedChange={handleDebounceChange}
-            className={inputClassname}
-            list={'items-' + id}
-            name={formName}
-            placeholder={placeholder}
-          />
+          {useDebounce ? (
+            <DebouncedInput
+              ref={ref}
+              id={id}
+              onDebouncedChange={handleDebounceChange}
+              className={inputClassname}
+              list={'items-' + id}
+              name={formName}
+              placeholder={placeholder}
+              debounceTimer={debounceTimer}
+            />
+          ) : (
+            <input
+              ref={ref}
+              id={id}
+              onChange={handleChange}
+              className={inputClassname}
+              list={'items-' + id}
+              name={formName}
+              placeholder={placeholder}
+            />
+          )}
           {label && (
             <span
               className={`inline-flex items-center justify-center text-center px-3 rounded-r-md bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700`}>
