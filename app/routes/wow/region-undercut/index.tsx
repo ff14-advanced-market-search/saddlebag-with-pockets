@@ -85,8 +85,6 @@ const RegionUndercut = () => {
   const error =
     results && 'exception' in results ? results.exception : undefined
 
-  console.log('results', results)
-
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (isLoading) {
       event.preventDefault()
