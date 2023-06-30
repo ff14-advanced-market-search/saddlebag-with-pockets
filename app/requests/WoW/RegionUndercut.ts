@@ -79,10 +79,12 @@ export interface RegionUndercutResponse {
   results_by_realm: Record<RealmName, ResultByRealm>
 }
 
-const RegionUndercut: (
-  props: RegionUndercutProps
-) => Promise<Response> = async ({ homeRealmId, region, addonData }) => {
-  return fetch(`${address}/api/wow/regionundercut`, {
+const RegionUndercutRequest = async ({
+  homeRealmId,
+  region,
+  addonData
+}: RegionUndercutProps) =>
+  await fetch(`${address}/api/wow/regionundercut`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -94,6 +96,5 @@ const RegionUndercut: (
       addonData
     })
   })
-}
 
-export default RegionUndercut
+export default RegionUndercutRequest

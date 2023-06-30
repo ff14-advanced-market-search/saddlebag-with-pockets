@@ -3,7 +3,7 @@ import type {
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useNavigation } from '@remix-run/react'
 import type { ReactNode } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
         quantity?: number
         type?: string
       }) => {
-        if (!current.id || !current.location) {
+        if (current.id === undefined || !current.location) {
           throw new Error(
             "Missing required fields 'id' or 'location' from allagan tools. Make sure those columns are enabled in your plugin!"
           )
@@ -81,7 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
 type ActionResponse = AllaganResults | { exception: string } | {}
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const results = useActionData<ActionResponse>()
   const isLoading = transition.state === 'submitting'
 
