@@ -41,6 +41,12 @@ const recommendedQueries = [
     href: '/wow/legacy-marketshare'
   },
   {
+    name: 'Region wide undercuts',
+    description: 'Search for items region wide that you have been undercut on!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/region-undercut'
+  },
+  {
     name: 'Undercut Alerts Curseforge Addon',
     description: 'The addon for our Undercut Alerts!',
     Icon: DocumentSearchIcon,
