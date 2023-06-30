@@ -5,9 +5,16 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { TextArea } from '~/components/form/TextArea'
 import { getUserSessionData } from '~/sessions'
-import type { RegionUndercutResponse } from '~/requests/WoW/RegionUndercut'
+import type {
+  RegionUndercutResponse,
+  UndercutItems
+} from '~/requests/WoW/RegionUndercut'
 import RegionUndercutRequest from '~/requests/WoW/RegionUndercut'
 import { useActionData, useNavigation } from '@remix-run/react'
+import NoResults from '~/components/Common/NoResults'
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import type { ColumnList } from '~/components/types'
+import ExternalLink from '~/components/utilities/ExternalLink'
 
 const formName = 'region-undercut'
 
@@ -79,15 +86,49 @@ const RegionUndercut = () => {
     results && 'exception' in results ? results.exception : undefined
 
   console.log('results', results)
+
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (isLoading) {
+      event.preventDefault()
+    }
+  }
+
+  if (results) {
+    if (!Object.keys(results).length) {
+      return <NoResults href="/wow/region-undercut" />
+    }
+
+    if ('not_found_list' in results) {
+      return (
+        <PageWrapper>
+          <SmallTable
+            title="Undercut Items"
+            description="Shows items that are undercut."
+            columnList={columnList}
+            data={results.undercut_list}
+            columnSelectOptions={selectOptions}
+            sortingOrder={sortingOrder}
+            mobileColumnList={mobileColumnList}
+          />
+          <SmallTable
+            title="Not Found Items"
+            description="Shows items that were sold, expired or not found."
+            columnList={columnList}
+            data={results.not_found_list}
+            columnSelectOptions={selectOptions}
+            sortingOrder={sortingOrder}
+            mobileColumnList={mobileColumnList}
+          />
+        </PageWrapper>
+      )
+    }
+  }
+
   return (
     <PageWrapper>
       <SmallFormContainer
         title="Region Undercuts"
-        onClick={(e) => {
-          if (isLoading) {
-            e.preventDefault()
-          }
-        }}
+        onClick={handleSubmit}
         loading={isLoading}
         disabled={isLoading}
         error={error}>
@@ -104,3 +145,26 @@ const RegionUndercut = () => {
 }
 
 export default RegionUndercut
+
+const columnList: Array<ColumnList<UndercutItems>> = [
+  { columnId: 'item_name', header: 'Item Name' },
+  { columnId: 'user_price', header: 'User Price' },
+  { columnId: 'lowest_price', header: 'Lowest Price' },
+  { columnId: 'realmName', header: 'Realm' },
+  {
+    columnId: 'link',
+    header: 'Undermine Link',
+    accessor: ({ getValue }) => (
+      <ExternalLink text="Undermine" link={getValue() as string} />
+    )
+  }
+]
+
+const selectOptions = ['user_price', 'lowest_price', 'realmName']
+
+const sortingOrder = [{ id: 'user_price', desc: true }]
+
+const mobileColumnList: Array<ColumnList<UndercutItems>> = [
+  { columnId: 'item_name', header: 'Item Name' },
+  { columnId: 'user_price', header: 'User Price' }
+]

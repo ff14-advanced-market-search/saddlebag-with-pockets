@@ -36,7 +36,7 @@ interface ImportSearch {
   sortBy: string
 }
 
-interface UndercutItems {
+export interface UndercutItems {
   connectedRealmId: number
   item_id: number
   item_name: string
