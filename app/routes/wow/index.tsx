@@ -20,6 +20,20 @@ const recommendedQueries = [
     external: true
   },
   {
+    name: 'Region Wide Undercut Checker',
+    description:
+      'Use our Addon with this search to check all of your undercuts on all your alts on one page!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/region-undercut'
+  },
+  {
+    name: 'Undercut Alerts Curseforge Addon',
+    description: 'The addon for our Undercut Checks and Alerts!',
+    Icon: DocumentSearchIcon,
+    href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+    external: true
+  },
+  {
     name: 'Dragonflight Marketshare Overview',
     description:
       'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
@@ -41,11 +55,10 @@ const recommendedQueries = [
     href: '/wow/legacy-marketshare'
   },
   {
-    name: 'Undercut Alerts Curseforge Addon',
-    description: 'The addon for our Undercut Alerts!',
+    name: 'Region wide undercuts',
+    description: 'Search for items region wide that you have been undercut on!',
     Icon: DocumentSearchIcon,
-    href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-    external: true
+    href: '/wow/region-undercut'
   },
   {
     name: 'Price Sniper and Price Spike Alerts',

@@ -3,14 +3,14 @@ import type {
   ErrorBoundaryComponent
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useNavigation } from '@remix-run/react'
 import type { ReactNode } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
-import { ToolTip } from '~/components/Common/InfoToolTip'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import { TextArea } from '~/components/form/TextArea'
 import type { ColumnList } from '~/components/types'
 import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
         quantity?: number
         type?: string
       }) => {
-        if (!current.id || !current.location) {
+        if (current.id === undefined || !current.location) {
           throw new Error(
             "Missing required fields 'id' or 'location' from allagan tools. Make sure those columns are enabled in your plugin!"
           )
@@ -81,7 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
 type ActionResponse = AllaganResults | { exception: string } | {}
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const results = useActionData<ActionResponse>()
   const isLoading = transition.state === 'submitting'
 
@@ -114,27 +114,11 @@ const Index = () => {
         onClick={handleSubmit}
         loading={isLoading}
         error={error}>
-        <div className="pt-2 flex-col">
-          <div className="relative flex flex-1 items-center gap-1">
-            <label
-              htmlFor={formName}
-              className="block text-sm font-medium text-gray-700 dark:text-gray-100">
-              Allagan Data
-            </label>
-            <ToolTip
-              data={'Paste the data copied from the Allagan tool here.'}
-            />
-          </div>
-          <div className="mt-1 flex rounded-md shadow-sm border border-gray-300 dark:border-gray-400">
-            <textarea
-              id={formName}
-              name={formName}
-              className="p-2 w-full border-0 rounded-md focus:ring-blue-500 focus:border-2 focus:border-blue-500 dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
-              placeholder="Paste your data here..."
-              rows={5}
-            />
-          </div>
-        </div>
+        <TextArea
+          formName={formName}
+          label="Allagan Data"
+          toolTip="Paste the data copied from the Allagan tool here."
+        />
       </SmallFormContainer>
     </PageWrapper>
   )

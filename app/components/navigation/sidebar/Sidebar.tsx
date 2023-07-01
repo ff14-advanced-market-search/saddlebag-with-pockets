@@ -200,6 +200,11 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
+        name: 'Region Wide Undercut Checker',
+        href: 'wow/region-undercut',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'Undercut Alerts Curseforge Addon',
         icon: DocumentSearchIcon,
         href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
