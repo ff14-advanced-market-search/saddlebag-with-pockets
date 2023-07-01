@@ -200,7 +200,7 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
-        name: 'Region Undercut Report',
+        name: 'Region Wide Undercut Checker',
         href: 'wow/region-undercut',
         icon: DocumentSearchIcon
       },
