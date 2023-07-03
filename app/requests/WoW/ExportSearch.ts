@@ -26,8 +26,24 @@ interface ExportItem {
   undermineLink: string
 }
 
+interface ExportItemInfo {
+  avgMinPrice: number
+  avgServerQuantity: number
+  avgTSMPrice: number
+  itemID: number
+  itemName: string
+  link: string
+  medianMinPrice: number
+  medianServerQuantity: number
+  salesPerDay: number
+  totalSelectedServerQuantity: number
+  undermineLink: string
+  warcraftPetsLink: string
+}
+
 export interface WoWExportResponse {
   data: Array<ExportItem>
+  itemInfo: ExportItemInfo
 }
 
 const WoWExportSearch = async ({
