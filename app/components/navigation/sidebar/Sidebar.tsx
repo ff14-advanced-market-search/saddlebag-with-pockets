@@ -30,18 +30,15 @@ import { LocationMarkerIcon } from '@heroicons/react/solid'
 import DiscordIcon from '~/icons/DiscordIcon'
 import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import { items } from '~/utils/items/id_to_item'
+import {
+  ffxivItemsList,
+  parseItemsForDataListSelect
+} from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
-
-const parseItemsForDataListSelect = ([value, label]: [string, string]) => ({
-  value,
-  label
-})
-const ffxivItemsList = items.map(parseItemsForDataListSelect)
 
 type Props = PropsWithChildren<any> & {
   data: LoaderData
