@@ -1,19 +1,21 @@
 import { address, UserAgent } from '~/requests/client/config'
 
-export type UploadTimersResponse = Array<UploadTimersItem>
+export interface UploadTimersResponse {
+  data: Array<UploadTimersItem>
+}
 
 export interface UploadTimersItem {
-  dataSetID: number
+  dataSetId: number
   dataSetName: Array<string>
   lastUploadMinute: number
   lastUploadTimeRaw: string
-  lastUploadUnix: number
+  lastUploadUnix: string
   region: string
   tableName: string
 }
 
-const UploadTimersRequest = async () =>
-  await fetch(`${address}/api/wow/upload-timers`, {
+const UploadTimers: () => Promise<Response> = async () => {
+  return fetch(`${address}/api/wow/upload-timers`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,5 +23,6 @@ const UploadTimersRequest = async () =>
     },
     body: JSON.stringify({})
   })
+}
 
-export default UploadTimersRequest
+export default UploadTimers

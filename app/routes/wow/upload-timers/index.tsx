@@ -1,51 +1,50 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
-import { json } from '@remix-run/cloudflare'
 import { PageWrapper } from '~/components/Common'
 import type {
   UploadTimersResponse,
   UploadTimersItem
 } from '~/requests/WoW/UploadTimers'
-import UploadTimersRequest from '~/requests/WoW/UploadTimers'
+import UploadTimers from '~/requests/WoW/UploadTimers'
 import { useLoaderData } from '@remix-run/react'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return await json(UploadTimersRequest())
+export const loader: LoaderFunction = async () => {
+  return UploadTimers()
 }
 
-type UploadTimersActionResponse =
-  | UploadTimersResponse
-  | { exception: string }
-  | {}
-  | undefined
-
-const UploadTimers = () => {
-  const results = useLoaderData<UploadTimersActionResponse>()
+const Index = () => {
+  const results = useLoaderData<
+    UploadTimersResponse | { exception: string } | {} | undefined
+  >()
 
   if (results) {
-    if (!Object.keys(results).length) {
+    if (Object.keys(results).length === 0) {
       return <NoResults href="/wow/upload-timers" />
+    }
+
+    if ('data' in results) {
+      return (
+        <PageWrapper>
+          <SmallTable
+            title="Upload Timers"
+            description="Shows when the WoW auction house data was last uploaded."
+            columnList={columnList}
+            data={results.data}
+            columnSelectOptions={selectOptions}
+            sortingOrder={sortingOrder}
+            mobileColumnList={mobileColumnList}
+          />
+        </PageWrapper>
+      )
     }
   }
 
-  return (
-    <PageWrapper>
-      <SmallTable
-        title="Upload Timers"
-        description="Shows when the WoW auction house data was last uploaded."
-        columnList={columnList}
-        data={[]}
-        columnSelectOptions={selectOptions}
-        sortingOrder={sortingOrder}
-        mobileColumnList={mobileColumnList}
-      />
-    </PageWrapper>
-  )
+  return <PageWrapper>No upload timers found.</PageWrapper>
 }
 
-export default UploadTimers
+export default Index
 
 const columnList: Array<ColumnList<UploadTimersItem>> = [
   { columnId: 'dataSetID', header: 'Data Set ID' },
@@ -57,9 +56,9 @@ const columnList: Array<ColumnList<UploadTimersItem>> = [
   { columnId: 'tableName', header: 'Table Name' }
 ]
 
-const selectOptions = ['user_price', 'lowest_price', 'realmName']
+const selectOptions = ['lastUploadMinute']
 
-const sortingOrder = [{ id: 'user_price', desc: true }]
+const sortingOrder = [{ id: 'lastUploadMinute', desc: true }]
 
 const mobileColumnList: Array<ColumnList<UploadTimersItem>> = [
   { columnId: 'dataSetName', header: 'Data Set Name' },
