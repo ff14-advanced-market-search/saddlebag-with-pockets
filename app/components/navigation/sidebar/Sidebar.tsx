@@ -447,6 +447,11 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     <PatreonLink />
                     <WikiLink />
                     <DiscordLink />
+                    <p className="text-gray-400 text-xs mt-4">
+                      FINAL FANTASY is a registered trademark of Square Enix
+                      Holdings Co., Ltd.
+                      <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
+                    </p>
                   </nav>
                 </div>
               </Dialog.Panel>
@@ -529,6 +534,11 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               <PatreonLink />
               <WikiLink />
               <DiscordLink />
+              <p className="text-gray-400 text-xs mt-4">
+                FINAL FANTASY is a registered trademark of Square Enix Holdings
+                Co., Ltd.
+                <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
+              </p>
               <div id="ezoic-pub-ad-placeholder-118" />
             </nav>
           </div>
