@@ -182,6 +182,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Item Export Search',
+        href: 'wow/export-search',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'Dragonflight Commodity Shortage Futures',
         href: 'wow/shortage-predictor',
         icon: ChartSquareBarIcon

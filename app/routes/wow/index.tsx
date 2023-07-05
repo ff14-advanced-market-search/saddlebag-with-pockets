@@ -20,6 +20,13 @@ const recommendedQueries = [
     external: true
   },
   {
+    name: 'Global Export Item Search',
+    description:
+      'Search other servers to find the best place to sell & buy items',
+    Icon: DocumentSearchIcon,
+    href: '/wow/export-search'
+  },
+  {
     name: 'Region Wide Undercut Checker',
     description:
       'Use our Addon with this search to check all of your undercuts on all your alts on one page!',

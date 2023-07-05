@@ -13,6 +13,7 @@ import z from 'zod'
 import { useActionData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import { getItemIDByName } from '~/utils/items'
+import Select from '~/components/form/select'
 
 const parseNumber = z.string().transform((value) => parseInt(value, 10))
 
@@ -38,7 +39,6 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ exception: 'Invalid Input' })
   }
 
-  console.log(JSON.stringify(validatedFormData.data, null, 2))
   return await WoWExportSearch({
     region,
     ...validatedFormData.data
@@ -63,6 +63,10 @@ const ExportSearch = () => {
     }
   }
 
+  const handleSelect = (value: string) => {
+    setItemName(value)
+  }
+
   const memoItems = useMemo(
     () => wowItems.map(parseItemsForDataListSelect),
     [wowItems]
@@ -85,9 +89,7 @@ const ExportSearch = () => {
             label="Item"
             id="export-item-select"
             selectOptions={memoItems}
-            onSelect={(itemName) => {
-              setItemName(itemName)
-            }}
+            onSelect={handleSelect}
           />
           <input hidden name="itemID" value={itemId} />
           <InputWithLabel
@@ -121,11 +123,16 @@ const ExportSearch = () => {
             type="number"
             defaultValue={90}
           />
-          <InputWithLabel
-            labelTitle="Sort By"
+          <Select
+            title="Sort Results By"
             name="sortBy"
-            type="text"
             defaultValue={'minPrice'}
+            options={[
+              { label: 'Minimum Price', value: 'minPrice' },
+              { label: 'Item Quantity', value: 'itemQuantity' },
+              { label: 'Realm Population', value: 'realmPopulationReal' },
+              { label: 'Realm Ranking', value: 'realmRanking' }
+            ]}
           />
         </div>
       </SmallFormContainer>
