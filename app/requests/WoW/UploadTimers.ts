@@ -15,7 +15,7 @@ export interface UploadTimersItem {
 }
 
 const UploadTimers: () => Promise<Response> = async () => {
-  return fetch(`${address}/api/wow/upload-timers`, {
+  return fetch(`${address}/api/wow/uploadtimers`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

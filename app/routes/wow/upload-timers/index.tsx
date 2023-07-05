@@ -41,7 +41,7 @@ const Index = () => {
     }
   }
 
-  return <PageWrapper>No upload timers found.</PageWrapper>
+  return <NoResults href="/wow/upload-timers" />
 }
 
 export default Index
