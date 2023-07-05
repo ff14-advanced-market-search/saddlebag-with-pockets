@@ -5,7 +5,7 @@ import { PageWrapper } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import type { WoWExportResponse } from '~/requests/WoW/ExportSearch'
+import type { ExportItem, WoWExportResponse } from '~/requests/WoW/ExportSearch'
 import WoWExportSearch from '~/requests/WoW/ExportSearch'
 import { getUserSessionData } from '~/sessions'
 import { parseItemsForDataListSelect } from '~/utils/items/id_to_item'
@@ -14,6 +14,10 @@ import { useActionData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import { getItemIDByName } from '~/utils/items'
 import Select from '~/components/form/select'
+import NoResults from '~/components/Common/NoResults'
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import type { ColumnList } from '~/components/types'
+import ExternalLink from '~/components/utilities/ExternalLink'
 
 const parseNumber = z.string().transform((value) => parseInt(value, 10))
 
@@ -39,32 +43,35 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ exception: 'Invalid Input' })
   }
 
-  return await WoWExportSearch({
+  const result = await WoWExportSearch({
     region,
     ...validatedFormData.data
   })
+
+  return json({
+    ...(await result.json()),
+    sortby: validatedFormData.data.sortBy
+  })
 }
 
-type ActionResponseType = {} | { exception: string } | WoWExportResponse
+type ActionResponseType =
+  | {}
+  | { exception: string }
+  | (WoWExportResponse & { sortby: string })
 
 const ExportSearch = () => {
   const result = useActionData<ActionResponseType>()
   const transistion = useNavigation()
   const { wowItems } = useTypedSelector((state) => state.user)
-  const [itemName, setItemName] = useState<string>('')
+  const [itemName, setItemName] = useState<{ name: string; error: string }>({
+    name: '',
+    error: ''
+  })
 
   const isSubmitting = transistion.state === 'submitting'
 
-  const handleSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    if (isSubmitting) {
-      event.preventDefault()
-    }
-  }
-
   const handleSelect = (value: string) => {
-    setItemName(value)
+    setItemName({ error: '', name: value })
   }
 
   const memoItems = useMemo(
@@ -72,16 +79,36 @@ const ExportSearch = () => {
     [wowItems]
   )
 
-  const itemId = getItemIDByName(itemName.trim(), wowItems)
+  const itemId = getItemIDByName(itemName.name.trim(), wowItems)
   const error = result && 'exception' in result ? result.exception : undefined
+
+  if (result && !Object.keys(result).length) {
+    return <NoResults href="/wow/export-search" />
+  }
+
   console.log(result)
+
+  if (result && 'data' in result && !error) {
+    return <Results {...result} />
+  }
+
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    if (isSubmitting) {
+      event.preventDefault()
+    }
+    if (!itemId) {
+      setItemName({ ...itemName, error: 'Invalid item selected' })
+    }
+  }
 
   return (
     <PageWrapper>
       <SmallFormContainer
         title="Export Search"
         onClick={handleSubmit}
-        error={error}
+        error={error || itemName.error}
         loading={isSubmitting}>
         <div className="pt-3 flex flex-col">
           <DebouncedSelectInput
@@ -97,6 +124,7 @@ const ExportSearch = () => {
             name="maxQuantity"
             type="number"
             defaultValue={1000}
+            min={0}
           />
 
           <InputWithLabel
@@ -104,24 +132,28 @@ const ExportSearch = () => {
             name="minPrice"
             type="number"
             defaultValue={1000}
+            min={0}
           />
           <InputWithLabel
             labelTitle="Population"
             name="populationWP"
             type="number"
             defaultValue={1}
+            min={1}
           />
           <InputWithLabel
             labelTitle="Population Blizzard"
             name="populationBlizz"
             type="number"
             defaultValue={1}
+            min={1}
           />
           <InputWithLabel
             labelTitle="Ranking"
             name="rankingWP"
             type="number"
             defaultValue={90}
+            min={1}
           />
           <Select
             title="Sort Results By"
@@ -141,3 +173,60 @@ const ExportSearch = () => {
 }
 
 export default ExportSearch
+
+const Results = ({ data, sortby }: WoWExportResponse & { sortby: string }) => {
+  return (
+    <PageWrapper>
+      <SmallTable
+        title="Export Results"
+        description="Results for your item in different worlds"
+        sortingOrder={[{ desc: true, id: sortby }]}
+        columnList={columnList}
+        mobileColumnList={mobileColumnList}
+        columnSelectOptions={[
+          'minPrice',
+          'itemQuantity',
+          'realmPopulationReal',
+          'realmRanking'
+        ]}
+        data={data}
+      />
+    </PageWrapper>
+  )
+}
+
+const columnList: Array<ColumnList<ExportItem>> = [
+  {
+    columnId: 'connectedRealmNames',
+    header: 'Realm Names',
+    accessor: ({ row }) => (
+      <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
+        {row.connectedRealmNames.join(', ')}
+      </p>
+    )
+  },
+  { columnId: 'minPrice', header: 'Minimum Price' },
+  { columnId: 'itemQuantity', header: 'Item Quantity' },
+  { columnId: 'realmPopulationReal', header: 'Realm Population' },
+  { columnId: 'realmPopulationInt', header: 'Realm Pop Int' },
+  { columnId: 'realmRanking', header: 'Realm Ranking' },
+  {
+    columnId: 'undermineLink',
+    header: 'Undermine Link',
+    accessor: ({ getValue }) => (
+      <ExternalLink text="Undermine" link={getValue() as string} />
+    )
+  }
+]
+const mobileColumnList: Array<ColumnList<ExportItem>> = [
+  {
+    columnId: 'connectedRealmNames',
+    header: 'Realm Names',
+    accessor: ({ row }) => (
+      <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
+        {row.connectedRealmNames.join(', ')}
+      </p>
+    )
+  },
+  { columnId: 'minPrice', header: 'Minimum Price' }
+]

@@ -13,7 +13,8 @@ interface WoWExportSearchProps {
   connectedRealmIDs: Record<string, string>
 }
 
-interface ExportItem {
+export interface ExportItem {
+  [key: string]: any
   connectedRealmID: number
   connectedRealmNames: Array<string>
   itemQuantity: number
