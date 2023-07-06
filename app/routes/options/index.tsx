@@ -177,7 +177,7 @@ export default function Options() {
   return (
     <PageWrapper>
       <Form
-        method="post"
+        method="POST"
         onSubmit={(e) => {
           if (transition.state === 'submitting') {
             e.preventDefault()
