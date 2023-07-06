@@ -9,6 +9,7 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   future: {
-    v2_normalizeFormMethod: true
+    v2_normalizeFormMethod: true,
+    v2_routeConvention: true
   }
 }
