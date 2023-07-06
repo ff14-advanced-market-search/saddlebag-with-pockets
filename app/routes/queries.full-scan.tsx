@@ -15,8 +15,8 @@ import Results from '~/components/FFXIVResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import { PreviousResultsLink } from '../../../components/FFXIVResults/FullScan/PreviousResultsLink'
-import FullScanForm from '../../../components/form/ffxiv/FullScanForm'
+import { PreviousResultsLink } from '../components/FFXIVResults/FullScan/PreviousResultsLink'
+import FullScanForm from '../components/form/ffxiv/FullScanForm'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()

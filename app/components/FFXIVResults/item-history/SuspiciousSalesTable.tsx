@@ -14,12 +14,12 @@ import {
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { Listing, ListingResponseType } from '~/requests/GetListing'
+import type { DirtySale } from '~/requests/GetHistory'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
-import DateCell from '../../../components/FFXIVResults/FullScan/DateCell'
+import DateCell from '~/components/FFXIVResults/FullScan/DateCell'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -38,41 +38,41 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-const ListingTable = ({ data }: { data: ListingResponseType }) => {
+const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder] = useState<ColumnOrderState>([])
 
-  const columnHelper = createColumnHelper<Listing>()
+  const columnHelper = createColumnHelper<DirtySale>()
   const columns = [
     columnHelper.accessor('pricePerUnit', {
-      header: 'Price Per Unit',
-      cell: (info) => info.getValue().toLocaleString()
+      header: 'Price per unit',
+      cell: (info) => info.getValue().toLocaleString().toLocaleString()
+    }),
+    columnHelper.accessor('server', {
+      header: 'World',
+      cell: (info) => info.getValue()
     }),
     columnHelper.accessor('hq', {
       header: 'Quality',
-      cell: (info) => (info.getValue() ? 'High' : null)
-    }),
-    columnHelper.accessor('quantity', {
-      header: 'Quantity',
-      cell: (info) => info.getValue().toLocaleString()
-    }),
-    columnHelper.accessor('total', {
-      header: 'Total',
-      cell: (info) => info.getValue().toLocaleString()
-    }),
-    columnHelper.accessor('retainerName', {
-      header: 'Retainer Name',
       cell: (info) => info.getValue()
     }),
-    columnHelper.accessor('unix_timestamp', {
-      header: 'Last Review Time',
+    columnHelper.accessor('onMannequin', {
+      header: 'Retailer',
+      cell: (info) => (info.getValue() ? 'Mannequin' : 'Retainer')
+    }),
+    columnHelper.accessor('buyerName', {
+      header: 'Buyer Name',
+      cell: (info) => info.getValue()
+    }),
+    columnHelper.accessor('timestamp', {
+      header: 'Time',
       cell: (info) => <DateCell date={info.getValue() * 1000} fixRight={true} />
     })
   ]
 
   const table = useReactTable({
-    data: data.listings,
+    data: data,
     columns,
     filterFns: {
       fuzzy: fuzzyFilter
@@ -106,11 +106,12 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
   }, [table])
 
   return (
-    <div className={`mt-0 flex flex-col`}>
-      <div className="overflow-x-auto">
+    <div
+      className={`mt-0 flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md`}>
+      <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table className="min-w-full divide-y relative divide-gray-300">
+          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
+            <table className="min-w-full relative divide-y divide-gray-300 dark:bg-gray-600 dark:divide-gray-600">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -120,7 +121,7 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                         onClick={header.column.getToggleSortingHandler()}
                         className={classNames(
                           header.column.getCanSort() ? 'cursor-pointer' : '',
-                          `whitespace-nowrap px-3 sticky top-0 bg-gray-50 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600 z-50`
+                          `whitespace-nowrap sticky top-0 px-3 py-3.5 text-center text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600`
                         )}
                         key={header.id}>
                         <div className={`group inline-flex`}>
@@ -140,13 +141,13 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                             {{
                               asc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronUpIcon className={`h-4 w-4`} />
                                 </span>
                               ),
                               desc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronDownIcon className={`h-4 w-4`} />
                                 </span>
                               )
@@ -184,7 +185,7 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
           <div>
             <p
               className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
-              {`${data.listings.length} results found`}
+              {`${data.length} results found`}
             </p>
           </div>
         </div>
@@ -193,4 +194,4 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
   )
 }
 
-export default ListingTable
+export default SuspiciousSaleTable

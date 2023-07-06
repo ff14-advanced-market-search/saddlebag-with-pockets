@@ -8,10 +8,10 @@ import type {
   GetListingProps,
   ListingResponseType
 } from '~/requests/GetListing'
-import Results from '~/routes/queries/listings/Results'
+import Results from '~/components/FFXIVResults/listings/Results'
 import { getUserSessionData } from '~/sessions'
-import type { ItemSelected } from '../../../components/form/select/ItemSelect'
-import ItemSelect from '../../../components/form/select/ItemSelect'
+import type { ItemSelected } from '~/components/form/select/ItemSelect'
+import ItemSelect from '~/components/form/select/ItemSelect'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { PageWrapper, Title } from '~/components/Common'
