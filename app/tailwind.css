@@ -1241,6 +1241,10 @@ select {
   max-width: 140px;
 }
 
+.max-w-\[200px\] {
+  max-width: 200px;
+}
+
 .max-w-fit {
   max-width: -moz-fit-content;
   max-width: fit-content;
@@ -1256,10 +1260,6 @@ select {
 
 .max-w-xs {
   max-width: 20rem;
-}
-
-.max-w-\[200px\] {
-  max-width: 200px;
 }
 
 .flex-1 {

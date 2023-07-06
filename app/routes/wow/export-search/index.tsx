@@ -1,7 +1,7 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useMemo, useState } from 'react'
-import { PageWrapper } from '~/components/Common'
+import { useEffect, useMemo, useState } from 'react'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { useTypedSelector } from '~/redux/useTypedSelector'
@@ -18,6 +18,8 @@ import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
+import { Differences } from '~/routes/queries/listings/Differences'
+import ItemDataLink from '~/components/utilities/ItemDataLink'
 
 const parseNumber = z.string().transform((value) => parseInt(value, 10))
 
@@ -174,9 +176,44 @@ const ExportSearch = () => {
 
 export default ExportSearch
 
-const Results = ({ data, sortby }: WoWExportResponse & { sortby: string }) => {
+const Results = ({
+  data,
+  sortby,
+  itemInfo
+}: WoWExportResponse & { sortby: string }) => {
+  useEffect(() => {
+    if (window && document) {
+      window.scroll({ top: 0, behavior: 'smooth' })
+    }
+  }, [])
   return (
     <PageWrapper>
+      <ContentContainer>
+        <div>
+          <div className="flex flex-col md:flex-row items-center gap-2">
+            <Title title={itemInfo.itemName} />
+            <ItemDataLink link={itemInfo.link} />
+          </div>
+          <div className="flex flex-col md:flex-row">
+            <Differences
+              diffTitle="Average Min Price"
+              diffAmount={itemInfo.avgMinPrice}
+            />
+            <Differences
+              diffTitle="Average Server Quantity"
+              diffAmount={itemInfo.avgServerQuantity}
+            />
+            <Differences
+              diffTitle="Sales per Day"
+              diffAmount={itemInfo.salesPerDay}
+            />
+            <Differences
+              diffTitle="Avg TSM Price"
+              diffAmount={itemInfo.avgTSMPrice}
+            />
+          </div>
+        </div>
+      </ContentContainer>
       <SmallTable
         title="Export Results"
         description="Results for your item in different worlds"
