@@ -34,6 +34,13 @@ const recommendedQueries = [
     external: true
   },
   {
+    name: 'Global Export Item Search',
+    description:
+      'Search other servers to find the best place to sell & buy items',
+    Icon: DocumentSearchIcon,
+    href: '/wow/export-search'
+  },
+  {
     name: 'Dragonflight Marketshare Overview',
     description:
       'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
