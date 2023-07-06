@@ -138,7 +138,7 @@ const ExportSearch = () => {
             labelTitle="Population"
             name="populationWP"
             type="number"
-            defaultValue={1}
+            defaultValue={3000}
             min={1}
           />
           <InputWithLabel
