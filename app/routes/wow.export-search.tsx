@@ -18,7 +18,7 @@ import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
-import { Differences } from '~/routes/queries/listings/Differences'
+import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 
 const parseNumber = z.string().transform((value) => parseInt(value, 10))

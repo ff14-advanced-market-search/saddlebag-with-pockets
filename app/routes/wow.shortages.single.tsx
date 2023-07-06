@@ -5,8 +5,11 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WowShortageResult } from '~/requests/WoWCommodities'
 import NoResults from '~/components/Common/NoResults'
-import { validateShortageData, WoWShortageFormFields } from '../commodities'
-import ShortageResults from '../ShortageResults'
+import {
+  validateShortageData,
+  WoWShortageFormFields
+} from './wow.shortages.commodities'
+import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoWSingleItemShortage'

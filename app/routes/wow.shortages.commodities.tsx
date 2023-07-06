@@ -13,9 +13,9 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
   ItemClassSelect,
   ItemQualitySelect
-} from '../../../../components/form/WoW/WoWScanForm'
+} from '~/components/form/WoW/WoWScanForm'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import ShortageResults from '../ShortageResults'
+import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import { useState } from 'react'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
