@@ -88,8 +88,6 @@ const ExportSearch = () => {
     return <NoResults href="/wow/export-search" />
   }
 
-  console.log(result)
-
   if (result && 'data' in result && !error) {
     return <Results {...result} />
   }
