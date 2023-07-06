@@ -2988,6 +2988,10 @@ select {
     min-width: 480px;
   }
 
+  .md\:min-w-\[50\%\] {
+    min-width: 50%;
+  }
+
   .md\:max-w-md {
     max-width: 28rem;
   }

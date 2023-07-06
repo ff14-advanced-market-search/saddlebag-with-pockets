@@ -176,6 +176,9 @@ const ExportSearch = () => {
 
 export default ExportSearch
 
+const differencesBlue =
+  'bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
+
 const Results = ({
   data,
   sortby,
@@ -189,28 +192,36 @@ const Results = ({
   return (
     <PageWrapper>
       <ContentContainer>
-        <div>
+        <div className="flex flex-col min-w-full">
           <div className="flex flex-col md:flex-row items-center gap-2">
             <Title title={itemInfo.itemName} />
             <ItemDataLink link={itemInfo.link} />
           </div>
-          <div className="flex flex-col md:flex-row">
-            <Differences
-              diffTitle="Average Min Price"
-              diffAmount={itemInfo.avgMinPrice}
-            />
-            <Differences
-              diffTitle="Average Server Quantity"
-              diffAmount={itemInfo.avgServerQuantity}
-            />
-            <Differences
-              diffTitle="Sales per Day"
-              diffAmount={itemInfo.salesPerDay}
-            />
-            <Differences
-              diffTitle="Avg TSM Price"
-              diffAmount={itemInfo.avgTSMPrice}
-            />
+          <div className="flex flex-col md:flex-row w-full">
+            <div className="flex  flex-col md:min-w-[50%] justify-center">
+              <Differences
+                className={differencesBlue}
+                diffTitle="Average Min Price"
+                diffAmount={itemInfo.avgMinPrice}
+              />
+              <Differences
+                className={differencesBlue}
+                diffTitle="Avg TSM Price"
+                diffAmount={itemInfo.avgTSMPrice}
+              />
+            </div>
+            <div className="flex flex-col md:min-w-[50%] justify-center">
+              <Differences
+                className={differencesBlue}
+                diffTitle="Sales per Day"
+                diffAmount={itemInfo.salesPerDay}
+              />
+              <Differences
+                className={differencesBlue}
+                diffTitle="Average Server Quantity"
+                diffAmount={itemInfo.avgServerQuantity}
+              />
+            </div>
           </div>
         </div>
       </ContentContainer>
