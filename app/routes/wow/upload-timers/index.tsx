@@ -48,19 +48,23 @@ export default Index
 
 const columnList: Array<ColumnList<UploadTimersItem>> = [
   { columnId: 'dataSetID', header: 'Data Set ID' },
-  { columnId: 'dataSetName', header: 'Data Set Name' },
   { columnId: 'lastUploadMinute', header: 'Last Upload Minute' },
   { columnId: 'lastUploadTimeRaw', header: 'Last Upload Time Raw' },
-  { columnId: 'lastUploadUnix', header: 'Last Upload Unix' },
   { columnId: 'region', header: 'Region' },
-  { columnId: 'tableName', header: 'Table Name' }
+  {
+    columnId: 'dataSetName',
+    header: 'Data Set Name',
+    accessor: ({ row }) => (
+      <p className="text-start">{row.dataSetName.join(', ')}</p>
+    )
+  }
 ]
 
-const selectOptions = ['lastUploadMinute']
+const selectOptions = ['dataSetID', 'lastUploadMinute', 'region', 'dataSetName']
 
-const sortingOrder = [{ id: 'lastUploadMinute', desc: true }]
+const sortingOrder = [{ id: 'dataSetID', desc: true }]
 
 const mobileColumnList: Array<ColumnList<UploadTimersItem>> = [
-  { columnId: 'dataSetName', header: 'Data Set Name' },
-  { columnId: 'lastUploadMinute', header: 'Last Upload Minute' }
+  { columnId: 'lastUploadMinute', header: 'Last Upload Minute' },
+  { columnId: 'dataSetName', header: 'Data Set Name' }
 ]
