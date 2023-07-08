@@ -88,6 +88,13 @@ const recommendedQueries = [
       'Search for items that can be bought cheaply on a your home server and sold for a profit when transfering realms.',
     Icon: DocumentSearchIcon,
     href: '/wow/full-scan'
+  },
+  {
+    name: 'Upload Timers',
+    description:
+      'View the time each hour when the Blizzard API AH data updates.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/upload-timers'
   }
 ]
 
