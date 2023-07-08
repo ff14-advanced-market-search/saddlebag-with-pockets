@@ -4,6 +4,7 @@ import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
   ChartSquareBarIcon,
+  ClockIcon,
   CogIcon,
   MenuAlt2Icon,
   XIcon,
@@ -226,6 +227,11 @@ const navGroups: Array<{
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
         icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Upload Timers',
+        href: '/wow/upload-timers',
+        icon: ClockIcon
       }
     ]
   },

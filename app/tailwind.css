@@ -1174,6 +1174,10 @@ select {
   width: 2rem;
 }
 
+.w-\[200px\] {
+  width: 200px;
+}
+
 .w-\[26px\] {
   width: 26px;
 }
@@ -1954,6 +1958,10 @@ select {
 
 .text-center {
   text-align: center;
+}
+
+.text-start {
+  text-align: start;
 }
 
 .align-middle {
