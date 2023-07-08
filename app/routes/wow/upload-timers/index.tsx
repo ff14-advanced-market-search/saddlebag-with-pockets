@@ -55,16 +55,17 @@ const columnList: Array<ColumnList<UploadTimersItem>> = [
     columnId: 'dataSetName',
     header: 'Data Set Name',
     accessor: ({ row }) => (
-      <p className="text-start">{row.dataSetName.join(', ')}</p>
+      <p className="py-2 px-3 w-[200px] overflow-x-scroll">
+        {row.dataSetName.join(', ')}
+      </p>
     )
   }
 ]
 
 const selectOptions = ['dataSetID', 'lastUploadMinute', 'region', 'dataSetName']
 
-const sortingOrder = [{ id: 'dataSetID', desc: true }]
+const sortingOrder = [{ id: 'dataSetName', desc: true }]
 
 const mobileColumnList: Array<ColumnList<UploadTimersItem>> = [
-  { columnId: 'lastUploadMinute', header: 'Last Upload Minute' },
   { columnId: 'dataSetName', header: 'Data Set Name' }
 ]
