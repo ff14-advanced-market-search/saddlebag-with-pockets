@@ -91,7 +91,7 @@ const recommendedQueries = [
   },
   {
     name: 'Upload Timers',
-    description: 'lorem ipsum',
+    description: 'View the time each hour when the Blizzard API AH data updates.',
     Icon: DocumentSearchIcon,
     href: '/wow/upload-timers'
   }
