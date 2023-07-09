@@ -755,7 +755,7 @@ const ItemSearch = () => {
       </button>
       {isOpen && (
         <div className="absolute left-2 mt-2 px-2 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <Form method="post" className="flex my-2">
+          <Form method="POST" className="flex my-2">
             <div
               className="flex flex-col max-h-fit gap-1 justify-center"
               onChange={handleFormChange}>
