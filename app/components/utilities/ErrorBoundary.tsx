@@ -1,7 +1,8 @@
 import { ExclamationCircleIcon } from '@heroicons/react/outline'
-import type { ErrorBoundaryComponent } from '@remix-run/cloudflare'
+import { useRouteError } from '@remix-run/react'
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
+export default function ErrorBoundary() {
+  const error = useRouteError()
   console.error('errorBoundary', error)
   return (
     <div className="rounded-md bg-red-50 p-4 m-4 border-2 border-red-100 dark:bg-red-900 dark:border-red-900">

@@ -1,7 +1,4 @@
-import type {
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import {
@@ -19,12 +16,10 @@ import { getItemNameById } from '~/utils/items'
 import HistoryResults from '~/components/FFXIVResults/item-history/Results'
 import NoResults from '~/components/Common/NoResults'
 import ListingResults from '~/components/FFXIVResults/listings/Results'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
+export const ErrorBoundary = () => <ErrorBounds />
 
 type ItemPageData =
   | {

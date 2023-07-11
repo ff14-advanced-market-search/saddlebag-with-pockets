@@ -1,8 +1,5 @@
 import { useActionData, useTransition } from '@remix-run/react'
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent
-} from '@remix-run/cloudflare'
+import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import GetHistoryRequest from '~/requests/GetHistory'
 import type { GetHistoryProps, GetHistoryResponse } from '~/requests/GetHistory'
@@ -18,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
 const validateInput = ({
   itemId,
@@ -87,16 +85,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  console.error('errorBoundary', error)
-  return (
-    <pre>
-      If you're seeing this, it'd be appreciated if you could report in our
-      Discord's <span className={`font-bold`}>#bug-reporting</span> channel.
-      Much thank
-    </pre>
-  )
-}
+export const ErrorBoundary = () => <ErrorBounds />
 
 const parseServerError = (error: string) => {
   if (error.includes('Error sending result:')) {

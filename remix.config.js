@@ -10,6 +10,7 @@ module.exports = {
   // publicPath: "/build/",
   future: {
     v2_normalizeFormMethod: true,
-    v2_routeConvention: true
+    v2_routeConvention: true,
+    v2_errorBoundary: true
   }
 }

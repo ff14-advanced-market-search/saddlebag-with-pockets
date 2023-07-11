@@ -1,9 +1,5 @@
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
 import { PageWrapper } from '~/components/Common'
@@ -20,6 +16,7 @@ import { useState } from 'react'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
 export const validateShortageData = (
   formData: FormData
@@ -154,16 +151,7 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  console.error('errorBoundary', error)
-  return (
-    <pre>
-      If you're seeing this, it'd be appreciated if you could report in our
-      Discord's <span className={`font-bold`}>#bug-reporting</span> channel.
-      Much thank
-    </pre>
-  )
-}
+export const ErrorBoundary = () => <ErrorBounds />
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

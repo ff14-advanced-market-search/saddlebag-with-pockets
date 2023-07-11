@@ -1,8 +1,4 @@
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { PageWrapper, Title } from '~/components/Common'
@@ -15,7 +11,7 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SelectWorld } from '~/components/form/select/SelectWorld/SelectWorld'
 import type { ColumnList } from '~/components/types'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
@@ -23,9 +19,7 @@ import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions'
 import WorldsMap from '~/utils/locations/Worlds'
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
+export const ErrorBoundary = () => <ErrorBounds />
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)

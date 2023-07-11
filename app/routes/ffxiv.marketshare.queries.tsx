@@ -1,12 +1,9 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
-import type { ErrorBoundaryComponent } from '@remix-run/cloudflare'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
+export const ErrorBoundary = () => <ErrorBounds />
 
 const searchParams = {
   marketView:
