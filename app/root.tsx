@@ -45,12 +45,22 @@ import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
 import WoWGetItems from './requests/WoWGetItems'
 import { setWoWItems } from './redux/reducers/userSlice'
-// import ErrorBounds from './components/utilities/ErrorBoundary'
+import ErrorBounds from './components/utilities/ErrorBoundary'
 
-// export const ErrorBoundary = () => {
-//   console.log('Hit Root')
-//   return <ErrorBounds />
-// }
+export const ErrorBoundary = () => {
+  return (
+    <html>
+      <head>
+        <Links />
+      </head>
+      <body>
+        <main>
+          <ErrorBounds />
+        </main>
+      </body>
+    </html>
+  )
+}
 
 export const links = () => {
   return [
