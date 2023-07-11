@@ -16,10 +16,7 @@ import { getItemNameById } from '~/utils/items'
 import HistoryResults from '~/components/FFXIVResults/item-history/Results'
 import NoResults from '~/components/Common/NoResults'
 import ListingResults from '~/components/FFXIVResults/listings/Results'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 type ItemPageData =
   | {

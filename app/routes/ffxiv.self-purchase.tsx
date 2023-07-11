@@ -11,15 +11,12 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SelectWorld } from '~/components/form/select/SelectWorld/SelectWorld'
 import type { ColumnList } from '~/components/types'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
 import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions'
 import WorldsMap from '~/utils/locations/Worlds'
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)

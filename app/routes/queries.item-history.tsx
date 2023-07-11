@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux'
 import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
 const validateInput = ({
   itemId,
@@ -84,8 +83,6 @@ export const action: ActionFunction = async ({ request }) => {
     return { exception: err }
   }
 }
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 const parseServerError = (error: string) => {
   if (error.includes('Error sending result:')) {

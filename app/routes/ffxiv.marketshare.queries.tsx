@@ -1,9 +1,6 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 const searchParams = {
   marketView:

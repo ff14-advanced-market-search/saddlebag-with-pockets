@@ -3,8 +3,6 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
-
 import { useEffect } from 'react'
 import NoResults from '~/components/Common/NoResults'
 import Results from '~/components/FFXIVResults/FullScan/Results'
@@ -29,8 +27,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     return err
   })
 }
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)

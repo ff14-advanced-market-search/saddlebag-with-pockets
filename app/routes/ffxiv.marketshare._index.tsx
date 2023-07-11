@@ -5,7 +5,6 @@ import { PageWrapper } from '~/components/Common'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
 import MarketShare from '~/requests/FFXIV/marketshare'
@@ -23,8 +22,6 @@ type MarketshareActionResult =
   | {}
   | { exception: string }
   | { data: MarketshareResult; server: string; sortBy: MarketshareSortBy }
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 const inputMap: Record<string, string> = {
   server: 'Home Realm',

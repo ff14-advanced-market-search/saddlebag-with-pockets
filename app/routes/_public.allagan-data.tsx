@@ -9,7 +9,6 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { TextArea } from '~/components/form/TextArea'
 import type { ColumnList } from '~/components/types'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
@@ -122,8 +121,6 @@ const Index = () => {
 }
 
 export default Index
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 const CheckValue = ({ row }: { row: InBagsReport }) => {
   const value = row.value

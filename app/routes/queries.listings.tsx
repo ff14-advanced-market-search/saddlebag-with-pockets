@@ -17,7 +17,6 @@ import { setListings } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
 const validateInput = ({
   itemId,
@@ -78,8 +77,6 @@ export const action: ActionFunction = async ({ request }) => {
     return err
   }
 }
-
-export const ErrorBoundary = () => <ErrorBounds />
 
 const Index = () => {
   const transition = useTransition()
