@@ -100,7 +100,7 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
     table.setSorting([
       {
         id: 'pricePerUnit',
-        desc: true
+        desc: false
       }
     ])
   }, [table])
