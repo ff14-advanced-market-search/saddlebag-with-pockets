@@ -12,7 +12,8 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
   PencilAltIcon,
-  SearchIcon
+  SearchIcon,
+  ExclamationCircleIcon
 } from '@heroicons/react/outline'
 import {
   Form,
@@ -232,6 +233,11 @@ const navGroups: Array<{
         name: 'Upload Timers',
         href: '/wow/upload-timers',
         icon: ClockIcon
+      },
+      {
+        name: 'Best Deals',
+        href: '/wow/best-deals',
+        icon: ExclamationCircleIcon
       }
     ]
   },

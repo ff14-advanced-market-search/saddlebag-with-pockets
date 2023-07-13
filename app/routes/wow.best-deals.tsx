@@ -20,31 +20,37 @@ const validateInput = z.object({
   type: z.string(),
   discount: parseNumber,
   minPrice: parseNumber,
-  salesPerDay: parseNumber
+  salesPerDay: z.string().transform((value) => parseFloat(value))
 })
 
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
-  console.log(session)
 
   const region = session.getWoWSessionData().region
-  console.log(region)
 
   const formData = Object.fromEntries(await request.formData())
-  console.log(formData)
 
   const validatedFormData = validateInput.safeParse(formData)
   if (!validatedFormData.success) {
     return json({ exception: 'Invalid Input' })
   }
 
+  console.log({
+    region,
+    ...validatedFormData.data
+  });
+
   const result = await WoWBestDeals({
     region,
     ...validatedFormData.data
   })
-  console.log(result)
 
-  return json({ ...(await result.json()) })
+  // await the result and then return the json
+
+  return json({
+    ...(await result.json()),
+    sortby: 'discount'
+  })
 }
 
 type ActionResponseType =
@@ -80,6 +86,7 @@ const BestDeals = () => {
     <PageWrapper>
       <SmallFormContainer
         title="Best Deals"
+        description="Find the best deals on your server and region wide with our Best Deals search!"
         onClick={handleSubmit}
         error={error}
         loading={isSubmitting}>
@@ -113,7 +120,8 @@ const BestDeals = () => {
             labelTitle="Sales Per Day"
             name="salesPerDay"
             type="number"
-            defaultValue={1}
+            defaultValue={1.1}
+            step={0.1}
             min={0}
           />
         </div>
@@ -134,15 +142,14 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
     <PageWrapper>
       <SmallTable
         title="Best Deals"
-        description="LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA."
         sortingOrder={[{ desc: true, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
         columnSelectOptions={[
+          'discount',
+          'salesPerDay',
           'minPrice',
-          'itemQuantity',
-          'realmPopulationReal',
-          'realmRanking'
+          'historicPrice',
         ]}
         data={data}
       />
@@ -151,16 +158,15 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
 }
 
 const columnList: Array<ColumnList<DealItem>> = [
-  { columnId: 'connectedRealmID', header: 'Realm ID' },
   { columnId: 'discount', header: 'Discount' },
-  { columnId: 'historicPrice', header: 'Historic Price' },
-  { columnId: 'itemID', header: 'Item ID' },
-  { columnId: 'itemName', header: 'Item Name' },
-  { columnId: 'link', header: 'Item Link' },
+  { columnId: 'salesPerDay', header: 'Sales Per Day' },
   { columnId: 'minPrice', header: 'Minimum Price' },
+  { columnId: 'historicPrice', header: 'Historic Price' },
+  { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'realmName', header: 'Realm Name' },
-  { columnId: 'salesPerDay', header: 'Sales Per Day' }
+  { columnId: 'link', header: 'Item Link' },
 ]
+
 const mobileColumnList: Array<ColumnList<DealItem>> = [
   { columnId: 'discount', header: 'Discount' },
   { columnId: 'itemName', header: 'Item Name' }

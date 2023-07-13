@@ -5,12 +5,12 @@ interface WoWBestDealsProps {
   type: string
   region: WoWServerRegion
   discount: number
-  minPrice: number
   salesPerDay: number
+  minPrice: number
 }
 
 export interface DealItem {
-  connectedRealmID: number
+  connectedRealmId: number
   discount: number
   historicPrice: number
   itemID: number
@@ -29,22 +29,26 @@ const WoWBestDeals = async ({
   type,
   region,
   discount,
-  minPrice,
-  salesPerDay
-}: WoWBestDealsProps) =>
-  fetch(`${address}/api/wow/bestdeals`, {
+  salesPerDay,
+  minPrice
+}: WoWBestDealsProps) => {
+  const floatingSalesPerDay = salesPerDay.toFixed(1)
+  console.log('floatingSalesPerDay', floatingSalesPerDay)
+  return fetch(`${address}/api/wow/bestdeals`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'User-Agent': UserAgent
     },
+    // send a JSON with salesPerDay as a float
     body: JSON.stringify({
       type,
       region,
       discount,
       minPrice,
-      salesPerDay
+      salesPerDay: +floatingSalesPerDay
     })
   })
+}
 
 export default WoWBestDeals
