@@ -13,6 +13,7 @@ import Select from '~/components/form/select'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
+import ExternalLink from '~/components/utilities/ExternalLink'
 
 const parseNumber = z.string().transform((value) => parseInt(value, 10))
 
@@ -38,7 +39,7 @@ export const action: ActionFunction = async ({ request }) => {
   console.log({
     region,
     ...validatedFormData.data
-  });
+  })
 
   const result = await WoWBestDeals({
     region,
@@ -149,7 +150,7 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
           'discount',
           'salesPerDay',
           'minPrice',
-          'historicPrice',
+          'historicPrice'
         ]}
         data={data}
       />
@@ -164,7 +165,11 @@ const columnList: Array<ColumnList<DealItem>> = [
   { columnId: 'historicPrice', header: 'Historic Price' },
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'realmName', header: 'Realm Name' },
-  { columnId: 'link', header: 'Item Link' },
+  {
+    columnId: 'link',
+    header: 'Item Link',
+    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
+  }
 ]
 
 const mobileColumnList: Array<ColumnList<DealItem>> = [
