@@ -101,7 +101,7 @@ const recommendedQueries = [
     description:
       'Find the best deals on your server and region wide with our Best Deals search!',
     Icon: DocumentSearchIcon,
-    href: '/wow/export-search'
+    href: '/wow/best-deals'
   }
 ]
 
