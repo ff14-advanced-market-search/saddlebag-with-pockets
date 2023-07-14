@@ -33,7 +33,6 @@ const WoWBestDeals = async ({
   minPrice
 }: WoWBestDealsProps) => {
   const floatingSalesPerDay = salesPerDay.toFixed(1)
-  console.log('floatingSalesPerDay', floatingSalesPerDay)
   return fetch(`${address}/api/wow/bestdeals`, {
     method: 'POST',
     headers: {

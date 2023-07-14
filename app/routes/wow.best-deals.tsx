@@ -36,11 +36,6 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ exception: 'Invalid Input' })
   }
 
-  console.log({
-    region,
-    ...validatedFormData.data
-  })
-
   const result = await WoWBestDeals({
     region,
     ...validatedFormData.data
