@@ -95,6 +95,13 @@ const recommendedQueries = [
       'View the time each hour when the Blizzard API AH data updates.',
     Icon: DocumentSearchIcon,
     href: '/wow/upload-timers'
+  },
+  {
+    name: 'Best Deals',
+    description:
+      'Find the best deals on your server and region wide with our Best Deals search!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/best-deals'
   }
 ]
 
