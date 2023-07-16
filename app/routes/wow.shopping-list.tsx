@@ -1,0 +1,183 @@
+import type { ActionFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
+import { useEffect, useMemo, useState } from 'react'
+import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
+import type { DealItem, WoWDealResponse } from '~/requests/WoW/ShoppingList'
+import WoWShoppingList from '~/requests/WoW/ShoppingList'
+import { getUserSessionData } from '~/sessions'
+import z from 'zod'
+import { useActionData, useNavigation } from '@remix-run/react'
+import { InputWithLabel } from '~/components/form/InputWithLabel'
+import Select from '~/components/form/select'
+import NoResults from '~/components/Common/NoResults'
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import type { ColumnList } from '~/components/types'
+import ExternalLink from '~/components/utilities/ExternalLink'
+import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
+import { items, parseItemsForDataListSelect } from '~/utils/items/id_to_item'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { getItemIDByName } from '~/utils/items'
+
+const parseNumber = z.string().transform((value) => parseInt(value, 10))
+
+const validateInput = z.object({
+  itemID: parseNumber,
+  maxPurchasePrice: parseNumber
+})
+
+export const action: ActionFunction = async ({ request }) => {
+  const session = await getUserSessionData(request)
+
+  const region = session.getWoWSessionData().region
+
+  const formData = Object.fromEntries(await request.formData())
+
+  const validatedFormData = validateInput.safeParse(formData)
+  if (!validatedFormData.success) {
+    return json({ exception: 'Invalid Input' })
+  }
+
+  const result = await WoWShoppingList({
+    region,
+    ...validatedFormData.data
+  })
+
+  // await the result and then return the json
+
+  return json({
+    ...(await result.json()),
+    sortby: 'discount'
+  })
+}
+
+type ActionResponseType =
+  | {}
+  | { exception: string }
+  | (WoWDealResponse & { sortby: string })
+
+const ShoppingList = () => {
+  const result = useActionData<ActionResponseType>()
+  const transistion = useNavigation()
+  const { wowItems } = useTypedSelector((state) => state.user)
+  const [itemName, setItemName] = useState<{ name: string; error: string }>({
+    name: '',
+    error: ''
+  })
+
+  const isSubmitting = transistion.state === 'submitting'
+
+  const handleSelect = (value: string) => {
+    setItemName({ error: '', name: value })
+  }
+
+  const memoItems = useMemo(
+    () => wowItems.map(parseItemsForDataListSelect),
+    [wowItems]
+  )
+
+  const itemId = getItemIDByName(itemName.name.trim(), wowItems)
+  const error = result && 'exception' in result ? result.exception : undefined
+
+  if (result && !Object.keys(result).length) {
+    return <NoResults href="/wow/shopping-list" />
+  }
+
+  if (result && 'data' in result && !error) {
+    return <Results {...result} />
+  }
+
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    if (isSubmitting) {
+      event.preventDefault()
+    }
+  }
+
+  return (
+    <PageWrapper>
+      <SmallFormContainer
+        title="Shopping List"
+        description="Search for the realms with the lowest price for an item."
+        onClick={handleSubmit}
+        error={error}
+        loading={isSubmitting}>
+        <div className="pt-3 flex flex-col">
+          <DebouncedSelectInput
+            title={'Item to search for'}
+            label="Item"
+            id="export-item-select"
+            selectOptions={memoItems}
+            onSelect={handleSelect}
+          />
+          <input hidden name="itemID" value={itemId} />
+          <InputWithLabel
+            labelTitle="Maximum Purchase Price"
+            name="maxPurchasePrice"
+            type="number"
+            defaultValue={10000000}
+            min={0}
+          />
+        </div>
+      </SmallFormContainer>
+    </PageWrapper>
+  )
+}
+
+export default ShoppingList
+
+const Results = ({
+  data,
+  sortby,
+  name
+}: WoWDealResponse & { sortby: string }) => {
+  useEffect(() => {
+    if (window && document) {
+      window.scroll({ top: 0, behavior: 'smooth' })
+    }
+  }, [])
+  return (
+    <PageWrapper>
+      <SmallTable
+        title={'Best Deals for ' + name}
+        sortingOrder={[{ desc: true, id: sortby }]}
+        columnList={columnList}
+        mobileColumnList={mobileColumnList}
+        columnSelectOptions={[
+          'discount',
+          'salesPerDay',
+          'minPrice',
+          'historicPrice'
+        ]}
+        data={data}
+      />
+    </PageWrapper>
+  )
+}
+
+const columnList: Array<ColumnList<DealItem>> = [
+  { columnId: 'price', header: 'Price' },
+  { columnId: 'quantity', header: 'Quantity' },
+  {
+    columnId: 'realmNames',
+    header: 'Realm Names',
+    accessor: ({ getValue }) => (
+      <p className="py-2 px-3 w-[200px] overflow-x-scroll">
+        {getValue() as string}
+      </p>
+    )
+  },
+  {
+    columnId: 'link',
+    header: 'Item Link',
+    accessor: ({ getValue }) => (
+      <ExternalLink link={getValue() as string} text="Undermine" />
+    )
+  }
+]
+
+const mobileColumnList: Array<ColumnList<DealItem>> = [
+  { columnId: 'discount', header: 'Discount' },
+  { columnId: 'itemName', header: 'Item Name' }
+]

@@ -13,7 +13,8 @@ import {
   ChevronDownIcon,
   PencilAltIcon,
   SearchIcon,
-  ExclamationCircleIcon
+  ExclamationCircleIcon,
+  ShoppingCartIcon
 } from '@heroicons/react/outline'
 import {
   Form,
@@ -238,6 +239,11 @@ const navGroups: Array<{
         name: 'Best Deals',
         href: '/wow/best-deals',
         icon: ExclamationCircleIcon
+      },
+      {
+        name: 'Shopping List',
+        href: '/wow/shopping-list',
+        icon: ShoppingCartIcon
       }
     ]
   },
