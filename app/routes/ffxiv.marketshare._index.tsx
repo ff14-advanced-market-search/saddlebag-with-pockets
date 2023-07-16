@@ -1,15 +1,10 @@
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
 import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
 import MarketShare from '~/requests/FFXIV/marketshare'
@@ -27,10 +22,6 @@ type MarketshareActionResult =
   | {}
   | { exception: string }
   | { data: MarketshareResult; server: string; sortBy: MarketshareSortBy }
-
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
 
 const inputMap: Record<string, string> = {
   server: 'Home Realm',

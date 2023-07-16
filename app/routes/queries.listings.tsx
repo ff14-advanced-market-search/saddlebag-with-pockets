@@ -1,8 +1,5 @@
 import { useActionData, useTransition } from '@remix-run/react'
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent
-} from '@remix-run/cloudflare'
+import type { ActionFunction } from '@remix-run/cloudflare'
 import GetListingRequest from '~/requests/GetListing'
 import type {
   GetListingProps,
@@ -79,17 +76,6 @@ export const action: ActionFunction = async ({ request }) => {
     console.log('catch', err)
     return err
   }
-}
-
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  console.error('errorBoundary', error)
-  return (
-    <pre>
-      If you're seeing this, it'd be appreciated if you could report in our
-      Discord's <span className={`font-bold`}>#bug-reporting</span> channel.
-      Much thank
-    </pre>
-  )
 }
 
 const Index = () => {

@@ -1,8 +1,5 @@
 import { useActionData, useTransition } from '@remix-run/react'
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent
-} from '@remix-run/cloudflare'
+import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import GetHistoryRequest from '~/requests/GetHistory'
 import type { GetHistoryProps, GetHistoryResponse } from '~/requests/GetHistory'
@@ -85,17 +82,6 @@ export const action: ActionFunction = async ({ request }) => {
     console.error('catch', err)
     return { exception: err }
   }
-}
-
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  console.error('errorBoundary', error)
-  return (
-    <pre>
-      If you're seeing this, it'd be appreciated if you could report in our
-      Discord's <span className={`font-bold`}>#bug-reporting</span> channel.
-      Much thank
-    </pre>
-  )
 }
 
 const parseServerError = (error: string) => {

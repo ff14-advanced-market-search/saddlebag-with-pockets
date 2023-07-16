@@ -1,14 +1,8 @@
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { FormValues } from '~/requests/FullScan'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
-
 import { useEffect } from 'react'
 import NoResults from '~/components/Common/NoResults'
 import Results from '~/components/FFXIVResults/FullScan/Results'
@@ -33,10 +27,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     return err
   })
 }
-
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)

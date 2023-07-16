@@ -1,8 +1,4 @@
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { useState } from 'react'
@@ -29,7 +25,7 @@ import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
 import TreemapChart from '~/components/Charts/Treemap'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import FullTable from '~/components/Tables/FullTable'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import type { ColumnList } from '~/components/types'
@@ -94,9 +90,7 @@ const validateFormData = z.object({
 
 const pageTitle = 'Legacy Item Marksetshare'
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
+export const ErrorBoundary = () => <ErrorBounds />
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

@@ -1,9 +1,5 @@
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
-import type {
-  ActionFunction,
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WoWScanResponseWithPayload } from '~/requests/WOWScan'
 import WOWScanRequest from '~/requests/WOWScan'
@@ -18,7 +14,7 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { setWoWScan } from '~/redux/reducers/wowSlice'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
@@ -49,9 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
     return err
   }
 }
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
+export const ErrorBoundary = () => <ErrorBounds />
 
 const Index = () => {
   const transition = useTransition()

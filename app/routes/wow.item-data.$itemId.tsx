@@ -1,11 +1,8 @@
-import type {
-  ErrorBoundaryComponent,
-  LoaderFunction
-} from '@remix-run/cloudflare'
+import type { LoaderFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
-import { ErrorBoundary as ErrorBounds } from '~/components/utilities/ErrorBoundary'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import type { ItemListingResponse } from '~/requests/WoW/ItemListingsData'
 import ItemListingsData from '~/requests/WoW/ItemListingsData'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
@@ -16,9 +13,7 @@ import HighchartsReact from 'highcharts-react-official'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => (
-  <ErrorBounds error={error} />
-)
+export const ErrorBoundary = () => <ErrorBounds />
 
 const makeTimeString = ({
   date,
