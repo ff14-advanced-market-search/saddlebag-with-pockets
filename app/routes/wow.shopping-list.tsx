@@ -178,6 +178,14 @@ const columnList: Array<ColumnList<DealItem>> = [
 ]
 
 const mobileColumnList: Array<ColumnList<DealItem>> = [
-  { columnId: 'discount', header: 'Discount' },
-  { columnId: 'itemName', header: 'Item Name' }
+  { columnId: 'price', header: 'Price' },
+  {
+    columnId: 'realmNames',
+    header: 'Realm Names',
+    accessor: ({ getValue }) => (
+      <p className="py-2 px-3 w-[200px] overflow-x-scroll">
+        {getValue() as string}
+      </p>
+    )
+  }
 ]
