@@ -1,21 +1,20 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useMemo, useState } from 'react'
-import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { DealItem, WoWDealResponse } from '~/requests/WoW/ShoppingList'
+import type { ListItem, WoWListResponse } from '~/requests/WoW/ShoppingList'
 import WoWShoppingList from '~/requests/WoW/ShoppingList'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
 import { useActionData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import Select from '~/components/form/select'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import { items, parseItemsForDataListSelect } from '~/utils/items/id_to_item'
+import { parseItemsForDataListSelect } from '~/utils/items/id_to_item'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemIDByName } from '~/utils/items'
 
@@ -54,21 +53,18 @@ export const action: ActionFunction = async ({ request }) => {
 type ActionResponseType =
   | {}
   | { exception: string }
-  | (WoWDealResponse & { sortby: string })
+  | (WoWListResponse & { sortby: string })
 
 const ShoppingList = () => {
   const result = useActionData<ActionResponseType>()
   const transistion = useNavigation()
   const { wowItems } = useTypedSelector((state) => state.user)
-  const [itemName, setItemName] = useState<{ name: string; error: string }>({
-    name: '',
-    error: ''
-  })
+  const [itemName, setItemName] = useState<string>('')
 
   const isSubmitting = transistion.state === 'submitting'
 
   const handleSelect = (value: string) => {
-    setItemName({ error: '', name: value })
+    setItemName(value)
   }
 
   const memoItems = useMemo(
@@ -76,7 +72,7 @@ const ShoppingList = () => {
     [wowItems]
   )
 
-  const itemId = getItemIDByName(itemName.name.trim(), wowItems)
+  const itemId = getItemIDByName(itemName.trim(), wowItems)
   const error = result && 'exception' in result ? result.exception : undefined
 
   if (result && !Object.keys(result).length) {
@@ -131,7 +127,7 @@ const Results = ({
   data,
   sortby,
   name
-}: WoWDealResponse & { sortby: string }) => {
+}: WoWListResponse & { sortby: string }) => {
   useEffect(() => {
     if (window && document) {
       window.scroll({ top: 0, behavior: 'smooth' })
@@ -156,7 +152,7 @@ const Results = ({
   )
 }
 
-const columnList: Array<ColumnList<DealItem>> = [
+const columnList: Array<ColumnList<ListItem>> = [
   { columnId: 'price', header: 'Price' },
   { columnId: 'quantity', header: 'Quantity' },
   {
@@ -177,7 +173,7 @@ const columnList: Array<ColumnList<DealItem>> = [
   }
 ]
 
-const mobileColumnList: Array<ColumnList<DealItem>> = [
+const mobileColumnList: Array<ColumnList<ListItem>> = [
   { columnId: 'price', header: 'Price' },
   {
     columnId: 'realmNames',

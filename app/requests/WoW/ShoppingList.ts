@@ -16,7 +16,7 @@ export interface ListItem {
   realmNames: string
 }
 
-export interface WoWDealResponse {
+export interface WoWListResponse {
   name: string
   data: Array<ListItem>
 }
