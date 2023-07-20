@@ -4,7 +4,7 @@ _Frontend for Aetheryte API_
 
 ## Prerequisites
 
-- Node `16.13.0`
+- Node `20.3.0`
 
 ## [Documentation](docs/INDEX.md)
 
