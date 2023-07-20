@@ -25,6 +25,31 @@ yarn run dev
 This starts your app in development mode, rebuilding assets on file changes.
 Check your terminal for the address, the default is `http://127.0.0.1:8788`
 
+### Testing
+
+We have just started to use [Jest](https://jestjs.io/) to run unit tests.
+
+We are currently using the .test.ts ending to mark our test files for the test runner.
+Please try to keep your test files in the same folder as the file your testing.
+
+You can run all unit tests by running:
+
+```bash
+yarn test
+```
+
+You can run a single unit test file by running
+
+```bash
+yarn test -testFile.test.ts
+```
+
+You can set jest into watch mode by passing the watch arguement:
+
+```bash
+yarn test --watch
+```
+
 ### Docker
 
 Alternatively, you can use docker to run the server:
