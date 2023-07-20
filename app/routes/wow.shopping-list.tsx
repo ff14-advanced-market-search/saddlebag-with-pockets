@@ -140,12 +140,7 @@ const Results = ({
         sortingOrder={[{ desc: true, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
-        columnSelectOptions={[
-          'discount',
-          'salesPerDay',
-          'minPrice',
-          'historicPrice'
-        ]}
+        columnSelectOptions={['price', 'quantity', 'realmNames', 'link']}
         data={data}
       />
     </PageWrapper>
@@ -159,7 +154,7 @@ const columnList: Array<ColumnList<ListItem>> = [
     columnId: 'realmNames',
     header: 'Realm Names',
     accessor: ({ getValue }) => (
-      <p className="py-2 px-3 w-[200px] overflow-x-scroll">
+      <p className="py-2 px-3 max-w-[400px] mx-auto overflow-x-scroll">
         {getValue() as string}
       </p>
     )
