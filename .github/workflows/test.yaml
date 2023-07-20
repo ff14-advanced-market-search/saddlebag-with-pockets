@@ -4,7 +4,7 @@ name: "Unit Tests"
 on: push
 
 jobs:
-  "Run Jest":
+  "Jest":
     runs-on: ubuntu-latest
     container: node:20.3.0
 
