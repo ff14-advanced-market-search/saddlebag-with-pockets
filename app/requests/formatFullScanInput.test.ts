@@ -1,4 +1,5 @@
 import { formatFullScanInput } from './FullScan'
+import { describe, it, expect } from 'vitest'
 
 describe('formatFullScanInput', () => {
   it('should return defaults when passed nothing or empty object', () => {
@@ -17,8 +18,8 @@ describe('formatFullScanInput', () => {
       show_out_stock: false,
       universalis_list_uid: ''
     }
-    expect(formatFullScanInput()).toEqual(expected)
-    expect(formatFullScanInput({})).toEqual(expected)
+    expect(formatFullScanInput()).toStrictEqual(expected)
+    expect(formatFullScanInput({})).toStrictEqual(expected)
   })
   it('should map values to corresponding key', () => {
     const expected = {
@@ -48,7 +49,7 @@ describe('formatFullScanInput', () => {
         roi: 25,
         scan_hours: 12
       })
-    ).toEqual(expected)
+    ).toStrictEqual(expected)
   })
   it('should keep values for keys that dont need to be mapped', () => {
     const expected = {
@@ -82,6 +83,6 @@ describe('formatFullScanInput', () => {
         include_vendor: true,
         filters: [1, 2, 3]
       })
-    ).toEqual(expected)
+    ).toStrictEqual(expected)
   })
 })

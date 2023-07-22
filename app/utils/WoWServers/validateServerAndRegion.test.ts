@@ -1,3 +1,4 @@
+import { it, expect, describe } from 'vitest'
 import { validateServerAndRegion } from '.'
 
 const FALLBACK = {
@@ -7,7 +8,6 @@ const FALLBACK = {
     name: 'Thrall'
   }
 }
-
 describe('validateServerAndRegion', () => {
   it('should return default values when nothing is found', () => {
     expect(validateServerAndRegion('NA', undefined, undefined)).toEqual(
