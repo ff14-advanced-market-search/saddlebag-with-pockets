@@ -1249,6 +1249,10 @@ select {
   max-width: 200px;
 }
 
+.max-w-\[400px\] {
+  max-width: 400px;
+}
+
 .max-w-fit {
   max-width: -moz-fit-content;
   max-width: fit-content;
