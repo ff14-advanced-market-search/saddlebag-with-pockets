@@ -1,6 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useState } from 'react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import TitleTooltip from '~/components/Common/TitleTooltip'
@@ -52,6 +53,7 @@ export default function Index() {
   const loaderData = useLoaderData<{ server: string; dataCenter: string }>()
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
+  const [world, setWorld] = useState(loaderData.server)
 
   const worldList = WorldsMap.get(loaderData.dataCenter)
 
@@ -89,9 +91,11 @@ export default function Index() {
           />
           <SelectWorld
             dataCenter={loaderData.dataCenter}
-            world={loaderData.server}
-            onSelect={() => {}}
+            world={world}
             worlds={worlds}
+            onSelect={(world) => {
+              setWorld(world)
+            }}
           />
           <InputWithLabel
             type="text"
