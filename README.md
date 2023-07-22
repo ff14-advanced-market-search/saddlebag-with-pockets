@@ -30,7 +30,8 @@ Check your terminal for the address, the default is `http://127.0.0.1:8788`
 We have just started to use [Vitest](https://vitest.dev) to run unit tests.
 
 We are currently using the .test.ts ending to mark our test files for the test runner.
-Please try to keep your test files in the same folder as the file your testing.
+For any route level testing, such as action files or loaders keep your test files in the `app/test/routes` folder.
+For other files try to keep your test files in the same folder as the file your testing. If this gets out of hand we can try to manage the test files into the test folder too. We'll see how it goes.
 
 You can run all unit tests by running:
 
