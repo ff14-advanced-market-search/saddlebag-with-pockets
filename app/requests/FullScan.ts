@@ -69,7 +69,6 @@ export const formatFullScanInput = (input?: FullScanForm): FullScanInput => {
     },
     {}
   )
-
   return { ...defaults, ...results }
 }
 

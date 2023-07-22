@@ -7,8 +7,8 @@ export const parseStringToNumber = z.string().min(1).transform(parseNumber)
 
 export const parseCheckboxBoolean = z
   .string()
+  .default('false')
   .transform((value) => value === 'on')
-  .optional()
 
 export const parseStringToNumberArray = z
   .string()
