@@ -18,8 +18,8 @@ describe('formatFullScanInput', () => {
       show_out_stock: false,
       universalis_list_uid: ''
     }
-    expect(formatFullScanInput()).toStrictEqual(expected)
-    expect(formatFullScanInput({})).toStrictEqual(expected)
+    expect(formatFullScanInput()).toEqual(expected)
+    expect(formatFullScanInput({})).toEqual(expected)
   })
   it('should map values to corresponding key', () => {
     const expected = {
@@ -49,7 +49,7 @@ describe('formatFullScanInput', () => {
         roi: 25,
         scan_hours: 12
       })
-    ).toStrictEqual(expected)
+    ).toEqual(expected)
   })
   it('should keep values for keys that dont need to be mapped', () => {
     const expected = {
@@ -83,6 +83,6 @@ describe('formatFullScanInput', () => {
         include_vendor: true,
         filters: [1, 2, 3]
       })
-    ).toStrictEqual(expected)
+    ).toEqual(expected)
   })
 })

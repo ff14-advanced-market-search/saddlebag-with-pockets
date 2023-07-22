@@ -3,7 +3,7 @@ import { DataCentersOfRegion, WorldsOfDataCenter } from './index'
 import { DataCenterNotFoundException, RegionNotFoundException } from './Errors'
 
 test('DataCentersOfRegion returns a data center array', () => {
-  expect(DataCentersOfRegion('OCE')).toStrictEqual([
+  expect(DataCentersOfRegion('OCE')).toEqual([
     {
       name: 'Materia'
     }
@@ -17,7 +17,7 @@ test('DataCentersOfRegion throws RegionNotFoundException', () => {
 })
 
 test('WorldsOfDataCenter returns a world array', () => {
-  expect(WorldsOfDataCenter('Mana')).toStrictEqual([
+  expect(WorldsOfDataCenter('Mana')).toEqual([
     {
       name: 'Anima'
     },

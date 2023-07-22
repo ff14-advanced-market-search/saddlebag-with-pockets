@@ -4,7 +4,7 @@ name: "Unit Tests"
 on: push
 
 jobs:
-  "Jest":
+  "Vitest":
     runs-on: ubuntu-latest
     container: node:20.3.0
 
