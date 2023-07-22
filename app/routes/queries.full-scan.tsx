@@ -13,38 +13,38 @@ import { PreviousResultsLink } from '../components/FFXIVResults/FullScan/Previou
 import FullScanForm from '../components/form/ffxiv/FullScanForm'
 import z from 'zod'
 import {
-  parseOptionalStringToNumber,
-  parseOptionalCheckboxBoolean,
+  parseStringToNumber,
+  parseCheckboxBoolean,
   parseZodErrorsToDisplayString,
   parseStringToNumberArray
 } from '~/utils/zodHelpers'
 
 const validateFormInput = z.object({
-  scan_hours: parseOptionalStringToNumber,
-  sale_amount: parseOptionalStringToNumber,
-  roi: parseOptionalStringToNumber,
-  price_per_unit: parseOptionalStringToNumber,
-  minimum_profit_amount: parseOptionalStringToNumber,
-  minimum_stack_size: parseOptionalStringToNumber,
-  world: z.string().optional(),
+  scan_hours: parseStringToNumber,
+  sale_amount: parseStringToNumber,
+  roi: parseStringToNumber,
+  price_per_unit: parseStringToNumber,
+  minimum_profit_amount: parseStringToNumber,
+  minimum_stack_size: parseStringToNumber,
+  world: z.string(),
   universalis_list_uid: z.string().optional(),
-  hq_only: parseOptionalCheckboxBoolean,
-  region_wide: parseOptionalCheckboxBoolean,
-  include_vendor: parseOptionalCheckboxBoolean,
-  out_of_stock: parseOptionalCheckboxBoolean,
+  hq_only: parseCheckboxBoolean,
+  region_wide: parseCheckboxBoolean,
+  include_vendor: parseCheckboxBoolean,
+  out_of_stock: parseCheckboxBoolean,
   filters: parseStringToNumberArray
 })
 
 const inputMap = {
   scan_hours: 'Scan Hours',
-  sale_amount: 'Ssle Amount',
+  sale_amount: 'Sale Amount',
   roi: 'Return on Investment',
   price_per_unit: 'Price per unit',
   minimum_profit_amount: 'Minimum profit amount',
   minimum_stack_size: 'Minimum stack size',
   world: 'Data Center',
   universalis_list_uid: 'Universalis List',
-  hq_only: 'HQ',
+  hq_only: 'HQ Only',
   region_wide: 'Region Wide',
   include_vendor: 'Include vendor',
   out_of_stock: 'Out of stock',

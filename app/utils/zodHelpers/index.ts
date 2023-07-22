@@ -3,18 +3,16 @@ import z from 'zod'
 
 export const parseNumber = (value: any) => parseInt(value, 10)
 
-export const parseStringToNumber = z.string().transform(parseNumber)
-
-export const parseOptionalStringToNumber = parseStringToNumber.optional()
+export const parseStringToNumber = z.string().min(1).transform(parseNumber)
 
 export const parseCheckboxBoolean = z
   .string()
   .transform((value) => value === 'on')
-
-export const parseOptionalCheckboxBoolean = parseCheckboxBoolean.optional()
+  .optional()
 
 export const parseStringToNumberArray = z
   .string()
+  .min(1)
   .transform((value) => value.split(',').map(parseNumber))
 
 export const parseZodErrorsToDisplayString = (
