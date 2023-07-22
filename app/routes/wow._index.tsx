@@ -102,6 +102,12 @@ const recommendedQueries = [
       'Find the best deals on your server and region wide with our Best Deals search!',
     Icon: DocumentSearchIcon,
     href: '/wow/best-deals'
+  },
+  {
+    name: 'Shopping List',
+    description: 'Search for the realms with the lowest price for an item.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/shopping-list'
   }
 ]
 
