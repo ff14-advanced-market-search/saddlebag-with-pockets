@@ -144,13 +144,13 @@ const Results = ({
       <div className="hidden sm:block">
         <FullTable<SelfPurchase>
           data={data}
-          sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
+          sortingOrder={[{ id: 'timestamp', desc: true }]}
           columnList={columnList}
         />
       </div>
       <MobileTable
         data={data}
-        sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
+        sortingOrder={[{ id: 'timestamp', desc: true }]}
         columnList={mobileColumnList}
         rowLabels={columnList}
         columnSelectOptions={sortByOptions}
