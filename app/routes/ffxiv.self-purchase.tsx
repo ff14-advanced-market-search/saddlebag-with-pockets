@@ -3,27 +3,25 @@ import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
-import TitleTooltip from '~/components/Common/TitleTooltip'
 import DateCell from '~/components/FFXIVResults/FullScan/DateCell'
 import FullTable from '~/components/Tables/FullTable'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import { SelectWorld } from '~/components/form/select/SelectWorld/SelectWorld'
+import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { ColumnList } from '~/components/types'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
 import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions'
-import WorldsMap from '~/utils/locations/Worlds'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 
   return json({
-    server: session.getWorld(),
-    dataCenter: session.getDataCenter()
+    world: session.getWorld(),
+    data_center: session.getDataCenter()
   })
 }
 
@@ -53,10 +51,6 @@ export default function Index() {
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
 
-  const worldList = WorldsMap.get(loaderData.dataCenter)
-
-  const worlds = worldList ? worldList : []
-
   const error =
     results && 'exception' in results ? results.exception : undefined
 
@@ -81,25 +75,15 @@ export default function Index() {
             e.preventDefault()
           }
         }}>
-        <div className="pt-2">
-          <TitleTooltip
-            title="Choose world to search"
-            toolTip="Choose a world in your data center"
-            relative
-          />
-          <SelectWorld
-            dataCenter={loaderData.dataCenter}
-            world={loaderData.server}
-            onSelect={() => {}}
-            worlds={worlds}
-          />
-          <InputWithLabel
-            type="text"
-            name="playerName"
-            labelTitle="Player Name"
-            toolTip="The name of your player"
-          />
+        <div className="py-2">
+          <SelectDCandWorld transition={transition} sessionData={loaderData} />
         </div>
+        <InputWithLabel
+          type="text"
+          name="playerName"
+          labelTitle="Player Name"
+          toolTip="The name of your player"
+        />
       </SmallFormContainer>
     </PageWrapper>
   )
@@ -160,13 +144,13 @@ const Results = ({
       <div className="hidden sm:block">
         <FullTable<SelfPurchase>
           data={data}
-          sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
+          sortingOrder={[{ id: 'timestamp', desc: true }]}
           columnList={columnList}
         />
       </div>
       <MobileTable
         data={data}
-        sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
+        sortingOrder={[{ id: 'timestamp', desc: true }]}
         columnList={mobileColumnList}
         rowLabels={columnList}
         columnSelectOptions={sortByOptions}
