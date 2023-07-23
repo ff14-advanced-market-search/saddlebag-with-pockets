@@ -22,7 +22,6 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
   sessionData,
   onChange
 }) => {
-  console.log(sessionData)
   const [dataCenter, setDataCenter] = useState<string | undefined>(
     sessionData.data_center
   )
