@@ -12,8 +12,8 @@ import type { SessionData } from '@remix-run/cloudflare'
 
 type SelectWorldProps = PropsWithoutRef<{
   transition: Transition
-  actionData: ValidationResult<typeof SelectWorldInputFields>
   sessionData: SessionData
+  actionData?: ValidationResult<typeof SelectWorldInputFields>
   onChange?: (ffxiv: { world: string; data_center: string }) => void
 }>
 
@@ -22,6 +22,7 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
   sessionData,
   onChange
 }) => {
+  console.log(sessionData)
   const [dataCenter, setDataCenter] = useState<string | undefined>(
     sessionData.data_center
   )
