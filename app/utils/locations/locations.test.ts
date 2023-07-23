@@ -1,8 +1,6 @@
+import { expect, test } from 'vitest'
 import { DataCentersOfRegion, WorldsOfDataCenter } from './index'
-import {
-  DataCenterNotFoundException,
-  RegionNotFoundException
-} from '~/utils/locations/Errors'
+import { DataCenterNotFoundException, RegionNotFoundException } from './Errors'
 
 test('DataCentersOfRegion returns a data center array', () => {
   expect(DataCentersOfRegion('OCE')).toEqual([

@@ -2,7 +2,7 @@ import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
-import FullScanRequest, { FormValues } from '~/requests/FullScan'
+import FullScanRequest, { formatFullScanInput } from '~/requests/FullScan'
 import { useEffect } from 'react'
 import NoResults from '~/components/Common/NoResults'
 import Results from '~/components/FFXIVResults/FullScan/Results'
@@ -11,18 +11,64 @@ import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { PreviousResultsLink } from '../components/FFXIVResults/FullScan/PreviousResultsLink'
 import FullScanForm from '../components/form/ffxiv/FullScanForm'
+import z from 'zod'
+import {
+  parseStringToNumber,
+  parseCheckboxBoolean,
+  parseZodErrorsToDisplayString,
+  parseStringToNumberArray
+} from '~/utils/zodHelpers'
 
-export const action: ActionFunction = async ({ request, params }) => {
+const validateFormInput = z.object({
+  scan_hours: parseStringToNumber,
+  sale_amount: parseStringToNumber,
+  roi: parseStringToNumber,
+  price_per_unit: parseStringToNumber,
+  minimum_profit_amount: parseStringToNumber,
+  minimum_stack_size: parseStringToNumber,
+  world: z.string(),
+  universalis_list_uid: z.string().optional(),
+  hq_only: parseCheckboxBoolean,
+  region_wide: parseCheckboxBoolean,
+  include_vendor: parseCheckboxBoolean,
+  out_of_stock: parseCheckboxBoolean,
+  filters: parseStringToNumberArray
+})
+
+const inputMap = {
+  scan_hours: 'Scan Hours',
+  sale_amount: 'Sale Amount',
+  roi: 'Return on Investment',
+  price_per_unit: 'Price per unit',
+  minimum_profit_amount: 'Minimum profit amount',
+  minimum_stack_size: 'Minimum stack size',
+  world: 'Data Center',
+  universalis_list_uid: 'Universalis List',
+  hq_only: 'HQ Only',
+  region_wide: 'Region Wide',
+  include_vendor: 'Include vendor',
+  out_of_stock: 'Out of stock',
+  filters: 'Filters'
+}
+
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const session = await getUserSessionData(request)
 
   formData.append('world', session.getWorld())
+  const formPayload = Object.fromEntries(formData)
 
-  const typedData = new FormValues(formData)
+  const validatedForm = validateFormInput.safeParse(formPayload)
 
-  const data = typedData.toMap()
-  console.dir(data)
-  return await FullScanRequest(data).catch((err) => {
+  if (!validatedForm.success) {
+    return json({
+      exception: parseZodErrorsToDisplayString(validatedForm.error, inputMap)
+    })
+  }
+
+  const formattedData = formatFullScanInput(validatedForm.data)
+
+  return await FullScanRequest(formattedData).catch((err) => {
     console.log('catch', err)
     return err
   })

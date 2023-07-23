@@ -1,7 +1,7 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect } from 'react'
-import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { DealItem, WoWDealResponse } from '~/requests/WoW/BestDeals'
 import WoWBestDeals from '~/requests/WoW/BestDeals'
