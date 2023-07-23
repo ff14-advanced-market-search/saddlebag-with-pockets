@@ -10,7 +10,7 @@ const recommendedQueries = [
   {
     name: 'World of Warcraft',
     description:
-      'Find tools to help find items to trade server to server, and which items are best to short the market.',
+      'Find tools cross-realm trading, market overviews, shortage finders, and our Best Deals search!',
     href: '/wow'
   }
 ]

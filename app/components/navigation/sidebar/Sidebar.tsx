@@ -180,14 +180,45 @@ const navGroups: Array<{
     openMatch: '/wow/',
     links: [
       {
-        name: 'Dragonflight Marketshare Overview',
-        href: '/wow/marketshare',
-        icon: ChartSquareBarIcon
+        name: 'Best Deals',
+        href: '/wow/best-deals',
+        icon: ExclamationCircleIcon
+      },
+      {
+        name: 'Upload Timers',
+        href: '/wow/upload-timers',
+        icon: ClockIcon
+      },
+      {
+        name: 'Shopping List',
+        href: '/wow/shopping-list',
+        icon: ShoppingCartIcon
       },
       {
         name: 'Item Export Search',
         href: 'wow/export-search',
         icon: DocumentSearchIcon
+      },
+      {
+        name: 'Region Wide Undercut Checker',
+        href: 'wow/region-undercut',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
+      },
+      {
+        name: 'Server Transfer Trading Search',
+        href: '/wow/full-scan',
+        icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Dragonflight Marketshare Overview',
+        href: '/wow/marketshare',
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Dragonflight Commodity Shortage Futures',
@@ -205,17 +236,6 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
-        name: 'Region Wide Undercut Checker',
-        href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
-      },
-      {
-        name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
-        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-        external: true
-      },
-      {
         name: 'Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
         icon: ChartSquareBarIcon
@@ -224,26 +244,6 @@ const navGroups: Array<{
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
         icon: ChartSquareBarIcon
-      },
-      {
-        name: 'Server Transfer Trading Search',
-        href: '/wow/full-scan',
-        icon: ChartSquareBarIcon
-      },
-      {
-        name: 'Upload Timers',
-        href: '/wow/upload-timers',
-        icon: ClockIcon
-      },
-      {
-        name: 'Best Deals',
-        href: '/wow/best-deals',
-        icon: ExclamationCircleIcon
-      },
-      {
-        name: 'Shopping List',
-        href: '/wow/shopping-list',
-        icon: ShoppingCartIcon
       }
     ]
   },

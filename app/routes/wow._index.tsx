@@ -3,13 +3,20 @@ import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
 const recommendedQueries = [
+  // {
+  //   name: 'Alpha Build Cross Server Trade Tools',
+  //   description:
+  //     'Check out the latest and greatest Alpha versions of our server to server trade tools just in time for 10.1.5 cross realm trading!',
+  //   Icon: DocumentSearchIcon,
+  //   href: 'https://temp.saddlebagexchange.com/',
+  //   external: true
+  // },
   {
-    name: 'Alpha Build Cross Server Trade Tools',
+    name: 'Best Deals',
     description:
-      'Check out the latest and greatest Alpha versions of our server to server trade tools just in time for 10.1.5 cross realm trading!',
+      'Find the best deals on your server and region wide with our Best Deals search!',
     Icon: DocumentSearchIcon,
-    href: 'https://temp.saddlebagexchange.com/',
-    external: true
+    href: '/wow/best-deals'
   },
   {
     name: 'Ultra Fast Mega-Alerts Sniper',
@@ -34,11 +41,31 @@ const recommendedQueries = [
     external: true
   },
   {
+    name: 'Upload Timers',
+    description:
+      'View the time each hour when the Blizzard API AH data updates.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/upload-timers'
+  },
+  {
     name: 'Global Export Item Search',
     description:
       'Search other servers to find the best place to sell & buy items',
     Icon: DocumentSearchIcon,
     href: '/wow/export-search'
+  },
+  {
+    name: 'Shopping List',
+    description: 'Search for the realms with the lowest price for an item.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/shopping-list'
+  },
+  {
+    name: 'Server Transfer Trading Search',
+    description:
+      'Search for items that can be bought cheaply on a your home server and sold for a profit when transfering realms.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/full-scan'
   },
   {
     name: 'Dragonflight Marketshare Overview',
@@ -81,33 +108,6 @@ const recommendedQueries = [
       'Searches for region wide commodities that you can flip and take over the market!',
     Icon: DocumentSearchIcon,
     href: '/wow/shortages/commodities'
-  },
-  {
-    name: 'Server Transfer Trading Search',
-    description:
-      'Search for items that can be bought cheaply on a your home server and sold for a profit when transfering realms.',
-    Icon: DocumentSearchIcon,
-    href: '/wow/full-scan'
-  },
-  {
-    name: 'Upload Timers',
-    description:
-      'View the time each hour when the Blizzard API AH data updates.',
-    Icon: DocumentSearchIcon,
-    href: '/wow/upload-timers'
-  },
-  {
-    name: 'Best Deals',
-    description:
-      'Find the best deals on your server and region wide with our Best Deals search!',
-    Icon: DocumentSearchIcon,
-    href: '/wow/best-deals'
-  },
-  {
-    name: 'Shopping List',
-    description: 'Search for the realms with the lowest price for an item.',
-    Icon: DocumentSearchIcon,
-    href: '/wow/shopping-list'
   }
 ]
 
