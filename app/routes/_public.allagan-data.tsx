@@ -62,9 +62,9 @@ export const action: ActionFunction = async ({ request }) => {
 
       return {
         id: current.id,
-        location: current.location || current['inventory location'],
+        location: current.location ?? current['inventory location'],
         source: current.source,
-        quantity: current.quantity || current['total quantity available'],
+        quantity: current.quantity ?? current['total quantity available'],
         type: current.type
       }
     })
