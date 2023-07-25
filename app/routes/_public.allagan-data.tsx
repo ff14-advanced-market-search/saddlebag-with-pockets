@@ -30,6 +30,18 @@ export const action: ActionFunction = async ({ request }) => {
 
   const input = formData.get(formName)
 
+  type TrimmedInput =
+    | {
+        id?: number
+        source?: string
+        quantity?: number
+        type?: string
+        'total quantity available'?: number
+      } & (
+        | { location: string; 'inventory location': never }
+        | { location: never; 'inventory location': string }
+      )
+
   if (!input || typeof input !== 'string') {
     return json({ exception: 'Missing input' })
   }
@@ -38,29 +50,24 @@ export const action: ActionFunction = async ({ request }) => {
     if (!Array.isArray(parsedInput)) {
       throw new Error('Invalid input')
     }
-    const trimmedInput = parsedInput.map(
-      (current: {
-        id?: number
-        location?: string
-        source?: string
-        quantity?: number
-        type?: string
-      }) => {
-        if (current.id === undefined || !current.location) {
-          throw new Error(
-            "Missing required fields 'id' or 'location' from allagan tools. Make sure those columns are enabled in your plugin!"
-          )
-        }
-
-        return {
-          id: current.id,
-          location: current.location,
-          source: current.source,
-          quantity: current.quantity,
-          type: current.type
-        }
+    const trimmedInput = parsedInput.map((current: TrimmedInput) => {
+      if (
+        current.id === undefined ||
+        (!current.location && !current['inventory location'])
+      ) {
+        throw new Error(
+          "Missing required fields 'id' or 'location' from allagan tools. Make sure those columns are enabled in your plugin!"
+        )
       }
-    )
+
+      return {
+        id: current.id,
+        location: current.location || current['inventory location'],
+        source: current.source,
+        quantity: current.quantity || current['total quantity available'],
+        type: current.type
+      }
+    })
 
     return await AllaganRequest({
       server: session.getWorld(),
