@@ -10,6 +10,7 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { ColumnList } from '~/components/types'
+import CSVButton from '~/components/utilities/CSVButton'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
@@ -127,6 +128,17 @@ const mobileColumnList = [
   { columnId: 'pricePerUnit', header: 'Price per unit' }
 ]
 
+const cvsFileList: Array<{ title: string; value: keyof SelfPurchase }> = [
+  { title: 'Item Id', value: 'itemID' },
+  { title: 'Item Name', value: 'item_name' },
+  { title: 'Buyer Name', value: 'buyerName' },
+  { title: 'Price Per Unit', value: 'pricePerUnit' },
+  { title: 'Quantity', value: 'quantity' },
+  { title: 'High Quality', value: 'hq' },
+  { title: 'Mannequin', value: 'onMannequin' },
+  { title: 'Updated At', value: 'timestamp' }
+]
+
 const Results = ({
   data,
   totalSpent
@@ -140,6 +152,11 @@ const Results = ({
       <Title
         title={`Total spent: ${totalSpent.toLocaleString()} gil`}
         className="text-xl"
+      />
+      <CSVButton
+        data={data}
+        columns={cvsFileList}
+        filename="saddlebag-selfpurchase.csv"
       />
       <div className="hidden sm:block">
         <FullTable<SelfPurchase>
