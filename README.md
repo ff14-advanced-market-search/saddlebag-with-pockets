@@ -45,7 +45,7 @@ You can run a single unit test file by running
 yarn test testFile
 ```
 
-You can set jest into watch mode by passing the watch arguement:
+You can set vite into watch mode by passing the watch arguement:
 
 ```bash
 yarn test watch
