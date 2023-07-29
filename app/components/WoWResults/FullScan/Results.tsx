@@ -127,6 +127,17 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
     ]
   }
 
+  const outOfStockCSVOptions = {
+    filename: 'saddlebag-profitable-items.csv',
+    columns: [
+      { title: 'Item ID', value: 'itemID' },
+      { title: 'Item Name', value: 'name' },
+      { title: 'Price', value: 'price' },
+      { title: 'Historic Price', value: 'historicPrice' },
+      { title: 'Sales Per Day', value: 'salesPerDay' }
+    ]
+  }
+
   return (
     <div ref={divRef} className="my-4">
       <Section>
@@ -150,6 +161,8 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
             title="Out of Stock Items"
             description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
+            fitScreen={true}
+            csvOptions={outOfStockCSVOptions}
           />
           <SmallTable
             data={data.profit_w_sales}
@@ -159,6 +172,11 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             sortingOrder={[{ id: 'profit', desc: true }]}
             title="Profitable Items With Sales"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
+            fitScreen={true}
+            csvOptions={{
+              ...profitableItemsCSVOptions,
+              filename: 'saddlebag-profit-with-sales.csv'
+            }}
           />
           <SmallTable
             data={data.out_w_sales}
@@ -168,6 +186,11 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
             title="Out of Stock Items With Sales"
             description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
+            fitScreen={true}
+            csvOptions={{
+              ...outOfStockCSVOptions,
+              filename: 'saddlebag-oos-with-sales.csv'
+            }}
           />
         </>
       </Section>
