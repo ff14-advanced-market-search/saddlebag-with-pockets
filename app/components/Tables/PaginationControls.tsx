@@ -5,7 +5,7 @@ import { ChevronDoubleRightIcon } from '@heroicons/react/solid'
 import type { Table } from '@tanstack/react-table'
 import { classNames } from '~/utils'
 
-const numberSelection = [10, 20, 30, 40, 50, 100] as const
+const numberSelection = [5, 10, 20, 30, 40, 50, 100, 200, 500] as const
 
 const getDisabledClassNames = (isDisabled: boolean) =>
   classNames(
