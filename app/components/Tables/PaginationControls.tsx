@@ -22,7 +22,7 @@ const PaginationControls = ({ table }: { table: Table<any> }) => {
   return (
     <div className="pt-1 flex flex-row gap-0.5 items-center justify-center dark:text-gray-200">
       <select
-        className={`flex-1 w-32 mr-4 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400`}
+        className={`flex-1 w-28 mr-4 block px-3 py-2 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400`}
         aria-label="number of results to display"
         value={table.getState().pagination.pageSize}
         onChange={(e) => {
