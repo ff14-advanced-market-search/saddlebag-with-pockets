@@ -26,6 +26,8 @@ import { Title } from '~/components/Common'
 import MobileTable from './MobileTable'
 import type { ColumnList } from '~/components/types'
 import PaginationControls from '~/components/Tables/PaginationControls'
+import type { CSVProps } from '~/components/utilities/CSVButton'
+import CSVButton from '~/components/utilities/CSVButton'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -45,18 +47,22 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 }
 type DataType = Record<string, string | number | boolean | null | undefined>
 
+type CSVOptions = Omit<CSVProps<DataType>, 'data'>
+
 function DesktopTable({
   data,
   sortingOrder,
   columnList,
   title,
-  description
+  description,
+  csvOptions
 }: {
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
   columnList: Array<ColumnList<any>>
   title: string
   description: string
+  csvOptions?: CSVOptions
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -133,6 +139,7 @@ function DesktopTable({
       </div>
       <div className="py-1 flex justify-between">
         <PaginationControls table={table} />
+        {csvOptions && <CSVButton {...csvOptions} data={data} />}
       </div>
       <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
@@ -227,7 +234,8 @@ const SmallTable = ({
   title,
   description,
   mobileColumnList,
-  columnSelectOptions
+  columnSelectOptions,
+  csvOptions
 }: {
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
@@ -236,6 +244,7 @@ const SmallTable = ({
   title: string
   description: string
   columnSelectOptions: Array<string>
+  csvOptions?: CSVOptions
 }) => {
   return (
     <>
@@ -255,6 +264,7 @@ const SmallTable = ({
         columnList={columnList}
         title={title}
         description={description}
+        csvOptions={csvOptions}
       />
     </>
   )

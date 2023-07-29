@@ -113,6 +113,20 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
     }
   }, [divRef])
 
+  const profitableItemsCSVOptions = {
+    filename: 'saddlebag-profitable-items.csv',
+    columns: [
+      { title: 'Item ID', value: 'itemID' },
+      { title: 'Item Name', value: 'name' },
+      { title: 'Home Price', value: 'home_price' },
+      { title: 'New Price', value: 'new_price' },
+      { title: 'Historic Price', value: 'historicPrice' },
+      { title: 'Price', value: 'profit' },
+      { title: 'Return on investment', value: 'roi' },
+      { title: 'Sales Per Day', value: 'salesPerDay' }
+    ]
+  }
+
   return (
     <div ref={divRef} className="my-4">
       <Section>
@@ -125,6 +139,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             sortingOrder={[{ id: 'profit', desc: true }]}
             title="Profitable Items"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
+            csvOptions={profitableItemsCSVOptions}
           />
           <SmallTable
             data={data.out_of_stock}
