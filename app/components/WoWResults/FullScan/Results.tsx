@@ -128,7 +128,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
   }
 
   const outOfStockCSVOptions = {
-    filename: 'saddlebag-profitable-items.csv',
+    filename: 'saddlebag-oos-items.csv',
     columns: [
       { title: 'Item ID', value: 'itemID' },
       { title: 'Item Name', value: 'name' },
