@@ -1025,12 +1025,12 @@ select {
   display: inline-flex;
 }
 
-.table {
-  display: table;
-}
-
 .\!table {
   display: table !important;
+}
+
+.table {
+  display: table;
 }
 
 .grid {
@@ -1122,6 +1122,15 @@ select {
   max-height: 100%;
 }
 
+.max-h-screen {
+  max-height: 100vh;
+}
+
+.max-h-max {
+  max-height: -moz-max-content;
+  max-height: max-content;
+}
+
 .min-h-0 {
   min-height: 0px;
 }
@@ -1148,6 +1157,10 @@ select {
 
 .w-14 {
   width: 3.5rem;
+}
+
+.w-28 {
+  width: 7rem;
 }
 
 .w-4 {
@@ -1207,22 +1220,6 @@ select {
   width: 100vw;
 }
 
-.w-9 {
-  width: 2.25rem;
-}
-
-.w-20 {
-  width: 5rem;
-}
-
-.w-24 {
-  width: 6rem;
-}
-
-.w-28 {
-  width: 7rem;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -1251,18 +1248,6 @@ select {
 .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content;
-}
-
-.min-w-\[40px\] {
-  min-width: 40px;
-}
-
-.min-w-\[60px\] {
-  min-width: 60px;
-}
-
-.min-w-\[70px\] {
-  min-width: 70px;
 }
 
 .max-w-4xl {
@@ -1457,12 +1442,12 @@ select {
   animation: spin 1s linear infinite;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
 .cursor-not-allowed {
   cursor: not-allowed;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .select-all {
@@ -1519,6 +1504,14 @@ select {
   justify-content: space-around;
 }
 
+.gap-0 {
+  gap: 0px;
+}
+
+.gap-0\.5 {
+  gap: 0.125rem;
+}
+
 .gap-1 {
   gap: 0.25rem;
 }
@@ -1537,14 +1530,6 @@ select {
 
 .gap-6 {
   gap: 1.5rem;
-}
-
-.gap-0 {
-  gap: 0px;
-}
-
-.gap-0\.5 {
-  gap: 0.125rem;
 }
 
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
@@ -2399,11 +2384,6 @@ select {
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-slate-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(71 85 105 / var(--tw-bg-opacity));
-}
-
 .hover\:text-blue-500:hover {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
@@ -2782,14 +2762,14 @@ select {
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
-:is(.dark .dark\:hover\:bg-slate-800:hover) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
-}
-
 :is(.dark .dark\:hover\:bg-slate-600:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+}
+
+:is(.dark .dark\:hover\:bg-slate-800:hover) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 :is(.dark .dark\:hover\:text-blue-100:hover) {

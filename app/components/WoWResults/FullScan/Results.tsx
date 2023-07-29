@@ -140,6 +140,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             title="Profitable Items"
             description="This shows items you can buy on your home server and sell on your new server for a profit!"
             csvOptions={profitableItemsCSVOptions}
+            fitScreen={true}
           />
           <SmallTable
             data={data.out_of_stock}

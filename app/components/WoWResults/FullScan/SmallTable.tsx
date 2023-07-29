@@ -55,7 +55,8 @@ function DesktopTable({
   columnList,
   title,
   description,
-  csvOptions
+  csvOptions,
+  fitScreen
 }: {
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
@@ -63,6 +64,7 @@ function DesktopTable({
   title: string
   description: string
   csvOptions?: CSVOptions
+  fitScreen?: boolean
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -126,9 +128,13 @@ function DesktopTable({
     table.setSorting(sortingOrder)
   }, [table, sortingOrder])
 
+  const wrapperClasses = classNames(
+    'hidden mt-0 sm:flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md shadow',
+    fitScreen ? 'max-h-screen' : 'max-h-fit'
+  )
+
   return (
-    <div
-      className={`hidden mt-0 sm:flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md shadow`}>
+    <div className={wrapperClasses}>
       <div className="mx-3">
         <Title title={title} />
       </div>
@@ -143,7 +149,7 @@ function DesktopTable({
       </div>
       <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
+          <div className="overflow-scroll max-h-fit shadow ring-1 ring-black ring-opacity-5">
             <table className="min-w-full relative divide-y divide-gray-300">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -235,7 +241,8 @@ const SmallTable = ({
   description,
   mobileColumnList,
   columnSelectOptions,
-  csvOptions
+  csvOptions,
+  fitScreen
 }: {
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
@@ -245,6 +252,7 @@ const SmallTable = ({
   description: string
   columnSelectOptions: Array<string>
   csvOptions?: CSVOptions
+  fitScreen?: boolean
 }) => {
   return (
     <>
@@ -265,6 +273,7 @@ const SmallTable = ({
         title={title}
         description={description}
         csvOptions={csvOptions}
+        fitScreen={fitScreen}
       />
     </>
   )
