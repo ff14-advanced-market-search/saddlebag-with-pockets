@@ -13,7 +13,11 @@ import {
   getSortedRowModel
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
-import { flexRender, useReactTable } from '@tanstack/react-table'
+import {
+  flexRender,
+  useReactTable,
+  getPaginationRowModel
+} from '@tanstack/react-table'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
@@ -21,6 +25,7 @@ import { classNames } from '~/utils'
 import { Title } from '~/components/Common'
 import MobileTable from './MobileTable'
 import type { ColumnList } from '~/components/types'
+import PaginationControls from '~/components/Tables/PaginationControls'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -104,6 +109,7 @@ function DesktopTable({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
+    getPaginationRowModel: getPaginationRowModel(),
     debugTable: true,
     debugHeaders: true,
     debugColumns: false
@@ -125,7 +131,9 @@ function DesktopTable({
           {description}
         </p>
       </div>
-
+      <div className="py-1 flex justify-between">
+        <PaginationControls table={table} />
+      </div>
       <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
           <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
