@@ -164,7 +164,15 @@ const columnList: Array<ColumnList<DealItem>> = [
     accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
   },
   { columnId: 'itemName', header: 'Item Name' },
-  { columnId: 'realmName', header: 'Realm Name' }
+  {
+    columnId: 'realmName',
+    header: 'Realm Name',
+    accessor: ({ row }) => (
+      <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
+        {row.connectedRealmNames.join(', ')}
+      </p>
+    )
+  }
 ]
 
 const mobileColumnList: Array<ColumnList<DealItem>> = [
