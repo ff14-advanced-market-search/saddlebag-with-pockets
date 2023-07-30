@@ -158,13 +158,13 @@ const columnList: Array<ColumnList<DealItem>> = [
   { columnId: 'salesPerDay', header: 'Sales Per Day' },
   { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'historicPrice', header: 'Historic Price' },
-  { columnId: 'itemName', header: 'Item Name' },
-  { columnId: 'realmName', header: 'Realm Name' },
   {
     columnId: 'link',
     header: 'Item Link',
     accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
-  }
+  },
+  { columnId: 'itemName', header: 'Item Name' },
+  { columnId: 'realmName', header: 'Realm Name' }
 ]
 
 const mobileColumnList: Array<ColumnList<DealItem>> = [
