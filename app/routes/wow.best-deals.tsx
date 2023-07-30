@@ -169,7 +169,7 @@ const columnList: Array<ColumnList<DealItem>> = [
     header: 'Realm Name',
     accessor: ({ row }) => (
       <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
-        {row.connectedRealmNames.join(', ')}
+        {row.realmName}
       </p>
     )
   }
