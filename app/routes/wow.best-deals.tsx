@@ -148,6 +148,19 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
           'historicPrice'
         ]}
         data={data}
+        csvOptions={{
+          filename: 'saddlebag-best-deals.csv',
+          columns: [
+            { title: 'Item ID', value: 'itemID' },
+            { title: 'Item Name', value: 'itemName' },
+            { title: 'Min Price', value: 'minPrice' },
+            { title: 'Historic Price', value: 'historicPrice' },
+            { title: 'Min Price', value: 'Sales Per Day' },
+            { title: 'Discount', value: 'discount' },
+            { title: 'Realm', value: 'realmName' },
+            { title: 'Connected Realm ID', value: 'connectedRealmId' }
+          ]
+        }}
       />
     </PageWrapper>
   )
@@ -155,15 +168,23 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
 
 const columnList: Array<ColumnList<DealItem>> = [
   { columnId: 'discount', header: 'Discount' },
-  { columnId: 'salesPerDay', header: 'Sales Per Day' },
-  { columnId: 'minPrice', header: 'Minimum Price' },
-  { columnId: 'historicPrice', header: 'Historic Price' },
-  { columnId: 'itemName', header: 'Item Name' },
-  { columnId: 'realmName', header: 'Realm Name' },
   {
     columnId: 'link',
     header: 'Item Link',
     accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
+  },
+  { columnId: 'salesPerDay', header: 'Sales Per Day' },
+  { columnId: 'minPrice', header: 'Minimum Price' },
+  { columnId: 'historicPrice', header: 'Historic Price' },
+  { columnId: 'itemName', header: 'Item Name' },
+  {
+    columnId: 'realmName',
+    header: 'Realm Name',
+    accessor: ({ row }) => (
+      <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
+        {row.realmName}
+      </p>
+    )
   }
 ]
 
