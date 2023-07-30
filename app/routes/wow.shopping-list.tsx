@@ -154,7 +154,7 @@ const columnList: Array<ColumnList<ListItem>> = [
     columnId: 'realmNames',
     header: 'Realm Names',
     accessor: ({ getValue }) => (
-      <p className="py-2 px-3 max-w-[400px] mx-auto overflow-x-scroll">
+      <p className="py-2 px-3 max-w-[200px] mx-auto overflow-x-scroll">
         {getValue() as string}
       </p>
     )
@@ -163,7 +163,7 @@ const columnList: Array<ColumnList<ListItem>> = [
     columnId: 'link',
     header: 'Item Link',
     accessor: ({ getValue }) => (
-      <ExternalLink link={getValue() as string} text="Undermine" />
+      <ExternalLink link={getValue() as string} text="" />
     )
   }
 ]
