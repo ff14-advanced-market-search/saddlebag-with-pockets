@@ -313,6 +313,16 @@ const Results = ({ results }: { results: AllaganResults }) => {
         columnList={columnList}
         mobileColumnList={mobileList}
         columnSelectOptions={selectOptions}
+        csvOptions={{
+          filename: 'saddlebag-allagan-inbag.csv',
+          columns: [
+            { value: 'itemID', title: 'Item ID' },
+            { value: 'name', title: 'Item Name' },
+            { value: 'min_price', title: 'Minimum Price' },
+            { value: 'value', title: 'Item Value' },
+            { value: 'hq', title: 'High Quality' }
+          ]
+        }}
       />
     </PageWrapper>
   )
