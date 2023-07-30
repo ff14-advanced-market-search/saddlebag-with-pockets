@@ -191,7 +191,7 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
               className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
               {`${data.length} results found`}
             </p>
-            <div className="my-2">
+            <div className="my-2 mr-1">
               <CSVButton
                 data={data}
                 filename="saddlebag-item-sale-history.csv"
