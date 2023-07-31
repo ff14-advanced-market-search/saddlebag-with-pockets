@@ -167,15 +167,6 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
 }
 
 const columnList: Array<ColumnList<DealItem>> = [
-  { columnId: 'discount', header: 'Discount' },
-  {
-    columnId: 'link',
-    header: 'Item Link',
-    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
-  },
-  { columnId: 'salesPerDay', header: 'Sales Per Day' },
-  { columnId: 'minPrice', header: 'Minimum Price' },
-  { columnId: 'historicPrice', header: 'Historic Price' },
   { columnId: 'itemName', header: 'Item Name' },
   {
     columnId: 'realmName',
@@ -185,7 +176,16 @@ const columnList: Array<ColumnList<DealItem>> = [
         {row.realmName}
       </p>
     )
-  }
+  },
+  {
+    columnId: 'link',
+    header: 'Item Link',
+    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
+  },
+  { columnId: 'discount', header: 'Discount' },
+  { columnId: 'salesPerDay', header: 'Sales Per Day' },
+  { columnId: 'minPrice', header: 'Minimum Price' },
+  { columnId: 'historicPrice', header: 'Historic Price' }
 ]
 
 const mobileColumnList: Array<ColumnList<DealItem>> = [
