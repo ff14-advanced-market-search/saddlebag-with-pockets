@@ -77,6 +77,33 @@ type RegionActionResponse =
   | {}
   | undefined
 
+const undercutColumns: Array<{ value: keyof UndercutItems; title: string }> = [
+  {
+    title: 'Item ID',
+    value: 'item_id'
+  },
+  {
+    title: 'Item Name',
+    value: 'item_name'
+  },
+  {
+    title: 'User Price',
+    value: 'user_price'
+  },
+  {
+    title: 'Lowest Price',
+    value: 'lowest_price'
+  },
+  {
+    title: 'Realm Name',
+    value: 'realmName'
+  },
+  {
+    title: 'Connected Realm Id',
+    value: 'connectedRealmId'
+  }
+]
+
 const RegionUndercut = () => {
   const transition = useNavigation()
   const results = useActionData<RegionActionResponse>()
@@ -107,6 +134,10 @@ const RegionUndercut = () => {
             columnSelectOptions={selectOptions}
             sortingOrder={sortingOrder}
             mobileColumnList={mobileColumnList}
+            csvOptions={{
+              filename: 'saddlebag-undercut-items.csv',
+              columns: undercutColumns
+            }}
           />
           <SmallTable
             title="Not Found Items"
@@ -116,6 +147,10 @@ const RegionUndercut = () => {
             columnSelectOptions={selectOptions}
             sortingOrder={sortingOrder}
             mobileColumnList={mobileColumnList}
+            csvOptions={{
+              filename: 'saddlebag-undercut-not-found.csv',
+              columns: undercutColumns
+            }}
           />
         </PageWrapper>
       )
