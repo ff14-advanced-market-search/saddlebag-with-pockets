@@ -3025,6 +3025,18 @@ select {
     width: 16rem;
   }
 
+  .md\:w-\[270px\] {
+    width: 270px;
+  }
+
+  .md\:w-\[260px\] {
+    width: 260px;
+  }
+
+  .md\:w-\[265px\] {
+    width: 265px;
+  }
+
   .md\:min-w-\[480px\] {
     min-width: 480px;
   }
