@@ -35,6 +35,17 @@ const Index = () => {
             columnSelectOptions={selectOptions}
             sortingOrder={sortingOrder}
             mobileColumnList={mobileColumnList}
+            csvOptions={{
+              filename: 'saddlebag-upload-timers.csv',
+              columns: [
+                { title: 'Dataset ID', value: 'dataSetId' },
+                { title: 'Dataset Name', value: 'dataSetName' },
+                { title: 'Table Name', value: 'tableName' },
+                { title: 'Region', value: 'region' },
+                { title: 'Last Upload Time (unix)', value: 'lastUploadUnix' },
+                { title: 'Last Upload Minute', value: 'lastUploadMinute' }
+              ]
+            }}
           />
         </PageWrapper>
       )
