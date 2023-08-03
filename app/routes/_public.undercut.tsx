@@ -1,4 +1,4 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
@@ -67,7 +67,7 @@ const Description = () => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const results = useActionData()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {

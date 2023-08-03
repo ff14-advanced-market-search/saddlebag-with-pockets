@@ -1,4 +1,4 @@
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
@@ -120,7 +120,7 @@ export const loader: LoaderFunction = ({ request }) => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const searchParams = useLoaderData()
   const results = useActionData()
   const fullScan = useTypedSelector((state) => state.queries.fullScan)

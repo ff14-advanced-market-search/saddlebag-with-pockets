@@ -1,4 +1,4 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useNavigation } from '@remix-run/react'
 import type { ActionFunction } from '@remix-run/cloudflare'
 import GetListingRequest from '~/requests/GetListing'
 import type {
@@ -79,7 +79,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const results = useActionData<
     ListingResponseType | { exception: string } | {}
   >()

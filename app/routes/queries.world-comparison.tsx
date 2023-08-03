@@ -1,4 +1,4 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useNavigation } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ActionFunction } from '@remix-run/cloudflare'
@@ -79,7 +79,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const results = useActionData<
     ItemServerComparisonList | { exception: string } | {}
   >()

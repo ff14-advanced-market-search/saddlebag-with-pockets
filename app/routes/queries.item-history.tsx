@@ -1,4 +1,4 @@
-import { useActionData, useTransition } from '@remix-run/react'
+import { useActionData, useNavigation } from '@remix-run/react'
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import GetHistoryRequest from '~/requests/GetHistory'
@@ -93,7 +93,7 @@ const parseServerError = (error: string) => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const results = useActionData<GetHistoryResponse>()
   const [formState, setFormState] = useState<ItemSelected | undefined>()
   const [error, setError] = useState<string | undefined>()

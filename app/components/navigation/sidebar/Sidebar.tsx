@@ -22,7 +22,7 @@ import {
   NavLink,
   useMatches,
   useNavigate,
-  useTransition
+  useNavigation
 } from '@remix-run/react'
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
@@ -692,7 +692,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
 
 const ItemSearch = () => {
   const { wowItems } = useTypedSelector((state) => state.user)
-  const transition = useTransition()
+  const transition = useNavigation()
   const [itemName, setItemName] = useState('')
   const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
   const [searchError, setSearchError] = useState<string | undefined>(undefined)

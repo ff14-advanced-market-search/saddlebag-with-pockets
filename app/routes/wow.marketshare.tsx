@@ -3,7 +3,7 @@ import { json } from '@remix-run/cloudflare'
 import { PageWrapper } from '~/components/Common'
 import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
 import { z } from 'zod'
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import { getUserSessionData } from '~/sessions'
@@ -106,7 +106,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const { darkmode } = useTypedSelector((state) => state.user)
 

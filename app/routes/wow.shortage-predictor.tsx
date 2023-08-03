@@ -1,4 +1,4 @@
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
@@ -105,7 +105,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<ActionResponse>()
 

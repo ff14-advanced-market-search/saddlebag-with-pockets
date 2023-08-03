@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import DateCell from '~/components/FFXIVResults/FullScan/DateCell'
@@ -47,7 +47,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function Index() {
-  const transition = useTransition()
+  const transition = useNavigation()
   const loaderData = useLoaderData<{ server: string; dataCenter: string }>()
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
@@ -77,7 +77,7 @@ export default function Index() {
           }
         }}>
         <div className="py-2">
-          <SelectDCandWorld transition={transition} sessionData={loaderData} />
+          <SelectDCandWorld navigation={transition} sessionData={loaderData} />
         </div>
         <InputWithLabel
           type="text"
