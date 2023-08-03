@@ -19,6 +19,7 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
+import CSVButton from '~/components/utilities/CSVButton'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -185,11 +186,30 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
               </tbody>
             </table>
           </div>
-          <div>
+          <div className="flex justify-between">
             <p
               className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
               {`${data.length} results found`}
             </p>
+            <div className="my-2 mr-1">
+              <CSVButton
+                data={data}
+                filename="saddlebag-item-sale-history.csv"
+                columns={[
+                  { value: 'number_of_sales', title: 'No# of Sales' },
+                  { value: 'percent_of_sales', title: '% of Sales' },
+                  {
+                    value: 'percent_of_total_quantity_sold',
+                    title: '% of Total Sold'
+                  },
+                  { value: 'stack_size', title: 'Stack Size' },
+                  {
+                    value: 'average_price_for_size',
+                    title: 'Avg Price for Size'
+                  }
+                ]}
+              />
+            </div>
           </div>
         </div>
       </div>

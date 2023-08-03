@@ -45,7 +45,10 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   addMeta({ itemRank })
   return itemRank.passed
 }
-type DataType = Record<string, string | number | boolean | null | undefined>
+type DataType = Record<
+  string,
+  string | Array<string> | Array<number> | number | boolean | null | undefined
+>
 
 type CSVOptions = Omit<CSVProps<DataType>, 'data'>
 
@@ -62,7 +65,7 @@ function DesktopTable({
   sortingOrder: Array<{ id: string; desc: boolean }>
   columnList: Array<ColumnList<any>>
   title: string
-  description: string
+  description?: string
   csvOptions?: CSVOptions
   fitScreen?: boolean
 }) {
@@ -138,11 +141,13 @@ function DesktopTable({
       <div className="mx-3">
         <Title title={title} />
       </div>
-      <div className="mx-3">
-        <p className="italic text-sm text-grey-500 dark:text-gray-300">
-          {description}
-        </p>
-      </div>
+      {description && (
+        <div className="mx-3">
+          <p className="italic text-sm text-grey-500 dark:text-gray-300">
+            {description}
+          </p>
+        </div>
+      )}
       <div className="py-1 flex justify-between">
         <PaginationControls table={table} />
         {csvOptions && <CSVButton {...csvOptions} data={data} />}
@@ -249,7 +254,7 @@ const SmallTable = ({
   columnList: Array<ColumnList<any>>
   mobileColumnList: Array<ColumnList<any>>
   title: string
-  description: string
+  description?: string
   columnSelectOptions: Array<string>
   csvOptions?: CSVOptions
   fitScreen?: boolean

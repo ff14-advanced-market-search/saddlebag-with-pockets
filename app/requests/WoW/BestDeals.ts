@@ -10,6 +10,7 @@ interface WoWBestDealsProps {
 }
 
 export interface DealItem {
+  [key: string]: any
   connectedRealmId: number
   discount: number
   historicPrice: number

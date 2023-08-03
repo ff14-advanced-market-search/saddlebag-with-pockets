@@ -20,6 +20,7 @@ import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
 import DateCell from '../FullScan/DateCell'
+import CSVButton from '~/components/utilities/CSVButton'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -181,11 +182,31 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
               </tbody>
             </table>
           </div>
-          <div>
+          <div className="flex justify-between">
             <p
               className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
               {`${data.listings.length} results found`}
             </p>
+            <div className="my-2 mr-1">
+              <CSVButton
+                data={data.listings}
+                filename="saddlebag-item-listings.csv"
+                columns={[
+                  { value: 'retainerName', title: 'Retainer' },
+                  { value: 'total', title: 'Total' },
+                  {
+                    value: 'quantity',
+                    title: 'Quantity'
+                  },
+                  { value: 'pricePerUnit', title: 'Price per unit' },
+                  {
+                    value: 'hq',
+                    title: 'Is High Quality'
+                  },
+                  { value: 'lastReviewTime', title: 'Last Reviewed' }
+                ]}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -236,6 +236,18 @@ const Results = ({
           'realmRanking'
         ]}
         data={data}
+        csvOptions={{
+          filename: 'saddlebag-wow-export.csv',
+          columns: [
+            { title: 'Realm ID', value: 'connectedRealmID' },
+            { title: 'Realm Names', value: 'connectedRealmNames' },
+            { title: 'Minimum Price', value: 'minPrice' },
+            { title: 'Item Quantity', value: 'itemQuantity' },
+            { title: 'Realm Ranking', value: 'realmRanking' },
+            { title: 'Realm Population Type', value: 'realmPopulationType' },
+            { title: 'Realm Population', value: 'realmPopulationReal' }
+          ]
+        }}
       />
     </PageWrapper>
   )

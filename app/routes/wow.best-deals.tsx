@@ -148,6 +148,19 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
           'historicPrice'
         ]}
         data={data}
+        csvOptions={{
+          filename: 'saddlebag-best-deals.csv',
+          columns: [
+            { title: 'Item ID', value: 'itemID' },
+            { title: 'Item Name', value: 'itemName' },
+            { title: 'Min Price', value: 'minPrice' },
+            { title: 'Historic Price', value: 'historicPrice' },
+            { title: 'Min Price', value: 'Sales Per Day' },
+            { title: 'Discount', value: 'discount' },
+            { title: 'Realm', value: 'realmName' },
+            { title: 'Connected Realm ID', value: 'connectedRealmId' }
+          ]
+        }}
       />
     </PageWrapper>
   )
