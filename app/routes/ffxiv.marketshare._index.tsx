@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -174,7 +174,7 @@ const handleSearchParamChange = (
 }
 
 export default function Index() {
-  const transition = useTransition()
+  const transition = useNavigation()
   const searchParams = useLoaderData<Omit<MarketshareProps, 'server'>>()
   const results = useActionData<MarketshareActionResult>()
   const { darkmode } = useTypedSelector((state) => state.user)

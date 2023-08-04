@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useState } from 'react'
 import { z } from 'zod'
 import type { TreemapNode } from '~/components/Charts/Treemap'
@@ -132,7 +132,7 @@ export const action: ActionFunction = async ({ request }) => {
 const Index = () => {
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   //   const { darkmode } = useTypedSelector(({ user }) => user)
-  const transition = useTransition()
+  const transition = useNavigation()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (transition.state === 'submitting') {

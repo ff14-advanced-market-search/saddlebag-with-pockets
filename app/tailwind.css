@@ -1261,10 +1261,6 @@ select {
   max-width: 200px;
 }
 
-.max-w-\[400px\] {
-  max-width: 400px;
-}
-
 .max-w-fit {
   max-width: -moz-fit-content;
   max-width: fit-content;
@@ -3019,18 +3015,6 @@ select {
 
   .md\:hidden {
     display: none;
-  }
-
-  .md\:w-64 {
-    width: 16rem;
-  }
-
-  .md\:w-\[270px\] {
-    width: 270px;
-  }
-
-  .md\:w-\[260px\] {
-    width: 260px;
   }
 
   .md\:w-\[265px\] {

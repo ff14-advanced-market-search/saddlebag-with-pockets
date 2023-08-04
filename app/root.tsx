@@ -15,7 +15,7 @@ import {
   ScrollRestoration,
   useLoaderData,
   useSubmit,
-  useTransition
+  useNavigation
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
 import { getUserSessionData } from '~/sessions'
@@ -170,7 +170,7 @@ function App() {
     (state) => state.user
   )
   const submit = useSubmit()
-  const transition = useTransition()
+  const transition = useNavigation()
   const dispatch = useDispatch()
 
   /**

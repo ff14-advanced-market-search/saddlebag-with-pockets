@@ -1,7 +1,6 @@
 import type { FC, PropsWithoutRef } from 'react'
 import { useEffect, useState } from 'react'
 import * as locations from '~/utils/locations'
-import type { Transition } from '@remix-run/react/dist/transition'
 import type { ValidationResult } from 'remix-validated-form'
 import type SelectWorldInputFields from '~/routes/_public.options'
 import type { GetDeepProp } from '~/utils/ts'
@@ -9,16 +8,17 @@ import type { WorldsList } from '~/utils/locations/Worlds'
 import { SelectDataCenter } from '~/components/form/select/SelectWorld/SelectDataCenter'
 import { SelectWorld } from '~/components/form/select/SelectWorld/SelectWorld'
 import type { SessionData } from '@remix-run/cloudflare'
+import type { RouterState } from '@remix-run/router'
 
 type SelectWorldProps = PropsWithoutRef<{
-  transition: Transition
+  navigation: RouterState['navigation']
   sessionData: SessionData
   actionData?: ValidationResult<typeof SelectWorldInputFields>
   onChange?: (ffxiv: { world: string; data_center: string }) => void
 }>
 
 export const SelectDCandWorld: FC<SelectWorldProps> = ({
-  transition,
+  navigation,
   sessionData,
   onChange
 }) => {
@@ -36,7 +36,7 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
   return (
     <fieldset
       className="mt-6 bg-white dark:bg-transparent"
-      disabled={transition.state === 'submitting'}>
+      disabled={navigation.state === 'submitting'}>
       <legend className="block text-sm font-medium text-gray-700 dark:text-gray-100">
         Data Center
       </legend>

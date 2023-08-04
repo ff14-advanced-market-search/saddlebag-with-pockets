@@ -1,4 +1,4 @@
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WoWScanResponseWithPayload } from '~/requests/WOWScan'
@@ -48,7 +48,7 @@ export const action: ActionFunction = async ({ request }) => {
 export const ErrorBoundary = () => <ErrorBounds />
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const results = useActionData<
     WoWScanResponseWithPayload | { exception: string }

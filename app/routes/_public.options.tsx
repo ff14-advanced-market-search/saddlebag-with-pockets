@@ -3,7 +3,7 @@ import {
   Form,
   useActionData,
   useLoaderData,
-  useTransition
+  useNavigation
 } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json, redirect } from '@remix-run/cloudflare'
@@ -151,7 +151,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Options() {
   const data = useLoaderData()
-  const transition = useTransition()
+  const transition = useNavigation()
   const actionData = useActionData()
 
   const dispatch = useDispatch()
@@ -219,7 +219,7 @@ export default function Options() {
           title="FFXIV World Selection"
           description="The selected server will change what marketplace your queries are run against.">
           <SelectDCandWorld
-            transition={transition}
+            navigation={transition}
             actionData={actionData}
             sessionData={data}
             onChange={(newWorld) => {

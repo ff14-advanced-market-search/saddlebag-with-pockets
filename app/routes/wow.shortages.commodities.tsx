@@ -1,4 +1,4 @@
-import { useActionData, useLoaderData, useTransition } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
@@ -160,7 +160,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 const Index = () => {
-  const transition = useTransition()
+  const transition = useNavigation()
   const results = useActionData<WowShortageResult>()
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
 
