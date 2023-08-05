@@ -14,14 +14,16 @@ import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
-
-const parseNumber = z.string().transform((value) => parseInt(value, 10))
+import { ItemClassSelect } from '~/components/form/WoW/WoWScanForm'
+import { parseStringToNumber } from '~/utils/zodHelpers'
 
 const validateInput = z.object({
   type: z.string(),
-  discount: parseNumber,
-  minPrice: parseNumber,
-  salesPerDay: z.string().transform((value) => parseFloat(value))
+  discount: parseStringToNumber,
+  minPrice: parseStringToNumber,
+  salesPerDay: z.string().transform((value) => parseFloat(value)),
+  itemClass: parseStringToNumber,
+  itemSubClass: parseStringToNumber
 })
 
 export const action: ActionFunction = async ({ request }) => {
@@ -98,6 +100,7 @@ const BestDeals = () => {
               { label: 'All', value: 'all' }
             ]}
           />
+          <ItemClassSelect />
           <InputWithLabel
             labelTitle="Discount Percentage"
             name="discount"
