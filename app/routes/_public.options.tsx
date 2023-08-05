@@ -220,7 +220,6 @@ export default function Options() {
           description="The selected server will change what marketplace your queries are run against.">
           <SelectDCandWorld
             navigation={transition}
-            actionData={actionData}
             sessionData={data}
             onChange={(newWorld) => {
               setFfxivWorld(newWorld)
