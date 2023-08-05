@@ -1,23 +1,43 @@
-import { useActionData, useNavigation } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import GetSellerId from '~/requests/GetSellerId'
-import { getUserSessionData } from '~/sessions'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import NoResults from '~/components/Common/NoResults'
 import Results from '../components/FFXIVResults/UndercutAlert/Results'
+import SelectDCandWorld from '~/components/form/select/SelectWorld'
+import z from 'zod'
+import { parseZodErrorsToDisplayString } from '~/utils/zodHelpers'
+import { parseStringToNumber } from '~/utils/zodHelpers'
+import { getUserSessionData } from '~/sessions'
+
+const validateForm = z.object({
+  retainerName: z.string().min(1),
+  itemId: parseStringToNumber,
+  world: z.string().min(1)
+})
+
+const inputMap: Record<keyof typeof validateForm._type, string> = {
+  retainerName: 'Retainer Name',
+  itemId: 'Item',
+  world: 'World'
+}
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData()
-  const session = await getUserSessionData(request)
+  const formData = Object.fromEntries(await request.formData())
 
-  const homeServer = session.getWorld()
+  const validData = validateForm.safeParse(formData)
 
-  const retainerName = formData.get('retainerName')
+  if (!validData.success) {
+    return json({
+      exception: parseZodErrorsToDisplayString(validData.error, inputMap)
+    })
+  }
 
+  const { retainerName, itemId, world } = validData.data
   if (
     !retainerName ||
     typeof retainerName !== 'string' ||
@@ -26,16 +46,7 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ exception: 'Missing retainer name' })
   }
 
-  const itemIdData = formData.get('itemId')
-  if (
-    !itemIdData ||
-    typeof itemIdData !== 'string' ||
-    isNaN(parseInt(itemIdData))
-  ) {
-    return json({ exception: 'Missing item' })
-  }
-
-  const itemId = parseInt(itemIdData)
+  const homeServer = world
 
   const response = await GetSellerId({
     itemId,
@@ -66,12 +77,25 @@ const Description = () => {
   )
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getWorld, getDataCenter } = await getUserSessionData(request)
+
+  const data_center = getDataCenter()
+  const world = getWorld()
+
+  return json({
+    data_center,
+    world
+  })
+}
+
 const Index = () => {
-  const transition = useNavigation()
+  const loaderData = useLoaderData()
+  const navigation = useNavigation()
   const results = useActionData()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (transition.state === 'submitting') {
+    if (navigation.state === 'submitting') {
       e.preventDefault()
     }
   }
@@ -104,8 +128,8 @@ const Index = () => {
         title="Input for undercut alerts"
         description={Description()}
         onClick={onSubmit}
-        loading={transition.state === 'submitting'}
-        disabled={transition.state === 'submitting'}
+        loading={navigation.state === 'submitting'}
+        disabled={navigation.state === 'submitting'}
         error={error}>
         <div className="pt-4">
           <ItemSelect tooltip="Item that your retainer is selling" />
@@ -117,6 +141,10 @@ const Index = () => {
               inputTag="Name"
               name="retainerName"
               toolTip="The name of the retainer that is selling your item"
+            />
+            <SelectDCandWorld
+              navigation={navigation}
+              sessionData={loaderData}
             />
           </div>
         </div>
