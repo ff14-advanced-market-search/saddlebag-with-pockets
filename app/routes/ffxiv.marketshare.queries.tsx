@@ -66,7 +66,7 @@ const recommendedQueries = [
     href: searchParams.mostQuantity
   },
   {
-    name: 'Best Selling Funiture (Weekly).',
+    name: 'Best Selling Furniture (Weekly).',
     description: 'See the best selling furniture items from the last week.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestFurniture

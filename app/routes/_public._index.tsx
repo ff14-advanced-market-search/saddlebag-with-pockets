@@ -4,13 +4,14 @@ import TileLink from '~/components/Common/TileLink'
 const recommendedQueries = [
   {
     name: 'Final Fantasy XIV',
-    description: 'Tools to help find items to trade across your region.',
+    description:
+      'Tools for Cross-Server reselling, Market Overviews, Crafting Profit Similation, Shopping Lists, Alerts and More!.',
     href: '/queries'
   },
   {
     name: 'World of Warcraft',
     description:
-      'Find tools cross-realm trading, market overviews, shortage finders, and our Best Deals search!',
+      'Tools for Cross-Realm Trading, Market Overviews, Shortage Finders, and our Best Deals Search!',
     href: '/wow'
   }
 ]
