@@ -16,6 +16,55 @@ export interface CraftingListInput {
   hideExpertRecipes: boolean
 }
 
+interface CostEstimate {
+  material_avg_cost: number
+  material_median_cost: number
+  material_min_listing_cost: number
+}
+
+interface RevenueEstimate {
+  revenue_avg: number
+  revenue_home_min_listing: number
+  revenue_median: number
+  revenue_region_min_listing: number
+}
+
+export interface CraftingListData {
+  [key: string]: any
+  costEst: CostEstimate
+  hq: boolean
+  itemData: string
+  itemID: number
+  itemName: string
+  profitEst: number
+  revenueEst: RevenueEstimate
+  soldPerWeek: number
+  universalisLink: string
+  yieldsPerCraft: number
+}
+
+export type FlatCraftingList = Omit<
+  CraftingListData,
+  'costEst' | 'revenueEst'
+> &
+  CostEstimate &
+  RevenueEstimate
+
+interface UntradableItems {
+  craftID: number
+  hq: boolean
+  materialID: number
+  quantity: number
+}
+
+export interface CraftingListRepsonse {
+  data: Array<CraftingListData>
+  item_ids: Array<number>
+  untradable_items: Array<UntradableItems>
+  missing_stats_ids: Array<number>
+  missing_materials_ids: Array<number>
+}
+
 const CraftingList = async ({
   homeServer,
   costMetric,
