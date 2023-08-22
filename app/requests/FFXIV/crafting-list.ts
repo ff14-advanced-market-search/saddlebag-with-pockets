@@ -1,9 +1,39 @@
 import { address, UserAgent } from '~/requests/client/config'
 
+export const costMetrics = [
+  'material_median_cost',
+  'material_avg_cost',
+  'material_min_listing_cost'
+] as const
+
+type CostMetrics = (typeof costMetrics)[number]
+
+export const costMetricLabels: Record<CostMetrics, string> = {
+  material_median_cost: 'Regional Median Price',
+  material_avg_cost: 'Regional Average Price',
+  material_min_listing_cost: 'Regional Minimum Price'
+}
+
+export const revenueMetrics = [
+  'revenue_home_min_listing',
+  'revenue_region_min_listing',
+  'revenue_median',
+  'revenue_avg'
+] as const
+
+type RevenueMetrics = (typeof revenueMetrics)[number]
+
+export const revenueMetricLabels: Record<RevenueMetrics, string> = {
+  revenue_home_min_listing: 'Home Minimum Price',
+  revenue_region_min_listing: 'Regional Minimum Price',
+  revenue_median: 'Regional Median Price',
+  revenue_avg: 'Regional Average Price'
+}
+
 export interface CraftingListInput {
   homeServer: string
-  costMetric: string
-  revenueMetric: string
+  costMetric: CostMetrics
+  revenueMetric: RevenueMetrics
   salesPerWeek: number
   medianSalePrice: number
   maxMaterialCost: number

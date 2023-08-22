@@ -1,7 +1,13 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
-import { useLoaderData } from '@remix-run/react'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import { useActionData, useLoaderData } from '@remix-run/react'
+import { useMemo } from 'react'
 import { PageWrapper, Title } from '~/components/Common'
+import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import CheckBox from '~/components/form/CheckBox'
+import { InputWithLabel } from '~/components/form/InputWithLabel'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
+import Select from '~/components/form/select'
 import type { ColumnList } from '~/components/types'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
@@ -10,6 +16,12 @@ import type {
   CraftingListInput,
   CraftingListRepsonse,
   FlatCraftingList
+} from '~/requests/FFXIV/crafting-list'
+import {
+  costMetrics,
+  costMetricLabels,
+  revenueMetricLabels,
+  revenueMetrics
 } from '~/requests/FFXIV/crafting-list'
 import CraftingList from '~/requests/FFXIV/crafting-list'
 import { getUserSessionData } from '~/sessions'
@@ -25,22 +37,22 @@ const flattenResult = ({
   yieldsPerCraft,
   costEst,
   revenueEst
-}: CraftingListData): FlatCraftingList => {
-  return {
-    itemID,
-    itemName,
-    hq,
-    itemData,
-    profitEst,
-    soldPerWeek,
-    universalisLink,
-    yieldsPerCraft,
-    ...costEst,
-    ...revenueEst
-  }
-}
+}: CraftingListData): FlatCraftingList => ({
+  itemID,
+  itemName,
+  hq,
+  itemData,
+  profitEst,
+  soldPerWeek,
+  universalisLink,
+  yieldsPerCraft,
+  ...costEst,
+  ...revenueEst
+})
 
-export const loader: LoaderFunction = async ({ request }) => {
+// export const loader: LoaderFunction = async ({ request }) => {}
+
+export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 
   const input: CraftingListInput = {
@@ -64,16 +76,92 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 type ActionResponse = CraftingListRepsonse | { exception: string } | {}
 export default function Index() {
-  const loaderData = useLoaderData<ActionResponse>()
+  // const loaderData = useLoaderData<ActionResponse>()
+  const actionData = useActionData<ActionResponse>()
 
-  if (loaderData && 'data' in loaderData) {
-    const flatData = loaderData.data.map(flattenResult)
-    return <Results data={flatData} />
-  }
+  const showNoResults = actionData && !Object.keys(actionData).length
+
+  const flatData = useMemo(() => {
+    return !showNoResults && actionData && 'data' in actionData
+      ? actionData.data.map(flattenResult)
+      : undefined
+  }, [actionData, showNoResults])
 
   return (
     <PageWrapper>
       <Title title="Crafting List" />
+      {showNoResults && <NoResults href="/ffxiv/crafting-list" />}
+      {flatData && <Results data={flatData} />}
+      {!flatData && (
+        <SmallFormContainer onClick={() => {}} title="input some stuff">
+          <div className="pt-2">
+            <Select
+              title="Cost Metric"
+              defaultValue={'material_median_cost'}
+              options={costMetrics.map((value) => ({
+                value,
+                label: costMetricLabels[value]
+              }))}
+              name="costMetric"
+            />
+            <Select
+              title="Revenue Metric"
+              defaultValue={'material_median_cost'}
+              options={revenueMetrics.map((value) => ({
+                value,
+                label: revenueMetricLabels[value]
+              }))}
+              name="revenueMetric"
+            />
+            <InputWithLabel
+              labelTitle="Sales Per Week"
+              name="salesPerWeek"
+              type="number"
+            />
+            <InputWithLabel
+              labelTitle="Median Sale Price"
+              name="medianSalePrice"
+              type="number"
+            />
+            <InputWithLabel
+              labelTitle="Max Material Cost"
+              name="maxMaterialCost"
+              type="number"
+            />
+            <InputWithLabel
+              labelTitle="Minimum Recipe Stars"
+              name="stars"
+              type="number"
+            />
+            <InputWithLabel
+              labelTitle="Lower Level Limit"
+              name="lvlLowerLimit"
+              type="number"
+            />
+            <InputWithLabel
+              labelTitle="Upper Level Limit"
+              name="lvlUpperLimit"
+              type="number"
+            />
+            <InputWithLabel
+              labelTitle="Yield per recipie"
+              name="yields"
+              type="number"
+            />
+            <div className="mt-2">
+              <CheckBox
+                labelTitle="Hide Expert Recipes"
+                name="hideExpertRecipes"
+              />
+            </div>
+            <Select
+              title="Disciples of the Hand"
+              name="jobs"
+              options={dOHOptions}
+            />
+          </div>
+        </SmallFormContainer>
+      )}
     </PageWrapper>
   )
 }
@@ -82,7 +170,6 @@ const Results = ({ data }: { data: Array<FlatCraftingList> }) => {
   return (
     <PageWrapper>
       <SmallTable
-        title="Crafting Lists"
         data={data}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
@@ -143,4 +230,16 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
       <UniversalisBadgedLink link={universalisLink} />
     )
   }
+]
+
+const dOHOptions = [
+  { value: '8', label: 'Carpenter' },
+  { value: '9', label: 'Blacksmith' },
+  { value: '10', label: 'Armorer' },
+  { value: '11', label: 'Goldsmith' },
+  { value: '12', label: 'Leatherworker' },
+  { value: '13', label: 'Weaver' },
+  { value: '14', label: 'Alchemist' },
+  { value: '15', label: 'Culinarian' },
+  { value: '0', label: 'Omnicrafter with max in all jobs' }
 ]

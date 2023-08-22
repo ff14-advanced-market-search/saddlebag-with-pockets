@@ -64,7 +64,7 @@ function DesktopTable({
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
   columnList: Array<ColumnList<any>>
-  title: string
+  title?: string
   description?: string
   csvOptions?: CSVOptions
   fitScreen?: boolean
@@ -138,9 +138,11 @@ function DesktopTable({
 
   return (
     <div className={wrapperClasses}>
-      <div className="mx-3">
-        <Title title={title} />
-      </div>
+      {title && (
+        <div className="mx-3">
+          <Title title={title} />
+        </div>
+      )}
       {description && (
         <div className="mx-3">
           <p className="italic text-sm text-grey-500 dark:text-gray-300">
@@ -253,7 +255,7 @@ const SmallTable = ({
   sortingOrder: Array<{ id: string; desc: boolean }>
   columnList: Array<ColumnList<any>>
   mobileColumnList: Array<ColumnList<any>>
-  title: string
+  title?: string
   description?: string
   columnSelectOptions: Array<string>
   csvOptions?: CSVOptions
