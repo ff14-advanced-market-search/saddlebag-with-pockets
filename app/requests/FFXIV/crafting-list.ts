@@ -6,7 +6,7 @@ export const costMetrics = [
   'material_min_listing_cost'
 ] as const
 
-type CostMetrics = (typeof costMetrics)[number]
+export type CostMetrics = (typeof costMetrics)[number]
 
 export const costMetricLabels: Record<CostMetrics, string> = {
   material_median_cost: 'Regional Median Price',

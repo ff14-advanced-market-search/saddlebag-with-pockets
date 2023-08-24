@@ -1,5 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData } from '@remix-run/react'
+import z from 'zod'
 import { useMemo } from 'react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
@@ -7,6 +9,7 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CheckBox from '~/components/form/CheckBox'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
+import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import Select from '~/components/form/select'
 import type { ColumnList } from '~/components/types'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
@@ -25,6 +28,13 @@ import {
 } from '~/requests/FFXIV/crafting-list'
 import CraftingList from '~/requests/FFXIV/crafting-list'
 import { getUserSessionData } from '~/sessions'
+import {
+  createUnionSchema,
+  parseCheckboxBoolean,
+  parseStringToNumber,
+  parseStringToNumberArray,
+  parseZodErrorsToDisplayString
+} from '~/utils/zodHelpers'
 
 const flattenResult = ({
   hq,
@@ -50,33 +60,81 @@ const flattenResult = ({
   ...revenueEst
 })
 
-// export const loader: LoaderFunction = async ({ request }) => {}
+const validateFormInput = z.object({
+  costMetric: createUnionSchema(costMetrics),
+  revenueMetric: createUnionSchema(revenueMetrics),
+  salesPerWeek: parseStringToNumber,
+  medianSalePrice: parseStringToNumber,
+  maxMaterialCost: parseStringToNumber,
+  jobs: parseStringToNumberArray,
+  filters: parseStringToNumberArray,
+  stars: parseStringToNumber,
+  lvlLowerLimit: parseStringToNumber,
+  lvlUpperLimit: parseStringToNumber,
+  yields: parseStringToNumber,
+  hideExpertRecipes: parseCheckboxBoolean
+})
+
+const defaultFormValues = {
+  costMetric: 'material_median_cost' as const,
+  revenueMetric: 'revenue_home_min_listing' as const,
+  salesPerWeek: 10,
+  medianSalePrice: 100000,
+  maxMaterialCost: 50000,
+  jobs: '8',
+  filters: [0],
+  stars: -1,
+  lvlLowerLimit: -1,
+  lvlUpperLimit: 91,
+  yields: -1,
+  hideExpertRecipes: true
+}
+
+const inputMap = {
+  costMetric: 'Cost Metric',
+  revenueMetric: 'Revenue Metric',
+  salesPerWeek: 'Sales Per Week',
+  medianSalePrice: 'Median Sale Price',
+  maxMaterialCost: 'Max Material Cost',
+  jobs: 'Disciples of the Hand',
+  filters: 'Filters',
+  stars: 'Minimum Recipe Stars',
+  lvlLowerLimit: 'Lower Level Limit',
+  lvlUpperLimit: 'Upper Level Limit',
+  yields: 'Yield per recipie',
+  hideExpertRecipes: 'Hide Expert Recipes'
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const defaults = defaultFormValues
+  return json(defaults)
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
+  const formData = await request.formData()
+  const formPayload = Object.fromEntries(formData)
+  const validInput = validateFormInput.safeParse(formPayload)
+
+  if (!validInput.success) {
+    console.log('bad input', formPayload)
+    return json({
+      exception: parseZodErrorsToDisplayString(validInput.error, inputMap)
+    })
+  }
 
   const input: CraftingListInput = {
     homeServer: session.getWorld(),
-    costMetric: 'material_median_cost',
-    revenueMetric: 'revenue_home_min_listing',
-    salesPerWeek: 10,
-    medianSalePrice: 100000,
-    maxMaterialCost: 50000,
-    jobs: [0, 8, 9],
-    filters: [0],
-    stars: -1,
-    lvlLowerLimit: -1,
-    lvlUpperLimit: 91,
-    yields: -1,
-    hideExpertRecipes: true
+    ...validInput.data
   }
 
+  console.log(JSON.stringify(input, null, 2))
   return CraftingList(input)
 }
 
 type ActionResponse = CraftingListRepsonse | { exception: string } | {}
 export default function Index() {
-  // const loaderData = useLoaderData<ActionResponse>()
+  const loaderData = useLoaderData<typeof defaultFormValues>()
   const actionData = useActionData<ActionResponse>()
 
   const showNoResults = actionData && !Object.keys(actionData).length
@@ -87,17 +145,27 @@ export default function Index() {
       : undefined
   }, [actionData, showNoResults])
 
+  const error =
+    actionData && 'exception' in actionData ? actionData.exception : undefined
+
   return (
     <PageWrapper>
       <Title title="Crafting List" />
       {showNoResults && <NoResults href="/ffxiv/crafting-list" />}
       {flatData && <Results data={flatData} />}
       {!flatData && (
-        <SmallFormContainer onClick={() => {}} title="input some stuff">
+        <SmallFormContainer onClick={() => {}} error={error}>
           <div className="pt-2">
             <Select
-              title="Cost Metric"
-              defaultValue={'material_median_cost'}
+              title={inputMap.jobs}
+              name="jobs"
+              options={dOHOptions}
+              defaultValue={loaderData.jobs}
+            />
+            <ItemsFilter defaultFilters={loaderData.filters} />
+            <Select
+              title={inputMap.costMetric}
+              defaultValue={loaderData.costMetric}
               options={costMetrics.map((value) => ({
                 value,
                 label: costMetricLabels[value]
@@ -105,8 +173,8 @@ export default function Index() {
               name="costMetric"
             />
             <Select
-              title="Revenue Metric"
-              defaultValue={'material_median_cost'}
+              title={inputMap.revenueMetric}
+              defaultValue={loaderData.revenueMetric}
               options={revenueMetrics.map((value) => ({
                 value,
                 label: revenueMetricLabels[value]
@@ -114,51 +182,54 @@ export default function Index() {
               name="revenueMetric"
             />
             <InputWithLabel
-              labelTitle="Sales Per Week"
+              labelTitle={inputMap.salesPerWeek}
+              defaultValue={loaderData.salesPerWeek}
               name="salesPerWeek"
               type="number"
             />
             <InputWithLabel
-              labelTitle="Median Sale Price"
+              labelTitle={inputMap.medianSalePrice}
+              defaultValue={loaderData.medianSalePrice}
               name="medianSalePrice"
               type="number"
             />
             <InputWithLabel
-              labelTitle="Max Material Cost"
+              labelTitle={inputMap.maxMaterialCost}
+              defaultValue={loaderData.maxMaterialCost}
               name="maxMaterialCost"
               type="number"
             />
             <InputWithLabel
-              labelTitle="Minimum Recipe Stars"
+              labelTitle={inputMap.stars}
+              defaultValue={loaderData.stars}
               name="stars"
               type="number"
             />
             <InputWithLabel
-              labelTitle="Lower Level Limit"
+              labelTitle={inputMap.lvlLowerLimit}
+              defaultValue={loaderData.lvlLowerLimit}
               name="lvlLowerLimit"
               type="number"
             />
             <InputWithLabel
-              labelTitle="Upper Level Limit"
+              labelTitle={inputMap.lvlUpperLimit}
+              defaultValue={loaderData.lvlUpperLimit}
               name="lvlUpperLimit"
               type="number"
             />
             <InputWithLabel
-              labelTitle="Yield per recipie"
+              labelTitle={inputMap.yields}
+              defaultValue={loaderData.yields}
               name="yields"
               type="number"
             />
             <div className="mt-2">
               <CheckBox
-                labelTitle="Hide Expert Recipes"
+                labelTitle={inputMap.hideExpertRecipes}
+                defaultChecked={loaderData.hideExpertRecipes}
                 name="hideExpertRecipes"
               />
             </div>
-            <Select
-              title="Disciples of the Hand"
-              name="jobs"
-              options={dOHOptions}
-            />
           </div>
         </SmallFormContainer>
       )}
