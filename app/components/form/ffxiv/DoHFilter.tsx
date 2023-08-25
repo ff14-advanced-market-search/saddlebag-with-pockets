@@ -9,12 +9,14 @@ const DoHFilter = ({
   formName = 'jobs',
   defaultValue,
   title,
-  options
+  options,
+  onChange
 }: {
   defaultValue: Array<number>
   formName?: string
   title: string
   options: Array<{ value: number; label: string }>
+  onChange?: (jobs: Array<number>) => void
 }) => {
   const [jobs, setJobs] = useState(defaultValue)
   const [isOpen, setIsOpen] = useState(false)
@@ -61,10 +63,15 @@ const DoHFilter = ({
                   onChange={(e) => {
                     e.stopPropagation()
                     if (isSelected) {
-                      setJobs(jobs.filter((id) => id !== option.value))
+                      const newJobs = jobs.filter((id) => id !== option.value)
+                      setJobs(newJobs)
+                      onChange?.(newJobs)
                       return
                     }
-                    setJobs([...jobs, option.value])
+
+                    const newJobs = [...jobs, option.value]
+                    setJobs(newJobs)
+                    onChange?.(newJobs)
                   }}
                   id={option.value}
                 />
