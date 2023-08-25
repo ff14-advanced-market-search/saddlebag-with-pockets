@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import z from 'zod'
 import { useMemo } from 'react'
 import { PageWrapper, Title } from '~/components/Common'
@@ -35,6 +35,7 @@ import {
   parseStringToNumberArray,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
+import DoHFilter from '~/components/form/ffxiv/DoHFilter'
 
 const flattenResult = ({
   hq,
@@ -81,7 +82,7 @@ const defaultFormValues = {
   salesPerWeek: 30,
   medianSalePrice: 70000,
   maxMaterialCost: 100000000,
-  jobs: '8',
+  jobs: [0, 8, 9],
   filters: [0],
   stars: -1,
   lvlLowerLimit: -1,
@@ -136,6 +137,8 @@ type ActionResponse = CraftingListRepsonse | { exception: string } | {}
 export default function Index() {
   const loaderData = useLoaderData<typeof defaultFormValues>()
   const actionData = useActionData<ActionResponse>()
+  const transition = useNavigation()
+  const loading = transition.state === 'submitting'
 
   const showNoResults = actionData && !Object.keys(actionData).length
 
@@ -150,17 +153,18 @@ export default function Index() {
 
   return (
     <PageWrapper>
-      <Title title="Crafting List" />
+      <div className="mx-3 my-2">
+        <Title title="Crafting List" />
+      </div>
       {showNoResults && <NoResults href="/ffxiv/crafting-list" />}
       {flatData && <Results data={flatData} />}
       {!flatData && (
-        <SmallFormContainer onClick={() => {}} error={error}>
+        <SmallFormContainer onClick={() => {}} error={error} loading={loading}>
           <div className="pt-2">
-            <Select
-              title={inputMap.jobs}
-              name="jobs"
-              options={dOHOptions}
+            <DoHFilter
               defaultValue={loaderData.jobs}
+              options={dOHOptions}
+              title={inputMap.jobs}
             />
             <ItemsFilter defaultFilters={loaderData.filters} />
             <Select
@@ -304,13 +308,13 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
 ]
 
 const dOHOptions = [
-  { value: '8', label: 'Carpenter' },
-  { value: '9', label: 'Blacksmith' },
-  { value: '10', label: 'Armorer' },
-  { value: '11', label: 'Goldsmith' },
-  { value: '12', label: 'Leatherworker' },
-  { value: '13', label: 'Weaver' },
-  { value: '14', label: 'Alchemist' },
-  { value: '15', label: 'Culinarian' },
-  { value: '0', label: 'Omnicrafter with max in all jobs' }
+  { value: 8, label: 'Carpenter' },
+  { value: 9, label: 'Blacksmith' },
+  { value: 10, label: 'Armorer' },
+  { value: 11, label: 'Goldsmith' },
+  { value: 12, label: 'Leatherworker' },
+  { value: 13, label: 'Weaver' },
+  { value: 14, label: 'Alchemist' },
+  { value: 15, label: 'Culinarian' },
+  { value: 0, label: 'Omnicrafter with max in all jobs' }
 ]
