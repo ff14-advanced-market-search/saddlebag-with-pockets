@@ -96,21 +96,6 @@ const defaultFormValues = {
   hideExpertRecipes: true
 }
 
-const validateParams = z.object({
-  costMetric: createUnionSchema(costMetrics),
-  revenueMetric: createUnionSchema(revenueMetrics),
-  salesPerWeek: parseStringToNumber,
-  medianSalePrice: parseStringToNumber,
-  maxMaterialCost: parseStringToNumber,
-  jobs: parseStringToNumberArray,
-  filters: parseStringToNumberArray,
-  stars: parseStringToNumber,
-  lvlLowerLimit: parseStringToNumber,
-  lvlUpperLimit: parseStringToNumber,
-  yields: parseStringToNumber,
-  hideExpertRecipes: parseCheckboxBoolean
-})
-
 const inputMap = {
   costMetric: 'Cost Metric',
   revenueMetric: 'Revenue Metric',
@@ -156,7 +141,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     yields: params.get('yields') || defaultFormValues.yields.toString(),
     hideExpertRecipes
   }
-  const validParams = validateParams.safeParse(values)
+  const validParams = validateFormInput.safeParse(values)
 
   if (validParams.success) {
     return json(validParams.data)
@@ -420,12 +405,24 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
     header: 'Revenue Average'
   },
   {
+    columnId: 'revenue_median',
+    header: 'Revenue Median'
+  },
+  {
+    columnId: 'revenue_home_min_listing',
+    header: 'Revenue Home Min Listing'
+  },
+  {
     columnId: 'revenue_region_min_listing',
-    header: 'Revenue Min Listing'
+    header: 'Revenue Region Min Listing'
   },
   {
     columnId: 'material_min_listing_cost',
     header: 'Cost Minimum Listing'
+  },
+  {
+    columnId: 'material_median_cost',
+    header: 'Cost Median Cost Listing'
   },
   {
     columnId: 'material_avg_cost',
