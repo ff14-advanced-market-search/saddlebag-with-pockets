@@ -84,10 +84,10 @@ const validateFormInput = z.object({
 const defaultFormValues = {
   costMetric: 'material_median_cost' as const,
   revenueMetric: 'revenue_home_min_listing' as const,
-  salesPerWeek: 30,
+  salesPerWeek: 40,
   medianSalePrice: 70000,
   maxMaterialCost: 100000000,
-  jobs: [0, 8, 9],
+  jobs: [0],
   filters: [0],
   stars: -1,
   lvlLowerLimit: -1,
@@ -410,23 +410,23 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
   },
   {
     columnId: 'revenue_home_min_listing',
-    header: 'Revenue Home Min Listing'
+    header: 'Revenue Home Minimum Listing'
   },
   {
     columnId: 'revenue_region_min_listing',
-    header: 'Revenue Region Min Listing'
+    header: 'Revenue Region Minimum Listing'
   },
   {
     columnId: 'material_min_listing_cost',
-    header: 'Cost Minimum Listing'
+    header: 'Cost Minimum Listing Price'
   },
   {
     columnId: 'material_median_cost',
-    header: 'Cost Median Cost Listing'
+    header: 'Cost Estimate Median'
   },
   {
     columnId: 'material_avg_cost',
-    header: 'Cost Estimage Average'
+    header: 'Cost Estimate Average'
   },
   {
     columnId: 'hq',
