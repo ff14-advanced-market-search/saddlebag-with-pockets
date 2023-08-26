@@ -398,6 +398,23 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
         <p>{row.profitEst.toLocaleString()}</p>
       )
   },
+  {
+    columnId: 'hq',
+    header: 'High Quality',
+    accessor: ({ row: { hq } }) => <p>{hq ? 'Yes' : 'No'}</p>
+  },
+  {
+    columnId: 'itemDataLink',
+    header: 'Item Data',
+    accessor: ({ row: { itemData } }) => <ItemDataLink link={itemData} />
+  },
+  {
+    columnId: 'universalisLink',
+    header: 'Universalis',
+    accessor: ({ row: { universalisLink } }) => (
+      <UniversalisBadgedLink link={universalisLink} />
+    )
+  },
   { columnId: 'yieldsPerCraft', header: 'Yield' },
   { columnId: 'soldPerWeek', header: 'Sales Per Week' },
   {
@@ -427,23 +444,6 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
   {
     columnId: 'material_avg_cost',
     header: 'Cost Estimate Average'
-  },
-  {
-    columnId: 'hq',
-    header: 'High Quality',
-    accessor: ({ row: { hq } }) => <p>{hq ? 'Yes' : 'No'}</p>
-  },
-  {
-    columnId: 'itemDataLink',
-    header: 'Item Data',
-    accessor: ({ row: { itemData } }) => <ItemDataLink link={itemData} />
-  },
-  {
-    columnId: 'universalisLink',
-    header: 'Universalis',
-    accessor: ({ row: { universalisLink } }) => (
-      <UniversalisBadgedLink link={universalisLink} />
-    )
   }
 ]
 
