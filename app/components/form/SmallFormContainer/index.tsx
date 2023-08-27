@@ -13,7 +13,7 @@ const SmallFormContainer = ({
   buttonTitle = 'Search'
 }: {
   children: React.ReactNode
-  title: string
+  title?: string
   error?: string
   loading?: boolean
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
@@ -33,9 +33,11 @@ const SmallFormContainer = ({
   return (
     <Form method="POST">
       <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">
-          {title}
-        </h1>
+        {title && (
+          <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">
+            {title}
+          </h1>
+        )}
         {!!descriptionForDisplay && descriptionForDisplay}
         <div className="mt-0 md:col-span-3">
           <div className="shadow rounded-md px-4 bg-white dark:bg-slate-700">

@@ -127,6 +127,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Craftism Search',
+        href: 'ffxiv/craftism',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
         icon: ChartSquareBarIcon

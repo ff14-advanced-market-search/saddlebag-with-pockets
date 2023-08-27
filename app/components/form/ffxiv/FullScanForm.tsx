@@ -4,6 +4,10 @@ import { ChevronDownIcon } from '@heroicons/react/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import ItemsFilter from './ItemsFilter'
+import {
+  handleCopyButton,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
 
 const FullScanForm = ({
   loading,
@@ -38,36 +42,6 @@ const FullScanForm = ({
 }) => {
   const [formOpened, setFormOpened] = useState(false)
   const [hqChecked, setHQChecked] = useState(defaultHQChecked)
-
-  const handleSearchParamChange = (
-    paramName: string,
-    newValue: string | undefined
-  ) => {
-    if (!document || !window) return
-    const url = new window.URL(document.URL)
-
-    if (newValue) {
-      url.searchParams.set(paramName, newValue)
-    }
-
-    window.history.replaceState({}, '', url.toString())
-  }
-
-  const handleCopyButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    if (!window || !document) {
-      return
-    }
-
-    if (!window.isSecureContext) {
-      alert('Failed to copy address to clipboard.')
-      return
-    }
-
-    await navigator.clipboard.writeText(document.URL)
-
-    alert('Address copied to clipboard')
-  }
 
   return (
     <>
