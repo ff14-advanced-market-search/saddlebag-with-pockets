@@ -9,7 +9,7 @@ const Select = ({
   ...rest
 }: {
   title: string
-  options: Array<{ label: string; value: string }>
+  options: Array<{ label: string; value: string | number }>
   id?: string
   className?: string
 } & React.DetailedHTMLProps<

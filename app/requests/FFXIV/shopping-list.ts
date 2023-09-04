@@ -1,6 +1,6 @@
 import { address, UserAgent } from '~/requests/client/config'
 
-export interface ShoppingItem {
+export interface ShoppingInputItem {
   itemID: string | number
   craft_amount: number
   hq: boolean
@@ -8,7 +8,22 @@ export interface ShoppingItem {
 }
 export interface GetShoppingListInput {
   homeServer: string
-  shoppingList: Array<ShoppingItem>
+  shoppingList: Array<ShoppingInputItem>
+}
+
+export interface ShoppingListItem {
+  hq: boolean
+  itemID: number
+  name: string
+  pricePerUnit: number
+  quantity: number
+  worldName: string
+}
+
+export interface GetShoppingListResponse {
+  average_cost_per_craft: number
+  total_cost: number
+  data: Array<ShoppingListItem>
 }
 
 const GetShoppingList = async ({

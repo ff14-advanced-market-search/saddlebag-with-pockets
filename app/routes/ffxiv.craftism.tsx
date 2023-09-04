@@ -41,6 +41,7 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import { dOHOptions } from '~/consts'
 
 const flattenResult = ({
   hq,
@@ -445,16 +446,4 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
     columnId: 'material_avg_cost',
     header: 'Cost Estimate Average'
   }
-]
-
-const dOHOptions = [
-  { value: 8, label: 'Carpenter' },
-  { value: 9, label: 'Blacksmith' },
-  { value: 10, label: 'Armorer' },
-  { value: 11, label: 'Goldsmith' },
-  { value: 12, label: 'Leatherworker' },
-  { value: 13, label: 'Weaver' },
-  { value: 14, label: 'Alchemist' },
-  { value: 15, label: 'Culinarian' },
-  { value: 0, label: 'Omnicrafter with max in all jobs' }
 ]
