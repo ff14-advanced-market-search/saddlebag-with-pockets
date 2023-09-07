@@ -1,3 +1,4 @@
+import { json } from '@remix-run/cloudflare'
 import { address, UserAgent } from '~/requests/client/config'
 
 export interface ShoppingInputItem {
@@ -12,6 +13,7 @@ export interface GetShoppingListInput {
 }
 
 export interface ShoppingListItem {
+  [key: string]: any
   hq: boolean
   itemID: number
   name: string
@@ -43,6 +45,10 @@ const GetShoppingList = async ({
   })
 
   const newInput = await firstRequest.json()
+
+  if ('exception' in newInput) {
+    return json(newInput)
+  }
 
   return await fetch(`${address}/api/shoppinglist`, {
     method: 'POST',
