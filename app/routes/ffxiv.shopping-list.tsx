@@ -106,10 +106,19 @@ const Row = ({
   hq,
   job,
   itemID,
+  error,
   onClick
-}: ShoppingFormItem & { onClick: (id: number | string) => void }) => {
+}: ShoppingFormItem & {
+  onClick: (id: number | string) => void
+  error?: boolean
+}) => {
   return (
-    <tr className={`gap-2 px-4 py-2 dark:text-gray-100`}>
+    <tr
+      className={`px-4 py-2 my-3 dark:text-gray-100${
+        error
+          ? ' shadow-[0px_0px_4px_2px_rgba(0,0,0,0.3)] shadow-red-500 rounded'
+          : ''
+      }`}>
       <TableCell>{name}</TableCell>
       <TableCell>{craft_amount}</TableCell>
       <TableCell>{hq ? 'Yes' : 'No'}</TableCell>
@@ -169,6 +178,7 @@ const ShoppingListForm = ({
   }
 
   const hideResultsTable = shoppingList.length === 0
+  const disableAddButton = shoppingList.length >= 10
 
   return (
     <SmallFormContainer
@@ -236,6 +246,7 @@ const ShoppingListForm = ({
           <SubmitButton
             title="Add +"
             className="max-w-[80px]"
+            disabled={disableAddButton}
             type="button"
             onClick={() => {
               setForm(undefined)
@@ -245,7 +256,7 @@ const ShoppingListForm = ({
         </div>
       )}
       {!hideResultsTable && (
-        <table className="w-full my-4 text-gray-800 dark:text-gray-100 border-t">
+        <table className="w-full my-4 text-gray-800 dark:text-gray-100 border-t border-separate border-spacing-y-2">
           <thead className="mt-4 py-4">
             <tr>
               <TableHead>Item</TableHead>
@@ -260,6 +271,7 @@ const ShoppingListForm = ({
               return (
                 <Row
                   key={`${index}-${item.itemID}`}
+                  error={!!error && error.includes(item.itemID.toString())}
                   {...item}
                   onClick={(id) => {
                     setShoppingList(
