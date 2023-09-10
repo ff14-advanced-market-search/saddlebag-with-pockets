@@ -112,6 +112,14 @@ const Row = ({
   onClick: (id: number | string) => void
   error?: boolean
 }) => {
+  const [form, setForm] = useState<ShoppingFormItem>({
+    name,
+    craft_amount,
+    hq,
+    job,
+    itemID
+  })
+
   return (
     <tr
       className={`px-4 py-2 my-3 dark:text-gray-100${
@@ -119,10 +127,45 @@ const Row = ({
           ? ' shadow-[0px_0px_4px_2px_rgba(0,0,0,0.3)] shadow-red-500 rounded'
           : ''
       }`}>
-      <TableCell>{name}</TableCell>
-      <TableCell>{craft_amount}</TableCell>
-      <TableCell>{hq ? 'Yes' : 'No'}</TableCell>
-      <TableCell>{findJobName(job)}</TableCell>
+      <TableCell>{form.name}</TableCell>
+      <TableCell>
+        <input
+          className="w-[70px] border border-gray-300 rounded-md"
+          type={'number'}
+          value={form.craft_amount}
+          onChange={(e) => {
+            const value = e.target.value
+
+            if (value === undefined || value === null) return
+
+            const craft_amount = parseInt(value, 10)
+            setForm({ ...form, craft_amount })
+          }}
+        />
+      </TableCell>
+      <TableCell>
+        <input
+          type="checkbox"
+          checked={form.hq}
+          onChange={(e) => {
+            const checked = e.target.checked
+            if (checked === undefined || checked === null) return
+            setForm({ ...form, hq: checked })
+          }}
+        />
+      </TableCell>
+      <TableCell>
+        <Select
+          options={dOHOptions}
+          onChange={(e) => {
+            const value = e.target.value
+            if (value === undefined || value === null) return
+
+            setForm({ ...form, job: parseInt(value) })
+          }}
+          className="min-w-[100px]"
+        />
+      </TableCell>
       <TableCell>
         <SubmitButton
           type="button"
@@ -136,20 +179,11 @@ const Row = ({
   )
 }
 const TableCell = ({ children }: { children: React.ReactNode }) => {
-  return <td className="text-center">{children}</td>
+  return <td className="text-center min-w-[80px]">{children}</td>
 }
 
 const TableHead = ({ children }: { children: React.ReactNode }) => {
   return <th className="text-center">{children}</th>
-}
-
-const findJobName = (jobId: number) => {
-  const job = dOHOptions.find(({ value }) => value === jobId)
-  if (!job) {
-    return undefined
-  }
-
-  return job.label
 }
 
 const ShoppingListForm = ({
@@ -159,26 +193,31 @@ const ShoppingListForm = ({
   error?: string
   loading: boolean
 }) => {
-  const [form, setForm] = useState<ShoppingFormItem | undefined>(undefined)
   const [shoppingList, setShoppingList] = useState<Array<ShoppingFormItem>>([])
+  const disableList = shoppingList.length >= 10
 
   const handleSelect = (name: string) => {
-    const itemID = getItemIDByName(name)
-
-    if (!itemID) {
-      setForm(undefined)
+    if (disableList) {
       return
     }
 
-    setForm({
-      itemID: parseInt(itemID, 10),
-      name,
-      ...FORM_DEFAULTS
-    })
+    const itemID = getItemIDByName(name)
+
+    if (!itemID) {
+      return
+    }
+
+    setShoppingList([
+      ...shoppingList,
+      {
+        itemID: parseInt(itemID, 10),
+        name,
+        ...FORM_DEFAULTS
+      }
+    ])
   }
 
   const hideResultsTable = shoppingList.length === 0
-  const disableAddButton = shoppingList.length >= 10
 
   return (
     <SmallFormContainer
@@ -190,7 +229,7 @@ const ShoppingListForm = ({
       <div className="py-2 flex flex-col max-w-md">
         <TitleTooltip
           title="Find Items"
-          toolTip="Add items to find crafting ingredients for"
+          toolTip="Add up to 10 items to find crafting ingredients for"
           relative
         />
         <DebouncedSelectInput
@@ -200,90 +239,46 @@ const ShoppingListForm = ({
           onSelect={handleSelect}
           error={error}
           placeholder="Search items..."
+          disabled={disableList}
         />
       </div>
-      {form && (
-        <div className="flex flex-col gap-3 mx-1 mt-3 mb-2 p-2 border rounded-md shadow-md">
-          <p className="text-md font-bold text-gray-700 dark:text-gray-100">
-            {form.name}
-          </p>
-          <InputWithLabel
-            labelTitle="Amount to craft"
-            inputTag="No#"
-            type="number"
-            value={form.craft_amount}
-            min={1}
-            onChange={(e) => {
-              const value = e.target.value
-
-              if (value === undefined || value === null) return
-
-              const craft_amount = parseInt(value, 10)
-              setForm({ ...form, craft_amount })
-            }}
-          />
-          <CheckBox
-            labelTitle="High Quality"
-            labelClassName="text-sm font-medium text-gray-700 dark:text-gray-100"
-            checked={form.hq}
-            onChange={(e) => {
-              const checked = e.target.checked
-              if (checked === undefined || checked === null) return
-              setForm({ ...form, hq: checked })
-            }}
-          />
-
-          <Select
-            title="DoH To Use"
-            options={dOHOptions}
-            onChange={(e) => {
-              const value = e.target.value
-              if (value === undefined || value === null) return
-
-              setForm({ ...form, job: parseInt(value) })
-            }}
-          />
-          <SubmitButton
-            title="Add +"
-            className="max-w-[80px]"
-            disabled={disableAddButton}
-            type="button"
-            onClick={() => {
-              setForm(undefined)
-              setShoppingList([...shoppingList, form])
-            }}
-          />
-        </div>
-      )}
       {!hideResultsTable && (
-        <table className="w-full my-4 text-gray-800 dark:text-gray-100 border-t border-separate border-spacing-y-2">
-          <thead className="mt-4 py-4">
-            <tr>
-              <TableHead>Item</TableHead>
-              <TableHead>Craft Amount</TableHead>
-              <TableHead>High Quality</TableHead>
-              <TableHead>Job</TableHead>
-              <TableHead>Remove Item</TableHead>
-            </tr>
-          </thead>
-          <tbody>
-            {shoppingList.map((item, index) => {
-              return (
-                <Row
-                  key={`${index}-${item.itemID}`}
-                  error={!!error && error.includes(item.itemID.toString())}
-                  {...item}
-                  onClick={(id) => {
-                    setShoppingList(
-                      shoppingList.filter((listItem) => listItem.itemID !== id)
-                    )
-                  }}
-                />
-              )
-            })}
-          </tbody>
-          <input hidden name={FORM_NAME} value={JSON.stringify(shoppingList)} />
-        </table>
+        <div className="max-w-full overflow-x-scroll">
+          <table className="min-w-full my-4 text-gray-800 dark:text-gray-100 border-t border-separate border-spacing-y-2">
+            <thead className="mt-4 py-4">
+              <tr>
+                <TableHead>Item</TableHead>
+                <TableHead>Craft Amount</TableHead>
+                <TableHead>High Quality</TableHead>
+                <TableHead>Job</TableHead>
+                <TableHead>Remove Item</TableHead>
+              </tr>
+            </thead>
+            <tbody>
+              {shoppingList.map((item, index) => {
+                return (
+                  <Row
+                    key={`${index}-${item.itemID}`}
+                    error={!!error && error.includes(item.itemID.toString())}
+                    {...item}
+                    onClick={(id) => {
+                      setShoppingList(
+                        shoppingList.filter(
+                          (listItem) => listItem.itemID !== id
+                        )
+                      )
+                    }}
+                  />
+                )
+              })}
+            </tbody>
+            <input
+              hidden
+              name={FORM_NAME}
+              value={JSON.stringify(shoppingList)}
+            />
+          </table>
+        </div>
       )}
     </SmallFormContainer>
   )

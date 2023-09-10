@@ -8,7 +8,7 @@ const Select = ({
   id,
   ...rest
 }: {
-  title: string
+  title?: string
   options: Array<{ label: string; value: string | number }>
   id?: string
   className?: string
@@ -23,7 +23,7 @@ const Select = ({
 
   return (
     <div className="my-2">
-      <Label htmlFor={id}>{title}</Label>
+      {title && <Label htmlFor={id}>{title}</Label>}
       <select id={id} className={classes} {...rest}>
         {options.map(({ label, value }) => (
           <option key={value} value={value}>
