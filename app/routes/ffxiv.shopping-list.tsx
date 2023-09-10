@@ -2,13 +2,11 @@ import { TrashIcon } from '@heroicons/react/solid'
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useNavigation } from '@remix-run/react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
-import CheckBox from '~/components/form/CheckBox'
-import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import Select from '~/components/form/select'
@@ -61,7 +59,7 @@ export default function Index() {
 
   const results = actionData && 'data' in actionData ? actionData : undefined
 
-  console.log(actionData)
+  console.log('actionData', actionData)
 
   return (
     <PageWrapper>
@@ -107,39 +105,33 @@ const Row = ({
   job,
   itemID,
   error,
-  onClick
+  onClick,
+  updateRow
 }: ShoppingFormItem & {
   onClick: (id: number | string) => void
   error?: boolean
+  updateRow: (row: ShoppingFormItem) => void
 }) => {
-  const [form, setForm] = useState<ShoppingFormItem>({
-    name,
-    craft_amount,
-    hq,
-    job,
-    itemID
-  })
-
+  const form = { name, hq, job, itemID, craft_amount }
   return (
     <tr
-      className={`px-4 py-2 my-3 dark:text-gray-100${
+      className={`px-4 py-2 my-3 mx-1 dark:text-gray-100${
         error
-          ? ' shadow-[0px_0px_4px_2px_rgba(0,0,0,0.3)] shadow-red-500 rounded'
+          ? ' shadow-[0px_0px_4px_2px_rgba(0,0,0,0.3)] shadow-red-500 rounded dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400'
           : ''
       }`}>
-      <TableCell>{form.name}</TableCell>
+      <TableCell>{name}</TableCell>
       <TableCell>
         <input
-          className="w-[70px] border border-gray-300 rounded-md"
+          className="w-[70px] border border-gray-300 rounded-md dark:border-gray-400 dark:bg-gray-600"
           type={'number'}
-          value={form.craft_amount}
+          value={craft_amount}
           onChange={(e) => {
             const value = e.target.value
 
             if (value === undefined || value === null) return
 
-            const craft_amount = parseInt(value, 10)
-            setForm({ ...form, craft_amount })
+            updateRow({ ...form, craft_amount: parseInt(value, 10) })
           }}
         />
       </TableCell>
@@ -150,18 +142,19 @@ const Row = ({
           onChange={(e) => {
             const checked = e.target.checked
             if (checked === undefined || checked === null) return
-            setForm({ ...form, hq: checked })
+            updateRow({ ...form, hq: checked })
           }}
         />
       </TableCell>
       <TableCell>
         <Select
           options={dOHOptions}
+          value={form.job}
           onChange={(e) => {
             const value = e.target.value
             if (value === undefined || value === null) return
 
-            setForm({ ...form, job: parseInt(value) })
+            updateRow({ ...form, job: parseInt(value) })
           }}
           className="min-w-[100px]"
         />
@@ -196,26 +189,32 @@ const ShoppingListForm = ({
   const [shoppingList, setShoppingList] = useState<Array<ShoppingFormItem>>([])
   const disableList = shoppingList.length >= 10
 
-  const handleSelect = (name: string) => {
-    if (disableList) {
-      return
-    }
-
-    const itemID = getItemIDByName(name)
-
-    if (!itemID) {
-      return
-    }
-
-    setShoppingList([
-      ...shoppingList,
-      {
-        itemID: parseInt(itemID, 10),
-        name,
-        ...FORM_DEFAULTS
+  const handleSelect = useCallback(
+    (name: string) => {
+      if (disableList) {
+        return
       }
-    ])
-  }
+
+      const itemID = getItemIDByName(name)
+
+      if (
+        !itemID ||
+        shoppingList.find((item) => item.itemID.toString() === itemID)
+      ) {
+        return
+      }
+
+      setShoppingList([
+        ...shoppingList,
+        {
+          itemID: parseInt(itemID, 10),
+          name,
+          ...FORM_DEFAULTS
+        }
+      ])
+    },
+    [shoppingList, disableList]
+  )
 
   const hideResultsTable = shoppingList.length === 0
 
@@ -244,7 +243,7 @@ const ShoppingListForm = ({
       </div>
       {!hideResultsTable && (
         <div className="max-w-full overflow-x-scroll">
-          <table className="min-w-full my-4 text-gray-800 dark:text-gray-100 border-t border-separate border-spacing-y-2">
+          <table className="min-w-full my-4 px-1 text-gray-800 dark:text-gray-100 border-t border-separate border-spacing-y-2">
             <thead className="mt-4 py-4">
               <tr>
                 <TableHead>Item</TableHead>
@@ -261,6 +260,14 @@ const ShoppingListForm = ({
                     key={`${index}-${item.itemID}`}
                     error={!!error && error.includes(item.itemID.toString())}
                     {...item}
+                    updateRow={(newForm) => {
+                      const newList = shoppingList.map((row) => {
+                        return newForm.itemID === row.itemID && row !== newForm
+                          ? newForm
+                          : row
+                      })
+                      setShoppingList(newList)
+                    }}
                     onClick={(id) => {
                       setShoppingList(
                         shoppingList.filter(
@@ -274,6 +281,7 @@ const ShoppingListForm = ({
             </tbody>
             <input
               hidden
+              readOnly
               name={FORM_NAME}
               value={JSON.stringify(shoppingList)}
             />
