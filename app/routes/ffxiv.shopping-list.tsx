@@ -5,6 +5,7 @@ import { useActionData, useNavigation } from '@remix-run/react'
 import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
+import NoResults from '~/components/Common/NoResults'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
@@ -59,11 +60,14 @@ export default function Index() {
 
   const results = actionData && 'data' in actionData ? actionData : undefined
 
-  console.log('actionData', actionData)
+  const noResults =
+    (!results && actionData && !Object.keys(actionData).length) ||
+    (results && results.data.length === 0)
 
   return (
     <PageWrapper>
       <ShoppingListForm error={error} loading={loading} />
+      {noResults && <NoResults />}
       {results && <Results {...results} />}
     </PageWrapper>
   )
@@ -75,10 +79,10 @@ const Results = ({ data }: GetShoppingListResponse) => {
       <div className="h-4 w-full" />
       <SmallTable
         data={data}
-        sortingOrder={[{ id: 'pricePerUnit', desc: true }]}
+        sortingOrder={[{ id: 'worldName', desc: true }]}
         columnList={columnList}
         mobileColumnList={columnList}
-        columnSelectOptions={['pricePerUnit', 'quantity']}
+        columnSelectOptions={['pricePerUnit', 'quantity', 'worldName']}
       />
     </>
   )
