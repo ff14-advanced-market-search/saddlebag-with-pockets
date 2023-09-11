@@ -144,7 +144,7 @@ const Index = () => {
       <>
         <SmallFormContainer
           title={`WoW ${priceOrQuantity} alert input generator`}
-          description={`Generate the input for our World of Warcraft ${priceOrQuantity} alerts. Join the Saddlebage Exchange discord server to use this for the discord bot commands.`}
+          description={`Generate the input for our World of Warcraft ${priceOrQuantity} alerts. Join the Saddlebag Exchange discord server to use this for the discord bot commands.`}
           error={error}
           onClick={(e) => {
             e.preventDefault()
