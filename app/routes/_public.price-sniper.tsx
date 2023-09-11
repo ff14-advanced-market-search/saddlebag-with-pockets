@@ -68,7 +68,7 @@ const Index = () => {
 
   const description = `To setup ${isPriceValue} alerts search, enter items and a desired
   ${isPriceValue}. Copy and paste the below input for the Discord Bot in the
-  Saddlebage Exchange discord server.`
+  Saddlebag Exchange discord server.`
 
   return (
     <PageWrapper>
