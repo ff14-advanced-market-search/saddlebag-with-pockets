@@ -127,6 +127,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Shopping List',
+        href: 'ffxiv/shopping-list',
+        icon: PencilAltIcon
+      },
+      {
         name: 'Craftism Search',
         href: 'ffxiv/craftism',
         icon: ChartSquareBarIcon

@@ -6,12 +6,13 @@ export const SubmitButton = ({
   loading,
   disabled,
   className,
+  children,
   ...rest
 }: React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {
-  title: string
+  title?: string
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   loading?: boolean
   disabled?: boolean
@@ -49,6 +50,7 @@ export const SubmitButton = ({
         </svg>
       )}
       {title}
+      {!title && children}
     </button>
   )
 }

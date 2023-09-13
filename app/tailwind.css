@@ -1194,6 +1194,10 @@ select {
   width: 26px;
 }
 
+.w-\[70px\] {
+  width: 70px;
+}
+
 .w-\[95\%\] {
   width: 95%;
 }
@@ -1229,6 +1233,10 @@ select {
 
 .min-w-\[260px\] {
   min-width: 260px;
+}
+
+.min-w-\[80px\] {
+  min-width: 80px;
 }
 
 .min-w-fit {
@@ -1268,6 +1276,10 @@ select {
 
 .max-w-full {
   max-width: 100%;
+}
+
+.max-w-md {
+  max-width: 28rem;
 }
 
 .max-w-sm {
@@ -1328,6 +1340,11 @@ select {
 
 .border-spacing-2 {
   --tw-border-spacing-x: 0.5rem;
+  --tw-border-spacing-y: 0.5rem;
+  border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
+}
+
+.border-spacing-y-2 {
   --tw-border-spacing-y: 0.5rem;
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
 }
@@ -2213,6 +2230,12 @@ select {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-\[0px_0px_4px_2px_rgba\(0\2c 0\2c 0\2c 0\.3\)\] {
+  --tw-shadow: 0px 0px 4px 2px rgba(0,0,0,0.3);
+  --tw-shadow-colored: 0px 0px 4px 2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-\[inset_0_-3px_3px_rgba\(0\2c 0\2c 0\2c 0\.2\)\] {
   --tw-shadow: inset 0 -3px 3px rgba(0,0,0,0.2);
   --tw-shadow-colored: inset 0 -3px 3px var(--tw-shadow-color);
@@ -2235,6 +2258,11 @@ select {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-red-500 {
+  --tw-shadow-color: #ef4444;
+  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .outline {

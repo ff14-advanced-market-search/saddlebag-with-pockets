@@ -10,7 +10,8 @@ const SmallFormContainer = ({
   loading,
   disabled,
   description,
-  buttonTitle = 'Search'
+  buttonTitle = 'Search',
+  hideSubmitButton = false
 }: {
   children: React.ReactNode
   title?: string
@@ -20,6 +21,7 @@ const SmallFormContainer = ({
   disabled?: boolean
   description?: string | JSX.Element
   buttonTitle?: string
+  hideSubmitButton?: boolean
 }) => {
   const descriptionForDisplay = description ? (
     typeof description === 'string' ? (
@@ -47,13 +49,15 @@ const SmallFormContainer = ({
                 <p className="text-red-500 dark:text-red-300 mx-0 sm:mx-0 shrink-1">
                   {error}
                 </p>
-                <SubmitButton
-                  title={buttonTitle}
-                  onClick={onClick}
-                  loading={loading}
-                  disabled={disabled}
-                  className="max-h-fit grow-0 ml-0 sm:ml-3 mt-2 sm:mt-0 shrink-0 self-start sm:self-center"
-                />
+                {!hideSubmitButton && (
+                  <SubmitButton
+                    title={buttonTitle}
+                    onClick={onClick}
+                    loading={loading}
+                    disabled={disabled}
+                    className="max-h-fit grow-0 ml-0 sm:ml-3 mt-2 sm:mt-0 shrink-0 self-start sm:self-center"
+                  />
+                )}
               </div>
             </div>
           </div>
