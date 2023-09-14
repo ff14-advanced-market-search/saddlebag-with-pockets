@@ -36,7 +36,7 @@ const ffxivPages = [
   },
   {
     name: 'Shopping List Search',
-    href: '/ffxiv/craftism',
+    href: '/ffxiv/shopping-list',
     description:
       'Helps make a shopping list, telling you where to find crafting materials for the best prices!',
     Icon: PencilAltIcon
