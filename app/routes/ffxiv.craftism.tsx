@@ -85,9 +85,9 @@ const validateFormInput = z.object({
 const defaultFormValues = {
   costMetric: 'material_median_cost' as const,
   revenueMetric: 'revenue_home_min_listing' as const,
-  salesPerWeek: 100,
+  salesPerWeek: 50,
   medianSalePrice: 70000,
-  maxMaterialCost: 100000000,
+  maxMaterialCost: 500000,
   jobs: [0],
   filters: [0],
   stars: -1,
