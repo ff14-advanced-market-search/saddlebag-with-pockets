@@ -10,6 +10,7 @@ export interface ShoppingInputItem {
 export interface GetShoppingListInput {
   homeServer: string
   shoppingList: Array<ShoppingInputItem>
+  regionWide: boolean
 }
 
 export interface ShoppingListItem {
@@ -30,7 +31,8 @@ export interface GetShoppingListResponse {
 
 const GetShoppingList = async ({
   homeServer,
-  shoppingList
+  shoppingList,
+  regionWide
 }: GetShoppingListInput) => {
   const firstRequest = await fetch(`${address}/api/createshoppinglist`, {
     method: 'POST',
@@ -40,7 +42,8 @@ const GetShoppingList = async ({
     },
     body: JSON.stringify({
       home_server: homeServer,
-      shopping_list: shoppingList
+      shopping_list: shoppingList,
+      region_wide: regionWide
     })
   })
 

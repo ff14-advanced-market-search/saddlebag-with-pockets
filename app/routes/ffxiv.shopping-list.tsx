@@ -8,6 +8,7 @@ import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import NoResults from '~/components/Common/NoResults'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import CheckBox from '~/components/form/CheckBox'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import Select from '~/components/form/select'
@@ -30,22 +31,32 @@ const FORM_DEFAULTS = {
 }
 
 const FORM_NAME = 'shopping-list'
+const REGION_WIDE = 'region-wide'
 
 type ShoppingFormItem = ShoppingInputItem & { name: string }
 type ActionDataResponse = GetShoppingListResponse | { exception: string } | {}
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = (await request.formData()).get(FORM_NAME)
-  if (!formData || typeof formData !== 'string') {
+  const formData = await request.formData()
+
+  const shoppingData = formData.get(FORM_NAME)
+  const regionData = formData.get(REGION_WIDE)
+
+  if (!shoppingData || typeof shoppingData !== 'string') {
     return json({ exception: 'Input not found' })
   }
+
   try {
-    const shoppingList = JSON.parse(formData)
+    const shoppingList = JSON.parse(shoppingData)
     const session = await getUserSessionData(request)
 
     const homeServer = session.getWorld()
 
-    return GetShoppingList({ shoppingList, homeServer })
+    return GetShoppingList({
+      shoppingList,
+      homeServer,
+      regionWide: regionData === 'on'
+    })
   } catch {
     return json({ exception: 'Invalid form data.' })
   }
@@ -290,6 +301,9 @@ const ShoppingListForm = ({
               value={JSON.stringify(shoppingList)}
             />
           </table>
+          <div className="w-fit">
+            <CheckBox labelTitle="Use Region Wide Search" name={REGION_WIDE} />
+          </div>
         </div>
       )}
     </SmallFormContainer>
