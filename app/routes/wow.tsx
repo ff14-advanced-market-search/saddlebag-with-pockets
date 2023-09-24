@@ -1,19 +1,10 @@
-import type { ErrorBoundaryComponent } from '@remix-run/cloudflare'
 import { Outlet } from '@remix-run/react'
+import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
-export default function Wow() {
-  return (
-    <div>
-      <Outlet />
-    </div>
-  )
+export function ErrorBoundary() {
+  return <ErrorBounds />
 }
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-  return (
-    <>
-      <p>Erg! Something's broken! Maybe try again. </p>
-      <pre>{error.message}</pre>
-    </>
-  )
+export default function Index() {
+  return <Outlet />
 }

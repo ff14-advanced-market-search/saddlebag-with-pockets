@@ -43,6 +43,7 @@ interface Props {
   label?: string
   useDebounce?: boolean
   debounceTimer?: number
+  disabled?: boolean
 }
 
 const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
@@ -59,7 +60,8 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
       label,
       id,
       useDebounce = false,
-      debounceTimer
+      debounceTimer,
+      disabled
     },
     ref
   ) => {
@@ -113,6 +115,7 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
               name={formName}
               placeholder={placeholder}
               debounceTimer={debounceTimer}
+              disabled={disabled}
             />
           ) : (
             <input

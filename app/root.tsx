@@ -15,7 +15,7 @@ import {
   ScrollRestoration,
   useLoaderData,
   useSubmit,
-  useTransition
+  useNavigation
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
 import { getUserSessionData } from '~/sessions'
@@ -45,6 +45,22 @@ import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
 import WoWGetItems from './requests/WoWGetItems'
 import { setWoWItems } from './redux/reducers/userSlice'
+import ErrorBounds from './components/utilities/ErrorBoundary'
+
+export const ErrorBoundary = () => {
+  return (
+    <html>
+      <head>
+        <Links />
+      </head>
+      <body>
+        <main>
+          <ErrorBounds />
+        </main>
+      </body>
+    </html>
+  )
+}
 
 export const links = () => {
   return [
@@ -154,7 +170,7 @@ function App() {
     (state) => state.user
   )
   const submit = useSubmit()
-  const transition = useTransition()
+  const transition = useNavigation()
   const dispatch = useDispatch()
 
   /**

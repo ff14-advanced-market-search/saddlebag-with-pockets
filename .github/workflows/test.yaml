@@ -1,0 +1,16 @@
+---
+name: "Unit Tests"
+
+on: push
+
+jobs:
+  "Vitest":
+    runs-on: ubuntu-latest
+    container: node:20.3.0
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn install
+      - name: Run Tests
+        run: yarn test

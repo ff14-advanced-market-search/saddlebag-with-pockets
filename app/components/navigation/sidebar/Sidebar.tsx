@@ -4,6 +4,7 @@ import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
   ChartSquareBarIcon,
+  ClockIcon,
   CogIcon,
   MenuAlt2Icon,
   XIcon,
@@ -11,7 +12,9 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
   PencilAltIcon,
-  SearchIcon
+  SearchIcon,
+  ExclamationCircleIcon,
+  ShoppingCartIcon
 } from '@heroicons/react/outline'
 import {
   Form,
@@ -19,7 +22,7 @@ import {
   NavLink,
   useMatches,
   useNavigate,
-  useTransition
+  useNavigation
 } from '@remix-run/react'
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
@@ -30,18 +33,15 @@ import { LocationMarkerIcon } from '@heroicons/react/solid'
 import DiscordIcon from '~/icons/DiscordIcon'
 import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import { items } from '~/utils/items/id_to_item'
+import {
+  ffxivItemsList,
+  parseItemsForDataListSelect
+} from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
-
-const parseItemsForDataListSelect = ([value, label]: [string, string]) => ({
-  value,
-  label
-})
-const ffxivItemsList = items.map(parseItemsForDataListSelect)
 
 type Props = PropsWithChildren<any> & {
   data: LoaderData
@@ -127,6 +127,16 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Shopping List',
+        href: 'ffxiv/shopping-list',
+        icon: PencilAltIcon
+      },
+      {
+        name: 'Craftism Search',
+        href: 'ffxiv/craftism',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
         icon: ChartSquareBarIcon
@@ -180,6 +190,42 @@ const navGroups: Array<{
     openMatch: '/wow/',
     links: [
       {
+        name: 'Best Deals',
+        href: '/wow/best-deals',
+        icon: ExclamationCircleIcon
+      },
+      {
+        name: 'Upload Timers',
+        href: '/wow/upload-timers',
+        icon: ClockIcon
+      },
+      {
+        name: 'Shopping List',
+        href: '/wow/shopping-list',
+        icon: ShoppingCartIcon
+      },
+      {
+        name: 'Item Export Search',
+        href: 'wow/export-search',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Region Wide Undercut Checker',
+        href: 'wow/region-undercut',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
+      },
+      {
+        name: 'Server Transfer Trading Search',
+        href: '/wow/full-scan',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Dragonflight Marketshare Overview',
         href: '/wow/marketshare',
         icon: ChartSquareBarIcon
@@ -200,17 +246,6 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
-        name: 'Region Wide Undercut Checker',
-        href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
-      },
-      {
-        name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
-        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-        external: true
-      },
-      {
         name: 'Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
         icon: ChartSquareBarIcon
@@ -218,11 +253,6 @@ const navGroups: Array<{
       {
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
-        icon: ChartSquareBarIcon
-      },
-      {
-        name: 'Server Transfer Trading Search',
-        href: '/wow/full-scan',
         icon: ChartSquareBarIcon
       }
     ]
@@ -445,6 +475,11 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     <PatreonLink />
                     <WikiLink />
                     <DiscordLink />
+                    <p className="text-gray-400 text-xs mt-4">
+                      FINAL FANTASY is a registered trademark of Square Enix
+                      Holdings Co., Ltd.
+                      <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
+                    </p>
                   </nav>
                 </div>
               </Dialog.Panel>
@@ -457,7 +492,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+      <div className="hidden md:flex md:w-[265px] md:flex-col md:fixed md:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
           <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900 dark:bg-slate-900">
@@ -527,6 +562,11 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               <PatreonLink />
               <WikiLink />
               <DiscordLink />
+              <p className="text-gray-400 text-xs mt-4">
+                FINAL FANTASY is a registered trademark of Square Enix Holdings
+                Co., Ltd.
+                <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
+              </p>
               <div id="ezoic-pub-ad-placeholder-118" />
             </nav>
           </div>
@@ -662,7 +702,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
 
 const ItemSearch = () => {
   const { wowItems } = useTypedSelector((state) => state.user)
-  const transition = useTransition()
+  const transition = useNavigation()
   const [itemName, setItemName] = useState('')
   const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
@@ -737,7 +777,7 @@ const ItemSearch = () => {
       </button>
       {isOpen && (
         <div className="absolute left-2 mt-2 px-2 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <Form method="post" className="flex my-2">
+          <Form method="POST" className="flex my-2">
             <div
               className="flex flex-col max-h-fit gap-1 justify-center"
               onChange={handleFormChange}>

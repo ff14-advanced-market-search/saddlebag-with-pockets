@@ -54,7 +54,7 @@ function createCSVFromData<T>(
   downloadCSV(csvString, title)
 }
 
-interface Props<DataType> {
+export interface CSVProps<DataType> {
   filename: string
   data: Array<DataType>
   columns: Array<CSVColumn<DataType>>
@@ -64,7 +64,7 @@ export default function CSVButton<DataType>({
   filename,
   data,
   columns
-}: Props<DataType>) {
+}: CSVProps<DataType>) {
   const handleDownload = () => {
     createCSVFromData(data, columns, filename)
   }

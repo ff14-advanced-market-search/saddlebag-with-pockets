@@ -10,16 +10,18 @@ const SmallFormContainer = ({
   loading,
   disabled,
   description,
-  buttonTitle = 'Search'
+  buttonTitle = 'Search',
+  hideSubmitButton = false
 }: {
   children: React.ReactNode
-  title: string
+  title?: string
   error?: string
   loading?: boolean
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
   description?: string | JSX.Element
   buttonTitle?: string
+  hideSubmitButton?: boolean
 }) => {
   const descriptionForDisplay = description ? (
     typeof description === 'string' ? (
@@ -31,11 +33,13 @@ const SmallFormContainer = ({
     )
   ) : undefined
   return (
-    <Form method="post">
+    <Form method="POST">
       <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">
-          {title}
-        </h1>
+        {title && (
+          <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">
+            {title}
+          </h1>
+        )}
         {!!descriptionForDisplay && descriptionForDisplay}
         <div className="mt-0 md:col-span-3">
           <div className="shadow rounded-md px-4 bg-white dark:bg-slate-700">
@@ -45,13 +49,15 @@ const SmallFormContainer = ({
                 <p className="text-red-500 dark:text-red-300 mx-0 sm:mx-0 shrink-1">
                   {error}
                 </p>
-                <SubmitButton
-                  title={buttonTitle}
-                  onClick={onClick}
-                  loading={loading}
-                  disabled={disabled}
-                  className="max-h-fit grow-0 ml-0 sm:ml-3 mt-2 sm:mt-0 shrink-0 self-start sm:self-center"
-                />
+                {!hideSubmitButton && (
+                  <SubmitButton
+                    title={buttonTitle}
+                    onClick={onClick}
+                    loading={loading}
+                    disabled={disabled}
+                    className="max-h-fit grow-0 ml-0 sm:ml-3 mt-2 sm:mt-0 shrink-0 self-start sm:self-center"
+                  />
+                )}
               </div>
             </div>
           </div>

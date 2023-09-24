@@ -129,7 +129,7 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
     header: 'Percent Changed',
     accessor: ({ row }) => {
       const value = row.percentChange
-      if (!value) return null
+      if (value === undefined || value === null) return null
 
       if (value >= 9999999) return <p>∞</p>
 
@@ -151,7 +151,7 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
 
     accessor: ({ row }) => {
       const itemID = row.itemID
-      if (!itemID || typeof itemID !== 'string') return null
+      if (itemID === undefined || typeof itemID !== 'string') return null
 
       return <ItemDataLink link={`/queries/item-data/${itemID}`} />
     }
