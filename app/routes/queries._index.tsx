@@ -8,13 +8,6 @@ import TileLink from '~/components/Common/TileLink'
 
 const ffxivPages = [
   {
-    name: 'Guides on how to use Saddlebag Exchange!',
-    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
-    description: 'A link to all of our wiki guides on how to use the website.',
-    Icon: DocumentSearchIcon,
-    external: true
-  },
-  {
     name: 'Reselling Trade Searches',
     description:
       'Find items you can buy on other servers and resell on your own for a profit!',
