@@ -35,13 +35,6 @@ const ffxivPages = [
     Icon: PencilAltIcon
   },
   {
-    name: 'Item History Statistics and Graphs',
-    description:
-      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
-    Icon: ChartSquareBarIcon,
-    href: '/queries/item-history'
-  },
-  {
     name: 'Discord Undercut Alert Generator',
     description:
       'Undercut Alerts will notify you via discord direct message when you are undercut.',
@@ -76,6 +69,13 @@ const ffxivPages = [
     description:
       'Use data from the Allagan Tools Plugin to create sale alerts and find valuable items in your bags you may have forgotten about.',
     Icon: ChartSquareBarIcon
+  },
+  {
+    name: 'Item History Statistics and Graphs',
+    description:
+      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
+    Icon: ChartSquareBarIcon,
+    href: '/queries/item-history'
   },
   {
     name: 'Listings Comparison and Competition Metric',
