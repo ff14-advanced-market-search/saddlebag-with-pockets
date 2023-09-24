@@ -25,9 +25,9 @@ import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 
 const FORM_DEFAULTS = {
-  craft_amount: 1,
+  craft_amount: 5,
   hq: true,
-  job: 8
+  job: 0
 }
 
 const FORM_NAME = 'shopping-list'
