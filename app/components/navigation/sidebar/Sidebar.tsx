@@ -117,6 +117,12 @@ const navGroups: Array<{
     openMatch: '/queries/',
     links: [
       {
+        name: 'Guides and Tutorials',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#game-guides',
+        icon: DocumentSearchIcon,
+        external: true
+      },
+      {
         name: 'Reselling Trading Searches',
         href: 'queries/recommended',
         icon: ChartSquareBarIcon
@@ -189,6 +195,12 @@ const navGroups: Array<{
     title: 'World of Warcraft',
     openMatch: '/wow/',
     links: [
+      {
+        name: 'Guides and Tutorials',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#game-guides',
+        icon: DocumentSearchIcon,
+        external: true
+      },
       {
         name: 'Best Deals',
         href: '/wow/best-deals',

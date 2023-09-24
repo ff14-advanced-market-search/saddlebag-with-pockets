@@ -8,13 +8,6 @@ import TileLink from '~/components/Common/TileLink'
 
 const ffxivPages = [
   {
-    name: 'Guides on how to use Saddlebag Exchange!',
-    href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki',
-    description: 'A link to all of our wiki guides on how to use the website.',
-    Icon: DocumentSearchIcon,
-    external: true
-  },
-  {
     name: 'Reselling Trade Searches',
     description:
       'Find items you can buy on other servers and resell on your own for a profit!',
@@ -40,13 +33,6 @@ const ffxivPages = [
     description:
       'Helps make a shopping list, telling you where to find crafting materials for the best prices!',
     Icon: PencilAltIcon
-  },
-  {
-    name: 'Item History Statistics and Graphs',
-    description:
-      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
-    Icon: ChartSquareBarIcon,
-    href: '/queries/item-history'
   },
   {
     name: 'Discord Undercut Alert Generator',
@@ -83,6 +69,13 @@ const ffxivPages = [
     description:
       'Use data from the Allagan Tools Plugin to create sale alerts and find valuable items in your bags you may have forgotten about.',
     Icon: ChartSquareBarIcon
+  },
+  {
+    name: 'Item History Statistics and Graphs',
+    description:
+      'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
+    Icon: ChartSquareBarIcon,
+    href: '/queries/item-history'
   },
   {
     name: 'Listings Comparison and Competition Metric',
