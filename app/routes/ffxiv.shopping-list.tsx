@@ -26,7 +26,7 @@ import { ffxivItemsList } from '~/utils/items/id_to_item'
 
 const FORM_DEFAULTS = {
   craft_amount: 5,
-  hq: true,
+  hq: false,
   job: 0
 }
 
