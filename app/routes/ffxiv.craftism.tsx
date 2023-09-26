@@ -108,7 +108,7 @@ const inputMap = {
   stars: 'Minimum Recipe Stars',
   lvlLowerLimit: 'Lower Level Limit',
   lvlUpperLimit: 'Upper Level Limit',
-  yields: 'Yield per recipie',
+  yields: 'Yield per Recipe',
   hideExpertRecipes: 'Hide Expert Recipes'
 }
 
