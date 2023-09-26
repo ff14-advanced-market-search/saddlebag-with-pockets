@@ -1,13 +1,10 @@
-import { Form } from '@remix-run/react'
+import { Form, useSearchParams } from '@remix-run/react'
 import React, { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import ItemsFilter from './ItemsFilter'
-import {
-  handleCopyButton,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { handleCopyButton } from '~/utils/urlSeachParamsHelpers'
 
 const FullScanForm = ({
   loading,
@@ -40,8 +37,31 @@ const FullScanForm = ({
   defaultOutOfStockChecked?: boolean
   error?: string
 }) => {
+  const [_, setSearchParams] = useSearchParams({
+    hours: defaultHours.toString(),
+    salesAmount: defaultSalesAmount.toString(),
+    ROI: defaultROI.toString(),
+    minimumStackSize: defaultMinimumStackSize.toString(),
+    minimumProfitAmount: defaultMinimumProfitAmount.toString(),
+    pricePerUnit: defaultPricePerUnit.toString(),
+    filters: defaultFilters.join(','),
+    hQChecked: defaultHQChecked.toString(),
+    regionWideChecked: defaultRegionWideChecked.toString(),
+    includeVendorChecked: defaultIncludeVendorChecked.toString(),
+    outOfStockChecked: defaultOutOfStockChecked.toString()
+  })
   const [formOpened, setFormOpened] = useState(false)
   const [hqChecked, setHQChecked] = useState(defaultHQChecked)
+
+  const handleSearchParamChange = (param: string, value: string) => {
+    setSearchParams(
+      (previous) => {
+        previous.set(param, value)
+        return previous
+      },
+      { replace: true }
+    )
+  }
 
   return (
     <>
