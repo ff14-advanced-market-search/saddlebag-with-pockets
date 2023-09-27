@@ -1,3 +1,4 @@
+import { json } from '@remix-run/cloudflare'
 import { address, UserAgent } from '~/requests/client/config'
 
 export const costMetrics = [
@@ -134,6 +135,10 @@ const CraftingList = async ({
   })
 
   const newInput = await firstFetch.json()
+
+  if ('exception' in newInput) {
+    return json(newInput)
+  }
 
   return await fetch(`${address}/api/craftsim`, {
     method: 'POST',

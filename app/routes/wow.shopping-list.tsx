@@ -98,7 +98,8 @@ const ShoppingList = () => {
         description="Search for the realms with the lowest price for an item."
         onClick={handleSubmit}
         error={error}
-        loading={isSubmitting}>
+        loading={isSubmitting}
+        hideSubmitButton={!itemId}>
         <div className="pt-3 flex flex-col">
           <DebouncedSelectInput
             title={'Item to search for'}
