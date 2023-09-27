@@ -87,7 +87,7 @@ const defaultFormValues = {
   revenueMetric: 'revenue_home_min_listing' as const,
   salesPerWeek: 50,
   medianSalePrice: 70000,
-  maxMaterialCost: 500000,
+  maxMaterialCost: 100000,
   jobs: [0],
   filters: [0],
   stars: -1,
@@ -108,7 +108,7 @@ const inputMap = {
   stars: 'Minimum Recipe Stars',
   lvlLowerLimit: 'Lower Level Limit',
   lvlUpperLimit: 'Upper Level Limit',
-  yields: 'Yield per recipie',
+  yields: 'Yield per Recipe',
   hideExpertRecipes: 'Hide Expert Recipes'
 }
 

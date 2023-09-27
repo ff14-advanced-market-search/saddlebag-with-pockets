@@ -138,7 +138,7 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
-        name: 'Craftism Search',
+        name: 'Craftsim Search',
         href: 'ffxiv/craftism',
         icon: ChartSquareBarIcon
       },
