@@ -207,6 +207,12 @@ const navGroups: Array<{
         icon: ExclamationCircleIcon
       },
       {
+        name: 'Mega Alerts Sniper',
+        href: 'https://github.com/ff14-advanced-market-search/mega-alerts',
+        icon: DocumentSearchIcon,
+        external: true
+      },
+      {
         name: 'Upload Timers',
         href: '/wow/upload-timers',
         icon: ClockIcon
