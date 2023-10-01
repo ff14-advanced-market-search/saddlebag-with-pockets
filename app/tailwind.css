@@ -808,6 +808,10 @@ select {
   z-index: inherit;
 }
 
+.z-\[100\] {
+  z-index: 100;
+}
+
 .col-span-6 {
   grid-column: span 6 / span 6;
 }
@@ -3045,8 +3049,8 @@ select {
     display: none;
   }
 
-  .md\:w-\[265px\] {
-    width: 265px;
+  .md\:w-64 {
+    width: 16rem;
   }
 
   .md\:min-w-\[480px\] {
