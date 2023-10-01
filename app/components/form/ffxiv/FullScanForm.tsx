@@ -1,10 +1,23 @@
-import { Form, useSearchParams } from '@remix-run/react'
+import { Form } from '@remix-run/react'
 import React, { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import ItemsFilter from './ItemsFilter'
-import { handleCopyButton } from '~/utils/urlSeachParamsHelpers'
+import {
+  handleCopyButton,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
+
+const PAGE_URL = '/queries/full-scan'
+
+const getActionUrl = (pageUrl: string, params: Record<string, string>) => {
+  const paramString = Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')
+
+  return `${pageUrl}?${paramString}`
+}
 
 const FullScanForm = ({
   loading,
@@ -37,7 +50,7 @@ const FullScanForm = ({
   defaultOutOfStockChecked?: boolean
   error?: string
 }) => {
-  const [_, setSearchParams] = useSearchParams({
+  const [searchParams, setSearchParams] = useState({
     hours: defaultHours.toString(),
     salesAmount: defaultSalesAmount.toString(),
     ROI: defaultROI.toString(),
@@ -53,19 +66,23 @@ const FullScanForm = ({
   const [formOpened, setFormOpened] = useState(false)
   const [hqChecked, setHQChecked] = useState(defaultHQChecked)
 
-  const handleSearchParamChange = (param: string, value: string) => {
-    setSearchParams(
-      (previous) => {
-        previous.set(param, value)
-        return previous
-      },
-      { replace: true }
-    )
+  const handleFormChange = (name: keyof typeof searchParams, value: string) => {
+    handleSearchParamChange(name, value)
+
+    setSearchParams({ ...searchParams, [name]: value })
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (formOpened) {
+      setFormOpened(false)
+    }
+
+    onClick(e)
   }
 
   return (
     <>
-      <Form method="POST">
+      <Form method="POST" action={getActionUrl(PAGE_URL, searchParams)}>
         <div className="mt-5 md:mt-0 md:col-span-3 py-6">
           <div className="shadow sm:rounded-md">
             <div className="px-4 py-5 shadow sm:rounded-md bg-white sm:p-6 dark:bg-slate-700">
@@ -101,11 +118,11 @@ const FullScanForm = ({
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
                         if (isNaN(value)) {
-                          handleSearchParamChange('hours', '')
+                          handleFormChange('hours', '')
                           return
                         }
 
-                        handleSearchParamChange('hours', value.toString())
+                        handleFormChange('hours', value.toString())
                       }}
                       name="scan_hours"
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
@@ -140,10 +157,10 @@ const FullScanForm = ({
                     onChange={(event) => {
                       const value = parseFloat(event.target.value)
                       if (isNaN(value)) {
-                        handleSearchParamChange('salesAmount', '')
+                        handleFormChange('salesAmount', '')
                         return
                       }
-                      handleSearchParamChange('salesAmount', value.toString())
+                      handleFormChange('salesAmount', value.toString())
                     }}
                     name="sale_amount"
                     className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
@@ -176,10 +193,10 @@ const FullScanForm = ({
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
                         if (isNaN(value)) {
-                          handleSearchParamChange('ROI', '')
+                          handleFormChange('ROI', '')
                           return
                         }
-                        handleSearchParamChange('ROI', value.toString())
+                        handleFormChange('ROI', value.toString())
                       }}
                       id="roi"
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
@@ -215,14 +232,10 @@ const FullScanForm = ({
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
                         if (isNaN(value)) {
-                          handleSearchParamChange('pricePerUnit', '')
+                          handleFormChange('pricePerUnit', '')
                           return
                         }
-                        handleSearchParamChange(
-                          'pricePerUnit',
-
-                          value.toString()
-                        )
+                        handleFormChange('pricePerUnit', value.toString())
                       }}
                       id="price_per_unit"
                       className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
@@ -258,16 +271,11 @@ const FullScanForm = ({
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
                         if (isNaN(value)) {
-                          handleSearchParamChange(
-                            'minimumProfitAmount',
-
-                            ''
-                          )
+                          handleFormChange('minimumProfitAmount', '')
                           return
                         }
-                        handleSearchParamChange(
+                        handleFormChange(
                           'minimumProfitAmount',
-
                           value.toString()
                         )
                       }}
@@ -328,14 +336,10 @@ const FullScanForm = ({
                         onChange={(event) => {
                           const value = parseFloat(event.target.value)
                           if (isNaN(value)) {
-                            handleSearchParamChange('minimumStackSize', '')
+                            handleFormChange('minimumStackSize', '')
                             return
                           }
-                          handleSearchParamChange(
-                            'minimumStackSize',
-
-                            value.toString()
-                          )
+                          handleFormChange('minimumStackSize', value.toString())
                         }}
                         id="minimum_stack_size"
                         className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
@@ -344,7 +348,7 @@ const FullScanForm = ({
                   </div>
                   <ItemsFilter
                     onChange={(newIds) =>
-                      handleSearchParamChange('filters', newIds.join(','))
+                      handleFormChange('filters', newIds.join(','))
                     }
                     defaultFilters={defaultFilters}
                   />
@@ -362,10 +366,7 @@ const FullScanForm = ({
                             onChange={(event) => {
                               const value = event.target.checked
 
-                              handleSearchParamChange(
-                                'hQChecked',
-                                value.toString()
-                              )
+                              handleFormChange('hQChecked', value.toString())
                               setHQChecked(value)
                             }}
                             className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
@@ -399,7 +400,7 @@ const FullScanForm = ({
                             onChange={(event) => {
                               const value = event.target.checked
 
-                              handleSearchParamChange(
+                              handleFormChange(
                                 'regionWideChecked',
                                 value.toString()
                               )
@@ -436,7 +437,7 @@ const FullScanForm = ({
                             onChange={(event) => {
                               const value = event.target.checked
 
-                              handleSearchParamChange(
+                              handleFormChange(
                                 'outOfStockChecked',
                                 value.toString()
                               )
@@ -479,7 +480,7 @@ const FullScanForm = ({
                             onChange={(event) => {
                               const value = event.target.checked
 
-                              handleSearchParamChange(
+                              handleFormChange(
                                 'includeVendorChecked',
                                 value.toString()
                               )
@@ -511,7 +512,11 @@ const FullScanForm = ({
           {error && (
             <p className="self-start text-red-500 dark:text-red-300">{error}</p>
           )}
-          <SubmitButton title="Search" loading={loading} onClick={onClick} />
+          <SubmitButton
+            title="Search"
+            loading={loading}
+            onClick={handleClick}
+          />
         </div>
       </Form>
     </>
