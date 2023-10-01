@@ -183,8 +183,7 @@ const Index = () => {
             defaultOutOfStockChecked={searchParams.outOfStockChecked}
           />
           {displayNoResultsPage && (
-            <NoResults
-              href={'/queries/full-scan?' + pageUrl.searchParams.toString()}>
+            <NoResults>
               A quick suggestion would be expanding the{' '}
               <span className={`font-bold`}>Scan Hours</span> to a higher
               number, or lowering the{' '}
