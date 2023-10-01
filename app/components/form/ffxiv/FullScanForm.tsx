@@ -72,14 +72,6 @@ const FullScanForm = ({
     setSearchParams({ ...searchParams, [name]: value })
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (formOpened) {
-      setFormOpened(false)
-    }
-
-    onClick(e)
-  }
-
   return (
     <>
       <Form method="POST" action={getActionUrl(PAGE_URL, searchParams)}>
@@ -512,11 +504,7 @@ const FullScanForm = ({
           {error && (
             <p className="self-start text-red-500 dark:text-red-300">{error}</p>
           )}
-          <SubmitButton
-            title="Search"
-            loading={loading}
-            onClick={handleClick}
-          />
+          <SubmitButton title="Search" loading={loading} onClick={onClick} />
         </div>
       </Form>
     </>

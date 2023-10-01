@@ -808,10 +808,6 @@ select {
   z-index: inherit;
 }
 
-.z-\[100\] {
-  z-index: 100;
-}
-
 .col-span-6 {
   grid-column: span 6 / span 6;
 }
