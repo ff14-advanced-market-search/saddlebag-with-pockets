@@ -29,3 +29,11 @@ export const handleSearchParamChange = (
 
   window.history.replaceState({}, '', url.toString())
 }
+
+export const getActionUrl = (pageUrl: string, params: Record<string, any>) => {
+  const paramString = Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')
+
+  return `${pageUrl}?${paramString}`
+}

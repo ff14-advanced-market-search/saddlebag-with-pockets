@@ -1,4 +1,4 @@
-import { ContentContainer, PageWrapper, Title } from '~/components/Common'
+import { ContentContainer, Title } from '~/components/Common'
 import type {
   MarketshareItem,
   MarketshareResult,
@@ -201,7 +201,7 @@ export const Results = ({
   sortByValue
 }: {
   data: MarketshareResult
-  pageTitle: string
+  pageTitle?: string
   darkmode: boolean
   sortByValue: MarketshareSortBy
 }) => {
@@ -219,55 +219,51 @@ export const Results = ({
   const mobileColumnList = getMobileColumns(sortBy)
 
   return (
-    <PageWrapper>
-      <>
-        <Title title={pageTitle} />
-        <ContentContainer>
-          <>
-            <Title title={chartTitle} />
-            <TabbedButtons
-              currentValue={sortBy}
-              onClick={(value) => {
-                if (assertIsSortBy(value)) setSortBy(value)
-              }}
-              options={sortByOptions}
-            />
-            <div className="md:hidden py-2">
-              <SortBySelect onChange={setSortBy} label="Sort By" />
-            </div>
-
-            <TreemapChart
-              chartData={chartData}
-              darkMode={darkmode}
-              backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
-            />
-          </>
-        </ContentContainer>
-
-        <div className="my-2">
-          <CSVButton
-            filename="saddlebag-marketshare.csv"
-            data={data}
-            columns={csvColumns}
+    <>
+      {pageTitle && <Title title={pageTitle} />}
+      <ContentContainer>
+        <>
+          <Title title={chartTitle} />
+          <TabbedButtons
+            currentValue={sortBy}
+            onClick={(value) => {
+              if (assertIsSortBy(value)) setSortBy(value)
+            }}
+            options={sortByOptions}
           />
-        </div>
+          <div className="md:hidden py-2">
+            <SortBySelect onChange={setSortBy} label="Sort By" />
+          </div>
 
-        <div className="hidden sm:block">
-          <FullTable<MarketshareItem>
-            data={data}
-            sortingOrder={[{ id: sortBy, desc: true }]}
-            columnList={columnList}
+          <TreemapChart
+            chartData={chartData}
+            darkMode={darkmode}
+            backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
           />
-        </div>
-        <MobileTable
+        </>
+      </ContentContainer>
+      <div className="my-2">
+        <CSVButton
+          filename="saddlebag-marketshare.csv"
+          data={data}
+          columns={csvColumns}
+        />
+      </div>
+      <div className="hidden sm:block">
+        <FullTable<MarketshareItem>
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}
-          columnList={mobileColumnList}
-          rowLabels={columnList}
-          columnSelectOptions={sortByOptions.map(({ value }) => value)}
+          columnList={columnList}
         />
-      </>
-    </PageWrapper>
+      </div>
+      <MobileTable
+        data={data}
+        sortingOrder={[{ id: sortBy, desc: true }]}
+        columnList={mobileColumnList}
+        rowLabels={columnList}
+        columnSelectOptions={sortByOptions.map(({ value }) => value)}
+      />
+    </>
   )
 }
 

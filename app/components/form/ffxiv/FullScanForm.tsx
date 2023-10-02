@@ -5,19 +5,12 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import ItemsFilter from './ItemsFilter'
 import {
+  getActionUrl,
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 
 const PAGE_URL = '/queries/full-scan'
-
-const getActionUrl = (pageUrl: string, params: Record<string, string>) => {
-  const paramString = Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
-    .join('&')
-
-  return `${pageUrl}?${paramString}`
-}
 
 const FullScanForm = ({
   loading,
