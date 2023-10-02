@@ -133,14 +133,14 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Shopping List',
-        href: 'ffxiv/shopping-list',
-        icon: PencilAltIcon
-      },
-      {
         name: 'Craftsim Search',
         href: 'ffxiv/craftism',
         icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Shopping List',
+        href: 'ffxiv/shopping-list',
+        icon: PencilAltIcon
       },
       {
         name: 'Listings Comparison and Competition Metrics',
