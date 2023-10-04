@@ -24,19 +24,6 @@ import TileLink from '~/components/Common/TileLink'
 
 const recommendedQueries = [
   {
-    name: 'Fast Sales Search',
-    description: 'Search for items with high rate of sales.',
-    Icon: DocumentSearchIcon,
-    href: FAST_SCAN_PATH
-  },
-  {
-    name: 'NPC Vendor Furniture Item Search',
-    description:
-      'Search for items sold by Housing Vendors which can be resold on the marketboard.',
-    Icon: DocumentSearchIcon,
-    href: VENDOR_FURNITURE_PATH
-  },
-  {
     name: 'Olivias Furnishing Items Medium Sell',
     description: 'Finds medium priced furniture to sell.',
     Icon: DocumentSearchIcon,
@@ -47,6 +34,20 @@ const recommendedQueries = [
     description: 'Medium priced Consumable Collectables to sell.',
     Icon: DocumentSearchIcon,
     href: OLIVIA_6_PATH
+  },
+  {
+    name: 'Fast Sales Search',
+    description:
+      'Search for items with high rate of sales. May not return results if your server has slow sales.',
+    Icon: DocumentSearchIcon,
+    href: FAST_SCAN_PATH
+  },
+  {
+    name: 'NPC Vendor Furniture Item Search',
+    description:
+      'Search for items sold by Housing Vendors which can be resold on the marketboard.',
+    Icon: DocumentSearchIcon,
+    href: VENDOR_FURNITURE_PATH
   },
   {
     name: 'Commodities Search',
