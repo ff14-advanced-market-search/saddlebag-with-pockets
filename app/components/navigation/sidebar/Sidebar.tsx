@@ -133,14 +133,14 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Craftsim Search',
+        href: 'ffxiv/craftsim',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Shopping List',
         href: 'ffxiv/shopping-list',
         icon: PencilAltIcon
-      },
-      {
-        name: 'Craftism Search',
-        href: 'ffxiv/craftism',
-        icon: ChartSquareBarIcon
       },
       {
         name: 'Listings Comparison and Competition Metrics',
@@ -205,6 +205,12 @@ const navGroups: Array<{
         name: 'Best Deals',
         href: '/wow/best-deals',
         icon: ExclamationCircleIcon
+      },
+      {
+        name: 'Mega Alerts Sniper',
+        href: 'https://github.com/ff14-advanced-market-search/mega-alerts',
+        icon: DocumentSearchIcon,
+        external: true
       },
       {
         name: 'Upload Timers',

@@ -22,8 +22,8 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
-    name: 'Crasftism Search',
-    href: '/ffxiv/craftism',
+    name: 'Craftsim Search',
+    href: '/ffxiv/craftsim',
     description: 'Finds the best items to craft!',
     Icon: ChartSquareBarIcon
   },
