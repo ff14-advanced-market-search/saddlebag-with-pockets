@@ -585,7 +585,6 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 Co., Ltd.
                 <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
               </p>
-              <div id="ezoic-pub-ad-placeholder-118" />
             </nav>
           </div>
         </div>
