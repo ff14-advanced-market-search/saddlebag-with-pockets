@@ -32,7 +32,7 @@ export const handleSearchParamChange = (
 
 export const getActionUrl = (pageUrl: string, params: Record<string, any>) => {
   const paramString = Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&')
 
   return `${pageUrl}?${paramString}`

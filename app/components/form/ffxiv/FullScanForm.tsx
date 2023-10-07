@@ -493,7 +493,7 @@ const FullScanForm = ({
           </div>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-end mb-3">
           {error && (
             <p className="self-start text-red-500 dark:text-red-300">{error}</p>
           )}

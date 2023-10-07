@@ -97,8 +97,7 @@ export const loader: LoaderFunction = ({ request }) => {
       ? parseFloat(url.searchParams.get('pricePerUnit') as string)
       : undefined,
     filters: url.searchParams.has('filters')
-      ? url.searchParams
-          .get('filters')
+      ? decodeURIComponent(url.searchParams.get('filters') as string)
           ?.split(',')
           .map((str) => parseInt(str))
       : undefined,
