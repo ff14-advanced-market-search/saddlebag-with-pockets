@@ -2,7 +2,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import z from 'zod'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -37,11 +37,14 @@ import {
 } from '~/utils/zodHelpers'
 import DoHFilter from '~/components/form/ffxiv/DoHFilter'
 import {
+  getActionUrl,
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
+
+const PAGE_URL = '/ffxiv/craftism'
 
 const flattenResult = ({
   hq,
@@ -178,6 +181,10 @@ export default function Index() {
   const transition = useNavigation()
   const loading = transition.state === 'submitting'
 
+  const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
+    ...loaderData
+  })
+
   const showNoResults = actionData && !Object.keys(actionData).length
 
   const flatData = useMemo(() => {
@@ -189,6 +196,13 @@ export default function Index() {
   const error =
     actionData && 'exception' in actionData ? actionData.exception : undefined
 
+  const handleFormChange = (
+    name: keyof typeof defaultFormValues,
+    value: string
+  ) => {
+    handleSearchParamChange(name, value)
+    setSearchParams({ ...searchParams, [name]: value })
+  }
   console.log(loaderData)
 
   return (
@@ -206,7 +220,8 @@ export default function Index() {
           onClick={() => {}}
           error={error}
           loading={loading}
-          title="Crafting List">
+          title="Crafting List"
+          action={getActionUrl(PAGE_URL, searchParams)}>
           <div className="pt-2">
             <div className="flex justify-end mb-2">
               <SubmitButton
@@ -219,14 +234,12 @@ export default function Index() {
               defaultValue={loaderData.jobs}
               options={dOHOptions}
               title={inputMap.jobs}
-              onChange={(jobs) =>
-                handleSearchParamChange('jobs', jobs.join(','))
-              }
+              onChange={(jobs) => handleFormChange('jobs', jobs.join(','))}
             />
             <ItemsFilter
               defaultFilters={loaderData.filters}
               onChange={(newIds) =>
-                handleSearchParamChange('filters', newIds.join(','))
+                handleFormChange('filters', newIds.join(','))
               }
             />
             <Select
@@ -240,7 +253,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.target.value
                 if (value !== undefined) {
-                  handleSearchParamChange('costMetric', value)
+                  handleFormChange('costMetric', value)
                 }
               }}
             />
@@ -255,7 +268,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.target.value
                 if (value !== undefined) {
-                  handleSearchParamChange('costMetric', value)
+                  handleFormChange('costMetric', value)
                 }
               }}
             />
@@ -267,7 +280,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
-                  handleSearchParamChange('salesPerWeek', value)
+                  handleFormChange('salesPerWeek', value)
                 }
               }}
             />
@@ -279,7 +292,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
-                  handleSearchParamChange('medianSalePrice', value)
+                  handleFormChange('medianSalePrice', value)
                 }
               }}
             />
@@ -291,7 +304,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
-                  handleSearchParamChange('maxMaterialCost', value)
+                  handleFormChange('maxMaterialCost', value)
                 }
               }}
             />
@@ -303,7 +316,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
-                  handleSearchParamChange('stars', value)
+                  handleFormChange('stars', value)
                 }
               }}
             />
@@ -315,7 +328,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
-                  handleSearchParamChange('lvlLowerLimit', value)
+                  handleFormChange('lvlLowerLimit', value)
                 }
               }}
             />
@@ -327,7 +340,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
-                  handleSearchParamChange('lvlUpperLimit', value)
+                  handleFormChange('lvlUpperLimit', value)
                 }
               }}
             />
@@ -339,7 +352,7 @@ export default function Index() {
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
-                  handleSearchParamChange('yields', value)
+                  handleFormChange('yields', value)
                 }
               }}
             />
@@ -350,7 +363,7 @@ export default function Index() {
                 name="hideExpertRecipes"
                 onChange={(event) => {
                   const value = event.target.checked
-                  handleSearchParamChange('hideExpertRecipes', value.toString())
+                  handleFormChange('hideExpertRecipes', value.toString())
                 }}
               />
             </div>
