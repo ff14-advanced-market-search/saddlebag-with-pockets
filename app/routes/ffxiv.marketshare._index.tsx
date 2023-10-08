@@ -84,7 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
     filters: z
       .string()
       .min(1)
-      .transform((value) => value.split(',').map(Number))
+      .transform((value) => decodeURIComponent(value).split(',').map(Number))
   })
 
   const validInput = validateFormData.safeParse(formPayload)

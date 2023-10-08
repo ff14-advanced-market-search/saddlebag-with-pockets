@@ -135,8 +135,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     maxMaterialCost:
       params.get('maxMaterialCost') ||
       defaultFormValues.maxMaterialCost.toString(),
-    jobs: params.get('jobs') || defaultFormValues.jobs.join(','),
-    filters: params.get('filters') || defaultFormValues.filters.join(','),
+    jobs: params.has('jobs')
+      ? decodeURIComponent(params.get('jobs') as string)
+      : defaultFormValues.jobs.join(','),
+    filters: params.has('filters')
+      ? decodeURIComponent(params.get('filters') as string)
+      : defaultFormValues.filters.join(','),
     stars: params.get('stars') || defaultFormValues.stars.toString(),
     lvlLowerLimit:
       params.get('lvlLowerLimit') || defaultFormValues.lvlLowerLimit.toString(),
