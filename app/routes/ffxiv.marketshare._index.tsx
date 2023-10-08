@@ -7,7 +7,7 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
-import MarketShare from '~/requests/FFXIV/marketshare'
+import MarketShare, { marketShareSortBys } from '~/requests/FFXIV/marketshare'
 import type {
   MarketshareResult,
   MarketshareSortBy,
@@ -17,11 +17,27 @@ import NoResults from '~/components/Common/NoResults'
 import { Results, SortBySelect } from '~/components/FFXIVResults/Marketshare'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import {
+  getActionUrl,
+  handleCopyButton,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
+import { useState } from 'react'
 
 type MarketshareActionResult =
   | {}
   | { exception: string }
   | { data: MarketshareResult; server: string; sortBy: MarketshareSortBy }
+
+type MarketshareParams = {
+  timePeriod: string
+  salesAmount: string
+  averagePrice: string
+  sortBy: MarketshareSortBy
+  filters: string
+}
+
+type MarketshareLoaderData = Omit<MarketshareProps, 'server'>
 
 const inputMap: Record<string, string> = {
   server: 'Home Realm',
@@ -30,6 +46,10 @@ const inputMap: Record<string, string> = {
   averagePrice: 'Average Price',
   sortBy: 'Sort Data By',
   filters: 'Filters'
+}
+
+const assertSortBy = (value: any): value is MarketshareSortBy => {
+  return marketShareSortBys.includes(value)
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -64,7 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
     filters: z
       .string()
       .min(1)
-      .transform((value) => value.split(',').map(Number))
+      .transform((value) => decodeURIComponent(value).split(',').map(Number))
   })
 
   const validInput = validateFormData.safeParse(formPayload)
@@ -96,7 +116,7 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
-const defaultParams = {
+const defaultParams: MarketshareLoaderData = {
   timePeriod: 168,
   salesAmount: 2,
   averagePrice: 10000,
@@ -159,23 +179,19 @@ export const loader: LoaderFunction = ({ request }) => {
   } else return defaultParams
 }
 
-const handleSearchParamChange = (
-  paramName: string,
-  newValue: string | undefined
-) => {
-  if (!document || !window) return
-  const url = new window.URL(document.URL)
-
-  if (newValue) {
-    url.searchParams.set(paramName, newValue)
-  }
-
-  window.history.replaceState({}, '', url.toString())
-}
-
 export default function Index() {
   const transition = useNavigation()
-  const searchParams = useLoaderData<Omit<MarketshareProps, 'server'>>()
+  const loaderData = useLoaderData<MarketshareLoaderData>()
+  const [searchParams, setSearchParams] = useState<MarketshareParams>({
+    timePeriod: loaderData.timePeriod.toString(),
+    salesAmount: loaderData.salesAmount.toString(),
+    averagePrice: loaderData.averagePrice.toString(),
+    sortBy: assertSortBy(loaderData.sortBy)
+      ? loaderData.sortBy
+      : defaultParams.sortBy,
+    filters: loaderData.filters.join(',')
+  })
+
   const results = useActionData<MarketshareActionResult>()
   const { darkmode } = useTypedSelector((state) => state.user)
 
@@ -190,37 +206,13 @@ export default function Index() {
   const error =
     results && 'exception' in results ? results?.exception : undefined
 
-  if (results && !error) {
-    if (!Object.keys(results).length) {
-      return <NoResults href="/ffvix/marketshare" />
-    }
+  const noResults = results && !Object.keys(results).length
+  const showResults = results && !noResults && 'data' in results
 
-    if ('data' in results) {
-      return (
-        <Results
-          data={results.data}
-          pageTitle={pageTitle}
-          darkmode={darkmode}
-          sortByValue={results.sortBy}
-        />
-      )
-    }
-  }
+  const handleFormChange = (name: keyof MarketshareParams, value: string) => {
+    handleSearchParamChange(name, value)
 
-  const handleCopyButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    if (!window || !document) {
-      return
-    }
-
-    if (!window.isSecureContext) {
-      alert('Failed to copy address to clipboard.')
-      return
-    }
-
-    await navigator.clipboard.writeText(document.URL)
-
-    alert('Address copied to clipboard')
+    setSearchParams({ ...searchParams, [name]: value })
   }
 
   return (
@@ -229,7 +221,8 @@ export default function Index() {
         title={pageTitle}
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
-        error={error}>
+        error={error}
+        action={getActionUrl('/ffxiv/marketshare', searchParams)}>
         <div className="pt-4">
           <div className="flex justify-end mb-2">
             <SubmitButton
@@ -242,12 +235,12 @@ export default function Index() {
             name="timePeriod"
             labelTitle="Time Period"
             type="number"
-            defaultValue={searchParams.timePeriod}
+            defaultValue={loaderData.timePeriod}
             inputTag="Hours"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
-                handleSearchParamChange('timePeriod', value)
+                handleFormChange('timePeriod', value)
               }
             }}
           />
@@ -255,12 +248,12 @@ export default function Index() {
             name="salesAmount"
             labelTitle="Sales Amount"
             type="number"
-            defaultValue={searchParams.salesAmount}
+            defaultValue={loaderData.salesAmount}
             inputTag="No# of sales"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
-                handleSearchParamChange('salesAmount', value)
+                handleFormChange('salesAmount', value)
               }
             }}
           />
@@ -268,33 +261,41 @@ export default function Index() {
             name="averagePrice"
             labelTitle="Average Price"
             type="number"
-            defaultValue={searchParams.averagePrice}
+            defaultValue={loaderData.averagePrice}
             inputTag="Gil"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
-                handleSearchParamChange('averagePrice', value)
+                handleFormChange('averagePrice', value)
               }
             }}
           />
           <ItemsFilter
-            defaultFilters={searchParams.filters}
+            defaultFilters={loaderData.filters}
             onChange={(value) => {
               if (value !== undefined) {
-                handleSearchParamChange('filters', value.join(','))
+                handleFormChange('filters', value.join(','))
               }
             }}
           />
           <SortBySelect
-            defaultValue={searchParams.sortBy}
+            defaultValue={loaderData.sortBy}
             onChange={(value) => {
               if (value !== undefined) {
-                handleSearchParamChange('sortBy', value)
+                handleFormChange('sortBy', value)
               }
             }}
           />
         </div>
       </SmallFormContainer>
+      {noResults && <NoResults />}
+      {showResults && (
+        <Results
+          data={results.data}
+          darkmode={darkmode}
+          sortByValue={results.sortBy}
+        />
+      )}
     </PageWrapper>
   )
 }

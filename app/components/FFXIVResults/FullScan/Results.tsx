@@ -110,6 +110,7 @@ const Results = ({ rows }: ResultTableProps) => {
   const touchBackendRef = useRef(false)
   const sortOrder = useTypedSelector((state) => state.user.ffScanSortOrder)
   const darkMode = useTypedSelector((state) => state.user.darkmode)
+  const tableRef = useRef<HTMLTableElement>(null)
 
   const columnHelper = createColumnHelper<ResponseType>()
   const columns = [
@@ -279,10 +280,16 @@ const Results = ({ rows }: ResultTableProps) => {
   )
 
   useEffect(() => {
+    // check which drag to use
     if (window) {
       if ('ontouchstart' in window) {
         touchBackendRef.current = true
       }
+    }
+
+    // Scroll on first load
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [])
 
@@ -343,7 +350,9 @@ const Results = ({ rows }: ResultTableProps) => {
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
                 <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-[calc(100vh-120px)]">
-                  <table className="min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
+                  <table
+                    ref={tableRef}
+                    className="min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
                     <thead>
                       {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>

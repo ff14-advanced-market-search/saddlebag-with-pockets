@@ -11,7 +11,8 @@ const SmallFormContainer = ({
   disabled,
   description,
   buttonTitle = 'Search',
-  hideSubmitButton = false
+  hideSubmitButton = false,
+  action
 }: {
   children: React.ReactNode
   title?: string
@@ -22,6 +23,7 @@ const SmallFormContainer = ({
   description?: string | JSX.Element
   buttonTitle?: string
   hideSubmitButton?: boolean
+  action?: string
 }) => {
   const descriptionForDisplay = description ? (
     typeof description === 'string' ? (
@@ -33,7 +35,7 @@ const SmallFormContainer = ({
     )
   ) : undefined
   return (
-    <Form method="POST">
+    <Form method="POST" action={action}>
       <div className="max-w-4xl mx-auto px-4">
         {title && (
           <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">

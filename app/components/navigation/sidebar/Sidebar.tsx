@@ -510,7 +510,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden md:flex md:w-[265px] md:flex-col md:fixed md:inset-y-0">
+      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
           <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900 dark:bg-slate-900">
@@ -592,7 +592,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       </div>
       {/* Nav bar */}
       <div className="md:pl-64 flex flex-col">
-        <nav className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
+        <nav className="sticky top-0 z-40 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
           <button
             type="button"
             className="px-4 border-r border-gray-200 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"

@@ -3,7 +3,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { formatFullScanInput } from '~/requests/FullScan'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import NoResults from '~/components/Common/NoResults'
 import Results from '~/components/FFXIVResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
@@ -97,8 +97,7 @@ export const loader: LoaderFunction = ({ request }) => {
       ? parseFloat(url.searchParams.get('pricePerUnit') as string)
       : undefined,
     filters: url.searchParams.has('filters')
-      ? url.searchParams
-          .get('filters')
+      ? decodeURIComponent(url.searchParams.get('filters') as string)
           ?.split(',')
           .map((str) => parseInt(str))
       : undefined,
@@ -124,7 +123,7 @@ const Index = () => {
   const searchParams = useLoaderData()
   const results = useActionData()
   const fullScan = useTypedSelector((state) => state.queries.fullScan)
-
+  const windowRef = useRef<Window | null>(null)
   const dispatch = useDispatch()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -139,25 +138,21 @@ const Index = () => {
     }
   }, [results, dispatch])
 
-  if (results) {
-    if (Object.keys(results).length === 0) {
-      const url = window && document ? new URL(window.location.href) : ''
-      if (url) {
-        return (
-          <NoResults href={'/queries/full-scan?' + url.searchParams.toString()}>
-            A quick suggestion would be expanding the{' '}
-            <span className={`font-bold`}>Scan Hours</span> to a higher number,
-            or lowering the <span className={`font-bold`}>Sale Amount</span>.
-          </NoResults>
-        )
-      }
+  useEffect(() => {
+    if (window && document) {
+      windowRef.current = window
     }
-    if ('data' in results) {
-      const data = results.data
+  })
 
-      return <Results rows={data} />
-    }
-  }
+  const pageUrl = windowRef.current
+    ? new URL(windowRef.current.location.href)
+    : ''
+  const displayNoResultsPage =
+    results && Object.keys(results).length === 0 && pageUrl
+
+  const displayResultsTable =
+    !displayNoResultsPage && results && 'data' in results
+
   return (
     <main className="flex-1">
       <div className="py-6">
@@ -186,6 +181,15 @@ const Index = () => {
             defaultIncludeVendorChecked={searchParams.includeVendorChecked}
             defaultOutOfStockChecked={searchParams.outOfStockChecked}
           />
+          {displayNoResultsPage && (
+            <NoResults>
+              A quick suggestion would be expanding the{' '}
+              <span className={`font-bold`}>Scan Hours</span> to a higher
+              number, or lowering the{' '}
+              <span className={`font-bold`}>Sale Amount</span>.
+            </NoResults>
+          )}
+          {displayResultsTable && <Results rows={results.data} />}
         </div>
       </div>
     </main>

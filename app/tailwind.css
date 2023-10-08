@@ -929,6 +929,10 @@ select {
   margin-bottom: 6rem;
 }
 
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
 .ml-0 {
   margin-left: 0px;
 }
@@ -3045,8 +3049,8 @@ select {
     display: none;
   }
 
-  .md\:w-\[265px\] {
-    width: 265px;
+  .md\:w-64 {
+    width: 16rem;
   }
 
   .md\:min-w-\[480px\] {

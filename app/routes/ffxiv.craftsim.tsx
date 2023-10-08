@@ -2,8 +2,8 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import z from 'zod'
-import { useMemo } from 'react'
-import { PageWrapper, Title } from '~/components/Common'
+import { useMemo, useState } from 'react'
+import { PageWrapper } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CheckBox from '~/components/form/CheckBox'
@@ -37,11 +37,14 @@ import {
 } from '~/utils/zodHelpers'
 import DoHFilter from '~/components/form/ffxiv/DoHFilter'
 import {
+  getActionUrl,
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
+
+const PAGE_URL = '/ffxiv/craftsim'
 
 const flattenResult = ({
   hq,
@@ -132,8 +135,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     maxMaterialCost:
       params.get('maxMaterialCost') ||
       defaultFormValues.maxMaterialCost.toString(),
-    jobs: params.get('jobs') || defaultFormValues.jobs.join(','),
-    filters: params.get('filters') || defaultFormValues.filters.join(','),
+    jobs: params.has('jobs')
+      ? decodeURIComponent(params.get('jobs') as string)
+      : defaultFormValues.jobs.join(','),
+    filters: params.has('filters')
+      ? decodeURIComponent(params.get('filters') as string)
+      : defaultFormValues.filters.join(','),
     stars: params.get('stars') || defaultFormValues.stars.toString(),
     lvlLowerLimit:
       params.get('lvlLowerLimit') || defaultFormValues.lvlLowerLimit.toString(),
@@ -178,6 +185,10 @@ export default function Index() {
   const transition = useNavigation()
   const loading = transition.state === 'submitting'
 
+  const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
+    ...loaderData
+  })
+
   const showNoResults = actionData && !Object.keys(actionData).length
 
   const flatData = useMemo(() => {
@@ -189,174 +200,169 @@ export default function Index() {
   const error =
     actionData && 'exception' in actionData ? actionData.exception : undefined
 
-  console.log(loaderData)
+  const handleFormChange = (
+    name: keyof typeof defaultFormValues,
+    value: string
+  ) => {
+    handleSearchParamChange(name, value)
+    setSearchParams({ ...searchParams, [name]: value })
+  }
 
   return (
     <PageWrapper>
-      {showNoResults ||
-        (flatData && (
-          <div className="mx-3 my-2">
-            <Title title="Crafting List" />
+      <SmallFormContainer
+        onClick={() => {}}
+        error={error}
+        loading={loading}
+        title="Crafting List"
+        action={getActionUrl(PAGE_URL, searchParams)}>
+        <div className="pt-2">
+          <div className="flex justify-end mb-2">
+            <SubmitButton
+              title="Share this search!"
+              onClick={handleCopyButton}
+              type="button"
+            />
           </div>
-        ))}
+          <DoHFilter
+            defaultValue={loaderData.jobs}
+            options={dOHOptions}
+            title={inputMap.jobs}
+            onChange={(jobs) => handleFormChange('jobs', jobs.join(','))}
+          />
+          <ItemsFilter
+            defaultFilters={loaderData.filters}
+            onChange={(newIds) => handleFormChange('filters', newIds.join(','))}
+          />
+          <Select
+            title={inputMap.costMetric}
+            defaultValue={loaderData.costMetric}
+            options={costMetrics.map((value) => ({
+              value,
+              label: costMetricLabels[value]
+            }))}
+            name="costMetric"
+            onChange={(e) => {
+              const value = e.target.value
+              if (value !== undefined) {
+                handleFormChange('costMetric', value)
+              }
+            }}
+          />
+          <Select
+            title={inputMap.revenueMetric}
+            defaultValue={loaderData.revenueMetric}
+            options={revenueMetrics.map((value) => ({
+              value,
+              label: revenueMetricLabels[value]
+            }))}
+            name="revenueMetric"
+            onChange={(e) => {
+              const value = e.target.value
+              if (value !== undefined) {
+                handleFormChange('costMetric', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            labelTitle={inputMap.salesPerWeek}
+            defaultValue={loaderData.salesPerWeek}
+            name="salesPerWeek"
+            type="number"
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('salesPerWeek', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            labelTitle={inputMap.medianSalePrice}
+            defaultValue={loaderData.medianSalePrice}
+            name="medianSalePrice"
+            type="number"
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('medianSalePrice', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            labelTitle={inputMap.maxMaterialCost}
+            defaultValue={loaderData.maxMaterialCost}
+            name="maxMaterialCost"
+            type="number"
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('maxMaterialCost', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            labelTitle={inputMap.stars}
+            defaultValue={loaderData.stars}
+            name="stars"
+            type="number"
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('stars', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            labelTitle={inputMap.lvlLowerLimit}
+            defaultValue={loaderData.lvlLowerLimit}
+            name="lvlLowerLimit"
+            type="number"
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('lvlLowerLimit', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            labelTitle={inputMap.lvlUpperLimit}
+            defaultValue={loaderData.lvlUpperLimit}
+            name="lvlUpperLimit"
+            type="number"
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('lvlUpperLimit', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            labelTitle={inputMap.yields}
+            defaultValue={loaderData.yields}
+            name="yields"
+            type="number"
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('yields', value)
+              }
+            }}
+          />
+          <div className="mt-2">
+            <CheckBox
+              labelTitle={inputMap.hideExpertRecipes}
+              defaultChecked={loaderData.hideExpertRecipes}
+              name="hideExpertRecipes"
+              onChange={(event) => {
+                const value = event.target.checked
+                handleFormChange('hideExpertRecipes', value.toString())
+              }}
+            />
+          </div>
+        </div>
+      </SmallFormContainer>
       {showNoResults && <NoResults href="/ffxiv/crafting-list" />}
       {flatData && <Results data={flatData} />}
-      {!flatData && (
-        <SmallFormContainer
-          onClick={() => {}}
-          error={error}
-          loading={loading}
-          title="Crafting List">
-          <div className="pt-2">
-            <div className="flex justify-end mb-2">
-              <SubmitButton
-                title="Share this search!"
-                onClick={handleCopyButton}
-                type="button"
-              />
-            </div>
-            <DoHFilter
-              defaultValue={loaderData.jobs}
-              options={dOHOptions}
-              title={inputMap.jobs}
-              onChange={(jobs) =>
-                handleSearchParamChange('jobs', jobs.join(','))
-              }
-            />
-            <ItemsFilter
-              defaultFilters={loaderData.filters}
-              onChange={(newIds) =>
-                handleSearchParamChange('filters', newIds.join(','))
-              }
-            />
-            <Select
-              title={inputMap.costMetric}
-              defaultValue={loaderData.costMetric}
-              options={costMetrics.map((value) => ({
-                value,
-                label: costMetricLabels[value]
-              }))}
-              name="costMetric"
-              onChange={(e) => {
-                const value = e.target.value
-                if (value !== undefined) {
-                  handleSearchParamChange('costMetric', value)
-                }
-              }}
-            />
-            <Select
-              title={inputMap.revenueMetric}
-              defaultValue={loaderData.revenueMetric}
-              options={revenueMetrics.map((value) => ({
-                value,
-                label: revenueMetricLabels[value]
-              }))}
-              name="revenueMetric"
-              onChange={(e) => {
-                const value = e.target.value
-                if (value !== undefined) {
-                  handleSearchParamChange('costMetric', value)
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.salesPerWeek}
-              defaultValue={loaderData.salesPerWeek}
-              name="salesPerWeek"
-              type="number"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleSearchParamChange('salesPerWeek', value)
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.medianSalePrice}
-              defaultValue={loaderData.medianSalePrice}
-              name="medianSalePrice"
-              type="number"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleSearchParamChange('medianSalePrice', value)
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.maxMaterialCost}
-              defaultValue={loaderData.maxMaterialCost}
-              name="maxMaterialCost"
-              type="number"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleSearchParamChange('maxMaterialCost', value)
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.stars}
-              defaultValue={loaderData.stars}
-              name="stars"
-              type="number"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleSearchParamChange('stars', value)
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.lvlLowerLimit}
-              defaultValue={loaderData.lvlLowerLimit}
-              name="lvlLowerLimit"
-              type="number"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleSearchParamChange('lvlLowerLimit', value)
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.lvlUpperLimit}
-              defaultValue={loaderData.lvlUpperLimit}
-              name="lvlUpperLimit"
-              type="number"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleSearchParamChange('lvlUpperLimit', value)
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.yields}
-              defaultValue={loaderData.yields}
-              name="yields"
-              type="number"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleSearchParamChange('yields', value)
-                }
-              }}
-            />
-            <div className="mt-2">
-              <CheckBox
-                labelTitle={inputMap.hideExpertRecipes}
-                defaultChecked={loaderData.hideExpertRecipes}
-                name="hideExpertRecipes"
-                onChange={(event) => {
-                  const value = event.target.checked
-                  handleSearchParamChange('hideExpertRecipes', value.toString())
-                }}
-              />
-            </div>
-          </div>
-        </SmallFormContainer>
-      )}
     </PageWrapper>
   )
 }

@@ -25,14 +25,17 @@ export interface MarketshareItem {
   state: MarketState
 }
 
-export type MarketshareSortBy =
-  | 'avg'
-  | 'marketValue'
-  | 'median'
-  | 'purchaseAmount'
-  | 'quantitySold'
-  | 'minPrice'
-  | 'percentChange'
+export const marketShareSortBys = [
+  'avg',
+  'marketValue',
+  'median',
+  'purchaseAmount',
+  'quantitySold',
+  'minPrice',
+  'percentChange'
+] as const
+
+export type MarketshareSortBy = (typeof marketShareSortBys)[number]
 
 export interface MarketshareProps {
   server: string
