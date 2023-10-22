@@ -47,85 +47,99 @@ const validateItem = ({ en }) => {
   return isInvalid ? undefined : en.replace('\u00a0', ' ')
 }
 
-let itemIds
+try {
+  let itemIds
 
-console.log('Fetching itemIds from:', ITEM_IDS_ADDRESS)
-get(ITEM_IDS_ADDRESS, (response) => {
-  console.log('Item id status code:', response.statusCode)
+  console.log('Fetching itemIds from:', ITEM_IDS_ADDRESS)
+  get(ITEM_IDS_ADDRESS, (response) => {
+    console.log('Item id status code:', response.statusCode)
 
-  const data = []
-  response.on('data', (chunk) => {
-    data.push(chunk)
-  })
-  response.on('end', () => {
-    const rawIds = JSON.parse(Buffer.concat(data).toString())
-    if (
-      Array.isArray(rawIds) &&
-      rawIds.length &&
-      rawIds.every((val) => typeof val === 'number')
-    ) {
-      itemIds = rawIds
-      console.log('Number of item ids:', itemIds.length)
-    } else {
-      console.error('ERROR: Invalid items list')
+    const data = []
+    response.on('data', (chunk) => {
+      data.push(chunk)
+    })
+
+    response.on('error', (error) => {
+      console.error('ERROR:', error.message)
 
       process.exit(1)
-    }
+    })
 
-    console.log('Fetching items from:', ITEM_NAMES_ADDRESS)
-
-    get(ITEM_NAMES_ADDRESS, (res) => {
-      console.log('Item name status code:', res.statusCode)
-      const nameData = []
-
-      res.on('data', (chunk) => {
-        nameData.push(chunk)
-      })
-      res.on('end', () => {
-        const rawNames = JSON.parse(Buffer.concat(nameData).toString())
-
-        console.log('Building file...')
-
-        const result = {}
-
-        itemIds.forEach((id) => {
-          const validItem = validateItem(rawNames[id])
-          if (validItem) {
-            result[id] = validItem
-          }
-        })
-
-        console.log('Writing file:', FILE_PATH)
-
-        const numberOfItems = Object.keys(result).length
-
-        if (numberOfItems === 0) {
-          console.error('ERROR:', 'No items to write')
-
-          process.exit(1)
-        }
-
-        writeFile(
-          FILE_PATH,
-          'export const itemsMap: Record<string, string> = ' +
-            JSON.stringify(result, null, 2),
-          function (err) {
-            if (err) {
-              console.error('ERROR:', err.message)
-
-              process.exit(1)
-            }
-            console.log('NO# of items successfully written:', numberOfItems)
-            process.exit(0)
-          }
-        )
-      })
-
-      res.on('error', (error) => {
-        console.error('ERROR:', error.message)
+    response.on('end', () => {
+      const rawIds = JSON.parse(Buffer.concat(data).toString())
+      if (
+        Array.isArray(rawIds) &&
+        rawIds.length &&
+        rawIds.every((val) => typeof val === 'number')
+      ) {
+        itemIds = rawIds
+        console.log('Number of item ids:', itemIds.length)
+      } else {
+        console.error('ERROR: Invalid items list')
 
         process.exit(1)
+      }
+
+      console.log('Fetching items from:', ITEM_NAMES_ADDRESS)
+
+      get(ITEM_NAMES_ADDRESS, (res) => {
+        console.log('Item name status code:', res.statusCode)
+        const nameData = []
+
+        res.on('data', (chunk) => {
+          nameData.push(chunk)
+        })
+
+        res.on('end', () => {
+          const rawNames = JSON.parse(Buffer.concat(nameData).toString())
+
+          console.log('Building file...')
+
+          const result = {}
+
+          itemIds.forEach((id) => {
+            const validItem = validateItem(rawNames[id])
+            if (validItem) {
+              result[id] = validItem
+            }
+          })
+
+          console.log('Writing file:', FILE_PATH)
+
+          const numberOfItems = Object.keys(result).length
+
+          if (numberOfItems === 0) {
+            console.error('ERROR:', 'No items to write')
+
+            process.exit(1)
+          }
+
+          writeFile(
+            FILE_PATH,
+            'export const itemsMap: Record<string, string> = ' +
+              JSON.stringify(result, null, 2),
+            function (err) {
+              if (err) {
+                console.error('ERROR:', err.message)
+
+                process.exit(1)
+              }
+              console.log('NO# of items successfully written:', numberOfItems)
+              process.exit(0)
+            }
+          )
+        })
+
+        res.on('error', (error) => {
+          console.error('ERROR:', error.message)
+
+          process.exit(1)
+        })
       })
     })
   })
-})
+} catch (error) {
+  console.error('Error writing items list:', error.message)
+
+  process.exit(1)
+}
