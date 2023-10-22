@@ -35,10 +35,11 @@ https
         }
       )
       console.log('Items successfully written')
+      process.exit(0)
     })
   })
   .on('error', (error) => {
     console.error(error.message)
 
-    process.exit(0)
+    process.exit(1)
   })

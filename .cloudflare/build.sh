@@ -1,4 +1,4 @@
 # !/bin/bash
 
-  npm run fetch-items  
-  npm run build
+  npm run fetch-items
+  wait -n npm run build
