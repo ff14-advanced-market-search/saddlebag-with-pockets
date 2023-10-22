@@ -19,7 +19,7 @@
     "prettier:check": "prettier --check app",
     "test": "vitest",
     "prepare": "husky install",
-    "fetch-items": "node ./scripts/buildItemsList.js"
+    "write-items": "node ./scripts/write-ffxiv-items.js"
   },
   "packageManager": "yarn@1.22.18",
   "dependencies": {

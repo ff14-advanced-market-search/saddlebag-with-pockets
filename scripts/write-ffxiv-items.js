@@ -7,7 +7,7 @@ const FILE_PATH = './app/utils/items/items.ts'
 console.log('Fetching items from:', ADDRESS)
 
 get(ADDRESS, (response) => {
-  console.log('Response received:', response.statusCode)
+  console.log('Response status code:', response.statusCode)
   const data = []
 
   response.on('data', (chunk) => {
@@ -18,7 +18,7 @@ get(ADDRESS, (response) => {
 
     const itemsEntries = Object.entries(raw)
 
-    console.log('Items recieved:', itemsEntries.length)
+    console.log('Items received:', itemsEntries.length)
 
     console.log('Building file...')
 
@@ -40,7 +40,10 @@ get(ADDRESS, (response) => {
         if (err) {
           throw err
         }
-        console.log('Items successfully written:', Object.keys(result).length)
+        console.log(
+          'NO# of items successfully written:',
+          Object.keys(result).length
+        )
         process.exit(0)
       }
     )

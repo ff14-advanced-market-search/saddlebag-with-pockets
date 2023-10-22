@@ -1,4 +1,4 @@
 # !/bin/bash
 
-  npm run fetch-items
+  npm run write-items
   npm run build
