@@ -63,13 +63,13 @@ const getItemIds = async () => {
       itemIds.some((value) => typeof value !== 'number')
     ) {
       console.error('Error:', 'Invalid item ids array')
-      process.exit(0)
+      process.exit(1)
     }
 
     return itemIds
   } catch (err) {
     console.error('Error:', err.message)
-    process.exit(0)
+    process.exit(1)
   }
 }
 
@@ -87,7 +87,7 @@ const getItemNames = async (itemIds) => {
     return { itemIds, itemNames }
   } catch (err) {
     console.error('Error:', err.message)
-    process.exit(0)
+    process.exit(1)
   }
 }
 
