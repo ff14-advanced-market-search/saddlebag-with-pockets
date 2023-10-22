@@ -18,7 +18,7 @@
     "prettier": "prettier --write app",
     "prettier:check": "prettier --check app",
     "test": "vitest",
-    "prepare": "yarn run fetch-items | husky install",
+    "prepare": "husky install",
     "fetch-items": "node ./scripts/buildItemsList.js"
   },
   "packageManager": "yarn@1.22.18",
