@@ -25,6 +25,14 @@ yarn run dev
 This starts your app in development mode, rebuilding assets on file changes.
 Check your terminal for the address, the default is `http://127.0.0.1:8788`
 
+## FFXIV Items list
+
+You can fetch and update the ffxiv items list if you find items are missing using:
+
+```bash
+yarn run write-items
+```
+
 ### Testing
 
 We have just started to use [Vitest](https://vitest.dev) to run unit tests.

@@ -18,7 +18,8 @@
     "prettier": "prettier --write app",
     "prettier:check": "prettier --check app",
     "test": "vitest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "write-items": "node ./scripts/write-ffxiv-items.js"
   },
   "packageManager": "yarn@1.22.18",
   "dependencies": {
