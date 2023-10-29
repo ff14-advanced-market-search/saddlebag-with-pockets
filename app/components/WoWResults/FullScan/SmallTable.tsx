@@ -28,6 +28,7 @@ import type { ColumnList } from '~/components/types'
 import PaginationControls from '~/components/Tables/PaginationControls'
 import type { CSVProps } from '~/components/utilities/CSVButton'
 import CSVButton from '~/components/utilities/CSVButton'
+import DebouncedInput from '~/components/Common/DebouncedInput'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -121,6 +122,7 @@ function DesktopTable({
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     getPaginationRowModel: getPaginationRowModel(),
+    getColumnCanGlobalFilter: () => true,
     debugTable: true,
     debugHeaders: true,
     debugColumns: false
@@ -150,9 +152,18 @@ function DesktopTable({
           </p>
         </div>
       )}
-      <div className="py-1 flex justify-between">
+      <div className="py-1 flex justify-between items-start">
         <PaginationControls table={table} />
-        {csvOptions && <CSVButton {...csvOptions} data={data} />}
+        <div className="w-full ml-2 flex flex-col justify-end items-end gap-3 lg:flex-row">
+          {csvOptions && <CSVButton {...csvOptions} data={data} />}
+          <DebouncedInput
+            onDebouncedChange={(value) => {
+              setGlobalFilter(value)
+            }}
+            className={'w-full max-w-[200px] p-2 rounded-md'}
+            placeholder={'Search...'}
+          />
+        </div>
       </div>
       <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">

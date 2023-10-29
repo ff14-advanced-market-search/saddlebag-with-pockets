@@ -12,6 +12,7 @@ import type {
 } from '~/requests/WoW/ShortagePredictor'
 import MobileTable from '../FullScan/MobileTable'
 import { useChartModal } from './useChartModal'
+import DebouncedInput from '~/components/Common/DebouncedInput'
 
 const mobileColumnList = [
   { columnId: 'item_name', header: 'Item Name' },
@@ -102,6 +103,8 @@ const PredictionTable = ({
     } | null
   ) => void
 }) => {
+  const [filterValue, setFilterValue] = useState('')
+
   const homeRealmName = results.alert_json.homeRealmName
 
   const region = results.alert_json.region
@@ -207,11 +210,18 @@ const PredictionTable = ({
 
   return (
     <>
-      <div>
+      <div className="flex justify-between">
         <CSVButton
           data={results.data}
           columns={csvColumns}
           filename="saddlebag_wow_shortagePredictor.csv"
+        />
+        <DebouncedInput
+          onDebouncedChange={(value) => {
+            setFilterValue(value)
+          }}
+          className={'p-2 rounded-md'}
+          placeholder={'Search...'}
         />
       </div>
       <div className="hidden sm:block">
@@ -219,6 +229,7 @@ const PredictionTable = ({
           data={results.data}
           columnList={columnList}
           sortingOrder={[{ id: 'quality', desc: true }]}
+          filter={filterValue}
         />
       </div>
       <MobileTable

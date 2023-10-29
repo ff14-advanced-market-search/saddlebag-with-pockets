@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
@@ -16,6 +17,7 @@ import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
 import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions'
+import DebouncedInput from '~/components/Common/DebouncedInput'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
@@ -146,6 +148,8 @@ const Results = ({
   data: Array<SelfPurchase>
   totalSpent: number
 }) => {
+  const [filterValue, setFilterValue] = useState('')
+
   return (
     <PageWrapper>
       <Title title="Self Purchase Items" />
@@ -153,16 +157,26 @@ const Results = ({
         title={`Total spent: ${totalSpent.toLocaleString()} gil`}
         className="text-xl"
       />
-      <CSVButton
-        data={data}
-        columns={cvsFileList}
-        filename="saddlebag-selfpurchase.csv"
-      />
+      <div className="flex justify-between">
+        <CSVButton
+          data={data}
+          columns={cvsFileList}
+          filename="saddlebag-selfpurchase.csv"
+        />
+        <DebouncedInput
+          onDebouncedChange={(value) => {
+            setFilterValue(value)
+          }}
+          className={'p-2 rounded-md'}
+          placeholder={'Search...'}
+        />
+      </div>
       <div className="hidden sm:block">
         <FullTable<SelfPurchase>
           data={data}
           sortingOrder={[{ id: 'timestamp', desc: true }]}
           columnList={columnList}
+          filter={filterValue}
         />
       </div>
       <MobileTable
