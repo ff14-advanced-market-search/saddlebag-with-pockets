@@ -167,7 +167,7 @@ const Results = ({
           onDebouncedChange={(value) => {
             setFilterValue(value)
           }}
-          className={'p-2 rounded-md'}
+          className={'hidden sm:block p-2 rounded-md'}
           placeholder={'Search...'}
         />
       </div>

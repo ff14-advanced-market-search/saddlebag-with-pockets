@@ -321,7 +321,7 @@ const Results = ({
         </>
       </ContentContainer>
 
-      <div className="w-full flex justify-end">
+      <div className="hidden sm:flex w-full justify-end">
         <DebouncedInput
           onDebouncedChange={(value) => {
             setFilterValue(value)
