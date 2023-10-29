@@ -48,7 +48,7 @@ const PaginationControls = ({ table }: { table: Table<any> }) => {
         disabled={previousDisabled}>
         <ChevronLeftIcon className="dark:text-gray-300" />
       </button>
-      <p className="text-sm">
+      <p className="text-sm whitespace-nowrap">
         {`Page ${table.getState().pagination.pageIndex + 1} / ${pageCount}`}
       </p>
       <button
