@@ -50,13 +50,15 @@ function FullTable<Type>({
   data,
   sortingOrder,
   columnList,
-  order
+  order,
+  filter
 }: {
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<ColumnList<Type>>
   description?: string
   order?: Array<string>
+  filter?: string
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -109,6 +111,7 @@ function FullTable<Type>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
+    getColumnCanGlobalFilter: () => true,
     debugHeaders: true,
     debugColumns: false
   })
@@ -124,6 +127,10 @@ function FullTable<Type>({
       window.scrollTo({ top: 0, behavior: 'auto' })
     }
   }, [])
+
+  useEffect(() => {
+    setGlobalFilter(filter ?? '')
+  }, [filter])
 
   return (
     <div className="mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll">
