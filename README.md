@@ -31,6 +31,7 @@ You can fetch and update the ffxiv items list if you find items are missing usin
 
 ```bash
 yarn run write-items
+prettier -w app/utils/items/items.ts
 ```
 
 ### Testing
