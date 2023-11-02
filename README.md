@@ -1,4 +1,8 @@
-# saddlebag
+# saddlebag-with-pockets
+
+The frontend of https://saddlebagexchange.com/
+
+Last udated for FFXIV 6.51
 
 _Frontend for Aetheryte API_
 
