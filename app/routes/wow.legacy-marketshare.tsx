@@ -284,7 +284,7 @@ const Results = ({
 }) => {
   const { darkmode } = useTypedSelector(({ user }) => user)
   const [sortBy, setSortBy] = useState<LegacyMarketshareSortBy>(sortByValue)
-  const [filterValue, setFilterValue] = useState('')
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const chartData = getChartData(data, sortBy)
 
@@ -324,7 +324,7 @@ const Results = ({
       <div className="hidden sm:flex w-full justify-end">
         <DebouncedInput
           onDebouncedChange={(value) => {
-            setFilterValue(value)
+            setGlobalFilter(value)
           }}
           className={'p-2 rounded-md'}
           placeholder={'Search...'}
@@ -336,7 +336,8 @@ const Results = ({
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}
           columnList={columnList}
-          filter={filterValue}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable

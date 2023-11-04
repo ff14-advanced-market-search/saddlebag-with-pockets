@@ -103,7 +103,7 @@ const PredictionTable = ({
     } | null
   ) => void
 }) => {
-  const [filterValue, setFilterValue] = useState('')
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const homeRealmName = results.alert_json.homeRealmName
 
@@ -218,7 +218,7 @@ const PredictionTable = ({
         />
         <DebouncedInput
           onDebouncedChange={(value) => {
-            setFilterValue(value)
+            setGlobalFilter(value)
           }}
           className={'hidden sm:block p-2 rounded-md'}
           placeholder={'Search...'}
@@ -229,7 +229,8 @@ const PredictionTable = ({
           data={results.data}
           columnList={columnList}
           sortingOrder={[{ id: 'quality', desc: true }]}
-          filter={filterValue}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable

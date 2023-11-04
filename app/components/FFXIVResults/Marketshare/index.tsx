@@ -207,7 +207,7 @@ export const Results = ({
   sortByValue: MarketshareSortBy
 }) => {
   const [sortBy, setSortBy] = useState<MarketshareSortBy>(sortByValue)
-  const [filterValue, setFilterValue] = useState('')
+  const [globalFilter, setGlobalFilter] = useState('')
   const chartData = getChartData(data, sortBy)
 
   const sortByTitleValue = sortByOptions.find(
@@ -252,7 +252,7 @@ export const Results = ({
         />
         <DebouncedInput
           onDebouncedChange={(value) => {
-            setFilterValue(value)
+            setGlobalFilter(value)
           }}
           className={'hidden sm:block p-2 rounded-md'}
           placeholder={'Search...'}
@@ -263,7 +263,8 @@ export const Results = ({
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}
           columnList={columnList}
-          filter={filterValue}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable

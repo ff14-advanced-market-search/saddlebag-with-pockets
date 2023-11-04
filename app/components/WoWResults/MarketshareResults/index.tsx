@@ -34,7 +34,7 @@ const MarketshareResults = ({
   )
 
   const [currentMarketValue, setCurrentMarketValue] = useState(true)
-  const [filterValue, setFilterValue] = useState('')
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const OribosLink = getOribosLink(results.serverName, 'Oribos', results.region)
   const chartData = currentMarketValue
@@ -165,7 +165,7 @@ const MarketshareResults = ({
         />
         <DebouncedInput
           onDebouncedChange={(value) => {
-            setFilterValue(value)
+            setGlobalFilter(value)
           }}
           className={'hidden sm:block p-2 rounded-md'}
           placeholder={'Search...'}
@@ -178,7 +178,8 @@ const MarketshareResults = ({
           sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
           description="This shows items market statistics!"
           order={tableSortOrder}
-          filter={filterValue}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable

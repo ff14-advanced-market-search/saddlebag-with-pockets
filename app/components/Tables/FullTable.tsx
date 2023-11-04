@@ -51,17 +51,18 @@ function FullTable<Type>({
   sortingOrder,
   columnList,
   order,
-  filter
+  globalFilter,
+  setGlobalFilter
 }: {
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<ColumnList<Type>>
   description?: string
   order?: Array<string>
-  filter?: string
+  globalFilter?: string
+  setGlobalFilter?: React.Dispatch<React.SetStateAction<string>>
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder] = useState<ColumnOrderState>(order || [])
 
   const columnHelper = createColumnHelper<Type>()
@@ -127,10 +128,6 @@ function FullTable<Type>({
       window.scrollTo({ top: 0, behavior: 'auto' })
     }
   }, [])
-
-  useEffect(() => {
-    setGlobalFilter(filter ?? '')
-  }, [filter])
 
   return (
     <div className="mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll">

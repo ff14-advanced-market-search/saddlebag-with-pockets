@@ -148,7 +148,7 @@ const Results = ({
   data: Array<SelfPurchase>
   totalSpent: number
 }) => {
-  const [filterValue, setFilterValue] = useState('')
+  const [globalFilter, setGlobalFilter] = useState('')
 
   return (
     <PageWrapper>
@@ -165,7 +165,7 @@ const Results = ({
         />
         <DebouncedInput
           onDebouncedChange={(value) => {
-            setFilterValue(value)
+            setGlobalFilter(value)
           }}
           className={'hidden sm:block p-2 rounded-md'}
           placeholder={'Search...'}
@@ -176,7 +176,8 @@ const Results = ({
           data={data}
           sortingOrder={[{ id: 'timestamp', desc: true }]}
           columnList={columnList}
-          filter={filterValue}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable
