@@ -1,4 +1,8 @@
-# saddlebag
+# saddlebag-with-pockets
+
+The frontend of https://saddlebagexchange.com/
+
+Last udated for FFXIV 6.51
 
 _Frontend for Aetheryte API_
 
@@ -31,6 +35,7 @@ You can fetch and update the ffxiv items list if you find items are missing usin
 
 ```bash
 yarn run write-items
+prettier -w app/utils/items/items.ts
 ```
 
 ### Testing
