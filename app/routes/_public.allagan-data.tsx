@@ -203,7 +203,7 @@ const Results = ({ results }: { results: AllaganResults }) => {
           {objectHasProperties(results.undercut_alert_json) ? (
             <>
               <CommandInstructions
-                cmd="/ff undercut-register"
+                cmd="/ff undercut"
                 title="Patreon undercut alerts."
                 link="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
               />
