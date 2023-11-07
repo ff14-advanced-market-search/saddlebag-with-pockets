@@ -30,6 +30,7 @@ import FullTable from '~/components/Tables/FullTable'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import type { ColumnList } from '~/components/types'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
+import DebouncedInput from '~/components/Common/DebouncedInput'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -283,6 +284,7 @@ const Results = ({
 }) => {
   const { darkmode } = useTypedSelector(({ user }) => user)
   const [sortBy, setSortBy] = useState<LegacyMarketshareSortBy>(sortByValue)
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const chartData = getChartData(data, sortBy)
 
@@ -319,11 +321,23 @@ const Results = ({
         </>
       </ContentContainer>
 
+      <div className="hidden sm:flex w-full justify-end">
+        <DebouncedInput
+          onDebouncedChange={(value) => {
+            setGlobalFilter(value)
+          }}
+          className={'p-2 rounded-md'}
+          placeholder={'Search...'}
+        />
+      </div>
+
       <div className="hidden sm:block">
         <FullTable<LegacyMarketshareItem>
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}
           columnList={columnList}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable

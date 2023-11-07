@@ -50,16 +50,19 @@ function FullTable<Type>({
   data,
   sortingOrder,
   columnList,
-  order
+  order,
+  globalFilter,
+  setGlobalFilter
 }: {
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
   columnList: Array<ColumnList<Type>>
   description?: string
   order?: Array<string>
+  globalFilter?: string
+  setGlobalFilter?: React.Dispatch<React.SetStateAction<string>>
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
   const [columnOrder] = useState<ColumnOrderState>(order || [])
 
   const columnHelper = createColumnHelper<Type>()
@@ -109,6 +112,7 @@ function FullTable<Type>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
+    getColumnCanGlobalFilter: () => true,
     debugHeaders: true,
     debugColumns: false
   })

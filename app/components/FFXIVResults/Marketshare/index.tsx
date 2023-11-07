@@ -15,6 +15,7 @@ import ExternalLink from '~/components/utilities/ExternalLink'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import CSVButton from '~/components/utilities/CSVButton'
+import DebouncedInput from '~/components/Common/DebouncedInput'
 
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
@@ -206,6 +207,7 @@ export const Results = ({
   sortByValue: MarketshareSortBy
 }) => {
   const [sortBy, setSortBy] = useState<MarketshareSortBy>(sortByValue)
+  const [globalFilter, setGlobalFilter] = useState('')
   const chartData = getChartData(data, sortBy)
 
   const sortByTitleValue = sortByOptions.find(
@@ -242,11 +244,18 @@ export const Results = ({
           />
         </>
       </ContentContainer>
-      <div className="my-2">
+      <div className="my-2 flex justify-between">
         <CSVButton
           filename="saddlebag-marketshare.csv"
           data={data}
           columns={csvColumns}
+        />
+        <DebouncedInput
+          onDebouncedChange={(value) => {
+            setGlobalFilter(value)
+          }}
+          className={'hidden sm:block p-2 rounded-md'}
+          placeholder={'Search...'}
         />
       </div>
       <div className="hidden sm:block">
@@ -254,6 +263,8 @@ export const Results = ({
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}
           columnList={columnList}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable

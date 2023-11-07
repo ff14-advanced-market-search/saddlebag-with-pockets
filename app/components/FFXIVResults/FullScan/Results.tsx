@@ -42,6 +42,7 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import DateCell from './DateCell'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import CSVButton from '~/components/utilities/CSVButton'
+import DebouncedInput from '~/components/Common/DebouncedInput'
 
 type ResultTableProps = {
   rows: Array<ResponseType>
@@ -229,6 +230,7 @@ const Results = ({ rows }: ResultTableProps) => {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
+    getColumnCanGlobalFilter: () => true,
     debugTable: true,
     debugHeaders: true,
     debugColumns: false
@@ -331,16 +333,26 @@ const Results = ({ rows }: ResultTableProps) => {
           </div>
         </div>
 
-        <div className="max-w-fit my-2 flex ">
-          <SubmitButton
-            onClick={handleColumnReset}
-            title={'Reset table columns'}
-            type="button"
-          />
-          <CSVButton
-            data={rows}
-            columns={cvsFileList}
-            filename="saddlebag-fullscan.csv"
+        <div className="w-full my-2 flex justify-between">
+          <div className="flex flex-wrap gap-y-3">
+            <SubmitButton
+              onClick={handleColumnReset}
+              title={'Reset table columns'}
+              type="button"
+            />
+            <CSVButton
+              data={rows}
+              columns={cvsFileList}
+              filename="saddlebag-fullscan.csv"
+            />
+          </div>
+
+          <DebouncedInput
+            onDebouncedChange={(value) => {
+              setGlobalFilter(value)
+            }}
+            className={'h-10 ml-3 p-2 rounded-md'}
+            placeholder={'Search...'}
           />
         </div>
 

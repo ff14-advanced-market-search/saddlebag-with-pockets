@@ -10,6 +10,7 @@ import { getOribosLink } from '~/components/utilities/getOribosLink'
 import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import MobileTable from '../FullScan/MobileTable'
+import DebouncedInput from '~/components/Common/DebouncedInput'
 
 export interface WoWMarketShareActionResults {
   data: Array<ItemStats>
@@ -33,6 +34,7 @@ const MarketshareResults = ({
   )
 
   const [currentMarketValue, setCurrentMarketValue] = useState(true)
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const OribosLink = getOribosLink(results.serverName, 'Oribos', results.region)
   const chartData = currentMarketValue
@@ -155,11 +157,18 @@ const MarketshareResults = ({
           </>
         </ContentContainer>
       </div>
-      <div>
+      <div className="flex justify-between">
         <CSVButton
           data={results.data}
           columns={csvColumns}
           filename="saddlebag_wow_marketshare.csv"
+        />
+        <DebouncedInput
+          onDebouncedChange={(value) => {
+            setGlobalFilter(value)
+          }}
+          className={'hidden sm:block p-2 rounded-md'}
+          placeholder={'Search...'}
         />
       </div>
       <div className="hidden sm:block">
@@ -169,6 +178,8 @@ const MarketshareResults = ({
           sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
           description="This shows items market statistics!"
           order={tableSortOrder}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable
