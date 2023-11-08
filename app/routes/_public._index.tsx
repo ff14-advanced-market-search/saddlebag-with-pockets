@@ -5,7 +5,7 @@ const recommendedQueries = [
   {
     name: 'Final Fantasy XIV',
     description:
-      'Tools for Cross-Server reselling, Market Overviews, Crafting Profit Similation, Shopping Lists, Alerts and More!.',
+      'Tools for Cross-Server reselling, Market Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More!.',
     href: '/queries'
   },
   {
