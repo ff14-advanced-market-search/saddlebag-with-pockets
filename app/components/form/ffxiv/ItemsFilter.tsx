@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Modal, ModalContent } from './CheckBoxModal'
+import { ModalContent } from './CheckBoxModal'
+import Modal from '../Modal'
 
 const noop = () => {}
 
