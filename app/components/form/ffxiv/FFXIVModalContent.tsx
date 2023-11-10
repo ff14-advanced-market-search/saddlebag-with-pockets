@@ -1,43 +1,15 @@
-import React from 'react'
 import filters from '~/utils/filters/'
+import { CheckBoxRow } from '../Modal/CheckBoxRow'
 
-interface CheckboxRowProps {
-  selected: boolean
-  onChange: (e: React.ChangeEvent) => void
-  id: string | number
-  title: string
-}
-
-export const CheckBoxRow = ({
-  selected,
-  onChange,
-  id,
-  title
-}: CheckboxRowProps) => {
-  return (
-    <div className="w-[95%] flex px-1 py-2 z-[inherit] shadow-sm mb-0.5 content-between items-center min-h-12 dark:text-gray-300 dark:border-b dark:border-gray-500">
-      <label htmlFor={`${title}-${id}`} className="grow text-left">
-        {title}
-      </label>
-      <input
-        id={`${title}-${id}`}
-        checked={selected}
-        onChange={onChange}
-        type="checkbox"
-      />
-    </div>
-  )
-}
-
-interface ModalContentProps {
+interface FFXIVModalContentProps {
   ids: Array<number>
   setIds: (newIds: Array<number>) => void
 }
 
-export const ModalContent = ({
+export const FFXIVModalContent = ({
   ids,
   setIds
-}: ModalContentProps): JSX.Element => {
+}: FFXIVModalContentProps): JSX.Element => {
   return (
     <>
       {filters.reduce<Array<JSX.Element>>((currentElements, item) => {
