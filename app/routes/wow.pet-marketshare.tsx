@@ -139,7 +139,7 @@ const Index = () => {
     if (!results.data.length) {
       return (
         <PageWrapper>
-          <NoResults href="/wow/marketshare" />
+          <NoResults href="/wow/pet-marketshare" />
         </PageWrapper>
       )
     }
