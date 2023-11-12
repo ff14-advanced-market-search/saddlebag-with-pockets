@@ -201,8 +201,8 @@ const getMobileColumns = (
 
 const tableSortOrder = [
   'itemName',
-  'avgTSMPrice',
   'estimatedRegionMarketValue',
+  'avgTSMPrice',
   'homeMinPrice',
   'percentChange',
   'salesPerDay',

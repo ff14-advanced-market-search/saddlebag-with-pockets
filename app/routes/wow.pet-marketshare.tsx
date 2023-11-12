@@ -29,11 +29,11 @@ export const sortByOptions: Array<{
   label: string
   value: PetMarketshareSortBy
 }> = [
-  { value: 'avgTSMPrice', label: 'Average TSM Price' },
   {
     value: 'estimatedRegionMarketValue',
     label: 'Estimated Region Market Value'
   },
+  { value: 'avgTSMPrice', label: 'Average TSM Price' },
   { value: 'homeMinPrice', label: 'Minimum Price' },
   { value: 'percentChange', label: 'Percent Change' },
   { value: 'salesPerDay', label: 'Sales Per Day' }
