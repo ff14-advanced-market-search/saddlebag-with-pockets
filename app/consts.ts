@@ -9,3 +9,8 @@ export const dOHOptions = [
   { value: 14, label: 'Alchemist' },
   { value: 15, label: 'Culinarian' }
 ]
+
+export const petMarketshareOptions = [
+  { value: -3, label: 'Top Rated' },
+  { value: -2, label: 'Crafted' }
+]
