@@ -91,8 +91,6 @@ export const action: ActionFunction = async ({ request }) => {
   const validInput = validateFormData.safeParse(formPayload)
 
   if (!validInput.success) {
-    console.log('error')
-    console.log(validInput.error.issues)
     return json({
       exception: `Missing: ${validInput.error.issues
         .map(({ path }) =>
@@ -111,9 +109,6 @@ export const action: ActionFunction = async ({ request }) => {
   if (!data?.data) {
     return json({ exception: 'Unknown server error' })
   }
-
-  console.log(data)
-  console.log(formPayload)
 
   return json({
     ...data,
