@@ -89,7 +89,7 @@ const validateFormData = z.object({
   ])
 })
 
-const pageTitle = 'Legacy Item Marksetshare'
+const pageTitle = 'Legacy Item Marketshare'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
