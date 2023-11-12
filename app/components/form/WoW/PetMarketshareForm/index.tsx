@@ -10,7 +10,7 @@ const PetMarketShareForm = ({
   regionDefault = 'NA',
   homeRealm,
   minPriceDefault = 1000,
-  salesPerDayDefault = 10,
+  salesPerDayDefault = 1,
   includeCategoriesDefault = [],
   excludeCategoriesDefault = []
 }: {
