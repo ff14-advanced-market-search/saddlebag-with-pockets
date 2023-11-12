@@ -272,6 +272,11 @@ const navGroups: Array<{
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
         icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Pet Marketshare Overview',
+        href: '/wow/pet-marketshare',
+        icon: ChartSquareBarIcon
       }
     ]
   },
