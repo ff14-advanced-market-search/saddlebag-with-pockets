@@ -54,28 +54,28 @@ const PetMarketshareResults = ({
 
   const itemsColumnList: Array<ColumnList<PetMarketshareItem>> = [
     { columnId: 'itemName', header: 'Item Name' },
-    { columnId: 'homeMinPrice', header: 'Minimum Price' },
-    { columnId: 'avgTSMPrice', header: 'Average TSM Price' },
     {
       columnId: 'estimatedRegionMarketValue',
       header: 'Estimated Region Market Value'
     },
+    { columnId: 'avgTSMPrice', header: 'Average TSM Price' },
+    { columnId: 'homeMinPrice', header: 'Minimum Price' },
     {
       columnId: 'percentChange',
       header: 'Percent Changed',
       accessor: ({ getValue }) => <p>{`${getValue()}%`}</p>
     },
+    { columnId: 'salesPerDay', header: 'Sales Per Day' },
     {
       columnId: 'state',
       header: 'Market State'
     },
-    { columnId: 'itemID', header: 'Oribos Link', accessor: OribosLink },
-    { columnId: 'salesPerDay', header: 'Sales Per Day' },
     {
       columnId: 'link',
       header: 'Item Link',
       accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
     },
+    { columnId: 'itemID', header: 'Oribos Link', accessor: OribosLink },
     {
       columnId: 'undermineLink',
       header: 'Undermine Link',
@@ -150,7 +150,6 @@ const PetMarketshareResults = ({
           columnList={itemsColumnList}
           sortingOrder={[{ id: results.sortBy, desc: true }]}
           description="This shows pet market statistics!"
-          order={tableSortOrder}
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
@@ -198,17 +197,3 @@ const getMobileColumns = (
     { header: sortByName.label, columnId: sortByName.value }
   ]
 }
-
-const tableSortOrder = [
-  'itemName',
-  'estimatedRegionMarketValue',
-  'avgTSMPrice',
-  'homeMinPrice',
-  'percentChange',
-  'salesPerDay',
-  'state',
-  'link',
-  'itemID',
-  'undermineLink',
-  'warcraftPetsLink'
-]
