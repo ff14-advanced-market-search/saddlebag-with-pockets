@@ -89,6 +89,13 @@ const recommendedQueries = [
     href: '/wow/legacy-marketshare'
   },
   {
+    name: 'Pet Marketshare Overview',
+    description:
+      'Find out what pets are actually selling and what are the best pets to sell.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/pet-marketshare'
+  },
+  {
     name: 'Price Sniper and Price Spike Alerts',
     description:
       'Alerts you when prices for items go above or below a price you pick!',
