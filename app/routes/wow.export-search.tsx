@@ -131,7 +131,7 @@ const ExportSearch = () => {
             labelTitle="Minimum Price"
             name="minPrice"
             type="number"
-            defaultValue={1000}
+            defaultValue={1100}
             min={0}
           />
           <InputWithLabel
