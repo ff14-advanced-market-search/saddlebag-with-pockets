@@ -109,7 +109,8 @@ const ExportSearch = () => {
         title="Export Search"
         onClick={handleSubmit}
         error={error || itemName.error}
-        loading={isSubmitting}>
+        loading={isSubmitting}
+        disabled={!itemId}>
         <div className="pt-3 flex flex-col">
           <DebouncedSelectInput
             title={'Item to search for'}
