@@ -31,7 +31,9 @@ export const getItemIDByName = (
   name: string,
   itemList = items
 ): string | undefined => {
-  const item = itemList.find(([_, itemName]) => name === itemName)
+  const item = itemList.find(
+    ([_, itemName]) => name.toLowerCase() === itemName.toLowerCase()
+  )
 
   if (!item) {
     return
