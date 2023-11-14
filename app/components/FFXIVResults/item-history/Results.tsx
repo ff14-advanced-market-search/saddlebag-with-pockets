@@ -5,6 +5,7 @@ import PriceHistoryChart from './PriceHistoryChart'
 import SaleHistoryTable from './SaleHistoryTable'
 import SalesByHourChart from './SalesByHourChart'
 import SuspiciousSaleTable from './SuspiciousSalesTable'
+import ServerDistributionChart from './ServerDistributionChart'
 
 const Results = ({
   data,
@@ -51,6 +52,22 @@ const Results = ({
       <>
         <Title title="Region Price History" />
         <PriceHistoryChart data={data.price_history} darkMode={darkMode} />
+      </>
+    </ContentContainer>
+
+    <ContentContainer>
+      <>
+        <Title title="Region Wide Server Sales Distribution" />
+        {Object.keys(data.server_distribution).length ? (
+          <ServerDistributionChart
+            data={data.server_distribution}
+            darkMode={darkMode}
+          />
+        ) : (
+          <p className="italic text-sm text-grey-500 px-3 dark:text-gray-200">
+            No sales found
+          </p>
+        )}
       </>
     </ContentContainer>
 

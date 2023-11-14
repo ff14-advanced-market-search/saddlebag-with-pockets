@@ -31,6 +31,10 @@ export interface StackChance {
   stack_size: number
 }
 
+export interface ServerDistribution {
+  [key: string]: number
+}
+
 export interface HistoryResponse {
   average_ppu: number
   median_ppu: number
@@ -41,6 +45,7 @@ export interface HistoryResponse {
   price_history: Array<PriceHistory>
   stack_chance: Array<StackChance>
   dirty_sales: Array<DirtySale>
+  server_distribution: ServerDistribution
   payload: GetHistoryProps
 }
 
