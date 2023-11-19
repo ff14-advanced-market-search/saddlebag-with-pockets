@@ -2,7 +2,7 @@ import type { DataCentersList } from './DataCenters'
 import DataCenters, { DataCenterArray } from './DataCenters'
 import Regions from './Regions'
 import type { WorldsList } from './Worlds'
-import Worlds, { WorldsArray } from './Worlds'
+import Worlds, { WorldList, WorldsArray } from './Worlds'
 import {
   DataCenterNotFoundException,
   RegionNotFoundException
@@ -33,8 +33,13 @@ const validateWorldAndDataCenter = (
   world?: string | null,
   data_center?: string | null
 ): { world: string; data_center: string } => {
-  if (world && WorldsArray.includes(world)) {
-    if (data_center && DataCenterArray.includes(data_center)) {
+  if (data_center && DataCenterArray.includes(data_center)) {
+    if (
+      world &&
+      WorldList[data_center]
+        ?.map((validWorld) => validWorld.name)
+        .includes(world)
+    ) {
       return { world, data_center }
     }
   }

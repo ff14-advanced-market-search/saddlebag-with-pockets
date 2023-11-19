@@ -42,10 +42,13 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
       </legend>
       <div className="mt-1 shadow-sm">
         <SelectDataCenter
-          onSelect={(data_center) => {
-            setDataCenter(data_center)
+          onSelect={(newDataCenter) => {
+            setDataCenter(newDataCenter)
+            const newWorld = Array.from(
+              locations.WorldsOfDataCenter(newDataCenter)
+            )[0].name
             if (world && dataCenter) {
-              onChange?.({ world, data_center })
+              onChange?.({ world: newWorld, data_center: newDataCenter })
             }
           }}
           dataCenter={dataCenter}
