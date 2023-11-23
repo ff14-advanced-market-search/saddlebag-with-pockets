@@ -34,7 +34,7 @@ const GetShoppingList = async ({
   shoppingList,
   regionWide
 }: GetShoppingListInput) => {
-  const firstRequest = await fetch(`${address}/api/createshoppinglist`, {
+  return await fetch(`${address}/api/v2/shoppinglist`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -45,21 +45,6 @@ const GetShoppingList = async ({
       shopping_list: shoppingList,
       region_wide: regionWide
     })
-  })
-
-  const newInput = await firstRequest.json()
-
-  if ('exception' in newInput) {
-    return json(newInput)
-  }
-
-  return await fetch(`${address}/api/shoppinglist`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': UserAgent
-    },
-    body: JSON.stringify(newInput)
   })
 }
 
