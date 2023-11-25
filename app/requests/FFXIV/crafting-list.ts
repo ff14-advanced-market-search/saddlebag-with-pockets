@@ -111,7 +111,7 @@ const CraftingList = async ({
   yields,
   hideExpertRecipes
 }: CraftingListInput) => {
-  const firstFetch = await fetch(`${address}/api/recipelookup`, {
+  return await fetch(`${address}/api/v2/craftsim`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -132,21 +132,6 @@ const CraftingList = async ({
       yields,
       hide_expert_recipes: hideExpertRecipes
     })
-  })
-
-  const newInput = await firstFetch.json()
-
-  if ('exception' in newInput) {
-    return json(newInput)
-  }
-
-  return await fetch(`${address}/api/craftsim`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': UserAgent
-    },
-    body: JSON.stringify(newInput)
   })
 }
 
