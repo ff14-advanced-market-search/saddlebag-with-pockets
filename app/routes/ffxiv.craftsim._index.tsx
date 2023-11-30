@@ -390,14 +390,14 @@ const Results = ({ data }: { data: Array<FlatCraftingList> }) => {
 
 const mobileColumnList = [
   { columnId: 'itemName', header: 'Item name' },
-  { columnId: 'profitEst', header: 'Profit Est per Yield.' }
+  { columnId: 'profitEst', header: 'Profit Est per Craft.' }
 ]
 
 const columnList: Array<ColumnList<FlatCraftingList>> = [
   { columnId: 'itemName', header: 'Item Name' },
   {
     columnId: 'profitEst',
-    header: 'Profit Est per Yield.',
+    header: 'Profit Est per Craft.',
     accessor: ({ row }) =>
       row.profitEst === 999999999 ? (
         <p>∞</p>
