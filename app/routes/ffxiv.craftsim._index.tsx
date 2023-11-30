@@ -260,7 +260,7 @@ export default function Index() {
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
-                handleFormChange('costMetric', value)
+                handleFormChange('revenueMetric', value)
               }
             }}
           />
