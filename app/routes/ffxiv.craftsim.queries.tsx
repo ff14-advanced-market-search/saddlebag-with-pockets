@@ -3,9 +3,10 @@ import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
 const searchParams = {
-  defaultItems: '/ffxiv/craftsim?filters=0%2C-5',
+  defaultItems:
+    '/ffxiv/craftsim?filters=0%2C-5&revenueMetric=revenue_region_min_listing',
   fastSaleItems:
-    '/ffxiv/craftsim?costMetric=revenue_region_min_listing&revenueMetric=revenue_home_min_listing&salesPerWeek=150&medianSalePrice=500&maxMaterialCost=10000&jobs=0&filters=0%2C-5&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=2&hideExpertRecipes=true',
+    '/ffxiv/craftsim?revenueMetric=revenue_region_min_listing&salesPerWeek=150&medianSalePrice=500&maxMaterialCost=10000&filters=0%2C-5&yields=2',
   foodItems:
     '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=750&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=-1&hideExpertRecipes=true',
   foodItemsTrainedEye:
