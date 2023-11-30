@@ -405,6 +405,7 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
         <p>{row.profitEst.toLocaleString()}</p>
       )
   },
+  { columnId: 'yieldsPerCraft', header: 'Yields Per Craft' },
   {
     columnId: 'hq',
     header: 'High Quality',
@@ -422,7 +423,6 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
       <UniversalisBadgedLink link={universalisLink} />
     )
   },
-  { columnId: 'yieldsPerCraft', header: 'Yield' },
   { columnId: 'soldPerWeek', header: 'Sales Per Week' },
   {
     columnId: 'revenue_avg',
