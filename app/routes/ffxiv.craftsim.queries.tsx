@@ -3,6 +3,7 @@ import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
 const searchParams = {
+  defaultItems: '/ffxiv/craftsim',
   foodItems:
     '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=750&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=-1&hideExpertRecipes=true',
   foodItemsTrainedEye:
@@ -15,6 +16,12 @@ const searchParams = {
     '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=500&medianSalePrice=75000&maxMaterialCost=200000&jobs=0&filters=1%2C2%2C3%2C4&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=-1&hideExpertRecipes=true'
 }
 const recommendedQueries = [
+  {
+    name: 'Default Search',
+    description: 'Default search for profitable items to craft.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.defaultItems
+  },
   {
     name: 'Food Items',
     description: 'Find food items that sell fast and in bulk.',
