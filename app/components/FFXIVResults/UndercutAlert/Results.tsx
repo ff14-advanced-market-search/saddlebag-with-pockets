@@ -42,6 +42,7 @@ const Results = ({
   )}],\n  "hq_only": ${info.hqOnly.toString()},\n  "ignore_data_after_hours": ${
     info.ignoreDataAfterHours
   },\n  "ignore_undercuts_with_quantity_over": ${info.ignoreStackSize}\n}`
+  const salesAlertJson =  `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "item_ids": []\n}`
 
   const isAddModal = modal.form === 'addIds'
   return (
@@ -134,6 +135,7 @@ const Results = ({
               />
             </div>
 
+
             <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{jsonData}</code>
             </pre>
@@ -157,6 +159,31 @@ const Results = ({
                 }}
               />
             </div>
+            
+            <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
+              <code>{salesAlertJson}</code>
+            </pre>
+            <div className="max-w-fit my-2">
+              <SubmitButton
+                title="Copy to clipboard"
+                type="button"
+                disabled={isAddModal && info.addIds.length === 0}
+                onClick={async () => {
+                  if (
+                    typeof window !== 'undefined' &&
+                    typeof document !== 'undefined'
+                  ) {
+                    if (!window.isSecureContext) {
+                      alert('Unable to copy.')
+                      return
+                    }
+                    await navigator.clipboard.writeText(salesAlertJson)
+                    alert('Copied to clipboard!')
+                  }
+                }}
+              />
+            </div>
+
           </div>
           {modal.open && (
             <Modal
