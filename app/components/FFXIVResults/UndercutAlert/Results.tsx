@@ -135,7 +135,7 @@ const Results = ({
               />
             </div>
 
-
+            
             <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{jsonData}</code>
             </pre>
@@ -160,6 +160,8 @@ const Results = ({
               />
             </div>
             
+            <Title title="Input for Sales Alerts" />
+            <SalesAlertDescription/>
             <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{salesAlertJson}</code>
             </pre>
@@ -249,6 +251,7 @@ const Results = ({
 
 export default Results
 
+// TODO: rework both these into 1 component to prevent redundant code
 export const UndercutDescription = () => (
   <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     Copy this to your clipboard and use it in our{' '}
@@ -266,6 +269,27 @@ export const UndercutDescription = () => (
       target="_blank"
       rel="noreferrer">
       patreon undercut alerts.
+    </a>
+  </p>
+)
+
+export const SalesAlertDescription = () => (
+  <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
+    To use Sales Alerts copy this to your clipboard and use it in our{' '}
+    <a
+      className="underline"
+      href="https://discord.gg/836C8wDVNq"
+      target="_blank"
+      rel="noreferrer">
+      discord server
+    </a>{' '}
+    for the bot slash command '/ff sale-register' to activate {' '}
+    <a
+      className="underline"
+      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis#sale-and-undercut-alert-json-data"
+      target="_blank"
+      rel="noreferrer">
+      patreon sale alerts.
     </a>
   </p>
 )
