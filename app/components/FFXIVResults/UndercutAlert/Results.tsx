@@ -42,7 +42,7 @@ const Results = ({
   )}],\n  "hq_only": ${info.hqOnly.toString()},\n  "ignore_data_after_hours": ${
     info.ignoreDataAfterHours
   },\n  "ignore_undercuts_with_quantity_over": ${info.ignoreStackSize}\n}`
-  const salesAlertJson =  `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "item_ids": []\n}`
+  const salesAlertJson = `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "item_ids": []\n}`
 
   const isAddModal = modal.form === 'addIds'
   return (
@@ -135,7 +135,6 @@ const Results = ({
               />
             </div>
 
-            
             <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{jsonData}</code>
             </pre>
@@ -159,9 +158,9 @@ const Results = ({
                 }}
               />
             </div>
-            
+
             <Title title="Input for Sales Alerts" />
-            <SalesAlertDescription/>
+            <SalesAlertDescription />
             <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{salesAlertJson}</code>
             </pre>
@@ -185,7 +184,6 @@ const Results = ({
                 }}
               />
             </div>
-
           </div>
           {modal.open && (
             <Modal
@@ -283,7 +281,7 @@ export const SalesAlertDescription = () => (
       rel="noreferrer">
       discord server
     </a>{' '}
-    for the bot slash command '/ff sale-register' to activate {' '}
+    for the bot slash command '/ff sale-register' to activate{' '}
     <a
       className="underline"
       href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis#sale-and-undercut-alert-json-data"
