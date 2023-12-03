@@ -134,7 +134,7 @@ const navGroups: Array<{
       },
       {
         name: 'Craftsim Search',
-        href: 'ffxiv/craftsim',
+        href: 'ffxiv/craftsim/queries',
         icon: ChartSquareBarIcon
       },
       {

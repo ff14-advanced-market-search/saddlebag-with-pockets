@@ -390,14 +390,14 @@ const Results = ({ data }: { data: Array<FlatCraftingList> }) => {
 
 const mobileColumnList = [
   { columnId: 'itemName', header: 'Item name' },
-  { columnId: 'profitEst', header: 'Profit Est.' }
+  { columnId: 'profitEst', header: 'Profit Est per Craft.' }
 ]
 
 const columnList: Array<ColumnList<FlatCraftingList>> = [
   { columnId: 'itemName', header: 'Item Name' },
   {
     columnId: 'profitEst',
-    header: 'Profit Est.',
+    header: 'Profit Est per Craft.',
     accessor: ({ row }) =>
       row.profitEst === 999999999 ? (
         <p>∞</p>
@@ -405,6 +405,7 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
         <p>{row.profitEst.toLocaleString()}</p>
       )
   },
+  { columnId: 'yieldsPerCraft', header: 'Yields Per Craft' },
   {
     columnId: 'hq',
     header: 'High Quality',
@@ -422,7 +423,6 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
       <UniversalisBadgedLink link={universalisLink} />
     )
   },
-  { columnId: 'yieldsPerCraft', header: 'Yield' },
   { columnId: 'soldPerWeek', header: 'Sales Per Week' },
   {
     columnId: 'revenue_avg',
