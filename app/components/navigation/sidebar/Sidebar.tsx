@@ -67,7 +67,7 @@ const PatreonLink = () => (
       )}
       aria-hidden="true"
     />
-    Patreon
+    Help Support us on Patreon
   </a>
 )
 
@@ -437,6 +437,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 </div>
                 <div className="mt-5 flex-1 h-0 overflow-y-auto">
                   <nav className="px-2 space-y-1">
+                    <PatreonLink />
+                    <WikiLink />
+                    <DiscordLink />
                     {navGroups.map((group) => (
                       <ButtonAccordian
                         key={group.title}
@@ -490,9 +493,6 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                         )}
                       </ButtonAccordian>
                     ))}
-                    <PatreonLink />
-                    <WikiLink />
-                    <DiscordLink />
                     <p className="text-gray-400 text-xs mt-4">
                       FINAL FANTASY is a registered trademark of Square Enix
                       Holdings Co., Ltd.
