@@ -60,7 +60,8 @@ function DesktopTable({
   title,
   description,
   csvOptions,
-  fitScreen
+  fitScreen,
+  highlights
 }: {
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
@@ -69,6 +70,7 @@ function DesktopTable({
   description?: string
   csvOptions?: CSVOptions
   fitScreen?: boolean
+  highlights?: Record<string, string>
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -222,12 +224,23 @@ function DesktopTable({
                 ))}
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
-                {table.getRowModel().rows.map((row) => (
+                {table.getRowModel().rows.map((row, rowIndex) => (
                   <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100 text-center">
+                        className={classNames(
+                          'whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100 text-center',
+                          highlights?.[cell.column.id]
+                            ? `relative before:absolute before:inset-0 before:border-x-4 ${
+                                highlights[cell.column.id]
+                              } ${rowIndex === 0 ? 'before:border-t-4' : ''} ${
+                                rowIndex === table.getRowModel().rows.length - 1
+                                  ? 'before:border-b-4 before:bottom-0'
+                                  : 'before:-bottom-1/2'
+                              }`
+                            : ''
+                        )}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -260,7 +273,8 @@ const SmallTable = ({
   mobileColumnList,
   columnSelectOptions,
   csvOptions,
-  fitScreen
+  fitScreen,
+  highlights
 }: {
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
@@ -271,6 +285,7 @@ const SmallTable = ({
   columnSelectOptions: Array<string>
   csvOptions?: CSVOptions
   fitScreen?: boolean
+  highlights?: Record<string, string>
 }) => {
   return (
     <>
@@ -292,6 +307,7 @@ const SmallTable = ({
         description={description}
         csvOptions={csvOptions}
         fitScreen={fitScreen}
+        highlights={highlights}
       />
     </>
   )
