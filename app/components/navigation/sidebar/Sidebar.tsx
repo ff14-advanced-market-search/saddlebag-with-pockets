@@ -208,7 +208,7 @@ const navGroups: Array<{
       },
       {
         name: 'Mega Alerts Sniper',
-        href: 'https://github.com/ff14-advanced-market-search/mega-alerts',
+        href: 'https://github.com/ff14-advanced-market-search/mega-alerts/blob/main/README.md',
         icon: DocumentSearchIcon,
         external: true
       },
