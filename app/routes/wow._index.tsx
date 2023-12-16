@@ -27,20 +27,6 @@ const recommendedQueries = [
     external: true
   },
   {
-    name: 'Region Wide Undercut Checker',
-    description:
-      'Use our Addon with this search to check all of your undercuts on all your alts on one page!',
-    Icon: DocumentSearchIcon,
-    href: '/wow/region-undercut'
-  },
-  {
-    name: 'Undercut Alerts Curseforge Addon',
-    description: 'The addon for our Undercut Checks and Alerts!',
-    Icon: DocumentSearchIcon,
-    href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-    external: true
-  },
-  {
     name: 'Upload Timers',
     description:
       'View the time each hour when the Blizzard API AH data updates.',
@@ -48,7 +34,7 @@ const recommendedQueries = [
     href: '/wow/upload-timers'
   },
   {
-    name: 'Global Export Item Search',
+    name: 'Region Export Item Search',
     description:
       'Search other servers to find the best place to sell & buy items',
     Icon: DocumentSearchIcon,
@@ -59,13 +45,6 @@ const recommendedQueries = [
     description: 'Search for the realms with the lowest price for an item.',
     Icon: DocumentSearchIcon,
     href: '/wow/shopping-list'
-  },
-  {
-    name: 'Server Transfer Trading Search',
-    description:
-      'Search for items that can be bought cheaply on a your home server and sold for a profit when transfering realms.',
-    Icon: DocumentSearchIcon,
-    href: '/wow/full-scan'
   },
   {
     name: 'Dragonflight Marketshare Overview',
@@ -94,6 +73,27 @@ const recommendedQueries = [
       'Alerts you when prices for items go above or below a price you pick!',
     Icon: DocumentSearchIcon,
     href: '/wow/price-alert'
+  },
+  {
+    name: 'Region Wide Undercut Checker',
+    description:
+      'Use our Addon with this search to check all of your undercuts on all your alts on one page!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/region-undercut'
+  },
+  {
+    name: 'Undercut Alerts Curseforge Addon',
+    description: 'The addon for our Undercut Checks and Alerts!',
+    Icon: DocumentSearchIcon,
+    href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+    external: true
+  },
+  {
+    name: 'Server Transfer Trading Search',
+    description:
+      'Search for items that can be bought cheaply on a your home server and sold for a profit when transfering realms.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/full-scan'
   },
   {
     name: 'Local Realm Shortage Finder',

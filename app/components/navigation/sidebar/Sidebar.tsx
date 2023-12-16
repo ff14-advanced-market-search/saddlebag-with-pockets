@@ -228,22 +228,6 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
-        name: 'Region Wide Undercut Checker',
-        href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
-      },
-      {
-        name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
-        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-        external: true
-      },
-      {
-        name: 'Server Transfer Trading Search',
-        href: '/wow/full-scan',
-        icon: ChartSquareBarIcon
-      },
-      {
         name: 'Dragonflight Marketshare Overview',
         href: '/wow/marketshare',
         icon: ChartSquareBarIcon
@@ -262,6 +246,22 @@ const navGroups: Array<{
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon
+      },
+      {
+        name: 'Region Wide Undercut Checker',
+        href: 'wow/region-undercut',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
+      },
+      {
+        name: 'Server Transfer Trading Search',
+        href: '/wow/full-scan',
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Commodity Shortage Finder',
