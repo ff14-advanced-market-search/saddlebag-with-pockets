@@ -44,17 +44,17 @@ const FullScanForm = ({
   error?: string
 }) => {
   const [searchParams, setSearchParams] = useState({
-    hours: defaultHours.toString(),
-    salesAmount: defaultSalesAmount.toString(),
-    ROI: defaultROI.toString(),
-    minimumStackSize: defaultMinimumStackSize.toString(),
-    minimumProfitAmount: defaultMinimumProfitAmount.toString(),
-    pricePerUnit: defaultPricePerUnit.toString(),
-    filters: defaultFilters.join(','),
-    hQChecked: defaultHQChecked.toString(),
-    regionWideChecked: defaultRegionWideChecked.toString(),
-    includeVendorChecked: defaultIncludeVendorChecked.toString(),
-    outOfStockChecked: defaultOutOfStockChecked.toString()
+    hours: defaultHours?.toString(),
+    salesAmount: defaultSalesAmount?.toString(),
+    ROI: defaultROI?.toString(),
+    minimumStackSize: defaultMinimumStackSize?.toString(),
+    minimumProfitAmount: defaultMinimumProfitAmount?.toString(),
+    pricePerUnit: defaultPricePerUnit?.toString(),
+    filters: defaultFilters?.join(','),
+    hQChecked: defaultHQChecked?.toString(),
+    regionWideChecked: defaultRegionWideChecked?.toString(),
+    includeVendorChecked: defaultIncludeVendorChecked?.toString(),
+    outOfStockChecked: defaultOutOfStockChecked?.toString()
   })
   const [formOpened, setFormOpened] = useState(false)
   const [hqChecked, setHQChecked] = useState(defaultHQChecked)
