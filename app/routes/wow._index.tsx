@@ -29,14 +29,14 @@ const recommendedQueries = [
   {
     name: 'Upload Timers',
     description:
-      'View the time each hour when the Blizzard API AH data updates.',
+      'View the time each hour when the Blizzard API AH data updates. This shows which minute the Mega-Alerts will trigger on.',
     Icon: DocumentSearchIcon,
     href: '/wow/upload-timers'
   },
   {
     name: 'Region Export Item Search',
     description:
-      'Search other servers to find the best place to sell & buy items',
+      'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
     Icon: DocumentSearchIcon,
     href: '/wow/export-search'
   },
