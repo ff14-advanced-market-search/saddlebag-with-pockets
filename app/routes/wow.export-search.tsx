@@ -20,16 +20,26 @@ import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
+import {
+  parseStringToNumber,
+  parseZodErrorsToDisplayString
+} from '~/utils/zodHelpers'
 
-const parseNumber = z.string().transform((value) => parseInt(value, 10))
+const inputMap: Record<string, string> = {
+  maxQuantity: 'Maximum Quantity',
+  minPrice: 'Minimum Price',
+  populationWP: 'Population',
+  populationBlizz: 'Population Blizzard',
+  rankingWP: 'Ranking'
+}
 
 const validateInput = z.object({
-  itemID: parseNumber,
-  populationWP: parseNumber,
-  populationBlizz: parseNumber,
-  rankingWP: parseNumber,
-  minPrice: parseNumber,
-  maxQuantity: parseNumber,
+  itemID: parseStringToNumber,
+  maxQuantity: parseStringToNumber,
+  minPrice: parseStringToNumber,
+  populationWP: parseStringToNumber,
+  populationBlizz: parseStringToNumber,
+  rankingWP: parseStringToNumber,
   sortBy: z.string(),
   connectedRealmIDs: z.record(z.string()).default({})
 })
@@ -42,7 +52,12 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validatedFormData = validateInput.safeParse(formData)
   if (!validatedFormData.success) {
-    return json({ exception: 'Invalid Input' })
+    return json({
+      exception: parseZodErrorsToDisplayString(
+        validatedFormData.error,
+        inputMap
+      )
+    })
   }
 
   const result = await WoWExportSearch({
