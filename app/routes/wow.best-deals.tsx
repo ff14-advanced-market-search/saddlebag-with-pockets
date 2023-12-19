@@ -15,13 +15,25 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import { ItemClassSelect } from '~/components/form/WoW/WoWScanForm'
-import { parseStringToNumber } from '~/utils/zodHelpers'
+import {
+  parseStringToNumber,
+  parseZodErrorsToDisplayString
+} from '~/utils/zodHelpers'
+
+const inputMap: Record<string, string> = {
+  discount: 'Discount Percentage',
+  minPrice: 'Minimum TSM Average Price',
+  salesPerDay: 'Sales Per Day'
+}
 
 const validateInput = z.object({
   type: z.string(),
   discount: parseStringToNumber,
   minPrice: parseStringToNumber,
-  salesPerDay: z.string().transform((value) => parseFloat(value)),
+  salesPerDay: z
+    .string()
+    .min(1)
+    .transform((value) => parseFloat(value)),
   itemClass: parseStringToNumber,
   itemSubClass: parseStringToNumber
 })
@@ -35,7 +47,12 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validatedFormData = validateInput.safeParse(formData)
   if (!validatedFormData.success) {
-    return json({ exception: 'Invalid Input' })
+    return json({
+      exception: parseZodErrorsToDisplayString(
+        validatedFormData.error,
+        inputMap
+      )
+    })
   }
 
   const result = await WoWBestDeals({

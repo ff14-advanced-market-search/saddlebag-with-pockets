@@ -17,12 +17,18 @@ import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { parseItemsForDataListSelect } from '~/utils/items/id_to_item'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemIDByName } from '~/utils/items'
+import {
+  parseStringToNumber,
+  parseZodErrorsToDisplayString
+} from '~/utils/zodHelpers'
 
-const parseNumber = z.string().transform((value) => parseInt(value, 10))
+const inputMap: Record<string, string> = {
+  maxPurchasePrice: 'Maximum Purchase Price'
+}
 
 const validateInput = z.object({
-  itemID: parseNumber,
-  maxPurchasePrice: parseNumber
+  itemID: parseStringToNumber,
+  maxPurchasePrice: parseStringToNumber
 })
 
 export const action: ActionFunction = async ({ request }) => {
@@ -34,7 +40,12 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validatedFormData = validateInput.safeParse(formData)
   if (!validatedFormData.success) {
-    return json({ exception: 'Invalid Input' })
+    return json({
+      exception: parseZodErrorsToDisplayString(
+        validatedFormData.error,
+        inputMap
+      )
+    })
   }
 
   const result = await WoWShoppingList({
