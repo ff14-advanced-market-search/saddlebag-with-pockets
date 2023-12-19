@@ -101,7 +101,7 @@ const Index = () => {
   }
 
   const error =
-    results && results?.data?.exception ? results.data.exception : undefined
+    results && 'exception' in results ? results.exception : undefined
 
   if (results && results.data && !error) {
     if (!results.data?.seller_id) {
