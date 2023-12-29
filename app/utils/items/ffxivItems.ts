@@ -1,4 +1,4 @@
-export const itemsMap: Record<string, string> = {
+export const ffxivItemsMap: Record<string, string> = {
   '2': 'Fire Shard',
   '3': 'Ice Shard',
   '4': 'Wind Shard',
