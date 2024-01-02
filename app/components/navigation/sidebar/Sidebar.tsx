@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
-import React, { Fragment, useState, useEffect, useMemo, useRef } from 'react'
+import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
@@ -35,11 +35,11 @@ import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import {
   ffxivItemsList,
-  parseItemsForDataListSelect
+  wowItems,
+  wowItemsList
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -719,7 +719,6 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
 }
 
 const ItemSearch = () => {
-  const { wowItems } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
   const [itemName, setItemName] = useState('')
   const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
@@ -728,14 +727,9 @@ const ItemSearch = () => {
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const wowItemsForList = useMemo(
-    () => wowItems.map(parseItemsForDataListSelect),
-    [wowItems]
-  )
-
   const isWoW = game === 'wow'
 
-  const dataFormItemList = isWoW ? wowItemsForList : ffxivItemsList
+  const dataFormItemList = isWoW ? wowItemsList : ffxivItemsList
 
   const handleSearchSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

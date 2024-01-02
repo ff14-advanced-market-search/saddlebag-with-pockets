@@ -1,6 +1,6 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ListItem, WoWListResponse } from '~/requests/WoW/ShoppingList'
@@ -14,8 +14,7 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import { parseItemsForDataListSelect } from '~/utils/items/id_to_item'
-import { useTypedSelector } from '~/redux/useTypedSelector'
+import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import {
   parseStringToNumber,
@@ -69,7 +68,6 @@ type ActionResponseType =
 const ShoppingList = () => {
   const result = useActionData<ActionResponseType>()
   const transistion = useNavigation()
-  const { wowItems } = useTypedSelector((state) => state.user)
   const [itemName, setItemName] = useState<string>('')
 
   const isSubmitting = transistion.state === 'submitting'
@@ -77,11 +75,6 @@ const ShoppingList = () => {
   const handleSelect = (value: string) => {
     setItemName(value)
   }
-
-  const memoItems = useMemo(
-    () => wowItems.map(parseItemsForDataListSelect),
-    [wowItems]
-  )
 
   const itemId = getItemIDByName(itemName.trim(), wowItems)
   const error = result && 'exception' in result ? result.exception : undefined
@@ -116,7 +109,7 @@ const ShoppingList = () => {
             title={'Item to search for'}
             label="Item"
             id="export-item-select"
-            selectOptions={memoItems}
+            selectOptions={wowItemsList}
             onSelect={handleSelect}
           />
           <input hidden name="itemID" value={itemId} />

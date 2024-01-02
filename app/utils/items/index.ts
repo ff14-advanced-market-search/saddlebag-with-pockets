@@ -1,6 +1,6 @@
-import { items } from './id_to_item'
+import { ffxivItems } from './id_to_item'
 
-export const searchForItemName = (term: string, itemList = items) => {
+export const searchForItemName = (term: string, itemList = ffxivItems) => {
   if (!term) {
     return
   }
@@ -14,7 +14,7 @@ export const searchForItemName = (term: string, itemList = items) => {
 
 export const getItemNameById = (
   id: number | string,
-  itemList = items
+  itemList = ffxivItems
 ): string | undefined => {
   const idToUse = typeof id === 'number' ? id.toString() : id
 
@@ -29,7 +29,7 @@ export const getItemNameById = (
 
 export const getItemIDByName = (
   name: string,
-  itemList = items
+  itemList = ffxivItems
 ): string | undefined => {
   const lowerCaseName = name.toLowerCase()
   const item = itemList.find(

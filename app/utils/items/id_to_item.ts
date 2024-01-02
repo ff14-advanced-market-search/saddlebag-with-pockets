@@ -1,6 +1,8 @@
-import { itemsMap } from './items'
+import { ffxivItemsMap } from './ffxivItems'
+import { wowItemsMap } from './wowItems'
 
-export const items = Object.entries(itemsMap)
+export const ffxivItems = Object.entries(ffxivItemsMap)
+export const wowItems = Object.entries(wowItemsMap)
 
 export const parseItemsForDataListSelect = ([value, label]: [
   string,
@@ -10,4 +12,5 @@ export const parseItemsForDataListSelect = ([value, label]: [
   label
 })
 
-export const ffxivItemsList = items.map(parseItemsForDataListSelect)
+export const ffxivItemsList = ffxivItems.map(parseItemsForDataListSelect)
+export const wowItemsList = wowItems.map(parseItemsForDataListSelect)
