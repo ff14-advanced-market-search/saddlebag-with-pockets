@@ -22,7 +22,7 @@ export const revenueMetrics = [
   'revenue_avg'
 ] as const
 
-type RevenueMetrics = (typeof revenueMetrics)[number]
+export type RevenueMetrics = (typeof revenueMetrics)[number]
 
 export const revenueMetricLabels: Record<RevenueMetrics, string> = {
   revenue_home_min_listing: 'Home Minimum Price',

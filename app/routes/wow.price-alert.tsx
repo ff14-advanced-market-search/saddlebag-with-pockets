@@ -11,9 +11,9 @@ import { findWoWServersIdByName } from '~/utils/WoWServers'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { getItemIDByName } from '~/utils/items'
+import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 
 interface Auction {
   itemName: string
@@ -76,7 +76,6 @@ type LoaderData = WoWLoaderData & {
 
 const Index = () => {
   const { wowRealm, wowRegion } = useLoaderData<LoaderData>()
-  const { wowItems } = useTypedSelector((state) => state.user)
   const [isPrice, setIsPrice] = useState(IS_PRICE_DEFAULT)
   const [jsonData, setJsonData] = useState<Input>({
     homeRealmName: wowRealm.name,
@@ -207,10 +206,7 @@ const Index = () => {
                 tooltip="Select items to generate an alert for"
                 placeholder="Search for items..."
                 label="Item"
-                selectOptions={wowItems.map(([value, label]) => ({
-                  value,
-                  label
-                }))}
+                selectOptions={wowItemsList}
                 onSelect={handleInputChange}
               />
             </div>

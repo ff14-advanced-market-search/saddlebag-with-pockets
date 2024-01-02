@@ -42,6 +42,7 @@ const Results = ({
   )}],\n  "hq_only": ${info.hqOnly.toString()},\n  "ignore_data_after_hours": ${
     info.ignoreDataAfterHours
   },\n  "ignore_undercuts_with_quantity_over": ${info.ignoreStackSize}\n}`
+  const salesAlertJson = `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "item_ids": []\n}`
 
   const isAddModal = modal.form === 'addIds'
   return (
@@ -157,6 +158,32 @@ const Results = ({
                 }}
               />
             </div>
+
+            <Title title="Input for Sales Alerts" />
+            <SalesAlertDescription />
+            <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
+              <code>{salesAlertJson}</code>
+            </pre>
+            <div className="max-w-fit my-2">
+              <SubmitButton
+                title="Copy to clipboard"
+                type="button"
+                disabled={isAddModal && info.addIds.length === 0}
+                onClick={async () => {
+                  if (
+                    typeof window !== 'undefined' &&
+                    typeof document !== 'undefined'
+                  ) {
+                    if (!window.isSecureContext) {
+                      alert('Unable to copy.')
+                      return
+                    }
+                    await navigator.clipboard.writeText(salesAlertJson)
+                    alert('Copied to clipboard!')
+                  }
+                }}
+              />
+            </div>
           </div>
           {modal.open && (
             <Modal
@@ -222,6 +249,7 @@ const Results = ({
 
 export default Results
 
+// TODO: rework both these into 1 component to prevent redundant code
 export const UndercutDescription = () => (
   <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     Copy this to your clipboard and use it in our{' '}
@@ -239,6 +267,27 @@ export const UndercutDescription = () => (
       target="_blank"
       rel="noreferrer">
       patreon undercut alerts.
+    </a>
+  </p>
+)
+
+export const SalesAlertDescription = () => (
+  <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
+    To use Sales Alerts copy this to your clipboard and use it in our{' '}
+    <a
+      className="underline"
+      href="https://discord.gg/836C8wDVNq"
+      target="_blank"
+      rel="noreferrer">
+      discord server
+    </a>{' '}
+    for the bot slash command '/ff sale-register' to activate{' '}
+    <a
+      className="underline"
+      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis#sale-and-undercut-alert-json-data"
+      target="_blank"
+      rel="noreferrer">
+      patreon sale alerts.
     </a>
   </p>
 )

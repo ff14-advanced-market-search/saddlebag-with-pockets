@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
-import React, { Fragment, useState, useEffect, useMemo, useRef } from 'react'
+import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
@@ -35,11 +35,11 @@ import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import {
   ffxivItemsList,
-  parseItemsForDataListSelect
+  wowItems,
+  wowItemsList
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -134,7 +134,7 @@ const navGroups: Array<{
       },
       {
         name: 'Craftsim Search',
-        href: 'ffxiv/craftsim',
+        href: 'ffxiv/craftsim/queries',
         icon: ChartSquareBarIcon
       },
       {
@@ -208,7 +208,7 @@ const navGroups: Array<{
       },
       {
         name: 'Mega Alerts Sniper',
-        href: 'https://github.com/ff14-advanced-market-search/mega-alerts',
+        href: 'https://github.com/ff14-advanced-market-search/mega-alerts/blob/main/README.md',
         icon: DocumentSearchIcon,
         external: true
       },
@@ -226,22 +226,6 @@ const navGroups: Array<{
         name: 'Item Export Search',
         href: 'wow/export-search',
         icon: DocumentSearchIcon
-      },
-      {
-        name: 'Region Wide Undercut Checker',
-        href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
-      },
-      {
-        name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
-        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-        external: true
-      },
-      {
-        name: 'Server Transfer Trading Search',
-        href: '/wow/full-scan',
-        icon: ChartSquareBarIcon
       },
       {
         name: 'Dragonflight Marketshare Overview',
@@ -267,6 +251,22 @@ const navGroups: Array<{
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon
+      },
+      {
+        name: 'Region Wide Undercut Checker',
+        href: 'wow/region-undercut',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
+      },
+      {
+        name: 'Server Transfer Trading Search',
+        href: '/wow/full-scan',
+        icon: ChartSquareBarIcon
       },
       {
         name: 'Commodity Shortage Finder',
@@ -724,7 +724,6 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
 }
 
 const ItemSearch = () => {
-  const { wowItems } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
   const [itemName, setItemName] = useState('')
   const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
@@ -733,14 +732,9 @@ const ItemSearch = () => {
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const wowItemsForList = useMemo(
-    () => wowItems.map(parseItemsForDataListSelect),
-    [wowItems]
-  )
-
   const isWoW = game === 'wow'
 
-  const dataFormItemList = isWoW ? wowItemsForList : ffxivItemsList
+  const dataFormItemList = isWoW ? wowItemsList : ffxivItemsList
 
   const handleSearchSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

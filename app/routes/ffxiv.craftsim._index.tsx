@@ -15,10 +15,12 @@ import type { ColumnList } from '~/components/types'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import type {
+  CostMetrics,
   CraftingListData,
   CraftingListInput,
   CraftingListRepsonse,
-  FlatCraftingList
+  FlatCraftingList,
+  RevenueMetrics
 } from '~/requests/FFXIV/crafting-list'
 import {
   costMetrics,
@@ -175,10 +177,22 @@ export const action: ActionFunction = async ({ request }) => {
     ...validInput.data
   }
 
-  return CraftingList(input)
+  const result = await CraftingList(input)
+
+  return json({
+    ...(await result.json()),
+    costMetric: input.costMetric,
+    revenueMetric: input.revenueMetric
+  })
 }
 
-type ActionResponse = CraftingListRepsonse | { exception: string } | {}
+type ActionResponse =
+  | (CraftingListRepsonse & {
+      costMetric: CostMetrics
+      revenueMetric: RevenueMetrics
+    })
+  | { exception: string }
+  | {}
 export default function Index() {
   const loaderData = useLoaderData<typeof defaultFormValues>()
   const actionData = useActionData<ActionResponse>()
@@ -196,6 +210,11 @@ export default function Index() {
       ? actionData.data.map(flattenResult)
       : undefined
   }, [actionData, showNoResults])
+
+  const costMetric =
+    actionData && 'costMetric' in actionData ? actionData.costMetric : ''
+  const revenueMetric =
+    actionData && 'revenueMetric' in actionData ? actionData.revenueMetric : ''
 
   const error =
     actionData && 'exception' in actionData ? actionData.exception : undefined
@@ -263,7 +282,7 @@ export default function Index() {
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
-                handleFormChange('costMetric', value)
+                handleFormChange('revenueMetric', value)
               }
             }}
           />
@@ -365,12 +384,26 @@ export default function Index() {
         </div>
       </SmallFormContainer>
       {showNoResults && <NoResults href="/ffxiv/crafting-list" />}
-      {flatData && <Results data={flatData} />}
+      {flatData && (
+        <Results
+          data={flatData}
+          costMetric={costMetric}
+          revenueMetric={revenueMetric}
+        />
+      )}
     </PageWrapper>
   )
 }
 
-const Results = ({ data }: { data: Array<FlatCraftingList> }) => {
+const Results = ({
+  data,
+  costMetric,
+  revenueMetric
+}: {
+  data: Array<FlatCraftingList>
+  costMetric: CostMetrics | ''
+  revenueMetric: RevenueMetrics | ''
+}) => {
   return (
     <PageWrapper>
       <SmallTable
@@ -386,6 +419,11 @@ const Results = ({ data }: { data: Array<FlatCraftingList> }) => {
           'material_avg_cost'
         ]}
         sortingOrder={[{ id: 'profitEst', desc: true }]}
+        highlights={{
+          profitEst: 'before:border-yellow-300',
+          [costMetric]: 'before:border-red-500',
+          [revenueMetric]: 'before:border-green-500'
+        }}
       />
     </PageWrapper>
   )
@@ -393,14 +431,14 @@ const Results = ({ data }: { data: Array<FlatCraftingList> }) => {
 
 const mobileColumnList = [
   { columnId: 'itemName', header: 'Item name' },
-  { columnId: 'profitEst', header: 'Profit Est.' }
+  { columnId: 'profitEst', header: 'Profit Est per Craft.' }
 ]
 
 const columnList: Array<ColumnList<FlatCraftingList>> = [
   { columnId: 'itemName', header: 'Item Name' },
   {
     columnId: 'profitEst',
-    header: 'Profit Est.',
+    header: 'Profit Est per Craft.',
     accessor: ({ row }) =>
       row.profitEst === 999999999 ? (
         <p>∞</p>
@@ -408,6 +446,7 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
         <p>{row.profitEst.toLocaleString()}</p>
       )
   },
+  { columnId: 'yieldsPerCraft', header: 'Yields Per Craft' },
   {
     columnId: 'hq',
     header: 'High Quality',
@@ -425,7 +464,6 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
       <UniversalisBadgedLink link={universalisLink} />
     )
   },
-  { columnId: 'yieldsPerCraft', header: 'Yield' },
   { columnId: 'soldPerWeek', header: 'Sales Per Week' },
   {
     columnId: 'revenue_avg',

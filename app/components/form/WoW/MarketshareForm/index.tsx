@@ -6,12 +6,12 @@ import RegionAndServerSelect from '../RegionAndServerSelect'
 import { ItemClassSelect, ItemQualitySelect } from '../WoWScanForm'
 
 const MarketShareForm = ({
-  desiredPriceDefault = 0,
-  desiredSalesDefault = 10,
+  desiredPriceDefault = 10000,
+  desiredSalesDefault = 0,
   regionDefault = 'NA',
   iLvlDefault = -1,
   requiredLevelDefault = -1,
-  commodityDefault = true,
+  commodityDefault = false,
   homeRealm
 }: {
   desiredPriceDefault?: number

@@ -2366,6 +2366,60 @@ select {
   background: linear-gradient(var(--quick-links-hover-bg,#eff6ff),var(--quick-links-hover-bg,#eff6ff)) padding-box,linear-gradient(to top,#facc15,#facc15,#3b82f6) border-box;
 }
 
+.before\:absolute::before {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.before\:inset-0::before {
+  content: var(--tw-content);
+  inset: 0px;
+}
+
+.before\:-bottom-1\/2::before {
+  content: var(--tw-content);
+  bottom: -50%;
+}
+
+.before\:bottom-0::before {
+  content: var(--tw-content);
+  bottom: 0px;
+}
+
+.before\:border-x-4::before {
+  content: var(--tw-content);
+  border-left-width: 4px;
+  border-right-width: 4px;
+}
+
+.before\:border-b-4::before {
+  content: var(--tw-content);
+  border-bottom-width: 4px;
+}
+
+.before\:border-t-4::before {
+  content: var(--tw-content);
+  border-top-width: 4px;
+}
+
+.before\:border-green-500::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(34 197 94 / var(--tw-border-opacity));
+}
+
+.before\:border-red-500::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.before\:border-yellow-300::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(253 224 71 / var(--tw-border-opacity));
+}
+
 .last\:mr-1:last-child {
   margin-right: 0.25rem;
 }

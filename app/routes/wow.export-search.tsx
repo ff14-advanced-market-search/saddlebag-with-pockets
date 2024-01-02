@@ -1,14 +1,13 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 import type { ExportItem, WoWExportResponse } from '~/requests/WoW/ExportSearch'
 import WoWExportSearch from '~/requests/WoW/ExportSearch'
 import { getUserSessionData } from '~/sessions'
-import { parseItemsForDataListSelect } from '~/utils/items/id_to_item'
+import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import z from 'zod'
 import { useActionData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -20,16 +19,26 @@ import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
+import {
+  parseStringToNumber,
+  parseZodErrorsToDisplayString
+} from '~/utils/zodHelpers'
 
-const parseNumber = z.string().transform((value) => parseInt(value, 10))
+const inputMap: Record<string, string> = {
+  maxQuantity: 'Maximum Quantity',
+  minPrice: 'Minimum Price',
+  populationWP: 'Population',
+  populationBlizz: 'Population Blizzard',
+  rankingWP: 'Ranking'
+}
 
 const validateInput = z.object({
-  itemID: parseNumber,
-  populationWP: parseNumber,
-  populationBlizz: parseNumber,
-  rankingWP: parseNumber,
-  minPrice: parseNumber,
-  maxQuantity: parseNumber,
+  itemID: parseStringToNumber,
+  maxQuantity: parseStringToNumber,
+  minPrice: parseStringToNumber,
+  populationWP: parseStringToNumber,
+  populationBlizz: parseStringToNumber,
+  rankingWP: parseStringToNumber,
   sortBy: z.string(),
   connectedRealmIDs: z.record(z.string()).default({})
 })
@@ -42,7 +51,12 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validatedFormData = validateInput.safeParse(formData)
   if (!validatedFormData.success) {
-    return json({ exception: 'Invalid Input' })
+    return json({
+      exception: parseZodErrorsToDisplayString(
+        validatedFormData.error,
+        inputMap
+      )
+    })
   }
 
   const result = await WoWExportSearch({
@@ -64,7 +78,6 @@ type ActionResponseType =
 const ExportSearch = () => {
   const result = useActionData<ActionResponseType>()
   const transistion = useNavigation()
-  const { wowItems } = useTypedSelector((state) => state.user)
   const [itemName, setItemName] = useState<{ name: string; error: string }>({
     name: '',
     error: ''
@@ -75,11 +88,6 @@ const ExportSearch = () => {
   const handleSelect = (value: string) => {
     setItemName({ error: '', name: value })
   }
-
-  const memoItems = useMemo(
-    () => wowItems.map(parseItemsForDataListSelect),
-    [wowItems]
-  )
 
   const itemId = getItemIDByName(itemName.name.trim(), wowItems)
   const error = result && 'exception' in result ? result.exception : undefined
@@ -116,7 +124,7 @@ const ExportSearch = () => {
             title={'Item to search for'}
             label="Item"
             id="export-item-select"
-            selectOptions={memoItems}
+            selectOptions={wowItemsList}
             onSelect={handleSelect}
           />
           <input hidden name="itemID" value={itemId} />
