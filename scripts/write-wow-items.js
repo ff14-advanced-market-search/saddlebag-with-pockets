@@ -90,7 +90,7 @@ const saveItemList = async (itemNames) => {
   writeFile(
     FILE_PATH,
     'export const wowItemsMap: Record<string, string> = ' +
-      JSON.stringify(itemNames, null, 2),
+      JSON.stringify(result, null, 2),
     function (err) {
       if (err) {
         console.error('ERROR:', err.message)
