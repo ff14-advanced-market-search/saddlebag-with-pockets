@@ -33,7 +33,7 @@ const validateItem = (id, itemName) => {
     return undefined
   }
 
-  if (isNaN(id)) {
+  if (!/^\d+$/.test(id)) {
     return undefined
   }
 
