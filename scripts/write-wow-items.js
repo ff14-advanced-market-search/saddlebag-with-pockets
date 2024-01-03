@@ -21,7 +21,7 @@ const INVALID_STRINGS = [
 ]
 
 const validateItem = (id, itemName) => {
-  if (id === undefined || itemName === undefined) {
+  if (id == null || itemName == null) {
     return undefined
   }
 

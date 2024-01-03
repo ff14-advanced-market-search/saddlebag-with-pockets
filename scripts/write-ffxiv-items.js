@@ -24,7 +24,7 @@ const INVALID_STRINGS = [
 ]
 
 const validateItem = ({ en }) => {
-  if (en === undefined) {
+  if (en == null) {
     return undefined
   }
 
