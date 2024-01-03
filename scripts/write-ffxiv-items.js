@@ -4,7 +4,7 @@ const { writeFile } = require('fs')
 const ITEM_NAMES_ADDRESS =
   'https://raw.githubusercontent.com/ffxiv-teamcraft/ffxiv-teamcraft/staging/libs/data/src/lib/json/items.json'
 
-const FILE_PATH = './app/utils/items/items.ts'
+const FILE_PATH = './app/utils/items/ffxivItems.ts'
 
 const ITEM_IDS_ADDRESS = 'https://universalis.app/api/marketable'
 
@@ -115,7 +115,7 @@ const saveItemList = async ({ itemIds, itemNames }) => {
 
   writeFile(
     FILE_PATH,
-    'export const itemsMap: Record<string, string> = ' +
+    'export const ffxivItemsMap: Record<string, string> = ' +
       JSON.stringify(result, null, 2),
     function (err) {
       if (err) {
