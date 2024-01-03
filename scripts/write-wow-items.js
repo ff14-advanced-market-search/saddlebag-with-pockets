@@ -1,7 +1,7 @@
 const axios = require('axios')
 const { writeFile } = require('fs')
 
-const ITEM_NAMES_ADDRESS = 'http://api.saddlebagexchange.com/api/wow/itemnames'
+const ITEMS_ADDRESS = 'http://api.saddlebagexchange.com/api/wow/itemnames'
 
 const FILE_PATH = './app/utils/items/wowItems.ts'
 
@@ -48,13 +48,13 @@ const validateItem = (id, itemName) => {
   return isInvalid ? undefined : itemName.replace('\u00a0', ' ')
 }
 
-const getItemNames = async () => {
+const getItems = async () => {
   try {
-    console.log('Fetching items from:', ITEM_NAMES_ADDRESS)
+    console.log('Fetching items from:', ITEMS_ADDRESS)
 
     const itemNameResponse = await axios({
       method: 'post',
-      url: ITEM_NAMES_ADDRESS,
+      url: ITEMS_ADDRESS,
       data: {}
     })
 
@@ -65,13 +65,13 @@ const getItemNames = async () => {
   }
 }
 
-const saveItemList = async (itemNames) => {
+const saveItemList = async (items) => {
   console.log('Writing file...')
 
   const result = {}
 
-  Object.keys(itemNames).forEach((id) => {
-    const validItem = validateItem(id, itemNames[id])
+  Object.keys(items).forEach((id) => {
+    const validItem = validateItem(id, items[id])
     if (validItem) {
       result[id] = validItem
     }
@@ -103,7 +103,7 @@ const saveItemList = async (itemNames) => {
   )
 }
 
-getItemNames()
+getItems()
   .then(saveItemList)
   .catch((error) => {
     console.error('Error writing items list:', error.message)
