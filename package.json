@@ -19,7 +19,9 @@
     "prettier:check": "prettier --check app",
     "test": "vitest",
     "prepare": "husky install",
-    "write-items": "node ./scripts/write-ffxiv-items.js"
+    "write-items": "yarn run write-ffxiv-items && yarn run write-wow-items",
+    "write-ffxiv-items": "node ./scripts/write-ffxiv-items.js && prettier --write app/utils/items/ffxivItems.ts",
+    "write-wow-items": "node ./scripts/write-wow-items.js && prettier --write app/utils/items/wowItems.ts"
   },
   "packageManager": "yarn@1.22.18",
   "dependencies": {
