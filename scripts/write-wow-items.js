@@ -103,10 +103,10 @@ const saveItemList = async (itemNames) => {
   )
 }
 
-try {
-  getItemNames().then(saveItemList)
-} catch (error) {
-  console.error('Error writing items list:', error.message)
+getItemNames()
+  .then(saveItemList)
+  .catch((error) => {
+    console.error('Error writing items list:', error.message)
 
-  process.exit(1)
-}
+    process.exit(1)
+  })
