@@ -77,12 +77,12 @@ const getItemNames = async (itemIds) => {
   try {
     console.log('Fetching items from:', ITEM_NAMES_ADDRESS)
 
-    const itemNameReqsponse = await axios({
+    const itemNameResponse = await axios({
       method: 'get',
       url: ITEM_NAMES_ADDRESS
     })
 
-    const itemNames = itemNameReqsponse.data
+    const itemNames = itemNameResponse.data
 
     return { itemIds, itemNames }
   } catch (err) {
