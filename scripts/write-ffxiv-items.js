@@ -4,7 +4,7 @@ const { writeFile } = require('fs')
 const ITEM_NAMES_ADDRESS =
   'https://raw.githubusercontent.com/ffxiv-teamcraft/ffxiv-teamcraft/staging/libs/data/src/lib/json/items.json'
 
-const FILE_PATH = './app/utils/items/items.ts'
+const FILE_PATH = './app/utils/items/ffxivItems.ts'
 
 const ITEM_IDS_ADDRESS = 'https://universalis.app/api/marketable'
 
@@ -24,7 +24,7 @@ const INVALID_STRINGS = [
 ]
 
 const validateItem = ({ en }) => {
-  if (en === undefined) {
+  if (en == null) {
     return undefined
   }
 
@@ -77,12 +77,12 @@ const getItemNames = async (itemIds) => {
   try {
     console.log('Fetching items from:', ITEM_NAMES_ADDRESS)
 
-    const itemNameReqsponse = await axios({
+    const itemNameResponse = await axios({
       method: 'get',
       url: ITEM_NAMES_ADDRESS
     })
 
-    const itemNames = itemNameReqsponse.data
+    const itemNames = itemNameResponse.data
 
     return { itemIds, itemNames }
   } catch (err) {
@@ -115,7 +115,7 @@ const saveItemList = async ({ itemIds, itemNames }) => {
 
   writeFile(
     FILE_PATH,
-    'export const itemsMap: Record<string, string> = ' +
+    'export const ffxivItemsMap: Record<string, string> = ' +
       JSON.stringify(result, null, 2),
     function (err) {
       if (err) {
@@ -129,10 +129,11 @@ const saveItemList = async ({ itemIds, itemNames }) => {
   )
 }
 
-try {
-  getItemIds().then(getItemNames).then(saveItemList)
-} catch (error) {
-  console.error('Error writing items list:', error.message)
+getItemIds()
+  .then(getItemNames)
+  .then(saveItemList)
+  .catch((error) => {
+    console.error('Error writing items list:', error.message)
 
-  process.exit(1)
-}
+    process.exit(1)
+  })
