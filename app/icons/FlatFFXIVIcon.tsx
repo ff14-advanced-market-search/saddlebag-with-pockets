@@ -2,7 +2,7 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
-const FlatWowIcon: FC<SVGProps> = (props) => {
+const FlatFFXIVIcon: FC<SVGProps> = (props) => {
   return (
     <svg 
       className={props.className}
@@ -15,4 +15,4 @@ const FlatWowIcon: FC<SVGProps> = (props) => {
   )
 }
 
-export default FlatWowIcon
+export default FlatFFXIVIcon
