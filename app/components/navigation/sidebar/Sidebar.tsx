@@ -27,7 +27,6 @@ import {
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
-import EarthIcon from '~/icons/EarthIcon'
 import GithubIcon from '~/icons/GithubIcon'
 import FlatWoWIcon from '~/icons/FlatWowIcon'
 import FlatFFXIVIcon from '~/icons/FlatFFXIVIcon'
