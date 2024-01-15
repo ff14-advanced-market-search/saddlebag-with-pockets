@@ -27,9 +27,9 @@ import {
 import { classNames } from '~/utils'
 import PatreonIcon from '~/icons/PatreonIcon'
 import KofiIcon from '~/icons/KofiIcon'
-import EarthIcon from '~/icons/EarthIcon'
 import GithubIcon from '~/icons/GithubIcon'
-import { LocationMarkerIcon } from '@heroicons/react/solid'
+import FlatWoWIcon from '~/icons/FlatWowIcon'
+import FlatFFXIVIcon from '~/icons/FlatFFXIVIcon'
 import DiscordIcon from '~/icons/DiscordIcon'
 import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
@@ -512,11 +512,11 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       {/* Static sidebar for desktop */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
-          <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900 dark:bg-slate-900">
+        <div className="flex-1 flex flex-col min-h-0 bg-gray-900 dark:bg-slate-950 border-r border-gray-100 dark:border-slate-800">
+          <div className="flex items-center h-12 flex-shrink-0 px-4 bg-gray-900 dark:bg-slate-950 group">
             <Link to={`/`}>
               <img
-                className="h-16 w-auto"
+                className="h-10 w-auto rounded-md hover:bg-gray-800"
                 src="/images/tiny-chocobo.png"
                 alt={data.site_name}
               />
@@ -592,7 +592,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       </div>
       {/* Nav bar */}
       <div className="md:pl-64 flex flex-col">
-        <nav className="sticky top-0 z-40 flex-shrink-0 flex h-16 bg-white dark:bg-slate-900 shadow">
+        <nav className="sticky top-0 z-40 flex-shrink-0 flex h-12 bg-white dark:bg-slate-900 shadow">
           <button
             type="button"
             className="px-4 border-r border-gray-200 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
@@ -612,47 +612,38 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                   'hover:bg-gray-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500'
                 )}>
                 <div className={`flex flex-wrap pl-1.5 flex-1`}>
-                  <div className="hidden md:flex">
-                    <div className="flex flex-col min-w-[150px]">
-                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
-                        <EarthIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
+                  <div className="hidden md:flex gap-2 divide-x divide-gray-200 dark:divide-gray-700">
+                    <div className="flex w-fit min-w-[150px]">
+                      <div className="gap-1.5 flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
+                        <FlatFFXIVIcon
+                          className="flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
-                        {data.data_center}
-                      </div>
-                      <div className=" md:flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
-                        <LocationMarkerIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
-                          aria-hidden="true"
-                        />
-                        {data.world}
+                        <div className='flex flex-col'>
+                          <p className='text-xs'>{data.data_center}</p>
+                          <p className='text-sm font-medium'>{data.world}</p>
+                        </div>
                       </div>
                     </div>
-                    <div className="border-l border-gray-200 w-0 m-2 shrink-0 rounded:md dark:group-hover:border-gray-100" />
-                    <div className="flex flex-col w-fit min-w-[150px]">
-                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
-                        <EarthIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
+                    <div className="flex w-fit min-w-[150px]">
+                      <div className="pl-2 gap-1.5 flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
+                        <FlatWoWIcon
+                          className="flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
-                        {data.wowRegion === 'NA' ? 'North America' : 'Europe'}
-                      </div>
-                      <div className=" md:flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
-                        <LocationMarkerIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-200 dark:group-hover:text-gray-100"
-                          aria-hidden="true"
-                        />
-                        {data.wowRealm.name}
+                        <div className='flex flex-col'>
+                          <p className='text-xs'>{data.wowRegion === 'NA' ? 'North America' : 'Europe'}</p>
+                          <p className='text-sm font-medium'>{data.wowRealm.name}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex md:hidden items-center text-sm text-gray-500 dark:text-gray-200 basis-full mr-1.5 dark:group-hover:text-gray-100">
+                  <div className="flex md:hidden items-center text-sm font-medium text-gray-500 dark:text-gray-200 basis-full mr-1.5 dark:group-hover:text-gray-100">
                     Settings
                   </div>
                 </div>
-                <div className={`flex items-center pr-1.5`}>
+                <div className={`flex md:hidden items-center pr-1.5`}>
                   <CogIcon
                     className="h-5 w-5 text-gray-400 dark:text-gray-200 basis-full group-hover:text-blue-500 dark:group-hover:text-gray-100"
                     aria-hidden="true"
@@ -674,10 +665,10 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               {/* Profile dropdown */}
               <Menu as="div" className="ml-3 relative">
                 <div>
-                  <Menu.Button className="max-w-xs bg-white dark:bg-slate-900 dark:hover:bg-slate-800 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <Menu.Button className="max-w-xs shrink-0 w-fit bg-white dark:bg-slate-900 dark:hover:bg-slate-800 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <span className="sr-only">Open user menu</span>
                     <img
-                      className="h-8 w-8 rounded-full"
+                      className="h-8 w-8 rounded-full shrink-0"
                       src="/images/tiny-chocobo.png"
                       alt=""
                     />
@@ -777,68 +768,77 @@ const ItemSearch = () => {
 
   const isLoading = transition.state === 'loading'
   return (
-    <div className={'md:relative'}>
+    <div>
       <button
         type="button"
         onClick={handleFormToggle}
         className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
         <SearchIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
-        <p className="hidden md:block shrink-0 text-sm text-gray-500 dark:text-gray-200">
+        <p className="hidden md:block font-medium shrink-0 text-sm text-gray-500 dark:text-gray-200">
           Item Search
         </p>
       </button>
       {isOpen && (
-        <div className="absolute left-2 mt-2 px-2 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <Form method="POST" className="flex my-2">
+        <div className="absolute w-full flex items-center h-28 md:h-16 px-4 left-0 shadow-lg py-1 bg-white dark:bg-slate-900 border-t border-black/5 dark:border-white/5 focus:outline-none">
+          <Form method="POST" className="flex flex-col md:flex-row items-center my-2 gap-1 md:gap-2 h-full w-full">
             <div
-              className="flex flex-col max-h-fit gap-1 justify-center"
+              className="flex w-full md:w-fit p-1 rounded-md bg-gray-50 dark:bg-slate-700 items-center"
               onChange={handleFormChange}>
               <label
                 htmlFor={`radio-ffxiv`}
-                className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
+                className='cursor-pointer w-full md:w-fit'
+              >
                 <input
                   id={`radio-ffxiv`}
                   type="radio"
                   value={'ffxiv'}
                   name="game-items"
                   defaultChecked={game === 'ffxiv'}
-                  className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
+                  className="peer hidden"
                 />
-                <span>FFXIV</span>
+                <span className='w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5'>
+                  FFXIV
+                </span>
               </label>
               <label
                 htmlFor={`radio-wow`}
-                className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
+                className='cursor-pointer w-full md:w-fit'
+              >
                 <input
                   id={`radio-wow`}
                   type="radio"
                   value={'wow'}
                   name="game-items"
                   defaultChecked={game === 'wow'}
-                  className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
+                  className="peer hidden"
                 />
-                <span>WoW</span>
+                <span className='w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5'>
+                  WoW
+                </span>
               </label>
             </div>
 
-            <DebouncedSelectInput
-              ref={inputRef}
-              id="nav-search"
-              selectOptions={dataFormItemList}
-              formName={ITEM_DATA_FORM_NAME}
-              onSelect={handleSelect}
-              error={searchError}
-              placeholder="Search items..."
-              containerClassNames="w-40"
-              useDebounce={true}
-            />
+            <div className="flex items-center w-full">
+              <DebouncedSelectInput
+                ref={inputRef}
+                id="nav-search"
+                selectOptions={dataFormItemList}
+                formName={ITEM_DATA_FORM_NAME}
+                onSelect={handleSelect}
+                error={searchError}
+                placeholder="Search items..."
+                containerClassNames="w-full"
+                useDebounce={true}
+              />
 
-            <SubmitButton
-              title="Find"
-              type="button"
-              onClick={handleSearchSubmit}
-              loading={isLoading}
-            />
+              <SubmitButton
+                title="Search"
+                type="button"
+                onClick={handleSearchSubmit}
+                loading={isLoading}
+                className=''
+              />
+            </div>
           </Form>
         </div>
       )}
