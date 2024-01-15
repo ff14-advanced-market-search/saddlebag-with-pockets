@@ -90,7 +90,7 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
       'p-2 w-full',
       label
         ? 'rounded-l-md border-gray-300 border-0 border-r'
-        : 'border-0 rounded-md',
+        : 'border-0 border-transparent rounded-md',
       'focus:ring-blue-500 focus:border-2 focus:border-blue-500 dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
     )
 
