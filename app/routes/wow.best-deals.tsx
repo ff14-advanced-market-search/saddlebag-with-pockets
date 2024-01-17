@@ -129,7 +129,7 @@ const BestDeals = () => {
             labelTitle="Minimum TSM Average Price"
             name="minPrice"
             type="number"
-            defaultValue={3000}
+            defaultValue={2000}
             min={0}
           />
           <InputWithLabel
