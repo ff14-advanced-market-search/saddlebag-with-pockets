@@ -362,7 +362,7 @@ const ButtonAccordian = ({
       </button>
       <div
         className={`${
-          isOpen ? 'animate-grow' : 'animate-shrink'
+          isOpen ? 'animate-open' : 'animate-close'
         } flex flex-col`}>
         {children}
       </div>
@@ -452,7 +452,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                                   isActive
                                     ? 'bg-gray-900 text-white'
                                     : 'text-gray-300 hover:bg-gray-500 hover:text-white',
-                                  'group flex items-center px-2 py-2 text-base font-medium rounded-md'
+                                  'group flex items-center px-2 py-2 text-base font-medium rounded-md animate-child'
                                 )
                               }>
                               {({ isActive }) => (
@@ -462,7 +462,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                                       isActive
                                         ? 'text-gray-300'
                                         : 'text-gray-400 group-hover:text-gray-300',
-                                      'mr-4 flex-shrink-0 h-6 w-6'
+                                      'mr-4 flex-shrink-0 h-6 w-6 animate-child'
                                     )}
                                     aria-hidden="true"
                                   />
@@ -522,7 +522,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               />
             </Link>
           </div>
-          <div className="flex-1 flex flex-col overflow-y-auto pb-24">
+          <div className="flex-1 flex flex-col overflow-y-auto pb-24 no-scroll">
             <nav className="flex-0 px-2 py-4 space-y-1">
               {navGroups.map((group) => (
                 <ButtonAccordian
@@ -539,7 +539,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                             isActive
                               ? 'bg-gray-900 text-white hover:bg-gray-500'
                               : 'text-gray-300 hover:bg-gray-500 hover:text-white',
-                            'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                            'group flex items-center px-2 py-2 text-sm font-medium rounded-md animate-child'
                           )
                         }>
                         {({ isActive }) => (
@@ -563,7 +563,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                         href={item.href}
                         target="_blank"
                         rel="noreferrer"
-                        className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
+                        className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md animate-child`}>
                         <item.icon
                           className={classNames(
                             'text-gray-400 group-hover:text-gray-300',
