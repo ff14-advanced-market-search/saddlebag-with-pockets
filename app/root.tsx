@@ -6,6 +6,7 @@ import type {
 import { redirect } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
+import overrides from './base.css'
 import {
   Links,
   LiveReload,
@@ -65,6 +66,10 @@ export const links = () => {
     {
       rel: 'stylesheet',
       href: styles
+    },
+    {
+      rel: 'stylesheet',
+      href: overrides
     },
     {
       rel: 'icon',
