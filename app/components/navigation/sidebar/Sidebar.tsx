@@ -619,9 +619,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                           className="flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
-                        <div className='flex flex-col'>
-                          <p className='text-xs'>{data.data_center}</p>
-                          <p className='text-sm font-medium'>{data.world}</p>
+                        <div className="flex flex-col">
+                          <p className="text-xs">{data.data_center}</p>
+                          <p className="text-sm font-medium">{data.world}</p>
                         </div>
                       </div>
                     </div>
@@ -631,9 +631,15 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                           className="flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100"
                           aria-hidden="true"
                         />
-                        <div className='flex flex-col'>
-                          <p className='text-xs'>{data.wowRegion === 'NA' ? 'North America' : 'Europe'}</p>
-                          <p className='text-sm font-medium'>{data.wowRealm.name}</p>
+                        <div className="flex flex-col">
+                          <p className="text-xs">
+                            {data.wowRegion === 'NA'
+                              ? 'North America'
+                              : 'Europe'}
+                          </p>
+                          <p className="text-sm font-medium">
+                            {data.wowRealm.name}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -780,14 +786,15 @@ const ItemSearch = () => {
       </button>
       {isOpen && (
         <div className="absolute w-full flex items-center h-28 md:h-16 px-4 left-0 shadow-lg py-1 bg-white dark:bg-slate-900 border-t border-black/5 dark:border-white/5 focus:outline-none">
-          <Form method="POST" className="flex flex-col md:flex-row items-center my-2 gap-1 md:gap-2 h-full w-full">
+          <Form
+            method="POST"
+            className="flex flex-col md:flex-row items-center my-2 gap-1 md:gap-2 h-full w-full">
             <div
               className="flex w-full md:w-fit p-1 rounded-md bg-gray-50 dark:bg-slate-700 items-center"
               onChange={handleFormChange}>
               <label
                 htmlFor={`radio-ffxiv`}
-                className='cursor-pointer w-full md:w-fit'
-              >
+                className="cursor-pointer w-full md:w-fit">
                 <input
                   id={`radio-ffxiv`}
                   type="radio"
@@ -796,14 +803,13 @@ const ItemSearch = () => {
                   defaultChecked={game === 'ffxiv'}
                   className="peer hidden"
                 />
-                <span className='w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5'>
+                <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
                   FFXIV
                 </span>
               </label>
               <label
                 htmlFor={`radio-wow`}
-                className='cursor-pointer w-full md:w-fit'
-              >
+                className="cursor-pointer w-full md:w-fit">
                 <input
                   id={`radio-wow`}
                   type="radio"
@@ -812,7 +818,7 @@ const ItemSearch = () => {
                   defaultChecked={game === 'wow'}
                   className="peer hidden"
                 />
-                <span className='w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5'>
+                <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
                   WoW
                 </span>
               </label>
@@ -836,7 +842,7 @@ const ItemSearch = () => {
                 type="button"
                 onClick={handleSearchSubmit}
                 loading={isLoading}
-                className=''
+                className=""
               />
             </div>
           </Form>
