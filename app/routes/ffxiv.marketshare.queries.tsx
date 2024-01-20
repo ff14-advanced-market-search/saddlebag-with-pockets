@@ -22,7 +22,9 @@ const searchParams = {
   bestVendorItems:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=-1&sortBy=marketValue',
   bestGear:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4,-5&sortBy=marketValue'
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4,-5&sortBy=marketValue',
+  bestGathering:
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=10&averagePrice=10&sortBy=purchaseAmount&filters=6'
 }
 const recommendedQueries = [
   {
@@ -90,6 +92,13 @@ const recommendedQueries = [
       'See the best selling gear, weapons, armor and glamors from the last week. Excluding crafted raid gear.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestGear
+  },
+  {
+    name: 'Best Raw Materials to Gather.',
+    description:
+      'See the best earning and fastest selling raw materials to gather.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.bestGathering
   }
 ]
 
