@@ -58,7 +58,7 @@ const WoWExportSearch = async ({
   sortBy,
   connectedRealmIDs
 }: WoWExportSearchProps) =>
-  fetch(`${address}/api/wow/export`, {
+  fetch(`${address}/api/wow/exportx`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
