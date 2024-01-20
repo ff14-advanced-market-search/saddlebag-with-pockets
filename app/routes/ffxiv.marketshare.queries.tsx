@@ -24,7 +24,7 @@ const searchParams = {
   bestGear:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4,-5&sortBy=marketValue',
   bestGathering:
-    '/ffxiv/marketshare?timePeriod=24&salesAmount=10&averagePrice=10&sortBy=purchaseAmount&filters=6'
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=10&averagePrice=10&sortBy=marketValue&filters=6'
 }
 const recommendedQueries = [
   {
