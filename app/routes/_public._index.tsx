@@ -3,6 +3,13 @@ import TileLink from '~/components/Common/TileLink'
 
 const recommendedQueries = [
   {
+    name: 'Patreon',
+    description:
+      'Join our Patreon Supporters to access the best tools we have!.',
+    href: 'https://www.patreon.com/indopan',
+    external: true
+  },
+  {
     name: 'Final Fantasy XIV',
     description:
       'Tools for Cross-Server reselling, Market Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More!.',
