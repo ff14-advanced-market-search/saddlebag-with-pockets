@@ -19,11 +19,11 @@ const recommendedQueries = [
     href: '/wow/best-deals'
   },
   {
-    name: 'Ultra Fast Mega-Alerts Sniper',
+    name: 'Ultra Fast Azeroth Auction Assassin Sniper',
     description:
-      'Try our standalone Mega-Alerts Sniper, designed to snipe across all realms for the best deals seconds after the Blizzard AH API updates so you get there first!',
+      'Try our standalone Azeroth Auction Assassin Sniper, designed to snipe across all realms for the best deals seconds after the Blizzard AH API updates so you get there first!',
     Icon: DocumentSearchIcon,
-    href: 'https://github.com/ff14-advanced-market-search/mega-alerts/blob/main/README.md',
+    href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
     external: true
   },
   {
