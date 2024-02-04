@@ -140,6 +140,7 @@ const Row = ({
         <input
           className="w-[70px] border border-gray-300 rounded-md dark:border-gray-400 dark:bg-gray-600"
           type={'number'}
+          max={1000000000}
           value={craft_amount}
           onChange={(e) => {
             const value = e.target.value

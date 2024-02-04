@@ -98,6 +98,7 @@ const FullScanForm = ({
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
                       type="number"
+                      max={1000000000}
                       id="scan-hours"
                       defaultValue={defaultHours}
                       onChange={(event) => {
@@ -137,6 +138,7 @@ const FullScanForm = ({
                   </label>
                   <input
                     type="number"
+                    max={1000000000}
                     id="sale-amt"
                     defaultValue={defaultSalesAmount}
                     onChange={(event) => {
@@ -173,6 +175,7 @@ const FullScanForm = ({
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
                       type="number"
+                      max={1000000000}
                       name="roi"
                       defaultValue={defaultROI}
                       onChange={(event) => {
@@ -212,6 +215,7 @@ const FullScanForm = ({
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
                       type="number"
+                      max={1000000000}
                       name="price_per_unit"
                       defaultValue={defaultPricePerUnit}
                       onChange={(event) => {
@@ -251,6 +255,7 @@ const FullScanForm = ({
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
                       type="number"
+                      max={1000000000}
                       name="minimum_profit_amount"
                       defaultValue={defaultMinimumProfitAmount}
                       onChange={(event) => {
@@ -316,6 +321,7 @@ const FullScanForm = ({
                     <div className={`mt-1 flex rounded-md shadow-sm`}>
                       <input
                         type="number"
+                        max={1000000000}
                         name="minimum_stack_size"
                         defaultValue={defaultMinimumStackSize}
                         onChange={(event) => {
