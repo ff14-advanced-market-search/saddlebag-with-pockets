@@ -22,7 +22,7 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
-import { Title } from '~/components/Common'
+import { ContentContainer, Title } from '~/components/Common'
 import MobileTable from './MobileTable'
 import type { ColumnList } from '~/components/types'
 import PaginationControls from '~/components/Tables/PaginationControls'
@@ -71,8 +71,8 @@ function DesktopTable({
   description?: string
   csvOptions?: CSVOptions
   fitScreen?: boolean
-  highlights?: Record<string, string>,
-  summaryData?: Array<{ label: string; value: number }>;
+  highlights?: Record<string, string>
+  summaryData?: Array<{ label: string; value: number }>
 }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -102,7 +102,7 @@ function DesktopTable({
               getValue: () => parseToLocaleString(props.getValue())
             })
           : parseToLocaleString(props.getValue())
-    }) 
+    })
   })
 
   const table = useReactTable({
@@ -255,19 +255,21 @@ function DesktopTable({
             </table>
           </div>
           <div>
-          <p className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
-            {`${data.length} results found`}
-            {summaryData && summaryData.length > 0 && (
-              <>
-                {' | '}
-                {summaryData.map(({ label, value }, index) => (
-                  <span key={index}>
-                    {`${label}: ${value}`} {index < summaryData.length - 1 ? ' | ' : ''}
-                  </span>
-                ))}
-              </>
-            )}
-          </p>
+            <p
+              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
+              {`${data.length} results found`}
+              {summaryData && summaryData.length > 0 && (
+                <>
+                  {' | '}
+                  {summaryData.map(({ label, value }, index) => (
+                    <span key={index}>
+                      {`${label}: ${value}`}{' '}
+                      {index < summaryData.length - 1 ? ' | ' : ''}
+                    </span>
+                  ))}
+                </>
+              )}
+            </p>
           </div>
         </div>
       </div>
@@ -297,34 +299,33 @@ const SmallTable = ({
   columnSelectOptions: Array<string>
   csvOptions?: CSVOptions
   fitScreen?: boolean
-  highlights?: Record<string, string>,
-  summaryData?: Array<{ label: string; value: number }>;
+  highlights?: Record<string, string>
+  summaryData?: Array<{ label: string; value: number }>
 }) => {
   return (
     <>
-        <MobileTable
-          data={data}
-          sortingOrder={sortingOrder}
-          columnList={mobileColumnList}
-          title={title}
-          description={description}
-          rowLabels={columnList}
-          columnSelectOptions={columnSelectOptions}
-        />
-        <DesktopTable
-          data={data}
-          sortingOrder={sortingOrder}
-          columnList={columnList}
-          title={title}
-          description={description}
-          csvOptions={csvOptions}
-          fitScreen={fitScreen}
-          highlights={highlights}
-          summaryData={summaryData}
-        />
+      <MobileTable
+        data={data}
+        sortingOrder={sortingOrder}
+        columnList={mobileColumnList}
+        title={title}
+        description={description}
+        rowLabels={columnList}
+        columnSelectOptions={columnSelectOptions}
+      />
+      <DesktopTable
+        data={data}
+        sortingOrder={sortingOrder}
+        columnList={columnList}
+        title={title}
+        description={description}
+        csvOptions={csvOptions}
+        fitScreen={fitScreen}
+        highlights={highlights}
+        summaryData={summaryData}
+      />
     </>
-  );
-};
+  )
+}
 
 export default SmallTable
-

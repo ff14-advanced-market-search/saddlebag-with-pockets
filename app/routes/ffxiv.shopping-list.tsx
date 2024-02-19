@@ -84,10 +84,14 @@ export default function Index() {
   )
 }
 
-const Results = ({ average_cost_per_craft, total_cost, data }: GetShoppingListResponse) => {
+const Results = ({
+  average_cost_per_craft,
+  total_cost,
+  data
+}: GetShoppingListResponse) => {
   const summaryData = [
-    { label: "Average cost per craft", value: average_cost_per_craft },
-    { label: "Total cost", value: total_cost }
+    { label: 'Average cost per craft', value: average_cost_per_craft },
+    { label: 'Total cost', value: total_cost }
   ]
 
   return (
@@ -102,9 +106,8 @@ const Results = ({ average_cost_per_craft, total_cost, data }: GetShoppingListRe
         summaryData={summaryData}
       />
     </>
-  );
-};
-
+  )
+}
 
 const columnList: Array<ColumnList<ShoppingListItem>> = [
   { columnId: 'name', header: 'Item Name' },
