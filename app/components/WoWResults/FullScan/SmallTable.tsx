@@ -22,7 +22,7 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { classNames } from '~/utils'
-import { ContentContainer, Title } from '~/components/Common'
+import { Title } from '~/components/Common'
 import MobileTable from './MobileTable'
 import type { ColumnList } from '~/components/types'
 import PaginationControls from '~/components/Tables/PaginationControls'
@@ -302,8 +302,6 @@ const SmallTable = ({
 }) => {
   return (
     <>
-      <ContentContainer>
-        <>
         <MobileTable
           data={data}
           sortingOrder={sortingOrder}
@@ -324,8 +322,6 @@ const SmallTable = ({
           highlights={highlights}
           summaryData={summaryData}
         />
-        </>
-      </ContentContainer>
     </>
   );
 };
