@@ -84,7 +84,12 @@ export default function Index() {
   )
 }
 
-const Results = ({ data }: GetShoppingListResponse) => {
+const Results = ({ average_cost_per_craft, total_cost, data }: GetShoppingListResponse) => {
+  const summaryData = [
+    { label: "Average cost per craft", value: average_cost_per_craft },
+    { label: "Total cost", value: total_cost }
+  ]
+
   return (
     <>
       <div className="h-4 w-full" />
@@ -94,10 +99,12 @@ const Results = ({ data }: GetShoppingListResponse) => {
         columnList={columnList}
         mobileColumnList={columnList}
         columnSelectOptions={['pricePerUnit', 'quantity', 'worldName']}
+        summaryData={summaryData}
       />
     </>
-  )
-}
+  );
+};
+
 
 const columnList: Array<ColumnList<ShoppingListItem>> = [
   { columnId: 'name', header: 'Item Name' },
