@@ -1,4 +1,4 @@
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
@@ -9,7 +9,7 @@ import WoWExportSearch from '~/requests/WoW/ExportSearch'
 import { getUserSessionData } from '~/sessions'
 import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import z from 'zod'
-import { useActionData, useNavigation } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import { getItemIDByName } from '~/utils/items'
 import Select from '~/components/form/select'
@@ -23,13 +23,33 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
+import {
+  getActionUrl,
+  handleCopyButton,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
+import { SubmitButton } from '~/components/form/SubmitButton'
+
+const PAGE_URL = '/wow/export-search'
+
+const defaultFormValues = {
+  itemID: '',
+  maxQuantity: 1000,
+  minPrice: 1100,
+  populationWP: 3000,
+  populationBlizz: 1,
+  rankingWP: 90,
+  sortBy: 'minPrice' as const
+}
 
 const inputMap: Record<string, string> = {
+  itemID: 'Item Id',
   maxQuantity: 'Maximum Quantity',
   minPrice: 'Minimum Price',
   populationWP: 'Population',
   populationBlizz: 'Population Blizzard',
-  rankingWP: 'Ranking'
+  rankingWP: 'Ranking',
+  sortBy: 'Sort Results By'
 }
 
 const validateInput = z.object({
@@ -42,6 +62,33 @@ const validateInput = z.object({
   sortBy: z.string(),
   connectedRealmIDs: z.record(z.string()).default({})
 })
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const params = new URL(request.url).searchParams
+
+  const values = {
+    itemID: params.get('itemID') || defaultFormValues.itemID,
+    maxQuantity:
+      params.get('maxQuantity') || defaultFormValues.maxQuantity.toString(),
+    minPrice: params.get('minPrice') || defaultFormValues.minPrice.toString(),
+    populationWP:
+      params.get('populationWP') || defaultFormValues.populationWP.toString(),
+    populationBlizz:
+      params.get('populationBlizz') ||
+      defaultFormValues.populationBlizz.toString(),
+    rankingWP:
+      params.get('rankingWP') || defaultFormValues.rankingWP.toString(),
+    sortBy: params.get('sortBy') || defaultFormValues.sortBy.toString()
+  }
+  const validParams = validateInput.safeParse(values)
+
+  if (validParams.success) {
+    return json(validParams.data)
+  }
+
+  return json(defaultFormValues)
+}
+
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 
@@ -61,7 +108,8 @@ export const action: ActionFunction = async ({ request }) => {
 
   const result = await WoWExportSearch({
     region,
-    ...validatedFormData.data
+    ...validatedFormData.data,
+    itemID: validatedFormData.data.itemID
   })
 
   return json({
@@ -76,24 +124,34 @@ type ActionResponseType =
   | (WoWExportResponse & { sortby: string })
 
 const ExportSearch = () => {
+  const loaderData = useLoaderData<typeof defaultFormValues>()
   const result = useActionData<ActionResponseType>()
   const transistion = useNavigation()
   const [itemName, setItemName] = useState<{ name: string; error: string }>({
     name: '',
     error: ''
   })
-
   const isSubmitting = transistion.state === 'submitting'
+
+  const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
+    ...loaderData
+  })
 
   const handleSelect = (value: string) => {
     setItemName({ error: '', name: value })
+    const itemID = getItemIDByName(value.trim(), wowItems)
+
+    if (itemID) {
+      handleSearchParamChange('itemID', itemID.toString())
+      setSearchParams({ ...searchParams, itemID: itemID.toString() })
+    }
   }
 
   const itemId = getItemIDByName(itemName.name.trim(), wowItems)
   const error = result && 'exception' in result ? result.exception : undefined
 
   if (result && !Object.keys(result).length) {
-    return <NoResults href="/wow/export-search" />
+    return <NoResults href={PAGE_URL} />
   }
 
   if (result && 'data' in result && !error) {
@@ -110,6 +168,13 @@ const ExportSearch = () => {
       setItemName({ ...itemName, error: 'Invalid item selected' })
     }
   }
+  const handleFormChange = (
+    name: keyof typeof defaultFormValues,
+    value: string
+  ) => {
+    handleSearchParamChange(name, value)
+    setSearchParams({ ...searchParams, [name]: value })
+  }
 
   return (
     <PageWrapper>
@@ -118,7 +183,17 @@ const ExportSearch = () => {
         onClick={handleSubmit}
         error={error || itemName.error}
         loading={isSubmitting}
-        disabled={!itemId}>
+        disabled={!itemId}
+        action={getActionUrl(PAGE_URL, searchParams)}>
+        <div className="pt-2">
+          <div className="flex justify-end mb-2">
+            <SubmitButton
+              title="Share this search!"
+              onClick={handleCopyButton}
+              type="button"
+            />
+          </div>
+        </div>
         <div className="pt-3 flex flex-col">
           <DebouncedSelectInput
             title={'Item to search for'}
@@ -129,51 +204,87 @@ const ExportSearch = () => {
           />
           <input hidden name="itemID" value={itemId} />
           <InputWithLabel
-            labelTitle="Maximum Quantity"
+            labelTitle={inputMap.maxQuantity}
+            defaultValue={loaderData.maxQuantity}
             name="maxQuantity"
             type="number"
-            defaultValue={1000}
             min={0}
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('maxQuantity', value)
+              }
+            }}
           />
 
           <InputWithLabel
-            labelTitle="Minimum Price"
+            labelTitle={inputMap.minPrice}
+            defaultValue={loaderData.minPrice}
             name="minPrice"
             type="number"
-            defaultValue={1100}
             min={0}
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('minPrice', value)
+              }
+            }}
           />
           <InputWithLabel
-            labelTitle="Population"
+            labelTitle={inputMap.populationWP}
+            defaultValue={loaderData.populationWP}
             name="populationWP"
             type="number"
-            defaultValue={3000}
             min={1}
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('populationWP', value)
+              }
+            }}
           />
           <InputWithLabel
-            labelTitle="Population Blizzard"
+            labelTitle={inputMap.populationBlizz}
+            defaultValue={loaderData.populationBlizz}
             name="populationBlizz"
             type="number"
-            defaultValue={1}
             min={1}
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('populationBlizz', value)
+              }
+            }}
           />
           <InputWithLabel
-            labelTitle="Ranking"
+            labelTitle={inputMap.rankingWP}
+            defaultValue={loaderData.rankingWP}
             name="rankingWP"
             type="number"
-            defaultValue={90}
             min={1}
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('rankingWP', value)
+              }
+            }}
           />
           <Select
-            title="Sort Results By"
+            title={inputMap.sortBy}
+            defaultValue={loaderData.sortBy}
             name="sortBy"
-            defaultValue={'minPrice'}
             options={[
               { label: 'Minimum Price', value: 'minPrice' },
               { label: 'Item Quantity', value: 'itemQuantity' },
               { label: 'Realm Population', value: 'realmPopulationReal' },
               { label: 'Realm Ranking', value: 'realmRanking' }
             ]}
+            onChange={(e) => {
+              const value = e.currentTarget.value
+              if (value !== null || value !== undefined) {
+                handleFormChange('sortBy', value)
+              }
+            }}
           />
         </div>
       </SmallFormContainer>
