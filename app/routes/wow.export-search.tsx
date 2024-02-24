@@ -201,6 +201,7 @@ const ExportSearch = () => {
             id="export-item-select"
             selectOptions={wowItemsList}
             onSelect={handleSelect}
+            initialValue={itemId}
           />
           <input hidden name="itemID" value={itemId} />
           <InputWithLabel

@@ -1,7 +1,7 @@
 import Label from '../form/Label'
 import DebouncedInput from './DebouncedInput'
 import { ToolTip } from './InfoToolTip'
-import { useState, forwardRef } from 'react'
+import { useState, forwardRef, useEffect } from 'react'
 import { classNames } from '~/utils'
 
 interface SelectInputOption {
@@ -44,6 +44,7 @@ interface Props {
   useDebounce?: boolean
   debounceTimer?: number
   disabled?: boolean
+  initialValue?: string
 }
 
 const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
@@ -61,11 +62,16 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
       id,
       useDebounce = false,
       debounceTimer,
-      disabled
+      disabled,
+      initialValue
     },
     ref
   ) => {
-    const [name, setName] = useState('')
+    const [name, setName] = useState(initialValue || '')
+
+    useEffect(() => {
+      setName(initialValue || '')
+    }, [initialValue])
 
     const items = getItems(name, selectOptions)
 
