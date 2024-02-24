@@ -67,7 +67,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 
   const values = {
-    itemID: params.get('itemID') || defaultFormValues.itemID,
+    itemID: params.get('itemID') || defaultFormValues.itemID.toString(),
     maxQuantity:
       params.get('maxQuantity') || defaultFormValues.maxQuantity.toString(),
     minPrice: params.get('minPrice') || defaultFormValues.minPrice.toString(),
@@ -147,7 +147,7 @@ const ExportSearch = () => {
     }
   }
 
-  const itemId = getItemIDByName(itemName.name.trim(), wowItems)
+  const itemID = getItemIDByName(itemName.name.trim(), wowItems)
   const error = result && 'exception' in result ? result.exception : undefined
 
   if (result && !Object.keys(result).length) {
@@ -164,7 +164,7 @@ const ExportSearch = () => {
     if (isSubmitting) {
       event.preventDefault()
     }
-    if (!itemId) {
+    if (!itemID) {
       setItemName({ ...itemName, error: 'Invalid item selected' })
     }
   }
@@ -183,7 +183,7 @@ const ExportSearch = () => {
         onClick={handleSubmit}
         error={error || itemName.error}
         loading={isSubmitting}
-        disabled={!itemId}
+        disabled={!itemID}
         action={getActionUrl(PAGE_URL, searchParams)}>
         <div className="pt-2">
           <div className="flex justify-end mb-2">
@@ -201,9 +201,9 @@ const ExportSearch = () => {
             id="export-item-select"
             selectOptions={wowItemsList}
             onSelect={handleSelect}
-            initialValue={itemId}
+            defaultValue={loaderData.itemID}
           />
-          <input hidden name="itemID" value={itemId} />
+          <input hidden name="itemID" value={itemID} />
           <InputWithLabel
             labelTitle={inputMap.maxQuantity}
             defaultValue={loaderData.maxQuantity}
