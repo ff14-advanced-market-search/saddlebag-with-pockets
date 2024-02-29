@@ -1,7 +1,7 @@
 import Label from '../form/Label'
 import DebouncedInput from './DebouncedInput'
 import { ToolTip } from './InfoToolTip'
-import { useState, forwardRef, useEffect } from 'react'
+import { useState, forwardRef } from 'react'
 import { classNames } from '~/utils'
 
 interface SelectInputOption {
@@ -44,7 +44,6 @@ interface Props {
   useDebounce?: boolean
   debounceTimer?: number
   disabled?: boolean
-  defaultValue?: string
 }
 
 const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
@@ -62,28 +61,21 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
       id,
       useDebounce = false,
       debounceTimer,
-      disabled,
-      defaultValue
+      disabled
     },
     ref
   ) => {
-    const [name, setName] = useState(defaultValue || '')
-
-    useEffect(() => {
-      setName(defaultValue || '')
-    }, [defaultValue])
+    const [name, setName] = useState('')
 
     const items = getItems(name, selectOptions)
 
     const handleDebounceChange = (debouncedValue: string) => {
-      console.log('Debounced Value Type:', typeof debouncedValue)
       setName(debouncedValue)
       onSelect?.(debouncedValue)
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value
-      console.log('Change Event Value Type:', typeof value)
       setName(value)
       onSelect?.(value)
     }

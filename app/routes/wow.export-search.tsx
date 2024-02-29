@@ -33,13 +33,16 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 const PAGE_URL = '/wow/export-search'
 
 const defaultFormValues = {
-  itemID: '',
   maxQuantity: 1000,
   minPrice: 1100,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
   sortBy: 'minPrice' as const
+}
+
+type ExtendedFormValues = typeof defaultFormValues & {
+  itemID?: string
 }
 
 const inputMap: Record<string, string> = {
@@ -67,7 +70,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 
   const values = {
-    itemID: params.get('itemID') || defaultFormValues.itemID.toString(),
+    itemID: params.get('itemID'),
     maxQuantity:
       params.get('maxQuantity') || defaultFormValues.maxQuantity.toString(),
     minPrice: params.get('minPrice') || defaultFormValues.minPrice.toString(),
@@ -133,7 +136,7 @@ const ExportSearch = () => {
   })
   const isSubmitting = transistion.state === 'submitting'
 
-  const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
+  const [searchParams, setSearchParams] = useState<ExtendedFormValues>({
     ...loaderData
   })
 
@@ -142,12 +145,19 @@ const ExportSearch = () => {
     const itemID = getItemIDByName(value.trim(), wowItems)
 
     if (itemID) {
+      setSearchParams({ itemID: itemID.toString(), ...searchParams })
       handleSearchParamChange('itemID', itemID.toString())
-      setSearchParams({ ...searchParams, itemID: itemID.toString() })
+    } else {
+      setItemName({
+        error: 'Selected item not found. Please try another.',
+        name: value
+      })
     }
   }
 
   const itemID = getItemIDByName(itemName.name.trim(), wowItems)
+  const isItemValid = typeof itemID === 'string'
+
   const error = result && 'exception' in result ? result.exception : undefined
 
   if (result && !Object.keys(result).length) {
@@ -183,7 +193,7 @@ const ExportSearch = () => {
         onClick={handleSubmit}
         error={error || itemName.error}
         loading={isSubmitting}
-        disabled={!itemID}
+        disabled={!isItemValid}
         action={getActionUrl(PAGE_URL, searchParams)}>
         <div className="pt-2">
           <div className="flex justify-end mb-2">
@@ -201,7 +211,6 @@ const ExportSearch = () => {
             id="export-item-select"
             selectOptions={wowItemsList}
             onSelect={handleSelect}
-            defaultValue={loaderData.itemID}
           />
           <input hidden name="itemID" value={itemID} />
           <InputWithLabel
