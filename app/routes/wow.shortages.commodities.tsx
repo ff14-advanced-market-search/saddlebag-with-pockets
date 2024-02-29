@@ -240,6 +240,7 @@ export const WoWShortageFormFields = ({
     <InputWithLabel
       defaultValue={desiredSalesPerDayDefault}
       type="number"
+      step="0.01"
       labelTitle="Desired Sales per Day"
       inputTag="Sales"
       name="desiredSalesPerDay"

@@ -40,7 +40,7 @@ const MarketShareForm = ({
         inputTag="Sales"
         name="desiredSalesPerDay"
         min={0}
-        step={1}
+        step={0.01}
       />
       <RegionAndServerSelect
         region={regionDefault}
