@@ -156,7 +156,6 @@ const BestDeals = () => {
     name: keyof typeof defaultFormValues,
     value: string
   ) => {
-    console.log(`Updating ${name} to ${value}`)
     setSearchParams((prevParams) => ({ ...prevParams, [name]: value }))
     handleSearchParamChange(name, value)
   }
