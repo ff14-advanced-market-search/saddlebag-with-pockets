@@ -1,13 +1,13 @@
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { DealItem, WoWDealResponse } from '~/requests/WoW/BestDeals'
 import WoWBestDeals from '~/requests/WoW/BestDeals'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
-import { useActionData, useNavigation } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Select from '~/components/form/select'
 import NoResults from '~/components/Common/NoResults'
@@ -19,11 +19,28 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
+import {
+  getActionUrl,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
+
+const PAGE_URL = '/wow/best-deals'
+
+const defaultFormValues = {
+  type: 'df',
+  discount: '90',
+  minPrice: '2000',
+  salesPerDay: '1.1',
+  itemClass: '-1',
+  itemSubClass: '-1'
+}
 
 const inputMap: Record<string, string> = {
   discount: 'Discount Percentage',
   minPrice: 'Minimum TSM Average Price',
-  salesPerDay: 'Sales Per Day'
+  salesPerDay: 'Sales Per Day',
+  itemClass: 'Item Class',
+  itemSubClass: 'Item Subclass'
 }
 
 const validateInput = z.object({
@@ -37,6 +54,26 @@ const validateInput = z.object({
   itemClass: parseStringToNumber,
   itemSubClass: parseStringToNumber
 })
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const params = new URL(request.url).searchParams
+
+  const values = {
+    type: params.get('type') || defaultFormValues.type,
+    discount: params.get('discount') || defaultFormValues.discount,
+    minPrice: params.get('minPrice') || defaultFormValues.minPrice,
+    salesPerDay: params.get('salesPerDay') || defaultFormValues.salesPerDay,
+    itemClass: params.get('itemClass') || defaultFormValues.itemClass,
+    itemSubClass: params.get('itemSubClass') || defaultFormValues.itemSubClass
+  }
+  const validParams = validateInput.safeParse(values)
+  if (!validParams.success) {
+    return json({
+      exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
+    })
+  }
+  return json(validParams.data)
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
@@ -74,15 +111,33 @@ type ActionResponseType =
   | (WoWDealResponse & { sortby: string })
 
 const BestDeals = () => {
+  const loaderData = useLoaderData<typeof defaultFormValues>()
   const result = useActionData<ActionResponseType>()
   const transistion = useNavigation()
 
   const isSubmitting = transistion.state === 'submitting'
 
+  const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
+    ...loaderData,
+    itemClass: loaderData.itemClass, // Ensure itemClass is 'all' if not provided
+    itemSubClass: loaderData.itemSubClass // Ensure itemSubClass is 'all' if not provided
+  })
   const error = result && 'exception' in result ? result.exception : undefined
 
+  useEffect(() => {
+    const updatedSearchParams = new URLSearchParams()
+    Object.entries(searchParams).forEach(([key, value]) => {
+      updatedSearchParams.set(key, value)
+    })
+    window.history.pushState(
+      {},
+      '',
+      `${PAGE_URL}?${updatedSearchParams.toString()}`
+    )
+  }, [searchParams])
+
   if (result && !Object.keys(result).length) {
-    return <NoResults href="/wow/best-deals" />
+    return <NoResults href={PAGE_URL} />
   }
 
   if (result && 'data' in result && !error) {
@@ -97,6 +152,14 @@ const BestDeals = () => {
     }
   }
 
+  const handleFormChange = (
+    name: keyof typeof defaultFormValues,
+    value: string
+  ) => {
+    setSearchParams((prevParams) => ({ ...prevParams, [name]: value }))
+    handleSearchParamChange(name, value)
+  }
+
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -104,41 +167,59 @@ const BestDeals = () => {
         description="Find the best deals on your server and region wide with our Best Deals search!"
         onClick={handleSubmit}
         error={error}
-        loading={isSubmitting}>
+        loading={isSubmitting}
+        action={getActionUrl(PAGE_URL, searchParams)}>
         <div className="pt-3 flex flex-col">
           <Select
             title="Item Type"
             name="type"
-            defaultValue={'df'}
+            defaultValue={searchParams.type}
             options={[
               { label: 'Dragonflight Only', value: 'df' },
               { label: 'Pets Only', value: 'pets' },
               { label: 'Legacy Only', value: 'legacy' },
               { label: 'All', value: 'all' }
             ]}
+            onChange={(e) => handleFormChange('type', e.target.value)}
           />
-          <ItemClassSelect />
+          <ItemClassSelect
+            itemClass={+searchParams.itemClass}
+            itemSubClass={+searchParams.itemSubClass}
+            onChange={(itemClassValue, itemSubClassValue) => {
+              handleFormChange('itemClass', String(itemClassValue))
+              handleFormChange('itemSubClass', String(itemSubClassValue))
+            }}
+          />
           <InputWithLabel
             labelTitle="Discount Percentage"
             name="discount"
             type="number"
-            defaultValue={90}
+            defaultValue={searchParams.discount}
             min={0}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange('discount', e.currentTarget.value)
+            }
           />
           <InputWithLabel
             labelTitle="Minimum TSM Average Price"
             name="minPrice"
             type="number"
-            defaultValue={2000}
+            defaultValue={searchParams.minPrice}
             min={0}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange('minPrice', e.currentTarget.value)
+            }
           />
           <InputWithLabel
             labelTitle="Sales Per Day"
             name="salesPerDay"
             type="number"
-            defaultValue={1.1}
+            defaultValue={searchParams.salesPerDay}
             step={0.1}
             min={0}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange('salesPerDay', e.currentTarget.value)
+            }
           />
         </div>
       </SmallFormContainer>

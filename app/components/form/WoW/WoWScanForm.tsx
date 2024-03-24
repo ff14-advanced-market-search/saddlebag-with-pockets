@@ -378,12 +378,22 @@ const itemClasses: Array<{
   }
 ]
 
-export const ItemClassSelect = () => {
-  const [itemClass, setItemClass] = useState(-1)
-  const [itemSubClass, setItemSubClass] = useState(-1)
+interface ItemClassSelectProps {
+  itemClass?: number
+  itemSubClass?: number
+  onChange?: (itemClassValue: number, itemSubClassValue: number) => void
+}
+
+export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
+  itemClass,
+  itemSubClass,
+  onChange
+}) => {
+  const [selectedItemClass, setSelectedItemClass] = useState(itemClass)
+  const [selectedItemSubClass, setSelectedItemSubClass] = useState(itemSubClass)
 
   const subClassItems = itemClasses.find(
-    (item) => item.value === itemClass
+    (item) => item.value === selectedItemClass
   )?.subClasses
 
   return (
@@ -395,10 +405,12 @@ export const ItemClassSelect = () => {
       <Select
         id={'itemClass'}
         name={'itemClass'}
-        value={itemClass}
+        value={selectedItemClass}
         onChange={(event) => {
-          setItemClass(parseInt(event.target.value))
-          setItemSubClass(-1)
+          const newValue = parseInt(event.target.value)
+          setSelectedItemClass(newValue)
+          setSelectedItemSubClass(-1)
+          onChange?.(newValue, -1)
         }}>
         <option value={-1}>All</option>
         {itemClasses.map(({ name, value }) => (
@@ -414,8 +426,12 @@ export const ItemClassSelect = () => {
       <Select
         id={'itemSubClass'}
         name={'itemSubClass'}
-        value={itemSubClass}
-        onChange={(event) => setItemSubClass(parseInt(event.target.value))}>
+        value={selectedItemSubClass}
+        onChange={(event) => {
+          const newValue = parseInt(event.target.value)
+          setSelectedItemSubClass(newValue)
+          onChange?.(selectedItemClass ?? -1, newValue)
+        }}>
         <option value={-1}>All</option>
         {subClassItems &&
           subClassItems.map(({ name, value }) => (
