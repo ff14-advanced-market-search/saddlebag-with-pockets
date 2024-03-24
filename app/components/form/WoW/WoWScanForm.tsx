@@ -89,6 +89,7 @@ const WoWScanForm = ({
           <InputWithLabel
             defaultValue={0}
             type="number"
+            step="0.01"
             labelTitle="Minimum Sales Per Day"
             inputTag="Min Sales"
             name="salePerDay"
