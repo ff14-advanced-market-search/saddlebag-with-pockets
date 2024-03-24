@@ -5,7 +5,7 @@ import { RadioButtons } from '~/components/Common/RadioButtons'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemNameById } from '~/utils/items'
-import { Modal } from '../../form/ffxiv/CheckBoxModal'
+import Modal from '../../form/Modal'
 import ItemSelect from '~/components/form/select/ItemSelect'
 
 const MAX_HOURS = 24 * 30

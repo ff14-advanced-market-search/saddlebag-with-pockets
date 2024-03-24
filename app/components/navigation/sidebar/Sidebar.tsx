@@ -243,6 +243,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Pet Marketshare Overview',
+        href: '/wow/pet-marketshare',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon
