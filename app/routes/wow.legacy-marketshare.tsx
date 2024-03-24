@@ -180,7 +180,7 @@ const Index = () => {
         error={error}>
         <div className="pt-4">
           <InputWithLabel
-            defaultValue={100}
+            defaultValue={1000}
             type="number"
             labelTitle="Minimum Desired average price"
             inputTag="Gold"
@@ -189,13 +189,13 @@ const Index = () => {
             step={0.01}
           />
           <InputWithLabel
-            defaultValue={1}
+            defaultValue={0.01}
             type="number"
             labelTitle="Minimum Desired sales per day"
             inputTag="Sales"
             name="desiredSalesPerDay"
             min={0}
-            step={1}
+            step={0.01}
           />
           <ItemClassSelect />
           <ItemQualitySelect />
