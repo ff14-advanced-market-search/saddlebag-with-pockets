@@ -29,7 +29,7 @@ const searchParams = {
 const recommendedQueries = [
   {
     name: 'Default Dragonflight Deals',
-    description: 'Explore default deals for Dragonflight items with notable discounts.',
+    description: 'Find deals on current content.',
     Icon: DocumentSearchIcon,
     href: searchParams.defaultDragonflight
   },
@@ -41,7 +41,7 @@ const recommendedQueries = [
   },
   {
     name: 'Transmog Weapons',
-    description: 'Find discount deals on legacy transmog weapons to enhance your appearance.',
+    description: 'Find discount deals on legacy transmog weapons.',
     Icon: DocumentSearchIcon,
     href: searchParams.transmogWeapons
   },
@@ -52,7 +52,7 @@ const recommendedQueries = [
     href: searchParams.transmogGear
   },
   {
-    name: 'Ultra Cheap Deals',
+    name: 'Ultra Cheap Deals (Beginner Friendly / Low Risk)',
     description: 'Scout for ultra-cheap deals across all categories with the highest discounts.',
     Icon: DocumentSearchIcon,
     href: searchParams.ultraCheapDeals
@@ -65,7 +65,7 @@ const recommendedQueries = [
   },
   {
     name: 'Super Fast Selling Items',
-    description: 'Spot the fastest selling items in the market with minimal investment.',
+    description: 'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
     Icon: DocumentSearchIcon,
     href: searchParams.superFastSelling
   },
@@ -83,7 +83,7 @@ const recommendedQueries = [
   },
   {
     name: 'Illusions and Consumables',
-    description: 'Seek out deals on Dragonflight illusions and consumables for every adventurer.',
+    description: 'Seek out deals on Dragonflight Weapon Illusions and consumable transmog.',
     Icon: DocumentSearchIcon,
     href: searchParams.illusionsAndConsumables
   },
@@ -101,13 +101,13 @@ const recommendedQueries = [
   },
   {
     name: 'Quest Items',
-    description: 'Discover discounted quest items to aid in your adventures.',
+    description: 'Brawlers Passes, Darkmoon Fair Items, etc.',
     Icon: DocumentSearchIcon,
     href: searchParams.questItems
   },
   {
     name: 'Medium Value Pet Deals',
-    description: 'Find pets with medium value, perfect for starting or expanding your collection.',
+    description: 'Find pets with medium value and ok sale rate.',
     Icon: DocumentSearchIcon,
     href: searchParams.mediumValuePetDeals
   },
@@ -119,7 +119,7 @@ const recommendedQueries = [
   },
   {
     name: 'Uncaged Pets',
-    description: 'Explore deals on uncaged pets items to unlock new companions.',
+    description: 'These are items that when consumed become a pet in your journal.  The same as getting a level 1 pet.',
     Icon: DocumentSearchIcon,
     href: searchParams.uncagedPetsItem
   },
@@ -131,7 +131,7 @@ const recommendedQueries = [
   },
   {
     name: 'Fast Selling Miscellaneous',
-    description: 'Identify quickly selling miscellaneous items like shovels and soul inhalers.',
+    description: 'Identify quickly selling miscellaneous items like Sturdy Expedition Shovel, Zapthrottle Soul Inhaler, etc.',
     Icon: DocumentSearchIcon,
     href: searchParams.fastSellingMiscellaneous
   },
