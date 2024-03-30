@@ -203,7 +203,7 @@ const navGroups: Array<{
       },
       {
         name: 'Best Deals',
-        href: '/wow/best-deals',
+        href: '/wow/best-deals/recommended',
         icon: ExclamationCircleIcon
       },
       {
