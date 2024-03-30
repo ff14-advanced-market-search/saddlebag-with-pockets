@@ -319,7 +319,8 @@ const itemClasses: Array<{
       { name: 'Holiday', value: 3 },
       { name: 'Other', value: 4 },
       { name: 'Mount', value: 5 },
-      { name: 'Mount Equipment', value: 6 }
+      { name: 'Mount Equipment', value: 6 },
+      { name: 'Toys', value: 199 }
     ]
   },
   {
