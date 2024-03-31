@@ -132,7 +132,7 @@ const ExportSearch = () => {
   const loaderData = useLoaderData<typeof defaultFormValues>()
   const result = useActionData<ActionResponseType>()
   const [itemName, setItemName] = useState<{ name: string; error: string }>({
-    name: getItemNameById(loaderData.itemId.toString(), wowItems) || "",
+    name: getItemNameById(loaderData.itemId.toString(), wowItems) || '',
     error: ''
   })
   const itemId = getItemIDByName(itemName.name.trim(), wowItems)
