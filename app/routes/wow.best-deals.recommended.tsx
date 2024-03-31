@@ -78,7 +78,7 @@ const recommendedQueries = [
     href: searchParams.ultraCheapDeals
   },
   {
-    name: 'Fast Selling Items',
+    name: 'Fast Selling Items (Beginner Friendly / Low Risk)',
     description:
       'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
     Icon: DocumentSearchIcon,
