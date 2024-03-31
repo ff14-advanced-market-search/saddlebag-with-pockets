@@ -14,8 +14,6 @@ const searchParams = {
     '/wow/best-deals?type=legacy&discount=50&minPrice=10000&salesPerDay=0.1&itemClass=4&itemSubClass=-1',
   ultraCheapDeals:
     '/wow/best-deals?type=all&discount=99&minPrice=100&salesPerDay=0.1&itemClass=-1&itemSubClass=-1',
-  fastSelling:
-    '/wow/best-deals?type=all&discount=50&minPrice=1000&salesPerDay=20&itemClass=-1&itemSubClass=-1',
   superFastSelling:
     '/wow/best-deals?type=all&discount=50&minPrice=1&salesPerDay=100&itemClass=-1&itemSubClass=-1',
   dragonflightRecipes:
@@ -81,13 +79,6 @@ const recommendedQueries = [
   },
   {
     name: 'Fast Selling Items',
-    description:
-      'Identify items that sell quickly across all categories with good discounts.',
-    Icon: DocumentSearchIcon,
-    href: searchParams.fastSelling
-  },
-  {
-    name: 'Super Fast Selling Items',
     description:
       'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
     Icon: DocumentSearchIcon,
