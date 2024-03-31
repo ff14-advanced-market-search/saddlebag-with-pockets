@@ -11,7 +11,7 @@ import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import z from 'zod'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import { getItemIDByName } from '~/utils/items'
+import { getItemIDByName, getItemNameById } from '~/utils/items'
 import Select from '~/components/form/select'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -33,6 +33,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 const PAGE_URL = '/wow/export-search'
 
 const defaultFormValues = {
+  itemId: '',
   maxQuantity: 1000,
   minPrice: 1100,
   populationWP: 3000,
@@ -41,12 +42,12 @@ const defaultFormValues = {
   sortBy: 'minPrice' as const
 }
 
-type ExtendedFormValues = typeof defaultFormValues & {
-  itemID?: string
-}
+// type ExtendedFormValues = typeof defaultFormValues & {
+//   itemId: string
+// }
 
 const inputMap: Record<string, string> = {
-  itemID: 'Item Id',
+  itemId: 'Item Id',
   maxQuantity: 'Maximum Quantity',
   minPrice: 'Minimum Price',
   populationWP: 'Population',
@@ -56,21 +57,21 @@ const inputMap: Record<string, string> = {
 }
 
 const validateInput = z.object({
-  itemID: parseStringToNumber,
+  itemId: parseStringToNumber,
   maxQuantity: parseStringToNumber,
   minPrice: parseStringToNumber,
   populationWP: parseStringToNumber,
   populationBlizz: parseStringToNumber,
   rankingWP: parseStringToNumber,
-  sortBy: z.string(),
-  connectedRealmIDs: z.record(z.string()).default({})
+  sortBy: z.string()
+  //connectedRealmIDs: z.record(z.string()).default({})
 })
 
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 
   const values = {
-    itemID: params.get('itemID'),
+    itemId: params.get('itemId') || '',
     maxQuantity:
       params.get('maxQuantity') || defaultFormValues.maxQuantity.toString(),
     minPrice: params.get('minPrice') || defaultFormValues.minPrice.toString(),
@@ -112,7 +113,8 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await WoWExportSearch({
     region,
     ...validatedFormData.data,
-    itemID: validatedFormData.data.itemID
+    itemID: validatedFormData.data.itemId,
+    connectedRealmIDs: {}
   })
 
   return json({
@@ -129,34 +131,29 @@ type ActionResponseType =
 const ExportSearch = () => {
   const loaderData = useLoaderData<typeof defaultFormValues>()
   const result = useActionData<ActionResponseType>()
-  const transistion = useNavigation()
   const [itemName, setItemName] = useState<{ name: string; error: string }>({
-    name: '',
+    name: getItemNameById(loaderData.itemId.toString(), wowItems) || "",
     error: ''
   })
+  const itemId = getItemIDByName(itemName.name.trim(), wowItems)
+  const transistion = useNavigation()
   const isSubmitting = transistion.state === 'submitting'
 
-  const [searchParams, setSearchParams] = useState<ExtendedFormValues>({
+  const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
     ...loaderData
   })
 
   const handleSelect = (value: string) => {
     setItemName({ error: '', name: value })
-    const itemID = getItemIDByName(value.trim(), wowItems)
+    const itemId = getItemIDByName(value.trim(), wowItems)
 
-    if (itemID) {
-      setSearchParams({ itemID: itemID.toString(), ...searchParams })
-      handleSearchParamChange('itemID', itemID.toString())
-    } else {
-      setItemName({
-        error: 'Selected item not found. Please try another.',
-        name: value
-      })
+    if (itemId) {
+      handleSearchParamChange('itemId', itemId.toString())
+      setSearchParams({ ...searchParams, itemId: itemId.toString() })
     }
   }
 
-  const itemID = getItemIDByName(itemName.name.trim(), wowItems)
-  const isItemValid = typeof itemID === 'string'
+  const isItemValid = typeof itemId === 'string'
 
   const error = result && 'exception' in result ? result.exception : undefined
 
@@ -174,10 +171,11 @@ const ExportSearch = () => {
     if (isSubmitting) {
       event.preventDefault()
     }
-    if (!itemID) {
+    if (!itemId) {
       setItemName({ ...itemName, error: 'Invalid item selected' })
     }
   }
+
   const handleFormChange = (
     name: keyof typeof defaultFormValues,
     value: string
@@ -207,12 +205,13 @@ const ExportSearch = () => {
         <div className="pt-3 flex flex-col">
           <DebouncedSelectInput
             title={'Item to search for'}
+            displayValue={itemName.name}
             label="Item"
             id="export-item-select"
             selectOptions={wowItemsList}
             onSelect={handleSelect}
           />
-          <input hidden name="itemID" value={itemID} />
+          <input hidden name="itemId" value={itemId} />
           <InputWithLabel
             labelTitle={inputMap.maxQuantity}
             defaultValue={loaderData.maxQuantity}
@@ -226,7 +225,6 @@ const ExportSearch = () => {
               }
             }}
           />
-
           <InputWithLabel
             labelTitle={inputMap.minPrice}
             defaultValue={loaderData.minPrice}

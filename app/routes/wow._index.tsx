@@ -16,7 +16,7 @@ const recommendedQueries = [
     description:
       'Find the best deals on your server and region wide with our Best Deals search!',
     Icon: DocumentSearchIcon,
-    href: '/wow/best-deals'
+    href: '/wow/best-deals/recommended'
   },
   {
     name: 'Ultra Fast Azeroth Auction Assassin Sniper',
