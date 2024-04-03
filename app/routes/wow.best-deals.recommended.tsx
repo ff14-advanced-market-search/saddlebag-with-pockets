@@ -5,41 +5,41 @@ import TileLink from '~/components/Common/TileLink'
 // Updated searchParams with WoW best deals endpoints
 const searchParams = {
   defaultDragonflight:
-    '/wow/best-deals?type=df&discount=50&minPrice=2000&salesPerDay=1.1&itemClass=-1&itemSubClass=-1',
+    '/wow/best-deals?type=df&itemClass=-1&itemSubClass=-1&discount=50&minPrice=2000&salesPerDay=1.1',
   highValue:
-    '/wow/best-deals?type=all&discount=50&minPrice=100000&salesPerDay=1&itemClass=-1&itemSubClass=-1',
+    '/wow/best-deals?type=all&itemClass=-1&itemSubClass=-1&discount=50&minPrice=100000&salesPerDay=1',
   transmogWeapons:
-    '/wow/best-deals?type=legacy&discount=50&minPrice=10000&salesPerDay=0.1&itemClass=2&itemSubClass=-1',
+    '/wow/best-deals?type=legacy&itemClass=2&itemSubClass=-1&discount=50&minPrice=10000&salesPerDay=0.1',
   transmogGear:
-    '/wow/best-deals?type=legacy&discount=50&minPrice=10000&salesPerDay=0.1&itemClass=4&itemSubClass=-1',
+    '/wow/best-deals?type=legacy&itemClass=4&itemSubClass=-1&discount=50&minPrice=10000&salesPerDay=0.1',
   ultraCheapDeals:
-    '/wow/best-deals?type=all&discount=99&minPrice=100&salesPerDay=0.1&itemClass=-1&itemSubClass=-1',
+    '/wow/best-deals?type=all&itemClass=-1&itemSubClass=-1&discount=99&minPrice=100&salesPerDay=0.1',
   superFastSelling:
-    '/wow/best-deals?type=all&discount=50&minPrice=1&salesPerDay=100&itemClass=-1&itemSubClass=-1',
+    '/wow/best-deals?type=all&itemClass=-1&itemSubClass=-1&discount=50&minPrice=1&salesPerDay=100',
   dragonflightRecipes:
-    '/wow/best-deals?type=df&discount=50&minPrice=10000&salesPerDay=0.1&itemClass=9&itemSubClass=-1',
+    '/wow/best-deals?type=df&itemClass=9&itemSubClass=-1&discount=50&minPrice=10000&salesPerDay=0.1',
   legacyRecipes:
-    '/wow/best-deals?type=legacy&discount=50&minPrice=10000&salesPerDay=0.1&itemClass=9&itemSubClass=-1',
+    '/wow/best-deals?type=legacy&itemClass=9&itemSubClass=-1&discount=50&minPrice=10000&salesPerDay=0.1',
   illusionsAndConsumables:
-    '/wow/best-deals?type=df&discount=50&minPrice=100&salesPerDay=0.1&itemClass=0&itemSubClass=-1',
+    '/wow/best-deals?type=df&itemClass=0&itemSubClass=-1&discount=50&minPrice=100&salesPerDay=0.1',
   highValueToys:
-    '/wow/best-deals?type=all&discount=50&minPrice=10000&salesPerDay=.1&itemClass=15&itemSubClass=199',
+    '/wow/best-deals?type=all&itemClass=15&itemSubClass=199&discount=50&minPrice=10000&salesPerDay=.1',
   mounts:
-    '/wow/best-deals?type=all&discount=40&minPrice=100&salesPerDay=0.1&itemClass=15&itemSubClass=5',
+    '/wow/best-deals?type=all&itemClass=15&itemSubClass=5&discount=40&minPrice=100&salesPerDay=0.1',
   questItems:
-    '/wow/best-deals?type=all&discount=40&minPrice=1000&salesPerDay=.1&itemClass=12&itemSubClass=-1',
+    '/wow/best-deals?type=all&itemClass=12&itemSubClass=-1&discount=40&minPrice=1000&salesPerDay=.1',
   mediumValuePetDeals:
-    '/wow/best-deals?type=pets&discount=50&minPrice=1000&salesPerDay=5&itemClass=-1&itemSubClass=-1',
+    '/wow/best-deals?type=pets&itemClass=-1&itemSubClass=-1&discount=50&minPrice=1000&salesPerDay=5',
   highValuePetDeals:
-    '/wow/best-deals?type=pets&discount=50&minPrice=10000&salesPerDay=0.1&itemClass=-1&itemSubClass=-1',
+    '/wow/best-deals?type=pets&itemClass=-1&itemSubClass=-1&discount=50&minPrice=10000&salesPerDay=0.1',
   uncagedPetsItem:
-    '/wow/best-deals?type=all&discount=40&minPrice=1000&salesPerDay=0.1&itemClass=15&itemSubClass=2',
+    '/wow/best-deals?type=all&itemClass=15&itemSubClass=2&discount=40&minPrice=1000&salesPerDay=0.1',
   holidayItem:
-    '/wow/best-deals?type=all&discount=50&minPrice=100&salesPerDay=0.1&itemClass=15&itemSubClass=3',
+    '/wow/best-deals?type=all&itemClass=15&itemSubClass=3&discount=50&minPrice=100&salesPerDay=0.1',
   fastSellingMiscellaneous:
-    '/wow/best-deals?type=all&discount=50&minPrice=1&salesPerDay=5&itemClass=15&itemSubClass=4',
+    '/wow/best-deals?type=all&itemClass=15&itemSubClass=4&discount=50&minPrice=1&salesPerDay=5',
   otherMiscellaneous:
-    '/wow/best-deals?type=all&discount=50&minPrice=10&salesPerDay=1&itemClass=15&itemSubClass=4'
+    '/wow/best-deals?type=all&itemClass=15&itemSubClass=4&discount=50&minPrice=10&salesPerDay=1'
 }
 
 // Updated recommendedQueries to reflect WoW searches

@@ -28,43 +28,44 @@ const PAGE_URL = '/wow/best-deals'
 
 const defaultFormValues = {
   type: 'df',
+  itemClass: '-1',
+  itemSubClass: '-1',
   discount: '90',
   minPrice: '2000',
-  salesPerDay: '1.1',
-  itemClass: '-1',
-  itemSubClass: '-1'
+  salesPerDay: '1.1'
 }
 
 const inputMap: Record<string, string> = {
+  type: 'Item Type',
+  itemClass: 'Item Class',
+  itemSubClass: 'Item Subclass',
   discount: 'Discount Percentage',
   minPrice: 'Minimum TSM Average Price',
-  salesPerDay: 'Sales Per Day',
-  itemClass: 'Item Class',
-  itemSubClass: 'Item Subclass'
+  salesPerDay: 'Sales Per Day'
 }
 
 const validateInput = z.object({
   type: z.string(),
+  itemClass: parseStringToNumber,
+  itemSubClass: parseStringToNumber,
   discount: parseStringToNumber,
   minPrice: parseStringToNumber,
   salesPerDay: z
     .string()
     .min(1)
-    .transform((value) => parseFloat(value)),
-  itemClass: parseStringToNumber,
-  itemSubClass: parseStringToNumber
+    .transform((value) => parseFloat(value))
 })
 
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 
   const values = {
-    type: params.get('type') || defaultFormValues.type,
-    discount: params.get('discount') || defaultFormValues.discount,
-    minPrice: params.get('minPrice') || defaultFormValues.minPrice,
-    salesPerDay: params.get('salesPerDay') || defaultFormValues.salesPerDay,
-    itemClass: params.get('itemClass') || defaultFormValues.itemClass,
-    itemSubClass: params.get('itemSubClass') || defaultFormValues.itemSubClass
+    type: params.get('type') || defaultFormValues.type.toString(),
+    itemClass: params.get('itemClass') || defaultFormValues.itemClass.toString(),
+    itemSubClass: params.get('itemSubClass') || defaultFormValues.itemSubClass.toString(),
+    discount: params.get('discount') || defaultFormValues.discount.toString(),
+    minPrice: params.get('minPrice') || defaultFormValues.minPrice.toString(),
+    salesPerDay: params.get('salesPerDay') || defaultFormValues.salesPerDay.toString()
   }
   const validParams = validateInput.safeParse(values)
   if (!validParams.success) {
@@ -118,23 +119,9 @@ const BestDeals = () => {
   const isSubmitting = transistion.state === 'submitting'
 
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
-    ...loaderData,
-    itemClass: loaderData.itemClass, // Ensure itemClass is 'all' if not provided
-    itemSubClass: loaderData.itemSubClass // Ensure itemSubClass is 'all' if not provided
+    ...loaderData
   })
   const error = result && 'exception' in result ? result.exception : undefined
-
-  useEffect(() => {
-    const updatedSearchParams = new URLSearchParams()
-    Object.entries(searchParams).forEach(([key, value]) => {
-      updatedSearchParams.set(key, value)
-    })
-    window.history.pushState(
-      {},
-      '',
-      `${PAGE_URL}?${updatedSearchParams.toString()}`
-    )
-  }, [searchParams])
 
   if (result && !Object.keys(result).length) {
     return <NoResults href={PAGE_URL} />
@@ -156,8 +143,8 @@ const BestDeals = () => {
     name: keyof typeof defaultFormValues,
     value: string
   ) => {
-    setSearchParams((prevParams) => ({ ...prevParams, [name]: value }))
     handleSearchParamChange(name, value)
+    setSearchParams({ ...searchParams, [name]: value })
   }
 
   return (
@@ -173,7 +160,7 @@ const BestDeals = () => {
           <Select
             title="Item Type"
             name="type"
-            defaultValue={searchParams.type}
+            defaultValue={loaderData.type}
             options={[
               { label: 'Dragonflight Only', value: 'df' },
               { label: 'Pets Only', value: 'pets' },
@@ -183,18 +170,18 @@ const BestDeals = () => {
             onChange={(e) => handleFormChange('type', e.target.value)}
           />
           <ItemClassSelect
-            itemClass={+searchParams.itemClass}
-            itemSubClass={+searchParams.itemSubClass}
+            itemClass={loaderData.itemClass}
+            itemSubClass={loaderData.itemSubClass}
             onChange={(itemClassValue, itemSubClassValue) => {
-              handleFormChange('itemClass', String(itemClassValue))
-              handleFormChange('itemSubClass', String(itemSubClassValue))
+              handleFormChange('itemClass', itemClassValue)
+              handleFormChange('itemSubClass', itemSubClassValue)
             }}
           />
           <InputWithLabel
             labelTitle="Discount Percentage"
             name="discount"
             type="number"
-            defaultValue={searchParams.discount}
+            defaultValue={loaderData.discount}
             min={0}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleFormChange('discount', e.currentTarget.value)
@@ -204,7 +191,7 @@ const BestDeals = () => {
             labelTitle="Minimum TSM Average Price"
             name="minPrice"
             type="number"
-            defaultValue={searchParams.minPrice}
+            defaultValue={loaderData.minPrice}
             min={0}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleFormChange('minPrice', e.currentTarget.value)
@@ -214,8 +201,8 @@ const BestDeals = () => {
             labelTitle="Sales Per Day"
             name="salesPerDay"
             type="number"
-            defaultValue={searchParams.salesPerDay}
-            step={0.1}
+            defaultValue={loaderData.salesPerDay}
+            step={0.01}
             min={0}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleFormChange('salesPerDay', e.currentTarget.value)
