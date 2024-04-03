@@ -380,21 +380,17 @@ const itemClasses: Array<{
 ]
 
 interface ItemClassSelectProps {
-  itemClass?: number
-  itemSubClass?: number
-  onChange?: (itemClassValue: number, itemSubClassValue: number) => void
+  itemClass?: string
+  itemSubClass?: string
+  onChange?: (itemClassValue: string, itemSubClassValue: string) => void
 }
 
-export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
-  itemClass,
-  itemSubClass,
-  onChange
-}) => {
-  const [selectedItemClass, setSelectedItemClass] = useState(itemClass)
-  const [selectedItemSubClass, setSelectedItemSubClass] = useState(itemSubClass)
+export const ItemClassSelect: React.FC<ItemClassSelectProps> = () => {
+  const [itemClass, setItemClass] = useState(-1)
+  const [itemSubClass, setItemSubClass] = useState(-1)
 
   const subClassItems = itemClasses.find(
-    (item) => item.value === selectedItemClass
+    (item) => item.value === itemClass
   )?.subClasses
 
   return (
@@ -406,12 +402,10 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
       <Select
         id={'itemClass'}
         name={'itemClass'}
-        value={selectedItemClass}
+        value={itemClass}
         onChange={(event) => {
-          const newValue = parseInt(event.target.value)
-          setSelectedItemClass(newValue)
-          setSelectedItemSubClass(-1)
-          onChange?.(newValue, -1)
+          setItemClass(parseInt(event.target.value))
+          setItemSubClass(-1)
         }}>
         <option value={-1}>All</option>
         {itemClasses.map(({ name, value }) => (
@@ -427,12 +421,8 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
       <Select
         id={'itemSubClass'}
         name={'itemSubClass'}
-        value={selectedItemSubClass}
-        onChange={(event) => {
-          const newValue = parseInt(event.target.value)
-          setSelectedItemSubClass(newValue)
-          onChange?.(selectedItemClass ?? -1, newValue)
-        }}>
+        value={itemSubClass}
+        onChange={(event) => setItemSubClass(parseInt(event.target.value))}>
         <option value={-1}>All</option>
         {subClassItems &&
           subClassItems.map(({ name, value }) => (
