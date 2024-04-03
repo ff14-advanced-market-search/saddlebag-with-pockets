@@ -61,11 +61,14 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const values = {
     type: params.get('type') || defaultFormValues.type.toString(),
-    itemClass: params.get('itemClass') || defaultFormValues.itemClass.toString(),
-    itemSubClass: params.get('itemSubClass') || defaultFormValues.itemSubClass.toString(),
+    itemClass:
+      params.get('itemClass') || defaultFormValues.itemClass.toString(),
+    itemSubClass:
+      params.get('itemSubClass') || defaultFormValues.itemSubClass.toString(),
     discount: params.get('discount') || defaultFormValues.discount.toString(),
     minPrice: params.get('minPrice') || defaultFormValues.minPrice.toString(),
-    salesPerDay: params.get('salesPerDay') || defaultFormValues.salesPerDay.toString()
+    salesPerDay:
+      params.get('salesPerDay') || defaultFormValues.salesPerDay.toString()
   }
   const validParams = validateInput.safeParse(values)
   if (!validParams.success) {
