@@ -12,7 +12,7 @@ export default function Banner() {
         </div>
         <div className="ml-3 flex-1 md:flex md:justify-between">
           <p className="text-sm text-blue-700 dark:text-gray-200">
-            Welcome to the new Saddlebag Exchange!{' '}
+            Welcome to the new FFXIV Marketboard!{' '}
           </p>
           <p className="mt-3 text-sm md:mt-0 md:ml-6">
             <a

@@ -31,10 +31,10 @@ export default function Index() {
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              Saddlebag Exchange
+              FFXIV Marketboard
             </h1>
             <p className="text-md text-slate-700 dark:text-gray-300">
-              Welcome to the saddlebag exchange. Find helpful tools to get ahead
+              Welcome to the FFXIV Marketboard. Find helpful tools to get ahead
               in your favourite MMO's.
             </p>
             <div
