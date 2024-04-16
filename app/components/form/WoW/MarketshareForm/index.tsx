@@ -91,7 +91,7 @@ const MarketShareForm = ({
       />
       <div className="my-2 relative flex">
         <CheckBox
-          defaultChecked={loaderData.commodity === 'off'}
+          defaultChecked={loaderData.commodity === 'on'}
           labelTitle={inputMap.commodity}
           id="commodity"
           name="commodity"
