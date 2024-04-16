@@ -13,6 +13,7 @@ import NoResults from '~/components/Common/NoResults'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import {
   getActionUrl,
+  handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { useState } from 'react'
@@ -21,6 +22,7 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 const PAGE_URL = '/wow/marketshare'
 
@@ -231,6 +233,15 @@ const Index = () => {
         action={getActionUrl(PAGE_URL, searchParams)}
         loading={transition.state === 'submitting'}
         error={error}>
+        <div className="pt-2">
+          <div className="flex justify-end mb-2">
+            <SubmitButton
+              title="Share this search!"
+              onClick={handleCopyButton}
+              type="button"
+            />
+          </div>
+        </div>
         <MarketShareForm
           loaderData={loaderData}
           inputMap={inputMap}

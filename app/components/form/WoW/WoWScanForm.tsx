@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import { InputWithLabel } from '../InputWithLabel'
 import SmallFormContainer from '../SmallFormContainer'
