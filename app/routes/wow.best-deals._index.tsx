@@ -147,7 +147,7 @@ const BestDeals = () => {
     value: string
   ) => {
     handleSearchParamChange(name, value)
-    setSearchParams({ ...searchParams, [name]: value })
+    setSearchParams((prev) => ({ ...prev, [name]: value }))
   }
 
   return (
@@ -173,11 +173,11 @@ const BestDeals = () => {
             onChange={(e) => handleFormChange('type', e.target.value)}
           />
           <ItemClassSelect
-            itemClass={loaderData.itemClass}
-            itemSubClass={loaderData.itemSubClass}
+            itemClass={parseInt(loaderData.itemClass)}
+            itemSubClass={parseInt(loaderData.itemSubClass)}
             onChange={(itemClassValue, itemSubClassValue) => {
-              handleFormChange('itemClass', itemClassValue)
-              handleFormChange('itemSubClass', itemSubClassValue)
+              handleFormChange('itemClass', itemClassValue.toString())
+              handleFormChange('itemSubClass', itemSubClassValue.toString())
             }}
           />
           <InputWithLabel
