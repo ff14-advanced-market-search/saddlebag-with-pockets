@@ -23,7 +23,7 @@ const recommendedQueries = [
     description:
       'Try our standalone Azeroth Auction Assassin Sniper, designed to snipe across all realms for the best deals seconds after the Blizzard AH API updates so you get there first!',
     Icon: DocumentSearchIcon,
-    href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases',
+    href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest',
     external: true
   },
   {

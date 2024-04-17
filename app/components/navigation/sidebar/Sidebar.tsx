@@ -208,7 +208,7 @@ const navGroups: Array<{
       },
       {
         name: 'Azeroth Auction Assassin Sniper',
-        href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases',
+        href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest',
         icon: DocumentSearchIcon,
         external: true
       },
