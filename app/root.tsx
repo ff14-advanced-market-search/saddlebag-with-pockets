@@ -97,8 +97,8 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   const { server, region } = getWoWSessionData()
 
   return json<LoaderData>({
-    // site_name: (context.SITE_NAME as string) ?? 'Saddlebag',
-    site_name: 'FFXIV Marketboard',
+    site_name: (context.SITE_NAME as string) ?? 'Saddlebag',
+    // site_name: 'FFXIV Marketboard',
     data_center,
     world,
     wowRealm: server,
