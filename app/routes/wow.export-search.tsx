@@ -187,7 +187,7 @@ const ExportSearch = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Export Search"
+        title="Export Search: Find the Best Place to Sell!"
         onClick={handleSubmit}
         error={error || itemName.error}
         loading={isSubmitting}
