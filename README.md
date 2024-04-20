@@ -2,7 +2,7 @@
 
 The frontend of https://saddlebagexchange.com/
 
-Last udated for FFXIV 6.51
+Last updated for FFXIV 6.51
 
 _Frontend for Aetheryte API_
 
@@ -24,6 +24,12 @@ Run Server:
 
 ```bash
 yarn run dev
+```
+
+For Windows:
+
+```bash
+yarn dev
 ```
 
 This starts your app in development mode, rebuilding assets on file changes.
