@@ -4,7 +4,7 @@ import CheckBox from '../../CheckBox'
 import { InputWithLabel } from '../../InputWithLabel'
 import RegionAndServerSelect from '../RegionAndServerSelect'
 import { ItemClassSelect, ItemQualitySelect } from '../WoWScanForm'
-import { defaultFormValuesMarketShare } from '~/routes/wow.marketshare'
+import type { defaultFormValuesMarketShare } from '~/routes/wow.marketshare'
 
 const MarketShareForm = ({
   loaderData,
