@@ -44,7 +44,7 @@ const searchParams = {
 
 // Updated recommendedQueries to reflect WoW searches
 const recommendedQueries = [
- {
+  {
     name: 'Ultra Cheap Deals (Beginner Friendly / Low Risk)',
     description:
       'Scout for ultra-cheap deals across all categories with the highest discounts.',
