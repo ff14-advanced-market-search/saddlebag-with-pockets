@@ -44,6 +44,20 @@ const searchParams = {
 
 // Updated recommendedQueries to reflect WoW searches
 const recommendedQueries = [
+ {
+    name: 'Ultra Cheap Deals (Beginner Friendly / Low Risk)',
+    description:
+      'Scout for ultra-cheap deals across all categories with the highest discounts.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.ultraCheapDeals
+  },
+  {
+    name: 'Fast Selling Items (Beginner Friendly / Low Risk)',
+    description:
+      'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
+    Icon: DocumentSearchIcon,
+    href: searchParams.superFastSelling
+  },
   {
     name: 'Default Dragonflight Deals',
     description: 'Find deals on current content.',
@@ -69,20 +83,6 @@ const recommendedQueries = [
       'Discover great discounts on legacy transmog gear for your collection.',
     Icon: DocumentSearchIcon,
     href: searchParams.transmogGear
-  },
-  {
-    name: 'Ultra Cheap Deals (Beginner Friendly / Low Risk)',
-    description:
-      'Scout for ultra-cheap deals across all categories with the highest discounts.',
-    Icon: DocumentSearchIcon,
-    href: searchParams.ultraCheapDeals
-  },
-  {
-    name: 'Fast Selling Items (Beginner Friendly / Low Risk)',
-    description:
-      'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
-    Icon: DocumentSearchIcon,
-    href: searchParams.superFastSelling
   },
   {
     name: 'Dragonflight Recipes',
