@@ -496,7 +496,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     <p className="text-gray-400 text-xs mt-4">
                       FINAL FANTASY is a registered trademark of Square Enix
                       Holdings Co., Ltd.
-                      <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
+                      <br />© SQUARE ENIX CO., LTD. All Rights Reserved.<br />
+                      WORLD OF WARCRAFT is a registered trademark of Blizzard Entertainment, Inc.
+                      <br />© BLIZZARD ENTERTAINMENT, INC. All Rights Reserved.
                     </p>
                   </nav>
                 </div>
@@ -583,7 +585,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               <p className="text-gray-400 text-xs mt-4">
                 FINAL FANTASY is a registered trademark of Square Enix Holdings
                 Co., Ltd.
-                <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
+                <br />© SQUARE ENIX CO., LTD. All Rights Reserved.<br />
+                WORLD OF WARCRAFT is a registered trademark of Blizzard Entertainment, Inc.
+                <br />© BLIZZARD ENTERTAINMENT, INC. All Rights Reserved.
               </p>
               <div id="ezoic-pub-ad-placeholder-118" />
             </nav>
