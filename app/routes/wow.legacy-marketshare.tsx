@@ -44,8 +44,8 @@ const inputMap: Record<string, string> = {
 
 const sortByOptions: Array<{ label: string; value: LegacyMarketshareSortBy }> =
   [
-    { value: 'currentMarketValue', label: 'Current Market Value' },
-    { value: 'historicMarketValue', label: 'Historic Market Value' },
+    { value: 'currentMarketValue', label: 'Current Daily Gold Earned' },
+    { value: 'historicMarketValue', label: 'Historic Daily Gold Earned' },
     { value: 'historicPrice', label: 'Historic Price' },
     { value: 'minPrice', label: 'Minimum Price' },
     { value: 'percentChange', label: 'Percent Change' },
@@ -224,10 +224,10 @@ const getColumnList = (
 ): Array<ColumnList<LegacyMarketshareItem>> => {
   return [
     { columnId: 'itemName', header: 'Item Name' },
-    { columnId: 'currentMarketValue', header: 'Current Market Value' },
+    { columnId: 'currentMarketValue', header: 'Current Daily Gold Earned' },
     { columnId: 'minPrice', header: 'Minimum Price' },
     { columnId: 'salesPerDay', header: 'Sales Per Day' },
-    { columnId: 'historicMarketValue', header: 'Historic Market Value' },
+    { columnId: 'historicMarketValue', header: 'Historic Daily Gold Earned' },
     { columnId: 'historicPrice', header: 'Historic Price' },
     {
       columnId: 'percentChange',
@@ -261,7 +261,7 @@ const getMobileColumns = (
   if (!sortByName) {
     return [
       { columnId: 'itemName', header: 'Item Name' },
-      { header: 'Current Market Value', columnId: 'currentMarketValue' }
+      { header: 'Current Daily Gold Earned', columnId: 'currentMarketValue' }
     ]
   }
 
