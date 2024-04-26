@@ -269,8 +269,13 @@ const columnList: Array<ColumnList<DealItem>> = [
     )
   },
   {
+    columnId: 'exportLink',
+    header: 'Where to Sell',
+    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
+  },
+  {
     columnId: 'link',
-    header: 'Item Link',
+    header: 'Undermine Link',
     accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
   },
   { columnId: 'discount', header: 'Discount' },
