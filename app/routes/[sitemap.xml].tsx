@@ -4,514 +4,160 @@ export const loader: LoaderFunction = async () => {
   const Sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://ffxivmarketboard.org/</loc>
+  <loc>https://saddlebagexchange.com/</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/queries/recommended</loc>
+  <loc>https://saddlebagexchange.com/queries/recommended</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/ffxiv/marketshare/queries</loc>
+  <loc>https://saddlebagexchange.com/ffxiv/marketshare/queries</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/ffxiv/craftsim/queries</loc>
+  <loc>https://saddlebagexchange.com/ffxiv/craftsim/queries</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/ffxiv/shopping-list</loc>
+  <loc>https://saddlebagexchange.com/ffxiv/shopping-list</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/queries/listings</loc>
+  <loc>https://saddlebagexchange.com/queries/listings</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/queries/item-history</loc>
+  <loc>https://saddlebagexchange.com/queries/item-history</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/ffxiv/self-purchase</loc>
+  <loc>https://saddlebagexchange.com/ffxiv/self-purchase</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/queries/world-comparison</loc>
+  <loc>https://saddlebagexchange.com/queries/world-comparison</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/undercut</loc>
+  <loc>https://saddlebagexchange.com/undercut</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/price-sniper</loc>
+  <loc>https://saddlebagexchange.com/price-sniper</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/allagan-data</loc>
+  <loc>https://saddlebagexchange.com/allagan-data</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/best-deals/recommended</loc>
+  <loc>https://saddlebagexchange.com/wow/best-deals/recommended</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/upload-timers</loc>
+  <loc>https://saddlebagexchange.com/wow/upload-timers</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/shopping-list</loc>
+  <loc>https://saddlebagexchange.com/wow/shopping-list</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/export-search</loc>
+  <loc>https://saddlebagexchange.com/wow/export-search</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/marketshare</loc>
+  <loc>https://saddlebagexchange.com/wow/marketshare</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/shortage-predictor</loc>
+  <loc>https://saddlebagexchange.com/wow/shortage-predictor</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/legacy-marketshare</loc>
+  <loc>https://saddlebagexchange.com/wow/legacy-marketshare</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/price-alert</loc>
+  <loc>https://saddlebagexchange.com/wow/price-alert</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/region-undercut</loc>
+  <loc>https://saddlebagexchange.com/wow/region-undercut</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/full-scan</loc>
+  <loc>https://saddlebagexchange.com/wow/full-scan</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/shortages/commodities</loc>
+  <loc>https://saddlebagexchange.com/wow/shortages/commodities</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow/shortages/single</loc>
+  <loc>https://saddlebagexchange.com/wow/shortages/single</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/options</loc>
+  <loc>https://saddlebagexchange.com/options</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/queries</loc>
+  <loc>https://saddlebagexchange.com/queries</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ffxivmarketboard.org/wow</loc>
+  <loc>https://saddlebagexchange.com/wow</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>https://saddlebagexchange.com/queries/full-scan</loc>
+  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/ffxiv/marketshare</loc>
+  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
   <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=168&amp;salesAmount=2&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=75000&amp;pricePerUnit=30000&amp;filters=56,65,66,67,68,69,70,71,72,81,82&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=true
+    https://saddlebagexchange.com/ffxiv/craftsim
   </loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=168&amp;salesAmount=2&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=75000&amp;pricePerUnit=30000&amp;filters=75,80,90&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?salesAmount=20&amp;minimumProfitAmount=500&amp;pricePerUnit=500
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=168&amp;salesAmount=2&amp;ROI=50&amp;minimumStackSize=1&amp;minimumProfitAmount=5000&amp;pricePerUnit=3000&amp;filters=-4&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=false
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?minimumStackSize=2&amp;minimumProfitAmount=1000&amp;pricePerUnit=1000
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=336&amp;salesAmount=1&amp;ROI=25&amp;minimumProfitAmount=1000000&amp;pricePerUnit=1000000&amp;regionWideChecked=true&amp;includeVendorChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=48&amp;salesAmount=5&amp;ROI=50&amp;minimumStackSize=1&amp;minimumProfitAmount=1000&amp;pricePerUnit=1000&amp;filters=-1&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=168&amp;salesAmount=2&amp;ROI=99&amp;minimumProfitAmount=100&amp;pricePerUnit=100&amp;filters=1,2,3,4,7&amp;hQChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?salesAmount=2&amp;hours=168&amp;ROI=99&amp;minimumProfitAmount=100&amp;pricePerUnit=100&amp;filters=7,54&amp;includeVendorChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=48&amp;salesAmount=5&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=5000&amp;pricePerUnit=5000&amp;filters=0&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=48&amp;salesAmount=2&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=5000&amp;pricePerUnit=5000&amp;filters=-2,-3&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=48&amp;salesAmount=5&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=5000&amp;pricePerUnit=5000&amp;filters=56,65,66,67,68,69,70,71,72,81,82&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=48&amp;salesAmount=5&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=5000&amp;pricePerUnit=5000&amp;filters=75,80,90&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=168&amp;salesAmount=2&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=75000&amp;pricePerUnit=30000&amp;filters=1,2,-5&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=336&amp;salesAmount=1&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=300000&amp;pricePerUnit=300000&amp;filters=56,65,66,67,68,69,70,71,72,81,82&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=336&amp;salesAmount=1&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=300000&amp;pricePerUnit=300000&amp;filters=75,80,90&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=336&amp;salesAmount=1&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=300000&amp;pricePerUnit=300000&amp;filters=1,2,-5&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/queries/full-scan?hours=336&amp;salesAmount=1&amp;ROI=25&amp;minimumStackSize=1&amp;minimumProfitAmount=300000&amp;pricePerUnit=300000&amp;filters=6&amp;hQChecked=false&amp;includeVendorChecked=true&amp;outOfStockChecked=true&amp;regionWideChecked=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=0&amp;sortBy=marketValue
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=0&amp;sortBy=percentChange
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=168&amp;salesAmount=1&amp;averagePrice=1000000&amp;filters=0&amp;sortBy=marketValue
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=1&amp;salesAmount=1&amp;averagePrice=10&amp;filters=0&amp;sortBy=marketValue
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=24&amp;salesAmount=35&amp;averagePrice=10&amp;filters=0&amp;sortBy=purchaseAmount
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=24&amp;salesAmount=35&amp;averagePrice=10&amp;filters=0&amp;sortBy=quantitySold
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=56,65,66,67,68,69,70,71,72,81,82&amp;sortBy=marketValue
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=75,80,90&amp;sortBy=marketValue
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=-1&amp;sortBy=marketValue
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=1,2,3,4,-5&amp;sortBy=marketValue
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/marketshare?timePeriod=24&amp;salesAmount=10&amp;averagePrice=10&amp;sortBy=marketValue&amp;filters=6
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/craftsim?filters=0%2C-5&amp;revenueMetric=revenue_region_min_listing
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/craftsim?revenueMetric=revenue_region_min_listing&amp;salesPerWeek=150&amp;medianSalePrice=500&amp;maxMaterialCost=10000&amp;filters=0%2C-5&amp;yields=2
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/craftsim?costMetric=material_median_cost&amp;revenueMetric=revenue_home_min_listing&amp;salesPerWeek=750&amp;medianSalePrice=1000&amp;maxMaterialCost=10000&amp;jobs=0&amp;filters=5%2C43%2C44%2C45%2C46&amp;stars=-1&amp;lvlLowerLimit=-1&amp;lvlUpperLimit=91&amp;yields=-1&amp;hideExpertRecipes=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/craftsim?costMetric=material_median_cost&amp;revenueMetric=revenue_home_min_listing&amp;salesPerWeek=400&amp;medianSalePrice=1000&amp;maxMaterialCost=10000&amp;jobs=0&amp;filters=5%2C43%2C44%2C45%2C46&amp;stars=-1&amp;lvlLowerLimit=-1&amp;lvlUpperLimit=80&amp;yields=-1&amp;hideExpertRecipes=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/craftsim?costMetric=material_median_cost&amp;revenueMetric=revenue_home_min_listing&amp;salesPerWeek=400&amp;medianSalePrice=50000&amp;maxMaterialCost=100000&amp;jobs=0&amp;filters=7%2C56%2C57%2C58%2C59%2C60%2C65%2C66%2C67%2C68%2C69%2C70%2C71%2C72%2C74%2C75%2C79%2C80%2C81%2C82%2C90&amp;stars=-1&amp;lvlLowerLimit=-1&amp;lvlUpperLimit=91&amp;yields=-1&amp;hideExpertRecipes=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/craftsim?costMetric=material_median_cost&amp;revenueMetric=revenue_home_min_listing&amp;salesPerWeek=100&amp;medianSalePrice=50000&amp;maxMaterialCost=100000&amp;jobs=0&amp;filters=0&amp;stars=-1&amp;lvlLowerLimit=-1&amp;lvlUpperLimit=91&amp;yields=-1&amp;hideExpertRecipes=false
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/ffxiv/craftsim?costMetric=material_median_cost&amp;revenueMetric=revenue_home_min_listing&amp;salesPerWeek=500&amp;medianSalePrice=75000&amp;maxMaterialCost=200000&amp;jobs=0&amp;filters=1%2C2%2C3%2C4&amp;stars=-1&amp;lvlLowerLimit=-1&amp;lvlUpperLimit=91&amp;yields=-1&amp;hideExpertRecipes=true
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=df&amp;itemClass=-1&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=2000&amp;salesPerDay=1.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=-1&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=100000&amp;salesPerDay=1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=legacy&amp;itemClass=2&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=10000&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=legacy&amp;itemClass=4&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=10000&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=-1&amp;itemSubClass=-1&amp;discount=99&amp;minPrice=100&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=-1&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=1&amp;salesPerDay=100
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=df&amp;itemClass=9&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=10000&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=legacy&amp;itemClass=9&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=10000&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=df&amp;itemClass=0&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=100&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=15&amp;itemSubClass=199&amp;discount=50&amp;minPrice=10000&amp;salesPerDay=.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=15&amp;itemSubClass=5&amp;discount=40&amp;minPrice=100&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=12&amp;itemSubClass=-1&amp;discount=40&amp;minPrice=1000&amp;salesPerDay=.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=pets&amp;itemClass=-1&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=1000&amp;salesPerDay=5
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=pets&amp;itemClass=-1&amp;itemSubClass=-1&amp;discount=50&amp;minPrice=10000&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=15&amp;itemSubClass=2&amp;discount=40&amp;minPrice=1000&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=15&amp;itemSubClass=3&amp;discount=50&amp;minPrice=100&amp;salesPerDay=0.1
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=15&amp;itemSubClass=4&amp;discount=50&amp;minPrice=1&amp;salesPerDay=5
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>
-    https://ffxivmarketboard.org/wow/best-deals?type=all&amp;itemClass=15&amp;itemSubClass=4&amp;discount=50&amp;minPrice=10&amp;salesPerDay=1
+    https://saddlebagexchange.com/wow/best-deals
   </loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.64</priority>
