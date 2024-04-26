@@ -233,13 +233,13 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Dragonflight Commodity Shortage Futures',
-        href: 'wow/shortage-predictor',
+        name: 'Legacy Marketshare Overview',
+        href: '/wow/legacy-marketshare',
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Legacy Marketshare Overview',
-        href: '/wow/legacy-marketshare',
+        name: 'Dragonflight Commodity Shortage Futures',
+        href: 'wow/shortage-predictor',
         icon: ChartSquareBarIcon
       },
       {
