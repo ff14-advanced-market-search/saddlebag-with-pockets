@@ -28,6 +28,8 @@ const searchParams = {
     '/wow/best-deals?type=all&itemClass=15&itemSubClass=5&discount=40&minPrice=100&salesPerDay=0.1',
   questItems:
     '/wow/best-deals?type=all&itemClass=12&itemSubClass=-1&discount=40&minPrice=1000&salesPerDay=.1',
+  cheapPetDeals:
+    '/wow/best-deals?type=pets&itemClass=-1&itemSubClass=-1&discount=90&minPrice=100&salesPerDay=0.1',
   mediumValuePetDeals:
     '/wow/best-deals?type=pets&itemClass=-1&itemSubClass=-1&discount=50&minPrice=1000&salesPerDay=5',
   highValuePetDeals:
@@ -65,12 +67,18 @@ const recommendedQueries = [
     href: searchParams.defaultDragonflight
   },
   {
-    name: 'High Value Deals',
-    description:
-      'Uncover high-value items across all expansions with substantial discounts.',
+    name: 'Cheap Pet Deals',
+    description: 'Find cheap battle pets. Good for cross realm trading on one wow account.',
     Icon: DocumentSearchIcon,
-    href: searchParams.highValue
+    href: searchParams.cheapPetDeals
   },
+  // {
+  //   name: 'High Value Deals',
+  //   description:
+  //     'Uncover high-value items across all expansions with substantial discounts.',
+  //   Icon: DocumentSearchIcon,
+  //   href: searchParams.highValue
+  // },
   {
     name: 'Transmog Weapons',
     description: 'Find discount deals on legacy transmog weapons.',
