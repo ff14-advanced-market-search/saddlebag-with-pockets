@@ -14,18 +14,18 @@ const recommendedQueries = [
       'Tools for Cross-Realm Trading, Market Overviews, Shortage Finders, and our Best Deals Search!',
     href: '/wow'
   },
+  // {
+  //   name: 'Blogs',
+  //   description: 'See our guides and blog posts.',
+  //   href: '/blog'
+  // },
   {
     name: 'Patreon',
     description:
       'Join our Patreon Supporters to access the best tools we have!',
     href: 'https://www.patreon.com/indopan',
     external: true
-  },
-  // {
-  //   name: 'Blogs',
-  //   description: 'See our guides and blog posts.',
-  //   href: '/blog'
-  // }
+  }
 ]
 
 export default function Index() {
