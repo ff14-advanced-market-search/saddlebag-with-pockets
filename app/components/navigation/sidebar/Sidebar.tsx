@@ -207,6 +207,27 @@ const navGroups: Array<{
         icon: ExclamationCircleIcon
       },
       {
+        name: 'Shopping List',
+        href: '/wow/shopping-list',
+        icon: ShoppingCartIcon
+      },
+      {
+        name: 'Item Export Search',
+        href: 'wow/export-search',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Region Wide Undercut Checker',
+        href: 'wow/region-undercut',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Undercut Alerts Curseforge Addon',
+        icon: DocumentSearchIcon,
+        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
+        external: true
+      },
+      {
         name: 'Azeroth Auction Assassin Sniper',
         href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest',
         icon: DocumentSearchIcon,
@@ -216,16 +237,6 @@ const navGroups: Array<{
         name: 'Upload Timers',
         href: '/wow/upload-timers',
         icon: ClockIcon
-      },
-      {
-        name: 'Shopping List',
-        href: '/wow/shopping-list',
-        icon: ShoppingCartIcon
-      },
-      {
-        name: 'Item Export Search',
-        href: 'wow/export-search',
-        icon: DocumentSearchIcon
       },
       {
         name: 'Dragonflight Marketshare Overview',
@@ -246,17 +257,6 @@ const navGroups: Array<{
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon
-      },
-      {
-        name: 'Region Wide Undercut Checker',
-        href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
-      },
-      {
-        name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
-        href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
-        external: true
       },
       {
         name: 'Server Transfer Trading Search',
