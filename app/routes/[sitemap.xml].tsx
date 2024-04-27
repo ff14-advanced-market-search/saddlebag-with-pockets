@@ -162,6 +162,36 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.64</priority>
 </url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/tldr</loc>
+  <lastmod>2024-04-27T00:27:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/HowtoCrossRealmTradeinFFXIV</loc>
+  <lastmod>2024-04-27T00:27:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/crossrealm1</loc>
+  <lastmod>2024-04-27T00:27:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/howtomarketshare</loc>
+  <lastmod>2024-04-27T00:27:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/howtoresell</loc>
+  <lastmod>2024-04-27T00:27:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/howtocommodityshortage</loc>
+  <lastmod>2024-04-27T00:27:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>  
 </urlset>`
   return new Response(Sitemap, {
     status: 200,
