@@ -202,6 +202,12 @@ const navGroups: Array<{
         external: true
       },
       {
+        name: 'Azeroth Auction Assassin Sniper',
+        href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest',
+        icon: DocumentSearchIcon,
+        external: true
+      },
+      {
         name: 'Best Deals',
         href: '/wow/best-deals/recommended',
         icon: ExclamationCircleIcon
@@ -217,6 +223,11 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Upload Timers',
+        href: '/wow/upload-timers',
+        icon: ClockIcon
+      },
+      {
         name: 'Region Wide Undercut Checker',
         href: 'wow/region-undercut',
         icon: DocumentSearchIcon
@@ -228,15 +239,10 @@ const navGroups: Array<{
         external: true
       },
       {
-        name: 'Azeroth Auction Assassin Sniper',
-        href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest',
+        name: 'TSM to AAA converter Addon',
+        href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
         icon: DocumentSearchIcon,
         external: true
-      },
-      {
-        name: 'Upload Timers',
-        href: '/wow/upload-timers',
-        icon: ClockIcon
       },
       {
         name: 'Dragonflight Marketshare Overview',
