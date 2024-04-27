@@ -34,6 +34,12 @@ const recommendedQueries = [
     href: '/blog/wow/howtocommodityshortage'
   },
   {
+    name: 'Chatgpt bs ffxiv post 1',
+    description: 'Chatgpt bs ffxiv post 1',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs1'
+  },
+  {
     name: 'Our first wow cross realm update',
     description: 'Launch of cross realm trading tools',
     Icon: DocumentSearchIcon,

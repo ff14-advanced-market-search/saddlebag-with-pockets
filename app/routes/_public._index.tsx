@@ -21,11 +21,11 @@ const recommendedQueries = [
     href: 'https://www.patreon.com/indopan',
     external: true
   },
-  {
-    name: 'Blogs',
-    description: 'See our guides and blog posts.',
-    href: '/blog'
-  }
+  // {
+  //   name: 'Blogs',
+  //   description: 'See our guides and blog posts.',
+  //   href: '/blog'
+  // }
 ]
 
 export default function Index() {
