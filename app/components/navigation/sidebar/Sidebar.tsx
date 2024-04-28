@@ -223,6 +223,11 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Price Alert Input Generator',
+        href: 'wow/price-alert',
+        icon: PencilAltIcon
+      },
+      {
         name: 'Upload Timers',
         href: '/wow/upload-timers',
         icon: ClockIcon
@@ -255,18 +260,13 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Dragonflight Commodity Shortage Futures',
-        href: 'wow/shortage-predictor',
+        name: 'Server Transfer Trading Search',
+        href: '/wow/full-scan',
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Price Alert Input Generator',
-        href: 'wow/price-alert',
-        icon: PencilAltIcon
-      },
-      {
-        name: 'Server Transfer Trading Search',
-        href: '/wow/full-scan',
+        name: 'Dragonflight Commodity Shortage Futures',
+        href: 'wow/shortage-predictor',
         icon: ChartSquareBarIcon
       },
       {
