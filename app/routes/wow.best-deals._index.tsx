@@ -21,8 +21,10 @@ import {
 } from '~/utils/zodHelpers'
 import {
   getActionUrl,
+  handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 const PAGE_URL = '/wow/best-deals'
 
@@ -159,6 +161,15 @@ const BestDeals = () => {
         error={error}
         loading={isSubmitting}
         action={getActionUrl(PAGE_URL, searchParams)}>
+        <div className="pt-2">
+          <div className="flex justify-end mb-2">
+            <SubmitButton
+              title="Share this search!"
+              onClick={handleCopyButton}
+              type="button"
+            />
+          </div>
+        </div>
         <div className="pt-3 flex flex-col">
           <Select
             title="Item Type"
