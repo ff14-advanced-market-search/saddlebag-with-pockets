@@ -70,7 +70,7 @@ You can set vite into watch mode by passing the watch arguement:
 yarn test watch
 ```
 
-### Docker
+<!-- ### Docker
 
 Alternatively, you can use docker to run the server:
 
@@ -85,7 +85,7 @@ docker-compose up
 ```
 
 > NOTE: any changes to the `Dockerfile` or dependencies will require you to rebuild the images.
-
+ -->
 ## Deployment
 
 Commit to `master`. Auto deploys to CloudFlare.
