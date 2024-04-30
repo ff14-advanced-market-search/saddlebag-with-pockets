@@ -1,7 +1,7 @@
 const howtocrossservertradeinffxiv = () => {
   return (
     <div classname={`m-12`}>
-      <main classname="flex-1">
+      <main className="flex-1">
 
         <p> <strong>&quot;The Role of Innovation in MMO Economies: Trends and Opportunities&quot;</strong></p>
 <p>In the dynamic and ever-evolving virtual economies of MMOs like Final Fantasy XIV and World of Warcraft, innovation plays a crucial role in driving economic growth, fostering entrepreneurship, and creating new opportunities for wealth creation. In this article, we&#39;ll explore the role of innovation in MMO economies, highlighting key trends, emerging technologies, and innovative strategies that are reshaping the landscape of gil-making and gold-making.</p>
