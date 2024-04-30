@@ -1,7 +1,7 @@
 const howtocrossservertradeinffxiv = () => {
   return (
     <div classname={`m-12`}>
-      <main classname="flex-1">
+      <main className="flex-1">
 <p><strong> Leveraging Social Trading Platforms</strong></p>
 <p>Social trading platforms have emerged as powerful tools for gil-making in Final Fantasy XIV and gold-making in World of Warcraft. These platforms facilitate peer-to-peer trading, allowing players to buy, sell, and exchange virtual assets directly with each other. By leveraging social trading platforms, entrepreneurs can tap into larger markets, access a wider range of goods and services, and interact with a diverse community of traders and investors. These platforms often feature advanced features such as rating systems, reputation scores, and escrow services to ensure secure and trustworthy transactions. Moreover, social trading platforms enable players to follow experienced traders, replicate their strategies, and learn from their insights and expertise, empowering newcomers to enter the market with confidence and success.</p>
 <p><strong> Embracing Cross-Server Trading</strong></p>
