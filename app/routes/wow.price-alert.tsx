@@ -143,7 +143,27 @@ const Index = () => {
       <>
         <SmallFormContainer
           title={`WoW ${priceOrQuantity} alert input generator`}
-          description={`Generate the input for our World of Warcraft ${priceOrQuantity} alerts. Join the Saddlebag Exchange discord server to use this for the discord bot commands.`}
+          description={
+            <>
+              Pick a list of your favorite World of Warcraft items for{' '}
+              {priceOrQuantity} alerts. Then join the{' '}
+              <a
+                href="https://discord.gg/836C8wDVNq"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-500 dark:text-blue-300 hover:underline">
+                Saddlebag Exchange Discord Server
+              </a>{' '}
+              to use this list in for our{' '}
+              <a
+                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/WoW-discord-price-sniper-and-spike-alerts"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-500 dark:text-blue-300 hover:underline">
+                Price Sniper and Price Spike Discord Alerts.
+              </a>{' '}
+            </>
+          }
           error={error}
           onClick={(e) => {
             e.preventDefault()
