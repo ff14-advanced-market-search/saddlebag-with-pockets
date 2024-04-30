@@ -1,7 +1,7 @@
 const howtocrossservertradeinffxiv = () => {
   return (
-    <div classname={`m-12`}>
-      <main classname="flex-1">
+    <div className={`m-12`}>
+      <main className="flex-1">
 
         <p><strong>&quot;The Impact of Social Dynamics on MMO Economies: Community, Cooperation, and Competition&quot;</strong></p>
 <p>Social dynamics play a crucial role in shaping the economies of MMOs like Final Fantasy XIV and World of Warcraft. In this extensive analysis, we&#39;ll delve into the intricate interplay between community, cooperation, and competition within virtual economies, examining how player interactions influence market dynamics, resource distribution, and overall economic performance.</p>
