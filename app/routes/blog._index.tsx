@@ -70,6 +70,60 @@ const recommendedQueries = [
     href: '/blob/ffxiv/bs6'
   },
   {
+    "name": "Chatgpt bs ffxiv post 7",
+    "description": "Chatgpt bs ffxiv post 7",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs7"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 8",
+    "description": "Chatgpt bs ffxiv post 8",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs8"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 9",
+    "description": "Chatgpt bs ffxiv post 9",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs9"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 10",
+    "description": "Chatgpt bs ffxiv post 10",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs10"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 11",
+    "description": "Chatgpt bs ffxiv post 11",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs11"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 12",
+    "description": "Chatgpt bs ffxiv post 12",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs12"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 13",
+    "description": "Chatgpt bs ffxiv post 13",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs13"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 14",
+    "description": "Chatgpt bs ffxiv post 14",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs14"
+  },
+  {
+    "name": "Chatgpt bs ffxiv post 15",
+    "description": "Chatgpt bs ffxiv post 15",
+    "Icon": "DocumentSearchIcon",
+    "href": "/blob/ffxiv/bs15"
+  },
+  {
     name: 'Our first wow cross realm update',
     description: 'Launch of cross realm trading tools',
     Icon: DocumentSearchIcon,
