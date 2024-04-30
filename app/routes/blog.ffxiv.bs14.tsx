@@ -1,7 +1,7 @@
 const howtocrossservertradeinffxiv = () => {
   return (
-    <div classname={`m-12`}>
-      <main classname="flex-1">
+    <div className={`m-12`}>
+      <main className="flex-1">
 
         <p><strong>&quot;The Influence of Economic Policies on MMO Economies: A Comprehensive Analysis&quot;</strong></p>
 <p>Economic policies implemented by game developers have a significant impact on the virtual economies of MMOs like Final Fantasy XIV and World of Warcraft. In this comprehensive analysis, we&#39;ll delve into the various economic policies employed by developers, their effects on player behavior and market dynamics, and strategies for entrepreneurs to navigate and thrive in these regulated environments.</p>
