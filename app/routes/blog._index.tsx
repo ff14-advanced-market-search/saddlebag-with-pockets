@@ -64,6 +64,12 @@ const recommendedQueries = [
     href: '/blob/ffxiv/bs5'
   },
   {
+    name: 'Chatgpt bs ffxiv post 6',
+    description: 'Chatgpt bs ffxiv post 6',
+    Icon: DocumentSearchIcon,
+    href: '/blob/ffxiv/bs6'
+  },
+  {
     name: 'Our first wow cross realm update',
     description: 'Launch of cross realm trading tools',
     Icon: DocumentSearchIcon,
