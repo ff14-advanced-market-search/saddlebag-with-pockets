@@ -1,6 +1,6 @@
 const howtocrossservertradeinffxiv = () => {
   return (
-    <div classname={`m-12`}>
+    <div className={`m-12`}>
       <main className="flex-1">
 <p> &quot;Diversification and Risk Management in Gil Making and Gold Making&quot;**</p>
 <p>In the dynamic economies of Final Fantasy XIV and World of Warcraft, where fortunes are won and lost with each transaction, diversification and risk management are essential principles for success in gil making and gold making. In this article, we&#39;ll delve into the importance of diversification and risk management strategies, exploring how they can help entrepreneurs navigate uncertainty, mitigate losses, and maximize returns in MMO economies.</p>
