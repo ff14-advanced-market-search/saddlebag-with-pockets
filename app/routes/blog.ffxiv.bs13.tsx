@@ -1,6 +1,6 @@
 const howtocrossservertradeinffxiv = () => {
   return (
-    <div classname={`m-12`}>
+    <div className={`m-12`}>
       <main className="flex-1">
 
         <p>&quot;Exploring Alternative Revenue Streams in MMO Economies&quot;
