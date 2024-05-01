@@ -210,8 +210,9 @@ export const Results = ({
   const [globalFilter, setGlobalFilter] = useState('')
   const chartData = getChartData(data, sortBy)
 
-  const sortByTitleValue = sortByOptions.find(({ value }) => value === sortBy)
-    ?.label
+  const sortByTitleValue = sortByOptions.find(
+    ({ value }) => value === sortBy
+  )?.label
 
   const chartTitle = sortByTitleValue
     ? `Marketshare Overview - ${sortByTitleValue}`
