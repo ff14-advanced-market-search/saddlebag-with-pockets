@@ -68,7 +68,8 @@ const recommendedQueries = [
   },
   {
     name: 'Cheap Pet Deals',
-    description: 'Find cheap battle pets. Good for cross realm trading on one wow account.',
+    description:
+      'Find cheap battle pets. Good for cross realm trading on one wow account.',
     Icon: DocumentSearchIcon,
     href: searchParams.cheapPetDeals
   },

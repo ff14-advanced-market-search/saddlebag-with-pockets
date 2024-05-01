@@ -30,17 +30,16 @@ export const action: ActionFunction = async ({ request }) => {
 
   const input = formData.get(formName)
 
-  type TrimmedInput =
-    | {
-        id?: number
-        source?: string
-        quantity?: number
-        type?: string
-        'total quantity available'?: number
-      } & (
-        | { location: string; 'inventory location': never }
-        | { location: never; 'inventory location': string }
-      )
+  type TrimmedInput = {
+    id?: number
+    source?: string
+    quantity?: number
+    type?: string
+    'total quantity available'?: number
+  } & (
+    | { location: string; 'inventory location': never }
+    | { location: never; 'inventory location': string }
+  )
 
   if (!input || typeof input !== 'string') {
     return json({ exception: 'Missing input' })
