@@ -49,79 +49,79 @@ const recommendedQueries = [
     name: 'Chatgpt bs ffxiv post 3',
     description: 'Chatgpt bs ffxiv post 3',
     Icon: DocumentSearchIcon,
-    href: '/blob/ffxiv/bs3'
+    href: '/blog/ffxiv/bs3'
   },
   {
     name: 'Chatgpt bs ffxiv post 4',
     description: 'Chatgpt bs ffxiv post 4',
     Icon: DocumentSearchIcon,
-    href: '/blob/ffxiv/bs4'
+    href: '/blog/ffxiv/bs4'
   },
   {
     name: 'Chatgpt bs ffxiv post 5',
     description: 'Chatgpt bs ffxiv post 5',
     Icon: DocumentSearchIcon,
-    href: '/blob/ffxiv/bs5'
+    href: '/blog/ffxiv/bs5'
   },
   {
     name: 'Chatgpt bs ffxiv post 6',
     description: 'Chatgpt bs ffxiv post 6',
     Icon: DocumentSearchIcon,
-    href: '/blob/ffxiv/bs6'
+    href: '/blog/ffxiv/bs6'
   },
   {
     name: 'Chatgpt bs ffxiv post 7',
     description: 'Chatgpt bs ffxiv post 7',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs7'
+    href: '/blog/ffxiv/bs7'
   },
   {
     name: 'Chatgpt bs ffxiv post 8',
     description: 'Chatgpt bs ffxiv post 8',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs8'
+    href: '/blog/ffxiv/bs8'
   },
   {
     name: 'Chatgpt bs ffxiv post 9',
     description: 'Chatgpt bs ffxiv post 9',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs9'
+    href: '/blog/ffxiv/bs9'
   },
   {
     name: 'Chatgpt bs ffxiv post 10',
     description: 'Chatgpt bs ffxiv post 10',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs10'
+    href: '/blog/ffxiv/bs10'
   },
   {
     name: 'Chatgpt bs ffxiv post 11',
     description: 'Chatgpt bs ffxiv post 11',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs11'
+    href: '/blog/ffxiv/bs11'
   },
   {
     name: 'Chatgpt bs ffxiv post 12',
     description: 'Chatgpt bs ffxiv post 12',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs12'
+    href: '/blog/ffxiv/bs12'
   },
   {
     name: 'Chatgpt bs ffxiv post 13',
     description: 'Chatgpt bs ffxiv post 13',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs13'
+    href: '/blog/ffxiv/bs13'
   },
   {
     name: 'Chatgpt bs ffxiv post 14',
     description: 'Chatgpt bs ffxiv post 14',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs14'
+    href: '/blog/ffxiv/bs14'
   },
   {
     name: 'Chatgpt bs ffxiv post 15',
     description: 'Chatgpt bs ffxiv post 15',
     Icon: 'DocumentSearchIcon',
-    href: '/blob/ffxiv/bs15'
+    href: '/blog/ffxiv/bs15'
   },
   {
     name: 'Our first wow cross realm update',
