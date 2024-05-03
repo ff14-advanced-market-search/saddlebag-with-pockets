@@ -36,7 +36,7 @@ export default function Index() {
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              Saddlebag Exchange / ffxiv marketboard
+              Saddlebag Exchange: FFXIV marketboard prices, WoW Auctionhouse
             </h1>
             <p className="text-md text-slate-700 dark:text-gray-300">
               Welcome to the Saddlebag Exchange. Find helpful tools to get ahead
