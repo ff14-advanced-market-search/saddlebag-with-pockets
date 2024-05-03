@@ -5,7 +5,7 @@ const recommendedQueries = [
   {
     name: 'Final Fantasy XIV',
     description:
-      'Tools for Cross-Server reselling, Market Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More!',
+      'Tools for Cross-Server reselling, FFXIV Market Board Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More! xiv analysis, the ffxiv market board, selling items, ff14 marketboard prices.',
     href: '/queries'
   },
   {
@@ -36,8 +36,9 @@ export default function Index() {
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              Saddlebag Exchange
+              Saddlebag Exchange / ffxiv marketboard
             </h1>
+            <title>ffxiv marketboard</title>
             <p className="text-md text-slate-700 dark:text-gray-300">
               Welcome to the Saddlebag Exchange. Find helpful tools to get ahead
               in your favourite MMO's.
