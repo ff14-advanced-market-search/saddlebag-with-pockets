@@ -126,6 +126,14 @@ export default function Index() {
               on market board ffxiv.
             </p>
             <div id="ezoic-pub-ad-placeholder-116" />
+            <h1>
+              Keywords for google: xiv analysis, the ffxiv market board, selling
+              items, ff14 marketboard prices, ffxiv market board, ff14 market
+              board, ffxiv marketboard, ff14 marketboard prices, ffxiv market
+              board prices, megalotragus horn, ff14 market board prices, ff14
+              marketboard, ffxiv market, how to sell on market board ffxiv, how
+              to sell items on market board ffxiv.
+            </h1>
           </div>
         </div>
       </main>
