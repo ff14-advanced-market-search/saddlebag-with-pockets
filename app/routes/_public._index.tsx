@@ -5,7 +5,7 @@ const recommendedQueries = [
   {
     name: 'Final Fantasy XIV',
     description:
-      'Tools for Cross-Server reselling, FFXIV Market Board Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More! xiv analysis, the ffxiv market board, selling items, ff14 marketboard prices.',
+      'Tools for Cross-Server reselling, FFXIV Market Board Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More!',
     href: '/queries'
   },
   {
@@ -38,7 +38,6 @@ export default function Index() {
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
               Saddlebag Exchange / ffxiv marketboard
             </h1>
-            <title>ffxiv marketboard</title>
             <p className="text-md text-slate-700 dark:text-gray-300">
               Welcome to the Saddlebag Exchange. Find helpful tools to get ahead
               in your favourite MMO's.
@@ -49,6 +48,82 @@ export default function Index() {
                 return <TileLink key={query.name} {...query} />
               })}
             </div>
+            <h2 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
+              About us
+            </h2>
+            <p>
+              Saddlebag Exchange: Your Gateway to Mastering MMO Markets! Our
+              platform is designed with dozens of tools to help take your in
+              game MMO market trading to the next level! For "Final Fantasy XIV"
+              players, dive into a world of profitable opportunities with our
+              cross-server reselling, detailed market overviews, and crafting
+              profit simulations. Our tools, including shopping lists, deep item
+              statistics and alerts, are designed to maximize your efficiency
+              and profits, whether you're a trading veteran, a crafting
+              aficionado or a new player saving up to buy the mansion plot of
+              your dreams! For "World of Warcraft" adventurers, experience the
+              game-changing power of cross-realm trading with Saddlebag
+              Exchange. Utilize our marketshare searches and best deals to
+              discover lucrative items. Buy low and sell high across realms with
+              our Azeroth Auction Assassin discount sniper, shopping lists, and
+              export search, tapping into the most profitable markets. Stay
+              ahead of the competition with our undercut addon, ensuring your
+              items always lead the market. Join Saddlebag Exchange and
+              transform your MMO trading into a highly efficient, rewarding
+              journey. Elevate your game and dominate the market today! **"Final
+              Fantasy XIV" Component:** In "Final Fantasy XIV" our service
+              offers a compelling alternative to the game's own expansion of
+              selling slots. Players are restricted to 40 item slots in their
+              market listings. The game allows expansion of this limit by 20
+              slots for an additional $3/month (up to a max of 100 extra sale
+              slots for $15 per month). However, Saddlebag Exchange offers a
+              more strategic solution. For the same price, our service optimizes
+              the use of the existing 40 slots. Instead of merely increasing
+              quantity, we enhance the quality and profitability of each slot.
+              Our tools enable players to identify and list items with the
+              highest market demand and profitability, thereby maximizing their
+              earnings within the existing constraints. While pitched as an
+              alternative to paid extra retainers, it can also be a multiplier
+              for those who still want to use the advantages of the purchasing
+              extra retainer slots. Once you purchase the maximum of 100 extra
+              slots for $15 a month then the Saddlebag Exchange elite package
+              for $10 to $20 a month becomes even more valuable. Our tools also
+              help large scale operations maximize their potential! **"World of
+              Warcraft" Component:** For "World of Warcraft" the WoW Token
+              represents a pivotal aspect of in-game economy. This token allows
+              players to exchange in-game gold for additional game time or add
+              funds to their Battle.net balance. Given that a WoW Token can be
+              exchanged for 30 days of game time or $15 for Battle.net balance,
+              our service becomes an invaluable asset for players looking to
+              make their gameplay self-sustaining. Our service, priced lower
+              than the monthly subscription, empowers players to earn
+              significant amounts of in-game gold, enough to regularly purchase
+              WoW Tokens. This essentially makes the game free to play, as
+              players can earn enough in-game currency to continuously renew
+              their game time without spending real money. The potential is
+              immense; one of our users earned 20 million gold in a few days, an
+              amount that can cover years of subscription costs.
+              **Opportunity:** Saddlebag Exchange is positioned at the
+              intersection of gaming and financial optimization. Our tools don't
+              just assist players; they revolutionize how they engage with the
+              in-game economy. For "Final Fantasy XIV," we turn limited
+              inventory slots into a high-yield asset. In "World of Warcraft,"
+              we transform gameplay into a means for self-sustaining
+              subscription. This is more than a service for gamers; it's an
+              innovative approach to in-game economics, providing players with
+              tools to maximize their resources and financial potential. For
+              supporters, this represents a unique opportunity to enter a
+              vibrant, growing market with a product that offers tangible value
+              to a dedicated user base. Our service not only retains customers
+              by offering substantial returns on their investment but also
+              fosters a dedicated community of players who see Saddlebag
+              Exchange as essential to their gaming experience. Keywords for
+              google: xiv analysis, the ffxiv market board, selling items, ff14
+              marketboard prices, ffxiv market board, ff14 market board, ffxiv
+              marketboard, ff14 marketboard prices, ffxiv market board prices,
+              megalotragus horn, ff14 market board prices, ff14 marketboard,
+              ffxiv market.
+            </p>
             <div id="ezoic-pub-ad-placeholder-116" />
           </div>
         </div>
