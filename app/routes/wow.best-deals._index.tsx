@@ -1,5 +1,4 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
-import { MetaFunction } from '@remix-run/react'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { PageWrapper } from '~/components/Common'

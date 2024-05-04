@@ -61,6 +61,18 @@ const getInputString = (input: Input, isPrice: boolean) => {
   )}${parseUserAuctions(input, isPrice)}\n}`
 }
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW price sniper',
+    description:
+      'Generate data for Sadddlebag Exchange discord bot wow price sniper alerts'
+  }
+}
+
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()

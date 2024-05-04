@@ -19,6 +19,17 @@ import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV marketboard purchase history',
+    description:
+      'Look up your FFXIV purchase history on the ffxiv marketboard'
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 

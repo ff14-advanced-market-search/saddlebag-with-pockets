@@ -77,6 +77,17 @@ const Description = () => {
   )
 }
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV undecut alerts, ffxiv sell faster!',
+    description:
+      'Generate data for Sadddlebag Exchange discord bot ffxiv undercut alerts. Sell faster when no one can sell under you!'
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWorld, getDataCenter } = await getUserSessionData(request)
 

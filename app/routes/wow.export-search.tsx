@@ -1,4 +1,5 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import { MetaFunction } from '@remix-run/react'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
@@ -66,6 +67,24 @@ const validateInput = z.object({
   sortBy: z.string()
   //connectedRealmIDs: z.record(z.string()).default({})
 })
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title:
+      'Saddlebag Exchange: WoW best selling, WoW Export, find the best realm to sell any item on!',
+    description:
+      'Find the best realm to sell any item on! Compare price data too wow realm population data.',
+    links: [
+      {
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/wow/export-search`
+      }
+    ]
+  }
+}
 
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
