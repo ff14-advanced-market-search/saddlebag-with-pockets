@@ -141,131 +141,131 @@ export const loader: LoaderFunction = async () => {
 <url>
   <loc>https://saddlebagexchange.com/queries/full-scan</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/ffxiv/marketshare</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>
     https://saddlebagexchange.com/ffxiv/craftsim
   </loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>
     https://saddlebagexchange.com/wow/best-deals
   </loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/wow/tldr</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/HowtoCrossRealmTradeinFFXIV</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/wow/crossrealm1</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/howtomarketshare</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/howtoresell</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/wow/howtocommodityshortage</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs1</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs2</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs3</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs4</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs5</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs6</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs7</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs8</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs9</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs10</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs11</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs12</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs13</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs14</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs15</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.80</priority>
 </url>
 </urlset>`
   return new Response(Sitemap, {
