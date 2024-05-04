@@ -218,6 +218,7 @@ function App() {
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
       <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
