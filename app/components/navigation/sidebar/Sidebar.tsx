@@ -690,7 +690,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     <img
                       className="h-8 w-8 rounded-full shrink-0"
                       src="/images/tiny-chocobo.png"
-                      alt=""
+                      alt="tiny-chocobo"
                     />
                   </Menu.Button>
                 </div>
