@@ -23,7 +23,6 @@ export const meta: MetaFunction = () => {
   }
 }
 
-
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const { world, data_center } = validateWorldAndDataCenter(

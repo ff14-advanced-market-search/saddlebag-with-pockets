@@ -25,8 +25,7 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV marketboard purchase history',
-    description:
-      'Look up your FFXIV purchase history on the ffxiv marketboard'
+    description: 'Look up your FFXIV purchase history on the ffxiv marketboard'
   }
 }
 

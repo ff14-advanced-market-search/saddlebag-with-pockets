@@ -153,7 +153,6 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const ErrorBoundary = () => <ErrorBounds />
 
-
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {

@@ -72,7 +72,6 @@ export const meta: MetaFunction = () => {
   }
 }
 
-
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()

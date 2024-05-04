@@ -16,7 +16,6 @@ import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
-
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {

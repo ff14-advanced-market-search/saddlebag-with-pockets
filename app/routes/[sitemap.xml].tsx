@@ -39,6 +39,11 @@ export const loader: LoaderFunction = async () => {
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>https://saddlebagexchange.com/queries/queries/item-data/30862</loc>
+  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>https://saddlebagexchange.com/ffxiv/self-purchase</loc>
   <lastmod>2024-04-17T12:55:59+00:00</lastmod>
   <priority>0.80</priority>

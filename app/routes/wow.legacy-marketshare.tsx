@@ -98,7 +98,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Legacy marketshare, most gold on auctionhouse',
+    title:
+      'Saddlebag Exchange: WoW Legacy marketshare, most gold on auctionhouse',
     description:
       'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!',
     links: [
