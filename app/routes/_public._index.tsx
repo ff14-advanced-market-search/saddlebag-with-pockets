@@ -36,7 +36,7 @@ export default function Index() {
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              Saddlebag Exchange / ffxiv marketboard
+              Saddlebag Exchange: FFXIV marketboard prices, WoW Auctionhouse
             </h1>
             <p className="text-md text-slate-700 dark:text-gray-300">
               Welcome to the Saddlebag Exchange. Find helpful tools to get ahead
@@ -122,9 +122,18 @@ export default function Index() {
               marketboard prices, ffxiv market board, ff14 market board, ffxiv
               marketboard, ff14 marketboard prices, ffxiv market board prices,
               megalotragus horn, ff14 market board prices, ff14 marketboard,
-              ffxiv market.
+              ffxiv market, how to sell on market board ffxiv, how to sell items
+              on market board ffxiv.
             </p>
             <div id="ezoic-pub-ad-placeholder-116" />
+            <h1>
+              Keywords for google: xiv analysis, the ffxiv market board, selling
+              items, ff14 marketboard prices, ffxiv market board, ff14 market
+              board, ffxiv marketboard, ff14 marketboard prices, ffxiv market
+              board prices, megalotragus horn, ff14 market board prices, ff14
+              marketboard, ffxiv market, how to sell on market board ffxiv, how
+              to sell items on market board ffxiv.
+            </h1>
           </div>
         </div>
       </main>

@@ -313,6 +313,11 @@ const navGroups: Array<{
         href: 'https://drive.google.com/file/d/1R9J51hNuwMfPuLi0u1snaLvQnJiZ2jRo/view?usp=sharing',
         external: true,
         icon: GithubIcon
+      },
+      {
+        name: 'blog',
+        href: '/blog',
+        icon: DocumentSearchIcon
       }
     ]
   }
