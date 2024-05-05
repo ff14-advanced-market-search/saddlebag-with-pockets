@@ -58,6 +58,7 @@ export default function Index() {
                 return <TileLink key={query.name} {...query} />
               })}
             </div>
+            <div id="ezoic-pub-ad-placeholder-116" />
             <h2 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
               About us
             </h2>
@@ -137,15 +138,6 @@ export default function Index() {
               immense; one of our users earned 20 million gold in a few days, an
               amount that can cover years of subscription costs.*/}
             </p>
-            <div id="ezoic-pub-ad-placeholder-116" />
-            <h1>
-              Keywords for google: xiv analysis, the ffxiv market board, selling
-              items, ff14 marketboard prices, ffxiv market board, ff14 market
-              board, ffxiv marketboard, ff14 marketboard prices, ffxiv market
-              board prices, megalotragus horn, ff14 market board prices, ff14
-              marketboard, ffxiv market, how to sell on market board ffxiv, how
-              to sell items on market board ffxiv.
-            </h1>
           </div>
         </div>
       </main>
