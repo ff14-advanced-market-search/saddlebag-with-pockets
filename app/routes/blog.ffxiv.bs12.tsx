@@ -4,11 +4,11 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Innovation in MMO Economies',
-    description: 'Explore key trends and opportunities in MMO economies, focusing on innovation and its impact on virtual markets.',
+    description:
+      'Explore key trends and opportunities in MMO economies, focusing on innovation and its impact on virtual markets.',
     customHeading: 'Unveiling the Future: Innovation in MMO Economies'
   }
 }
-
 
 const howtocrossservertradeinffxiv = () => {
   return (

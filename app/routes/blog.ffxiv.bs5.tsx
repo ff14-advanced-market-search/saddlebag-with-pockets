@@ -4,7 +4,8 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Gold & Gil Mastery: WoW & FFXIV',
-    description: 'Discover advanced strategies for mastering gold in World of Warcraft and gil in Final Fantasy XIV.',
+    description:
+      'Discover advanced strategies for mastering gold in World of Warcraft and gil in Final Fantasy XIV.',
     customHeading: 'Mastering Gold & Gil: Advanced Strategies for WoW & FFXIV'
   }
 }

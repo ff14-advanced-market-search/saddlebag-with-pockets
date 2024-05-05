@@ -4,8 +4,10 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'The Impact of Social Dynamics on MMO Economies',
-    description: 'Explore the profound influence of social dynamics on MMO economies and virtual communities.',
-    customHeading: 'Understanding the Role of Social Dynamics in Shaping MMO Economies'
+    description:
+      'Explore the profound influence of social dynamics on MMO economies and virtual communities.',
+    customHeading:
+      'Understanding the Role of Social Dynamics in Shaping MMO Economies'
   }
 }
 

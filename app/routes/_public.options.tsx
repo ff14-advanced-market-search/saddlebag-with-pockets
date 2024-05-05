@@ -43,7 +43,8 @@ export const meta: MetaFunction = () => {
     title: 'Saddlebag Exchange: Options Menu',
     description:
       'Set your FFXIV datacenter and server / Set your wow realm and region',
-    customHeading: 'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange'
+    customHeading:
+      'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange'
   }
 }
 

@@ -4,11 +4,12 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Exploring Specialized Markets for Gil Making in Final Fantasy XIV',
-    description: 'Discover lucrative opportunities and strategies for capitalizing on specialized markets to maximize your Gil making potential in Final Fantasy XIV.',
-    customHeading: 'Unveiling Lucrative Markets: Specialized Gil Making in Final Fantasy XIV'
+    description:
+      'Discover lucrative opportunities and strategies for capitalizing on specialized markets to maximize your Gil making potential in Final Fantasy XIV.',
+    customHeading:
+      'Unveiling Lucrative Markets: Specialized Gil Making in Final Fantasy XIV'
   }
 }
-
 
 const howtocrossservertradeinffxiv = () => {
   return (

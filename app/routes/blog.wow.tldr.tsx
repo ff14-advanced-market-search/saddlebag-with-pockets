@@ -4,7 +4,8 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'WoW TL;DR: How to Earn Gold with Cross-Realm Trading',
-    description: 'Learn quick and effective methods for earning gold through cross-realm trading in World of Warcraft.',
+    description:
+      'Learn quick and effective methods for earning gold through cross-realm trading in World of Warcraft.',
     customHeading: 'Quick Guide: Earning Gold with Cross-Realm Trading in WoW'
   }
 }

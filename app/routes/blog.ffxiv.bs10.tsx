@@ -6,7 +6,8 @@ export const meta: MetaFunction = () => {
     title: 'Diversification and Risk Management in Gil Making and Gold Making',
     description:
       'Diversification and Risk Management in Gil Making and Gold Making',
-    customHeading: 'Optimize Your Strategy: Diversification and Risk Management in Gil and Gold Making'
+    customHeading:
+      'Optimize Your Strategy: Diversification and Risk Management in Gil and Gold Making'
   }
 }
 

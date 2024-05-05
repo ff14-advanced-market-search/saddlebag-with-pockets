@@ -4,11 +4,12 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Flip items on the FFXIV Marketboard using Saddlebag Exchange',
-    description: 'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange.',
-    customHeading: 'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange'
+    description:
+      'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange.',
+    customHeading:
+      'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange'
   }
 }
-
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

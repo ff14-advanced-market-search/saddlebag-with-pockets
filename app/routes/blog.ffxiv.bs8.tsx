@@ -4,11 +4,12 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Advanced Tactics for Goldmaking in World of Warcraft',
-    description: 'Explore advanced strategies and tactics to maximize your goldmaking potential in World of Warcraft.',
-    customHeading: 'Unlocking Advanced Tactics: Maximize Goldmaking in World of Warcraft'
+    description:
+      'Explore advanced strategies and tactics to maximize your goldmaking potential in World of Warcraft.',
+    customHeading:
+      'Unlocking Advanced Tactics: Maximize Goldmaking in World of Warcraft'
   }
 }
-
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

@@ -20,7 +20,8 @@ export const meta: MetaFunction = () => {
     title: 'Saddlebag Exchange: FFXIV price sniper',
     description:
       'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts',
-    customHeading: 'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
+    customHeading:
+      'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
   }
 }
 

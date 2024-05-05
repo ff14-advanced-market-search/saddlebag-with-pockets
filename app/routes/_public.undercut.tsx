@@ -22,7 +22,8 @@ export const meta: MetaFunction = () => {
     title: 'Saddlebag Exchange: FFXIV undecut alerts, ffxiv sell faster!',
     description:
       'Generate data for Sadddlebag Exchange discord bot ffxiv undercut alerts. Sell faster when no one can sell under you!',
-    customHeading: 'Maximize Your Profits with FFXIV Undercut Alerts from Saddlebag Exchange'
+    customHeading:
+      'Maximize Your Profits with FFXIV Undercut Alerts from Saddlebag Exchange'
   }
 }
 

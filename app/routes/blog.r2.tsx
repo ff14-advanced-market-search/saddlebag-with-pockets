@@ -4,11 +4,11 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'How to Cross-Server Trade in FFXIV',
-    description: 'Discover effective methods and guidelines for cross-server trading in Final Fantasy XIV.',
+    description:
+      'Discover effective methods and guidelines for cross-server trading in Final Fantasy XIV.',
     customHeading: 'Mastering Cross-Server Trading: Strategies for FFXIV'
   }
 }
-
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

@@ -4,8 +4,10 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'How to Use Commodity Shortage Futures as a Crafter',
-    description: 'Discover effective strategies for utilizing commodity shortage futures to maximize profits as a crafter.',
-    customHeading: 'Maximizing Profits: Using Commodity Shortage Futures as a Crafter'
+    description:
+      'Discover effective strategies for utilizing commodity shortage futures to maximize profits as a crafter.',
+    customHeading:
+      'Maximizing Profits: Using Commodity Shortage Futures as a Crafter'
   }
 }
 
@@ -42,9 +44,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
               on other servers to sell high on your own!
             </code>
           </p>
-          <p>
-            Undercutting is a Necessity for Trade!
-          </p>
+          <p>Undercutting is a Necessity for Trade!</p>
           <p>
             The number one rule of FFXIV trading is that you need to undercut.
             That means you should always provide the lowest price for whatever
@@ -175,9 +175,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             basic stuff from the Market Board instead of crafting it or finding
             the item themselves in-game.
           </p>
-          <p>
-            All Non-Consumables and Non-Trade Goods Can Sell for 70k!
-          </p>
+          <p>All Non-Consumables and Non-Trade Goods Can Sell for 70k!</p>
           <p>
             A general rule of thumb is that, if you’re ever unsure what to price
             an item for, 70k is your go-to number. It’s a very small amount of
@@ -274,9 +272,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             sell very well. Housing items can often sell for more than 70k. Even
             for items bought from vendors!
           </p>
-          <p>
-            Trading with Saddlebag Exchange Import Searches
-          </p>
+          <p>Trading with Saddlebag Exchange Import Searches</p>
           <p>
             The tricky part of trading is in figuring out what to trade. The “In
             Demand” heart icon found next to many items on the Market Board
