@@ -6,7 +6,9 @@ export const meta: MetaFunction = () => {
     title:
       'The Influence of Economic Policies on MMO Economies: A Comprehensive Analysis',
     description:
-      'The Influence of Economic Policies on MMO Economies: A Comprehensive Analysis'
+      'Explore the impact of economic policies on MMO economies through a comprehensive analysis.',
+    customHeading:
+      'Navigating Economic Landscapes: The Impact of Policies on MMO Economies'
   }
 }
 
@@ -14,12 +16,10 @@ const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <p>
-          <strong>
-            &quot;The Influence of Economic Policies on MMO Economies: A
-            Comprehensive Analysis&quot;
-          </strong>
-        </p>
+        <h1>
+          The Influence of Economic Policies on MMO Economies: A Comprehensive
+          Analysis
+        </h1>
         <p>
           Economic policies implemented by game developers have a significant
           impact on the virtual economies of MMOs like Final Fantasy XIV and

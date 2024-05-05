@@ -4,7 +4,10 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Economies of WoW & FFXIV: Strategies Unveiled',
-    description: 'Economies of WoW & FFXIV: Strategies Unveiled'
+    description:
+      'Explore effective strategies for mastering the economies of World of Warcraft and Final Fantasy XIV.',
+    customHeading:
+      'Unveiling Strategies: Mastering the Economies of WoW & FFXIV'
   }
 }
 
@@ -12,7 +15,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <h3>Introduction:</h3>
+        <h1>Economies of WoW & FFXIV: Strategies Unveiled</h1>
 
         <p>
           The digital economies of massively multiplayer online role-playing

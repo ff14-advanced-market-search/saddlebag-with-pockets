@@ -4,7 +4,10 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'The Impact of Social Dynamics on MMO Economies',
-    description: 'The Impact of Social Dynamics on MMO Economies'
+    description:
+      'Explore the profound influence of social dynamics on MMO economies and virtual communities.',
+    customHeading:
+      'Understanding the Role of Social Dynamics in Shaping MMO Economies'
   }
 }
 
@@ -12,12 +15,12 @@ const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <p>
+        <h1 className={`text-2xl`}>
           <strong>
             &quot;The Impact of Social Dynamics on MMO Economies: Community,
             Cooperation, and Competition&quot;
           </strong>
-        </p>
+        </h1>
         <p>
           Social dynamics play a crucial role in shaping the economies of MMOs
           like Final Fantasy XIV and World of Warcraft. In this extensive

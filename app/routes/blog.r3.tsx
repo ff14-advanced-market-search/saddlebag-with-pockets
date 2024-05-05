@@ -3,8 +3,11 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'how to trade use commodity shortage futures as a crafter',
-    description: 'how to trade use commodity shortage futures as a crafter'
+    title: 'How to Trade Using Commodity Shortage Futures as a Crafter',
+    description:
+      'Explore effective strategies for trading using commodity shortage futures to maximize profits as a crafter.',
+    customHeading:
+      'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter'
   }
 }
 
@@ -53,9 +56,8 @@ const HowtoCrossServerTradeinFFXIV = () => {
           game knowledge. You need to know your markets, know what people
           actually want to buy and know what sells reliably. The{' '}
           <code>TSM Sales Per Hour</code> value can assist with that and I
-          recommend also searching on <a href="wowhead.com">wowhead.com</a> to
-          gain further insight into what an item is used for if you are
-          unfamiliar with it.
+          recommend also searching on wowhead.com to gain further insight into
+          what an item is used for if you are unfamiliar with it.
         </p>
         <h2 id="using-oribos-exchange">Using Oribos Exchange</h2>
         <p>

@@ -5,7 +5,9 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Diversification and Risk Management in Gil Making and Gold Making',
     description:
-      'Diversification and Risk Management in Gil Making and Gold Making'
+      'Diversification and Risk Management in Gil Making and Gold Making',
+    customHeading:
+      'Optimize Your Strategy: Diversification and Risk Management in Gil and Gold Making'
   }
 }
 
@@ -13,11 +15,9 @@ const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <p>
-          {' '}
-          &quot;Diversification and Risk Management in Gil Making and Gold
-          Making&quot;**
-        </p>
+        <h1>
+          Diversification and Risk Management in Gil Making and Gold Making
+        </h1>
         <p>
           In the dynamic economies of Final Fantasy XIV and World of Warcraft,
           where fortunes are won and lost with each transaction, diversification

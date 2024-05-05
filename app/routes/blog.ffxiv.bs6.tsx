@@ -6,7 +6,9 @@ export const meta: MetaFunction = () => {
     title:
       'Mastering Gold Making in WoW: Unleash the Power of the Auction House',
     description:
-      'Mastering Gold Making in WoW: Unleash the Power of the Auction House'
+      'Discover advanced strategies to become a master of gold making in World of Warcraft by leveraging the power of the Auction House.',
+    customHeading:
+      'Unleash the Power of the Auction House: Mastering Gold Making in WoW'
   }
 }
 
@@ -14,9 +16,9 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <h3 id="wow-gold-making-using-the-auction-house">
+        <h1 id="wow-gold-making-using-the-auction-house">
           WoW Gold Making Using the Auction House
-        </h3>
+        </h1>
         <p>
           Title: Mastering Gold Making in WoW: Unleash the Power of the Auction
           House

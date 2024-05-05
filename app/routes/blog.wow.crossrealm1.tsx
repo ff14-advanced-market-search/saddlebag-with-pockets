@@ -3,8 +3,10 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'wow cross realm trading announcement',
-    description: 'wow cross realm trading announcement'
+    title: 'WoW Cross Realm Trading Announcement',
+    description:
+      'Stay updated with the latest announcement regarding cross-realm trading in World of Warcraft.',
+    customHeading: 'Breaking News: WoW Cross Realm Trading Announcement'
   }
 }
 
@@ -12,6 +14,9 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
+        <h1 className={`text-2xl`}>
+          Breaking News: WoW Cross Realm Trading Announcement
+        </h1>
         <p>
           At Saddlebag Exchange we have been developing AH trading searches
           throughout dragonflight and now with the announcement that marketable
