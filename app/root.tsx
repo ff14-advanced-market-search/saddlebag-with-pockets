@@ -157,11 +157,11 @@ export const meta: MetaFunction = ({ data }) => {
   const { site_name } = data
   return {
     charset: 'utf-8',
-    // title: site_name,
-    title: `${site_name}: FFXIV marketboard prices, WoW Auctionhouse`,
+    title: site_name,
+    // title: `${site_name}: FFXIV marketboard prices, WoW Auctionhouse`,
     viewport: 'width=device-width,initial-scale=1',
     description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold'
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
   }
 }
 

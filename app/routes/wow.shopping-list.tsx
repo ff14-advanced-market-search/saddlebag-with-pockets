@@ -30,6 +30,17 @@ const validateInput = z.object({
   maxPurchasePrice: parseStringToNumber
 })
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: wow shopping list',
+    description:
+      'See the wow listings across all realms on one page ordered by price'
+  }
+}
+
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 
