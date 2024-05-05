@@ -106,7 +106,7 @@ export default function Index() {
               Auctionhouse, games like world of warcraft, world of warcraft
               hairstyles, world of warcraft expansions in order, world of
               warcraft the war within, world of warcraft season of discovery
-              gold.
+              gold, chocobo saddlebag ffxiv.
               {/***"FinalFantasy XIV" Component:** In "Final Fantasy XIV" our service
               offers a compelling alternative to the game's own expansion of
               selling slots. Players are restricted to 40 item slots in their
