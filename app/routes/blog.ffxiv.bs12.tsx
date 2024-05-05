@@ -1,3 +1,14 @@
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'the Role of Innovation in MMO Economies: Trends and Opportunities',
+    description:
+      'the Role of Innovation in MMO Economies: Trends and Opportunities'
+  }
+}
+
 const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
