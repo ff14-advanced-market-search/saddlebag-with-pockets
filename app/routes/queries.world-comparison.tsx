@@ -34,7 +34,8 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: ffxiv export search',
-    description: 'Saddlebag Exchange: ffxiv export search'
+    description:
+      'Explore and compare FFXIV item prices across different servers with Saddlebag Exchange.'
   }
 }
 

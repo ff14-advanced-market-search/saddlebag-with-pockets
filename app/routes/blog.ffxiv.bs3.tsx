@@ -3,8 +3,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Unlocking MMORPG Economies: WoW & FFXIV Strategies',
-    description: 'Unlocking MMORPG Economies: WoW & FFXIV Strategies'
+    title: 'Unlocking MMORPG Economies: Strategies for WoW & FFXIV',
+    description: 'Unlocking MMORPG Economies: Strategies for WoW & FFXIV'
   }
 }
 

@@ -3,8 +3,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'How to Import, Trade and Flip items on the FFXIV Market Board',
-    description: 'How to Import, Trade and Flip items on the FFXIV Market Board'
+    title: 'How to Use Commodity Shortage Futures as a Crafter',
+    description:
+      'Learn how to use commodity shortage futures to maximize profits as a crafter.'
   }
 }
 

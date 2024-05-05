@@ -3,8 +3,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Title: Mastering Gil Earning on the FFXIV Marketboard',
-    description: 'Title: Mastering Gil Earning on the FFXIV Marketboard'
+    title: 'Mastering Gil Earning on the FFXIV Marketboard',
+    description:
+      'Explore strategies to maximize your Gil earnings on the FFXIV Marketboard.'
   }
 }
 

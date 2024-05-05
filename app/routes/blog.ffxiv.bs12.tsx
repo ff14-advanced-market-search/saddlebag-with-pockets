@@ -3,9 +3,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'the Role of Innovation in MMO Economies: Trends and Opportunities',
+    title: 'Innovation in MMO Economies',
     description:
-      'the Role of Innovation in MMO Economies: Trends and Opportunities'
+      'Explore key trends and opportunities in MMO economies, focusing on innovation and its impact on virtual markets.'
   }
 }
 

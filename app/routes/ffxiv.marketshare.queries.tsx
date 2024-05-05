@@ -7,8 +7,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV marketshare recommendations',
-    description: 'Saddlebag Exchange: FFXIV marketshare recommendations'
+    title: 'FFXIV market overview recommendations',
+    description: 'FFXIV market overview recommendations'
   }
 }
 
