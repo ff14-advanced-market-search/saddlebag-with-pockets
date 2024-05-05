@@ -5,7 +5,8 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Mastering Gil Earning on the FFXIV Marketboard',
     description:
-      'Explore strategies to maximize your Gil earnings on the FFXIV Marketboard.'
+      'Explore strategies to maximize your Gil earnings on the FFXIV Marketboard.',
+    customHeading: 'Unlock the Secrets to Gil Mastery on the FFXIV Marketboard'
   }
 }
 

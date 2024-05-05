@@ -3,10 +3,12 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'wow cross realm trading announcement',
-    description: 'wow cross realm trading announcement'
+    title: 'WoW Cross Realm Trading Announcement',
+    description: 'Stay updated with the latest announcement regarding cross-realm trading in World of Warcraft.',
+    customHeading: 'Breaking News: WoW Cross Realm Trading Announcement'
   }
 }
+
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

@@ -4,9 +4,11 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Economies of WoW & FFXIV: Strategies Unveiled',
-    description: 'Economies of WoW & FFXIV: Strategies Unveiled'
+    description: 'Explore effective strategies for mastering the economies of World of Warcraft and Final Fantasy XIV.',
+    customHeading: 'Unveiling Strategies: Mastering the Economies of WoW & FFXIV'
   }
 }
+
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

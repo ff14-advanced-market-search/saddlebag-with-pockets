@@ -173,7 +173,7 @@ export const loader: LoaderFunction = async () => {
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/HowtoCrossRealmTradeinFFXIV</loc>
+  <loc>https://saddlebagexchange.com/blog/r1</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -183,7 +183,7 @@ export const loader: LoaderFunction = async () => {
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/howtomarketshare</loc>
+  <loc>https://saddlebagexchange.com/blog/r2</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -193,7 +193,7 @@ export const loader: LoaderFunction = async () => {
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/wow/howtocommodityshortage</loc>
+  <loc>https://saddlebagexchange.com/blog/r3</loc>
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>

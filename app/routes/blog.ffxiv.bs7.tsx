@@ -4,7 +4,8 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: "Mastering Goldmaking in World of Warcraft's Auction House",
-    description: "Mastering Goldmaking in World of Warcraft's Auction House"
+    description: "Discover expert strategies and techniques for mastering goldmaking in World of Warcraft's Auction House.",
+    customHeading: "Unlock the Secrets: Mastering Goldmaking in WoW's Auction House"
   }
 }
 

@@ -4,9 +4,11 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV & WoW Gil Strategies 2',
-    description: 'Saddlebag Exchange: FFXIV & WoW Gil Strategies 2'
+    description: 'Explore advanced strategies for maximizing Gil in Final Fantasy XIV and gold in World of Warcraft.',
+    customHeading: 'Mastering Gil and Gold: Advanced Strategies from Saddlebag Exchange'
   }
 }
+
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

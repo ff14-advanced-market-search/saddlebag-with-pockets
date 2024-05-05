@@ -19,7 +19,8 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV price sniper',
     description:
-      'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts'
+      'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts',
+    customHeading: 'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
   }
 }
 

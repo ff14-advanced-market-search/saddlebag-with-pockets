@@ -23,7 +23,8 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'FFXIV allagan tools data import',
     description:
-      'Input your Allagan Tools generated data here, and we will turn it into useful stuff!'
+      'Input your Allagan Tools generated data here, and we will turn it into useful stuff!',
+    customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page'
   }
 }
 

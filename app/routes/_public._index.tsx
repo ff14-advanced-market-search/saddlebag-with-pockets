@@ -1,13 +1,14 @@
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     title: `SaddleBag Exchange: FFXIV marketboard prices, wow gold`,
     viewport: 'width=device-width,initial-scale=1',
     description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold'
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold',
+    customHeading: 'Explore MMO Market Data with SaddleBag Exchange'
   }
 }
 
@@ -59,9 +60,9 @@ export default function Index() {
               })}
             </div>
             <div id="ezoic-pub-ad-placeholder-116" />
-            <h2 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
+            <h3 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
               About us
-            </h2>
+            </h3>
             <p>
               Saddlebag Exchange: Your Gateway to Mastering MMO Markets! Our
               platform is designed with dozens of tools to help take your in

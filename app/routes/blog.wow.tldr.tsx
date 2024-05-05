@@ -3,8 +3,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'wow tldr: How to Earn Gold with Cross Realm Trading',
-    description: 'wow tldr: How to Earn Gold with Cross Realm Trading'
+    title: 'WoW TL;DR: How to Earn Gold with Cross-Realm Trading',
+    description: 'Learn quick and effective methods for earning gold through cross-realm trading in World of Warcraft.',
+    customHeading: 'Quick Guide: Earning Gold with Cross-Realm Trading in WoW'
   }
 }
 
@@ -20,9 +21,9 @@ const HowtoCrossServerTradeinFFXIV = () => {
             How to Trade Tutorial
           </a>
         </p>
-        <h1 id="tldr-how-to-make-gold-with-saddlebagexchange-com-step-by-step">
+        <h2 id="tldr-how-to-make-gold-with-saddlebagexchange-com-step-by-step">
           TLDR: How to Make Gold with SaddlebagExchange.com Step by Step
-        </h1>
+        </h2>
         <p>
           Here's some of the top ways to use Saddlebag for WoW, made simple for
           new users:

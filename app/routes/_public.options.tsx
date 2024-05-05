@@ -35,6 +35,18 @@ import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 import { PageWrapper } from '~/components/Common'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: Options Menu',
+    description:
+      'Set your FFXIV datacenter and server / Set your wow realm and region',
+    customHeading: 'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange'
+  }
+}
+
 export const validator = z.object({
   data_center: z.string().min(1),
   world: z.string().min(1),
@@ -129,17 +141,6 @@ const OptionSection = ({
       </div>
     </div>
   )
-}
-
-// Overwrite default meta in the root.tsx
-export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: Options Menu',
-    description:
-      'Set your FFXIV datacenter and server / Set your wow realm and region'
-  }
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

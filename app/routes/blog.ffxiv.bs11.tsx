@@ -3,8 +3,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'investment portfolio Final Fantasy XIV and World of Warcraft',
-    description: 'investment portfolio Final Fantasy XIV and World of Warcraft'
+    title: 'Investment Portfolio for Final Fantasy XIV and World of Warcraft',
+    description: 'Explore strategies for building an investment portfolio in Final Fantasy XIV and World of Warcraft.',
+    customHeading: 'Optimize Your Gaming Investments: FFXIV and WoW Portfolio Strategies'
   }
 }
 

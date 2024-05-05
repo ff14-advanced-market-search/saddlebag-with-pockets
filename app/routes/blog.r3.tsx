@@ -3,10 +3,12 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'how to trade use commodity shortage futures as a crafter',
-    description: 'how to trade use commodity shortage futures as a crafter'
+    title: 'How to Trade Using Commodity Shortage Futures as a Crafter',
+    description: 'Explore effective strategies for trading using commodity shortage futures to maximize profits as a crafter.',
+    customHeading: 'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter'
   }
 }
+
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

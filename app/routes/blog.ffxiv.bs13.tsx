@@ -4,9 +4,11 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Exploring Alternative Revenue Streams in MMO Economies',
-    description: 'Exploring Alternative Revenue Streams in MMO Economies'
+    description: 'Discover innovative methods to generate revenue in MMO economies beyond traditional means.',
+    customHeading: 'Unlocking Revenue Opportunities: Exploring Alternative Streams in MMO Economies'
   }
 }
+
 
 const howtocrossservertradeinffxiv = () => {
   return (
