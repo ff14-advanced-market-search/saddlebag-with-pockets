@@ -14,6 +14,9 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
+        <h1 className={`text-2xl`}>
+          Breaking News: WoW Cross Realm Trading Announcement
+        </h1>
         <p>
           At Saddlebag Exchange we have been developing AH trading searches
           throughout dragonflight and now with the announcement that marketable

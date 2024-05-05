@@ -14,7 +14,9 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <p>Title: Mastering Gil Earning on the FFXIV Marketboard</p>
+        <h1 id="mastering-gil-earning-on-the-ffxiv-marketboard">
+          Mastering Gil Earning on the FFXIV Marketboard
+        </h1>
         <p>
           Introduction (100 words): In Final Fantasy XIV (FFXIV), gil is the
           primary currency used for various in-game transactions. One of the
