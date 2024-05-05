@@ -74,6 +74,23 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV reselling trade search',
+    description:
+      'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!',
+    links: [
+      {
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/ffxiv/full-scan`
+      }
+    ]
+  }
+}
+
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)
   // CAN WE USE ZOD HERE??

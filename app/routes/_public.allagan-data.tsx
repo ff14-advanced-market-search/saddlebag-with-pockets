@@ -16,6 +16,17 @@ import { getUserSessionData } from '~/sessions'
 
 const formName = 'allaganData'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'FFXIV allagan tools data import',
+    description:
+      'Input your Allagan Tools generated data here, and we will turn it into useful stuff!'
+  }
+}
+
 const objectHasProperties = (object: Object) => {
   return Object.keys(object).length > 0
 }

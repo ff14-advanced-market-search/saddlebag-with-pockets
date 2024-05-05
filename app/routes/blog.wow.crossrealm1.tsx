@@ -1,3 +1,13 @@
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Flip items on the FFXIV Marketboard using Saddlebag Exchange',
+    description: 'Flip items on the FFXIV Marketboard using Saddlebag Exchange'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>

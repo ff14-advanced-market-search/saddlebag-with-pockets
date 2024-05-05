@@ -1,4 +1,5 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import { MetaFunction } from '@remix-run/react'
 import { json } from '@remix-run/cloudflare'
 import { PageWrapper } from '~/components/Common'
 import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
@@ -75,6 +76,23 @@ const searchParamsTypes = z.object({
   requiredLevel: parseStringToNumber,
   commodity: parseCheckboxBoolean
 })
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW marketshare, most gold on auctionhouse',
+    description:
+      'Find what current content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!',
+    links: [
+      {
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/wow/marketshare`
+      }
+    ]
+  }
+}
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

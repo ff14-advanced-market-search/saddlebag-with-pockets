@@ -1,3 +1,15 @@
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title:
+      'Mastering Gold Making in WoW: Unleash the Power of the Auction House',
+    description:
+      'Mastering Gold Making in WoW: Unleash the Power of the Auction House'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>

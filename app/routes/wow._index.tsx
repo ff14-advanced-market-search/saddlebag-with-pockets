@@ -2,6 +2,16 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: wow tools',
+    description: 'Saddlebag Exchange: wow tools'
+  }
+}
+
 const recommendedQueries = [
   // {
   //   name: 'Alpha Build Cross Server Trade Tools',

@@ -26,6 +26,21 @@ type ItemPageData =
     }
   | { exception: string }
 
+// Overwrite default meta in the root.tsx
+// Change your MetaFunction arguments
+type MetaArgs = {
+  context: any
+  data: ItemPageData
+}
+export const meta: MetaFunction = ({ data }: MetaArgs) => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: data.itemName,
+    description: `${data.itemName}: FFXIV Market data`
+  }
+}
+
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId
   if (!itemId) {

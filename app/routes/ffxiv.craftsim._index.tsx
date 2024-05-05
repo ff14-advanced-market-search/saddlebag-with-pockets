@@ -117,6 +117,20 @@ const inputMap = {
   hideExpertRecipes: 'Hide Expert Recipes'
 }
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV crafting profit simulation',
+    description:
+      'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!',
+    links: [
+      { rel: 'canonical', href: `https://saddlebagexchange.com/ffxiv/craftsim` }
+    ]
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 

@@ -131,6 +131,17 @@ const OptionSection = ({
   )
 }
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: Options Menu',
+    description:
+      'Set your FFXIV datacenter and server / Set your wow realm and region'
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const { getWorld, getDataCenter, getWoWSessionData } =

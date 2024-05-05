@@ -57,6 +57,17 @@ export const action: ActionFunction = async ({ request }) => {
   return json({ ...(await res.json()), region })
 }
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW realm shortages',
+    description:
+      'Find wow local realm auctionhouse items that can be flipped for a profit'
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()

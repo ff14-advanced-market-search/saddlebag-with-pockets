@@ -2,6 +2,16 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: wow best deals recommendations',
+    description: 'Saddlebag Exchange: wow best deals recommendations'
+  }
+}
+
 // Updated searchParams with WoW best deals endpoints
 const searchParams = {
   defaultDragonflight:

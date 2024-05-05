@@ -1,3 +1,13 @@
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Advanced Tactics for Goldmaking in World of Warcraft',
+    description: 'Advanced Tactics for Goldmaking in World of Warcraft'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
