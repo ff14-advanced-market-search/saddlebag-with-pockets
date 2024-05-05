@@ -4,7 +4,7 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = ({ data }) => {
   return {
     charset: 'utf-8',
-    title: `SaddleBag Exchange: FFXIV marketboard prices, WoW Auctionhouse`,
+    title: `SaddleBag Exchange: FFXIV marketboard prices, wow gold`,
     viewport: 'width=device-width,initial-scale=1',
     description:
       'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold'
@@ -102,7 +102,11 @@ export default function Index() {
               marketboard, ff14 marketboard prices, ffxiv market board prices,
               megalotragus horn, ff14 market board prices, ff14 marketboard,
               ffxiv market, how to sell on market board ffxiv, how to sell items
-              on market board ffxiv.
+              on market board ffxiv, world of warcraft player count, wow
+              Auctionhouse, games like world of warcraft, world of warcraft
+              hairstyles, world of warcraft expansions in order, world of
+              warcraft the war within, world of warcraft season of discovery
+              gold.
               {/***"FinalFantasy XIV" Component:** In "Final Fantasy XIV" our service
               offers a compelling alternative to the game's own expansion of
               selling slots. Players are restricted to 40 item slots in their
