@@ -15,7 +15,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <h3>Introduction:</h3>
+        <h1>Economies of WoW & FFXIV: Strategies Unveiled</h1>
 
         <p>
           The digital economies of massively multiplayer online role-playing

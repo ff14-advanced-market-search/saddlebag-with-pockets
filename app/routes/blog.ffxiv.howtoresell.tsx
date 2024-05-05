@@ -3,7 +3,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Flip items on the FFXIV Marketboard using Saddlebag Exchange',
+    title: 'Flip items on the FFXIV Marketboard',
     description:
       'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange.',
     customHeading:

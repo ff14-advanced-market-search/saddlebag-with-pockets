@@ -16,9 +16,9 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <h3 id="wow-gold-making-using-the-auction-house">
+        <h1 id="wow-gold-making-using-the-auction-house">
           WoW Gold Making Using the Auction House
-        </h3>
+        </h1>
         <p>
           Title: Mastering Gold Making in WoW: Unleash the Power of the Auction
           House

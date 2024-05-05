@@ -15,9 +15,9 @@ const howtocrossservertradeinffxiv = () => {
   return (
     <div classname={`m-12`}>
       <main classname="flex-1">
-        <p>
-          "Exploring Specialized Markets for Gil Making in Final Fantasy XIV"
-        </p>
+        <h1>
+          Exploring Specialized Markets for Gil Making in Final Fantasy XIV
+        </h1>
         <p>
           In the bustling markets of Eorzea, where adventurers seek fame and
           fortune, specialized markets offer unique opportunities for savvy
