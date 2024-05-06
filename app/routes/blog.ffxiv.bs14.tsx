@@ -1,3 +1,6 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
