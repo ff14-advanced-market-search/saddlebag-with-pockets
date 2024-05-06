@@ -23,8 +23,6 @@ const howtocrossservertradeinffxiv = () => {
       <Helmet>
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
-
-      <main className="flex-1">
         <h1>
           Exploring Specialized Markets for Gil Making in Final Fantasy XIV
         </h1>
