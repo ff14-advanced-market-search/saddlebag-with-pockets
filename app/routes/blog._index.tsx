@@ -14,26 +14,6 @@ export const meta: MetaFunction = () => {
   }
 }
 
-// Overwrite default meta in the root.tsx
-export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange Blogs',
-    description: 'Saddlebag Exchange Blogs'
-  }
-}
-
-// Overwrite default meta in the root.tsx
-export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange Blogs',
-    description: 'Saddlebag Exchange Blogs'
-  }
-}
-
 const recommendedQueries = [
   {
     name: 'TLDR: How to make gold in WoW with cross realm trading',
