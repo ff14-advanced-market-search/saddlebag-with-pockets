@@ -85,7 +85,7 @@ export const meta: MetaFunction = () => {
     links: [
       {
         rel: 'canonical',
-        href: `https://saddlebagexchange.com/ffxiv/full-scan`
+        href: `https://saddlebagexchange.com/queries/full-scan`
       }
     ]
   }
