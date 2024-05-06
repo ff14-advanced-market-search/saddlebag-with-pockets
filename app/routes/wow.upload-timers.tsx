@@ -40,7 +40,7 @@ const Index = () => {
         <PageWrapper>
           <h1>WoW api data upload timers</h1>
           <SmallTable
-            title="Upload Timers"
+            // title="Upload Timers"
             description="Shows when the WoW auction house data was last uploaded."
             columnList={columnList}
             data={results.data}
