@@ -1,170 +1,183 @@
 import { LoaderFunction } from '@remix-run/cloudflare'
+import { ffxivItemsMap } from '~/utils/items/ffxivItems'
+import { wowItemsMap } from '~/utils/items/wowItems'
 
 export const loader: LoaderFunction = async () => {
+  const baseURL = 'https://saddlebagexchange.com';
+  const currentDate = new Date().toISOString();
+
+  // # can change this back to a static date if thats better
+  // const currentDate = '2024-04-17T12:55:59+00:00'
+
+  // Get arrays of item IDs without labels
+  const ffxivItemIDs = Object.keys(ffxivItemsMap);
+  const wowItemIDs = Object.keys(wowItemsMap);
+
+  // Generate URLs with dynamic parameters for WoW items
+  const dynamicWoWURLs = wowItemIDs.map(id => {
+    return `${baseURL}/wow/item-data/${id}`;
+  });
+
+  // Generate URLs with dynamic parameters for FFXIV items
+  const dynamicFFXIVURLs = ffxivItemIDs.map(id => {
+    return `${baseURL}/queries/item-data/${id}`;
+  });
+
   const Sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
   <loc>https://saddlebagexchange.com/</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/queries/recommended</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/ffxiv/marketshare/queries</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/ffxiv/craftsim/queries</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/ffxiv/shopping-list</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/queries/listings</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/queries/item-history</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/queries/queries/item-data/30862</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/ffxiv/self-purchase</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/queries/world-comparison</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/undercut</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/price-sniper</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/allagan-data</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/best-deals/recommended</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/upload-timers</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/shopping-list</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/export-search</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/marketshare</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/shortage-predictor</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/legacy-marketshare</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/price-alert</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/region-undercut</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/full-scan</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/shortages/commodities</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/shortages/single</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/options</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/queries</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/queries/full-scan</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/ffxiv/marketshare</loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>
-    https://saddlebagexchange.com/ffxiv/craftsim
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <loc>https://saddlebagexchange.com/ffxiv/craftsim</loc>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>
-    https://saddlebagexchange.com/wow/best-deals
-  </loc>
-  <lastmod>2024-04-17T12:55:59+00:00</lastmod>
+  <loc>https://saddlebagexchange.com/wow/best-deals</loc>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
@@ -272,6 +285,18 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
+${dynamicWoWURLs.map(url => `
+<url>
+  <loc>${url}</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>`).join('\n')}
+${dynamicFFXIVURLs.map(url => `
+<url>
+  <loc>${url}</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>`).join('\n')}
 </urlset>`
   return new Response(Sitemap, {
     status: 200,
