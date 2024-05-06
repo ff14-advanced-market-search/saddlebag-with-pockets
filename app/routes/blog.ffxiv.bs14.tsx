@@ -4,7 +4,7 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title:
-      'The Influence of Economic Policies on MMO Economies: A Comprehensive Analysis',
+      'Economic Policies on MMO Economies: A Comprehensive Analysis',
     description:
       'Explore the impact of economic policies on MMO economies through a comprehensive analysis.',
     customHeading:

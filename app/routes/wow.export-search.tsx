@@ -74,7 +74,7 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title:
-      'Saddlebag Exchange: WoW best selling, WoW Export, find the best realm to sell any item on!',
+      'WoW best selling, WoW Export, find the best realm to sell any item on!',
     description:
       'Find the best realm to sell any item on! Compare price data too wow realm population data.',
     links: [
