@@ -3,25 +3,25 @@ import { ffxivItemsMap } from '~/utils/items/ffxivItems'
 import { wowItemsMap } from '~/utils/items/wowItems'
 
 export const loader: LoaderFunction = async () => {
-  const baseURL = 'https://saddlebagexchange.com';
-  const currentDate = new Date().toISOString();
+  const baseURL = 'https://saddlebagexchange.com'
+  const currentDate = new Date().toISOString()
 
   // # can change this back to a static date if thats better
   // const currentDate = '2024-04-17T12:55:59+00:00'
 
   // Get arrays of item IDs without labels
-  const ffxivItemIDs = Object.keys(ffxivItemsMap);
-  const wowItemIDs = Object.keys(wowItemsMap);
+  const ffxivItemIDs = Object.keys(ffxivItemsMap)
+  const wowItemIDs = Object.keys(wowItemsMap)
 
   // Generate URLs with dynamic parameters for WoW items
-  const dynamicWoWURLs = wowItemIDs.map(id => {
-    return `${baseURL}/wow/item-data/${id}`;
-  });
+  const dynamicWoWURLs = wowItemIDs.map((id) => {
+    return `${baseURL}/wow/item-data/${id}`
+  })
 
   // Generate URLs with dynamic parameters for FFXIV items
-  const dynamicFFXIVURLs = ffxivItemIDs.map(id => {
-    return `${baseURL}/queries/item-data/${id}`;
-  });
+  const dynamicFFXIVURLs = ffxivItemIDs.map((id) => {
+    return `${baseURL}/queries/item-data/${id}`
+  })
 
   const Sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
@@ -285,18 +285,26 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-04-27T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-${dynamicWoWURLs.map(url => `
+${dynamicWoWURLs
+  .map(
+    (url) => `
 <url>
   <loc>${url}</loc>
   <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
-</url>`).join('\n')}
-${dynamicFFXIVURLs.map(url => `
+</url>`
+  )
+  .join('\n')}
+${dynamicFFXIVURLs
+  .map(
+    (url) => `
 <url>
   <loc>${url}</loc>
   <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
-</url>`).join('\n')}
+</url>`
+  )
+  .join('\n')}
 </urlset>`
   return new Response(Sitemap, {
     status: 200,
