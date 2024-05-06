@@ -98,7 +98,7 @@ export default function Index() {
     )
     return (
       <PageWrapper>
-        <Title title={'Listing data for ' + listing.itemName} />
+        <Title title={listing.itemName} />
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
             <Differences
