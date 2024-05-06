@@ -7,11 +7,11 @@ export const Title = ({
   title: string
   className?: string
 }) => (
-  <h2
+  <h1
     className={classNames(
       `text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100`,
       className
     )}>
     {title}
-  </h2>
+  </h1>
 )

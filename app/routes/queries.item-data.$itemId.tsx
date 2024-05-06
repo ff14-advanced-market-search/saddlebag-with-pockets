@@ -126,7 +126,7 @@ const ItemPage = () => {
         {data.history && 'price_history' in data.history ? (
           <HistoryResults data={data.history} darkMode={darkmode} />
         ) : (
-          <NoResults title={`No hitorical data for ${data.itemName}`} />
+          <NoResults title={`No historical data for ${data.itemName}`} />
         )}
         <Section>
           <ContentContainer>
