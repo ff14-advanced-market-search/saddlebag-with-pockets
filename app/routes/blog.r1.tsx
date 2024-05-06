@@ -1,14 +1,27 @@
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'How to Use Commodity Shortage Futures as a Crafter',
+    description:
+      'Discover effective strategies for utilizing commodity shortage futures to maximize profits as a crafter.',
+    customHeading:
+      'Maximizing Profits: Using Commodity Shortage Futures as a Crafter'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <h2 className={`text-2xl`}>
+        <h1 className={`text-2xl`}>
           How to Import, Trade and Flip items on the FFXIV Market Board
-        </h2>
+        </h1>
         <p className={`text-prose`}>
-          <h1 id="how-to-import-trade-and-flip-items-on-the-ffxiv-market-board">
+          <h2 id="how-to-import-trade-and-flip-items-on-the-ffxiv-market-board">
             How to Import, Trade and Flip items on the FFXIV Market Board
-          </h1>
+          </h2>
           <p>
             Importing, trading, and flipping items on the FFXIV Market Board is
             by far one of the easiest methods of making gil — without the need
@@ -31,9 +44,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
               on other servers to sell high on your own!
             </code>
           </p>
-          <h2 id="undercutting-is-a-necessity-for-trade-">
-            Undercutting is a Necessity for Trade!
-          </h2>
+          <p>Undercutting is a Necessity for Trade!</p>
           <p>
             The number one rule of FFXIV trading is that you need to undercut.
             That means you should always provide the lowest price for whatever
@@ -96,7 +107,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             is a must-have for keeping tabs on all of your auctions and knowing
             when someone else is selling your stuff at a better price.
           </p>
-          <h2 id="basic-import-trade-example-">Basic Import Trade Example:</h2>
+          <p>Basic Import Trade Example:</p>
           <p>
             To start trading, let&#39;s take a basic example of buying low and
             selling high.
@@ -124,7 +135,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             investment (ROI). However, better profits can still be made for less
             cost and risk!
           </p>
-          <h2 id="out-of-stock-trade-example">Out-of-Stock Trade Example</h2>
+          <p>Out-of-Stock Trade Example</p>
           <p>
             In FFXIV, there’s a default limit of 40 auctions available to each
             character (without purchasing additional retainers for $2 per month
@@ -164,9 +175,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             basic stuff from the Market Board instead of crafting it or finding
             the item themselves in-game.
           </p>
-          <h2 id="all-non-consumables-and-non-trade-goods-can-sell-for-70k-">
-            All Non-Consumables and Non-Trade Goods Can Sell for 70k!
-          </h2>
+          <p>All Non-Consumables and Non-Trade Goods Can Sell for 70k!</p>
           <p>
             A general rule of thumb is that, if you’re ever unsure what to price
             an item for, 70k is your go-to number. It’s a very small amount of
@@ -198,7 +207,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             </li>
             <li>Selling on a mannequin removes the sales tax.</li>
           </ul>
-          <h2 id="trading-vendor-items">Trading Vendor Items</h2>
+          <p>Trading Vendor Items</p>
           <p>
             Selling vendor items is also another strategy to gain profit.
             Vendors can only sell NQ versions of items, but for many reasons,
@@ -231,7 +240,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             sell for 70k. (Often, but not always, vendor prices will be far
             lower than Market Board prices.)
           </p>
-          <h2 id="best-vendors-for-flipping">Best Vendors for Flipping</h2>
+          <p>Best Vendors for Flipping</p>
           <p>The best vendors with the most stock are:</p>
           <ul>
             <li>
@@ -263,9 +272,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             sell very well. Housing items can often sell for more than 70k. Even
             for items bought from vendors!
           </p>
-          <h2 id="trading-with-saddlebag-exchange-import-searches">
-            Trading with Saddlebag Exchange Import Searches
-          </h2>
+          <p>Trading with Saddlebag Exchange Import Searches</p>
           <p>
             The tricky part of trading is in figuring out what to trade. The “In
             Demand” heart icon found next to many items on the Market Board

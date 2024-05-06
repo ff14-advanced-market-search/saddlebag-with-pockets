@@ -1,5 +1,18 @@
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    title: `SaddleBag Exchange: FFXIV marketboard prices, wow gold`,
+    viewport: 'width=device-width,initial-scale=1',
+    description:
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold',
+    customHeading: 'Explore MMO Market Data with SaddleBag Exchange'
+  }
+}
 
 const recommendedQueries = [
   {
@@ -29,8 +42,13 @@ const recommendedQueries = [
 ]
 
 export default function Index() {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
   return (
     <>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
       <main className="flex-1">
         <Banner />
         <div className="py-6">
@@ -48,9 +66,10 @@ export default function Index() {
                 return <TileLink key={query.name} {...query} />
               })}
             </div>
-            <h2 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
+            <div id="ezoic-pub-ad-placeholder-116" />
+            <h3 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
               About us
-            </h2>
+            </h3>
             <p>
               Saddlebag Exchange: Your Gateway to Mastering MMO Markets! Our
               platform is designed with dozens of tools to help take your in
@@ -91,7 +110,11 @@ export default function Index() {
               marketboard, ff14 marketboard prices, ffxiv market board prices,
               megalotragus horn, ff14 market board prices, ff14 marketboard,
               ffxiv market, how to sell on market board ffxiv, how to sell items
-              on market board ffxiv.
+              on market board ffxiv, world of warcraft player count, wow
+              Auctionhouse, games like world of warcraft, world of warcraft
+              hairstyles, world of warcraft expansions in order, world of
+              warcraft the war within, world of warcraft season of discovery
+              gold, chocobo saddlebag ffxiv.
               {/***"FinalFantasy XIV" Component:** In "Final Fantasy XIV" our service
               offers a compelling alternative to the game's own expansion of
               selling slots. Players are restricted to 40 item slots in their
@@ -126,15 +149,6 @@ export default function Index() {
               their game time without spending real money. The potential is
               immense; one of our users earned 20 million gold in a few days, an
               amount that can cover years of subscription costs.*/}
-            </p>
-            <div id="ezoic-pub-ad-placeholder-116" />
-            <p>
-              Keywords for google: xiv analysis, the ffxiv market board, selling
-              items, ff14 marketboard prices, ffxiv market board, ff14 market
-              board, ffxiv marketboard, ff14 marketboard prices, ffxiv market
-              board prices, megalotragus horn, ff14 market board prices, ff14
-              marketboard, ffxiv market, how to sell on market board ffxiv, how
-              to sell items on market board ffxiv.
             </p>
           </div>
         </div>

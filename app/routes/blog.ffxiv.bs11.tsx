@@ -1,10 +1,32 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Investment Portfolio for Final Fantasy XIV and World of Warcraft',
+    description:
+      'Explore strategies for building an investment portfolio in Final Fantasy XIV and World of Warcraft.',
+    customHeading:
+      'Optimize Your Gaming Investments: FFXIV and WoW Portfolio Strategies'
+  }
+}
+
 const howtocrossservertradeinffxiv = () => {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
+
   return (
     <div className={`m-12`}>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
       <main className="flex-1">
-        <p>
+        <h1>
           <strong> Leveraging Social Trading Platforms</strong>
-        </p>
+        </h1>
         <p>
           Social trading platforms have emerged as powerful tools for gil-making
           in Final Fantasy XIV and gold-making in World of Warcraft. These

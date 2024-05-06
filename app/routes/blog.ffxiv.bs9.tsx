@@ -1,10 +1,33 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Exploring Specialized Markets for Gil Making in Final Fantasy XIV',
+    description:
+      'Discover lucrative opportunities and strategies for capitalizing on specialized markets to maximize your Gil making potential in Final Fantasy XIV.',
+    customHeading:
+      'Unveiling Lucrative Markets: Specialized Gil Making in Final Fantasy XIV'
+  }
+}
+
 const howtocrossservertradeinffxiv = () => {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
+
   return (
-    <div classname={`m-12`}>
-      <main classname="flex-1">
-        <p>
-          "Exploring Specialized Markets for Gil Making in Final Fantasy XIV"
-        </p>
+    <div className={`m-12`}>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
+
+      <main className="flex-1">
+        <h1>
+          Exploring Specialized Markets for Gil Making in Final Fantasy XIV
+        </h1>
         <p>
           In the bustling markets of Eorzea, where adventurers seek fame and
           fortune, specialized markets offer unique opportunities for savvy

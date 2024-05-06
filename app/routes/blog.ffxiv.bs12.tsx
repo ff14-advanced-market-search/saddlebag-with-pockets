@@ -1,14 +1,22 @@
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Innovation in MMO Economies',
+    description:
+      'Explore key trends and opportunities in MMO economies, focusing on innovation and its impact on virtual markets.',
+    customHeading: 'Unveiling the Future: Innovation in MMO Economies'
+  }
+}
+
 const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
       <main className="flex-1">
-        <p>
-          {' '}
-          <strong>
-            &quot;The Role of Innovation in MMO Economies: Trends and
-            Opportunities&quot;
-          </strong>
-        </p>
+        <h1>
+          The Role of Innovation in MMO Economies: Trends and Opportunities
+        </h1>
         <p>
           In the dynamic and ever-evolving virtual economies of MMOs like Final
           Fantasy XIV and World of Warcraft, innovation plays a crucial role in

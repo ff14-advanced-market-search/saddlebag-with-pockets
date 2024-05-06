@@ -4,6 +4,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
+import { HelmetProvider } from 'react-helmet-async'
 import { json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import overrides from './base.css'
@@ -157,11 +158,11 @@ export const meta: MetaFunction = ({ data }) => {
   const { site_name } = data
   return {
     charset: 'utf-8',
-    // title: site_name,
-    title: `${site_name}: FFXIV marketboard prices, WoW Auctionhouse`,
+    title: site_name,
+    // title: `${site_name}: FFXIV marketboard prices, WoW Auctionhouse`,
     viewport: 'width=device-width,initial-scale=1',
     description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold'
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
   }
 }
 
@@ -268,9 +269,11 @@ function App() {
 export default function AppWithTheme() {
   return (
     <Provider store={store}>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <HelmetProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </HelmetProvider>
     </Provider>
   )
 }

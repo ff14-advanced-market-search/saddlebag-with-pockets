@@ -12,6 +12,19 @@ import HQCheckbox from '~/components/form/HQCheckbox'
 import CodeBlock from '~/components/Common/CodeBlock'
 import ItemSelect from '~/components/form/select/ItemSelect'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV price sniper',
+    description:
+      'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts',
+    customHeading:
+      'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const { world, data_center } = validateWorldAndDataCenter(

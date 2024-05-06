@@ -28,6 +28,24 @@ const makeTimeString = ({
   return format(newDate, formatString)
 }
 
+export const meta: MetaFunction = ({ data }: MetaArgs) => {
+  if ('exception' in data) {
+    return {
+      charset: 'utf-8',
+      viewport: 'width=device-width,initial-scale=1',
+      title: 'Error',
+      description: `Error: ${data.exception}`
+    }
+  } else {
+    return {
+      charset: 'utf-8',
+      viewport: 'width=device-width,initial-scale=1',
+      title: data.data.itemName, // Adjust according to your needs
+      description: `TSM (Trade Skill Master) statistics for ${data.data.itemName}` // Adjust this too
+    }
+  }
+}
+
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId
   if (!itemId) {

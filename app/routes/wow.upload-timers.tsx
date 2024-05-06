@@ -10,6 +10,17 @@ import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW api data upload timers',
+    description:
+      'WoW: see what time blizzard updates the auctionhouse api data, this is the time when saddlebag exchange and azeroth auction assassin will update with the latest data!'
+  }
+}
+
 export const loader: LoaderFunction = async () => {
   return UploadTimers()
 }
@@ -27,6 +38,7 @@ const Index = () => {
     if ('data' in results) {
       return (
         <PageWrapper>
+          <h1>WoW api data upload timers</h1>
           <SmallTable
             title="Upload Timers"
             description="Shows when the WoW auction house data was last uploaded."

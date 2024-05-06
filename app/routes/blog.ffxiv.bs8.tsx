@@ -1,12 +1,33 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Advanced Tactics for Goldmaking in World of Warcraft',
+    description:
+      'Explore advanced strategies and tactics to maximize your goldmaking potential in World of Warcraft.',
+    customHeading:
+      'Unlocking Advanced Tactics: Maximize Goldmaking in World of Warcraft'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
+
   return (
     <div className={`m-12`}>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
+
       <main className="flex-1">
-        <p>
-          {' '}
-          &quot;Advanced Tactics for Goldmaking in World of Warcraft&#39;s
-          Auction House&quot;**
-        </p>
+        <h1>
+          Advanced Tactics for Goldmaking in World of Warcraft Auction House
+        </h1>
         <p>
           Delving deeper into the realm of goldmaking in Azeroth, advanced
           players employ a multitude of tactics to dominate the Auction House

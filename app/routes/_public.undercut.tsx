@@ -14,6 +14,19 @@ import { parseZodErrorsToDisplayString } from '~/utils/zodHelpers'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { getUserSessionData } from '~/sessions'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV undecut alerts, ffxiv sell faster!',
+    description:
+      'Generate data for Sadddlebag Exchange discord bot ffxiv undercut alerts. Sell faster when no one can sell under you!',
+    customHeading:
+      'Maximize Your Profits with FFXIV Undercut Alerts from Saddlebag Exchange'
+  }
+}
+
 const validateForm = z.object({
   retainerName: z.string().min(1),
   itemId: parseStringToNumber,

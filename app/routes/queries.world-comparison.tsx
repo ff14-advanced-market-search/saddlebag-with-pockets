@@ -28,6 +28,17 @@ const pathHash: Record<string, string> = {
   itemIds: 'Items'
 }
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: ffxiv export search',
+    description:
+      'Explore and compare FFXIV item prices across different servers with Saddlebag Exchange.'
+  }
+}
+
 const sortByPrice =
   (desc: boolean) => (first: { price: number }, second: { price: number }) => {
     if (first.price === second.price) {

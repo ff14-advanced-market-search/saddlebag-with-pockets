@@ -1,8 +1,30 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Mastering Gil Earning on the FFXIV Marketboard',
+    description:
+      'Explore strategies to maximize your Gil earnings on the FFXIV Marketboard.',
+    customHeading: 'Unlock the Secrets to Gil Mastery on the FFXIV Marketboard'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
   return (
     <div className={`m-12`}>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
       <main className="flex-1">
-        <p>Title: Mastering Gil Earning on the FFXIV Marketboard</p>
+        <h1 id="mastering-gil-earning-on-the-ffxiv-marketboard">
+          Mastering Gil Earning on the FFXIV Marketboard
+        </h1>
         <p>
           Introduction (100 words): In Final Fantasy XIV (FFXIV), gil is the
           primary currency used for various in-game transactions. One of the

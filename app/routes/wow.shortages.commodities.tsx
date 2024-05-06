@@ -153,6 +153,17 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const ErrorBoundary = () => <ErrorBounds />
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW commodity shortages',
+    description:
+      'Find wow commodity auctionhouse items that can be flipped for a profit'
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()

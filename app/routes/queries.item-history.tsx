@@ -16,6 +16,16 @@ import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: ffxiv history analysis',
+    description: 'Saddlebag Exchange: ffxiv history analysis'
+  }
+}
+
 const validateInput = ({
   itemId,
   world,

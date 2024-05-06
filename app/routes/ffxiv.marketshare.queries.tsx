@@ -2,6 +2,16 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'FFXIV market overview recommendations',
+    description: 'FFXIV market overview recommendations'
+  }
+}
+
 const searchParams = {
   marketView:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=0&sortBy=marketValue',

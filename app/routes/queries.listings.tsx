@@ -18,6 +18,16 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: ffxiv listings analysis',
+    description: 'Saddlebag Exchange: ffxiv listings analysis'
+  }
+}
+
 const validateInput = ({
   itemId,
   world

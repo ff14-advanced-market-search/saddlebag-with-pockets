@@ -1,8 +1,31 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Economies of WoW & FFXIV: Strategies Unveiled',
+    description:
+      'Explore effective strategies for mastering the economies of World of Warcraft and Final Fantasy XIV.',
+    customHeading:
+      'Unveiling Strategies: Mastering the Economies of WoW & FFXIV'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
+
   return (
     <div className={`m-12`}>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
+
       <main className="flex-1">
-        <h3>Introduction:</h3>
+        <h1>Economies of WoW & FFXIV: Strategies Unveiled</h1>
 
         <p>
           The digital economies of massively multiplayer online role-playing

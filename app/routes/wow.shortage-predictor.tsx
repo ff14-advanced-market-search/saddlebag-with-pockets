@@ -102,6 +102,23 @@ export const action: ActionFunction = async ({ request }) => {
 
 type ActionResponse = PredictionResponse | { exception: string } | {}
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW commodity shortage predictions',
+    description:
+      'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!',
+    links: [
+      {
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/wow/shortage-predictor`
+      }
+    ]
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()

@@ -1,6 +1,28 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange Blogs',
+    description: 'Saddlebag Exchange Blogs'
+  }
+}
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange Blogs',
+    description: 'Saddlebag Exchange Blogs'
+  }
+}
 
 const recommendedQueries = [
   {
@@ -13,13 +35,13 @@ const recommendedQueries = [
     name: 'How to Cross Server Trade in FFXIV',
     description: 'Watch a youtube video on how to tade between servers',
     Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/HowtoCrossRealmTradeinFFXIV'
+    href: '/blog/r1'
   },
   {
     name: 'How to use ffxiv marketshare',
     description: 'how to marketshare',
     Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/howtomarketshare'
+    href: '/blog/r2'
   },
   {
     name: 'How to use ffxiv reselling',
@@ -31,7 +53,7 @@ const recommendedQueries = [
     name: 'How to use wow commodity shortage',
     description: 'how to wow commodity shortage',
     Icon: DocumentSearchIcon,
-    href: '/blog/wow/howtocommodityshortage'
+    href: '/blog/r3'
   },
   {
     name: 'Chatgpt bs ffxiv post 1',
@@ -132,8 +154,13 @@ const recommendedQueries = [
 ]
 
 export default function Index() {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
   return (
     <>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
       <main className="flex-1">
         <Banner />
         <div className="py-6">

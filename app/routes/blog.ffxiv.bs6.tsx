@@ -1,10 +1,34 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from '@remix-run/react'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title:
+      'Mastering Gold Making in WoW: Unleash the Power of the Auction House',
+    description:
+      'Discover advanced strategies to become a master of gold making in World of Warcraft by leveraging the power of the Auction House.',
+    customHeading:
+      'Unleash the Power of the Auction House: Mastering Gold Making in WoW'
+  }
+}
+
 const HowtoCrossServerTradeinFFXIV = () => {
+  const { pathname } = useLocation()
+  const canonicalUrl = `https://saddlebagexchange.com${pathname}`
+
   return (
     <div className={`m-12`}>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
+
       <main className="flex-1">
-        <h3 id="wow-gold-making-using-the-auction-house">
+        <h1 id="wow-gold-making-using-the-auction-house">
           WoW Gold Making Using the Auction House
-        </h3>
+        </h1>
         <p>
           Title: Mastering Gold Making in WoW: Unleash the Power of the Auction
           House
