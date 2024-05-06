@@ -4,7 +4,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
-import { HelmetProvider } from 'react-helmet-async'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import overrides from './base.css'
@@ -20,6 +20,7 @@ import {
   useNavigation
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
+import { useLocation } from '@remix-run/react'
 import { getUserSessionData } from '~/sessions'
 import {
   EnsureThemeApplied,
@@ -215,11 +216,15 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  const canonicalUrl = `https://saddlebagexchange.com/`
 
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <Helmet>
+          <link rel="canonical" href={canonicalUrl} />
+        </Helmet>
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

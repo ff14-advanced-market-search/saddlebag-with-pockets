@@ -1,1 +1,6 @@
 Redirect 301 /ads.txt https://srv.adstxtmanager.com/49120/saddlebagexchange.com
+RewriteEngine On
+
+# Redirect non-www to www
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ https://www.saddlebagexchange.com/$1 [L,R=301]
