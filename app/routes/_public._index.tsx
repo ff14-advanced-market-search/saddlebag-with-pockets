@@ -43,7 +43,7 @@ const recommendedQueries = [
 
 export default function Index() {
   const { pathname } = useLocation()
-  const canonicalUrl = `https://luckytopdev.saddlebag-with-pockets.pages.dev/${pathname}`
+  const canonicalUrl = `https://luckytopdev.saddlebag-with-pockets.pages.dev${pathname}`
   return (
     <>
       <Helmet>
