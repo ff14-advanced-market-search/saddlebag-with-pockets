@@ -1,4 +1,4 @@
-import { ContentContainer, Title } from '~/components/Common'
+import { ContentContainer, TitleH2 } from '~/components/Common'
 import type { HistoryResponse } from '~/requests/GetHistory'
 import { Differences } from '../listings/Differences'
 import PriceHistoryChart from './PriceHistoryChart'
@@ -15,7 +15,7 @@ const Results = ({
   darkMode: boolean
 }) => (
   <div className="max-w-4xl mx-auto px-4">
-    <Title title="Region Wide Pricing and Sales" />
+    <TitleH2 title="Region Wide Pricing and Sales" />
     <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
       <div className="flex flex-col max-w-full">
         <Differences
@@ -50,14 +50,14 @@ const Results = ({
 
     <ContentContainer>
       <>
-        <Title title="Region Price History" />
+        <TitleH2 title="Region Price History" />
         <PriceHistoryChart data={data.price_history} darkMode={darkMode} />
       </>
     </ContentContainer>
 
     <ContentContainer>
       <>
-        <Title title="Region Wide Server Sales Distribution" />
+        <TitleH2 title="Region Wide Server Sales Distribution" />
         {Object.keys(data.server_distribution).length ? (
           <ServerDistributionChart
             data={data.server_distribution}
@@ -75,7 +75,7 @@ const Results = ({
 
     <ContentContainer>
       <>
-        <Title title="Home Server Sales per Hour" />
+        <TitleH2 title="Home Server Sales per Hour" />
         <SalesByHourChart
           data={data.home_server_sales_by_hour_chart}
           darkMode={darkMode}
@@ -85,7 +85,7 @@ const Results = ({
 
     <ContentContainer>
       <>
-        <Title title="Region Wide Suspicious Sales" />
+        <TitleH2 title="Region Wide Suspicious Sales" />
         {data.dirty_sales.length ? (
           <SuspiciousSaleTable data={data.dirty_sales} />
         ) : (
