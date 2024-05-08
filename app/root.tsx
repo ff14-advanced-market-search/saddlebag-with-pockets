@@ -216,7 +216,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const canonicalUrl = `https://saddlebagexchange.com/`
+  const canonicalUrl = `https://luckytopdev.saddlebag-with-pockets.pages.dev/`
 
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>

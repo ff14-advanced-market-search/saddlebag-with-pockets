@@ -46,9 +46,10 @@ export default function Index() {
   const canonicalUrl = `https://luckytopdev.saddlebag-with-pockets.pages.dev${pathname}`
   return (
     <>
-      <Helmet>
-        <link rel="canonical" href={canonicalUrl} />
-      </Helmet>
+      <link
+        rel="canonical"
+        href="https://luckytopdev.saddlebag-with-pockets.pages.dev"
+      />
       <main className="flex-1">
         <Banner />
         <div className="py-6">
