@@ -24,6 +24,24 @@ import { getUserSessionData } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV shopping list, bulk craft',
+    description:
+      'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients'
+  }
+}
+
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
+  }
+]
+
 const FORM_DEFAULTS = {
   craft_amount: 5,
   hq: false,

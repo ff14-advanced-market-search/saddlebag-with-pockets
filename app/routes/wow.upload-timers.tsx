@@ -21,6 +21,11 @@ export const meta: MetaFunction = () => {
   }
 }
 
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/upload-timers' }
+]
+
 export const loader: LoaderFunction = async () => {
   return UploadTimers()
 }

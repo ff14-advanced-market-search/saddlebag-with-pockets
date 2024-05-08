@@ -46,6 +46,14 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   }
 }
 
+// // THIS ISNT WORKING!!!
+// export const links: LinksFunction = async ({ params, request }) => {
+//   const itemId = request.params.itemId;
+//   return [
+//     { rel: 'canonical', href: `https://saddlebagexchange.com/wow/item-data/${itemId}` }
+//   ];
+// }
+
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId
   if (!itemId) {

@@ -48,6 +48,10 @@ export const meta: MetaFunction = () => {
   }
 }
 
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/options' }
+]
+
 export const validator = z.object({
   data_center: z.string().min(1),
   world: z.string().min(1),

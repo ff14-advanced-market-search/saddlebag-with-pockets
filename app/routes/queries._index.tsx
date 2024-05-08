@@ -16,6 +16,10 @@ export const meta: MetaFunction = () => {
   }
 }
 
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/queries' }
+]
+
 const ffxivPages = [
   {
     name: 'Reselling Trade Searches',

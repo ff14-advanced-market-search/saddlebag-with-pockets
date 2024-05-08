@@ -28,6 +28,14 @@ export const meta: MetaFunction = () => {
   }
 }
 
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/region-undercut'
+  }
+]
+
 const petAuction = z.object({
   petID: z.number(),
   price: z.number(),
