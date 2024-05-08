@@ -41,6 +41,11 @@ export const meta: MetaFunction = () => {
   }
 }
 
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/shopping-list' }
+]
+
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 

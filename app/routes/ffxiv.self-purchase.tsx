@@ -29,6 +29,13 @@ export const meta: MetaFunction = () => {
   }
 }
 
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/ffxiv/self-purchase'
+  }
+]
+
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 

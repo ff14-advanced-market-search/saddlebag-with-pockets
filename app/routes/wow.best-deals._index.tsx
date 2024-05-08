@@ -65,12 +65,13 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Auctionhouse Best Deals',
     description:
-      'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!',
-    links: [
-      { rel: 'canonical', href: `https://saddlebagexchange.com/wow/best-deals` }
-    ]
+      'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!'
   }
 }
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/best-deals' }
+]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams

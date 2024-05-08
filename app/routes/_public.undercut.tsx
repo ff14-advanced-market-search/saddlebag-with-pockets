@@ -27,6 +27,10 @@ export const meta: MetaFunction = () => {
   }
 }
 
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/undercut' }
+]
+
 const validateForm = z.object({
   retainerName: z.string().min(1),
   itemId: parseStringToNumber,

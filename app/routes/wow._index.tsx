@@ -12,6 +12,11 @@ export const meta: MetaFunction = () => {
   }
 }
 
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow' }
+]
+
 const recommendedQueries = [
   // {
   //   name: 'Alpha Build Cross Server Trade Tools',

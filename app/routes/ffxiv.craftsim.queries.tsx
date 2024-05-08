@@ -14,6 +14,10 @@ export const meta: MetaFunction = () => {
   }
 }
 
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/queries' }
+]
+
 const searchParams = {
   defaultItems:
     '/ffxiv/craftsim?filters=0%2C-5&revenueMetric=revenue_region_min_listing',

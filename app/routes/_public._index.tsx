@@ -12,6 +12,10 @@ export const meta: MetaFunction = () => {
   }
 }
 
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com' }
+]
+
 const recommendedQueries = [
   {
     name: 'Final Fantasy XIV',

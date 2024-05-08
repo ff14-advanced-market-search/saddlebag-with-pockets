@@ -12,6 +12,14 @@ export const meta: MetaFunction = () => {
   }
 }
 
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
+  }
+]
+
 // Updated searchParams with WoW best deals endpoints
 const searchParams = {
   defaultDragonflight:
