@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => {
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/queries' }
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/craftsim/queries' }
 ]
 
 const searchParams = {
