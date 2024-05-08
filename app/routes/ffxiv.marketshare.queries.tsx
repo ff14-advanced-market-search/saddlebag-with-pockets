@@ -13,7 +13,10 @@ export const meta: MetaFunction = () => {
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries' }
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
+  }
 ]
 
 const searchParams = {
