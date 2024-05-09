@@ -70,23 +70,32 @@ export default function Index() {
             <p>
               Saddlebag Exchange: Your Gateway to Mastering MMO Markets! Our
               platform is designed with dozens of tools to help take your in
-              game MMO market trading to the next level! For "Final Fantasy XIV"
-              players, dive into a world of profitable opportunities with our
-              cross-server reselling, detailed market overviews, and crafting
-              profit simulations. Our tools, including shopping lists, deep item
-              statistics and alerts, are designed to maximize your efficiency
-              and profits, whether you're a trading veteran, a crafting
-              aficionado or a new player saving up to buy the mansion plot of
-              your dreams! For "World of Warcraft" adventurers, experience the
-              game-changing power of cross-realm trading with Saddlebag
-              Exchange. Utilize our marketshare searches and best deals to
-              discover lucrative items. Buy low and sell high across realms with
-              our Azeroth Auction Assassin discount sniper, shopping lists, and
-              export search, tapping into the most profitable markets. Stay
-              ahead of the competition with our undercut addon, ensuring your
-              items always lead the market. Join Saddlebag Exchange and
+              game MMO market trading to the next level!
+            </p>
+            <p>
+              For "Final Fantasy XIV" players, dive into a world of profitable
+              opportunities with our cross-server reselling, detailed market
+              overviews, and crafting profit simulations. Our tools, including
+              shopping lists, deep item statistics and alerts, are designed to
+              maximize your efficiency and profits, whether you're a trading
+              veteran, a crafting aficionado or a new player saving up to buy
+              the mansion plot of your dreams!
+            </p>
+            <p>
+              For "World of Warcraft" adventurers, experience the game-changing
+              power of cross-realm trading with Saddlebag Exchange. Utilize our
+              marketshare searches and best deals to discover lucrative items.
+              Buy low and sell high across realms with our Azeroth Auction
+              Assassin discount sniper, shopping lists, and export search,
+              tapping into the most profitable markets.
+            </p>
+            <p>
+              Stay ahead of the competition with our undercut addon, ensuring
+              your items always lead the market. Join Saddlebag Exchange and
               transform your MMO trading into a highly efficient, rewarding
               journey. Elevate your game and dominate the market today!
+            </p>
+            <p style={{ fontSize: '1px' }}>
               **Opportunity:** Saddlebag Exchange is positioned at the
               intersection of gaming and financial optimization. Our tools don't
               just assist players; they revolutionize how they engage with the
@@ -111,41 +120,39 @@ export default function Index() {
               Auctionhouse, games like world of warcraft, world of warcraft
               hairstyles, world of warcraft expansions in order, world of
               warcraft the war within, world of warcraft season of discovery
-              gold, chocobo saddlebag ffxiv.
-              {/***"FinalFantasy XIV" Component:** In "Final Fantasy XIV" our service
-              offers a compelling alternative to the game's own expansion of
-              selling slots. Players are restricted to 40 item slots in their
-              market listings. The game allows expansion of this limit by 20
-              slots for an additional $3/month (up to a max of 100 extra sale
-              slots for $15 per month). However, Saddlebag Exchange offers a
-              more strategic solution. For the same price, our service optimizes
-              the use of the existing 40 slots. Instead of merely increasing
-              quantity, we enhance the quality and profitability of each slot.
-              Our tools enable players to identify and list items with the
-              highest market demand and profitability, thereby maximizing their
-              earnings within the existing constraints. While pitched as an
-              alternative to paid extra retainers, it can also be a multiplier
-              for those who still want to use the advantages of the purchasing
-              extra retainer slots. Once you purchase the maximum of 100 extra
-              slots for $15 a month then the Saddlebag Exchange elite package
-              for $10 to $20 a month becomes even more valuable. Our tools also
-              help large scale operations maximize their potential! 
-
-              **"World of
-              Warcraft" Component:** For "World of Warcraft" the WoW Token
-              represents a pivotal aspect of in-game economy. This token allows
-              players to exchange in-game gold for additional game time or add
-              funds to their Battle.net balance. Given that a WoW Token can be
-              exchanged for 30 days of game time or $15 for Battle.net balance,
-              our service becomes an invaluable asset for players looking to
-              make their gameplay self-sustaining. Our service, priced lower
-              than the monthly subscription, empowers players to earn
-              significant amounts of in-game gold, enough to regularly purchase
-              WoW Tokens. This essentially makes the game free to play, as
-              players can earn enough in-game currency to continuously renew
-              their game time without spending real money. The potential is
-              immense; one of our users earned 20 million gold in a few days, an
-              amount that can cover years of subscription costs.*/}
+              gold, chocobo saddlebag ffxiv. **"FinalFantasy XIV" Component:**
+              In "Final Fantasy XIV" our service offers a compelling alternative
+              to the game's own expansion of selling slots. Players are
+              restricted to 40 item slots in their market listings. The game
+              allows expansion of this limit by 20 slots for an additional
+              $3/month (up to a max of 100 extra sale slots for $15 per month).
+              However, Saddlebag Exchange offers a more strategic solution. For
+              the same price, our service optimizes the use of the existing 40
+              slots. Instead of merely increasing quantity, we enhance the
+              quality and profitability of each slot. Our tools enable players
+              to identify and list items with the highest market demand and
+              profitability, thereby maximizing their earnings within the
+              existing constraints. While pitched as an alternative to paid
+              extra retainers, it can also be a multiplier for those who still
+              want to use the advantages of the purchasing extra retainer slots.
+              Once you purchase the maximum of 100 extra slots for $15 a month
+              then the Saddlebag Exchange elite package for $10 to $20 a month
+              becomes even more valuable. Our tools also help large scale
+              operations maximize their potential! **"World of Warcraft"
+              Component:** For "World of Warcraft" the WoW Token represents a
+              pivotal aspect of in-game economy. This token allows players to
+              exchange in-game gold for additional game time or add funds to
+              their Battle.net balance. Given that a WoW Token can be exchanged
+              for 30 days of game time or $15 for Battle.net balance, our
+              service becomes an invaluable asset for players looking to make
+              their gameplay self-sustaining. Our service, priced lower than the
+              monthly subscription, empowers players to earn significant amounts
+              of in-game gold, enough to regularly purchase WoW Tokens. This
+              essentially makes the game free to play, as players can earn
+              enough in-game currency to continuously renew their game time
+              without spending real money. The potential is immense; one of our
+              users earned 20 million gold in a few days, an amount that can
+              cover years of subscription costs.
             </p>
           </div>
         </div>
