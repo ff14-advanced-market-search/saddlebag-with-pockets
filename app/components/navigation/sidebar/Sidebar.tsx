@@ -318,6 +318,12 @@ const navGroups: Array<{
         name: 'blog',
         href: '/blog',
         icon: DocumentSearchIcon
+      },
+      {
+        name: 'fandom',
+        href: 'https://ffxivmarketboard.fandom.com/wiki/Ffxivmarketboard_Wiki',
+        external: true,
+        icon: DocumentSearchIcon
       }
     ]
   }
