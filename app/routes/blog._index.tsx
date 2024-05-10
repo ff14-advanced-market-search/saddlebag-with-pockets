@@ -7,8 +7,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange Blogs',
-    description: 'Saddlebag Exchange Blogs'
+    title: 'Saddlebag Exchange Blogs, posts and random stuff',
+    description: 'Saddlebag Exchange best blogs and guides are all on github'
   }
 }
 

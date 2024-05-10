@@ -3,8 +3,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title:
-      'Mastering Gold Making in WoW: Unleash the Power of the Auction House',
+    title: 'Mastering Gold Making in the WoW Auction House',
     description:
       'Discover advanced strategies to become a master of gold making in World of Warcraft by leveraging the power of the Auction House.',
     customHeading:

@@ -3,7 +3,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Exploring Specialized Markets for Gil Making in Final Fantasy XIV',
+    title: 'Exploring Markets for Gil Making in Final Fantasy XIV',
     description:
       'Discover lucrative opportunities and strategies for Gil making.',
     customHeading:

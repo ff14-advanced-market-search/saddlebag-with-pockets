@@ -3,9 +3,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Diversification and Risk Management in Gil Making and Gold Making',
-    description:
-      'Diversification and Risk Management in Gil Making and Gold Making',
+    title: 'Diversification in Gil Making and Gold Making',
+    description: ' Risk Management in Gil Making and Gold Making',
     customHeading:
       'Optimize Your Strategy: Diversification and Risk Management in Gil and Gold Making'
   }
