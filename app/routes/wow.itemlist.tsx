@@ -1,4 +1,4 @@
-import { wowItemsMap } from '~/utils/items/wowItems';
+import { wowItemsMap } from '~/utils/items/wowItems'
 
 export const meta = () => {
   return {
@@ -18,7 +18,7 @@ export default function Index() {
   const wowItemLinks = Object.keys(wowItemsMap).map((id) => ({
     href: `/wow/item-data/${id}`,
     text: `WoW Item ${id}`
-  }));
+  }))
 
   return (
     <main>
@@ -36,5 +36,5 @@ export default function Index() {
         </ul>
       </div>
     </main>
-  );
+  )
 }
