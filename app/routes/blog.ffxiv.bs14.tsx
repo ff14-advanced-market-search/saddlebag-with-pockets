@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs13' }
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs14' }
 ]
 
 const howtocrossservertradeinffxiv = () => {
