@@ -320,6 +320,16 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'List of all WoW Items',
+        href: '/wow/itemlist',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'List of all FFXIV Items',
+        href: '/ffxiv/itemlist',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'fandom',
         href: 'https://ffxivmarketboard.fandom.com/wiki/Ffxivmarketboard_Wiki',
         external: true,
