@@ -7,10 +7,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title:
-      'Saddlebag Exchange: FFXIV crafting profit simulation recommendations',
-    description:
-      'Saddlebag Exchange: FFXIV crafting profit simulation recommendations'
+    title: 'FFXIV crafting profit simulation recommendations',
+    description: 'FFXIV crafting profit simulation recommendations'
   }
 }
 

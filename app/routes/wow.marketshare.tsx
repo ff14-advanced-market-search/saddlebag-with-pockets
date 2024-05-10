@@ -82,9 +82,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW marketshare, most gold on auctionhouse',
-    description:
-      'Find what current content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!',
+    title: 'Saddlebag Exchange: WoW most gold on auctionhouse',
+    description: 'Find what current content items make the most gold in WoW!',
     links: [
       {
         rel: 'canonical',

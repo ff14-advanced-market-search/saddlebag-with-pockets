@@ -73,10 +73,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title:
-      'WoW best selling, WoW Export, find the best realm to sell any item on!',
+    title: 'WoW best selling, find the best realm to sell any item on!',
     description:
-      'Find the best realm to sell any item on! Compare price data too wow realm population data.'
+      'Find the best realm to sell any item on! Wow realm population data.'
   }
 }
 
