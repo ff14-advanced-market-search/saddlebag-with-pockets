@@ -160,7 +160,23 @@ export default function Index() {
               universalis, server ffxiv, ff14 server, ffxiv server, ffxi ah,
               ffxiv logs, ffxiv log, ff14 player search, ffxiv player search,
               data center ff14, final fantasy xiv data center, ffxiv data
-              center, ff14 data center, data centers ffxiv.
+              center, ff14 data center, data centers ffxiv, data center ffxiv,
+              ffxiv housing tracker, ff14 housing tracker, ffx celestial
+              weapons, universalis europa, ff11 wiki, ffxiv house tracker,
+              celestial weapons ffx, wiki ff11, ff11 wikipedia, ff14 login, bard
+              ff14, login ffxiv, final fantasy 14 mog, final fantasy 14 moogle,
+              ff14 bard, eorzea, ff14 moogle, aether auctions, final fantasy 14
+              gil, moogle ff14, ffxiv mog, aether auction, retainer ffxiv, ffxiv
+              cost, ff14 fish, ff14 retainer, ffxiv retainer, retainers ffxiv,
+              ffxiv prices, ffxiv housing tracker, ff14 housing tracker, ffxiv
+              house tracker, ffxiv cost, ffxiv prices, ff14 price, final fantasy
+              xiv pricing, ff14 prices, ff14 cost, ffxiv price, ff14 moogle
+              shop, ffxiv materia, ff14 auction house, ff14 excalibur, ffxiv
+              web, ffxiv auction house, ffxiv website, auction house ffxiv,
+              ffxiv mb, ffxiv websites, auction house ff14, materia ffxiv, ffxiv
+              site, ff14 websites, ffxiv house prices, ff14 house prices, ffxiv
+              housing prices, ffxiv data, ff14 housing prices, ff13 weapons
+              upgrade guide.
             </p>
           </div>
         </div>
