@@ -30,7 +30,7 @@ export const meta: MetaFunction = () => {
 export const links: LinksFunction = () => [
   {
     rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
+    href: 'https://saddlebagexchange.com/wow/pet-marketshare'
   }
 ]
 
