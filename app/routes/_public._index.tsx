@@ -43,7 +43,7 @@ const recommendedQueries = [
   },
   {
     name: 'Discord Webpage',
-    description: 
+    description:
       'Or join our Discord Subscribers to access the best tools we have!',
     href: 'https://discord.com/servers/saddlebag-exchange-973380473281724476',
     external: true
