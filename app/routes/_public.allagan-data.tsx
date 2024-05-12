@@ -16,6 +16,22 @@ import { getUserSessionData } from '~/sessions'
 
 const formName = 'allaganData'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'FFXIV allagan tools data import',
+    description:
+      'Input your Allagan Tools generated data here, and we will turn it into useful stuff!',
+    customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page'
+  }
+}
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/allagan-data' }
+]
+
 const objectHasProperties = (object: Object) => {
   return Object.keys(object).length > 0
 }
@@ -30,17 +46,16 @@ export const action: ActionFunction = async ({ request }) => {
 
   const input = formData.get(formName)
 
-  type TrimmedInput =
-    | {
-        id?: number
-        source?: string
-        quantity?: number
-        type?: string
-        'total quantity available'?: number
-      } & (
-        | { location: string; 'inventory location': never }
-        | { location: never; 'inventory location': string }
-      )
+  type TrimmedInput = {
+    id?: number
+    source?: string
+    quantity?: number
+    type?: string
+    'total quantity available'?: number
+  } & (
+    | { location: string; 'inventory location': never }
+    | { location: never; 'inventory location': string }
+  )
 
   if (!input || typeof input !== 'string') {
     return json({ exception: 'Missing input' })

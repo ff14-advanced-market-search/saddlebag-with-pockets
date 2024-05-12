@@ -89,6 +89,7 @@ const WoWScanForm = ({
           <InputWithLabel
             defaultValue={0}
             type="number"
+            step="0.01"
             labelTitle="Minimum Sales Per Day"
             inputTag="Min Sales"
             name="salePerDay"
@@ -118,7 +119,11 @@ const WoWScanForm = ({
           <ItemQualitySelect />
         </div>
         <div className="w-full">
-          <ItemClassSelect />
+          <ItemClassSelect
+            onChange={(itemClassValue, itemSubClassValue) => {
+              // Notify parent component
+            }}
+          />
           <RegionAndServerSelect
             serverSelectFormName="homeRealmId"
             serverSelectTitle="Home World"
@@ -318,7 +323,8 @@ const itemClasses: Array<{
       { name: 'Holiday', value: 3 },
       { name: 'Other', value: 4 },
       { name: 'Mount', value: 5 },
-      { name: 'Mount Equipment', value: 6 }
+      { name: 'Mount Equipment', value: 6 },
+      { name: 'Toys', value: 199 }
     ]
   },
   {
@@ -377,12 +383,22 @@ const itemClasses: Array<{
   }
 ]
 
-export const ItemClassSelect = () => {
-  const [itemClass, setItemClass] = useState(-1)
-  const [itemSubClass, setItemSubClass] = useState(-1)
+interface ItemClassSelectProps {
+  itemClass?: number
+  itemSubClass?: number
+  onChange?: (itemClassValue: number, itemSubClassValue: number) => void
+}
+
+export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
+  itemClass,
+  itemSubClass,
+  onChange
+}) => {
+  const [selectedItemClass, setSelectedItemClass] = useState(itemClass)
+  const [selectedItemSubClass, setSelectedItemSubClass] = useState(itemSubClass)
 
   const subClassItems = itemClasses.find(
-    (item) => item.value === itemClass
+    (item) => item.value === selectedItemClass
   )?.subClasses
 
   return (
@@ -394,10 +410,12 @@ export const ItemClassSelect = () => {
       <Select
         id={'itemClass'}
         name={'itemClass'}
-        value={itemClass}
+        value={selectedItemClass}
         onChange={(event) => {
-          setItemClass(parseInt(event.target.value))
-          setItemSubClass(-1)
+          const newItemClassValue = parseInt(event.target.value, 10)
+          setSelectedItemClass(newItemClassValue)
+          setSelectedItemSubClass(-1) // Reset itemSubClass when itemClass changes
+          onChange?.(newItemClassValue, -1) // Notify parent component with new values
         }}>
         <option value={-1}>All</option>
         {itemClasses.map(({ name, value }) => (
@@ -413,34 +431,47 @@ export const ItemClassSelect = () => {
       <Select
         id={'itemSubClass'}
         name={'itemSubClass'}
-        value={itemSubClass}
-        onChange={(event) => setItemSubClass(parseInt(event.target.value))}>
+        value={selectedItemSubClass}
+        onChange={(event) => {
+          const newItemSubClassValue = parseInt(event.target.value, 10)
+          setSelectedItemSubClass(newItemSubClassValue)
+          onChange?.(selectedItemClass ?? -1, newItemSubClassValue) // Provide a default value for selectedItemClass
+        }}>
         <option value={-1}>All</option>
-        {subClassItems &&
-          subClassItems.map(({ name, value }) => (
-            <option key={name + value} value={value}>
-              {name}
-            </option>
-          ))}
+        {subClassItems?.map(({ name, value }) => (
+          <option key={name + value} value={value}>
+            {name}
+          </option>
+        ))}
       </Select>
     </div>
   )
 }
 
-export const ItemQualitySelect = () => (
+interface ItemQualitySelectProps {
+  defaultValue?: string
+  onChange?: (value: string) => void
+}
+
+export const ItemQualitySelect: React.FC<ItemQualitySelectProps> = ({
+  defaultValue,
+  onChange
+}) => (
   <div className="w-full mt-2">
     <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
       <Label htmlFor="item-quality">Item Quality</Label>
       <ToolTip data="Pick which quality item you would like to search from" />
     </div>
-    <Select id="item-quality" name="itemQuality" defaultValue={'Rare'}>
-      {itemQuality.map(({ name, value }) => {
-        return (
-          <option key={name + value} value={value}>
-            {name}
-          </option>
-        )
-      })}
+    <Select
+      id="item-quality"
+      name="itemQuality"
+      defaultValue={defaultValue}
+      onChange={(e) => onChange?.(e.target.value)}>
+      {itemQuality.map(({ name, value }) => (
+        <option key={name + value} value={value}>
+          {name}
+        </option>
+      ))}
     </Select>
   </div>
 )

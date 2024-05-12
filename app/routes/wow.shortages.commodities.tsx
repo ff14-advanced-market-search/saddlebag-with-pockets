@@ -153,6 +153,25 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const ErrorBoundary = () => <ErrorBounds />
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW commodity shortages',
+    description:
+      'Find wow commodity auctionhouse items that can be flipped for a profit'
+  }
+}
+
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/shortages/commodities'
+  }
+]
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
@@ -240,6 +259,7 @@ export const WoWShortageFormFields = ({
     <InputWithLabel
       defaultValue={desiredSalesPerDayDefault}
       type="number"
+      step="0.01"
       labelTitle="Desired Sales per Day"
       inputTag="Sales"
       name="desiredSalesPerDay"

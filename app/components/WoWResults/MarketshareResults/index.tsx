@@ -43,27 +43,27 @@ const MarketshareResults = ({
 
   const currentMarketOptions = [
     {
-      label: 'Current Market Value',
+      label: 'Current Daily Gold Earned',
       value: 'currentMarketValue'
     },
     {
-      label: 'Historic Market Value',
+      label: 'Historic Daily Gold Earned',
       value: 'historicMarketValue'
     }
   ]
 
   const currentColorOptions = results.commodity
     ? [
-        { label: 'Market Value', value: 'state' },
+        { label: 'Daily Gold Earned', value: 'state' },
         { label: 'Market Quantity', value: 'quantityState' }
       ]
-    : [{ label: 'Market Value', value: 'state' }]
+    : [{ label: 'Daily Gold Earned', value: 'state' }]
 
   const itemsColumnList: Array<ColumnList<ItemStats>> = [
     { columnId: 'itemName', header: 'Item Name' },
     { columnId: 'minPrice', header: 'Minimum Price' },
-    { columnId: 'currentMarketValue', header: 'Current Market Value' },
-    { columnId: 'historicMarketValue', header: 'Historic Market Value' },
+    { columnId: 'currentMarketValue', header: 'Current Daily Gold Earned' },
+    { columnId: 'historicMarketValue', header: 'Historic Daily Gold Earned' },
     {
       columnId: 'percentChange',
       header: 'Percent Changed',
@@ -95,7 +95,7 @@ const MarketshareResults = ({
 
   const mobileColumnList = [
     { columnId: 'itemName', header: 'Item Name' },
-    { columnId: 'currentMarketValue', header: 'Current Market Value' }
+    { columnId: 'currentMarketValue', header: 'Current Daily Gold Earned' }
   ]
 
   const mobileSelectOptions = [
@@ -210,7 +210,7 @@ const getHistoryChartData = (
   const result: Array<TreemapNode> = [
     {
       id: 'historicMarketValue',
-      name: 'Historic Market Value',
+      name: 'Historic Daily Gold Earned',
       toolTip: `Historic Market: ${marketplaceOverviewData
         .reduce((total, curr) => total + curr.historicMarketValue, 0)
         .toLocaleString()}`

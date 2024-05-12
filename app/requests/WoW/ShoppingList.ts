@@ -26,7 +26,7 @@ const WoWShoppingList = async ({
   itemID,
   maxPurchasePrice
 }: WoWShoppingListProps) => {
-  return fetch(`${address}/api/wow/shoppinglist`, {
+  return fetch(`${address}/api/wow/shoppinglistx`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

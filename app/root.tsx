@@ -6,6 +6,7 @@ import type {
 import { redirect } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
+import overrides from './base.css'
 import {
   Links,
   LiveReload,
@@ -67,6 +68,10 @@ export const links = () => {
       href: styles
     },
     {
+      rel: 'stylesheet',
+      href: overrides
+    },
+    {
       rel: 'icon',
       type: 'image/png',
       sizes: '32x32',
@@ -92,7 +97,8 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   const { server, region } = getWoWSessionData()
 
   return json<LoaderData>({
-    site_name: (context.SITE_NAME as string) ?? 'Saddlebag',
+    site_name: (context.SITE_NAME as string) ?? 'Saddlebag Exchange',
+    // site_name: 'FFXIV Marketboard',
     data_center,
     world,
     wowRealm: server,
@@ -152,9 +158,10 @@ export const meta: MetaFunction = ({ data }) => {
   return {
     charset: 'utf-8',
     title: site_name,
+    // title: `${site_name}: FFXIV marketboard prices, WoW Auctionhouse`,
     viewport: 'width=device-width,initial-scale=1',
     description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW, FFXIV and more!'
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
   }
 }
 
@@ -211,6 +218,7 @@ function App() {
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
       <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

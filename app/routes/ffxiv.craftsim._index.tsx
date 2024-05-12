@@ -46,6 +46,21 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV crafting profit simulation',
+    description:
+      'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!'
+  }
+}
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/craftsim' }
+]
+
 const PAGE_URL = '/ffxiv/craftsim'
 
 const flattenResult = ({

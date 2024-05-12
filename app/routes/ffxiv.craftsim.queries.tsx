@@ -2,6 +2,23 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'FFXIV crafting profit simulation recommendations',
+    description: 'FFXIV crafting profit simulation recommendations'
+  }
+}
+
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/ffxiv/craftsim/queries'
+  }
+]
+
 const searchParams = {
   defaultItems:
     '/ffxiv/craftsim?filters=0%2C-5&revenueMetric=revenue_region_min_listing',

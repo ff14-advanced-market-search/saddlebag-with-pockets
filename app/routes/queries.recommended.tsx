@@ -22,6 +22,23 @@ import {
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV reselling recommendations',
+    description: 'Saddlebag Exchange: FFXIV reselling recommendations'
+  }
+}
+
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/queries/recommended'
+  }
+]
+
 const recommendedQueries = [
   {
     name: 'Olivias Furnishing Items Medium Sell',

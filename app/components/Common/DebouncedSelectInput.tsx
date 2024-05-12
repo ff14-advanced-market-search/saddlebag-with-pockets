@@ -44,6 +44,7 @@ interface Props {
   useDebounce?: boolean
   debounceTimer?: number
   disabled?: boolean
+  displayValue?: string
 }
 
 const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
@@ -61,11 +62,12 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
       id,
       useDebounce = false,
       debounceTimer,
-      disabled
+      disabled,
+      displayValue
     },
     ref
   ) => {
-    const [name, setName] = useState('')
+    const [name, setName] = useState(displayValue ? displayValue : '')
 
     const items = getItems(name, selectOptions)
 
@@ -90,7 +92,7 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
       'p-2 w-full',
       label
         ? 'rounded-l-md border-gray-300 border-0 border-r'
-        : 'border-0 rounded-md',
+        : 'border-0 border-transparent rounded-md',
       'focus:ring-blue-500 focus:border-2 focus:border-blue-500 dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
     )
 
@@ -116,6 +118,7 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
               placeholder={placeholder}
               debounceTimer={debounceTimer}
               disabled={disabled}
+              defaultValue={displayValue}
             />
           ) : (
             <input
@@ -126,6 +129,7 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
               list={'items-' + id}
               name={formName}
               placeholder={placeholder}
+              defaultValue={displayValue}
             />
           )}
           {label && (

@@ -44,8 +44,8 @@ const inputMap: Record<string, string> = {
 
 const sortByOptions: Array<{ label: string; value: LegacyMarketshareSortBy }> =
   [
-    { value: 'currentMarketValue', label: 'Current Market Value' },
-    { value: 'historicMarketValue', label: 'Historic Market Value' },
+    { value: 'currentMarketValue', label: 'Current Daily Gold Earned' },
+    { value: 'historicMarketValue', label: 'Historic Daily Gold Earned' },
     { value: 'historicPrice', label: 'Historic Price' },
     { value: 'minPrice', label: 'Minimum Price' },
     { value: 'percentChange', label: 'Percent Change' },
@@ -92,6 +92,25 @@ const validateFormData = z.object({
 const pageTitle = 'Legacy Item Marketshare'
 
 export const ErrorBoundary = () => <ErrorBounds />
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW Legacy most gold',
+    description:
+      'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
+  }
+}
+
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
+  }
+]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
@@ -180,7 +199,7 @@ const Index = () => {
         error={error}>
         <div className="pt-4">
           <InputWithLabel
-            defaultValue={100}
+            defaultValue={1000}
             type="number"
             labelTitle="Minimum Desired average price"
             inputTag="Gold"
@@ -189,13 +208,13 @@ const Index = () => {
             step={0.01}
           />
           <InputWithLabel
-            defaultValue={1}
+            defaultValue={0.01}
             type="number"
             labelTitle="Minimum Desired sales per day"
             inputTag="Sales"
             name="desiredSalesPerDay"
             min={0}
-            step={1}
+            step={0.01}
           />
           <ItemClassSelect />
           <ItemQualitySelect />
@@ -224,10 +243,10 @@ const getColumnList = (
 ): Array<ColumnList<LegacyMarketshareItem>> => {
   return [
     { columnId: 'itemName', header: 'Item Name' },
-    { columnId: 'currentMarketValue', header: 'Current Market Value' },
+    { columnId: 'currentMarketValue', header: 'Current Daily Gold Earned' },
     { columnId: 'minPrice', header: 'Minimum Price' },
     { columnId: 'salesPerDay', header: 'Sales Per Day' },
-    { columnId: 'historicMarketValue', header: 'Historic Market Value' },
+    { columnId: 'historicMarketValue', header: 'Historic Daily Gold Earned' },
     { columnId: 'historicPrice', header: 'Historic Price' },
     {
       columnId: 'percentChange',
@@ -261,7 +280,7 @@ const getMobileColumns = (
   if (!sortByName) {
     return [
       { columnId: 'itemName', header: 'Item Name' },
-      { header: 'Current Market Value', columnId: 'currentMarketValue' }
+      { header: 'Current Daily Gold Earned', columnId: 'currentMarketValue' }
     ]
   }
 

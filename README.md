@@ -2,7 +2,7 @@
 
 The frontend of https://saddlebagexchange.com/
 
-Last udated for FFXIV 6.51
+Last updated for FFXIV 6.51
 
 _Frontend for Aetheryte API_
 
@@ -24,6 +24,12 @@ Run Server:
 
 ```bash
 yarn run dev
+```
+
+For Windows:
+
+```bash
+yarn dev
 ```
 
 This starts your app in development mode, rebuilding assets on file changes.
@@ -64,7 +70,7 @@ You can set vite into watch mode by passing the watch arguement:
 yarn test watch
 ```
 
-### Docker
+<!-- ### Docker
 
 Alternatively, you can use docker to run the server:
 
@@ -79,7 +85,7 @@ docker-compose up
 ```
 
 > NOTE: any changes to the `Dockerfile` or dependencies will require you to rebuild the images.
-
+ -->
 ## Deployment
 
 Commit to `master`. Auto deploys to CloudFlare.

@@ -16,6 +16,22 @@ import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW server transfer trade search',
+    description:
+      'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit'
+  }
+}
+
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/full-scan' }
+]
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()

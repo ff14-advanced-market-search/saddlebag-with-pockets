@@ -28,6 +28,32 @@ const makeTimeString = ({
   return format(newDate, formatString)
 }
 
+export const meta: MetaFunction = ({ data }: MetaArgs) => {
+  if ('exception' in data) {
+    return {
+      charset: 'utf-8',
+      viewport: 'width=device-width,initial-scale=1',
+      title: 'Error',
+      description: `Error: ${data.exception}`
+    }
+  } else {
+    return {
+      charset: 'utf-8',
+      viewport: 'width=device-width,initial-scale=1',
+      title: data.data.itemName, // Adjust according to your needs
+      description: `TSM (Trade Skill Master) statistics for ${data.data.itemName}` // Adjust this too
+    }
+  }
+}
+
+// // THIS ISNT WORKING!!!
+// export const links: LinksFunction = async ({ params, request }) => {
+//   const itemId = request.params.itemId;
+//   return [
+//     { rel: 'canonical', href: `https://saddlebagexchange.com/wow/item-data/${itemId}` }
+//   ];
+// }
+
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId
   if (!itemId) {
@@ -80,7 +106,7 @@ export default function Index() {
     )
     return (
       <PageWrapper>
-        <Title title={'Listing data for ' + listing.itemName} />
+        <Title title={listing.itemName} />
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
             <Differences
@@ -172,6 +198,7 @@ export default function Index() {
             />
           </ContentContainer>
         )}
+        <p style={{ fontSize: '1px' }}>{listing.blog}</p>
       </PageWrapper>
     )
   }

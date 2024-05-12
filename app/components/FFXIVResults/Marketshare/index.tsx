@@ -19,7 +19,7 @@ import DebouncedInput from '~/components/Common/DebouncedInput'
 
 export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
   [
-    { label: 'Market Value', value: 'marketValue' },
+    { label: 'Weekly Gil Earned', value: 'marketValue' },
     { label: 'Price Increase Percent', value: 'percentChange' },
     { label: 'Purchase Amount', value: 'purchaseAmount' },
     { label: 'Quantity Sold', value: 'quantitySold' },
@@ -30,7 +30,7 @@ export const sortByOptions: Array<{ label: string; value: MarketshareSortBy }> =
 const csvColumns: Array<{ title: string; value: keyof MarketshareItem }> = [
   { title: 'Item ID', value: 'itemID' },
   { title: 'Item Name', value: 'name' },
-  { title: 'Market Value', value: 'marketValue' },
+  { title: 'Weekly Gil Earned', value: 'marketValue' },
   { title: '% Change', value: 'percentChange' },
   { title: 'Market State', value: 'state' },
   { title: 'Minimum Price', value: 'minPrice' },
@@ -124,7 +124,7 @@ export const TabbedButtons = ({
 
 const columnList: Array<ColumnList<MarketshareItem>> = [
   { columnId: 'name', header: 'Item Name' },
-  { columnId: 'marketValue', header: 'Market Value' },
+  { columnId: 'marketValue', header: 'Weekly Gil Earned' },
   {
     columnId: 'percentChange',
     header: 'Percent Changed',

@@ -6,6 +6,20 @@ import {
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV tools',
+    description: 'Saddlebag Exchange: FFXIV tools'
+  }
+}
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/queries' }
+]
+
 const ffxivPages = [
   {
     name: 'Reselling Trade Searches',

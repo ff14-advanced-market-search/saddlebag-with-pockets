@@ -24,6 +24,24 @@ import { getUserSessionData } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: FFXIV shopping list, bulk craft',
+    description:
+      'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients'
+  }
+}
+
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
+  }
+]
+
 const FORM_DEFAULTS = {
   craft_amount: 5,
   hq: false,
@@ -84,7 +102,16 @@ export default function Index() {
   )
 }
 
-const Results = ({ data }: GetShoppingListResponse) => {
+const Results = ({
+  average_cost_per_craft,
+  total_cost,
+  data
+}: GetShoppingListResponse) => {
+  const summaryData = [
+    { label: 'Average cost per craft', value: average_cost_per_craft },
+    { label: 'Total cost', value: total_cost }
+  ]
+
   return (
     <>
       <div className="h-4 w-full" />
@@ -94,6 +121,7 @@ const Results = ({ data }: GetShoppingListResponse) => {
         columnList={columnList}
         mobileColumnList={columnList}
         columnSelectOptions={['pricePerUnit', 'quantity', 'worldName']}
+        summaryData={summaryData}
       />
     </>
   )
@@ -140,6 +168,7 @@ const Row = ({
         <input
           className="w-[70px] border border-gray-300 rounded-md dark:border-gray-400 dark:bg-gray-600"
           type={'number'}
+          max={1000000000}
           value={craft_amount}
           onChange={(e) => {
             const value = e.target.value

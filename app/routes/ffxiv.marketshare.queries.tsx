@@ -2,6 +2,23 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'FFXIV market overview recommendations',
+    description: 'FFXIV market overview recommendations'
+  }
+}
+
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
+  }
+]
+
 const searchParams = {
   marketView:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=0&sortBy=marketValue',
@@ -22,7 +39,9 @@ const searchParams = {
   bestVendorItems:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=-1&sortBy=marketValue',
   bestGear:
-    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4,-5&sortBy=marketValue'
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4,-5&sortBy=marketValue',
+  bestGathering:
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=10&averagePrice=10&sortBy=marketValue&filters=6'
 }
 const recommendedQueries = [
   {
@@ -90,6 +109,13 @@ const recommendedQueries = [
       'See the best selling gear, weapons, armor and glamors from the last week. Excluding crafted raid gear.',
     Icon: DocumentSearchIcon,
     href: searchParams.bestGear
+  },
+  {
+    name: 'Best Raw Materials to Gather.',
+    description:
+      'See the best earning and fastest selling raw materials to gather.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.bestGathering
   }
 ]
 
