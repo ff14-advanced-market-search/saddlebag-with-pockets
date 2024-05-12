@@ -12,6 +12,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -198,6 +199,14 @@ export default function Index() {
             />
           </ContentContainer>
         )}
+        <SmallTable
+          title={`${listing.itemName} : Auctionhouse Listings`}
+          sortingOrder={[{ desc: false, id: 'price' }]}
+          columnList={columnList}
+          mobileColumnList={mobileColumnList}
+          columnSelectOptions={['price', 'quantity']}
+          data={listing.listingData}
+        />
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>
       </PageWrapper>
     )
@@ -290,3 +299,13 @@ const GenericLineChart = ({
   }
   return <HighchartsReact highcharts={Highcharts} options={options} />
 }
+
+const columnList: Array<ColumnList<ListItem>> = [
+  { columnId: 'price', header: 'Price' },
+  { columnId: 'quantity', header: 'Quantity' }
+]
+
+const mobileColumnList: Array<ColumnList<ListItem>> = [
+  { columnId: 'price', header: 'Price' },
+  { columnId: 'quantity', header: 'Quantity' }
+]
