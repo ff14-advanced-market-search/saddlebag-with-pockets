@@ -71,37 +71,62 @@ export default function Index() {
               })}
             </div>
             <div id="ezoic-pub-ad-placeholder-116" />
-            <h3 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              About us
+            <h3 className="text-2xl font-semibold text-blue-900 dark:text-gray-100 mb-4">
+              About Us
             </h3>
             <p>
-              Saddlebag Exchange: Your Gateway to Mastering MMO Markets! Our
-              platform is designed with dozens of tools to help take your in
-              game MMO market trading to the next level!
+              Welcome to <strong>Saddlebag Exchange</strong> — Your Gateway to
+              Mastering MMO Markets! Our platform offers a comprehensive suite
+              of tools designed to elevate your game trading strategy.
             </p>
+            <div className="mt-4 mb-4">
+              <h4 className="text-xl font-semibold text-blue-800 dark:text-gray-200">
+                For Final Fantasy XIV Players:
+              </h4>
+              <ul className="list-disc list-inside">
+                <li>
+                  Cross-server reselling and detailed market overviews to spot
+                  the best deals.
+                </li>
+                <li>
+                  Crafting profit simulations and shopping lists tailored to
+                  enhance your efficiency.
+                </li>
+                <li>
+                  Deep item statistics and alerts to keep you ahead in the
+                  market game.
+                </li>
+                <li>
+                  Whether you're a veteran trader or a newcomer aiming to buy
+                  your dream mansion plot, we've got you covered.
+                </li>
+              </ul>
+            </div>
+            <div className="mt-4 mb-4">
+              <h4 className="text-xl font-semibold text-blue-800 dark:text-gray-200">
+                For World of Warcraft Adventurers:
+              </h4>
+              <ul className="list-disc list-inside">
+                <li>
+                  Experience the power of cross-realm trading with our exclusive
+                  Discount Sniper the <strong>Azeroth Auction Assassin</strong>.
+                </li>
+                <li>
+                  Discover lucrative items with our marketshare searches and
+                  snag the best deals.
+                </li>
+                <li>
+                  Use our shopping lists and export search tools to tap into the
+                  most profitable markets.
+                </li>
+              </ul>
+            </div>
             <p>
-              For "Final Fantasy XIV" players, dive into a world of profitable
-              opportunities with our cross-server reselling, detailed market
-              overviews, and crafting profit simulations. Our tools, including
-              shopping lists, deep item statistics and alerts, are designed to
-              maximize your efficiency and profits, whether you're a trading
-              veteran, a crafting aficionado or a new player saving up to buy
-              the mansion plot of your dreams!
+              Join <strong>Saddlebag Exchange</strong> today and transform your
+              MMO trading into a highly efficient, rewarding journey. Let us
+              help you elevate your game and dominate the market!
             </p>
-            <p>
-              For "World of Warcraft" adventurers, experience the game-changing
-              power of cross-realm trading with Saddlebag Exchange. Utilize our
-              marketshare searches and best deals to discover lucrative items.
-              Buy low and sell high across realms with our Azeroth Auction
-              Assassin discount sniper, shopping lists, and export search,
-              tapping into the most profitable markets.
-            </p>
-            <p>
-              Stay ahead of the competition with our undercut addon, ensuring
-              your items always lead the market. Join Saddlebag Exchange and
-              transform your MMO trading into a highly efficient, rewarding
-              journey. Elevate your game and dominate the market today!
-            </p>
+
             <p style={{ fontSize: '1px' }}>
               **Opportunity:** Saddlebag Exchange is positioned at the
               intersection of gaming and financial optimization. Our tools don't
