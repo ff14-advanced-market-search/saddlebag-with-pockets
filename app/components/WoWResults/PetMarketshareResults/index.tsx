@@ -5,7 +5,6 @@ import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
-import { getOribosLink } from '~/components/utilities/getOribosLink'
 import type {
   PetMarketshareItem,
   PetMarketshareSortBy
@@ -45,11 +44,6 @@ const PetMarketshareResults = ({
   const [globalFilter, setGlobalFilter] = useState('')
   const [sortBy, setSortBy] = useState<PetMarketshareSortBy>(results.sortBy)
 
-  const OribosLink = getOribosLink(
-    results.serverName,
-    'Oribos',
-    results.region as WoWServerRegion
-  )
   const chartData = getChartData(results.data, sortBy)
 
   const itemsColumnList: Array<ColumnList<PetMarketshareItem>> = [
@@ -75,7 +69,6 @@ const PetMarketshareResults = ({
       header: 'Item Link',
       accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
     },
-    { columnId: 'itemID', header: 'Oribos Link', accessor: OribosLink },
     {
       columnId: 'undermineLink',
       header: 'Undermine Link',
