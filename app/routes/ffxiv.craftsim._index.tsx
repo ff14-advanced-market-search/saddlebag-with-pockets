@@ -37,7 +37,7 @@ import {
   parseStringToNumberArray,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
-import DoHFilter from '~/components/form/ffxiv/DoHFilter'
+import Filter from '~/components/form/Filter'
 import {
   getActionUrl,
   handleCopyButton,
@@ -258,7 +258,10 @@ export default function Index() {
               type="button"
             />
           </div>
-          <DoHFilter
+          <Filter
+            formName="jobs"
+            filterButtonText="Choose DoH"
+            selectedCountText="DoH"
             defaultValue={loaderData.jobs}
             options={dOHOptions}
             title={inputMap.jobs}

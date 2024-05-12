@@ -260,6 +260,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Pet Marketshare Overview',
+        href: '/wow/pet-marketshare',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
         icon: ChartSquareBarIcon

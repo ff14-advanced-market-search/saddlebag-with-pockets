@@ -101,7 +101,7 @@ export const TabbedButtons = ({
   onClick: (value: string) => void
   options: Array<{ value: string; label: string }>
 }) => (
-  <div className="hidden md:flex mt-2 gap-2 overflow-x-scroll">
+  <div className="hidden md:flex mt-2 gap-2 overflow-x-auto">
     {options.map(({ value, label }) => {
       const selected = value === currentValue
       return (

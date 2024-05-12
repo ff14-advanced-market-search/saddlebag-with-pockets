@@ -84,6 +84,13 @@ const recommendedQueries = [
     href: '/wow/legacy-marketshare'
   },
   {
+    name: 'Pet Marketshare Overview',
+    description:
+      'Find out what pets are actually selling and what are the best pets to sell.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/pet-marketshare'
+  },
+  {
     name: 'Region Wide Undercut Checker',
     description:
       'Use our Addon with this search to check all of your undercuts on all your alts on one page!',
