@@ -40,6 +40,13 @@ const recommendedQueries = [
       'Join our Patreon Supporters to access the best tools we have!',
     href: 'https://www.patreon.com/indopan',
     external: true
+  },
+  {
+    name: 'Discord Webpage',
+    description: 
+      'Or join our Discord Subscribers to access the best tools we have!',
+    href: 'https://discord.com/servers/saddlebag-exchange-973380473281724476',
+    external: true
   }
 ]
 

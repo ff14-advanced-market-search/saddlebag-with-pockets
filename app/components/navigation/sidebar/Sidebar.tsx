@@ -330,8 +330,14 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
-        name: 'fandom',
+        name: 'Fandom',
         href: 'https://ffxivmarketboard.fandom.com/wiki/Ffxivmarketboard_Wiki',
+        external: true,
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Discord Webpage',
+        href: 'https://discord.com/servers/saddlebag-exchange-973380473281724476',
         external: true,
         icon: DocumentSearchIcon
       }
