@@ -50,7 +50,7 @@ export const sortByOptions: Array<{
 }> = [
   {
     value: 'estimatedRegionMarketValue',
-    label: 'Estimated Region Market Value'
+    label: 'Gold Earned Per Day'
   },
   { value: 'avgTSMPrice', label: 'Average TSM Price' },
   { value: 'homeMinPrice', label: 'Minimum Price' },

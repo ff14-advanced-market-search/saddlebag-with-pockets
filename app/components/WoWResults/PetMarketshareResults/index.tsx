@@ -50,7 +50,7 @@ const PetMarketshareResults = ({
     { columnId: 'itemName', header: 'Item Name' },
     {
       columnId: 'estimatedRegionMarketValue',
-      header: 'Estimated Region Market Value'
+      header: 'Gold Earned Per Day'
     },
     { columnId: 'avgTSMPrice', header: 'Average TSM Price' },
     { columnId: 'homeMinPrice', header: 'Minimum Price' },
