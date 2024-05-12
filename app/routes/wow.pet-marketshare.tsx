@@ -15,6 +15,25 @@ import PetMarketshare, {
   PetMarketshareSortBy
 } from '~/requests/WoW/PetMarketshare'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW Battle Pets Most Gold',
+    description:
+      'Find what battle pets make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
+  }
+}
+
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
+  }
+]
+
 const inputMap: Record<string, string> = {
   region: 'Region',
   homeRealmName: 'Home Realm',
