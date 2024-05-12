@@ -198,7 +198,7 @@ export default function Index() {
             />
           </ContentContainer>
         )}
-        <p style={{ fontSize: '1px' }}>${listing.blog}</p>
+        <p style={{ fontSize: '1px' }}>{listing.blog}</p>
       </PageWrapper>
     )
   }
