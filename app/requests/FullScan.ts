@@ -11,8 +11,7 @@ const defaults = {
   filters: [0],
   region_wide: false,
   include_vendor: false,
-  show_out_stock: false,
-  universalis_list_uid: ''
+  show_out_stock: false
 }
 export type FullScanInput = typeof defaults
 
@@ -24,7 +23,6 @@ export interface FullScanForm {
   roi?: number
   scan_hours?: number
   world?: string
-  universalis_list_uid?: string
   hq_only?: boolean
   out_of_stock?: boolean
   include_vendor?: boolean
