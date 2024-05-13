@@ -75,7 +75,7 @@ describe('formatFullScanInput', () => {
         out_of_stock: true,
         roi: 25,
         scan_hours: 12,
-        region_wide: true
+        region_wide: true,
         include_vendor: true,
         filters: [1, 2, 3]
       })
