@@ -15,8 +15,7 @@ describe('formatFullScanInput', () => {
       filters: [0],
       region_wide: false,
       include_vendor: false,
-      show_out_stock: false,
-      universalis_list_uid: ''
+      show_out_stock: false
     }
     expect(formatFullScanInput()).toEqual(expected)
     expect(formatFullScanInput({})).toEqual(expected)
@@ -34,8 +33,7 @@ describe('formatFullScanInput', () => {
       filters: [0],
       region_wide: false,
       include_vendor: false,
-      show_out_stock: true,
-      universalis_list_uid: ''
+      show_out_stock: true
     }
     expect(
       formatFullScanInput({
@@ -64,8 +62,7 @@ describe('formatFullScanInput', () => {
       filters: [1, 2, 3],
       region_wide: true,
       include_vendor: true,
-      show_out_stock: true,
-      universalis_list_uid: 'some-id'
+      show_out_stock: true
     }
     expect(
       formatFullScanInput({
@@ -78,8 +75,7 @@ describe('formatFullScanInput', () => {
         out_of_stock: true,
         roi: 25,
         scan_hours: 12,
-        region_wide: true,
-        universalis_list_uid: 'some-id',
+        region_wide: true
         include_vendor: true,
         filters: [1, 2, 3]
       })
