@@ -10,7 +10,7 @@ const PetMarketShareForm = ({
   regionDefault = 'NA',
   homeRealm,
   minPriceDefault = 1000,
-  salesPerDayDefault = 0,
+  salesPerDayDefault = 0.01,
   includeCategoriesDefault = [],
   excludeCategoriesDefault = []
 }: {
@@ -39,7 +39,7 @@ const PetMarketShareForm = ({
         inputTag="Sales"
         name="desiredSalesPerDay"
         min={0}
-        step={1}
+        step={0.01}
       />
       <RegionAndServerSelect
         region={regionDefault}
