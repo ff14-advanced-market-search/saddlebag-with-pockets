@@ -34,8 +34,10 @@ const searchParams = {
     '/ffxiv/marketshare?timePeriod=24&salesAmount=35&averagePrice=10&filters=0&sortBy=quantitySold',
   bestFurniture:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=56,65,66,67,68,69,70,71,72,81,82&sortBy=marketValue',
-  bestConsumables:
+  bestCollectible:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=75,80,90&sortBy=marketValue',
+  bestConsumables:
+    '/ffxiv/marketshare?timePeriod=168&salesAmount=10&averagePrice=100&filters=5&sortBy=marketValue',
   bestVendorItems:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=-1&sortBy=marketValue',
   bestGear:
@@ -94,7 +96,14 @@ const recommendedQueries = [
     name: 'Best Selling Collectible Items (Weekly).',
     description: 'See the best selling collectible items from the last week.',
     Icon: DocumentSearchIcon,
-    href: searchParams.bestConsumables
+    href: searchParams.bestCollectible
+  },
+  {
+    name: 'Best Selling Consumable Items (Weekly).',
+    description:
+      'See the best selling food, seafood, tincture items from the last week.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.bestCollectible
   },
   {
     name: 'Best Selling Vendor Items (Weekly).',
