@@ -208,7 +208,10 @@ export default function Index() {
               ffxiv mb, ffxiv websites, auction house ff14, materia ffxiv, ffxiv
               site, ff14 websites, ffxiv house prices, ff14 house prices, ffxiv
               housing prices, ffxiv data, ff14 housing prices, ff13 weapons
-              upgrade guide.
+              upgrade guide, ffxiv character search, final fantasy xiv sale,
+              universalis ffxiv, choco bo, xiv server status, final fantasy 14
+              online server status, marketboard ffxiv, final fantasy 14 market
+              board, ff14 maintenance, ffxiv server status.
             </p>
           </div>
         </div>
