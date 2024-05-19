@@ -140,6 +140,16 @@ export default function Index() {
             </div>
           </div>
         </div>
+        <p style={{ fontSize: '1px' }}>
+          google keywords: ffxiv glamour, reddit ffxiv, ff14 mog station, ffxiv
+          classes, ffxiv modders, ffxiv modpacks, ffxiv download, ffxiv jobs,
+          ffxiv mod, ffxiv mogstation, ffxiv fashion report, fashion report
+          ffxiv, ffxiv forums, ffxiv housing, ffxiv maintenance, ffxiv market
+          board, ffxiv patch notes, final fantasy 14 reddit, ffxiv fanfest,
+          ffxiv msq list, ffxiv character search, ffxiv fafnir, ffxiv collect,
+          universalis ffxiv, ffxiv maintenance jan 15, ffxiv universalis, ffxiv
+          relic weapons, r ffxiv, relic weapons ffxiv, character search ffxiv
+        </p>
       </main>
     </>
   )
