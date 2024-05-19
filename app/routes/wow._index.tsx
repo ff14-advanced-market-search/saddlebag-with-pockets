@@ -7,9 +7,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: world of Warcraft auctionhouse tools',
+    title: 'World of Warcraft Auction House Prices, wowhead sod, ',
     description:
-      'tools to get an advantage in the world of Warcraft auctionhouse'
+      'Addons to make gold in the World of Warcraft Auction House auctionhouse, wowhead sod'
   }
 }
 
@@ -152,6 +152,21 @@ export default function Index() {
             </div>
           </div>
         </div>
+        <p style={{ fontSize: '1px' }}>
+          Google Keywords: wow classic hardcore addons, best sod addons wow, wow
+          classic hardcore addon, wow sod addons, wow coordinates addon, wow
+          hardcore addons, classic wow voice over addon, quest addon wow, wow
+          3.3.5 addons, wow addon healer wow controller addon, wow leveling
+          addon, wow quest addon, best healing addon wow, swing timer addon
+          classic wow nate silver twitter, r/woweconomy, r/wow, wowhead sod,
+          world of warcraft expansions in order, fyrakk assault bugged, world of
+          warcraft hairstyles, wowhead dragonflight battle net login, wor craft,
+          wow classic reddit, blizzard store, reddit classic wow, wow expansions
+          in order, blizzard gear store, meme world of warcraft, r world, reddit
+          wow classic blizzard.com link, battle.net account, lich king, wow
+          expansions, wow+, wowhead wotlk, blizzard launcher, classic wow, south
+          park world of warcraft, world of warcraft classic hardcore
+        </p>
       </main>
     </>
   )
