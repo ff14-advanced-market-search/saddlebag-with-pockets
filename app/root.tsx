@@ -255,10 +255,11 @@ function App() {
           dangerouslySetInnerHTML={{
             __html: `window.ezstandalone = window.ezstandalone || {};
           ezstandalone.cmd = ezstandalone.cmd || [];
-          ezstandalone.define(118,116);
-          ezstandalone.refresh();
-          ezstandalone.enable();
-          ezstandalone.display();
+          ezstandalone.cmd.push(function() {
+            ezstandalone.define(118,116);
+            ezstandalone.refresh();
+            ezstandalone.enable();
+            ezstandalone.display();
         });`
           }}
         />
