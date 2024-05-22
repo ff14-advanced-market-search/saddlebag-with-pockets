@@ -1,7 +1,11 @@
 import { useLoaderData } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getSession } from '~/sessions'
 import { validateWorldAndDataCenter } from '~/utils/locations'
@@ -11,6 +15,7 @@ import Label from '~/components/form/Label'
 import HQCheckbox from '~/components/form/HQCheckbox'
 import CodeBlock from '~/components/Common/CodeBlock'
 import ItemSelect from '~/components/form/select/ItemSelect'
+import CheckBox from '~/components/form/CheckBox'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -76,10 +81,16 @@ const Index = () => {
   const [subForm, setSubForm] = useState<SubFormItem | null>(null)
   const [error, setError] = useState<string | undefined>(undefined)
   const [isPrice, setIsPrice] = useState(true)
+  const [dcOnly, setDcOnly] = useState(false)
 
   const jsonToDisplay = `{\n  "home_server": "${
     jsonData.server
-  }"${parseJSONInput(jsonData.userAuctions, isPrice)}\n}`
+  }",\n  "user_auctions": [${jsonData.userAuctions
+    .map(
+      ({ itemID, price, desiredState, hq }) =>
+        `\n    { "itemID": ${itemID}, "price": ${price}, "desired_state": "${desiredState}", "hq": ${hq} }`
+    )
+    .join(',')}\n  ]${dcOnly ? ',\n  "dc_only": true' : ''}\n}`
 
   const isPriceValue = isPrice ? 'price' : 'quantity'
 
@@ -258,6 +269,20 @@ const Index = () => {
                     })
                   }
                 />
+                <div className="my-2 flex items-center">
+                  <Label
+                    htmlFor="dc-only"
+                    className="font-medium text-gray-700 dark:text-gray-200">
+                    DC Only
+                  </Label>
+                  <CheckBox
+                    id="dc-only"
+                    checked={dcOnly}
+                    onChange={() => setDcOnly(!dcOnly)}
+                    className="ml-2 rounded p-1"
+                    labelTitle=""
+                  />
+                </div>
               </div>
             )}
           </div>

@@ -3,6 +3,7 @@ import {
   ChartSquareBarIcon,
   PencilAltIcon
 } from '@heroicons/react/outline'
+import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -146,9 +147,9 @@ export default function Index() {
           ffxiv mod, ffxiv mogstation, ffxiv fashion report, fashion report
           ffxiv, ffxiv forums, ffxiv housing, ffxiv maintenance, ffxiv market
           board, ffxiv patch notes, final fantasy 14 reddit, ffxiv fanfest,
-          ffxiv msq list, ffxiv character search, ffxiv fafnir,
-          universalis ffxiv, ffxiv maintenance jan 15, ffxiv
-          relic weapons, r ffxiv, relic weapons ffxiv, character search ffxiv
+          ffxiv msq list, ffxiv character search, ffxiv fafnir, universalis
+          ffxiv, ffxiv maintenance jan 15, ffxiv relic weapons, r ffxiv, relic
+          weapons ffxiv, character search ffxiv
         </p>
       </main>
     </>
