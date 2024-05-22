@@ -15,8 +15,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useSubmit,
-  useNavigation
+  useSubmit
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
 import { getUserSessionData } from '~/sessions'
@@ -28,7 +27,7 @@ import {
 } from '~/utils/providers/theme-provider'
 import { classNames } from '~/utils'
 import { store } from '~/redux/store'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
@@ -45,6 +44,15 @@ import { z } from 'zod'
 import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
 import ErrorBounds from './components/utilities/ErrorBoundary'
+import { setFFxivWorld, setWoWRealmData } from './redux/reducers/userSlice'
+import {
+  getFFWorldDataFromLocalStorage,
+  setFFWorldDataInLocalStorage
+} from './redux/localStorage/ffxivWorldDataHelpers'
+import {
+  getWoWRealmDataFromLocalStorage,
+  setWoWRealmDataInLocalStorage
+} from './redux/localStorage/wowRealmHelpers'
 
 export const ErrorBoundary = () => {
   return (
@@ -98,7 +106,6 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 
   return json<LoaderData>({
     site_name: (context.SITE_NAME as string) ?? 'Saddlebag Exchange',
-    // site_name: 'FFXIV Marketboard',
     data_center,
     world,
     wowRealm: server,
@@ -158,7 +165,6 @@ export const meta: MetaFunction = ({ data }) => {
   return {
     charset: 'utf-8',
     title: site_name,
-    // title: `${site_name}: FFXIV marketboard prices, WoW Auctionhouse`,
     viewport: 'width=device-width,initial-scale=1',
     description:
       'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
@@ -172,7 +178,8 @@ function App() {
     (state) => state.user
   )
   const submit = useSubmit()
-  const transition = useNavigation()
+  //const transition = useNavigation()
+  const dispatch = useDispatch()
 
   /**
    * Setup theme for app
@@ -189,19 +196,28 @@ function App() {
    * Sync ffxiv servers and wow realms between local storage and session cookies.
    */
   useEffect(() => {
-    const ffxivDataMatches =
-      ffxivWorld.world === data.world &&
-      ffxivWorld.data_center === data.data_center
+    // Check local storage first
+    const localFFXIVWorld = getFFWorldDataFromLocalStorage()
+    const localWoWRealm = getWoWRealmDataFromLocalStorage()
 
-    const wowDataMatches =
-      wowRealm.region === data.wowRegion &&
-      wowRealm.server.id === data.wowRealm.id &&
-      wowRealm.server.name === data.wowRealm.name
-
+    // If local data exists, use that
     if (
-      (!ffxivDataMatches || !wowDataMatches) &&
-      transition.state !== 'submitting'
+      localFFXIVWorld.world !== data.world ||
+      localFFXIVWorld.data_center !== data.data_center ||
+      localWoWRealm.region !== data.wowRegion ||
+      localWoWRealm.server.id !== data.wowRealm.id ||
+      localWoWRealm.server.name !== data.wowRealm.name
     ) {
+      dispatch(setFFxivWorld(localFFXIVWorld))
+      dispatch(setWoWRealmData(localWoWRealm))
+    } else if (
+      ffxivWorld.world !== data.world ||
+      ffxivWorld.data_center !== data.data_center ||
+      wowRealm.region !== data.wowRegion ||
+      wowRealm.server.id !== data.wowRealm.id ||
+      wowRealm.server.name !== data.wowRealm.name
+    ) {
+      // If local data doesn't exist, use session data and update local storage
       const formData = new FormData()
 
       formData.set(DATA_CENTER, ffxivWorld.data_center)
@@ -211,6 +227,9 @@ function App() {
       formData.set(WOW_REALM_ID, wowRealm.server.id.toString())
 
       submit(formData, { method: 'post' })
+
+      setFFWorldDataInLocalStorage(ffxivWorld.world, ffxivWorld.data_center)
+      setWoWRealmDataInLocalStorage(wowRealm.server, wowRealm.region)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -236,12 +255,11 @@ function App() {
           dangerouslySetInnerHTML={{
             __html: `window.ezstandalone = window.ezstandalone || {};
           ezstandalone.cmd = ezstandalone.cmd || [];
-          ezstandalone.cmd.push(function() {
-              ezstandalone.define(118,116);
-              ezstandalone.refresh();
-              ezstandalone.enable();
-              ezstandalone.display();
-          });`
+          ezstandalone.define(118,116);
+          ezstandalone.refresh();
+          ezstandalone.enable();
+          ezstandalone.display();
+        });`
           }}
         />
       </head>
