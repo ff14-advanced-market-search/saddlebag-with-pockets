@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import { RegionRadioGroup } from './RegionRadioGroup'
 import type { ServerSelected } from './WoWServerSelect'
 import ServerSelect from './WoWServerSelect'
 
 import type { WoWServerData } from '~/requests/WoW/types'
+import { findWoWServersIdByName } from '~/utils/WoWServers'
 
 interface Props {
   region: WoWServerRegion
@@ -30,6 +31,18 @@ export default function RegionAndServerSelect({
   onServerSelectChange
 }: Props) {
   const [regionValue, setRegionValue] = useState<WoWServerRegion>(region)
+
+  // Updates server selection when region changes to keep it in sync
+  useEffect(() => {
+    if (regionValue !== region) {
+      const servers = findWoWServersIdByName(defaultRealm.name, regionValue)
+      if (servers.length > 0) {
+        onServerSelectChange?.({ id: servers[0].id, name: servers[0].name })
+      } else {
+        onServerSelectChange?.(undefined)
+      }
+    }
+  }, [regionValue, region, defaultRealm.name, onServerSelectChange])
 
   return (
     <>
