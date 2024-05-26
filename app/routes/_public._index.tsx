@@ -200,18 +200,17 @@ export default function Index() {
               ff14 bard, eorzea, ff14 moogle, aether auctions, final fantasy 14
               gil, moogle ff14, ffxiv mog, aether auction, retainer ffxiv, ffxiv
               cost, ff14 fish, ff14 retainer, ffxiv retainer, retainers ffxiv,
-              ffxiv prices, ffxiv housing tracker, ff14 housing tracker, ffxiv
-              house tracker, ffxiv cost, ffxiv prices, ff14 price, final fantasy
-              xiv pricing, ff14 prices, ff14 cost, ffxiv price, ff14 moogle
-              shop, ffxiv materia, ff14 auction house, ff14 excalibur, ffxiv
-              web, ffxiv auction house, ffxiv website, auction house ffxiv,
-              ffxiv mb, ffxiv websites, auction house ff14, materia ffxiv, ffxiv
-              site, ff14 websites, ffxiv house prices, ff14 house prices, ffxiv
-              housing prices, ffxiv data, ff14 housing prices, ff13 weapons
-              upgrade guide, ffxiv character search, final fantasy xiv sale,
-              universalis ffxiv, choco bo, xiv server status, final fantasy 14
-              online server status, marketboard ffxiv, final fantasy 14 market
-              board, ff14 maintenance, ffxiv server status.
+              ffxiv prices, ffxiv cost, ff14 price, final fantasy xiv pricing,
+              ff14 prices, ff14 cost, ff14 moogle shop, ffxiv materia, ff14
+              auction house, ff14 excalibur, ffxiv web, ffxiv auction house,
+              ffxiv website, auction house ffxiv, ffxiv mb, ffxiv websites,
+              auction house ff14, materia ffxiv, ffxiv site, ff14 websites,
+              ffxiv house prices, ff14 house prices, ffxiv housing prices, ffxiv
+              data, ff14 housing prices, ff13 weapons upgrade guide, ffxiv
+              character search, final fantasy xiv sale, universalis ffxiv, choco
+              bo, xiv server status, final fantasy 14 online server status,
+              marketboard ffxiv, final fantasy 14 market board, ff14
+              maintenance, ffxiv server status.
             </p>
           </div>
         </div>
