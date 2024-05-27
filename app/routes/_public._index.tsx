@@ -128,7 +128,8 @@ export default function Index() {
             </p>
 
             <p style={{ fontSize: '1px' }}>
-              **Opportunity:** Saddlebag Exchange is positioned at the
+              Welcome to the Saddlebag Exchange. Find helpful tools to get ahead
+              in your favourite MMO's. Saddlebag Exchange is positioned at the
               intersection of gaming and financial optimization. Our tools don't
               just assist players; they revolutionize how they engage with the
               in-game economy. For "Final Fantasy XIV," we turn limited
