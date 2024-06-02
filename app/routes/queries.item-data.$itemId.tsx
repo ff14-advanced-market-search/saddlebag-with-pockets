@@ -116,6 +116,7 @@ const ItemPage = () => {
   }
 
   const listing = data?.listing
+  // itemID uses caps on ID from api response values
   const itemId = 'history' in data ? data.history.itemID : ''
 
   const noResults =
