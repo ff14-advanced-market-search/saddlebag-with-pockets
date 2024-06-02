@@ -18,6 +18,7 @@ import HistoryResults from '~/components/FFXIVResults/item-history/Results'
 import NoResults from '~/components/Common/NoResults'
 import ListingResults from '~/components/FFXIVResults/listings/Results'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import CustomButton from '~/components/utilities/CustomButton'
 
 type ItemPageData =
   | {
@@ -115,7 +116,7 @@ const ItemPage = () => {
   }
 
   const listing = data?.listing
-  // const itemId = 'params' in data ? data.params.itemId : '';
+  const itemId = 'params' in data ? data.params.itemId : ''
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
@@ -133,27 +134,22 @@ const ItemPage = () => {
           </>
         </Section>
 
-        {/*<Section>
-          <>
-            <ul>
-              <li>
-                <a href={`https://universalis.app/market/${data.itemId}`} target="_blank" rel="noopener noreferrer">
-                  View on Universalis
-                </a>
-              </li>
-              <li>
-                <a href={`https://ffxivteamcraft.com/db/en/item/${data.itemId}`} target="_blank" rel="noopener noreferrer">
-                  View on FFXIV Teamcraft
-                </a>
-              </li>
-              <li>
-                <a href={`https://www.garlandtools.org/db/#item/${data.itemId}`} target="_blank" rel="noopener noreferrer">
-                  View on Garland Tools
-                </a>
-              </li>
-            </ul>
-          </>
-        </Section>*/}
+        <Section>
+          <div className="flex flex-wrap gap-2">
+            <CustomButton
+              link={`https://universalis.app/market/${itemId}`}
+              buttonText="View on Universalis"
+            />
+            <CustomButton
+              link={`https://ffxivteamcraft.com/db/en/item/${itemId}`}
+              buttonText="View on FFXIV Teamcraft"
+            />
+            <CustomButton
+              link={`https://www.garlandtools.org/db/#item/${itemId}`}
+              buttonText="View on Garland Tools"
+            />
+          </div>
+        </Section>
 
         <Section>
           <>
