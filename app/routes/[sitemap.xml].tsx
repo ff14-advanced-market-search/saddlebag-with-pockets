@@ -5,8 +5,8 @@ import { wowItemsMap } from '~/utils/items/wowItems'
 export const loader: LoaderFunction = async () => {
   const baseURL = 'https://saddlebagexchange.com'
 
-  // # can change this back to a dynamic date if thats better
-  // const currentDate = new Date().toISOString()
+  // // # can change this back to a dynamic date if thats better
+  const currentDate = new Date().toISOString()
 
   // # then use this
   // <url>
@@ -311,7 +311,8 @@ ${dynamicWoWURLs
     (url) => `
 <url>
   <loc>${url}</loc>
-  <lastmod>2024-05-11T00:27:48+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
+  <changefreq>hourly</changefreq>
   <priority>0.80</priority>
 </url>`
   )
@@ -321,7 +322,8 @@ ${dynamicFFXIVURLs
     (url) => `
 <url>
   <loc>${url}</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <lastmod>${currentDate}</lastmod>
+  <changefreq>hourly</changefreq>
   <priority>0.80</priority>
 </url>`
   )
