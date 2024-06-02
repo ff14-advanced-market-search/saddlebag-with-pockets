@@ -115,6 +115,7 @@ const ItemPage = () => {
   }
 
   const listing = data?.listing
+  // const itemId = 'params' in data ? data.params.itemId : '';
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
@@ -131,6 +132,28 @@ const ItemPage = () => {
             )}
           </>
         </Section>
+
+        {/*<Section>
+          <>
+            <ul>
+              <li>
+                <a href={`https://universalis.app/market/${data.itemId}`} target="_blank" rel="noopener noreferrer">
+                  View on Universalis
+                </a>
+              </li>
+              <li>
+                <a href={`https://ffxivteamcraft.com/db/en/item/${data.itemId}`} target="_blank" rel="noopener noreferrer">
+                  View on FFXIV Teamcraft
+                </a>
+              </li>
+              <li>
+                <a href={`https://www.garlandtools.org/db/#item/${data.itemId}`} target="_blank" rel="noopener noreferrer">
+                  View on Garland Tools
+                </a>
+              </li>
+            </ul>
+          </>
+        </Section>*/}
 
         <Section>
           <>
