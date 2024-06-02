@@ -118,7 +118,7 @@ const ItemPage = () => {
   const listing = data?.listing
   // itemID uses caps on ID from api response values
   // default to 4745 so we dont have dead links on pages without history data
-  const itemId = data.history?.itemID || '4745';
+  const itemId = data.history?.itemID || '4745'
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
