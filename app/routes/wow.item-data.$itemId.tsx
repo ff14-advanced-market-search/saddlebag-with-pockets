@@ -13,6 +13,7 @@ import HighchartsReact from 'highcharts-react-official'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import CustomButton from '~/components/utilities/CustomButton'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -162,6 +163,18 @@ export default function Index() {
                 listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
               }
               className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
+          <div className="flex flex-wrap gap-2">
+            <CustomButton
+              link={`https://www.wowhead.com/item=${listing.itemID}`}
+              buttonText="View on WoWHead"
+            />
+            <CustomButton
+              link={`${listing.link}`}
+              buttonText="View on Undermine Exchange"
             />
           </div>
         </div>

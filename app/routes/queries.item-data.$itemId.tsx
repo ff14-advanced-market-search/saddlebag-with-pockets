@@ -18,6 +18,7 @@ import HistoryResults from '~/components/FFXIVResults/item-history/Results'
 import NoResults from '~/components/Common/NoResults'
 import ListingResults from '~/components/FFXIVResults/listings/Results'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+import CustomButton from '~/components/utilities/CustomButton'
 
 type ItemPageData =
   | {
@@ -115,6 +116,9 @@ const ItemPage = () => {
   }
 
   const listing = data?.listing
+  // itemID uses caps on ID from api response values
+  // default to 4745 so we dont have dead links on pages without history data
+  const itemId = data.history?.itemID || '4745'
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
@@ -130,6 +134,23 @@ const ItemPage = () => {
               <Title title="No results found" className="text-xl" />
             )}
           </>
+        </Section>
+
+        <Section>
+          <div className="flex flex-wrap gap-2">
+            <CustomButton
+              link={`https://universalis.app/market/${itemId}`}
+              buttonText="View on Universalis"
+            />
+            <CustomButton
+              link={`https://ffxivteamcraft.com/db/en/item/${itemId}`}
+              buttonText="View on FFXIV Teamcraft"
+            />
+            <CustomButton
+              link={`https://www.garlandtools.org/db/#item/${itemId}`}
+              buttonText="View on Garland Tools"
+            />
+          </div>
         </Section>
 
         <Section>
