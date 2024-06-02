@@ -116,7 +116,7 @@ const ItemPage = () => {
   }
 
   const listing = data?.listing
-  const itemId = 'params' in data ? data.params.itemId : ''
+  const itemId = 'history' in data ? data.history.itemID : ''
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
