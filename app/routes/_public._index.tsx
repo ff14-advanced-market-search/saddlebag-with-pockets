@@ -81,37 +81,50 @@ export default function Index() {
               <ul className="list-disc list-inside">
                 <li>
                   Get real-time FFXIV Discord alerts for{' '}
-                  <a href="https://saddlebagexchange.com/price-sniper">
-                    prices
+                  <a
+                    href="https://saddlebagexchange.com/price-sniper"
+                    className="text-blue-600 underline">
+                    Prices
                   </a>
                   ,{' '}
-                  <a href="https://saddlebagexchange.com/undercut">
-                    undercuts, sales
+                  <a
+                    href="https://saddlebagexchange.com/undercut"
+                    className="text-blue-600 underline">
+                    Undercuts, Sales
                   </a>
                   , and more!
                 </li>
                 <li>
                   Unlock the best deals and maximize profits with our{' '}
-                  <a href="https://saddlebagexchange.com/queries/recommended">
-                    cross-server reselling tool.
+                  <a
+                    href="https://saddlebagexchange.com/queries/recommended"
+                    className="text-blue-600 underline">
+                    Cross-Server Reselling Tool.
                   </a>
                 </li>
                 <li>
                   Explore lucrative crafting opportunities with our{' '}
-                  <a href="https://saddlebagexchange.com/queries/recommended">
-                    crafting profit simulations.
+                  <a
+                    href="https://saddlebagexchange.com/queries/recommended"
+                    className="text-blue-600 underline">
+                    Crafting Profit Simulations.
                   </a>
                 </li>
                 <li>
-                  <a href="https://saddlebagexchange.com/ffxiv/shopping-list">
-                    Optimize your shopping with our list to find raw materials
-                    at the lowest prices across servers!
+                  Optimize your search for the cheapest raw materials across
+                  with our{' '}
+                  <a
+                    href="https://saddlebagexchange.com/ffxiv/shopping-list"
+                    className="text-blue-600 underline">
+                    Shopping List Search.
                   </a>
                 </li>
                 <li>
-                  <a href="https://saddlebagexchange.com/queries/item-history">
-                    Dive into detailed item statistics to uncover the true value
-                    of your items.
+                  Uncover the true value of your items into our{' '}
+                  <a
+                    href="https://saddlebagexchange.com/queries/item-history"
+                    className="text-blue-600 underline">
+                    Detailed Item Sale Statistics.
                   </a>
                 </li>
                 <li>
@@ -126,12 +139,25 @@ export default function Index() {
               </h4>
               <ul className="list-disc list-inside">
                 <li>
-                  Get real-time WoW AH Discod Price Alerts, Undercut Alerts and
-                  more!
+                  Get real-time WoW AH Discord{' '}
+                  <a
+                    href="https://saddlebagexchange.com/wow/price-alert"
+                    className="text-blue-600 underline">
+                    Price Alerts
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
+                    className="text-blue-600 underline">
+                    Undercuts Alerts
+                  </a>
+                  , and more!
                 </li>
                 <li>
                   Check out our region wide{' '}
-                  <a href="https://saddlebagexchange.com/wow/best-deals?discount=99&minPrice=100&salesPerDay=0.1">
+                  <a
+                    href="https://saddlebagexchange.com/wow/best-deals?discount=99&minPrice=100&salesPerDay=0.1"
+                    className="text-blue-600 underline">
                     Ultra Cheap Deals
                   </a>{' '}
                   search that finds super valuable items selling for just 1
@@ -141,7 +167,9 @@ export default function Index() {
                   Experience the power of cross-realm trading with our exclusive
                   Discount Sniper the{' '}
                   <strong>
-                    <a href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest">
+                    <a
+                      href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest"
+                      className="text-blue-600 underline">
                       Azeroth Auction Assassin
                     </a>
                   </strong>
@@ -149,22 +177,30 @@ export default function Index() {
                 </li>
                 <li>
                   Discover lucrative items with our{' '}
-                  <a href="https://saddlebagexchange.com/wow/marketshare">
+                  <a
+                    href="https://saddlebagexchange.com/wow/marketshare"
+                    className="text-blue-600 underline">
                     Marketshare Gold Earning Searches
                   </a>{' '}
                   and snag the{' '}
-                  <a href="https://saddlebagexchange.com/wow/best-deals/recommended">
+                  <a
+                    href="https://saddlebagexchange.com/wow/best-deals/recommended"
+                    className="text-blue-600 underline">
                     Best Deals.
                   </a>{' '}
                 </li>
                 <li>
                   Use our{' '}
-                  <a href="https://saddlebagexchange.com/wow/shopping-list">
-                    shopping list
+                  <a
+                    href="https://saddlebagexchange.com/wow/shopping-list"
+                    className="text-blue-600 underline">
+                    Shopping List
                   </a>{' '}
                   and{' '}
-                  <a href="https://saddlebagexchange.com/wow/export-search">
-                    export search
+                  <a
+                    href="https://saddlebagexchange.com/wow/export-search"
+                    className="text-blue-600 underline">
+                    Export Search
                   </a>{' '}
                   tools to tap into the most profitable markets.
                 </li>
