@@ -163,7 +163,7 @@ export default function Index() {
                     shopping list
                   </a>{' '}
                   and{' '}
-                  <a href="https://saddlebagexchange.com/wow/export">
+                  <a href="https://saddlebagexchange.com/wow/export-search">
                     export search
                   </a>{' '}
                   tools to tap into the most profitable markets.
