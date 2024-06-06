@@ -1,10 +1,11 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { MetaFunction } from '@remix-run/react'
 import { json } from '@remix-run/cloudflare'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import { useState } from 'react'
+import { z } from 'zod'
 import { PageWrapper } from '~/components/Common'
 import WoWStatLookup from '~/requests/WoW/ItemStatLookup'
-import { z } from 'zod'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { getUserSessionData } from '~/sessions'
 import type { WoWMarketShareActionResults } from '~/components/WoWResults/MarketshareResults'
@@ -17,7 +18,6 @@ import {
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
-import { useState } from 'react'
 import {
   parseCheckboxBoolean,
   parseStringToNumber,
@@ -57,18 +57,16 @@ const searchParamsTypes = z.object({
   desiredAvgPrice: z
     .string()
     .min(1)
-    .transform((value) => parseFloat(value) * 10000),
+    .transform((value) => parseFloat(value)),
   desiredSalesPerDay: z
     .string()
     .min(1)
     .transform((value) => parseFloat(value)),
   region: z.union([z.literal('NA'), z.literal('EU')]),
   homeRealmId: z
-    .object({
-      id: z.number(),
-      name: z.string()
-    })
-    .transform((value) => `${value.id}---${value.name}`),
+    .string()
+    .min(1)
+    .transform((value) => value),
   itemClass: parseStringToNumber,
   itemSubClass: parseStringToNumber,
   itemQuality: parseStringToNumber,
