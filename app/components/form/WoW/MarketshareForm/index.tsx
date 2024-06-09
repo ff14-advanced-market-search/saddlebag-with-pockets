@@ -20,7 +20,7 @@ const MarketShareForm = ({
   commodityDefault?: boolean
 }) => {
   // // debug the issue is this is being passed as a bool not a string
-  // console.log('loaderdata', loaderData.commodity)
+  // console.log('commodity', loaderData.commodity)
   return (
     <div className="pt-2 md:pt-4">
       <InputWithLabel

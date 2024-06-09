@@ -125,9 +125,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     requiredLevel:
       params.get('requiredLevel') ||
       defaultFormValuesMarketShare.requiredLevel.toString(),
-    commodity:
-      params.get('commodity') ||
-      defaultFormValuesMarketShare.commodity
+    commodity: params.get('commodity') || defaultFormValuesMarketShare.commodity
   }
 
   const validInput = searchParamsTypes.safeParse(input)
