@@ -25,7 +25,7 @@ export const links: LinksFunction = () => [
 const searchParams = {
   defaultSingleRealm: '/wow/marketshare',
   defaultCommodity:
-    '/wow/marketshare?desiredAvgPrice=0&desiredSalesPerDay=10000&commodity=on'
+    '/wow/marketshare?desiredAvgPrice=0&desiredSalesPerDay=100&commodity=on'
 }
 
 // Updated recommendedQueries to reflect WoW searches
@@ -43,127 +43,6 @@ const recommendedQueries = [
     Icon: DocumentSearchIcon,
     href: searchParams.defaultCommodity
   }
-  // {
-  //   name: 'Ultra Cheap Deals (Beginner Friendly / Low Risk)',
-  //   description:
-  //     'Scout for ultra-cheap deals across all categories with the highest discounts.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.ultraCheapDeals
-  // },
-  // {
-  //   name: 'Fast Selling Items (Beginner Friendly / Low Risk)',
-  //   description:
-  //     'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.superFastSelling
-  // },
-  // {
-  //   name: 'Cheap Pet Deals',
-  //   description:
-  //     'Find cheap battle pets. Good for cross realm trading on one wow account.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.cheapPetDeals
-  // },
-  // {
-  //   name: 'High Value Deals',
-  //   description:
-  //     'Uncover high-value items across all expansions with substantial discounts.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.highValue
-  // },
-  // {
-  //   name: 'Transmog Weapons',
-  //   description: 'Find discount deals on legacy transmog weapons.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.transmogWeapons
-  // },
-  // {
-  //   name: 'Transmog Gear',
-  //   description:
-  //     'Discover great discounts on legacy transmog gear for your collection.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.transmogGear
-  // },
-  // {
-  //   name: 'Dragonflight Recipes',
-  //   description:
-  //     'Find Dragonflight recipes at a discount for crafting advancements.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.dragonflightRecipes
-  // },
-  // {
-  //   name: 'Legacy Recipes',
-  //   description:
-  //     'Acquire legacy recipes for your collection or crafting needs at a discount.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.legacyRecipes
-  // },
-  // {
-  //   name: 'Illusions and Consumables',
-  //   description:
-  //     'Seek out deals on Dragonflight Weapon Illusions and consumable transmog.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.illusionsAndConsumables
-  // },
-  // {
-  //   name: 'High Value Toys',
-  //   description:
-  //     'Explore toys with high value and rarity across expansions at a discount.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.highValueToys
-  // },
-  // {
-  //   name: 'Mounts',
-  //   description: 'Pursue discounts on mounts to travel Azeroth in style.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.mounts
-  // },
-  // {
-  //   name: 'Quest Items',
-  //   description: 'Brawlers Passes, Darkmoon Fair Items, etc.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.questItems
-  // },
-  // {
-  //   name: 'Medium Value Pet Deals',
-  //   description: 'Find pets with medium value and ok sale rate.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.mediumValuePetDeals
-  // },
-  // {
-  //   name: 'High Value Pet Deals',
-  //   description:
-  //     'Seek out high-value pets to add rare companions to your collection.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.highValuePetDeals
-  // },
-  // {
-  //   name: 'Uncaged Pets',
-  //   description:
-  //     'These are items that when consumed become a pet in your journal.  The same as getting a level 1 pet.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.uncagedPetsItem
-  // },
-  // {
-  //   name: 'Holiday Items',
-  //   description: 'Discover festive holiday items to celebrate seasonal events.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.holidayItem
-  // },
-  // {
-  //   name: 'Fast Selling Miscellaneous',
-  //   description:
-  //     'Identify quickly selling miscellaneous items like Sturdy Expedition Shovel, Zapthrottle Soul Inhaler, etc.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.fastSellingMiscellaneous
-  // },
-  // {
-  //   name: 'Other Miscellaneous',
-  //   description:
-  //     'Find unique and random items, including trading post parts, books, and keys.',
-  //   Icon: DocumentSearchIcon,
-  //   href: searchParams.otherMiscellaneous
-  // }
 ]
 
 export default function Index() {
