@@ -251,7 +251,7 @@ const navGroups: Array<{
       },
       {
         name: 'Dragonflight Marketshare Overview',
-        href: '/wow/marketshare',
+        href: '/wow/marketshare/recommended',
         icon: ChartSquareBarIcon
       },
       {

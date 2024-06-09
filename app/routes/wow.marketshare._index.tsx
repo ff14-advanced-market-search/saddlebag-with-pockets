@@ -80,7 +80,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW most gold on auctionhouse',
+    title: 'Saddlebag Exchange: WoW Most Gold on the Auctionhouse',
     description: 'Find what current content items make the most gold in WoW!',
     links: [
       {
@@ -125,9 +125,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     requiredLevel:
       params.get('requiredLevel') ||
       defaultFormValuesMarketShare.requiredLevel.toString(),
-    commodity:
-      params.get('commodity') ||
-      defaultFormValuesMarketShare.commodity.toString()
+    commodity: params.get('commodity') || defaultFormValuesMarketShare.commodity
   }
 
   const validInput = searchParamsTypes.safeParse(input)

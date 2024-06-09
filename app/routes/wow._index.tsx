@@ -74,7 +74,7 @@ const recommendedQueries = [
     description:
       'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
     Icon: DocumentSearchIcon,
-    href: '/wow/marketshare'
+    href: '/wow/marketshare/recommended'
   },
   {
     name: 'Legacy Marketshare Overview',

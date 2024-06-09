@@ -7,8 +7,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: wow best deals recommendations',
-    description: 'Saddlebag Exchange: wow best deals recommendations'
+    title: 'Saddlebag Exchange: WoW Best Deals Recommendations',
+    description: 'Saddlebag Exchange: WoW Amazing Auction House Deals'
   }
 }
 
