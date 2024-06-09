@@ -19,6 +19,8 @@ const MarketShareForm = ({
   inputMap: Record<keyof typeof defaultFormValuesMarketShare, string>
   commodityDefault?: boolean
 }) => {
+  // // debug the issue is this is being passed as a bool not a string
+  // console.log('loaderdata', loaderData.commodity)
   return (
     <div className="pt-2 md:pt-4">
       <InputWithLabel
@@ -91,7 +93,7 @@ const MarketShareForm = ({
       />
       <div className="my-2 relative flex">
         <CheckBox
-          defaultChecked={loaderData.commodity === 'on'}
+          defaultChecked={loaderData.commodity}
           labelTitle={inputMap.commodity}
           id="commodity"
           name="commodity"
