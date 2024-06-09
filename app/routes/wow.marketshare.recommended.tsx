@@ -23,8 +23,7 @@ export const links: LinksFunction = () => [
 
 // Updated searchParams with WoW best deals endpoints
 const searchParams = {
-  defaultSingleRealm:
-    '/wow/marketshare',
+  defaultSingleRealm: '/wow/marketshare',
   defaultCommodity:
     '/wow/marketshare?desiredAvgPrice=0&desiredSalesPerDay=10000&commodity=on'
 }
@@ -39,7 +38,8 @@ const recommendedQueries = [
   },
   {
     name: 'Default Commodity Realm',
-    description: 'See what items make the most gold on your region wide commodity market.',
+    description:
+      'See what items make the most gold on your region wide commodity market.',
     Icon: DocumentSearchIcon,
     href: searchParams.defaultCommodity
   }
