@@ -26,13 +26,16 @@ const BASE_URL = '/wow/marketshare'
 
 // Updated searchParams
 const searchParams = {
+  // $$$
+  ultraFast: `${BASE_URL}?desiredSalesPerDay=1000000&commodity=on`,
+  legacy: '/wow/legacy-marketshare',
   // default
   defaultSingleRealm: `${BASE_URL}`,
   defaultCommodity: `${BASE_URL}?commodity=on`,
   // custom
   fastSalesSingleRealm: `${BASE_URL}?desiredSalesPerDay=10`,
   fastCommodities: `${BASE_URL}?commodity=on&desiredSalesPerDay=1000`,
-  valueSalesSingleRealm: `${BASE_URL}?desiredAvgPrice=10000`,
+  valueSalesSingleRealm: `${BASE_URL}?desiredAvgPrice=30000`,
   valueCommodities: `${BASE_URL}?commodity=on&desiredAvgPrice=1000`,
   // misc
   toys: `${BASE_URL}?itemClass=15&itemSubClass=199`,
@@ -71,6 +74,19 @@ const searchParams = {
 
 // Updated recommendedQueries to reflect WoW searches
 const recommendedQueries = [
+  {
+    name: '1 MILLION SOLD A DAY!!!',
+    description: 'See what items sell over 1 million a day on your region.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.ultraFast
+  },
+  {
+    name: 'Legacy Marketshare',
+    description:
+      'Find out what Legacy items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.legacy
+  },
   {
     name: 'Default Single Realm',
     description: 'See what items make the most gold on your realm.',
