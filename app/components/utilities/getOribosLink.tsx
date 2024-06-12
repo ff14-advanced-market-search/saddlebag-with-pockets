@@ -23,9 +23,9 @@ export const getOribosLink =
 
     return (
       <ExternalLink
-        link={`https://oribos.exchange/#${regionForLink}-${parsedServerName}/${itemId}`}
+        link={`https://undermine.exchange/#${regionForLink}-${parsedServerName}/${itemId}`}
         text={title}
-        tooltip={`Oribos Marketplace For ${serverName}`}
+        tooltip={`Undermine Marketplace For ${serverName}`}
       />
     )
   }

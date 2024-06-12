@@ -21,11 +21,52 @@ export const links: LinksFunction = () => [
   }
 ]
 
-// Updated searchParams with WoW best deals endpoints
+// Define the base URL for the search parameters
+const BASE_URL = '/wow/marketshare'
+
+// Updated searchParams
 const searchParams = {
-  defaultSingleRealm: '/wow/marketshare',
-  defaultCommodity:
-    '/wow/marketshare?desiredAvgPrice=0&desiredSalesPerDay=100&commodity=on'
+  // default
+  defaultSingleRealm: `${BASE_URL}`,
+  defaultCommodity: `${BASE_URL}?commodity=on`,
+  // custom
+  fastSalesSingleRealm: `${BASE_URL}?desiredSalesPerDay=10`,
+  fastCommodities: `${BASE_URL}?commodity=on&desiredSalesPerDay=1000`,
+  valueSalesSingleRealm: `${BASE_URL}?desiredAvgPrice=10000`,
+  valueCommodities: `${BASE_URL}?commodity=on&desiredAvgPrice=1000`,
+  // misc
+  toys: `${BASE_URL}?itemClass=15&itemSubClass=199`,
+  recipes: `${BASE_URL}?itemClass=9`,
+  misc: `${BASE_URL}?itemClass=15`,
+  miscCommodities: `${BASE_URL}?itemClass=15&commodity=on`,
+  // gear
+  weapons: `${BASE_URL}?itemClass=2`,
+  armor: `${BASE_URL}?itemClass=4`,
+  cloth: `${BASE_URL}?itemClass=4&itemSubClass=1`,
+  leather: `${BASE_URL}?itemClass=4&itemSubClass=2`,
+  mail: `${BASE_URL}?itemClass=4&itemSubClass=3`,
+  plate: `${BASE_URL}?itemClass=4&itemSubClass=4`,
+  armorMiscellaneous: `${BASE_URL}?itemClass=4&itemSubClass=0`,
+  bags: `${BASE_URL}?itemClass=1`,
+  // finished goods
+  itemEnhancement: `${BASE_URL}?itemClass=8&commodity=on`,
+  gems: `${BASE_URL}?itemClass=3&commodity=on`,
+  consumable: `${BASE_URL}?itemClass=0&commodity=on`,
+  // trade goods
+  tradegoods: `${BASE_URL}?itemClass=7&commodity=on`,
+  partsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=1`,
+  jcTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=4`,
+  clothTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=5`,
+  leatherTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=6`,
+  metalStoneTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=7`,
+  cookingTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=8`,
+  herbTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=9`,
+  elementalTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=10`,
+  otherTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=11`,
+  enchantingTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=12`,
+  inscriptionTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=16`,
+  optionalReagentsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=18`,
+  finishingReagentsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=19`
 }
 
 // Updated recommendedQueries to reflect WoW searches
@@ -42,6 +83,207 @@ const recommendedQueries = [
       'See what items make the most gold on your region wide commodity market.',
     Icon: DocumentSearchIcon,
     href: searchParams.defaultCommodity
+  },
+  {
+    name: 'Fast Sales Single Realm',
+    description: 'Find items that have a high sales rate on your realm.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.fastSalesSingleRealm
+  },
+  {
+    name: 'Fast Commodities',
+    description:
+      'Identify commodities that sell quickly on the region-wide market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.fastCommodities
+  },
+  {
+    name: 'High Value Sales Single Realm',
+    description: 'Find items that have a high sales price on your realm.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.valueSalesSingleRealm
+  },
+  {
+    name: 'High Value Commodities',
+    description:
+      'Identify commodities that have a high sales price on the region-wide market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.valueCommodities
+  },
+  {
+    name: 'Toys',
+    description: 'Discover toys that can be sold for profit.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.toys
+  },
+  {
+    name: 'Recipes',
+    description: 'Look up recipes that have high market value.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.recipes
+  },
+  {
+    name: 'Miscellaneous',
+    description: 'Explore various miscellaneous items for sale.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.misc
+  },
+  {
+    name: 'Miscellaneous Commodities',
+    description: 'Check out miscellaneous commodities that sell well.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.miscCommodities
+  },
+  {
+    name: 'Weapons',
+    description: 'Find profitable weapons on the market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.weapons
+  },
+  {
+    name: 'Armor',
+    description: 'Explore armor pieces that are in demand.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.armor
+  },
+  {
+    name: 'Cloth Armor',
+    description: 'Discover cloth armor that can be sold.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.cloth
+  },
+  {
+    name: 'Leather Armor',
+    description: 'Check out leather armor for sale.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.leather
+  },
+  {
+    name: 'Mail Armor',
+    description: 'Check out mail armor for sale.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.mail
+  },
+  {
+    name: 'Plate Armor',
+    description: 'Identify valuable plate armor items.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.plate
+  },
+  {
+    name: 'Miscellaneous Armor',
+    description:
+      'Miscellaneous: Trinkets, Rings, Necks, Spellstones, Firestones, etc.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.armorMiscellaneous
+  },
+  {
+    name: 'Bags',
+    description: 'Look up bags that are in high demand.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.bags
+  },
+  {
+    name: 'Item Enhancements',
+    description: 'Identify item enhancements that sell well.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.itemEnhancement
+  },
+  {
+    name: 'Gems',
+    description: 'Explore gems that are profitable.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.gems
+  },
+  {
+    name: 'Consumables',
+    description: 'Find consumable items that have high sales rates.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.consumable
+  },
+  {
+    name: 'Trade Goods',
+    description: 'Look up various trade goods on the market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.tradegoods
+  },
+  {
+    name: 'Parts Trade Goods',
+    description: 'Explore parts trade goods.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.partsTradegoods
+  },
+  {
+    name: 'Jewelcrafting Trade Goods',
+    description: 'Find jewelcrafting materials on the market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.jcTradegoods
+  },
+  {
+    name: 'Cloth Trade Goods',
+    description: 'Look up cloth materials that are in demand.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.clothTradegoods
+  },
+  {
+    name: 'Leather Trade Goods',
+    description: 'Check out leather materials for sale.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.leatherTradegoods
+  },
+  {
+    name: 'Metal & Stone Trade Goods',
+    description: 'Identify valuable metal and stone materials.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.metalStoneTradegoods
+  },
+  {
+    name: 'Cooking Trade Goods',
+    description: 'Discover cooking materials that sell well.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.cookingTradegoods
+  },
+  {
+    name: 'Herb Trade Goods',
+    description: 'Find herbs on the market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.herbTradegoods
+  },
+  {
+    name: 'Elemental Trade Goods',
+    description: 'Explore elemental materials that are profitable.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.elementalTradegoods
+  },
+  {
+    name: 'Other Trade Goods',
+    description: 'Look up other various trade goods.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.otherTradegoods
+  },
+  {
+    name: 'Enchanting Trade Goods',
+    description: 'Find enchanting materials on the market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.enchantingTradegoods
+  },
+  {
+    name: 'Inscription Trade Goods',
+    description: 'Discover inscription materials that sell well.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.inscriptionTradegoods
+  },
+  {
+    name: 'Optional Reagents Trade Goods',
+    description: 'Identify optional reagents for sale.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.optionalReagentsTradegoods
+  },
+  {
+    name: 'Finishing Reagents Trade Goods',
+    description: 'Explore finishing reagents that are in demand.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.finishingReagentsTradegoods
   }
 ]
 

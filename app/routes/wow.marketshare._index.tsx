@@ -28,7 +28,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 const PAGE_URL = '/wow/marketshare'
 
 export const defaultFormValuesMarketShare = {
-  desiredAvgPrice: '10000',
+  desiredAvgPrice: '0',
   desiredSalesPerDay: '0',
   region: 'NA',
   homeRealmId: `3678---Thrall`,
