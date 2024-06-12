@@ -169,6 +169,10 @@ export default function Index() {
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-wrap gap-2">
             <CustomButton
+              link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
+              buttonText="Best Place to Sell!"
+            />
+            <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
             />
