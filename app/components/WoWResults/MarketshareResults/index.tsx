@@ -7,6 +7,7 @@ import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
+import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import MobileTable from '../FullScan/MobileTable'
@@ -36,7 +37,9 @@ const MarketshareResults = ({
   const [currentMarketValue, setCurrentMarketValue] = useState(true)
   const [globalFilter, setGlobalFilter] = useState('')
 
-  const OribosLink = getOribosLink(results.serverName, 'Oribos', results.region)
+  // // get oribos links
+  // const itemDataLink = getOribosLink(results.serverName, 'Link', results.region)
+  const itemDataLink = getSaddlebagWoWLink('Link')
   const chartData = currentMarketValue
     ? getChartData(results.data, colorValue)
     : getHistoryChartData(results.data, colorValue)
@@ -61,6 +64,7 @@ const MarketshareResults = ({
 
   const itemsColumnList: Array<ColumnList<ItemStats>> = [
     { columnId: 'itemName', header: 'Item Name' },
+    { columnId: 'itemID', header: 'Item Data', accessor: itemDataLink },
     { columnId: 'minPrice', header: 'Minimum Price' },
     { columnId: 'currentMarketValue', header: 'Current Daily Gold Earned' },
     { columnId: 'historicMarketValue', header: 'Historic Daily Gold Earned' },
@@ -76,7 +80,6 @@ const MarketshareResults = ({
     { columnId: 'historicPrice', header: 'Historic Price' },
     { columnId: 'item_class', header: 'Item Class' },
     { columnId: 'item_subclass', header: 'Item Sub Class' },
-    { columnId: 'itemID', header: 'Oribos Link', accessor: OribosLink },
     { columnId: 'salesPerDay', header: 'Sales Per Day' },
     {
       columnId: 'avgQuantity',
@@ -263,6 +266,7 @@ const getChartData = (
 
 const tableSortOrder = [
   'itemName',
+  'itemID',
   'currentMarketValue',
   'historicMarketValue',
   'percentChange',
@@ -273,7 +277,6 @@ const tableSortOrder = [
   'avgQuantity',
   'currentQuantity',
   'currentVsAvgQuantityPercent',
-  'itemID',
   'item_subclass',
   'item_class'
 ]
