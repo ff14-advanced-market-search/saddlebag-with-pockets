@@ -21,11 +21,48 @@ export const links: LinksFunction = () => [
   }
 ]
 
-// Updated searchParams with WoW best deals endpoints
+
+// Define the base URL for the search parameters
+const BASE_URL = '/wow/marketshare';
+
+// Updated searchParams
 const searchParams = {
-  defaultSingleRealm: '/wow/marketshare',
-  defaultCommodity:
-    '/wow/marketshare?desiredAvgPrice=0&desiredSalesPerDay=100&commodity=on'
+  // default
+  defaultSingleRealm: `${BASE_URL}`,
+  defaultCommodity:`${BASE_URL}?commodity=on`,
+  // custom
+  fastSalesSingleRealm: `${BASE_URL}?desiredSalesPerDay=10`,
+  fastCommodities:`${BASE_URL}?commodity=on&desiredSalesPerDay=1000`,
+  // misc
+  toys:`${BASE_URL}?itemClass=15&itemSubClass=199`,
+  recipes:`${BASE_URL}?itemClass=9`,
+  misc:`${BASE_URL}?itemClass=15`,
+  miscCommodities:`${BASE_URL}?itemClass=15&commodity=on`,
+  // gear
+  weapons:`${BASE_URL}?itemClass=2`,
+  armor:`${BASE_URL}?itemClass=4`,
+  cloth:`${BASE_URL}?itemClass=4&itemSubClass=1`,
+  mail:`${BASE_URL}?itemClass=9&itemSubClass=3`,
+  plate:`${BASE_URL}?itemClass=9&itemSubClass=4`,
+  armorMiscellaneous:`${BASE_URL}?itemClass=9&itemSubClass=0`,
+  // trade goods
+  tradegoods: `${BASE_URL}?itemClass=7&commodity=on`,
+  partsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=1`,
+  jcTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=4`,
+  clothTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=5`,
+  leatherTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=6`,
+  metalStoneTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=7`,
+  cookingTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=8`,
+  herbTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=9`,
+  elementalTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=10`,
+  otherTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=11`,
+  enchantingTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=12`,
+  inscriptionTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=16`,
+  optionalReagentsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=18`,
+  finishingReagentsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=19`,
+  // finished goods
+  itemEnhancement: `${BASE_URL}?itemClass=8&commodity=on`,
+  gems: `${BASE_URL}?itemClass=3&commodity=on`
 }
 
 // Updated recommendedQueries to reflect WoW searches
