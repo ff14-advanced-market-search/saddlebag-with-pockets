@@ -2190,7 +2190,7 @@ export const wowItemsMap: Record<string, string> = {
   '3286': 'Mister Toots',
   '3287': 'Ghostflame',
   '3288': 'Trunkalumpf',
-  '3289': 'Echo of the Inferno',
+  '3289': 'Ancestral Boots',
   '3290': 'Bunbo',
   '3291': 'Scruffles',
   '3292': 'Phoenix Wishwing',
