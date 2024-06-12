@@ -43,9 +43,10 @@ const searchParams = {
   weapons: `${BASE_URL}?itemClass=2`,
   armor: `${BASE_URL}?itemClass=4`,
   cloth: `${BASE_URL}?itemClass=4&itemSubClass=1`,
-  mail: `${BASE_URL}?itemClass=9&itemSubClass=3`,
-  plate: `${BASE_URL}?itemClass=9&itemSubClass=4`,
-  armorMiscellaneous: `${BASE_URL}?itemClass=9&itemSubClass=0`,
+  leather: `${BASE_URL}?itemClass=4&itemSubClass=2`,
+  mail: `${BASE_URL}?itemClass=4&itemSubClass=3`,
+  plate: `${BASE_URL}?itemClass=4&itemSubClass=4`,
+  armorMiscellaneous: `${BASE_URL}?itemClass=4&itemSubClass=0`,
   bags: `${BASE_URL}?itemClass=1`,
   // finished goods
   itemEnhancement: `${BASE_URL}?itemClass=8&commodity=on`,
@@ -152,6 +153,12 @@ const recommendedQueries = [
     href: searchParams.cloth
   },
   {
+    name: 'Leather Armor',
+    description: 'Check out leather armor for sale.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.leather
+  },
+  {
     name: 'Mail Armor',
     description: 'Check out mail armor for sale.',
     Icon: DocumentSearchIcon,
@@ -165,7 +172,8 @@ const recommendedQueries = [
   },
   {
     name: 'Miscellaneous Armor',
-    description: 'Find various miscellaneous armor pieces.',
+    description:
+      'Miscellaneous: Trinkets, Rings, Necks, Spellstones, Firestones, etc.',
     Icon: DocumentSearchIcon,
     href: searchParams.armorMiscellaneous
   },
