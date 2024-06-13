@@ -12,6 +12,8 @@ import type { HistoryResponse } from '~/requests/GetHistory'
 import GetHistory from '~/requests/GetHistory'
 import type { ListingResponseType } from '~/requests/GetListing'
 import GetListing from '~/requests/GetListing'
+import type { BlogResponseType } from '~/requests/GetBlog'
+import GetBlog from '~/requests/GetBlog'
 import { getUserSessionData } from '~/sessions'
 import { getItemNameById } from '~/utils/items'
 import HistoryResults from '~/components/FFXIVResults/item-history/Results'
@@ -80,6 +82,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   try {
     const historyResponse = await GetHistory(input)
     const listingResponse = await GetListing(input)
+    const blogResponse = await GetBlog({ itemId: parsedItemId })
 
     if (!historyResponse.ok) {
       return { exception: historyResponse.statusText }
@@ -89,9 +92,14 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       return { exception: listingResponse.statusText }
     }
 
+    if (!blogResponse.ok) {
+      return { exception: blogResponse.statusText }
+    }
+
     return json({
       history: await historyResponse.json(),
       listing: await listingResponse.json(),
+      itemDescription: (await blogResponse.json()).itemDescription,
       itemName
     })
   } catch (error) {
@@ -178,6 +186,13 @@ const ItemPage = () => {
               ) : (
                 <NoResults title={`No listings data for ${data.itemName}`} />
               )}
+            </>
+          </ContentContainer>
+        </Section>
+        <Section>
+          <ContentContainer>
+            <>
+              <div dangerouslySetInnerHTML={{ __html: data.itemDescription }} />
             </>
           </ContentContainer>
         </Section>
