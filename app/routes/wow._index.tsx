@@ -7,9 +7,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'World of Warcraft Auction House Prices, wowhead sod, ',
+    title: 'World of Warcraft Auction House Prices and Gold making tools!',
     description:
-      'Addons to make gold in the World of Warcraft Auction House auctionhouse, wowhead sod'
+      'Tools and Addons to make gold on the World of Warcraft Auction House Auctionhouse'
   }
 }
 
