@@ -30,6 +30,7 @@ import FullTable from '~/components/Tables/FullTable'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import type { ColumnList } from '~/components/types'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
+import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 
 const inputMap: Record<string, string> = {
@@ -263,9 +264,17 @@ const getColumnList = (
     { columnId: 'state', header: 'State in Market' },
     {
       columnId: 'itemID',
-      header: 'Oribos Link',
+      header: 'Link',
       accessor: ({ row }) => {
-        const link = getOribosLink(server, 'Oribos', region)
+        const link = getSaddlebagWoWLink('')
+        return link({ row })
+      }
+    },
+    {
+      columnId: 'itemID',
+      header: 'Undermine',
+      accessor: ({ row }) => {
+        const link = getOribosLink(server, '', region)
         return link({ row })
       }
     }
