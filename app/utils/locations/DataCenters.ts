@@ -17,6 +17,9 @@ export const DataCenterList: Record<string, Array<{ name: string }>> = {
     {
       name: 'Chaos'
     },
+    // {
+    //   name: 'Shadow'
+    // }
     {
       name: 'Light'
     }

@@ -14,7 +14,11 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
     { name: 'Halicarnassus' },
     { name: 'Maduin' },
     { name: 'Marilith' },
-    { name: 'Seraph' }
+    { name: 'Seraph' },
+    { name: 'Cuchulainn' },
+    { name: 'Kraken' },
+    { name: 'Rafflesia' },
+    { name: 'Golem' }
   ],
   Primal: [
     { name: 'Behemoth' },
@@ -57,6 +61,11 @@ export const WorldList: Record<string, Array<{ name: string }>> = {
     { name: 'Alpha' },
     { name: 'Raiden' }
   ],
+  // Shadow: [
+  //   { name: 'Titania' },
+  //   { name: 'Innocence' },
+  //   { name: 'Pixie' }
+  // ],
   // // Japan
   Elemental: [
     { name: 'Aegis' },
