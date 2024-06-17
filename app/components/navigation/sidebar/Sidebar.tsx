@@ -250,7 +250,7 @@ const navGroups: Array<{
         external: true
       },
       {
-        name: 'Dragonflight Marketshare Overview',
+        name: 'Current Content Marketshare Overview',
         href: '/wow/marketshare/recommended',
         icon: ChartSquareBarIcon
       },

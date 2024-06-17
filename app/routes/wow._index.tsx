@@ -70,7 +70,7 @@ const recommendedQueries = [
     href: '/wow/shopping-list'
   },
   {
-    name: 'Dragonflight Marketshare Overview',
+    name: 'Current Content Marketshare Overview',
     description:
       'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
     Icon: DocumentSearchIcon,
