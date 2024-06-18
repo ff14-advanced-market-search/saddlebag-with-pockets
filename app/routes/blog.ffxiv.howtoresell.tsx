@@ -334,6 +334,14 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
         </ul>
         {/*<p><img width="324" alt="image" src="https://user-images.githubusercontent.com/17516896/219104465-699eb0e7-b85f-49e2-96a8-912938837ab9.png"></p>*/}
+        <p style={{ fontSize: '1px' }}>
+          how to mod ffxiv, how to install ffxiv mods, are mods allowed in
+          ffxiv, can you mod ffxiv, how to add mods to ffxiv, how to download
+          ffxiv mods, how to install eye mods ffxiv, how to install mods ffxiv,
+          how to install mods in ffxiv, how to install mods on ffxiv, ffxiv
+          mods, ffxiv mod archive, mittens ffxiv mods, ffxiv mod, mods ffxiv,
+          dalamund plugins
+        </p>
       </main>
     </div>
   )
