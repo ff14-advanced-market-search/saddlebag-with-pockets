@@ -3,11 +3,11 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Flip items on the FFXIV Marketboard',
+    title: 'Flip items on the FFXIV Marketboard : FFXIV Mods',
     description:
-      'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange.',
+      'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange : FFXIV Mods',
     customHeading:
-      'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange'
+      'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange : FFXIV Mods'
   }
 }
 
@@ -24,7 +24,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
       <main className="flex-1">
         <h1 id="how-to-import-trade-and-flip-items-on-the-ffxiv-marketboard-using-saddlebag-exchange-reselling-searches">
           How to Import, Trade and Flip items on the FFXIV Marketboard using
-          Saddlebag Exchange Reselling Searches
+          Saddlebag Exchange Reselling Searches : FFXIV Mods
         </h1>
         <p>
           Let&#39;s say you want to earn gil by flipping vendor items or trading
@@ -48,7 +48,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             https://saddlebagexchange.com/queries
           </a>
         </p>
-        <h2 id="tldr">TLDR</h2>
+        <h2 id="tldr">TLDR Gil Earning : FFXIV Mods</h2>
         <ol>
           <li>
             Pick a search from the list at:{' '}
