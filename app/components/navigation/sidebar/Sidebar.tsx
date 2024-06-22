@@ -263,7 +263,12 @@ const navGroups: Array<{
         name: 'Pet Marketshare Overview',
         href: '/wow/pet-marketshare',
         icon: ChartSquareBarIcon
-      },
+      }
+    ]
+  },
+  {
+    title: 'WoW Experimental Tools',
+    links: [
       {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
