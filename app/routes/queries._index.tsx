@@ -12,8 +12,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV tools',
-    description: 'Saddlebag Exchange: FFXIV tools'
+    title: 'Saddlebag Exchange: FFXIV tools ffxiah',
+    description: 'Saddlebag Exchange: FFXIV tools ffxiah'
   }
 }
 
@@ -149,7 +149,7 @@ export default function Index() {
           board, ffxiv patch notes, final fantasy 14 reddit, ffxiv fanfest,
           ffxiv msq list, ffxiv character search, ffxiv fafnir, universalis
           ffxiv, ffxiv maintenance jan 15, ffxiv relic weapons, r ffxiv, relic
-          weapons ffxiv, character search ffxiv
+          weapons ffxiv, character search ffxiv, ffxiah
         </p>
       </main>
     </>
