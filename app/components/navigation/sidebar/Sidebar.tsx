@@ -118,7 +118,7 @@ const navGroups: Array<{
     links: [
       {
         name: 'Guides and Tutorials',
-        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#game-guides',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#game-guides#ffxiv',
         icon: DocumentSearchIcon,
         external: true
       },
@@ -197,7 +197,7 @@ const navGroups: Array<{
     links: [
       {
         name: 'Guides and Tutorials',
-        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#game-guides',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#wow',
         icon: DocumentSearchIcon,
         external: true
       },
