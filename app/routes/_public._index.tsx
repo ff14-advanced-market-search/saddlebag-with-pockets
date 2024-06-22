@@ -298,7 +298,7 @@ export default function Index() {
               bo, xiv server status, final fantasy 14 online server status,
               marketboard ffxiv, final fantasy 14 market board, ff14
               maintenance, ffxiv server status, ffxiah, green hills of
-              stranglethorn, ff14 hairstyles, loque'nahak.
+              stranglethorn, ff14 hairstyles, loque'nahak, housing lottery.
             </p>
           </div>
         </div>
