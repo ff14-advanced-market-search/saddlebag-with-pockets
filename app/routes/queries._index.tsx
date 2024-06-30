@@ -12,8 +12,8 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV tools FFXIVAH',
-    description: 'Saddlebag Exchange: FFXIV tools FFXIVAH'
+    title: 'Saddlebag Exchange: FFXIV Market Board Tools',
+    description: 'Saddlebag Exchange: FFXIV MarketBoard Tools'
   }
 }
 
