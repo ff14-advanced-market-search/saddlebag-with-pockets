@@ -33,6 +33,8 @@ import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 
+// @coderabbitai help us add in the "Download as .csv" button to this page
+
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
   region: 'Region',
