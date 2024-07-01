@@ -118,7 +118,7 @@ const navGroups: Array<{
     links: [
       {
         name: 'Guides and Tutorials',
-        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#game-guides',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#ffxiv-alert-guides',
         icon: DocumentSearchIcon,
         external: true
       },
@@ -197,13 +197,13 @@ const navGroups: Array<{
     links: [
       {
         name: 'Guides and Tutorials',
-        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#game-guides',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#wow-general-guides',
         icon: DocumentSearchIcon,
         external: true
       },
       {
         name: 'Azeroth Auction Assassin Sniper',
-        href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest',
+        href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
         icon: DocumentSearchIcon,
         external: true
       },
@@ -263,7 +263,12 @@ const navGroups: Array<{
         name: 'Pet Marketshare Overview',
         href: '/wow/pet-marketshare',
         icon: ChartSquareBarIcon
-      },
+      }
+    ]
+  },
+  {
+    title: 'WoW Experimental Tools',
+    links: [
       {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',

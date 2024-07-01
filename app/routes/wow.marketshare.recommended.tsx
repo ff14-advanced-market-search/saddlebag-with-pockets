@@ -88,17 +88,17 @@ const recommendedQueries = [
     href: searchParams.legacy
   },
   {
-    name: 'Default Single Realm',
-    description: 'See what items make the most gold on your realm.',
+    name: 'High Value Sales Single Realm',
+    description: 'Find items that have a high sales price on your realm.',
     Icon: DocumentSearchIcon,
-    href: searchParams.defaultSingleRealm
+    href: searchParams.valueSalesSingleRealm
   },
   {
-    name: 'Default Commodity Realm',
+    name: 'High Value Commodities',
     description:
-      'See what items make the most gold on your region wide commodity market.',
+      'Identify commodities that have a high sales price on the region-wide market.',
     Icon: DocumentSearchIcon,
-    href: searchParams.defaultCommodity
+    href: searchParams.valueCommodities
   },
   {
     name: 'Fast Sales Single Realm',
@@ -114,17 +114,17 @@ const recommendedQueries = [
     href: searchParams.fastCommodities
   },
   {
-    name: 'High Value Sales Single Realm',
-    description: 'Find items that have a high sales price on your realm.',
+    name: 'Default Single Realm',
+    description: 'See what items make the most gold on your realm.',
     Icon: DocumentSearchIcon,
-    href: searchParams.valueSalesSingleRealm
+    href: searchParams.defaultSingleRealm
   },
   {
-    name: 'High Value Commodities',
+    name: 'Default Commodity Realm',
     description:
-      'Identify commodities that have a high sales price on the region-wide market.',
+      'See what items make the most gold on your region wide commodity market.',
     Icon: DocumentSearchIcon,
-    href: searchParams.valueCommodities
+    href: searchParams.defaultCommodity
   },
   {
     name: 'Toys',
