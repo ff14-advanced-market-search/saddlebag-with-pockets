@@ -357,12 +357,17 @@ const Results = ({
         </>
       </ContentContainer>
 
-      <div className="hidden sm:flex w-full justify-end">
+      <div className="flex justify-between">
+        <CSVButton
+          filename="legacy_marketshare.csv"
+          data={data}
+          columns={csvColumns}
+        />
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
           }}
-          className={'p-2 rounded-md'}
+          className={'hidden sm:block p-2 rounded-md'}
           placeholder={'Search...'}
         />
       </div>
@@ -382,12 +387,6 @@ const Results = ({
         columnList={getMobileColumns(sortBy, sortByOptions)}
         rowLabels={columnList}
         columnSelectOptions={sortByOptions.map(({ value }) => value)}
-      />
-
-      <CSVButton
-        filename="legacy_marketshare.csv"
-        data={data}
-        columns={csvColumns}
       />
     </PageWrapper>
   )
