@@ -32,8 +32,7 @@ import type { ColumnList } from '~/components/types'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import DebouncedInput from '~/components/Common/DebouncedInput'
-
-// @coderabbitai help us add in the "Download as .csv" button to this page
+import CSVButton from '~/components/utilities/CSVButton'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -319,6 +318,13 @@ const Results = ({
   const chartData = getChartData(data, sortBy)
 
   const columnList = getColumnList(region, server)
+
+  // Define the columns for the CSV
+  const csvColumns = columnList.map(({ columnId, header }) => ({
+    title: header,
+    value: columnId
+  }))
+
   return (
     <PageWrapper>
       <Title title={pageTitle} />
@@ -376,6 +382,12 @@ const Results = ({
         columnList={getMobileColumns(sortBy, sortByOptions)}
         rowLabels={columnList}
         columnSelectOptions={sortByOptions.map(({ value }) => value)}
+      />
+
+      <CSVButton
+        filename="legacy_marketshare.csv"
+        data={data}
+        columns={csvColumns}
       />
     </PageWrapper>
   )
