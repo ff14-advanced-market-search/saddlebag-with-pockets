@@ -8,13 +8,15 @@ import {
   CogIcon,
   MenuAlt2Icon,
   XIcon,
+  DocumentTextIcon,
   DocumentSearchIcon,
   ChevronUpIcon,
   ChevronDownIcon,
   PencilAltIcon,
   SearchIcon,
   ExclamationCircleIcon,
-  ShoppingCartIcon
+  ShoppingCartIcon,
+  ExternalLinkIcon
 } from '@heroicons/react/outline'
 import {
   Form,
@@ -31,6 +33,7 @@ import GithubIcon from '~/icons/GithubIcon'
 import FlatWoWIcon from '~/icons/FlatWowIcon'
 import FlatFFXIVIcon from '~/icons/FlatFFXIVIcon'
 import DiscordIcon from '~/icons/DiscordIcon'
+import YoutubeIcon from '~/icons/YoutubeIcon'
 import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import {
@@ -140,7 +143,7 @@ const navGroups: Array<{
       {
         name: 'Shopping List',
         href: 'ffxiv/shopping-list',
-        icon: PencilAltIcon
+        icon: ShoppingCartIcon
       },
       {
         name: 'Listings Comparison and Competition Metrics',
@@ -325,6 +328,12 @@ const navGroups: Array<{
         icon: GithubIcon
       },
       {
+        name: 'YouTube',
+        href: 'https://www.youtube.com/@saddlebagexchange704',
+        external: true,
+        icon: YoutubeIcon
+      },
+      {
         name: 'blog',
         href: '/blog',
         icon: DocumentSearchIcon
@@ -332,24 +341,24 @@ const navGroups: Array<{
       {
         name: 'List of all WoW Items',
         href: '/wow/itemlist',
-        icon: DocumentSearchIcon
+        icon: DocumentTextIcon
       },
       {
         name: 'List of all FFXIV Items',
         href: '/ffxiv/itemlist',
-        icon: DocumentSearchIcon
+        icon: DocumentTextIcon
       },
       {
         name: 'Fandom',
         href: 'https://ffxivmarketboard.fandom.com/wiki/Ffxivmarketboard_Wiki',
         external: true,
-        icon: DocumentSearchIcon
+        icon: ExternalLinkIcon
       },
       {
         name: 'Discord Webpage',
         href: 'https://discord.com/servers/saddlebag-exchange-973380473281724476',
         external: true,
-        icon: DocumentSearchIcon
+        icon: DiscordIcon
       }
     ]
   }
