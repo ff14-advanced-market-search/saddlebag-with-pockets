@@ -324,6 +324,7 @@ const navGroups: Array<{
         external: true,
         icon: GithubIcon
       },
+      // @coderabbitai
       {
         name: 'blog',
         href: '/blog',
