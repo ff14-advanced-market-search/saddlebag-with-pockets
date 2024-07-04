@@ -20,6 +20,8 @@ export const links: LinksFunction = () => [
 ]
 
 const searchParams = {
+  defaultDawntrail:
+    '/ffxiv/craftsim?filters=0%2C-5&revenueMetric=revenue_region_min_listing&lvlLowerLimit=91',
   defaultItems:
     '/ffxiv/craftsim?filters=0%2C-5&revenueMetric=revenue_region_min_listing',
   fastSaleItems:
@@ -36,6 +38,12 @@ const searchParams = {
     '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=500&medianSalePrice=75000&maxMaterialCost=200000&jobs=0&filters=1%2C2%2C3%2C4&stars=-1&lvlLowerLimit=-1&yields=-1&hideExpertRecipes=true'
 }
 const recommendedQueries = [
+  {
+    name: 'Default Dawntrail',
+    description: 'Search for profitable new Dawntrail items to craft.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.defaultDawntrail
+  },
   {
     name: 'Default Search',
     description: 'Default search for profitable items to craft.',
