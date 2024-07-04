@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async () => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
   <loc>https://saddlebagexchange.com/</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <lastmod>2024-06-21T00:27:48+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
@@ -124,6 +124,11 @@ export const loader: LoaderFunction = async () => {
 <url>
   <loc>https://saddlebagexchange.com/wow/marketshare</loc>
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/wow/marketshare/recommended</loc>
+  <lastmod>2024-06-21T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
