@@ -104,7 +104,7 @@ export default function Index() {
                 </li>
                 <li>
                   Discover what items earn the most gil and sell the fastest
-                  with our {' '}
+                  with our{' '}
                   <a
                     href="https://saddlebagexchange.com/ffxiv/marketshare/queries"
                     className="text-blue-600 underline">

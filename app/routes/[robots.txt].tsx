@@ -4,6 +4,7 @@ export const loader: LoaderFunction = () => {
   const robotText = `
   User-agent: Googlebot
   Disallow: /nogooglebot/
+  Disallow: /build/
 
   User-agent: *
   Allow: /
