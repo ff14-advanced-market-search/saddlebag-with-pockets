@@ -112,7 +112,7 @@ const defaultFormValues = {
   filters: [0],
   stars: -1,
   lvlLowerLimit: -1,
-  lvlUpperLimit: 91,
+  lvlUpperLimit: 1000,
   yields: -1,
   hideExpertRecipes: true
 }

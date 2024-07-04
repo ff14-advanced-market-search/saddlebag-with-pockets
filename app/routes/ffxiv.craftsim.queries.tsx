@@ -25,15 +25,15 @@ const searchParams = {
   fastSaleItems:
     '/ffxiv/craftsim?revenueMetric=revenue_region_min_listing&salesPerWeek=150&medianSalePrice=500&maxMaterialCost=10000&filters=0%2C-5&yields=2',
   foodItems:
-    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=750&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=-1&hideExpertRecipes=true',
+    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=750&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&yields=-1&hideExpertRecipes=true',
   foodItemsTrainedEye:
     '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=400&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=80&yields=-1&hideExpertRecipes=true',
   furnitureAndGlamourItems:
-    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=400&medianSalePrice=50000&maxMaterialCost=100000&jobs=0&filters=7%2C56%2C57%2C58%2C59%2C60%2C65%2C66%2C67%2C68%2C69%2C70%2C71%2C72%2C74%2C75%2C79%2C80%2C81%2C82%2C90&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=-1&hideExpertRecipes=true',
+    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=400&medianSalePrice=50000&maxMaterialCost=100000&jobs=0&filters=7%2C56%2C57%2C58%2C59%2C60%2C65%2C66%2C67%2C68%2C69%2C70%2C71%2C72%2C74%2C75%2C79%2C80%2C81%2C82%2C90&stars=-1&lvlLowerLimit=-1&yields=-1&hideExpertRecipes=true',
   expertCraftItems:
-    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=100&medianSalePrice=50000&maxMaterialCost=100000&jobs=0&filters=0&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=-1&hideExpertRecipes=false',
+    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=100&medianSalePrice=50000&maxMaterialCost=100000&jobs=0&filters=0&stars=-1&lvlLowerLimit=-1&yields=-1&hideExpertRecipes=false',
   bestCraftedGear:
-    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=500&medianSalePrice=75000&maxMaterialCost=200000&jobs=0&filters=1%2C2%2C3%2C4&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=91&yields=-1&hideExpertRecipes=true'
+    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=500&medianSalePrice=75000&maxMaterialCost=200000&jobs=0&filters=1%2C2%2C3%2C4&stars=-1&lvlLowerLimit=-1&yields=-1&hideExpertRecipes=true'
 }
 const recommendedQueries = [
   {
