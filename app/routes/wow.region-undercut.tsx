@@ -49,7 +49,7 @@ const itemAuction = z.object({
 
 const validateInput = z.array(
   z.object({
-    homeRealmName: z.string(),
+    homeRealmName: z.union([z.string(), z.number()]), // Accepts both string and number
     region: z.string(),
     user_auctions: z.array(z.union([petAuction, itemAuction]))
   })
@@ -67,7 +67,9 @@ export const action: ActionFunction = async ({ request }) => {
 
   try {
     const parsedInput = JSON.parse(input)
+    // console.log(parsedInput)
     const validInput = validateInput.safeParse(parsedInput)
+    // console.log(validInput)
 
     if (!validInput.success) {
       throw new Error('Invalid input')

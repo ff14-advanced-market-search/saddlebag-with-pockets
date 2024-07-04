@@ -4,10 +4,10 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
-    title: `SaddleBag Exchange: FFXIV MarketBoard Prices, WoW Gold`,
+    title: `SaddleBag Exchange: FFXIV Market Board Prices, WoW Gold`,
     viewport: 'width=device-width,initial-scale=1',
     description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold',
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auction House, FFXIV Market Board and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold',
     customHeading: 'Explore MMO Market Data with SaddleBag Exchange'
   }
 }
@@ -103,9 +103,18 @@ export default function Index() {
                   </a>
                 </li>
                 <li>
+                  Discover what items earn the most gil and sell the fastest
+                  with our {' '}
+                  <a
+                    href="https://saddlebagexchange.com/ffxiv/marketshare/queries"
+                    className="text-blue-600 underline">
+                    Marketshare Overview Tool.
+                  </a>
+                </li>
+                <li>
                   Explore lucrative crafting opportunities with our{' '}
                   <a
-                    href="https://saddlebagexchange.com/queries/recommended"
+                    href="https://saddlebagexchange.com/ffxiv/craftsim/queries"
                     className="text-blue-600 underline">
                     Crafting Profit Simulations.
                   </a>
@@ -297,7 +306,9 @@ export default function Index() {
               character search, final fantasy xiv sale, universalis ffxiv, choco
               bo, xiv server status, final fantasy 14 online server status,
               marketboard ffxiv, final fantasy 14 market board, ff14
-              maintenance, ffxiv server status.
+              maintenance, ffxiv server status, ffxiah, green hills of
+              stranglethorn, ff14 hairstyles, loque'nahak, housing lottery,
+              ffxiv auction house tracker.
             </p>
           </div>
         </div>
