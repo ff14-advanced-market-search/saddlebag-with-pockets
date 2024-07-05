@@ -47,7 +47,7 @@
     "react-dom": "^18.3.1",
     "react-redux": "^8.0.4",
     "remix-validated-form": "^4.5.5",
-    "zod": "^3.22.3"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@headlessui/react": "^1.7.2",
