@@ -19,13 +19,25 @@ const Results = ({
     <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
       <div className="flex flex-col max-w-full">
         <Differences
+          diffTitle="Median Price Per Unit Sold"
+          diffAmount={data.median_ppu}
+          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+        />
+        <Differences
           diffTitle="Average Price Per Unit Sold"
           diffAmount={data.average_ppu}
           className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
+      </div>
+      <div className="flex flex-col max-w-full">
         <Differences
-          diffTitle="Median Price Per Unit Sold"
-          diffAmount={data.median_ppu}
+          diffTitle="Average Purchases per day"
+          diffAmount={data.average_sales_per_day}
+          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+        />
+        <Differences
+          diffTitle="Total Purchases per week"
+          diffAmount={data.total_purchase_amount}
           className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
       </div>
@@ -33,11 +45,6 @@ const Results = ({
         <Differences
           diffTitle="Average Quantity Sold per day"
           diffAmount={data.average_quantity_sold_per_day}
-          className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-        />
-        <Differences
-          diffTitle="Average Amount Purchases per day"
-          diffAmount={data.average_sales_per_day}
           className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
         <Differences
