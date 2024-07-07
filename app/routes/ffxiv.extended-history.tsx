@@ -79,12 +79,12 @@ export const action: ActionFunction = async ({ request }) => {
   try {
     const response = await fetch(`https://universalis.app/api/v2/history/${validInput.world}/${validInput.itemId}`);
     const data = await response.json();
-    console.log(data);
 
     if (!data.entries) {
       return json({ exception: 'No entries found.' });
     }
 
+    console.log('Fetched data:', data);
     return json({ entries: data.entries, payload: validInput });
   } catch (err) {
     console.error('Error fetching data:', err);
@@ -117,7 +117,10 @@ const FFXIVSaleHistory = () => {
   };
 
   useEffect(() => {
+    console.log('Action data results:', results);
+
     if (results && results.entries) {
+      console.log('Setting item history with results:', results);
       dispatch(setItemHistory(results));
     } else if (results && results.exception) {
       const message = parseServerError(results.exception);
@@ -127,6 +130,8 @@ const FFXIVSaleHistory = () => {
     }
   }, [results, dispatch]);
 
+  console.log('Item history:', itemHistory);
+
   const resultTitle = itemHistory ? getItemNameById(itemHistory.payload.itemId) : null;
 
   const handleFormChange = (selectValue?: ItemSelected | undefined) => {
@@ -134,11 +139,48 @@ const FFXIVSaleHistory = () => {
       setError(undefined);
     }
     setFormState(selectValue);
+    console.log('Form state changed:', selectValue);
   };
 
   const handleTextChange = () => {
     setError(undefined);
+    console.log('Text input changed');
   };
+
+  const formatDate = (timestamp: number) => {
+    const date = new Date(timestamp * 1000);
+    return date.toLocaleString();
+  };
+
+  let tableData = [];
+  if (itemHistory?.entries) {
+    console.log('Entries found:', itemHistory.entries);
+    tableData = itemHistory.entries.map((entry) => ({
+      hq: entry.hq,
+      pricePerUnit: entry.pricePerUnit,
+      quantity: entry.quantity,
+      buyerName: entry.buyerName,
+      onMannequin: entry.onMannequin,
+      timestamp: formatDate(entry.timestamp),
+    }));
+  } else {
+    console.log('No entries found or itemHistory is undefined');
+  }
+
+  console.log('Table data:', tableData);
+
+  const columnList = [
+    { columnId: 'hq', header: 'HQ' },
+    { columnId: 'pricePerUnit', header: 'Price Per Unit' },
+    { columnId: 'quantity', header: 'Quantity' },
+    { columnId: 'buyerName', header: 'Buyer Name' },
+    { columnId: 'onMannequin', header: 'On Mannequin' },
+    { columnId: 'timestamp', header: 'Timestamp' },
+  ];
+
+  const sortingOrder = [
+    { id: 'timestamp', desc: true },
+  ];
 
   return (
     <PageWrapper>
@@ -168,7 +210,13 @@ const FFXIVSaleHistory = () => {
           </div>
         )}
         {itemHistory && itemHistory.entries && (
-          <SmallTable data={itemHistory.entries} darkMode={darkmode} />
+          <SmallTable
+            data={tableData}
+            sortingOrder={sortingOrder}
+            columnList={columnList}
+            title="Sale History"
+            description="A detailed history of item sales"
+          />
         )}
       </>
     </PageWrapper>
