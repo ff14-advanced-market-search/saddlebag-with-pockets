@@ -56,7 +56,7 @@ const validateInput = ({
 
   const parsedItemId = parseInt(itemId);
 
-  if (isNaN(parsedItemId)) return { exception: 'Invalid item' };
+  if (Number.isNaN(parsedItemId)) return { exception: 'Invalid item' };
 
   return { itemId: parsedItemId, world };
 };
