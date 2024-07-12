@@ -50,12 +50,12 @@ export default function Index() {
     <>
       <main className="flex-1">
         <Banner />
-        <section className="bg-gray-100 py-12">
+        <section className="bg-gradient-to-r from-purple-500 to-blue-500 py-12 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-4xl font-bold text-blue-900 dark:text-gray-100 text-center">
+            <h1 className="text-4xl font-bold text-center">
               Saddlebag Exchange: FFXIV Marketboard Prices, WoW Auctionhouse
             </h1>
-            <p className="text-lg text-slate-700 dark:text-gray-300 text-center mt-4">
+            <p className="text-lg text-center mt-4">
               Welcome to the Saddlebag Exchange. Find helpful tools to get ahead
               in your favorite MMO's.
             </p>
@@ -73,22 +73,22 @@ export default function Index() {
               About Us
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div>
-                <h3 className="text-2xl font-semibold text-blue-800 dark:text-gray-200 mb-4">
+              <div className="bg-purple-100 p-6 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-semibold text-purple-800 mb-4">
                   For Final Fantasy XIV Players:
                 </h3>
-                <ul className="list-disc list-inside space-y-4 text-slate-700 dark:text-gray-300">
+                <ul className="list-disc list-inside space-y-4 text-purple-700">
                   <li>
                     Get real-time FFXIV Discord alerts for{' '}
                     <a
                       href="https://saddlebagexchange.com/price-sniper"
-                      className="text-blue-600 underline">
+                      className="text-purple-600 underline">
                       Prices
                     </a>
                     ,{' '}
                     <a
                       href="https://saddlebagexchange.com/undercut"
-                      className="text-blue-600 underline">
+                      className="text-purple-600 underline">
                       Undercuts, Sales
                     </a>
                     , and more!
@@ -97,7 +97,7 @@ export default function Index() {
                     Unlock the best deals and maximize profits with our{' '}
                     <a
                       href="https://saddlebagexchange.com/queries/recommended"
-                      className="text-blue-600 underline">
+                      className="text-purple-600 underline">
                       Cross-Server Reselling Tool.
                     </a>
                   </li>
@@ -106,7 +106,7 @@ export default function Index() {
                     with our{' '}
                     <a
                       href="https://saddlebagexchange.com/ffxiv/marketshare/queries"
-                      className="text-blue-600 underline">
+                      className="text-purple-600 underline">
                       Marketshare Overview Tool.
                     </a>
                   </li>
@@ -114,7 +114,7 @@ export default function Index() {
                     Explore lucrative crafting opportunities with our{' '}
                     <a
                       href="https://saddlebagexchange.com/ffxiv/craftsim/queries"
-                      className="text-blue-600 underline">
+                      className="text-purple-600 underline">
                       Crafting Profit Simulations.
                     </a>
                   </li>
@@ -122,7 +122,7 @@ export default function Index() {
                     Optimize your search for the cheapest raw materials with our{' '}
                     <a
                       href="https://saddlebagexchange.com/ffxiv/shopping-list"
-                      className="text-blue-600 underline">
+                      className="text-purple-600 underline">
                       Shopping List Search.
                     </a>
                   </li>
@@ -130,7 +130,7 @@ export default function Index() {
                     Uncover the true value of your items with our{' '}
                     <a
                       href="https://saddlebagexchange.com/queries/item-history"
-                      className="text-blue-600 underline">
+                      className="text-purple-600 underline">
                       Detailed Item Sale Statistics.
                     </a>
                   </li>
@@ -140,11 +140,11 @@ export default function Index() {
                   </li>
                 </ul>
               </div>
-              <div>
-                <h3 className="text-2xl font-semibold text-blue-800 dark:text-gray-200 mb-4">
+              <div className="bg-blue-100 p-6 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-semibold text-blue-800 mb-4">
                   For World of Warcraft Adventurers:
                 </h3>
-                <ul className="list-disc list-inside space-y-4 text-slate-700 dark:text-gray-300">
+                <ul className="list-disc list-inside space-y-4 text-blue-700">
                   <li>
                     Get real-time WoW AH Discord{' '}
                     <a
