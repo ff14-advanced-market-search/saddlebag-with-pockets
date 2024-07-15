@@ -146,13 +146,8 @@ const navGroups: Array<{
         icon: ShoppingCartIcon
       },
       {
-        name: 'Listings Comparison and Competition Metrics',
-        href: 'queries/listings',
-        icon: ChartSquareBarIcon
-      },
-      {
-        name: 'Item History Statistics and Graphs',
-        href: 'queries/item-history',
+        name: 'Allagan Data Reports',
+        href: 'allagan-data',
         icon: ChartSquareBarIcon
       },
       {
@@ -176,11 +171,6 @@ const navGroups: Array<{
         icon: PencilAltIcon
       },
       {
-        name: 'Allagan Data Reports',
-        href: 'allagan-data',
-        icon: ChartSquareBarIcon
-      },
-      {
         name: 'Secret Sale Leads',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
         icon: DocumentSearchIcon,
@@ -191,6 +181,16 @@ const navGroups: Array<{
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Experimental-Discount-Price-Sniper',
         icon: DocumentSearchIcon,
         external: true
+      },
+      {
+        name: 'Listings Comparison and Competition Metrics',
+        href: 'queries/listings',
+        icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Item History Statistics and Graphs',
+        href: 'queries/item-history',
+        icon: ChartSquareBarIcon
       }
     ]
   },

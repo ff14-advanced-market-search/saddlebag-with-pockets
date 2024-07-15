@@ -42,8 +42,10 @@ const searchParams = {
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=-1&sortBy=marketValue',
   bestGear:
     '/ffxiv/marketshare?timePeriod=168&salesAmount=3&averagePrice=10000&filters=1,2,3,4,-5&sortBy=marketValue',
+  bestRawMats:
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=10&averagePrice=10&sortBy=marketValue&filters=6',
   bestGathering:
-    '/ffxiv/marketshare?timePeriod=24&salesAmount=10&averagePrice=10&sortBy=marketValue&filters=6'
+    '/ffxiv/marketshare?timePeriod=24&salesAmount=30&averagePrice=500&sortBy=marketValue&filters=47%2C48%2C49%2C50'
 }
 const recommendedQueries = [
   {
@@ -59,6 +61,13 @@ const recommendedQueries = [
       'Find the best selling items that are out of stock or have had massive price increases!',
     Icon: DocumentSearchIcon,
     href: searchParams.percentChange
+  },
+  {
+    name: 'Eaving Tidemoores Best Raw Materials to Gather.',
+    description:
+      'See the best earning and fastest selling raw materials to gather. Made by Eaving Tidemoore.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.bestGathering
   },
   {
     name: 'Mega Value Marketshare (Weekly)',
@@ -120,11 +129,11 @@ const recommendedQueries = [
     href: searchParams.bestGear
   },
   {
-    name: 'Best Raw Materials to Gather.',
+    name: 'Best Raw Materials to Sell.',
     description:
-      'See the best earning and fastest selling raw materials to gather.',
+      'See the best earning and fastest selling raw materials to sell.',
     Icon: DocumentSearchIcon,
-    href: searchParams.bestGathering
+    href: searchParams.bestRawMats
   }
 ]
 

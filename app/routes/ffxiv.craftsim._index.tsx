@@ -7,6 +7,7 @@ import { PageWrapper } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CheckBox from '~/components/form/CheckBox'
+import { ClipboardIcon } from '@heroicons/react/outline'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
@@ -45,6 +46,25 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
+
+const CopyButton = ({ text }: { text: string }) => {
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text)
+      alert('Copied to clipboard!')
+    } catch (err) {
+      alert('Failed to copy text')
+    }
+  }
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="text-blue-500 hover:text-blue-700 focus:outline-none">
+      <ClipboardIcon className="h-5 w-5 inline" />
+    </button>
+  )
+}
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -208,6 +228,7 @@ type ActionResponse =
     })
   | { exception: string }
   | {}
+
 export default function Index() {
   const loaderData = useLoaderData<typeof defaultFormValues>()
   const actionData = useActionData<ActionResponse>()
@@ -450,7 +471,16 @@ const mobileColumnList = [
 ]
 
 const columnList: Array<ColumnList<FlatCraftingList>> = [
-  { columnId: 'itemName', header: 'Item Name' },
+  {
+    columnId: 'itemName',
+    header: 'Item Name',
+    accessor: ({ row: { itemName } }) => (
+      <div className="flex items-center justify-between">
+        <span>{itemName}</span>
+        <CopyButton text={itemName} />
+      </div>
+    )
+  },
   {
     columnId: 'profitEst',
     header: 'Profit Est per Craft.',
