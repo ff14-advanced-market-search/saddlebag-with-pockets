@@ -21,7 +21,7 @@ export interface ScripExchange {
 export type ScripExchangeResults = ScripExchange[];
 
 export const ScripExchangeRequest = async ({ server, color }: ScripExchangeProps): Promise<ScripExchangeResults> => {
-  const response = await fetch(`${address}/ffxiv/scrip-exchange`, {
+  const response = await fetch(`${address}/ffxiv/scripexchange`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
