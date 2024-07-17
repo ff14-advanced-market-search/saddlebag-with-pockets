@@ -1,17 +1,17 @@
-import { useActionData, useNavigation } from '@remix-run/react';
-import type { ActionFunction } from '@remix-run/cloudflare';
-import { json } from '@remix-run/cloudflare';
-import NoResults from '~/components/Common/NoResults';
-import { getUserSessionData } from '~/sessions';
-import { useEffect, useState } from 'react';
-import SmallFormContainer from '~/components/form/SmallFormContainer';
-import SmallTable from '~/components/WoWResults/FullScan/SmallTable';
-import { PageWrapper, TitleH2 } from '~/components/Common';
-import { useDispatch } from 'react-redux';
-import { setItemHistory } from '~/redux/reducers/queriesSlice';
-import { useTypedSelector } from '~/redux/useTypedSelector';
+import { useActionData, useNavigation } from '@remix-run/react'
+import type { ActionFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
+import NoResults from '~/components/Common/NoResults'
+import { getUserSessionData } from '~/sessions'
+import { useEffect, useState } from 'react'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import { PageWrapper, TitleH2 } from '~/components/Common'
+import { useDispatch } from 'react-redux'
+import { setItemHistory } from '~/redux/reducers/queriesSlice'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
-import { ScripExchangeRequest } from '~/requests/FFXIV/scrip-exchange'; // Imported ScripExchangeRequest
+import { ScripExchangeRequest } from '~/requests/FFXIV/scrip-exchange' // Imported ScripExchangeRequest
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -19,123 +19,123 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV Scrip Exchange',
-    description: 'Saddlebag Exchange: FFXIV scrip exchange details',
-  };
-};
+    description: 'Saddlebag Exchange: FFXIV scrip exchange details'
+  }
+}
 
 export const links: LinksFunction = () => [
   {
     rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/scrip-exchange',
-  },
-];
+    href: 'https://saddlebagexchange.com/ffxiv/scrip-exchange'
+  }
+]
 
 const validateInput = ({
-  server,
-  color,
+  home_server,
+  color
 }: {
-  server?: FormDataEntryValue | null;
-  color?: FormDataEntryValue | null;
-}): { server: string; color: string } | { exception: string } => {
-  if (server === undefined || server === null) {
-    return { exception: 'Server not found' };
+  home_server?: FormDataEntryValue | null
+  color?: FormDataEntryValue | null
+}): { home_server: string; color: string } | { exception: string } => {
+  if (home_server === undefined || home_server === null) {
+    return { exception: 'Server not found' }
   }
 
   if (color === undefined || color === null) {
-    return { exception: 'Color not set' };
+    return { exception: 'Color not set' }
   }
 
-  if (typeof server !== 'string') {
-    return { exception: 'Invalid server' };
+  if (typeof home_server !== 'string') {
+    return { exception: 'Invalid server' }
   }
 
   if (typeof color !== 'string') {
-    return { exception: 'Invalid color' };
+    return { exception: 'Invalid color' }
   }
 
-  return { server, color };
-};
+  return { home_server, color }
+}
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const session = await getUserSessionData(request);
+  const formData = await request.formData()
+  const session = await getUserSessionData(request)
 
   const validInput = validateInput({
-    server: session.getWorld(),
-    color: formData.get('color'),
-  });
+    home_server: session.getWorld(),
+    color: formData.get('color')
+  })
 
   if ('exception' in validInput) {
-    return validInput;
+    return validInput
   }
 
   try {
-    const data = await ScripExchangeRequest(validInput); // Used ScripExchangeRequest function
-    console.log(data)
+    const data = await ScripExchangeRequest(validInput) // Used ScripExchangeRequest function
+    // console.log(data)
 
     if (!data.entries) {
-      return json({ exception: 'No entries found.' });
+      return json({ exception: 'No entries found.' })
     }
 
-    return json({ entries: data.entries, payload: validInput });
+    return json({ entries: data.entries, payload: validInput })
   } catch (err) {
-    console.error('Error fetching data:', err);
-    return { exception: 'Error fetching data.' };
+    console.error('Error fetching data:', err)
+    return { exception: 'Error fetching data.' }
   }
-};
+}
 
 const parseServerError = (error: string) => {
   if (error.includes('Error fetching data:')) {
-    return 'Failed to receive result from external API';
+    return 'Failed to receive result from external API'
   }
 
-  return error;
-};
+  return error
+}
 
 const FFXIVScripExchange = () => {
-  const transition = useNavigation();
-  const results = useActionData();
-  const [formState, setFormState] = useState<{ color: string } | undefined>();
-  const [error, setError] = useState<string | undefined>();
-  const { darkmode } = useTypedSelector((state) => state.user);
-  const { itemHistory } = useTypedSelector((state) => state.queries);
-  const dispatch = useDispatch();
+  const transition = useNavigation()
+  const results = useActionData()
+  const [formState, setFormState] = useState<{ color: string } | undefined>()
+  const [error, setError] = useState<string | undefined>()
+  const { darkmode } = useTypedSelector((state) => state.user)
+  const { itemHistory } = useTypedSelector((state) => state.queries)
+  const dispatch = useDispatch()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {
-      e.preventDefault();
-      return;
+      e.preventDefault()
+      return
     }
-  };
+  }
 
   useEffect(() => {
     if (results && results.entries) {
-      dispatch(setItemHistory(results));
+      dispatch(setItemHistory(results))
     } else if (results && results.exception) {
-      const message = parseServerError(results.exception);
-      setError(`Server Error: ${message}`);
+      const message = parseServerError(results.exception)
+      setError(`Server Error: ${message}`)
     } else if (results && results.payload) {
-      setError('No results found');
+      setError('No results found')
     }
-  }, [results, dispatch]);
+  }, [results, dispatch])
 
   const handleFormChange = (name: string, value: string) => {
     if (error) {
-      setError(undefined);
+      setError(undefined)
     }
-    setFormState({ ...formState, [name]: value });
-  };
+    setFormState({ ...formState, [name]: value })
+  }
 
   const handleTextChange = () => {
-    setError(undefined);
-  };
+    setError(undefined)
+  }
 
   const formatDate = (timestamp: number) => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleString();
-  };
+    const date = new Date(timestamp * 1000)
+    return date.toLocaleString()
+  }
 
-  let tableData = [];
+  let tableData = []
   if (itemHistory?.entries) {
     tableData = itemHistory.entries.map((entry) => ({
       itemID: entry.itemID,
@@ -147,8 +147,8 @@ const FFXIVScripExchange = () => {
       valuePerScrip: entry.valuePerScrip,
       saddleLink: entry.saddleLink,
       uniLink: entry.uniLink,
-      webpage: entry.webpage,
-    }));
+      webpage: entry.webpage
+    }))
   }
 
   const columnList = [
@@ -161,12 +161,10 @@ const FFXIVScripExchange = () => {
     { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
     { columnId: 'saddleLink', header: 'Saddle Link' },
     { columnId: 'uniLink', header: 'Uni Link' },
-    { columnId: 'webpage', header: 'Webpage' },
-  ];
+    { columnId: 'webpage', header: 'Webpage' }
+  ]
 
-  const sortingOrder = [
-    { id: 'itemID', desc: true },
-  ];
+  const sortingOrder = [{ id: 'itemID', desc: true }]
 
   return (
     <PageWrapper>
@@ -177,8 +175,7 @@ const FFXIVScripExchange = () => {
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
-            disabled={!formState}
-          >
+            disabled={!formState}>
             <>
               <Select
                 title="Scrip Color"
@@ -207,7 +204,7 @@ const FFXIVScripExchange = () => {
         )}
       </>
     </PageWrapper>
-  );
-};
+  )
+}
 
-export default FFXIVScripExchange;
+export default FFXIVScripExchange
