@@ -73,11 +73,11 @@ export const action: ActionFunction = async ({ request }) => {
     const data = await ScripExchangeRequest(validInput) // Used ScripExchangeRequest function
     // console.log(data)
 
-    if (!data.entries) {
-      return json({ exception: 'No entries found.' })
+    if (!data) {
+      return json({ exception: 'No data found.' })
     }
 
-    return json({ entries: data.entries, payload: validInput })
+    return json({ entries: data, payload: validInput })
   } catch (err) {
     console.error('Error fetching data:', err)
     return { exception: 'Error fetching data.' }
