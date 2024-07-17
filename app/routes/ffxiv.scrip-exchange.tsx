@@ -1,19 +1,15 @@
-import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import { useState, useEffect } from 'react'
+import type { ActionFunction, LoaderFunction, MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData } from '~/sessions'
-import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
-import { PageWrapper, TitleH2 } from '~/components/Common'
-import { useDispatch } from 'react-redux'
-import { setItemHistory } from '~/redux/reducers/queriesSlice'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
-import { ScripExchangeRequest } from '~/requests/FFXIV/scrip-exchange' // Imported ScripExchangeRequest
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import { getUserSessionData } from '~/sessions'
+import { ScripExchangeRequest } from '~/requests/FFXIV/scrip-exchange'
 
-// Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
@@ -30,30 +26,12 @@ export const links: LinksFunction = () => [
   }
 ]
 
-const validateInput = ({
-  home_server,
-  color
-}: {
-  home_server?: FormDataEntryValue | null
-  color?: FormDataEntryValue | null
-}): { home_server: string; color: string } | { exception: string } => {
-  if (home_server === undefined || home_server === null) {
-    return { exception: 'Server not found' }
-  }
-
-  if (color === undefined || color === null) {
-    return { exception: 'Color not set' }
-  }
-
-  if (typeof home_server !== 'string') {
-    return { exception: 'Invalid server' }
-  }
-
-  if (typeof color !== 'string') {
-    return { exception: 'Invalid color' }
-  }
-
-  return { home_server, color }
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await getUserSessionData(request)
+  return json({
+    world: session.getWorld(),
+    data_center: session.getDataCenter()
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -66,17 +44,15 @@ export const action: ActionFunction = async ({ request }) => {
   })
 
   if ('exception' in validInput) {
-    return validInput
+    return json(validInput)
   }
 
   try {
-    const data = await ScripExchangeRequest(validInput) // Used ScripExchangeRequest function
-    // console.log(data)
-
+    const data = await ScripExchangeRequest(validInput)
     if (!data) {
       return json({ exception: 'No data found.' })
     }
-
+    console.log(data)
     return json({ entries: data, payload: validInput })
   } catch (err) {
     console.error('Error fetching data:', err)
@@ -84,71 +60,50 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
-const parseServerError = (error: string) => {
+const validateInput = ({ home_server, color }) => {
+  if (!home_server || typeof home_server !== 'string' || !color || typeof color !== 'string') {
+    return { exception: 'Invalid input' }
+  }
+  return { home_server, color }
+}
+
+const parseServerError = (error) => {
   if (error.includes('Error fetching data:')) {
     return 'Failed to receive result from external API'
   }
-
   return error
 }
 
 const FFXIVScripExchange = () => {
   const transition = useNavigation()
+  const loaderData = useLoaderData()
   const results = useActionData()
-  const [formState, setFormState] = useState<{ color: string } | undefined>()
-  const [error, setError] = useState<string | undefined>()
-  const { darkmode } = useTypedSelector((state) => state.user)
-  const { itemHistory } = useTypedSelector((state) => state.queries)
-  const dispatch = useDispatch()
-
-  const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (transition.state === 'submitting' || !formState) {
-      e.preventDefault()
-      return
-    }
-  }
+  const [formState, setFormState] = useState({ color: 'Orange' })
+  const [error, setError] = useState()
+  const [tableData, setTableData] = useState([])
 
   useEffect(() => {
     if (results && results.entries) {
-      dispatch(setItemHistory(results))
+      setTableData(results.entries)
     } else if (results && results.exception) {
       const message = parseServerError(results.exception)
       setError(`Server Error: ${message}`)
     } else if (results && results.payload) {
       setError('No results found')
     }
-  }, [results, dispatch])
+  }, [results])
 
-  const handleFormChange = (name: string, value: string) => {
+  const handleFormChange = (name, value) => {
+    setFormState({ ...formState, [name]: value })
     if (error) {
       setError(undefined)
     }
-    setFormState({ ...formState, [name]: value })
   }
 
-  const handleTextChange = () => {
-    setError(undefined)
-  }
-
-  const formatDate = (timestamp: number) => {
-    const date = new Date(timestamp * 1000)
-    return date.toLocaleString()
-  }
-
-  let tableData = []
-  if (itemHistory?.entries) {
-    tableData = itemHistory.entries.map((entry) => ({
-      itemID: entry.itemID,
-      itemName: entry.itemName,
-      cost: entry.cost,
-      minPrice: entry.minPrice,
-      salesAmountNQ: entry.salesAmountNQ,
-      quantitySoldNQ: entry.quantitySoldNQ,
-      valuePerScrip: entry.valuePerScrip,
-      saddleLink: entry.saddleLink,
-      uniLink: entry.uniLink,
-      webpage: entry.webpage
-    }))
+  const onSubmit = (e) => {
+    if (transition.state === 'submitting' || !formState) {
+      e.preventDefault()
+    }
   }
 
   const columnList = [
@@ -168,41 +123,38 @@ const FFXIVScripExchange = () => {
 
   return (
     <PageWrapper>
-      <>
-        <div className="py-3">
-          <SmallFormContainer
-            title="Find Scrip Exchange"
-            onClick={onSubmit}
-            error={error}
-            loading={transition.state === 'submitting'}
-            disabled={!formState}>
-            <>
-              <Select
-                title="Scrip Color"
-                name="color"
-                defaultValue="Orange"
-                options={[
-                  { label: 'Orange', value: 'Orange' },
-                  { label: 'Purple', value: 'Purple' }
-                ]}
-                onChange={(e) => handleFormChange('color', e.target.value)}
-              />
-            </>
-          </SmallFormContainer>
-        </div>
-        {error === 'No results found' && !itemHistory && (
-          <NoResults href={`/ffxiv-scrip-exchange`} />
-        )}
-        {itemHistory && itemHistory.entries && (
-          <SmallTable
-            data={tableData}
-            sortingOrder={sortingOrder}
-            columnList={columnList}
-            title="Scrip Exchange"
-            description="Details of scrip exchange items"
+      <div className="py-3">
+        <SmallFormContainer
+          title="Find Scrip Exchange"
+          onClick={onSubmit}
+          error={error}
+          loading={transition.state === 'submitting'}
+          disabled={!formState}
+        >
+          <Select
+            title="Scrip Color"
+            name="color"
+            defaultValue="Orange"
+            options={[
+              { label: 'Orange', value: 'Orange' },
+              { label: 'Purple', value: 'Purple' }
+            ]}
+            onChange={(e) => handleFormChange('color', e.target.value)}
           />
-        )}
-      </>
+        </SmallFormContainer>
+      </div>
+      {error === 'No results found' && !tableData.length && (
+        <NoResults href={`/ffxiv-scrip-exchange`} />
+      )}
+      {tableData.length > 0 && (
+        <SmallTable
+          data={tableData}
+          sortingOrder={sortingOrder}
+          columnList={columnList}
+          title="Scrip Exchange"
+          description="Details of scrip exchange items"
+        />
+      )}
     </PageWrapper>
   )
 }
