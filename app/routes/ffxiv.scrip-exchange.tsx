@@ -60,10 +60,8 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const session = await getUserSessionData(request);
 
-  formData.append('server', session.server); // Corrected the method to access server
-
   const validInput = validateInput({
-    server: formData.get('server'),
+    server: session.getWorld(),
     color: formData.get('color'),
   });
 
@@ -73,6 +71,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   try {
     const data = await ScripExchangeRequest(validInput); // Used ScripExchangeRequest function
+    console.log(data)
 
     if (!data.entries) {
       return json({ exception: 'No entries found.' });
