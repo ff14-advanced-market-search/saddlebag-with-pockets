@@ -12,8 +12,8 @@ export default function Banner() {
         </div>
         <div className="ml-3 flex-1 md:flex md:justify-between">
           <p className="text-sm text-blue-700 dark:text-gray-200">
-            NOTICE: FFXIV Listing Data is down, history based searches like
-            marketshare are still working. Join the Discord for updates!{' '}
+            NOTICE: FFXIV Data is not updating due to Universalis outages. Join
+            the Discord for updates!{' '}
           </p>
           <p className="mt-3 text-sm md:mt-0 md:ml-6">
             <a
