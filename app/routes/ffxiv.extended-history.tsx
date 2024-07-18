@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
+import { format } from 'date-fns'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -148,9 +149,9 @@ const FFXIVSaleHistory = () => {
     setError(undefined)
   }
 
-  const formatDate = (timestamp: number) => {
+  const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000)
-    return date.toLocaleString()
+    return format(date, 'PPpp') // 'PPpp' can be replaced with any format string you need
   }
 
   let tableData = []
@@ -161,12 +162,13 @@ const FFXIVSaleHistory = () => {
       quantity: entry.quantity,
       buyerName: entry.buyerName,
       onMannequin: entry.onMannequin,
-      timestamp: formatDate(entry.timestamp)
+      timestamp: entry.timestamp,
+      date: formatDate(entry.timestamp)
     }))
   }
 
   const columnList = [
-    { columnId: 'timestamp', header: 'Timestamp' },
+    { columnId: 'date', header: 'Date' },
     { columnId: 'pricePerUnit', header: 'Price Per Unit' },
     { columnId: 'quantity', header: 'Quantity' },
     { columnId: 'hq', header: 'HQ' },
@@ -175,7 +177,7 @@ const FFXIVSaleHistory = () => {
   ]
 
   const mobileColumnList = [
-    { columnId: 'timestamp', header: 'Timestamp' },
+    { columnId: 'date', header: 'Date' },
     { columnId: 'pricePerUnit', header: 'Price Per Unit' },
     { columnId: 'quantity', header: 'Quantity' },
     { columnId: 'hq', header: 'HQ' },
@@ -185,7 +187,7 @@ const FFXIVSaleHistory = () => {
 
   const columnSelectOptions = ['hq']
 
-  const sortingOrder = [{ id: 'timestamp', desc: true }]
+  const sortingOrder = [{ id: 'date', desc: true }]
 
   return (
     <PageWrapper>
