@@ -80,11 +80,10 @@ export const action: ActionFunction = async ({ request }) => {
     const response = await fetch(`https://universalis.app/api/v2/history/${validInput.world}/${validInput.itemId}`);
     const data = await response.json();
 
-    if (!data.entries) {
-      return json({ exception: 'No entries found.' });
+    if (!data.entries || data.entries.length === 0) {
+      return json({ exception: 'No entries found.', payload: validInput });
     }
 
-    console.log('Fetched data:', data);
     return json({ entries: data.entries, payload: validInput });
   } catch (err) {
     console.error('Error fetching data:', err);
@@ -117,20 +116,17 @@ const FFXIVSaleHistory = () => {
   };
 
   useEffect(() => {
-    console.log('Action data results:', results);
-
-    if (results && results.entries) {
-      console.log('Setting item history with results:', results);
-      dispatch(setItemHistory(results));
-    } else if (results && results.exception) {
-      const message = parseServerError(results.exception);
-      setError(`Server Error: ${message}`);
-    } else if (results && results.payload) {
-      setError('No results found');
+    if (results) {
+      if (results.entries) {
+        dispatch(setItemHistory(results));
+      } else if (results.exception) {
+        const message = parseServerError(results.exception);
+        setError(`Server Error: ${message}`);
+      } else if (results.payload && (!results.entries || results.entries.length === 0)) {
+        setError('No results found');
+      }
     }
   }, [results, dispatch]);
-
-  console.log('Item history:', itemHistory);
 
   const resultTitle = itemHistory ? getItemNameById(itemHistory.payload.itemId) : null;
 
@@ -139,12 +135,10 @@ const FFXIVSaleHistory = () => {
       setError(undefined);
     }
     setFormState(selectValue);
-    console.log('Form state changed:', selectValue);
   };
 
   const handleTextChange = () => {
     setError(undefined);
-    console.log('Text input changed');
   };
 
   const formatDate = (timestamp: number) => {
@@ -153,8 +147,7 @@ const FFXIVSaleHistory = () => {
   };
 
   let tableData = [];
-  if (itemHistory?.entries) {
-    console.log('Entries found:', itemHistory.entries);
+  if (itemHistory && itemHistory.entries) {
     tableData = itemHistory.entries.map((entry) => ({
       hq: entry.hq,
       pricePerUnit: entry.pricePerUnit,
@@ -163,11 +156,7 @@ const FFXIVSaleHistory = () => {
       onMannequin: entry.onMannequin,
       timestamp: formatDate(entry.timestamp),
     }));
-  } else {
-    console.log('No entries found or itemHistory is undefined');
   }
-
-  console.log('Table data:', tableData);
 
   const columnList = [
     { columnId: 'hq', header: 'HQ' },
@@ -209,7 +198,7 @@ const FFXIVSaleHistory = () => {
             <TitleH2 title={resultTitle} />
           </div>
         )}
-        {itemHistory && itemHistory.entries && (
+        {itemHistory && itemHistory.entries && itemHistory.entries.length > 0 && (
           <SmallTable
             data={tableData}
             sortingOrder={sortingOrder}
@@ -217,6 +206,9 @@ const FFXIVSaleHistory = () => {
             title="Sale History"
             description="A detailed history of item sales"
           />
+        )}
+        {itemHistory && (!itemHistory.entries || itemHistory.entries.length === 0) && (
+          <NoResults href={`/ffxiv-sale-history`} />
         )}
       </>
     </PageWrapper>
