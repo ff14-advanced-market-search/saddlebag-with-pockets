@@ -179,7 +179,7 @@ const FFXIVScripExchange = () => {
             columnList={columnList}
             mobileColumnList={mobileColumnList}
             columnSelectOptions={['itemName']}
-            sortingOrder={[{ id: 'itemName', desc: true }]}
+            sortingOrder={[{ id: 'valuePerScrip', desc: true }]}
           />
         )}
       </>
@@ -188,7 +188,6 @@ const FFXIVScripExchange = () => {
 }
 
 const columnList = [
-  { columnId: 'itemID', header: 'Item ID' },
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'cost', header: 'Cost' },
   { columnId: 'minPrice', header: 'Min Price' },
@@ -201,7 +200,6 @@ const columnList = [
 ]
 
 const mobileColumnList = [
-  { columnId: 'itemID', header: 'Item ID' },
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'cost', header: 'Cost' },
   { columnId: 'minPrice', header: 'Min Price' },
