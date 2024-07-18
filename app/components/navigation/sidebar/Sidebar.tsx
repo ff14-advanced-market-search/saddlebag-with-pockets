@@ -151,6 +151,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Scrip Value Search',
+        href: 'ffxiv/scrip-exchange',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Self Purchase Records',
         href: 'ffxiv/self-purchase',
         icon: ChartSquareBarIcon
