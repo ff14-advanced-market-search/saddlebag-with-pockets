@@ -93,6 +93,13 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
+    name: 'Extened Sale History',
+    description:
+      'See extended sale history of last 1800 sales on any FFXIV item.',
+    Icon: ChartSquareBarIcon,
+    href: '/ffxiv/extended-history'
+  },
+  {
     name: 'Item History Statistics and Graphs',
     description:
       'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',

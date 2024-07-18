@@ -156,6 +156,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Extended Sale History',
+        href: '/ffxiv/extended-history',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Self Purchase Records',
         href: 'ffxiv/self-purchase',
         icon: ChartSquareBarIcon
