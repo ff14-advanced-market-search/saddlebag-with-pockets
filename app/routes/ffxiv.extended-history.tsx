@@ -166,21 +166,21 @@ const FFXIVSaleHistory = () => {
   }
 
   const columnList = [
-    { columnId: 'hq', header: 'HQ' },
+    { columnId: 'timestamp', header: 'Timestamp' },
     { columnId: 'pricePerUnit', header: 'Price Per Unit' },
     { columnId: 'quantity', header: 'Quantity' },
+    { columnId: 'hq', header: 'HQ' },
     { columnId: 'buyerName', header: 'Buyer Name' },
-    { columnId: 'onMannequin', header: 'On Mannequin' },
-    { columnId: 'timestamp', header: 'Timestamp' }
+    { columnId: 'onMannequin', header: 'On Mannequin' }
   ]
 
   const mobileColumnList = [
-    { columnId: 'hq', header: 'HQ' },
+    { columnId: 'timestamp', header: 'Timestamp' },
     { columnId: 'pricePerUnit', header: 'Price Per Unit' },
     { columnId: 'quantity', header: 'Quantity' },
+    { columnId: 'hq', header: 'HQ' },
     { columnId: 'buyerName', header: 'Buyer Name' },
-    { columnId: 'onMannequin', header: 'On Mannequin' },
-    { columnId: 'timestamp', header: 'Timestamp' }
+    { columnId: 'onMannequin', header: 'On Mannequin' }
   ]
 
   const columnSelectOptions = ['hq']
