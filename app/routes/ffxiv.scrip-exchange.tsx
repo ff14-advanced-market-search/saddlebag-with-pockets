@@ -194,8 +194,8 @@ const columnList = [
   { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
   { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
   { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
-  { columnId: 'saddleLink', header: 'Saddle Link' },
-  { columnId: 'uniLink', header: 'Uni Link' },
+  { columnId: 'saddleLink', header: 'Item-Data' },
+  { columnId: 'uniLink', header: 'Universalis' },
   { columnId: 'webpage', header: 'Webpage' }
 ]
 
@@ -206,8 +206,8 @@ const mobileColumnList = [
   { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
   { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
   { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
-  { columnId: 'saddleLink', header: 'Saddle Link' },
-  { columnId: 'uniLink', header: 'Uni Link' },
+  { columnId: 'saddleLink', header: 'Item-Data'  },
+  { columnId: 'uniLink', header: 'Universalis' },
   { columnId: 'webpage', header: 'Webpage' }
 ]
 
