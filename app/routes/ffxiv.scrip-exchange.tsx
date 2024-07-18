@@ -14,8 +14,10 @@ import Select from '~/components/form/select'
 import {
   ScripExchangeRequest,
   ScripExchangeResults
-} from '~/requests/FFXIV/scrip-exchange' // Imported ScripExchangeRequest
+} from '~/requests/FFXIV/scrip-exchange'
 import { ScripExchangeProps } from '~/requests/FFXIV/scripexchange'
+import ItemDataLink from '~/components/utilities/ItemDataLink'
+import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -74,9 +76,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   try {
-    const data = await ScripExchangeRequest(validInput) // Used ScripExchangeRequest function
-    // console.log(data)
-
+    const data = await ScripExchangeRequest(validInput)
     if (!data) {
       return json({ exception: 'No data found.' })
     }
@@ -194,9 +194,21 @@ const columnList = [
   { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
   { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
   { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
-  { columnId: 'saddleLink', header: 'Item-Data' },
-  { columnId: 'uniLink', header: 'Universalis' },
-  { columnId: 'webpage', header: 'Webpage' }
+  {
+    columnId: 'saddleLink',
+    header: 'Item-Data',
+    accessor: ({ row }) => <ItemDataLink link={row.saddleLink} />
+  },
+  {
+    columnId: 'uniLink',
+    header: 'Universalis',
+    accessor: ({ row }) => <UniversalisBadgedLink link={row.uniLink} />
+  },
+  {
+    columnId: 'webpage',
+    header: 'wiki',
+    accessor: ({ row }) => <ItemDataLink link={row.webpage} />
+  }
 ]
 
 const mobileColumnList = [
@@ -206,9 +218,21 @@ const mobileColumnList = [
   { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
   { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
   { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
-  { columnId: 'saddleLink', header: 'Item-Data'  },
-  { columnId: 'uniLink', header: 'Universalis' },
-  { columnId: 'webpage', header: 'Webpage' }
+  {
+    columnId: 'saddleLink',
+    header: 'Item-Data',
+    accessor: ({ row }) => <ItemDataLink link={row.saddleLink} />
+  },
+  {
+    columnId: 'uniLink',
+    header: 'Universalis',
+    accessor: ({ row }) => <UniversalisBadgedLink link={row.uniLink} />
+  },
+  {
+    columnId: 'webpage',
+    header: 'wiki',
+    accessor: ({ row }) => <ItemDataLink link={row.webpage} />
+  }
 ]
 
 export default FFXIVScripExchange
