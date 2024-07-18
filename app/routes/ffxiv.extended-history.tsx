@@ -1,18 +1,18 @@
-import { useActionData, useNavigation } from '@remix-run/react';
-import type { ActionFunction } from '@remix-run/cloudflare';
-import { json } from '@remix-run/cloudflare';
-import NoResults from '~/components/Common/NoResults';
-import { getUserSessionData } from '~/sessions';
-import ItemSelect from '~/components/Common/ItemSelect';
-import type { ItemSelected } from '~/components/Common/ItemSelect';
-import { useEffect, useState } from 'react';
-import SmallFormContainer from '~/components/form/SmallFormContainer';
-import SmallTable from '~/components/WoWResults/FullScan/SmallTable';
-import { PageWrapper, TitleH2 } from '~/components/Common';
-import { useDispatch } from 'react-redux';
-import { setItemHistory } from '~/redux/reducers/queriesSlice';
-import { useTypedSelector } from '~/redux/useTypedSelector';
-import { getItemNameById } from '~/utils/items';
+import { useActionData, useNavigation } from '@remix-run/react'
+import type { ActionFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
+import NoResults from '~/components/Common/NoResults'
+import { getUserSessionData } from '~/sessions'
+import ItemSelect from '~/components/Common/ItemSelect'
+import type { ItemSelected } from '~/components/Common/ItemSelect'
+import { useEffect, useState } from 'react'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
+import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
+import { PageWrapper, TitleH2 } from '~/components/Common'
+import { useDispatch } from 'react-redux'
+import { setItemHistory } from '~/redux/reducers/queriesSlice'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { getItemNameById } from '~/utils/items'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -20,133 +20,140 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV Full Sale History',
-    description: 'Saddlebag Exchange: FFXIV sale history on past 1800 sales',
-  };
-};
+    description: 'Saddlebag Exchange: FFXIV sale history on past 1800 sales'
+  }
+}
 
 export const links: LinksFunction = () => [
   {
     rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/extended-history',
-  },
-];
+    href: 'https://saddlebagexchange.com/ffxiv/extended-history'
+  }
+]
 
 const validateInput = ({
   itemId,
-  world,
+  world
 }: {
-  itemId?: FormDataEntryValue | null;
-  world?: FormDataEntryValue | null;
+  itemId?: FormDataEntryValue | null
+  world?: FormDataEntryValue | null
 }): { itemId: number; world: string } | { exception: string } => {
   if (itemId === undefined || itemId === null) {
-    return { exception: 'Item not found' };
+    return { exception: 'Item not found' }
   }
 
   if (world === undefined || world === null) {
-    return { exception: 'World not set' };
+    return { exception: 'World not set' }
   }
 
   if (typeof itemId !== 'string') {
-    return { exception: 'Invalid item' };
+    return { exception: 'Invalid item' }
   }
 
   if (typeof world !== 'string') {
-    return { exception: 'Invalid world' };
+    return { exception: 'Invalid world' }
   }
 
-  const parsedItemId = parseInt(itemId);
+  const parsedItemId = parseInt(itemId)
 
-  if (Number.isNaN(parsedItemId)) return { exception: 'Invalid item' };
+  if (Number.isNaN(parsedItemId)) return { exception: 'Invalid item' }
 
-  return { itemId: parsedItemId, world };
-};
+  return { itemId: parsedItemId, world }
+}
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const session = await getUserSessionData(request);
+  const formData = await request.formData()
+  const session = await getUserSessionData(request)
 
-  formData.append('world', session.getWorld());
+  formData.append('world', session.getWorld())
 
   const validInput = validateInput({
     itemId: formData.get('itemId'),
-    world: formData.get('world'),
-  });
+    world: formData.get('world')
+  })
 
   if ('exception' in validInput) {
-    return validInput;
+    return validInput
   }
 
   try {
-    const response = await fetch(`https://universalis.app/api/v2/history/${validInput.world}/${validInput.itemId}`);
-    const data = await response.json();
+    const response = await fetch(
+      `https://universalis.app/api/v2/history/${validInput.world}/${validInput.itemId}`
+    )
+    const data = await response.json()
 
     if (!data.entries || data.entries.length === 0) {
-      return json({ exception: 'No entries found.', payload: validInput });
+      return json({ exception: 'No entries found.', payload: validInput })
     }
 
-    return json({ entries: data.entries, payload: validInput });
+    return json({ entries: data.entries, payload: validInput })
   } catch (err) {
-    console.error('Error fetching data:', err);
-    return { exception: 'Error fetching data.' };
+    console.error('Error fetching data:', err)
+    return { exception: 'Error fetching data.' }
   }
-};
+}
 
 const parseServerError = (error: string) => {
   if (error.includes('Error fetching data:')) {
-    return 'Failed to receive result from external API';
+    return 'Failed to receive result from external API'
   }
 
-  return error;
-};
+  return error
+}
 
 const FFXIVSaleHistory = () => {
-  const transition = useNavigation();
-  const results = useActionData();
-  const [formState, setFormState] = useState<ItemSelected | undefined>();
-  const [error, setError] = useState<string | undefined>();
-  const { darkmode } = useTypedSelector((state) => state.user);
-  const { itemHistory } = useTypedSelector((state) => state.queries);
-  const dispatch = useDispatch();
+  const transition = useNavigation()
+  const results = useActionData()
+  const [formState, setFormState] = useState<ItemSelected | undefined>()
+  const [error, setError] = useState<string | undefined>()
+  const { darkmode } = useTypedSelector((state) => state.user)
+  const { itemHistory } = useTypedSelector((state) => state.queries)
+  const dispatch = useDispatch()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {
-      e.preventDefault();
-      return;
+      e.preventDefault()
+      return
     }
-  };
+  }
 
   useEffect(() => {
     if (results) {
       if (results.entries) {
-        dispatch(setItemHistory(results));
+        dispatch(setItemHistory(results))
       } else if (results.exception) {
-        const message = parseServerError(results.exception);
-        setError(`Server Error: ${message}`);
-      } else if (results.payload && (!results.entries || results.entries.length === 0)) {
-        setError('No results found');
+        const message = parseServerError(results.exception)
+        setError(`Server Error: ${message}`)
+      } else if (
+        results.payload &&
+        (!results.entries || results.entries.length === 0)
+      ) {
+        setError('No results found')
       }
     }
-  }, [results, dispatch]);
+  }, [results, dispatch])
 
-  const resultTitle = itemHistory ? getItemNameById(itemHistory.payload.itemId) : null;
+  const resultTitle = itemHistory
+    ? getItemNameById(itemHistory.payload.itemId)
+    : null
 
   const handleFormChange = (selectValue?: ItemSelected | undefined) => {
     if (error) {
-      setError(undefined);
+      setError(undefined)
     }
-    setFormState(selectValue);
-  };
+    setFormState(selectValue)
+  }
 
   const handleTextChange = () => {
-    setError(undefined);
-  };
+    setError(undefined)
+  }
 
   const formatDate = (timestamp: number) => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleString();
-  };
+    const date = new Date(timestamp * 1000)
+    return date.toLocaleString()
+  }
 
-  let tableData = [];
+  let tableData = []
   if (itemHistory && itemHistory.entries) {
     tableData = itemHistory.entries.map((entry) => ({
       hq: entry.hq,
@@ -154,8 +161,8 @@ const FFXIVSaleHistory = () => {
       quantity: entry.quantity,
       buyerName: entry.buyerName,
       onMannequin: entry.onMannequin,
-      timestamp: formatDate(entry.timestamp),
-    }));
+      timestamp: formatDate(entry.timestamp)
+    }))
   }
 
   const columnList = [
@@ -164,12 +171,21 @@ const FFXIVSaleHistory = () => {
     { columnId: 'quantity', header: 'Quantity' },
     { columnId: 'buyerName', header: 'Buyer Name' },
     { columnId: 'onMannequin', header: 'On Mannequin' },
-    { columnId: 'timestamp', header: 'Timestamp' },
-  ];
+    { columnId: 'timestamp', header: 'Timestamp' }
+  ]
 
-  const sortingOrder = [
-    { id: 'timestamp', desc: true },
-  ];
+  const mobileColumnList = [
+    { columnId: 'hq', header: 'HQ' },
+    { columnId: 'pricePerUnit', header: 'Price Per Unit' },
+    { columnId: 'quantity', header: 'Quantity' },
+    { columnId: 'buyerName', header: 'Buyer Name' },
+    { columnId: 'onMannequin', header: 'On Mannequin' },
+    { columnId: 'timestamp', header: 'Timestamp' }
+  ]
+
+  const columnSelectOptions = ['hq']
+
+  const sortingOrder = [{ id: 'timestamp', desc: true }]
 
   return (
     <PageWrapper>
@@ -180,8 +196,7 @@ const FFXIVSaleHistory = () => {
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
-            disabled={!formState}
-          >
+            disabled={!formState}>
             <>
               <ItemSelect
                 onSelectChange={handleFormChange}
@@ -198,21 +213,26 @@ const FFXIVSaleHistory = () => {
             <TitleH2 title={resultTitle} />
           </div>
         )}
-        {itemHistory && itemHistory.entries && itemHistory.entries.length > 0 && (
-          <SmallTable
-            data={tableData}
-            sortingOrder={sortingOrder}
-            columnList={columnList}
-            title="Sale History"
-            description="A detailed history of item sales"
-          />
-        )}
-        {itemHistory && (!itemHistory.entries || itemHistory.entries.length === 0) && (
-          <NoResults href={`/ffxiv-sale-history`} />
-        )}
+        {itemHistory &&
+          itemHistory.entries &&
+          itemHistory.entries.length > 0 && (
+            <SmallTable
+              data={tableData}
+              sortingOrder={sortingOrder}
+              columnList={columnList}
+              title="Sale History"
+              description="A detailed history of item sales"
+              mobileColumnList={mobileColumnList}
+              columnSelectOptions={columnSelectOptions}
+            />
+          )}
+        {itemHistory &&
+          (!itemHistory.entries || itemHistory.entries.length === 0) && (
+            <NoResults href={`/ffxiv-sale-history`} />
+          )}
       </>
     </PageWrapper>
-  );
-};
+  )
+}
 
-export default FFXIVSaleHistory;
+export default FFXIVSaleHistory
