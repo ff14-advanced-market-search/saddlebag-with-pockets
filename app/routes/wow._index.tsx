@@ -131,6 +131,13 @@ const recommendedQueries = [
       'Searches for region wide commodities that you can flip and take over the market!',
     Icon: DocumentSearchIcon,
     href: '/wow/shortages/commodities'
+  },
+  {
+    name: 'Zygor Guides',
+    description: 'Addons and Guides for WoW',
+    Icon: DocumentSearchIcon,
+    href: 'https://zygorguides.com/ref/indopan/',
+    external: true
   }
 ]
 
