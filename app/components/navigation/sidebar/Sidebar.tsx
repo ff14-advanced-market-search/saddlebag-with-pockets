@@ -170,11 +170,11 @@ const navGroups: Array<{
         href: 'queries/world-comparison',
         icon: ChartSquareBarIcon
       },
-      {
-        name: 'Undercut Alert Input',
-        href: 'undercut',
-        icon: PencilAltIcon
-      },
+      // {
+      //   name: 'Undercut Alert Input',
+      //   href: 'undercut',
+      //   icon: PencilAltIcon
+      // },
       {
         name: 'Price Sniper Alert Input',
         href: 'price-sniper',
