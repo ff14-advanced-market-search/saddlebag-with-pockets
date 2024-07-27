@@ -35,14 +35,14 @@ const Results = ({
     form: 'addIds' | 'removeIds'
     open: boolean
   }>({ form: 'removeIds', open: false })
-  const jsonData = `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "add_ids": [${info.addIds.join(
+  const jsonData = `{\n  "retainer_names": ["${sellerId}"],\n  "server": "${homeServer}",\n  "add_ids": [${info.addIds.join(
     ','
   )}],\n  "ignore_ids": [${info.removeIds.join(
     ','
   )}],\n  "hq_only": ${info.hqOnly.toString()},\n  "ignore_data_after_hours": ${
     info.ignoreDataAfterHours
   },\n  "ignore_undercuts_with_quantity_over": ${info.ignoreStackSize}\n}`
-  const salesAlertJson = `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "item_ids": []\n}`
+  const salesAlertJson = `{\n  "retainer_names": ["${sellerId}"],\n  "server": "${homeServer}",\n  "item_ids": []\n}`
 
   const isAddModal = modal.form === 'addIds'
   return (

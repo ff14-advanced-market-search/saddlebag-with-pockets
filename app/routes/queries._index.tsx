@@ -49,13 +49,13 @@ const ffxivPages = [
       'Helps make a shopping list, telling you where to find crafting materials for the best prices!',
     Icon: PencilAltIcon
   },
-  // {
-  //   name: 'Discord Undercut Alert Generator',
-  //   description:
-  //     'Undercut Alerts will notify you via discord direct message when you are undercut.',
-  //   Icon: PencilAltIcon,
-  //   href: '/undercut'
-  // },
+  {
+    name: 'Discord Undercut Alert Generator',
+    description:
+      'Undercut Alerts will notify you via discord direct message when you are undercut.',
+    Icon: PencilAltIcon,
+    href: '/undercut'
+  },
   {
     name: 'Undercut Alerts Guide',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
