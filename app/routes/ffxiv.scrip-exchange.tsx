@@ -105,7 +105,7 @@ const FFXIVScripExchange = () => {
   const transition = useNavigation()
   const actionData = useActionData<ActionResponse>()
   const [formState, setFormState] = useState<{ color: string }>({
-    color: 'Orange'
+    color: 'Orange Gatherers'
   })
   const [error, setError] = useState<string | undefined>()
   const { darkmode } = useTypedSelector((state) => state.user)
@@ -162,8 +162,10 @@ const FFXIVScripExchange = () => {
                 name="color"
                 defaultValue="Orange"
                 options={[
-                  { label: 'Orange', value: 'Orange' },
-                  { label: 'Purple', value: 'Purple' }
+                  { label: 'Orange Crafters', value: 'Orange Crafters' },
+                  { label: 'Orange Gatherers', value: 'Orange Gatherers' },
+                  { label: 'Purple Crafters', value: 'Purple Crafters' },
+                  { label: 'Purple Gatherers', value: 'Purple Gatherers' }
                 ]}
                 onChange={(e) => handleFormChange('color', e.target.value)}
               />
