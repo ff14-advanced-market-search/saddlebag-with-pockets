@@ -311,6 +311,16 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://saddlebagexchange.com/ffxiv/scrip-exchange</loc>
+  <lastmod>2024-07-07T00:27:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/ffxiv/extended-history</loc>
+  <lastmod>2024-07-07T00:27:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 ${dynamicWoWURLs
   .map(
     (url) => `
