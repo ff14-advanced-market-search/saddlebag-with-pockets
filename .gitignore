@@ -19,3 +19,5 @@ node_modules
 
 # @Cloudflare/Wrangler
 .wrangler
+
+package-lock.json 

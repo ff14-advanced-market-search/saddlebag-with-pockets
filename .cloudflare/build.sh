@@ -1,4 +1,3 @@
 # !/bin/bash
-
-  npm run write-items
-  npm run build
+yarn run write-items
+yarn run build
