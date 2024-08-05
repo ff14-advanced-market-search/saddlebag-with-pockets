@@ -221,7 +221,7 @@ const Index = () => {
     setSearchParams((prev) => ({ ...prev, [name]: value }))
   }
 
-  const pageTitle = 'Dragonflight Auction House Marketshare Overview'
+  const pageTitle = 'Total Auction House Marketshare Overview'
 
   if (results && 'data' in results) {
     if (!results.data.length) {
