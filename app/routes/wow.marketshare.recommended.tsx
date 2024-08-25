@@ -80,7 +80,8 @@ const searchParams = {
 const recommendedQueries = [
   {
     name: 'TWW Single Realm',
-    description: 'See what "The War Within" items make the most gold on your realm.',
+    description:
+      'See what "The War Within" items make the most gold on your realm.',
     Icon: DocumentSearchIcon,
     href: searchParams.defaultTWWSingle
   },
