@@ -32,6 +32,7 @@ export const defaultFormValuesMarketShare = {
   desiredSalesPerDay: '0',
   region: 'NA',
   homeRealmId: `3678---Thrall`,
+  expansionNumber: '-1',
   itemClass: '-1',
   itemSubClass: '-1',
   itemQuality: '1',
