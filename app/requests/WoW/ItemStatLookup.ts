@@ -13,6 +13,7 @@ interface StatLookupProps {
   itemClass: number
   itemSubClass: number
   iLvl: number
+  expansionNumber: number
 }
 
 export interface ItemStats {
@@ -31,6 +32,7 @@ export interface ItemStats {
   currentQuantity: number
   currentVsAvgQuantityPercent: number
   quantityState: WoWMarketState
+  expansion_number: number
 }
 
 export interface ItemStatResponse {
@@ -47,7 +49,8 @@ const WoWStatLookup: (props: StatLookupProps) => Promise<Response> = async ({
   requiredLevel,
   itemClass,
   itemSubClass,
-  iLvl
+  iLvl,
+  expansionNumber
 }) => {
   return fetch(`${address}/api/wow/itemstats`, {
     method: 'POST',
@@ -65,7 +68,8 @@ const WoWStatLookup: (props: StatLookupProps) => Promise<Response> = async ({
       required_level: requiredLevel,
       item_class: itemClass,
       item_subclass: itemSubClass,
-      ilvl: iLvl
+      ilvl: iLvl,
+      expansion_number: expansionNumber
     })
   })
 }

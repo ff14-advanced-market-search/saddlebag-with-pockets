@@ -37,7 +37,8 @@ export const defaultFormValuesMarketShare = {
   itemQuality: '1',
   iLvl: '-1',
   requiredLevel: '-1',
-  commodity: 'off'
+  commodity: 'off',
+  expansionNumber: '-1'
 }
 
 const inputMap: Record<string, string> = {
@@ -50,7 +51,8 @@ const inputMap: Record<string, string> = {
   itemQuality: 'Item Quality',
   iLvl: 'Minimum Item Level (iLevel)',
   requiredLevel: 'Minimum Required Level',
-  commodity: 'Commodity Items'
+  commodity: 'Commodity Items',
+  expansionNumber: 'WoW Expansion'
 }
 
 const searchParamsTypes = z.object({
@@ -72,7 +74,8 @@ const searchParamsTypes = z.object({
   itemQuality: parseStringToNumber,
   iLvl: parseStringToNumber,
   requiredLevel: parseStringToNumber,
-  commodity: parseCheckboxBoolean
+  commodity: parseCheckboxBoolean,
+  expansionNumber: parseStringToNumber
 })
 
 // Overwrite default meta in the root.tsx
@@ -125,7 +128,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     requiredLevel:
       params.get('requiredLevel') ||
       defaultFormValuesMarketShare.requiredLevel.toString(),
-    commodity: params.get('commodity') || defaultFormValuesMarketShare.commodity
+    commodity:
+      params.get('commodity') || defaultFormValuesMarketShare.commodity,
+    expansionNumber:
+      params.get('expansionNumber') ||
+      defaultFormValuesMarketShare.expansionNumber.toString()
   }
 
   const validInput = searchParamsTypes.safeParse(input)
@@ -164,7 +171,8 @@ export const action: ActionFunction = async ({ request }) => {
     itemQuality: parseStringToNumber,
     iLvl: parseStringToNumber,
     requiredLevel: parseStringToNumber,
-    commodity: parseCheckboxBoolean
+    commodity: parseCheckboxBoolean,
+    expansionNumber: parseStringToNumber
   })
 
   const validInput = validateFormData.safeParse(formPayload)
