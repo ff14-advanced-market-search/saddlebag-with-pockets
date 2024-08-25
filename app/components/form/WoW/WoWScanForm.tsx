@@ -49,6 +49,7 @@ const itemQuality = [
 ]
 
 const expansionOptions = [
+  { label: 'All', value: '-1' },
   { label: 'Classic (Vanilla)', value: '1' },
   { label: 'The Burning Crusade', value: '2' },
   { label: 'Wrath of the Lich King', value: '3' },

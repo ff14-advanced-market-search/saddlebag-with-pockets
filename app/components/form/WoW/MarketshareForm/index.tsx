@@ -64,6 +64,10 @@ const MarketShareForm = ({
           )
         }
       />
+      <ExpansionSelect
+        defaultValue={loaderData.expansionNumber}
+        onChange={(value) => handleFormChange('expansionNumber', value)}
+      />
       <ItemClassSelect
         itemClass={parseInt(loaderData.itemClass)}
         itemSubClass={parseInt(loaderData.itemSubClass)}
@@ -75,10 +79,6 @@ const MarketShareForm = ({
       <ItemQualitySelect
         defaultValue={loaderData.itemQuality}
         onChange={(value) => handleFormChange('itemQuality', value)}
-      />
-      <ExpansionSelect
-        defaultValue={loaderData.expansionNumber}
-        onChange={(value) => handleFormChange('expansionNumber', value)}
       />
       <InputWithLabel
         defaultValue={loaderData.iLvl}
