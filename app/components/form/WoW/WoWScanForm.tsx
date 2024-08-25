@@ -48,6 +48,20 @@ const itemQuality = [
   }
 ]
 
+const expansionOptions = [
+  { label: 'Classic (Vanilla)', value: '1' },
+  { label: 'The Burning Crusade', value: '2' },
+  { label: 'Wrath of the Lich King', value: '3' },
+  { label: 'Cataclysm', value: '4' },
+  { label: 'Mists of Pandaria', value: '5' },
+  { label: 'Warlords of Draenor', value: '6' },
+  { label: 'Legion', value: '7' },
+  { label: 'Battle for Azeroth', value: '8' },
+  { label: 'Shadowlands', value: '9' },
+  { label: 'Dragonflight', value: '10' },
+  { label: 'The War Within', value: '11' }
+]
+
 const WoWScanForm = ({
   onClick,
   loading,
@@ -470,6 +484,34 @@ export const ItemQualitySelect: React.FC<ItemQualitySelectProps> = ({
       {itemQuality.map(({ name, value }) => (
         <option key={name + value} value={value}>
           {name}
+        </option>
+      ))}
+    </Select>
+  </div>
+)
+
+interface ExpansionSelectProps {
+  defaultValue?: string
+  onChange?: (value: string) => void
+}
+
+export const ExpansionSelect: React.FC<ExpansionSelectProps> = ({
+  defaultValue,
+  onChange
+}) => (
+  <div className="w-full mt-2">
+    <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+      <Label htmlFor="expansion-select">Expansion</Label>
+      <ToolTip data="Select the World of Warcraft expansion you're interested in" />
+    </div>
+    <Select
+      id="expansion-select"
+      name="expansion"
+      defaultValue={defaultValue}
+      onChange={(e) => onChange?.(e.target.value)}>
+      {expansionOptions.map(({ label, value }) => (
+        <option key={value} value={value}>
+          {label}
         </option>
       ))}
     </Select>

@@ -3,7 +3,11 @@ import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 import CheckBox from '../../CheckBox'
 import { InputWithLabel } from '../../InputWithLabel'
 import RegionAndServerSelect from '../RegionAndServerSelect'
-import { ItemClassSelect, ItemQualitySelect } from '../WoWScanForm'
+import {
+  ItemClassSelect,
+  ItemQualitySelect,
+  ExpansionSelect
+} from '../WoWScanForm'
 import type { defaultFormValuesMarketShare } from '~/routes/wow.marketshare'
 
 const MarketShareForm = ({
@@ -71,6 +75,10 @@ const MarketShareForm = ({
       <ItemQualitySelect
         defaultValue={loaderData.itemQuality}
         onChange={(value) => handleFormChange('itemQuality', value)}
+      />
+      <ExpansionSelect
+        defaultValue={loaderData.expansionNumber}
+        onChange={(value) => handleFormChange('expansionNumber', value)}
       />
       <InputWithLabel
         defaultValue={loaderData.iLvl}
