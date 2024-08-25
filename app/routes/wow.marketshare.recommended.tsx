@@ -26,6 +26,10 @@ const BASE_URL = '/wow/marketshare'
 
 // Updated searchParams
 const searchParams = {
+  // TWW
+  // default
+  defaultTWWSingle: `${BASE_URL}?expansionNumber=11`,
+  defaultTWWCommodity: `${BASE_URL}?commodity=on&expansionNumber=11`,
   // $$$
   ultraFast: `${BASE_URL}?desiredSalesPerDay=1000000&commodity=on`,
   legacy: '/wow/legacy-marketshare',
@@ -74,6 +78,19 @@ const searchParams = {
 
 // Updated recommendedQueries to reflect WoW searches
 const recommendedQueries = [
+  {
+    name: 'TWW Single Realm',
+    description: 'See what "The War Within" items make the most gold on your realm.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.defaultTWWSingle
+  },
+  {
+    name: 'TWW Commodity Realm',
+    description:
+      'See what "The War Within" items make the most gold on your region wide commodity market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.defaultTWWCommodity
+  },
   {
     name: '1 MILLION SOLD A DAY!!!',
     description: 'See what items sell over 1 million a day on your region.',
