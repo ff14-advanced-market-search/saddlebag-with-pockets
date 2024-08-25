@@ -507,7 +507,7 @@ export const ExpansionSelect: React.FC<ExpansionSelectProps> = ({
     </div>
     <Select
       id="expansion-select"
-      name="expansion"
+      name="expansionNumber"
       defaultValue={defaultValue}
       onChange={(e) => onChange?.(e.target.value)}>
       {expansionOptions.map(({ label, value }) => (
