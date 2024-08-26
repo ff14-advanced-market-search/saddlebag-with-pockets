@@ -111,8 +111,8 @@ export const loader: LoaderFunction = ({ request }) => {
       : undefined,
     filters: url.searchParams.has('filters')
       ? decodeURIComponent(url.searchParams.get('filters') as string)
-        ?.split(',')
-        .map((str) => parseInt(str))
+          ?.split(',')
+          .map((str) => parseInt(str))
       : undefined,
     hQChecked: url.searchParams.has('hQChecked')
       ? url.searchParams.get('hQChecked') === 'true'
@@ -181,7 +181,9 @@ const Index = () => {
               loading={transition.state === 'submitting'}
               onClick={onSubmit}
               error={
-                results && 'exception' in results ? results.exception : undefined
+                results && 'exception' in results
+                  ? results.exception
+                  : undefined
               }
               defaultHours={searchParams.hours}
               defaultSalesAmount={searchParams.salesAmount}
