@@ -20,31 +20,41 @@ const Results = ({
   const [info, setInfo] = useState<{
     addIds: Array<string>
     removeIds: Array<string>
+    sellerIds: Array<string>
     hqOnly: boolean
     ignoreDataAfterHours: number
     ignoreStackSize: number
   }>({
     addIds: [],
     removeIds: [],
+    sellerIds: [sellerId],
     hqOnly: false,
     ignoreDataAfterHours: MAX_HOURS,
     ignoreStackSize: 9999
   })
 
   const [modal, setModal] = useState<{
-    form: 'addIds' | 'removeIds'
+    form: 'addIds' | 'removeIds' | 'sellerIds'
     open: boolean
   }>({ form: 'removeIds', open: false })
-  const jsonData = `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "add_ids": [${info.addIds.join(
-    ','
-  )}],\n  "ignore_ids": [${info.removeIds.join(
-    ','
-  )}],\n  "hq_only": ${info.hqOnly.toString()},\n  "ignore_data_after_hours": ${
-    info.ignoreDataAfterHours
-  },\n  "ignore_undercuts_with_quantity_over": ${info.ignoreStackSize}\n}`
-  const salesAlertJson = `{\n  "seller_id": "${sellerId}",\n  "server": "${homeServer}",\n  "item_ids": []\n}`
+  const jsonData = `{
+  "retainer_names": [${info.sellerIds.map((id) => `"${id}"`).join(',')}],
+  "server": "${homeServer}",
+  "add_ids": [${info.addIds.join(',')}],
+  "ignore_ids": [${info.removeIds.join(',')}],
+  "hq_only": ${info.hqOnly.toString()},
+  "ignore_data_after_hours": ${info.ignoreDataAfterHours},
+  "ignore_undercuts_with_quantity_over": ${info.ignoreStackSize}
+}`
+  const salesAlertJson = `{
+  "retainer_names": [${info.sellerIds.map((id) => `"${id}"`).join(',')}],
+  "server": "${homeServer}",
+  "item_ids": []
+}`
 
   const isAddModal = modal.form === 'addIds'
+  const isSellerModal = modal.form === 'sellerIds'
+
   return (
     <PageWrapper>
       <ContentContainer>
@@ -81,6 +91,17 @@ const Results = ({
                   setModal({ ...modal, open: true })
                 }}>
                 {isAddModal ? 'Alert on these items' : 'Filter out these items'}
+              </button>
+            </div>
+            <div className="mt-1 flex rounded-md shadow-sm max-w-fit">
+              <button
+                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
+                aria-label="Add all Retainers"
+                type="button"
+                onClick={() => {
+                  setModal({ form: 'sellerIds', open: true })
+                }}>
+                Add all Retainers
               </button>
             </div>
             <div className="flex justify-center mt-2 items-center max-w-fit dark:text-gray-300">
@@ -187,7 +208,13 @@ const Results = ({
           </div>
           {modal.open && (
             <Modal
-              title={isAddModal ? 'Include Items' : 'Ignore Items'}
+              title={
+                isAddModal
+                  ? 'Include Items'
+                  : isSellerModal
+                  ? 'Add Retainers'
+                  : 'Ignore Items'
+              }
               onClose={() => {
                 setModal({ ...modal, open: false })
               }}>
@@ -195,49 +222,100 @@ const Results = ({
                 <p className="text-sm text-grey-500 my-1 dark:text-gray-200">
                   {isAddModal
                     ? 'Please search for items that you would like to include in your alert.'
+                    : isSellerModal
+                    ? 'Please enter all your other retainer names or IDs.'
                     : 'Please search for items that you do not wish to be included in your undercut alerts.'}
                 </p>
-                <ItemSelect
-                  onSelectChange={(selected) => {
-                    if (!selected) {
-                      return
-                    }
-                    setInfo({
-                      ...info,
-                      [modal.form]: [...info[modal.form], selected.id]
-                    })
-                  }}
-                  tooltip={
-                    isAddModal
-                      ? 'Add specific items to your undercut alerts.'
-                      : 'Ignore specific items from the alerts.'
-                  }
-                />
-                <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
-                  {info[modal.form].map((id, index) => (
-                    <li
-                      key={`${id}-${index}`}
-                      className="flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200">
-                      <p className="text-ellipsis">{getItemNameById(id)}</p>
-                      <button
-                        className="rounded p-1 border-gray-300 min-w-fit"
-                        type="button"
-                        onClick={() => {
+                {isSellerModal ? (
+                  <div className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      placeholder="Enter seller ID"
+                      className="rounded p-2"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && e.currentTarget.value) {
                           setInfo({
                             ...info,
-                            [modal.form]: info[modal.form].filter(
-                              (item) => item !== id
-                            )
+                            sellerIds: [
+                              ...info.sellerIds,
+                              e.currentTarget.value
+                            ]
                           })
-                        }}
-                        aria-label="Delete">
-                        <TrashIcon
-                          className={`h-4 w-4 text-gray-500 mx-auto dark:text-gray-300`}
-                        />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                          e.currentTarget.value = ''
+                        }
+                      }}
+                    />
+                    <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
+                      {info.sellerIds.map((id, index) => (
+                        <li
+                          key={`${id}-${index}`}
+                          className="flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200">
+                          <p className="text-ellipsis">{id}</p>
+                          <button
+                            className="rounded p-1 border-gray-300 min-w-fit"
+                            type="button"
+                            onClick={() => {
+                              setInfo({
+                                ...info,
+                                sellerIds: info.sellerIds.filter(
+                                  (item) => item !== id
+                                )
+                              })
+                            }}
+                            aria-label="Delete">
+                            <TrashIcon
+                              className={`h-4 w-4 text-gray-500 mx-auto dark:text-gray-300`}
+                            />
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <ItemSelect
+                    onSelectChange={(selected) => {
+                      if (!selected) {
+                        return
+                      }
+                      setInfo({
+                        ...info,
+                        [modal.form]: [...info[modal.form], selected.id]
+                      })
+                    }}
+                    tooltip={
+                      isAddModal
+                        ? 'Add specific items to your undercut alerts.'
+                        : 'Ignore specific items from the alerts.'
+                    }
+                  />
+                )}
+                {!isSellerModal && (
+                  <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
+                    {info[modal.form].map((id, index) => (
+                      <li
+                        key={`${id}-${index}`}
+                        className="flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200">
+                        <p className="text-ellipsis">{getItemNameById(id)}</p>
+                        <button
+                          className="rounded p-1 border-gray-300 min-w-fit"
+                          type="button"
+                          onClick={() => {
+                            setInfo({
+                              ...info,
+                              [modal.form]: info[modal.form].filter(
+                                (item) => item !== id
+                              )
+                            })
+                          }}
+                          aria-label="Delete">
+                          <TrashIcon
+                            className={`h-4 w-4 text-gray-500 mx-auto dark:text-gray-300`}
+                          />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </Modal>
           )}

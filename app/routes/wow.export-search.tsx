@@ -36,7 +36,7 @@ const PAGE_URL = '/wow/export-search'
 const defaultFormValues = {
   itemId: '',
   maxQuantity: 1000,
-  minPrice: 1100,
+  minPrice: 1,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,

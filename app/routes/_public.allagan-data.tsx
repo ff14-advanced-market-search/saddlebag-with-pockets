@@ -21,7 +21,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV allagan tools data import',
+    title: 'FFXIV Allagan Tools Data Import',
     description:
       'Input your Allagan Tools generated data here, and we will turn it into useful stuff!',
     customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page'
@@ -128,7 +128,19 @@ const Index = () => {
     <PageWrapper>
       <SmallFormContainer
         title="Allagan Data"
-        description="Input your Allagan generated data here, and we will turn it into useful stuff!"
+        description={
+          <>
+            Input your Allagan generated data here, and we will turn it into
+            useful stuff!{' '}
+            <a
+              href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">
+              Learn more about the Allagan Tools Inventory Analysis.
+            </a>
+          </>
+        }
         onClick={handleSubmit}
         loading={isLoading}
         error={error}>
