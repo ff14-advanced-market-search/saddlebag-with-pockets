@@ -149,6 +149,13 @@ const Index = () => {
     exportServers: string[]
   }>({ items: [], exportServers: [] })
 
+  // // One AI recommendation, but it didnt solve the issue. It keeps saying "Error: Cannot read properties of undefined (reading 'split')"
+  // const [state, setState] = useState({
+  //   items: loaderData.itemIds ? loaderData.itemIds.split(',') : [], // Add a check for undefined
+  //   exportServers: loaderData.exportServers ? loaderData.exportServers.split(',') : [], // Add a check for undefined
+  //   hqOnly: loaderData.hqOnly === 'false',
+  // })
+
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
