@@ -1,5 +1,4 @@
-// add url endings to this file https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/issues/489
-import { useActionData, useNavigation } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ActionFunction } from '@remix-run/cloudflare'
@@ -21,6 +20,10 @@ import {
 } from '@heroicons/react/outline'
 import { WorldList } from '~/utils/locations/Worlds'
 import TitleTooltip from '~/components/Common/TitleTooltip'
+import {
+  getActionUrl,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -46,6 +49,42 @@ export const links: LinksFunction = () => [
     href: 'https://saddlebagexchange.com/queries/world-comparison'
   }
 ]
+
+// Define default form values
+const defaultFormValues = {
+  itemIds: '',
+  exportServers: '',
+  hqOnly: 'false'
+}
+
+// Define input schema for validation
+const inputSchema = z.object({
+  itemIds: z.string().min(1),
+  exportServers: z.string().min(1),
+  hqOnly: z.optional(z.string())
+})
+
+// Loader function to handle URL parameters
+export const loader: LoaderFunction = async ({ request }) => {
+  const params = new URL(request.url).searchParams
+
+  const values = {
+    itemIds: params.get('itemIds') || defaultFormValues.itemIds,
+    exportServers:
+      params.get('exportServers') || defaultFormValues.exportServers,
+    hqOnly: params.get('hqOnly') || defaultFormValues.hqOnly
+  }
+
+  const validParams = inputSchema.safeParse(values)
+  if (!validParams.success) {
+    return json({
+      exception: `Missing: ${validParams.error.issues
+        .map(({ path }) => path.join(', '))
+        .join(', ')}`
+    })
+  }
+  return json(validParams.data)
+}
 
 const sortByPrice =
   (desc: boolean) => (first: { price: number }, second: { price: number }) => {
@@ -102,6 +141,7 @@ const Index = () => {
   const results = useActionData<
     ItemServerComparisonList | { exception: string } | {}
   >()
+  const loaderData = useLoaderData<typeof defaultFormValues>()
 
   const [modal, setModal] = useState<'exportServers' | 'items' | null>(null)
   const [state, setState] = useState<{
@@ -138,7 +178,8 @@ const Index = () => {
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}
-        error={error}>
+        error={error}
+        action={getActionUrl('/queries/world-comparison', state)}>
         <div className="pt-4">
           <div className="sm:px-4 flex flex-col gap-4">
             <div className="flex flex-col max-w-full relative">
