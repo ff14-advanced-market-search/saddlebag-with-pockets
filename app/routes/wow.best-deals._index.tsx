@@ -34,7 +34,8 @@ const defaultFormValues = {
   itemSubClass: '-1',
   discount: '90',
   minPrice: '2000',
-  salesPerDay: '1.1'
+  salesPerDay: '1.1',
+  expansionNumber: '-1'
 }
 
 const inputMap: Record<string, string> = {
@@ -191,7 +192,7 @@ const BestDeals = () => {
             name="type"
             defaultValue={loaderData.type}
             options={[
-              { label: 'Dragonflight Only', value: 'df' },
+              { label: 'Current Content', value: 'df' },
               { label: 'Pets Only', value: 'pets' },
               { label: 'Legacy Only', value: 'legacy' },
               { label: 'All', value: 'all' }
