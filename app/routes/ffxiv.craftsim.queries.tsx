@@ -29,7 +29,7 @@ const searchParams = {
   foodItems:
     '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=750&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&yields=-1&hideExpertRecipes=true',
   foodItemsTrainedEye:
-    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=400&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=80&yields=-1&hideExpertRecipes=true',
+    '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=400&medianSalePrice=1000&maxMaterialCost=10000&jobs=0&filters=5%2C43%2C44%2C45%2C46&stars=-1&lvlLowerLimit=-1&lvlUpperLimit=90&yields=-1&hideExpertRecipes=true',
   furnitureAndGlamourItems:
     '/ffxiv/craftsim?costMetric=material_median_cost&revenueMetric=revenue_home_min_listing&salesPerWeek=400&medianSalePrice=50000&maxMaterialCost=100000&jobs=0&filters=7%2C56%2C57%2C58%2C59%2C60%2C65%2C66%2C67%2C68%2C69%2C70%2C71%2C72%2C74%2C75%2C79%2C80%2C81%2C82%2C90&stars=-1&lvlLowerLimit=-1&yields=-1&hideExpertRecipes=true',
   expertCraftItems:
