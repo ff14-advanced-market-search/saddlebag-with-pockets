@@ -14,7 +14,10 @@ import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
-import { ItemClassSelect } from '~/components/form/WoW/WoWScanForm'
+import {
+  ItemClassSelect,
+  ExpansionSelect
+} from '~/components/form/WoW/WoWScanForm'
 import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
@@ -44,7 +47,8 @@ const inputMap: Record<string, string> = {
   itemSubClass: 'Item Subclass',
   discount: 'Discount Percentage',
   minPrice: 'Minimum TSM Average Price',
-  salesPerDay: 'Sales Per Day'
+  salesPerDay: 'Sales Per Day',
+  expansionNumber: 'WoW Expansion'
 }
 
 const validateInput = z.object({
@@ -56,7 +60,8 @@ const validateInput = z.object({
   salesPerDay: z
     .string()
     .min(1)
-    .transform((value) => parseFloat(value))
+    .transform((value) => parseFloat(value)),
+  expansionNumber: parseStringToNumber
 })
 
 // Overwrite default meta in the root.tsx
@@ -86,7 +91,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     discount: params.get('discount') || defaultFormValues.discount.toString(),
     minPrice: params.get('minPrice') || defaultFormValues.minPrice.toString(),
     salesPerDay:
-      params.get('salesPerDay') || defaultFormValues.salesPerDay.toString()
+      params.get('salesPerDay') || defaultFormValues.salesPerDay.toString(),
+    expansionNumber:
+      params.get('expansionNumber') ||
+      defaultFormValues.expansionNumber.toString()
   }
   const validParams = validateInput.safeParse(values)
   if (!validParams.success) {
@@ -198,6 +206,10 @@ const BestDeals = () => {
               { label: 'All', value: 'all' }
             ]}
             onChange={(e) => handleFormChange('type', e.target.value)}
+          />
+          <ExpansionSelect
+            defaultValue={loaderData.expansionNumber}
+            onChange={(value) => handleFormChange('expansionNumber', value)}
           />
           <ItemClassSelect
             itemClass={parseInt(loaderData.itemClass)}
