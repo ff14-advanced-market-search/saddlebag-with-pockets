@@ -55,7 +55,7 @@ async function getUserSessionData(request: Request) {
 
   const getCookieValue = (name: string) => {
     const match = cookieHeader.match(new RegExp(`(^| )${name}=([^;]+)`))
-    return match ? match[2] : undefined
+    return match ? decodeURIComponent(match[2]) : undefined
   }
 
   const getFF14Data = () => {
@@ -77,7 +77,7 @@ async function getUserSessionData(request: Request) {
     if (regionCookie && realmIdCookie && realmNameCookie) {
       return validateServerAndRegion(
         regionCookie as WoWServerRegion,
-        realmIdCookie,
+        Number(realmIdCookie),
         realmNameCookie
       )
     }

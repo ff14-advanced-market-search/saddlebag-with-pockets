@@ -6,5 +6,5 @@ export function setCookie(
   options: { maxAge?: number; path?: string } = {}
 ) {
   const { maxAge = defaultMaxAge, path = '/' } = options
-  return `${name}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=${path}; HttpOnly; Secure; SameSite=Lax`
+  return `${name}=${value}; Max-Age=${maxAge}; Path=${path}; HttpOnly; Secure; SameSite=Lax`
 }
