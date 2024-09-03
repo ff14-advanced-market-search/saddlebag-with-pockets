@@ -2,6 +2,7 @@ import type { Session } from '@remix-run/cloudflare'
 import { createCookieSessionStorage } from '@remix-run/cloudflare'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import { validateServerAndRegion } from '~/utils/WoWServers'
+import { defaultMaxAge } from '~/requests/client/config'
 
 export const DATA_CENTER = 'data_center'
 export const FF14_WORLD = 'world'
@@ -16,7 +17,8 @@ const { getSession, commitSession, destroySession } =
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       sameSite: 'lax',
-      path: '/'
+      path: '/',
+      maxAge: defaultMaxAge
     }
   })
 
