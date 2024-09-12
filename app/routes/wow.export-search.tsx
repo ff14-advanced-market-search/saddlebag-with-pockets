@@ -268,12 +268,19 @@ const ExportSearch = () => {
               }
             }}
           />
+          {/*  the api uses a number but the users understand it as text
+          instead of a number make text so the users see the text but the api calls a number
+          3 is "FULL"
+          2 is "HIGH"
+          1 is  "MEDIUM"
+          0 is "LOW"
+          */}
           <InputWithLabel
             labelTitle={inputMap.populationBlizz}
             defaultValue={loaderData.populationBlizz}
             name="populationBlizz"
             type="number"
-            min={1}
+            min={0}
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
