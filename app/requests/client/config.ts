@@ -9,3 +9,4 @@ export const address = defaultAddress
 //     : defaultAddress
 
 export const UserAgent = 'Saddlebag/1.0'
+export const defaultMaxAge = 60 * 60 * 24 * 365 // 1 year in seconds

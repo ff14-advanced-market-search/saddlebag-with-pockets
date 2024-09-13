@@ -9,6 +9,7 @@ interface WoWBestDealsProps {
   minPrice: number
   itemClass: number
   itemSubClass: number
+  expansionNumber: number
 }
 
 export interface DealItem {
@@ -35,7 +36,8 @@ const WoWBestDeals = async ({
   salesPerDay,
   minPrice,
   itemClass,
-  itemSubClass
+  itemSubClass,
+  expansionNumber
 }: WoWBestDealsProps) => {
   const floatingSalesPerDay = salesPerDay.toFixed(1)
   return fetch(`${address}/api/wow/bestdeals`, {
@@ -52,7 +54,8 @@ const WoWBestDeals = async ({
       minPrice,
       salesPerDay: +floatingSalesPerDay,
       item_class: itemClass,
-      item_subclass: itemSubClass
+      item_subclass: itemSubClass,
+      expansion_number: expansionNumber
     })
   })
 }

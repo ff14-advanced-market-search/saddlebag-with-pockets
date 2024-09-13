@@ -53,6 +53,7 @@ import {
   getWoWRealmDataFromLocalStorage,
   setWoWRealmDataInLocalStorage
 } from './redux/localStorage/wowRealmHelpers'
+import { setCookie } from './utils/cookies'
 
 export const ErrorBoundary = () => {
   return (
@@ -153,10 +154,19 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(WOW_REALM_NAME, server.name)
   session.set(WOW_REALM_ID, server.id)
 
+  const cookies = [
+    setCookie(DATA_CENTER, data_center),
+    setCookie(FF14_WORLD, world),
+    setCookie(WOW_REALM_ID, server.id.toString()),
+    setCookie(WOW_REALM_NAME, server.name),
+    setCookie(WOW_REGION, region)
+  ]
+
   return redirect('/', {
-    headers: {
-      'Set-Cookie': await commitSession(session)
-    }
+    headers: [
+      ['Set-Cookie', await commitSession(session)],
+      ...cookies.map((cookie) => ['Set-Cookie', cookie] as [string, string])
+    ]
   })
 }
 

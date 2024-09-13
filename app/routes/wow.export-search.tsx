@@ -268,12 +268,16 @@ const ExportSearch = () => {
               }
             }}
           />
-          <InputWithLabel
-            labelTitle={inputMap.populationBlizz}
-            defaultValue={loaderData.populationBlizz}
+          <Select
+            title={inputMap.populationBlizz}
+            defaultValue={loaderData.populationBlizz.toString()}
             name="populationBlizz"
-            type="number"
-            min={1}
+            options={[
+              { label: 'FULL', value: '3' },
+              { label: 'HIGH', value: '2' },
+              { label: 'MEDIUM', value: '1' },
+              { label: 'LOW', value: '0' }
+            ]}
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -411,7 +415,7 @@ const columnList: Array<ColumnList<ExportItem>> = [
   { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'itemQuantity', header: 'Item Quantity' },
   { columnId: 'realmPopulationReal', header: 'Realm Population' },
-  { columnId: 'realmPopulationInt', header: 'Realm Pop Int' },
+  { columnId: 'realmPopulationInt', header: 'Blizzard Realm Size' },
   { columnId: 'realmRanking', header: 'Realm Ranking' },
   {
     columnId: 'undermineLink',

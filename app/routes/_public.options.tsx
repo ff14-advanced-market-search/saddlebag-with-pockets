@@ -34,6 +34,7 @@ import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 import { PageWrapper } from '~/components/Common'
+import { setCookie } from '~/utils/cookies'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -90,11 +91,20 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(WOW_REALM_NAME, server.name)
   session.set(WOW_REGION, region)
 
+  const cookies = [
+    setCookie(DATA_CENTER, data_center),
+    setCookie(FF14_WORLD, world),
+    setCookie(WOW_REALM_ID, server.id.toString()),
+    setCookie(WOW_REALM_NAME, server.name),
+    setCookie(WOW_REGION, region)
+  ]
+
   // Set the new option, yeet back to index (but save against session data within the cookie)
   return redirect('/', {
-    headers: {
-      'Set-Cookie': await commitSession(session)
-    }
+    headers: [
+      ['Set-Cookie', await commitSession(session)],
+      ...cookies.map((cookie) => ['Set-Cookie', cookie] as [string, string])
+    ]
   })
 }
 
