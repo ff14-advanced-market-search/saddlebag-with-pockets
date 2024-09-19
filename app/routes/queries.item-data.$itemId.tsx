@@ -97,6 +97,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     }
 
     return json({
+      'Cache-Control': 'public, max-age=31536000, immutable',
       history: await historyResponse.json(),
       listing: await listingResponse.json(),
       itemDescription: (await blogResponse.json()).itemDescription,

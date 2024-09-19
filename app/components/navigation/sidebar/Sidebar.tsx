@@ -655,7 +655,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 Entertainment, Inc.
                 <br />© BLIZZARD ENTERTAINMENT, INC. All Rights Reserved.
               </p>
-              <div id="ezoic-pub-ad-placeholder-118" />
+              {/*<div id="ezoic-pub-ad-placeholder-118" />*/}
             </nav>
           </div>
         </div>

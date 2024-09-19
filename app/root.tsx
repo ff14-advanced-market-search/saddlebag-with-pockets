@@ -260,7 +260,7 @@ function App() {
         <Meta />
         <Links />
         <EnsureThemeApplied />
-        <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+        {/*<script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.ezstandalone = window.ezstandalone || {};
@@ -272,7 +272,7 @@ function App() {
             ezstandalone.display();
         });`
           }}
-        />
+        />*/}
       </head>
       <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
         <noscript>
