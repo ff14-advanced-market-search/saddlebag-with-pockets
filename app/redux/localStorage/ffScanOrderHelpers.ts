@@ -15,7 +15,15 @@ export const defaultSortOrder = [
   'profit_raw_percent',
   'stack_size',
   'update_time',
-  'home_update_time'
+  'home_update_time',
+  'regionWeeklyMedianNQ',
+  'regionWeeklyAverageNQ',
+  'regionWeeklySalesAmountNQ',
+  'regionWeeklyQuantitySoldNQ',
+  'regionWeeklyMedianHQ',
+  'regionWeeklyAverageHQ',
+  'regionWeeklySalesAmountHQ',
+  'regionWeeklyQuantitySoldHQ'
 ]
 
 export const getFFScanSortOrderInLocalStorage = (): Array<string> => {

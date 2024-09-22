@@ -75,7 +75,27 @@ const cvsFileList: Array<{ title: string; value: keyof ResponseType }> = [
   { title: 'Lowest Price Stack Size', value: 'stack_size' },
   { title: 'Lowest Price Last Update Time', value: 'update_time' },
   { title: 'Universalis Link', value: 'url' },
-  { title: 'NPC Vendor Info', value: 'npc_vendor_info' }
+  { title: 'NPC Vendor Info', value: 'npc_vendor_info' },
+  { title: 'Region Weekly Median NQ', value: 'regionWeeklyMedianNQ' },
+  { title: 'Region Weekly Average NQ', value: 'regionWeeklyAverageNQ' },
+  {
+    title: 'Region Weekly Sales Amount NQ',
+    value: 'regionWeeklySalesAmountNQ'
+  },
+  {
+    title: 'Region Weekly Quantity Sold NQ',
+    value: 'regionWeeklyQuantitySoldNQ'
+  },
+  { title: 'Region Weekly Median HQ', value: 'regionWeeklyMedianHQ' },
+  { title: 'Region Weekly Average HQ', value: 'regionWeeklyAverageHQ' },
+  {
+    title: 'Region Weekly Sales Amount HQ',
+    value: 'regionWeeklySalesAmountHQ'
+  },
+  {
+    title: 'Region Weekly Quantity Sold HQ',
+    value: 'regionWeeklyQuantitySoldHQ'
+  }
 ]
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -200,6 +220,38 @@ const Results = ({ rows }: ResultTableProps) => {
       cell: (info) => (
         <ItemDataLink link={'/queries/item-data/' + info.getValue()} />
       )
+    }),
+    columnHelper.accessor('regionWeeklyMedianNQ', {
+      header: 'Region Weekly Median NQ',
+      cell: (info) => info.getValue().toLocaleString()
+    }),
+    columnHelper.accessor('regionWeeklyAverageNQ', {
+      header: 'Region Weekly Average NQ',
+      cell: (info) => info.getValue().toLocaleString()
+    }),
+    columnHelper.accessor('regionWeeklySalesAmountNQ', {
+      header: 'Region Weekly Sales Amount NQ',
+      cell: (info) => info.getValue().toLocaleString()
+    }),
+    columnHelper.accessor('regionWeeklyQuantitySoldNQ', {
+      header: 'Region Weekly Quantity Sold NQ',
+      cell: (info) => info.getValue().toLocaleString()
+    }),
+    columnHelper.accessor('regionWeeklyMedianHQ', {
+      header: 'Region Weekly Median HQ',
+      cell: (info) => info.getValue().toLocaleString()
+    }),
+    columnHelper.accessor('regionWeeklyAverageHQ', {
+      header: 'Region Weekly Average HQ',
+      cell: (info) => info.getValue().toLocaleString()
+    }),
+    columnHelper.accessor('regionWeeklySalesAmountHQ', {
+      header: 'Region Weekly Sales Amount HQ',
+      cell: (info) => info.getValue().toLocaleString()
+    }),
+    columnHelper.accessor('regionWeeklyQuantitySoldHQ', {
+      header: 'Region Weekly Quantity Sold HQ',
+      cell: (info) => info.getValue().toLocaleString()
     })
   ]
 
