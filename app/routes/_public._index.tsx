@@ -105,7 +105,7 @@ export default function Index() {
                     key={feature.name}
                     href={feature.href}
                     target={feature.external ? '_blank' : '_self'}
-                    rel={feature.external ? 'noopener noreferrer' : ''}
+                    {...(feature.external && { rel: 'noopener noreferrer' })}
                     className="block">
                     <div className="p-6 rounded-lg shadow-lg hover:bg-blue-600 hover:text-white transition duration-200">
                       <h3 className="text-lg leading-6 font-medium">
