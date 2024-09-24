@@ -70,14 +70,12 @@ export default function Index() {
             <div className="mt-8 flex justify-center">
               <a
                 href="/queries"
-                className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md mr-4"
-              >
+                className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md mr-4">
                 Final Fantasy XIV
               </a>
               <a
                 href="/wow"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md"
-              >
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
                 World of Warcraft
               </a>
             </div>
@@ -95,7 +93,8 @@ export default function Index() {
                 What We Offer
               </p>
               <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-                Powerful tools and analytics to enhance your MMO trading experience.
+                Powerful tools and analytics to enhance your MMO trading
+                experience.
               </p>
             </div>
 
@@ -107,15 +106,12 @@ export default function Index() {
                     href={feature.href}
                     target={feature.external ? '_blank' : '_self'}
                     rel={feature.external ? 'noopener noreferrer' : ''}
-                    className="block"
-                  >
+                    className="block">
                     <div className="p-6 rounded-lg shadow-lg hover:bg-blue-600 hover:text-white transition duration-200">
                       <h3 className="text-lg leading-6 font-medium">
                         {feature.name}
                       </h3>
-                      <p className="mt-2 text-base">
-                        {feature.description}
-                      </p>
+                      <p className="mt-2 text-base">{feature.description}</p>
                     </div>
                   </a>
                 ))}
@@ -135,7 +131,8 @@ export default function Index() {
                 Your Gateway to Mastering MMO Markets
               </p>
               <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-                Saddlebag Exchange provides tools to revolutionize how you engage with in-game economies.
+                Saddlebag Exchange provides tools to revolutionize how you
+                engage with in-game economies.
               </p>
             </div>
 
@@ -150,15 +147,13 @@ export default function Index() {
                     Get real-time FFXIV Discord alerts for{' '}
                     <a
                       href="https://saddlebagexchange.com/price-sniper"
-                      className="text-purple-600 underline"
-                    >
+                      className="text-purple-600 underline">
                       Prices
                     </a>
                     ,{' '}
                     <a
                       href="https://saddlebagexchange.com/undercut"
-                      className="text-purple-600 underline"
-                    >
+                      className="text-purple-600 underline">
                       Undercuts, Sales
                     </a>
                     , and more!
@@ -167,8 +162,7 @@ export default function Index() {
                     Unlock the best deals with our{' '}
                     <a
                       href="https://saddlebagexchange.com/queries/recommended"
-                      className="text-purple-600 underline"
-                    >
+                      className="text-purple-600 underline">
                       Cross-Server Reselling Tool
                     </a>
                     .
@@ -177,8 +171,7 @@ export default function Index() {
                     Discover high-demand items with our{' '}
                     <a
                       href="https://saddlebagexchange.com/ffxiv/marketshare/queries"
-                      className="text-purple-600 underline"
-                    >
+                      className="text-purple-600 underline">
                       Marketshare Overview Tool
                     </a>
                     .
@@ -187,8 +180,7 @@ export default function Index() {
                     Explore crafting opportunities with our{' '}
                     <a
                       href="https://saddlebagexchange.com/ffxiv/craftsim/queries"
-                      className="text-purple-600 underline"
-                    >
+                      className="text-purple-600 underline">
                       Crafting Profit Simulations
                     </a>
                     .
@@ -197,8 +189,7 @@ export default function Index() {
                     Optimize material costs with our{' '}
                     <a
                       href="https://saddlebagexchange.com/ffxiv/shopping-list"
-                      className="text-purple-600 underline"
-                    >
+                      className="text-purple-600 underline">
                       Shopping List Search
                     </a>
                     .
@@ -216,15 +207,13 @@ export default function Index() {
                     Get real-time WoW AH Discord{' '}
                     <a
                       href="https://saddlebagexchange.com/wow/price-alert"
-                      className="text-blue-600 underline"
-                    >
+                      className="text-blue-600 underline">
                       Price Alerts
                     </a>
                     ,{' '}
                     <a
                       href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
-                      className="text-blue-600 underline"
-                    >
+                      className="text-blue-600 underline">
                       Undercut Alerts
                     </a>
                     , and more!
@@ -233,8 +222,7 @@ export default function Index() {
                     Discover ultra-cheap deals with our{' '}
                     <a
                       href="https://saddlebagexchange.com/wow/best-deals?discount=99&minPrice=100&salesPerDay=0.1"
-                      className="text-blue-600 underline"
-                    >
+                      className="text-blue-600 underline">
                       Ultra Cheap Deals
                     </a>{' '}
                     search.
@@ -243,8 +231,7 @@ export default function Index() {
                     Experience cross-realm trading with{' '}
                     <a
                       href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest"
-                      className="text-blue-600 underline"
-                    >
+                      className="text-blue-600 underline">
                       Azeroth Auction Assassin
                     </a>
                     .
@@ -253,8 +240,7 @@ export default function Index() {
                     Find lucrative items with our{' '}
                     <a
                       href="https://saddlebagexchange.com/wow/marketshare"
-                      className="text-blue-600 underline"
-                    >
+                      className="text-blue-600 underline">
                       Marketshare Gold Earning Searches
                     </a>
                     .
@@ -263,15 +249,13 @@ export default function Index() {
                     Utilize our{' '}
                     <a
                       href="https://saddlebagexchange.com/wow/shopping-list"
-                      className="text-blue-600 underline"
-                    >
+                      className="text-blue-600 underline">
                       Shopping List
                     </a>{' '}
                     and{' '}
                     <a
                       href="https://saddlebagexchange.com/wow/export-search"
-                      className="text-blue-600 underline"
-                    >
+                      className="text-blue-600 underline">
                       Export Search
                     </a>{' '}
                     tools.
@@ -289,13 +273,13 @@ export default function Index() {
               Join Saddlebag Exchange Today
             </h2>
             <p className="mt-4 text-lg">
-              Transform your MMO trading into a highly efficient, rewarding journey.
+              Transform your MMO trading into a highly efficient, rewarding
+              journey.
             </p>
             <div className="mt-8">
               <a
                 href="/signup"
-                className="inline-block bg-white text-purple-600 font-semibold py-3 px-6 rounded-md shadow-md hover:bg-gray-100"
-              >
+                className="inline-block bg-white text-purple-600 font-semibold py-3 px-6 rounded-md shadow-md hover:bg-gray-100">
                 Get Started
               </a>
             </div>
@@ -306,17 +290,103 @@ export default function Index() {
       {/* Footer */}
       <footer className="bg-gray-900 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Saddlebag Exchange. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Saddlebag Exchange. All rights
+            reserved.
+          </p>
         </div>
       </footer>
 
       {/* Hidden SEO Content */}
-      <div style={{ fontSize: '1px', opacity: 0, height: 0, overflow: 'hidden' }}>
+      <div
+        style={{ fontSize: '1px', opacity: 0, height: 0, overflow: 'hidden' }}>
         <p>
-          Join <strong>Saddlebag Exchange</strong> today and transform your MMO trading into a highly efficient, rewarding journey. Let us help you elevate your game and dominate the market!
+          Join <strong>Saddlebag Exchange</strong> today and transform your MMO
+          trading into a highly efficient, rewarding journey. Let us help you
+          elevate your game and dominate the market!
         </p>
         <p>
-          Welcome to the Saddlebag Exchange. Our platform offers a comprehensive suite of tools designed to elevate your game trading strategy. Your Gateway to Mastering MMO Markets! Saddlebag Exchange is positioned at the intersection of gaming and financial optimization. Our tools don't just assist players; they revolutionize how they engage with the in-game economy. For "Final Fantasy XIV," we turn limited inventory slots into a high-yield asset. In "World of Warcraft," we transform gameplay into a means for self-sustaining subscription. This is more than a service for gamers; it's an innovative approach to in-game economics, providing players with tools to maximize their resources and financial potential. For supporters, this represents a unique opportunity to enter a vibrant, growing market with a product that offers tangible value to a dedicated user base. Our service not only retains customers by offering substantial returns on their investment but also fosters a dedicated community of players who see Saddlebag Exchange as essential to their gaming experience. **"FinalFantasy XIV" Component:** In "Final Fantasy XIV" our service offers a compelling alternative to the game's own expansion of selling slots. Players are restricted to 40 item slots in their market listings. The game allows expansion of this limit by 20 slots for an additional $3/month (up to a max of 100 extra sale slots for $15 per month). However, Saddlebag Exchange offers a more strategic solution. For the same price, our service optimizes the use of the existing 40 slots. Instead of merely increasing quantity, we enhance the quality and profitability of each slot. Our tools enable players to identify and list items with the highest market demand and profitability, thereby maximizing their earnings within the existing constraints. While pitched as an alternative to paid extra retainers, it can also be a multiplier for those who still want to use the advantages of the purchasing extra retainer slots. Once you purchase the maximum of 100 extra slots for $15 a month then the Saddlebag Exchange elite package for $10 to $20 a month becomes even more valuable. Our tools also help large scale operations maximize their potential! **"World of Warcraft" Component:** For "World of Warcraft" the WoW Token represents a pivotal aspect of in-game economy. This token allows players to exchange in-game gold for additional game time or add funds to their Battle.net balance. Given that a WoW Token can be exchanged for 30 days of game time or $15 for Battle.net balance, our service becomes an invaluable asset for players looking to make their gameplay self-sustaining. Our service, priced lower than the monthly subscription, empowers players to earn significant amounts of in-game gold, enough to regularly purchase WoW Tokens. This essentially makes the game free to play, as players can earn enough in-game currency to continuously renew their game time without spending real money. The potential is immense; one of our users earned 20 million gold in a few days, an amount that can cover years of subscription costs. Keywords for google: xiv analysis, the ffxiv market board, selling items, ff14 marketboard prices, ffxiv market board, ff14 market board, ffxiv marketboard, ff14 marketboard prices, ffxiv market board prices, megalotragus horn, ff14 market board prices, ff14 marketboard, ffxiv market, how to sell on market board ffxiv, how to sell items on market board ffxiv, world of warcraft player count, wow Auctionhouse, games like world of warcraft, world of warcraft hairstyles, world of warcraft expansions in order, world of warcraft the war within, world of warcraft season of discovery gold, chocobo saddlebag ffxiv, server status final fantasy 14, ff14 servers status, universalis, ffxiv character lookup, final fantasy online xiv download, ff14 online download, ff14 house, universus, ffxiv house, universalis ffxiv, universalis ff14, ffxiv universalis, ffxiv servers, ff online servers, ff14 servers, ff14 universalis, server ffxiv, ff14 server, ffxiv server, ffxi ah, ffxiv logs, ffxiv log, ff14 player search, ffxiv player search, data center ff14, final fantasy xiv data center, ffxiv data center, ff14 data center, data centers ffxiv, data center ffxiv, ffxiv housing tracker, ff14 housing tracker, ffx celestial weapons, universalis europa, ff11 wiki, ffxiv house tracker, celestial weapons ffx, wiki ff11, ff11 wikipedia, ff14 login, bard ff14, login ffxiv, final fantasy 14 mog, final fantasy 14 moogle, ff14 bard, eorzea, ff14 moogle, aether auctions, final fantasy 14 gil, moogle ff14, ffxiv mog, aether auction, retainer ffxiv, ffxiv cost, ff14 fish, ff14 retainer, ffxiv retainer, retainers ffxiv, ffxiv prices, ffxiv cost, ff14 price, final fantasy xiv pricing, ff14 prices, ff14 cost, ff14 moogle shop, ffxiv materia, ff14 auction house, ff14 excalibur, ffxiv web, ffxiv auction house, ffxiv website, auction house ffxiv, ffxiv mb, ffxiv websites, auction house ff14, materia ffxiv, ffxiv site, ff14 websites, ffxiv house prices, ff14 house prices, ffxiv housing prices, ffxiv data, ff14 housing prices, ff13 weapons upgrade guide, ffxiv character search, final fantasy xiv sale, universalis ffxiv, choco bo, xiv server status, final fantasy 14 online server status, marketboard ffxiv, final fantasy 14 market board, ff14 maintenance, ffxiv server status, ffxiah, green hills of stranglethorn, ff14 hairstyles, loque'nahak, housing lottery, ffxiv auction house tracker.
+          Welcome to the Saddlebag Exchange. Our platform offers a comprehensive
+          suite of tools designed to elevate your game trading strategy. Your
+          Gateway to Mastering MMO Markets! Saddlebag Exchange is positioned at
+          the intersection of gaming and financial optimization. Our tools don't
+          just assist players; they revolutionize how they engage with the
+          in-game economy. For "Final Fantasy XIV," we turn limited inventory
+          slots into a high-yield asset. In "World of Warcraft," we transform
+          gameplay into a means for self-sustaining subscription. This is more
+          than a service for gamers; it's an innovative approach to in-game
+          economics, providing players with tools to maximize their resources
+          and financial potential. For supporters, this represents a unique
+          opportunity to enter a vibrant, growing market with a product that
+          offers tangible value to a dedicated user base. Our service not only
+          retains customers by offering substantial returns on their investment
+          but also fosters a dedicated community of players who see Saddlebag
+          Exchange as essential to their gaming experience. **"FinalFantasy XIV"
+          Component:** In "Final Fantasy XIV" our service offers a compelling
+          alternative to the game's own expansion of selling slots. Players are
+          restricted to 40 item slots in their market listings. The game allows
+          expansion of this limit by 20 slots for an additional $3/month (up to
+          a max of 100 extra sale slots for $15 per month). However, Saddlebag
+          Exchange offers a more strategic solution. For the same price, our
+          service optimizes the use of the existing 40 slots. Instead of merely
+          increasing quantity, we enhance the quality and profitability of each
+          slot. Our tools enable players to identify and list items with the
+          highest market demand and profitability, thereby maximizing their
+          earnings within the existing constraints. While pitched as an
+          alternative to paid extra retainers, it can also be a multiplier for
+          those who still want to use the advantages of the purchasing extra
+          retainer slots. Once you purchase the maximum of 100 extra slots for
+          $15 a month then the Saddlebag Exchange elite package for $10 to $20 a
+          month becomes even more valuable. Our tools also help large scale
+          operations maximize their potential! **"World of Warcraft"
+          Component:** For "World of Warcraft" the WoW Token represents a
+          pivotal aspect of in-game economy. This token allows players to
+          exchange in-game gold for additional game time or add funds to their
+          Battle.net balance. Given that a WoW Token can be exchanged for 30
+          days of game time or $15 for Battle.net balance, our service becomes
+          an invaluable asset for players looking to make their gameplay
+          self-sustaining. Our service, priced lower than the monthly
+          subscription, empowers players to earn significant amounts of in-game
+          gold, enough to regularly purchase WoW Tokens. This essentially makes
+          the game free to play, as players can earn enough in-game currency to
+          continuously renew their game time without spending real money. The
+          potential is immense; one of our users earned 20 million gold in a few
+          days, an amount that can cover years of subscription costs. Keywords
+          for google: xiv analysis, the ffxiv market board, selling items, ff14
+          marketboard prices, ffxiv market board, ff14 market board, ffxiv
+          marketboard, ff14 marketboard prices, ffxiv market board prices,
+          megalotragus horn, ff14 market board prices, ff14 marketboard, ffxiv
+          market, how to sell on market board ffxiv, how to sell items on market
+          board ffxiv, world of warcraft player count, wow Auctionhouse, games
+          like world of warcraft, world of warcraft hairstyles, world of
+          warcraft expansions in order, world of warcraft the war within, world
+          of warcraft season of discovery gold, chocobo saddlebag ffxiv, server
+          status final fantasy 14, ff14 servers status, universalis, ffxiv
+          character lookup, final fantasy online xiv download, ff14 online
+          download, ff14 house, universus, ffxiv house, universalis ffxiv,
+          universalis ff14, ffxiv universalis, ffxiv servers, ff online servers,
+          ff14 servers, ff14 universalis, server ffxiv, ff14 server, ffxiv
+          server, ffxi ah, ffxiv logs, ffxiv log, ff14 player search, ffxiv
+          player search, data center ff14, final fantasy xiv data center, ffxiv
+          data center, ff14 data center, data centers ffxiv, data center ffxiv,
+          ffxiv housing tracker, ff14 housing tracker, ffx celestial weapons,
+          universalis europa, ff11 wiki, ffxiv house tracker, celestial weapons
+          ffx, wiki ff11, ff11 wikipedia, ff14 login, bard ff14, login ffxiv,
+          final fantasy 14 mog, final fantasy 14 moogle, ff14 bard, eorzea, ff14
+          moogle, aether auctions, final fantasy 14 gil, moogle ff14, ffxiv mog,
+          aether auction, retainer ffxiv, ffxiv cost, ff14 fish, ff14 retainer,
+          ffxiv retainer, retainers ffxiv, ffxiv prices, ffxiv cost, ff14 price,
+          final fantasy xiv pricing, ff14 prices, ff14 cost, ff14 moogle shop,
+          ffxiv materia, ff14 auction house, ff14 excalibur, ffxiv web, ffxiv
+          auction house, ffxiv website, auction house ffxiv, ffxiv mb, ffxiv
+          websites, auction house ff14, materia ffxiv, ffxiv site, ff14
+          websites, ffxiv house prices, ff14 house prices, ffxiv housing prices,
+          ffxiv data, ff14 housing prices, ff13 weapons upgrade guide, ffxiv
+          character search, final fantasy xiv sale, universalis ffxiv, choco bo,
+          xiv server status, final fantasy 14 online server status, marketboard
+          ffxiv, final fantasy 14 market board, ff14 maintenance, ffxiv server
+          status, ffxiah, green hills of stranglethorn, ff14 hairstyles,
+          loque'nahak, housing lottery, ffxiv auction house tracker.
         </p>
       </div>
     </>
