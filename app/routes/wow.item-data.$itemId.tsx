@@ -171,14 +171,17 @@ export default function Index() {
             <CustomButton
               link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
               buttonText="Best Place to Sell!"
+              rel="nofollow"
             />
             <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
+              rel="nofollow"
             />
             <CustomButton
               link={`${listing.link}`}
               buttonText="View on Undermine Exchange"
+              rel="nofollow"
             />
           </div>
         </div>

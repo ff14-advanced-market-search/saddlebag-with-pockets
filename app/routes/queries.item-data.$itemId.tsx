@@ -150,14 +150,17 @@ const ItemPage = () => {
             <CustomButton
               link={`https://universalis.app/market/${itemId}`}
               buttonText="View on Universalis"
+              rel="nofollow"
             />
             <CustomButton
               link={`https://ffxivteamcraft.com/db/en/item/${itemId}`}
               buttonText="View on FFXIV Teamcraft"
+              rel="nofollow"
             />
             <CustomButton
               link={`https://www.garlandtools.org/db/#item/${itemId}`}
               buttonText="View on Garland Tools"
+              rel="nofollow"
             />
           </div>
         </Section>
