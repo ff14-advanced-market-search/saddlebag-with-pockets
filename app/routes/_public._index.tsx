@@ -102,21 +102,22 @@ export default function Index() {
             <div className="mt-10">
               <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                 {recommendedQueries.map((feature) => (
-                  <div key={feature.name} className="relative">
-                    <dt>
-                      <a
-                        href={feature.href}
-                        target={feature.external ? '_blank' : '_self'}
-                        rel={feature.external ? 'noopener noreferrer' : ''}
-                        className="text-lg leading-6 font-medium text-gray-900 hover:text-purple-600"
-                      >
+                  <a
+                    key={feature.name}
+                    href={feature.href}
+                    target={feature.external ? '_blank' : '_self'}
+                    rel={feature.external ? 'noopener noreferrer' : ''}
+                    className="block"
+                  >
+                    <div className="p-6 rounded-lg shadow-lg hover:bg-blue-600 hover:text-white transition duration-200">
+                      <h3 className="text-lg leading-6 font-medium">
                         {feature.name}
-                      </a>
-                    </dt>
-                    <dd className="mt-2 text-base text-gray-500">
-                      {feature.description}
-                    </dd>
-                  </div>
+                      </h3>
+                      <p className="mt-2 text-base">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </a>
                 ))}
               </dl>
             </div>
