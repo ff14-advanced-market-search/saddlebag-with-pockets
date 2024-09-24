@@ -278,7 +278,8 @@ export default function Index() {
             </p>
             <div className="mt-8">
               <a
-                href="/signup"
+                // href="/signup"
+                href="/blog"
                 className="inline-block bg-white text-purple-600 font-semibold py-3 px-6 rounded-md shadow-md hover:bg-gray-100">
                 Get Started
               </a>
