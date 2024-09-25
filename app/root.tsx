@@ -246,39 +246,40 @@ function App() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Load Google Tag Manager
-      ;(function (w, d, s, l, i) {
-        w[l] = w[l] || []
-        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : ''
-        j.async = true
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
-        f.parentNode.insertBefore(j, f)
-      })(window, document, 'script', 'dataLayer', 'GTM-WH4KFG5')
+      window.requestAnimationFrame(() => {
+        // Load Google Tag Manager
+        ;(function (w, d, s, l, i) {
+          w[l] = w[l] || []
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : ''
+          j.async = true
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+          f.parentNode.insertBefore(j, f)
+        })(window, document, 'script', 'dataLayer', 'GTM-WH4KFG5')
 
-      // Load Ezoic script
-      const script = document.createElement('script')
-      script.src = '//www.ezojs.com/ezoic/sa.min.js'
-      script.async = true
-      document.body.appendChild(script)
+        // Load Ezoic script
+        const script = document.createElement('script')
+        script.src = '//www.ezojs.com/ezoic/sa.min.js'
+        script.async = true
+        document.body.appendChild(script)
 
-      script.onload = function () {
-        window.ezstandalone = window.ezstandalone || {}
-        ezstandalone.cmd = ezstandalone.cmd || []
-        ezstandalone.cmd.push(function () {
-          ezstandalone.define(118, 116)
-          ezstandalone.refresh()
-          ezstandalone.enable()
-          ezstandalone.display()
-        })
-      }
-    }, 2000) // Delay of 1000ms (1 second)
+        script.onload = function () {
+          window.ezstandalone = window.ezstandalone || {}
+          ezstandalone.cmd = ezstandalone.cmd || []
+          ezstandalone.cmd.push(function () {
+            ezstandalone.define(118, 116)
+            ezstandalone.refresh()
+            ezstandalone.enable()
+            ezstandalone.display()
+          })
+        }
+      })
+    }, 3000) // Delay of 3000ms (3 second)
 
-    // Cleanup function to clear the timeout if the component unmounts
     return () => clearTimeout(timer)
-  }, []) // Empty dependency array means this effect runs once after initial render
+  }, [])
 
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
