@@ -1,22 +1,22 @@
 // root.tsx
 
-import { MetaFunction, LinksFunction } from "@remix-run/node";
+import { MetaFunction, LinksFunction } from '@remix-run/node'
 
 export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  viewport: "width=device-width, initial-scale=1",
-  title: "WoW TL;DR: How to Earn Gold with Cross-Realm Trading",
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1',
+  title: 'WoW TL;DR: How to Earn Gold with Cross-Realm Trading',
   description:
-    "Learn quick and effective methods for earning gold through cross-realm trading in World of Warcraft.",
-  customHeading: "Quick Guide: Earning Gold with Cross-Realm Trading in WoW",
-});
+    'Learn quick and effective methods for earning gold through cross-realm trading in World of Warcraft.',
+  customHeading: 'Quick Guide: Earning Gold with Cross-Realm Trading in WoW'
+})
 
 export const links: LinksFunction = () => [
   {
-    rel: "canonical",
-    href: "https://saddlebagexchange.com/blog/wow/tldr",
-  },
-];
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/blog/wow/tldr'
+  }
+]
 
 const HowToCrossServerTradeInWoW = () => {
   return (
@@ -36,14 +36,12 @@ const HowToCrossServerTradeInWoW = () => {
             href="https://www.youtube.com/watch?v=ZVcOFHonH10"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-          >
+            className="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
             <svg
               className="w-5 h-5 mr-2"
               fill="currentColor"
               viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path d="M10 15l-5-5h10l-5 5z" />
             </svg>
             Watch Tutorial
@@ -57,8 +55,8 @@ const HowToCrossServerTradeInWoW = () => {
         </h2>
 
         <p className="text-gray-700 mb-6">
-          Here are some of the top ways to use Saddlebag for WoW, made simple for
-          new users:
+          Here are some of the top ways to use Saddlebag for WoW, made simple
+          for new users:
         </p>
 
         <ol className="list-decimal list-outside space-y-6 pl-8">
@@ -68,8 +66,8 @@ const HowToCrossServerTradeInWoW = () => {
               Find What to Buy
             </h3>
             <p className="text-gray-600">
-              Use the marketshare searches or best deals to find good items to buy
-              or craft (if you have professions):
+              Use the marketshare searches or best deals to find good items to
+              buy or craft (if you have professions):
             </p>
             <ul className="list-disc list-inside mt-2 ml-6 text-gray-600">
               <li>
@@ -77,8 +75,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://saddlebagexchange.com/wow/best-deals/recommended"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Best Deals
                 </a>
               </li>
@@ -87,8 +84,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://saddlebagexchange.com/wow/marketshare"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Marketshare
                 </a>
               </li>
@@ -97,8 +93,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://saddlebagexchange.com/wow/legacy-marketshare"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Legacy Marketshare
                 </a>
               </li>
@@ -107,8 +102,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://temp.saddlebagexchange.com/megaitemnames"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Mega Item Names
                 </a>
               </li>
@@ -119,8 +113,9 @@ const HowToCrossServerTradeInWoW = () => {
           <li>
             <h3 className="text-xl font-semibold text-gray-800">Buy Low</h3>
             <p className="text-gray-600">
-              Search for good deals on those items using the Azeroth Auction Assassin,
-              shopping list, or best deals, then buy them (if not crafting):
+              Search for good deals on those items using the Azeroth Auction
+              Assassin, shopping list, or best deals, then buy them (if not
+              crafting):
             </p>
             <ul className="list-disc list-inside mt-2 ml-6 text-gray-600">
               <li>
@@ -128,8 +123,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://saddlebagexchange.com/wow/best-deals/recommended"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Best Deals Recommended
                 </a>
               </li>
@@ -138,8 +132,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Azeroth Auction Assassin
                 </a>
               </li>
@@ -148,8 +141,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://saddlebagexchange.com/wow/shopping-list"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Shopping List
                 </a>
               </li>
@@ -160,8 +152,8 @@ const HowToCrossServerTradeInWoW = () => {
           <li>
             <h3 className="text-xl font-semibold text-gray-800">Sell High</h3>
             <p className="text-gray-600">
-              Use the export search to find the best realm with the highest population
-              to sell any items you buy or craft.
+              Use the export search to find the best realm with the highest
+              population to sell any items you buy or craft.
             </p>
             <ul className="list-disc list-inside mt-2 ml-6 text-gray-600">
               <li>
@@ -169,8 +161,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://saddlebagexchange.com/wow/export-search"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Export Search
                 </a>
               </li>
@@ -183,9 +174,10 @@ const HowToCrossServerTradeInWoW = () => {
               Check for Sales and Undercuts
             </h3>
             <p className="text-gray-600">
-              Use the undercut addon/webpage to check on the items you have listed
-              and track them on the Auction House (usually wait after you log back
-              in or 1 hour after posting items so the API data from Blizzard updates):
+              Use the undercut addon/webpage to check on the items you have
+              listed and track them on the Auction House (usually wait after you
+              log back in or 1 hour after posting items so the API data from
+              Blizzard updates):
             </p>
             <ul className="list-disc list-inside mt-2 ml-6 text-gray-600">
               <li>
@@ -193,8 +185,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Saddlebag Exchange Addon
                 </a>
               </li>
@@ -203,8 +194,7 @@ const HowToCrossServerTradeInWoW = () => {
                   href="https://saddlebagexchange.com/wow/region-undercut"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
+                  className="text-blue-500 hover:underline">
                   Region Undercut
                 </a>
               </li>
@@ -214,10 +204,11 @@ const HowToCrossServerTradeInWoW = () => {
       </section>
 
       <footer className="mt-12 text-center text-gray-500">
-        &copy; {new Date().getFullYear()} SaddlebagExchange. All rights reserved.
+        &copy; {new Date().getFullYear()} SaddlebagExchange. All rights
+        reserved.
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default HowToCrossServerTradeInWoW;
+export default HowToCrossServerTradeInWoW
