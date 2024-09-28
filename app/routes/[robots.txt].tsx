@@ -7,6 +7,7 @@ export const loader: LoaderFunction = () => {
   Allow: /ffxiv
   Allow: /queries
   Allow: /wow
+  Allow: /blog/*
   Allow: /queries/item-data/*
   Allow: /wow/item-data/*
 

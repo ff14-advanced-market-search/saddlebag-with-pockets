@@ -967,6 +967,14 @@ select {
   margin-bottom: 1rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
 .ml-0 {
   margin-left: 0px;
 }
@@ -985,6 +993,10 @@ select {
 
 .ml-4 {
   margin-left: 1rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
 }
 
 .ml-8 {
@@ -1027,6 +1039,10 @@ select {
   margin-top: 2.5rem;
 }
 
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1049,22 +1065,6 @@ select {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.ml-6 {
-  margin-left: 1.5rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
-.mt-12 {
-  margin-top: 3rem;
 }
 
 .block {
@@ -1487,12 +1487,12 @@ select {
   list-style-position: outside;
 }
 
-.list-disc {
-  list-style-type: disc;
-}
-
 .list-decimal {
   list-style-type: decimal;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .grid-cols-1 {
@@ -1615,12 +1615,6 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
-}
-
-.space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
 .divide-x > :not([hidden]) ~ :not([hidden]) {
@@ -2126,6 +2120,10 @@ select {
   padding-left: 0.5rem;
 }
 
+.pl-8 {
+  padding-left: 2rem;
+}
+
 .pr-1 {
   padding-right: 0.25rem;
 }
@@ -2152,10 +2150,6 @@ select {
 
 .pt-5 {
   padding-top: 1.25rem;
-}
-
-.pl-8 {
-  padding-left: 2rem;
 }
 
 .text-left {
@@ -2188,6 +2182,11 @@ select {
   line-height: 2.25rem;
 }
 
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
@@ -2216,11 +2215,6 @@ select {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 
 .font-bold {
