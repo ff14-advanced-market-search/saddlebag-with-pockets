@@ -169,8 +169,8 @@ export default function Index() {
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-wrap gap-2">
             <CustomButton
-              // link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
-              link={`https://saddlebagexchange.com/wow/export-search`} // remove custom id as it might be slowing down the crawl
+              link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
+              // link={`https://saddlebagexchange.com/wow/export-search`} // remove custom id as it might be slowing down the crawl
               buttonText="Best Place to Sell!"
               rel="noopener noreferrer nofollow" // not working need to fix
             />
