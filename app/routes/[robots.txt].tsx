@@ -41,6 +41,12 @@ export const loader: LoaderFunction = () => {
 
   Disallow: /nogooglebot/
   Disallow: /build/
+  Disallow: /queries/full-scan
+  Disallow: /ffxiv/marketshare
+  Disallow: /ffxiv/craftsim/queries
+  Disallow: /wow/best-deals
+  Disallow: /wow/export-search
+  Disallow: /wow/marketshare
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `
