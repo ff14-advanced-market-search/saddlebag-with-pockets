@@ -97,6 +97,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     }
 
     return json({
+      'Cache-Control': 'public, max-age=31536000, immutable',
       history: await historyResponse.json(),
       listing: await listingResponse.json(),
       itemDescription: (await blogResponse.json()).itemDescription,
@@ -149,14 +150,17 @@ const ItemPage = () => {
             <CustomButton
               link={`https://universalis.app/market/${itemId}`}
               buttonText="View on Universalis"
+              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://ffxivteamcraft.com/db/en/item/${itemId}`}
               buttonText="View on FFXIV Teamcraft"
+              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://www.garlandtools.org/db/#item/${itemId}`}
               buttonText="View on Garland Tools"
+              rel="nofollow" // not working need to fix
             />
           </div>
         </Section>

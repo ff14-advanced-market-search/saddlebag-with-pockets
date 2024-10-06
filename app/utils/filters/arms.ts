@@ -121,5 +121,17 @@ export const arms: FilterFormat[] = [
     abbreviation: `THM`,
     icon: Job.THM,
     id: 14
+  },
+  {
+    name: `Viper's Arms`,
+    abbreviation: `VPM`,
+    icon: Job.THM,
+    id: 91
+  },
+  {
+    name: `Pictomancer's Arms`,
+    abbreviation: `PTM`,
+    icon: Job.THM,
+    id: 92
   }
 ]

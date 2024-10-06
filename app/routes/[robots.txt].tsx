@@ -2,12 +2,51 @@ import { LoaderFunction } from '@remix-run/cloudflare'
 
 export const loader: LoaderFunction = () => {
   const robotText = `
-  User-agent: Googlebot
-  Disallow: /nogooglebot/
-  Disallow: /build/
-
   User-agent: *
   Allow: /
+  Allow: /ffxiv
+  Allow: /queries
+  Allow: /wow
+  Allow: /blog/*
+  Allow: /options
+  Allow: /queries/item-data/*
+  Allow: /wow/item-data/*
+  Allow: /ffxiv/itemlist
+  Allow: /wow/itemlist
+  Allow: /queries/recommended
+  Allow: /ffxiv/marketshare/queries
+  Allow: /ffxiv/craftsim/queries
+  Allow: /ffxiv/shopping-list
+  Allow: /queries/listings
+  Allow: /queries/item-history
+  Allow: /ffxiv/self-purchase
+  Allow: /queries/world-comparison
+  Allow: /undercut
+  Allow: /price-sniper
+  Allow: /allagan-data
+  Allow: /wow/best-deals/recommended
+  Allow: /wow/upload-timers
+  Allow: /wow/shopping-list
+  Allow: /wow/marketshare/recommended
+  Allow: /wow/shortage-predictor
+  Allow: /wow/legacy-marketshare
+  Allow: /wow/price-alert
+  Allow: /wow/region-undercut
+  Allow: /wow/full-scan
+  Allow: /wow/shortages/commodities
+  Allow: /wow/shortages/single
+  Allow: /wow/pet-marketshare
+  Allow: /ffxiv/scrip-exchange
+  Allow: /ffxiv/extended-history
+
+  Disallow: /nogooglebot/
+  Disallow: /build/
+  Disallow: /queries/full-scan
+  Disallow: /ffxiv/marketshare
+  Disallow: /ffxiv/craftsim/queries
+  Disallow: /wow/best-deals
+  Disallow: /wow/export-search
+  Disallow: /wow/marketshare
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `

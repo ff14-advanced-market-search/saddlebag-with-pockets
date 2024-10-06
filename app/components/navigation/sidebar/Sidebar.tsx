@@ -344,6 +344,12 @@ const navGroups: Array<{
         icon: YoutubeIcon
       },
       {
+        name: 'Twitter / X',
+        href: 'https://x.com/SaddlebagE36285',
+        external: true,
+        icon: YoutubeIcon
+      },
+      {
         name: 'blog',
         href: '/blog',
         icon: DocumentSearchIcon

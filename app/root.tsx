@@ -244,35 +244,50 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.requestAnimationFrame(() => {
+        // Load Google Tag Manager
+        ;(function (w, d, s, l, i) {
+          w[l] = w[l] || []
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : ''
+          j.async = true
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+          f.parentNode.insertBefore(j, f)
+        })(window, document, 'script', 'dataLayer', 'GTM-WH4KFG5')
+
+        // Load Ezoic script
+        const script = document.createElement('script')
+        script.src = '//www.ezojs.com/ezoic/sa.min.js'
+        script.async = true
+        document.body.appendChild(script)
+
+        script.onload = function () {
+          window.ezstandalone = window.ezstandalone || {}
+          ezstandalone.cmd = ezstandalone.cmd || []
+          ezstandalone.cmd.push(function () {
+            ezstandalone.define(118, 116)
+            ezstandalone.refresh()
+            ezstandalone.enable()
+            ezstandalone.display()
+          })
+        }
+      })
+    }, 3000) // Delay of 3000ms (3 second)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <html lang="en" className={classNames(`h-full`, theme || '')}>
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-WH4KFG5');`
-          }}
-        />
         <Meta />
         <Links />
         <EnsureThemeApplied />
-        <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ezstandalone = window.ezstandalone || {};
-          ezstandalone.cmd = ezstandalone.cmd || [];
-          ezstandalone.cmd.push(function() {
-            ezstandalone.define(118,116);
-            ezstandalone.refresh();
-            ezstandalone.enable();
-            ezstandalone.display();
-        });`
-          }}
-        />
       </head>
       <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
         <noscript>
