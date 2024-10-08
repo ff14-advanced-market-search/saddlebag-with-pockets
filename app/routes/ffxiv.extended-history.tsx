@@ -194,7 +194,7 @@ const FFXIVSaleHistory = () => {
       <>
         <div className="py-3">
           <SmallFormContainer
-            title="Find Extened Sale History of Last 1800 Sales"
+            title="Find Extended Sale History of Last 1800 Sales"
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
