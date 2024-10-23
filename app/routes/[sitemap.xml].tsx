@@ -116,16 +116,16 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-<url>
-  <loc>https://saddlebagexchange.com/wow/export-search</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/wow/marketshare</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
+// <url>
+//   <loc>https://saddlebagexchange.com/wow/export-search</loc>
+//   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+//   <priority>0.80</priority>
+// </url>
+// <url>
+//   <loc>https://saddlebagexchange.com/wow/marketshare</loc>
+//   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+//   <priority>0.80</priority>
+// </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/marketshare/recommended</loc>
   <lastmod>2024-06-21T00:27:48+00:00</lastmod>
@@ -181,26 +181,26 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-<url>
-  <loc>https://saddlebagexchange.com/queries/full-scan</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/ffxiv/marketshare</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/ffxiv/craftsim</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/wow/best-deals</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
+// <url>
+//   <loc>https://saddlebagexchange.com/queries/full-scan</loc>
+//   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+//   <priority>0.80</priority>
+// </url>
+// <url>
+//   <loc>https://saddlebagexchange.com/ffxiv/marketshare</loc>
+//   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+//   <priority>0.80</priority>
+// </url>
+// <url>
+//   <loc>https://saddlebagexchange.com/ffxiv/craftsim</loc>
+//   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+//   <priority>0.80</priority>
+// </url>
+// <url>
+//   <loc>https://saddlebagexchange.com/wow/best-deals</loc>
+//   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+//   <priority>0.80</priority>
+// </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/pet-marketshare</loc>
   <lastmod>2024-05-11T00:27:48+00:00</lastmod>
