@@ -173,7 +173,7 @@ const RegionUndercut = () => {
             }}
           />
           <SmallTable
-            title="Data No Yet Uploaded Items"
+            title="Not Uploaded Items"
             description="Shows items that were not yet uploaded to the Blizzard API. Wait 1 hour for these to appear in the data."
             columnList={columnList}
             data={results.not_in_dataset_list}
