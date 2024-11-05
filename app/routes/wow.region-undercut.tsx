@@ -172,6 +172,19 @@ const RegionUndercut = () => {
               columns: undercutColumns
             }}
           />
+          <SmallTable
+            title="Data No Yet Uploaded Items"
+            description="Shows items that were not yet uploaded to the Blizzard API. Wait 1 hour for these to appear in the data."
+            columnList={columnList}
+            data={results.not_in_dataset_list}
+            columnSelectOptions={selectOptions}
+            sortingOrder={sortingOrder}
+            mobileColumnList={mobileColumnList}
+            csvOptions={{
+              filename: 'saddlebag-undercut-not-in-dataset.csv',
+              columns: undercutColumns
+            }}
+          />
         </PageWrapper>
       )
     }
