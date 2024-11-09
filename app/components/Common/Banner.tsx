@@ -16,7 +16,7 @@ export default function Banner() {
           </p>
           <p className="mt-3 text-sm md:mt-0 md:ml-6">
             <a
-              href="https://discord.gg/836C8wDVNq"
+              href="https://discord.gg/saddlebag-exchange-973380473281724476"
               className="whitespace-nowrap font-medium text-blue-700 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-100">
               Discord
               <span aria-hidden="true"> &rarr;</span>

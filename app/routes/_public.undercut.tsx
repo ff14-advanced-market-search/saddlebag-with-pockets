@@ -13,6 +13,7 @@ import z from 'zod'
 import { parseZodErrorsToDisplayString } from '~/utils/zodHelpers'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { getUserSessionData } from '~/sessions'
+import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -141,6 +142,8 @@ const Index = () => {
 
   return (
     <PageWrapper>
+      <Banner />
+
       <SmallFormContainer
         title="Input for undercut alerts"
         description={Description()}

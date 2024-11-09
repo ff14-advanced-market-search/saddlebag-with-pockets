@@ -30,6 +30,7 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import Banner from '~/components/Common/Banner'
 
 const PAGE_URL = '/wow/export-search'
 
@@ -203,6 +204,8 @@ const ExportSearch = () => {
 
   return (
     <PageWrapper>
+      <Banner />
+
       <SmallFormContainer
         title="Export Search: Find the Best Place to Sell!"
         onClick={handleSubmit}

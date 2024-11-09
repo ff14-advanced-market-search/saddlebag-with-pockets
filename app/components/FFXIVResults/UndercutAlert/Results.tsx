@@ -333,7 +333,7 @@ export const UndercutDescription = () => (
     Copy this to your clipboard and use it in our{' '}
     <a
       className="underline"
-      href="https://discord.gg/836C8wDVNq"
+      href="https://discord.gg/saddlebag-exchange-973380473281724476"
       target="_blank"
       rel="noreferrer">
       discord server
@@ -354,7 +354,7 @@ export const SalesAlertDescription = () => (
     To use Sales Alerts copy this to your clipboard and use it in our{' '}
     <a
       className="underline"
-      href="https://discord.gg/836C8wDVNq"
+      href="https://discord.gg/saddlebag-exchange-973380473281724476"
       target="_blank"
       rel="noreferrer">
       discord server

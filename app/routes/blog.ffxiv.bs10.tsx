@@ -1,3 +1,5 @@
+import Banner from '~/components/Common/Banner'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -17,6 +19,8 @@ export const links: LinksFunction = () => [
 const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
+      <Banner />
+
       <main className="flex-1">
         <h1>
           Diversification and Risk Management in Gil Making and Gold Making

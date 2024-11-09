@@ -9,6 +9,7 @@ import { useLoaderData } from '@remix-run/react'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
+import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -44,6 +45,7 @@ const Index = () => {
       return (
         <PageWrapper>
           <h1>World of Warcraft API Upload Times</h1>
+          <Banner />
           <SmallTable
             // title="Upload Timers"
             description="Shows when the WoW auction house data was last uploaded."

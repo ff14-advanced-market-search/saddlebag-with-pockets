@@ -81,6 +81,7 @@ export default function Index() {
             </div>
           </div>
         </section>
+        <Banner />
 
         {/* Features Section */}
         <section className="py-16 bg-gray-50">
@@ -279,7 +280,8 @@ export default function Index() {
             <div className="mt-8">
               <a
                 // href="/signup"
-                href="/blog"
+                // href="/blog"
+                href="https://discord.gg/saddlebag-exchange-973380473281724476"
                 className="inline-block bg-white text-purple-600 font-semibold py-3 px-6 rounded-md shadow-md hover:bg-gray-100">
                 Get Started
               </a>
