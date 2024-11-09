@@ -205,7 +205,6 @@ const ExportSearch = () => {
   return (
     <PageWrapper>
       <Banner />
-
       <SmallFormContainer
         title="Export Search: Find the Best Place to Sell!"
         onClick={handleSubmit}

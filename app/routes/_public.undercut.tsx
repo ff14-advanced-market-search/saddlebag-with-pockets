@@ -143,7 +143,6 @@ const Index = () => {
   return (
     <PageWrapper>
       <Banner />
-
       <SmallFormContainer
         title="Input for undercut alerts"
         description={Description()}
