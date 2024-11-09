@@ -20,7 +20,6 @@ const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
       <Banner />
-
       <main className="flex-1">
         <h1>
           Diversification and Risk Management in Gil Making and Gold Making
