@@ -1,6 +1,5 @@
-// root.tsx
-
 import { MetaFunction, LinksFunction } from '@remix-run/node'
+import Banner from '~/components/Common/Banner'
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -21,6 +20,7 @@ export const links: LinksFunction = () => [
 const HowToCrossServerTradeInWoW = () => {
   return (
     <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+      <Banner />
       <header className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-blue-600">
           How to Earn Gold with Cross-Realm Trading

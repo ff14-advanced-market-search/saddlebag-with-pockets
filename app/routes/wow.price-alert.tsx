@@ -164,7 +164,7 @@ const Index = () => {
               Pick a list of your favorite World of Warcraft items for{' '}
               {priceOrQuantity} alerts. Then join the{' '}
               <a
-                href="https://discord.gg/836C8wDVNq"
+                href="https://discord.gg/saddlebag-exchange-973380473281724476"
                 target="_blank"
                 rel="noreferrer"
                 className="text-blue-500 dark:text-blue-300 hover:underline">

@@ -15,6 +15,7 @@ import { setWoWScan } from '~/redux/reducers/wowSlice'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
+import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -96,6 +97,7 @@ const Index = () => {
   return (
     <PageWrapper>
       <>
+        <Banner />
         <WoWScanForm
           onClick={onSubmit}
           onChange={() => {

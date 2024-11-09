@@ -16,6 +16,7 @@ import HQCheckbox from '~/components/form/HQCheckbox'
 import CodeBlock from '~/components/Common/CodeBlock'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import CheckBox from '~/components/form/CheckBox'
+import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -101,6 +102,7 @@ const Index = () => {
   return (
     <PageWrapper>
       <>
+        <Banner />
         <SmallFormContainer
           title="Input for Price Sniper Alerts"
           description={description}

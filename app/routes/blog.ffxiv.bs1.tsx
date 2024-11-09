@@ -1,3 +1,5 @@
+import Banner from '~/components/Common/Banner'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -17,6 +19,7 @@ export const links: LinksFunction = () => [
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
+      <Banner />
       <main className="flex-1">
         <h1 id="mastering-gil-earning-on-the-ffxiv-marketboard">
           Mastering Gil Earning on the FFXIV Marketboard

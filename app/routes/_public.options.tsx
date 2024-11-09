@@ -35,6 +35,7 @@ import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 import { PageWrapper } from '~/components/Common'
 import { setCookie } from '~/utils/cookies'
+import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -203,6 +204,7 @@ export default function Options() {
 
   return (
     <PageWrapper>
+      <Banner />
       <Form
         method="POST"
         onSubmit={(e) => {
