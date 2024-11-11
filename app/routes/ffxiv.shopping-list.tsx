@@ -66,8 +66,21 @@ export const action: ActionFunction = async ({ request }) => {
 
   try {
     const shoppingList = JSON.parse(shoppingData)
-    const session = await getUserSessionData(request)
 
+    // Server-side validation for craft_amount
+    for (const item of shoppingList) {
+      if (
+        item.craft_amount == null ||
+        isNaN(item.craft_amount) ||
+        item.craft_amount <= 0
+      ) {
+        return json({
+          exception: `Invalid craft amount for item ID ${item.itemID}.`
+        })
+      }
+    }
+
+    const session = await getUserSessionData(request)
     const homeServer = session.getWorld()
 
     return GetShoppingList({
@@ -167,17 +180,28 @@ const Row = ({
       <TableCell>
         <input
           className="w-[70px] border border-gray-300 rounded-md dark:border-gray-400 dark:bg-gray-600"
-          type={'number'}
-          max={1000000000}
-          value={craft_amount}
+          type="number"
+          min="1"
+          max="1000000000"
+          value={craft_amount ?? ''}
           onChange={(e) => {
             const value = e.target.value
 
-            if (value === undefined || value === null) return
+            // Handle empty input
+            if (value === '') {
+              updateRow({ ...form, craft_amount: null })
+              return
+            }
 
-            updateRow({ ...form, craft_amount: parseInt(value, 10) })
+            const parsedValue = parseInt(value, 10)
+            if (!isNaN(parsedValue)) {
+              updateRow({ ...form, craft_amount: parsedValue })
+            }
           }}
         />
+        {error && (
+          <p className="text-red-500 text-sm">Craft amount is required.</p>
+        )}
       </TableCell>
       <TableCell>
         <input
