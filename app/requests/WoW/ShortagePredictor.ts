@@ -61,7 +61,8 @@ const WoWShortagePredictor: (
   region,
   homeRealmName,
   desiredPriceVsAvgPercent,
-  desiredQuantityVsAvgPercent
+  desiredQuantityVsAvgPercent,
+  expansionNumber
 }) => {
   return fetch(`${address}/api/wow/commodityfutures`, {
     method: 'POST',
@@ -78,7 +79,8 @@ const WoWShortagePredictor: (
       region,
       homeRealmName,
       desired_price_vs_avg_percent: desiredPriceVsAvgPercent,
-      desired_quantity_vs_avg_percent: desiredQuantityVsAvgPercent
+      desired_quantity_vs_avg_percent: desiredQuantityVsAvgPercent,
+      expansionNumber: expansionNumber
     })
   })
 }
