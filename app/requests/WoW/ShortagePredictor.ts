@@ -11,6 +11,7 @@ export interface ShortagePredictorProps {
   homeRealmName: string
   desiredPriceVsAvgPercent: number
   desiredQuantityVsAvgPercent: number
+  expansionNumber: number
 }
 
 export interface Prediction {

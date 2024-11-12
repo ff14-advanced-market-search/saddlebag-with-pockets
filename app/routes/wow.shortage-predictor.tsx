@@ -3,7 +3,8 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
   ItemClassSelect,
-  ItemQualitySelect
+  ItemQualitySelect,
+  ExpansionSelect
 } from '~/components/form/WoW/WoWScanForm'
 import type { WoWServerData } from '~/requests/WoW/types'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -40,7 +41,8 @@ const defaultFormValues = {
   region: 'NA',
   homeRealmName: '3678---Thrall',
   desiredPriceVsAvgPercent: '120',
-  desiredQuantityVsAvgPercent: '50'
+  desiredQuantityVsAvgPercent: '50',
+  expansionNumber: '-1'
 }
 
 const inputMap: Record<keyof ShortagePredictorProps, string> = {
@@ -52,7 +54,8 @@ const inputMap: Record<keyof ShortagePredictorProps, string> = {
   region: 'Select your region',
   homeRealmName: 'Search for server by name',
   desiredPriceVsAvgPercent: 'Current Price Percent Above Average',
-  desiredQuantityVsAvgPercent: 'Current Market Quantity Percentage'
+  desiredQuantityVsAvgPercent: 'Current Market Quantity Percentage',
+  expansionNumber: 'Expansion Number'
 }
 
 const pageTitle = 'Commodity Shortage Futures'
@@ -78,7 +81,8 @@ export const action: ActionFunction = async ({ request }) => {
       .min(1)
       .transform((value) => value.split('---')[1]),
     desiredPriceVsAvgPercent: parseStringToNumber,
-    desiredQuantityVsAvgPercent: parseStringToNumber
+    desiredQuantityVsAvgPercent: parseStringToNumber,
+    expansionNumber: parseStringToNumber
   })
 
   const validInput = validateFormData.safeParse(formPayload)
@@ -150,7 +154,8 @@ export const loader: LoaderFunction = async ({ request }) => {
       })
       .transform((value) => `${value.id}---${value.name}`),
     desiredPriceVsAvgPercent: parseStringToNumber,
-    desiredQuantityVsAvgPercent: parseStringToNumber
+    desiredQuantityVsAvgPercent: parseStringToNumber,
+    expansionNumber: parseStringToNumber
   })
 
   const input = {
@@ -173,7 +178,10 @@ export const loader: LoaderFunction = async ({ request }) => {
       defaultFormValues.desiredPriceVsAvgPercent.toString(),
     desiredQuantityVsAvgPercent:
       params.get('desiredQuantityVsAvgPercent') ||
-      defaultFormValues.desiredQuantityVsAvgPercent.toString()
+      defaultFormValues.desiredQuantityVsAvgPercent.toString(),
+    expansionNumber:
+      params.get('expansionNumber') ||
+      defaultFormValues.expansionNumber.toString()
   }
 
   const validInput = validateFormData.safeParse(input)
@@ -270,6 +278,10 @@ const Index = () => {
           <ItemQualitySelect
             defaultValue={loaderData.itemQuality}
             onChange={(value) => handleFormChange('itemQuality', value)}
+          />
+          <ExpansionSelect
+            defaultValue={loaderData.expansionNumber}
+            onChange={(value) => handleFormChange('expansionNumber', value)}
           />
           <ItemClassSelect
             itemClass={parseInt(loaderData.itemClass)}
