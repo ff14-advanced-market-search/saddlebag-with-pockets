@@ -24,7 +24,7 @@ import {
   getActionUrl,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
-import { SubmitButton } from '~/components/form/SubmitButton' // Import SubmitButton
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -179,12 +179,6 @@ const Index = () => {
   const itemsLength = state.items.length
   const serversLength = state.exportServers.length
 
-  const handleCopyButton = () => {
-    if (navigator.clipboard && window) {
-      navigator.clipboard.writeText(window.location.href)
-    }
-  }
-
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -243,13 +237,6 @@ const Index = () => {
                 relative
               />
               <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
-            </div>
-            <div className="flex justify-end mt-4">
-              <SubmitButton
-                title="Share this search!"
-                onClick={handleCopyButton}
-                type="button"
-              />
             </div>
           </div>
         </div>
@@ -365,9 +352,22 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
 
   const getSortedTables = sortByPrice(tableDesc)
 
+  const handleCopyButton = () => {
+    if (navigator.clipboard && window) {
+      navigator.clipboard.writeText(window.location.href)
+    }
+  }
+
   return (
     <PageWrapper>
       <ContentContainer>
+        <div className="flex justify-start mt-4">
+          <SubmitButton
+            title="Share this search!"
+            onClick={handleCopyButton}
+            type="button"
+          />
+        </div>
         <div className="flex w-full overflow-x-scroll gap-3 p-4">
           {results.data.map((item) => {
             const sortedServers = item.export_servers.sort(getSortedTables)
