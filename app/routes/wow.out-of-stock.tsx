@@ -187,6 +187,8 @@ const OutOfStock = () => {
         onClick={handleSubmit}
         error={error}
         loading={isSubmitting}
+        role="search"
+        aria-label="Search out of stock items"
         action={getActionUrl(PAGE_URL, searchParams)}>
         <div className="pt-2">
           <div className="flex justify-end mb-2">
