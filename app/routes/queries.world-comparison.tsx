@@ -1,4 +1,4 @@
-import { useActionData, useNavigation } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ActionFunction } from '@remix-run/cloudflare'
@@ -20,12 +20,17 @@ import {
 } from '@heroicons/react/outline'
 import { WorldList } from '~/utils/locations/Worlds'
 import TitleTooltip from '~/components/Common/TitleTooltip'
+import {
+  getActionUrl,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
   homeServer: 'Home Server',
   exportServers: 'Export Servers',
-  itemIds: 'Items'
+  items: 'Items'
 }
 
 // Overwrite default meta in the root.tsx
@@ -46,6 +51,42 @@ export const links: LinksFunction = () => [
   }
 ]
 
+// Define default form values
+const defaultFormValues = {
+  items: '',
+  exportServers: '',
+  hqOnly: 'false'
+}
+
+// Define input schema for validation
+const inputSchema = z.object({
+  items: z.string().min(1),
+  exportServers: z.string().min(1),
+  hqOnly: z.optional(z.string())
+})
+
+// Loader function to handle URL parameters
+export const loader: LoaderFunction = async ({ request }) => {
+  const params = new URL(request.url).searchParams
+
+  const values = {
+    items: params.get('items') || defaultFormValues.items,
+    exportServers:
+      params.get('exportServers') || defaultFormValues.exportServers,
+    hqOnly: params.get('hqOnly') || defaultFormValues.hqOnly
+  }
+
+  const validParams = inputSchema.safeParse(values)
+  if (!validParams.success) {
+    return json({
+      exception: `Missing: ${validParams.error.issues
+        .map(({ path }) => path.join(', '))
+        .join(', ')}`
+    })
+  }
+  return json(validParams.data)
+}
+
 const sortByPrice =
   (desc: boolean) => (first: { price: number }, second: { price: number }) => {
     if (first.price === second.price) {
@@ -65,7 +106,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formPayload = Object.fromEntries(formData)
   const inputSchema = z.object({
-    itemIds: z
+    items: z
       .string()
       .min(1)
       .transform((item) => item.split(',').map((id) => parseInt(id, 10))),
@@ -88,7 +129,9 @@ export const action: ActionFunction = async ({ request }) => {
 
   const response = await ItemServerComparison({
     homeServer,
-    ...validInput.data
+    itemIds: validInput.data.items,
+    exportServers: validInput.data.exportServers,
+    hqOnly: validInput.data.hqOnly
   })
   if (!response.ok) {
     return json({ exception: response.statusText })
@@ -101,12 +144,18 @@ const Index = () => {
   const results = useActionData<
     ItemServerComparisonList | { exception: string } | {}
   >()
+  const loaderData = useLoaderData<typeof defaultFormValues>()
 
   const [modal, setModal] = useState<'exportServers' | 'items' | null>(null)
   const [state, setState] = useState<{
     items: string[]
     exportServers: string[]
-  }>({ items: [], exportServers: [] })
+  }>({
+    items: loaderData.items ? loaderData.items.split(',') : [],
+    exportServers: loaderData.exportServers
+      ? loaderData.exportServers.split(',')
+      : []
+  })
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -129,6 +178,7 @@ const Index = () => {
 
   const itemsLength = state.items.length
   const serversLength = state.exportServers.length
+
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -137,7 +187,8 @@ const Index = () => {
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}
-        error={error}>
+        error={error}
+        action={getActionUrl('/queries/world-comparison', state)}>
         <div className="pt-4">
           <div className="sm:px-4 flex flex-col gap-4">
             <div className="flex flex-col max-w-full relative">
@@ -170,7 +221,7 @@ const Index = () => {
                 onClick={() => setModal('items')}>
                 Choose Items
               </ModalToggleButton>
-              <input name="itemIds" hidden value={state.items} />
+              <input name="items" hidden value={state.items} />
               <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
                 {itemsLength > 3 || !itemsLength
                   ? `${itemsLength ? itemsLength : 'No'} items selected`
@@ -301,9 +352,22 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
 
   const getSortedTables = sortByPrice(tableDesc)
 
+  const handleCopyButton = () => {
+    if (navigator.clipboard && window) {
+      navigator.clipboard.writeText(window.location.href)
+    }
+  }
+
   return (
     <PageWrapper>
       <ContentContainer>
+        <div className="flex justify-start mt-4">
+          <SubmitButton
+            title="Share this search!"
+            onClick={handleCopyButton}
+            type="button"
+          />
+        </div>
         <div className="flex w-full overflow-x-scroll gap-3 p-4">
           {results.data.map((item) => {
             const sortedServers = item.export_servers.sort(getSortedTables)
