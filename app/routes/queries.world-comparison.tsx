@@ -29,7 +29,7 @@ const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
   homeServer: 'Home Server',
   exportServers: 'Export Servers',
-  itemIds: 'Items'
+  items: 'Items'
 }
 
 // Overwrite default meta in the root.tsx
@@ -52,14 +52,14 @@ export const links: LinksFunction = () => [
 
 // Define default form values
 const defaultFormValues = {
-  itemIds: '',
+  items: '',
   exportServers: '',
   hqOnly: 'false'
 }
 
 // Define input schema for validation
 const inputSchema = z.object({
-  itemIds: z.string().min(1),
+  items: z.string().min(1),
   exportServers: z.string().min(1),
   hqOnly: z.optional(z.string())
 })
@@ -69,7 +69,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 
   const values = {
-    itemIds: params.get('itemIds') || defaultFormValues.itemIds,
+    items: params.get('items') || defaultFormValues.items,
     exportServers:
       params.get('exportServers') || defaultFormValues.exportServers,
     hqOnly: params.get('hqOnly') || defaultFormValues.hqOnly
@@ -105,7 +105,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formPayload = Object.fromEntries(formData)
   const inputSchema = z.object({
-    itemIds: z
+    items: z
       .string()
       .min(1)
       .transform((item) => item.split(',').map((id) => parseInt(id, 10))),
@@ -128,7 +128,9 @@ export const action: ActionFunction = async ({ request }) => {
 
   const response = await ItemServerComparison({
     homeServer,
-    ...validInput.data
+    itemIds: validInput.data.items,
+    exportServers: validInput.data.exportServers,
+    hqOnly: validInput.data.hqOnly
   })
   if (!response.ok) {
     return json({ exception: response.statusText })
@@ -147,14 +149,12 @@ const Index = () => {
   const [state, setState] = useState<{
     items: string[]
     exportServers: string[]
-  }>({ items: [], exportServers: [] })
-
-  // // One AI recommendation, but it didnt solve the issue. It keeps saying "Error: Cannot read properties of undefined (reading 'split')"
-  // const [state, setState] = useState({
-  //   items: loaderData.itemIds ? loaderData.itemIds.split(',') : [], // Add a check for undefined
-  //   exportServers: loaderData.exportServers ? loaderData.exportServers.split(',') : [], // Add a check for undefined
-  //   hqOnly: loaderData.hqOnly === 'false',
-  // })
+  }>({
+    items: loaderData.items ? loaderData.items.split(',') : [],
+    exportServers: loaderData.exportServers
+      ? loaderData.exportServers.split(',')
+      : []
+  })
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -219,7 +219,7 @@ const Index = () => {
                 onClick={() => setModal('items')}>
                 Choose Items
               </ModalToggleButton>
-              <input name="itemIds" hidden value={state.items} />
+              <input name="items" hidden value={state.items} />
               <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
                 {itemsLength > 3 || !itemsLength
                   ? `${itemsLength ? itemsLength : 'No'} items selected`
