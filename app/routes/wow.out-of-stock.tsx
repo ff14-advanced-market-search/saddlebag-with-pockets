@@ -17,7 +17,8 @@ import { getActionUrl, handleCopyButton, handleSearchParamChange } from '~/utils
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { ExpansionSelect } from '~/components/form/WoW/WoWScanForm'
 import type { MetaFunction, LinksFunction } from '@remix-run/node'
-import { getOribosLink } from '~/components/utilities/getOribosLink'
+import ExternalLink from '~/components/utilities/ExternalLink'
+
 
 const PAGE_URL = '/wow/out-of-stock'
 
@@ -249,13 +250,14 @@ const columnList = (region: string): Array<ColumnList<OutOfStockItem>> => [
     )
   },
   {
-    columnId: 'itemID',
+    columnId: 'saddlebagLink',
+    header: 'Where to Buy',
+    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
+  },
+  {
+    columnId: 'undermineLink',
     header: 'Undermine Link',
-    accessor: ({ row }) => (
-      <a href={row.undermineLink} target="_blank" rel="noopener noreferrer">
-        View Item
-      </a>
-    )
+    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
   },
   { columnId: 'marketValue', header: 'Market Value' },
   { columnId: 'salesPerDay', header: 'Sales/Day' },
