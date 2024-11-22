@@ -26,7 +26,6 @@ export const loader: LoaderFunction = () => {
   Allow: /allagan-data
   Allow: /wow/best-deals/recommended
   Allow: /wow/upload-timers
-  Allow: /wow/shopping-list
   Allow: /wow/marketshare/recommended
   Allow: /wow/shortage-predictor
   Allow: /wow/legacy-marketshare
@@ -47,6 +46,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/best-deals
   Disallow: /wow/export-search
   Disallow: /wow/marketshare
+  Disallow: /wow/shopping-list
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `
