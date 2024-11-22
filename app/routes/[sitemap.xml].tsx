@@ -111,11 +111,11 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-<url>
-  <loc>https://saddlebagexchange.com/wow/shopping-list</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
+// <url>
+//   <loc>https://saddlebagexchange.com/wow/shopping-list</loc>
+//   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+//   <priority>0.80</priority>
+// </url>
 // <url>
 //   <loc>https://saddlebagexchange.com/wow/export-search</loc>
 //   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
