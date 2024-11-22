@@ -12,16 +12,12 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
-import { parseZodErrorsToDisplayString } from '~/utils/zodHelpers'
-import {
-  getActionUrl,
-  handleCopyButton,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { parseZodErrorsToDisplayString, parseStringToNumber } from '~/utils/zodHelpers'
+import { getActionUrl, handleCopyButton, handleSearchParamChange } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { ExpansionSelect } from '~/components/form/WoW/WoWScanForm'
-import { parseStringToNumber } from '~/utils/zodHelpers'
-import { MetaFunction, LinksFunction } from '@remix-run/node'
+import type { MetaFunction, LinksFunction } from '@remix-run/node'
+import { getOribosLink } from '~/components/utilities/getOribosLink'
 
 const PAGE_URL = '/wow/out-of-stock'
 
@@ -47,13 +43,18 @@ const inputMap: Record<string, string> = {
 
 const validateInput = z.object({
   salesPerDay: z.string().transform((value) => parseFloat(value)),
-  avgPrice: z.string().transform((value) => parseInt(value)),
-  minMarketValue: z.string().transform((value) => parseInt(value)),
-  populationWP: z.string().transform((value) => parseInt(value)),
-  populationBlizz: z.string().transform((value) => parseInt(value)),
-  rankingWP: z.string().transform((value) => parseInt(value)),
+  avgPrice: parseStringToNumber,
+  minMarketValue: parseStringToNumber,
+  populationWP: parseStringToNumber,
+  populationBlizz: parseStringToNumber,
+  rankingWP: parseStringToNumber,
   expansionNumber: parseStringToNumber
 })
+
+type ActionResponseType = 
+  | {}
+  | { exception: string }
+  | ({ data: OutOfStockItem[] } & { sortby: string })
 
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
@@ -119,9 +120,7 @@ export const links: LinksFunction = () => [
 
 const OutOfStock = () => {
   const loaderData = useLoaderData<typeof defaultFormValues>()
-  const result = useActionData<
-    { data: OutOfStockItem[] } | { exception: string } | {}
-  >()
+  const result = useActionData<ActionResponseType>()
   const transition = useNavigation()
 
   const isSubmitting = transition.state === 'submitting'
@@ -134,6 +133,12 @@ const OutOfStock = () => {
 
   if (result && 'data' in result && !error) {
     return <Results {...result} />
+  }
+
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (isSubmitting) {
+      event.preventDefault()
+    }
   }
 
   const handleFormChange = (
@@ -149,7 +154,7 @@ const OutOfStock = () => {
       <SmallFormContainer
         title="Out of Stock Items"
         description="Find items that are out of stock on your realm!"
-        onClick={(e) => isSubmitting && e.preventDefault()}
+        onClick={handleSubmit}
         error={error}
         loading={isSubmitting}
         action={getActionUrl(PAGE_URL, searchParams)}>
@@ -192,15 +197,9 @@ const OutOfStock = () => {
   )
 }
 
-export default OutOfStock
+const Results = ({ data, sortby }: { data: OutOfStockItem[]; sortby: string }) => {
+  const { region } = useLoaderData<typeof loader>()
 
-const Results = ({
-  data,
-  sortby
-}: {
-  data: OutOfStockItem[]
-  sortby: string
-}) => {
   useEffect(() => {
     if (window && document) {
       window.scroll({ top: 0, behavior: 'smooth' })
@@ -212,7 +211,7 @@ const Results = ({
       <SmallTable
         title="Out of Stock Items"
         sortingOrder={[{ desc: true, id: sortby }]}
-        columnList={columnList}
+        columnList={columnList(region)}
         mobileColumnList={mobileColumnList}
         columnSelectOptions={[
           'marketValue',
@@ -238,9 +237,26 @@ const Results = ({
   )
 }
 
-const columnList: Array<ColumnList<OutOfStockItem>> = [
+const columnList = (region: string): Array<ColumnList<OutOfStockItem>> => [
   { columnId: 'itemName', header: 'Item Name' },
-  { columnId: 'realmNames', header: 'Realm' },
+  { 
+    columnId: 'realmNames', 
+    header: 'Realm',
+    accessor: ({ row }) => (
+      <p className="px-3 py-2 max-w-[200px] overflow-x-scroll">
+        {row.realmNames}
+      </p>
+    )
+  },
+  {
+    columnId: 'itemID',
+    header: 'Undermine Link',
+    accessor: ({ row }) => (
+      <a href={row.undermineLink} target="_blank" rel="noopener noreferrer">
+        View Item
+      </a>
+    )
+  },
   { columnId: 'marketValue', header: 'Market Value' },
   { columnId: 'salesPerDay', header: 'Sales/Day' },
   { columnId: 'popWoWProgress', header: 'Population' },
@@ -251,3 +267,5 @@ const mobileColumnList: Array<ColumnList<OutOfStockItem>> = [
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'realmNames', header: 'Realm' }
 ]
+
+export default OutOfStock
