@@ -98,17 +98,32 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  const result = await WoWOutOfStock({
-    ...validatedFormData.data,
-    region,
-    includeCategories: [],
-    excludeCategories: []
-  })
+  try {
+    const result = await WoWOutOfStock({
+      ...validatedFormData.data,
+      region,
+      includeCategories: [],
+      excludeCategories: []
+    })
 
-  return json({
-    ...(await result.json()),
-    sortby: 'popWoWProgress'
-  })
+    if (!result.ok) {
+      throw new Error(`API error: ${result.status}`)
+    }
+
+    const data = await result.json()
+    if (!Array.isArray(data?.data)) {
+      throw new Error('Invalid API response format')
+    }
+
+    return json({
+      ...data,
+      sortby: 'popWoWProgress'
+    })
+  } catch (error) {
+    return json({
+      exception: error instanceof Error ? error.message : 'An unexpected error occurred'
+    })
+  }
 }
 
 export const meta: MetaFunction = () => {
