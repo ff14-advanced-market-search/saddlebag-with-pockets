@@ -1,6 +1,7 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
+import Banner from '~/components/Common/Banner'
 import {
   ContentContainer,
   PageWrapper,
@@ -136,6 +137,7 @@ const ItemPage = () => {
   return (
     <PageWrapper>
       <>
+        <Banner />
         <Section>
           <>
             <Title title={data.itemName} />

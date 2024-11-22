@@ -143,28 +143,6 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
       <Section>
         <>
           <SmallTable
-            data={data.profitable_items}
-            columnList={profitableItemsColumnList}
-            mobileColumnList={mobileProfitableItemsList}
-            columnSelectOptions={profiableSelectOptions}
-            sortingOrder={[{ id: 'profit', desc: true }]}
-            title="Profitable Items"
-            description="This shows items you can buy on your home server and sell on your new server for a profit!"
-            csvOptions={profitableItemsCSVOptions}
-            fitScreen={true}
-          />
-          <SmallTable
-            data={data.out_of_stock}
-            columnList={oosColumnList}
-            mobileColumnList={mobileOosList}
-            columnSelectOptions={oosSelectOptions}
-            sortingOrder={[{ id: 'historicPrice', desc: true }]}
-            title="Out of Stock Items"
-            description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
-            fitScreen={true}
-            csvOptions={outOfStockCSVOptions}
-          />
-          <SmallTable
             data={data.profit_w_sales}
             columnList={profitableItemsColumnList}
             mobileColumnList={mobileProfitableItemsList}
@@ -191,6 +169,28 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
               ...outOfStockCSVOptions,
               filename: 'saddlebag-oos-with-sales.csv'
             }}
+          />
+          <SmallTable
+            data={data.profitable_items}
+            columnList={profitableItemsColumnList}
+            mobileColumnList={mobileProfitableItemsList}
+            columnSelectOptions={profiableSelectOptions}
+            sortingOrder={[{ id: 'profit', desc: true }]}
+            title="Profitable Items"
+            description="This shows items you can buy on your home server and sell on your new server for a profit!"
+            csvOptions={profitableItemsCSVOptions}
+            fitScreen={true}
+          />
+          <SmallTable
+            data={data.out_of_stock}
+            columnList={oosColumnList}
+            mobileColumnList={mobileOosList}
+            columnSelectOptions={oosSelectOptions}
+            sortingOrder={[{ id: 'historicPrice', desc: true }]}
+            title="Out of Stock Items"
+            description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
+            fitScreen={true}
+            csvOptions={outOfStockCSVOptions}
           />
         </>
       </Section>

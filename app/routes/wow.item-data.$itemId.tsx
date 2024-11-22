@@ -14,6 +14,7 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CustomButton from '~/components/utilities/CustomButton'
+import Banner from '~/components/Common/Banner'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -108,6 +109,7 @@ export default function Index() {
     )
     return (
       <PageWrapper>
+        <Banner />
         <Title title={listing.itemName} />
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">

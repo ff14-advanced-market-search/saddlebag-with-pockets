@@ -95,7 +95,7 @@ const WikiLink = () => (
 
 const DiscordLink = () => (
   <a
-    href={'https://discord.gg/836C8wDVNq'}
+    href={'https://discord.gg/saddlebag-exchange-973380473281724476'}
     target="_blank"
     rel="noreferrer"
     className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
