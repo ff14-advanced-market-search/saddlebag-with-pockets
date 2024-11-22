@@ -83,7 +83,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     return json(validParams.data)
   } catch (error) {
     return json({
-      exception: "Invalid URL format"
+      exception: 'Invalid URL format'
     })
   }
 }
@@ -93,7 +93,7 @@ export const action: ActionFunction = async ({ request }) => {
   const region = session.getWoWSessionData().region
   if (!region) {
     return json({
-      exception: "Region is required. Please select a region in your settings."
+      exception: 'Region is required. Please select a region in your settings.'
     })
   }
   const formData = Object.fromEntries(await request.formData())
@@ -131,7 +131,8 @@ export const action: ActionFunction = async ({ request }) => {
     })
   } catch (error) {
     return json({
-      exception: error instanceof Error ? error.message : 'An unexpected error occurred'
+      exception:
+        error instanceof Error ? error.message : 'An unexpected error occurred'
     })
   }
 }
