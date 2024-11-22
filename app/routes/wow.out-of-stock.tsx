@@ -12,13 +12,19 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
-import { parseZodErrorsToDisplayString, parseStringToNumber } from '~/utils/zodHelpers'
-import { getActionUrl, handleCopyButton, handleSearchParamChange } from '~/utils/urlSeachParamsHelpers'
+import {
+  parseZodErrorsToDisplayString,
+  parseStringToNumber
+} from '~/utils/zodHelpers'
+import {
+  getActionUrl,
+  handleCopyButton,
+  handleSearchParamChange
+} from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { ExpansionSelect } from '~/components/form/WoW/WoWScanForm'
 import type { MetaFunction, LinksFunction } from '@remix-run/node'
 import ExternalLink from '~/components/utilities/ExternalLink'
-
 
 const PAGE_URL = '/wow/out-of-stock'
 
@@ -52,7 +58,7 @@ const validateInput = z.object({
   expansionNumber: parseStringToNumber
 })
 
-type ActionResponseType = 
+type ActionResponseType =
   | {}
   | { exception: string }
   | ({ data: OutOfStockItem[] } & { sortby: string })
@@ -136,7 +142,9 @@ const OutOfStock = () => {
     return <Results {...result} />
   }
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     if (isSubmitting) {
       event.preventDefault()
     }
@@ -198,7 +206,13 @@ const OutOfStock = () => {
   )
 }
 
-const Results = ({ data, sortby }: { data: OutOfStockItem[]; sortby: string }) => {
+const Results = ({
+  data,
+  sortby
+}: {
+  data: OutOfStockItem[]
+  sortby: string
+}) => {
   const { region } = useLoaderData<typeof loader>()
 
   useEffect(() => {
@@ -240,8 +254,8 @@ const Results = ({ data, sortby }: { data: OutOfStockItem[]; sortby: string }) =
 
 const columnList = (region: string): Array<ColumnList<OutOfStockItem>> => [
   { columnId: 'itemName', header: 'Item Name' },
-  { 
-    columnId: 'realmNames', 
+  {
+    columnId: 'realmNames',
     header: 'Realm',
     accessor: ({ row }) => (
       <p className="px-3 py-2 max-w-[200px] overflow-x-scroll">
