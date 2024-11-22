@@ -20,7 +20,6 @@ export const loader: LoaderFunction = () => {
   Allow: /queries/listings
   Allow: /queries/item-history
   Allow: /ffxiv/self-purchase
-  Allow: /queries/world-comparison
   Allow: /undercut
   Allow: /price-sniper
   Allow: /allagan-data
@@ -47,6 +46,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/export-search
   Disallow: /wow/marketshare
   Disallow: /wow/shopping-list
+  DisAllow: /queries/world-comparison
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `
