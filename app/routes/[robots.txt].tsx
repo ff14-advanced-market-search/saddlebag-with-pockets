@@ -47,7 +47,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/marketshare
   Disallow: /wow/shopping-list
   Disallow: /wow/out-of-stock
-  DisAllow: /queries/world-comparison
+  Disallow: /queries/world-comparison
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `
