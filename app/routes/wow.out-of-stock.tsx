@@ -91,7 +91,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
   const region = session.getWoWSessionData().region
-
+  if (!region) {
+    return json({
+      exception: "Region is required. Please select a region in your settings."
+    })
+  }
   const formData = Object.fromEntries(await request.formData())
   const validatedFormData = validateInput.safeParse(formData)
 
