@@ -64,22 +64,28 @@ type ActionResponseType =
   | ({ data: OutOfStockItem[] } & { sortby: string })
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const params = new URL(request.url).searchParams
+  try {
+    const params = new URL(request.url).searchParams
 
-  const values = Object.fromEntries(
-    Object.entries(defaultFormValues).map(([key, defaultValue]) => [
-      key,
-      params.get(key) || defaultValue
-    ])
-  )
+    const values = Object.fromEntries(
+      Object.entries(defaultFormValues).map(([key, defaultValue]) => [
+        key,
+        params.get(key) || defaultValue
+      ])
+    )
 
-  const validParams = validateInput.safeParse(values)
-  if (!validParams.success) {
+    const validParams = validateInput.safeParse(values)
+    if (!validParams.success) {
+      return json({
+        exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
+      })
+    }
+    return json(validParams.data)
+  } catch (error) {
     return json({
-      exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
+      exception: "Invalid URL format"
     })
   }
-  return json(validParams.data)
 }
 
 export const action: ActionFunction = async ({ request }) => {
