@@ -23,6 +23,8 @@ export interface OutOfStockItem {
   popWoWProgress: number
   rankWoWProgress: number
   connectedRealmId: number
+  undermineLink: string
+  saddlebagLink: string
 }
 
 export interface WoWOutOfStockResponse {
