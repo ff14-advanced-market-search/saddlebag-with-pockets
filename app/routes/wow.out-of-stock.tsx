@@ -162,7 +162,7 @@ const OutOfStock = () => {
     <PageWrapper>
       <SmallFormContainer
         title="Out of Stock Items"
-        description="Find items that are out of stock on your realm!"
+        description="Find items that are not listed on the auctionhouse of super high pop realms!"
         onClick={handleSubmit}
         error={error}
         loading={isSubmitting}
