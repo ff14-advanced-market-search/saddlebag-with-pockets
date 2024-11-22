@@ -138,6 +138,12 @@ const recommendedQueries = [
     Icon: DocumentSearchIcon,
     href: 'https://zygorguides.com/ref/indopan/',
     external: true
+  },
+  {
+    name: 'Out of Stock',
+    description: 'Find items that are out of stock on any realm!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/out-of-stock'
   }
 ]
 

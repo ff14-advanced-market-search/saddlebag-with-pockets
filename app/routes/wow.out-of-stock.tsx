@@ -19,6 +19,9 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import { ExpansionSelect } from '~/components/form/WoW/WoWScanForm'
+import { parseStringToNumber } from '~/utils/zodHelpers'
+import { MetaFunction, LinksFunction } from '@remix-run/node'
 
 const PAGE_URL = '/wow/out-of-stock'
 
@@ -28,7 +31,8 @@ const defaultFormValues = {
   minMarketValue: '100000',
   populationWP: '3000',
   populationBlizz: '1',
-  rankingWP: '90'
+  rankingWP: '90',
+  expansionNumber: '-1'
 }
 
 const inputMap: Record<string, string> = {
@@ -37,16 +41,18 @@ const inputMap: Record<string, string> = {
   minMarketValue: 'Minimum Market Value',
   populationWP: 'WoWProgress Population',
   populationBlizz: 'Blizzard Population',
-  rankingWP: 'WoWProgress Ranking'
+  rankingWP: 'WoWProgress Ranking',
+  expansionNumber: 'WoW Expansion'
 }
 
 const validateInput = z.object({
-  salesPerDay: z.string().transform(value => parseFloat(value)),
-  avgPrice: z.string().transform(value => parseInt(value)),
-  minMarketValue: z.string().transform(value => parseInt(value)),
-  populationWP: z.string().transform(value => parseInt(value)),
-  populationBlizz: z.string().transform(value => parseInt(value)),
-  rankingWP: z.string().transform(value => parseInt(value))
+  salesPerDay: z.string().transform((value) => parseFloat(value)),
+  avgPrice: z.string().transform((value) => parseInt(value)),
+  minMarketValue: z.string().transform((value) => parseInt(value)),
+  populationWP: z.string().transform((value) => parseInt(value)),
+  populationBlizz: z.string().transform((value) => parseInt(value)),
+  rankingWP: z.string().transform((value) => parseInt(value)),
+  expansionNumber: parseStringToNumber
 })
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -77,7 +83,10 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!validatedFormData.success) {
     return json({
-      exception: parseZodErrorsToDisplayString(validatedFormData.error, inputMap)
+      exception: parseZodErrorsToDisplayString(
+        validatedFormData.error,
+        inputMap
+      )
     })
   }
 
@@ -85,8 +94,7 @@ export const action: ActionFunction = async ({ request }) => {
     ...validatedFormData.data,
     region,
     includeCategories: [],
-    excludeCategories: [],
-    expansionNumber: -1
+    excludeCategories: []
   })
 
   return json({
@@ -95,9 +103,25 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW Out of Stock Items',
+    description:
+      'Find items that are out of stock on your realm with our WoW Out of Stock search!'
+  }
+}
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/out-of-stock' }
+]
+
 const OutOfStock = () => {
   const loaderData = useLoaderData<typeof defaultFormValues>()
-  const result = useActionData<{ data: OutOfStockItem[] } | { exception: string } | {}>()
+  const result = useActionData<
+    { data: OutOfStockItem[] } | { exception: string } | {}
+  >()
   const transition = useNavigation()
 
   const isSubmitting = transition.state === 'submitting'
@@ -139,18 +163,29 @@ const OutOfStock = () => {
           </div>
         </div>
         <div className="pt-3 flex flex-col">
-          {Object.entries(defaultFormValues).map(([key, defaultValue]) => (
-            <InputWithLabel
-              key={key}
-              labelTitle={inputMap[key]}
-              name={key}
-              type="number"
-              defaultValue={loaderData[key as keyof typeof defaultFormValues]}
-              step={key === 'salesPerDay' ? '0.1' : '1'}
-              min={0}
-              onChange={(e) => handleFormChange(key as keyof typeof defaultFormValues, e.target.value)}
-            />
-          ))}
+          <ExpansionSelect
+            defaultValue={loaderData.expansionNumber}
+            onChange={(value) => handleFormChange('expansionNumber', value)}
+          />
+          {Object.entries(defaultFormValues)
+            .filter(([key]) => key !== 'expansionNumber')
+            .map(([key, defaultValue]) => (
+              <InputWithLabel
+                key={key}
+                labelTitle={inputMap[key]}
+                name={key}
+                type="number"
+                defaultValue={loaderData[key as keyof typeof defaultFormValues]}
+                step={key === 'salesPerDay' ? '0.1' : '1'}
+                min={0}
+                onChange={(e) =>
+                  handleFormChange(
+                    key as keyof typeof defaultFormValues,
+                    e.target.value
+                  )
+                }
+              />
+            ))}
         </div>
       </SmallFormContainer>
     </PageWrapper>
@@ -159,7 +194,13 @@ const OutOfStock = () => {
 
 export default OutOfStock
 
-const Results = ({ data, sortby }: { data: OutOfStockItem[], sortby: string }) => {
+const Results = ({
+  data,
+  sortby
+}: {
+  data: OutOfStockItem[]
+  sortby: string
+}) => {
   useEffect(() => {
     if (window && document) {
       window.scroll({ top: 0, behavior: 'smooth' })
@@ -210,6 +251,3 @@ const mobileColumnList: Array<ColumnList<OutOfStockItem>> = [
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'realmNames', header: 'Realm' }
 ]
-
-
-
