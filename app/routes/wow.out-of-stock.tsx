@@ -56,12 +56,20 @@ const validateInput = z.object({
   populationBlizz: z.string().transform((value) => parseInt(value)),
   rankingWP: z.string().transform((value) => parseInt(value)),
   expansionNumber: z.string().transform((value) => parseInt(value)),
-  includeCategories: z.string().transform((value) =>
-    value.trim() === '' ? [] : value.split(',').map((value) => parseInt(value))
-  ),
-  excludeCategories: z.string().transform((value) =>
-    value.trim() === '' ? [] : value.split(',').map((value) => parseInt(value))
-  )
+  includeCategories: z
+    .string()
+    .transform((value) =>
+      value.trim() === ''
+        ? []
+        : value.split(',').map((value) => parseInt(value))
+    ),
+  excludeCategories: z
+    .string()
+    .transform((value) =>
+      value.trim() === ''
+        ? []
+        : value.split(',').map((value) => parseInt(value))
+    )
 })
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -106,7 +114,10 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!validatedFormData.success) {
     return json({
-      exception: parseZodErrorsToDisplayString(validatedFormData.error, inputMap)
+      exception: parseZodErrorsToDisplayString(
+        validatedFormData.error,
+        inputMap
+      )
     })
   }
 
@@ -131,14 +142,18 @@ export const action: ActionFunction = async ({ request }) => {
     })
   } catch (error) {
     return json({
-      exception: error instanceof Error ? error.message : 'An unexpected error occurred'
+      exception:
+        error instanceof Error ? error.message : 'An unexpected error occurred'
     })
   }
 }
 
 const OutOfStock = () => {
   const loaderData = useLoaderData<typeof loader>()
-  const result = useActionData<{ data?: OutOfStockItem[], exception?: string }>()
+  const result = useActionData<{
+    data?: OutOfStockItem[]
+    exception?: string
+  }>()
   const transition = useNavigation()
   const isSubmitting = transition.state === 'submitting'
   const [searchParams, setSearchParams] = useState(loaderData)
@@ -158,7 +173,10 @@ const OutOfStock = () => {
     }
   }
 
-  const handleFormChange = (name: keyof typeof defaultFormValues, value: string) => {
+  const handleFormChange = (
+    name: keyof typeof defaultFormValues,
+    value: string
+  ) => {
     handleSearchParamChange(name, value)
     setSearchParams((prev) => ({ ...prev, [name]: value }))
   }
@@ -183,8 +201,8 @@ const OutOfStock = () => {
             />
           </div>
         </div>
-        <OutOfStockForm 
-          defaultValues={searchParams} 
+        <OutOfStockForm
+          defaultValues={searchParams}
           onFormChange={handleFormChange}
         />
       </SmallFormContainer>

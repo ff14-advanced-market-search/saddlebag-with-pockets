@@ -14,13 +14,32 @@ const OutOfStockForm = ({
   const parseCategories = (value: string | number | number[]): number[] => {
     if (Array.isArray(value)) return value
     if (typeof value === 'string' && value.trim() !== '') {
-      return value.split(',').map(Number).filter(n => !isNaN(n))
+      return value
+        .split(',')
+        .map(Number)
+        .filter((n) => !isNaN(n))
     }
     return []
   }
 
   return (
     <div className="pt-3 flex flex-col">
+      <ExpansionSelect
+        defaultValue={defaultValues.expansionNumber}
+        onChange={(value) => onFormChange('expansionNumber', value)}
+      />
+      <Filter
+        formName="includeCategories"
+        defaultValue={parseCategories(defaultValues.includeCategories)}
+        options={wowCategories}
+        title={'Item Categories (Include)'}
+      />
+      <Filter
+        formName="excludeCategories"
+        defaultValue={parseCategories(defaultValues.excludeCategories)}
+        options={wowCategories}
+        title={'Item Categories (Exclude)'}
+      />
       <InputWithLabel
         defaultValue={defaultValues.salesPerDay}
         type="number"
@@ -82,24 +101,8 @@ const OutOfStockForm = ({
         step={1}
         onChange={(e) => onFormChange('rankingWP', e.target.value)}
       />
-      <ExpansionSelect
-        defaultValue={defaultValues.expansionNumber}
-        onChange={(value) => onFormChange('expansionNumber', value)}
-      />
-      <Filter
-        formName="includeCategories"
-        defaultValue={parseCategories(defaultValues.includeCategories)}
-        options={wowCategories}
-        title={'Item Categories (Include)'}
-      />
-      <Filter
-        formName="excludeCategories"
-        defaultValue={parseCategories(defaultValues.excludeCategories)}
-        options={wowCategories}
-        title={'Item Categories (Exclude)'}
-      />
     </div>
   )
 }
 
-export default OutOfStockForm 
+export default OutOfStockForm
