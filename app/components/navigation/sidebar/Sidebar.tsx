@@ -276,6 +276,11 @@ const navGroups: Array<{
         name: 'Pet Marketshare Overview',
         href: '/wow/pet-marketshare',
         icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Out of Stock',
+        href: '/wow/out-of-stock',
+        icon: DocumentSearchIcon
       }
     ]
   },
