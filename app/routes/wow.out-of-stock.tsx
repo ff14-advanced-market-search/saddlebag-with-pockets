@@ -8,23 +8,19 @@ import WoWOutOfStock from '~/requests/WoW/OutOfStock'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
-import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
-import {
-  parseZodErrorsToDisplayString,
-  parseStringToNumber
-} from '~/utils/zodHelpers'
+import { parseZodErrorsToDisplayString } from '~/utils/zodHelpers'
 import {
   getActionUrl,
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
-import { ExpansionSelect } from '~/components/form/WoW/WoWScanForm'
 import type { MetaFunction, LinksFunction } from '@remix-run/node'
 import ExternalLink from '~/components/utilities/ExternalLink'
+import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 
 const PAGE_URL = '/wow/out-of-stock'
 
@@ -35,7 +31,9 @@ const defaultFormValues = {
   populationWP: '3000',
   populationBlizz: '1',
   rankingWP: '90',
-  expansionNumber: '-1'
+  expansionNumber: '-1',
+  includeCategories: '',
+  excludeCategories: ''
 }
 
 const inputMap: Record<string, string> = {
@@ -45,28 +43,30 @@ const inputMap: Record<string, string> = {
   populationWP: 'WoWProgress Population',
   populationBlizz: 'Blizzard Population',
   rankingWP: 'WoWProgress Ranking',
-  expansionNumber: 'WoW Expansion'
+  expansionNumber: 'WoW Expansion',
+  includeCategories: 'Include Categories',
+  excludeCategories: 'Exclude Categories'
 }
 
 const validateInput = z.object({
   salesPerDay: z.string().transform((value) => parseFloat(value)),
-  avgPrice: parseStringToNumber,
-  minMarketValue: parseStringToNumber,
-  populationWP: parseStringToNumber,
-  populationBlizz: parseStringToNumber,
-  rankingWP: parseStringToNumber,
-  expansionNumber: parseStringToNumber
+  avgPrice: z.string().transform((value) => parseInt(value)),
+  minMarketValue: z.string().transform((value) => parseInt(value)),
+  populationWP: z.string().transform((value) => parseInt(value)),
+  populationBlizz: z.string().transform((value) => parseInt(value)),
+  rankingWP: z.string().transform((value) => parseInt(value)),
+  expansionNumber: z.string().transform((value) => parseInt(value)),
+  includeCategories: z.string().transform((value) =>
+    value.trim() === '' ? [] : value.split(',').map((value) => parseInt(value))
+  ),
+  excludeCategories: z.string().transform((value) =>
+    value.trim() === '' ? [] : value.split(',').map((value) => parseInt(value))
+  )
 })
-
-type ActionResponseType =
-  | {}
-  | { exception: string }
-  | ({ data: OutOfStockItem[] } & { sortby: string })
 
 export const loader: LoaderFunction = async ({ request }) => {
   try {
     const params = new URL(request.url).searchParams
-
     const values = Object.fromEntries(
       Object.entries(defaultFormValues).map(([key, defaultValue]) => [
         key,
@@ -80,7 +80,11 @@ export const loader: LoaderFunction = async ({ request }) => {
         exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
       })
     }
-    return json(validParams.data)
+
+    const session = await getUserSessionData(request)
+    const { region } = session.getWoWSessionData()
+
+    return json({ ...validParams.data, region })
   } catch (error) {
     return json({
       exception: 'Invalid URL format'
@@ -90,30 +94,26 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
-  const region = session.getWoWSessionData().region
+  const { region } = session.getWoWSessionData()
   if (!region) {
     return json({
       exception: 'Region is required. Please select a region in your settings.'
     })
   }
+
   const formData = Object.fromEntries(await request.formData())
   const validatedFormData = validateInput.safeParse(formData)
 
   if (!validatedFormData.success) {
     return json({
-      exception: parseZodErrorsToDisplayString(
-        validatedFormData.error,
-        inputMap
-      )
+      exception: parseZodErrorsToDisplayString(validatedFormData.error, inputMap)
     })
   }
 
   try {
     const result = await WoWOutOfStock({
       ...validatedFormData.data,
-      region,
-      includeCategories: [],
-      excludeCategories: []
+      region
     })
 
     if (!result.ok) {
@@ -126,60 +126,39 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     return json({
-      ...data,
+      data: data.data,
       sortby: 'popWoWProgress'
     })
   } catch (error) {
     return json({
-      exception:
-        error instanceof Error ? error.message : 'An unexpected error occurred'
+      exception: error instanceof Error ? error.message : 'An unexpected error occurred'
     })
   }
 }
 
-export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Out of Stock Items',
-    description:
-      'Find items that are out of stock on your realm with our WoW Out of Stock search!'
-  }
-}
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/out-of-stock' }
-]
-
 const OutOfStock = () => {
-  const loaderData = useLoaderData<typeof defaultFormValues>()
-  const result = useActionData<ActionResponseType>()
+  const loaderData = useLoaderData<typeof loader>()
+  const result = useActionData<{ data?: OutOfStockItem[], exception?: string }>()
   const transition = useNavigation()
-
   const isSubmitting = transition.state === 'submitting'
   const [searchParams, setSearchParams] = useState(loaderData)
-  const error = result && 'exception' in result ? result.exception : undefined
+  const error = result?.exception
 
-  if (result && !Object.keys(result).length) {
+  if (result?.data?.length === 0) {
     return <NoResults href={PAGE_URL} />
   }
 
-  if (result && 'data' in result && !error) {
-    return <Results {...result} />
+  if (result?.data) {
+    return <Results data={result.data} sortby="popWoWProgress" />
   }
 
-  const handleSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (isSubmitting) {
       event.preventDefault()
     }
   }
 
-  const handleFormChange = (
-    name: keyof typeof defaultFormValues,
-    value: string
-  ) => {
+  const handleFormChange = (name: keyof typeof defaultFormValues, value: string) => {
     handleSearchParamChange(name, value)
     setSearchParams((prev) => ({ ...prev, [name]: value }))
   }
@@ -204,31 +183,10 @@ const OutOfStock = () => {
             />
           </div>
         </div>
-        <div className="pt-3 flex flex-col">
-          <ExpansionSelect
-            defaultValue={loaderData.expansionNumber}
-            onChange={(value) => handleFormChange('expansionNumber', value)}
-          />
-          {Object.entries(defaultFormValues)
-            .filter(([key]) => key !== 'expansionNumber')
-            .map(([key, defaultValue]) => (
-              <InputWithLabel
-                key={key}
-                labelTitle={inputMap[key]}
-                name={key}
-                type="number"
-                defaultValue={loaderData[key as keyof typeof defaultFormValues]}
-                step={key === 'salesPerDay' ? '0.1' : '1'}
-                min={0}
-                onChange={(e) =>
-                  handleFormChange(
-                    key as keyof typeof defaultFormValues,
-                    e.target.value
-                  )
-                }
-              />
-            ))}
-        </div>
+        <OutOfStockForm 
+          defaultValues={searchParams} 
+          onFormChange={handleFormChange}
+        />
       </SmallFormContainer>
     </PageWrapper>
   )
