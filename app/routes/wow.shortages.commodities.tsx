@@ -3,8 +3,8 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
 import { PageWrapper } from '~/components/Common'
-import type { WowShortageResult } from '~/requests/WoWCommodities'
-import WoWCommodityShortage from '~/requests/WoWCommodities'
+import type { WowShortageResult } from '~/requests/WoW/WoWCommodities'
+import WoWCommodityShortage from '~/requests/WoW/WoWCommodities'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
   ItemClassSelect,
