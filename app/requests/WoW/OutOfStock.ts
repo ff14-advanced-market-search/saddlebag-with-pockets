@@ -19,6 +19,7 @@ export interface OutOfStockItem {
   itemName: string
   realmNames: string
   marketValue: number
+  historicPrice: number
   salesPerDay: number
   popWoWProgress: number
   rankWoWProgress: number

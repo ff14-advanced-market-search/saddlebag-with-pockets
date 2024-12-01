@@ -245,6 +245,7 @@ const Results = ({
             { title: 'Item ID', value: 'itemID' },
             { title: 'Item Name', value: 'itemName' },
             { title: 'Market Value', value: 'marketValue' },
+            { title: 'Historic Price', value: 'historicPrice' },
             { title: 'Sales Per Day', value: 'salesPerDay' },
             { title: 'Population', value: 'popWoWProgress' },
             { title: 'Rank', value: 'rankWoWProgress' },
@@ -278,6 +279,7 @@ const columnList = (region: string): Array<ColumnList<OutOfStockItem>> => [
     accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
   },
   { columnId: 'marketValue', header: 'Market Value' },
+  { columnId: 'historicPrice', header: 'Historic Price' },
   { columnId: 'salesPerDay', header: 'Sales/Day' },
   { columnId: 'popWoWProgress', header: 'Population' },
   { columnId: 'rankWoWProgress', header: 'Rank' }
