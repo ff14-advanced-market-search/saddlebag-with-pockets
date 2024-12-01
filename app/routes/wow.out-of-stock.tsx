@@ -156,7 +156,18 @@ const OutOfStock = () => {
   }>()
   const transition = useNavigation()
   const isSubmitting = transition.state === 'submitting'
-  const [searchParams, setSearchParams] = useState(loaderData)
+  const [searchParams, setSearchParams] = useState<Record<string, string>>(
+    Object.fromEntries(
+      Object.entries(loaderData).map(([key, value]) => [
+        key,
+        typeof value === 'number'
+          ? value.toString()
+          : Array.isArray(value)
+          ? value.join(',')
+          : String(value)
+      ])
+    )
+  )
   const error = result?.exception
 
   if (result?.data?.length === 0) {
@@ -173,10 +184,7 @@ const OutOfStock = () => {
     }
   }
 
-  const handleFormChange = (
-    name: keyof typeof defaultFormValues,
-    value: string
-  ) => {
+  const handleFormChange = (name: string, value: string) => {
     handleSearchParamChange(name, value)
     setSearchParams((prev) => ({ ...prev, [name]: value }))
   }
