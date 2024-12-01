@@ -1,4 +1,4 @@
-import type { ListingResponseType } from '~/requests/GetListing'
+import type { ListingResponseType } from '~/requests/FFXIV/GetListing'
 import { Differences } from './Differences'
 import ListingTable from './ListingTable'
 

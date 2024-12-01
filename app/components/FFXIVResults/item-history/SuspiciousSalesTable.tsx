@@ -14,7 +14,7 @@ import {
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { DirtySale } from '~/requests/GetHistory'
+import type { DirtySale } from '~/requests/FFXIV/GetHistory'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'

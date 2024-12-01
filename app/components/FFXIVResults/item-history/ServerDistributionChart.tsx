@@ -1,7 +1,7 @@
 import type { Options } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import type { ServerDistribution } from '~/requests/GetHistory'
+import type { ServerDistribution } from '~/requests/FFXIV/GetHistory'
 
 export default function ServerDistributionChart({
   data,

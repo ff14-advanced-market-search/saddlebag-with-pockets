@@ -1,7 +1,7 @@
 import type { Options, PointOptionsObject } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import type { HomeServerSalesByHour } from '~/requests/GetHistory'
+import type { HomeServerSalesByHour } from '~/requests/FFXIV/GetHistory'
 
 const makeDateString = (timeStampInSeconds: number) => {
   const date = new Date(timeStampInSeconds * 1000)

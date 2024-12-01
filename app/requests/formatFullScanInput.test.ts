@@ -1,4 +1,4 @@
-import { formatFullScanInput } from './FullScan'
+import { formatFullScanInput } from '~/requests/FFXIV/FullScan'
 import { describe, it, expect } from 'vitest'
 
 describe('formatFullScanInput', () => {

@@ -14,7 +14,7 @@ import {
 } from '@tanstack/table-core'
 import { useEffect, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { Listing, ListingResponseType } from '~/requests/GetListing'
+import type { Listing, ListingResponseType } from '~/requests/FFXIV/GetListing'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'

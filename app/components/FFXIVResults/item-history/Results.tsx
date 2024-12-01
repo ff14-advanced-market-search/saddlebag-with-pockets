@@ -1,5 +1,5 @@
 import { ContentContainer, TitleH2 } from '~/components/Common'
-import type { HistoryResponse } from '~/requests/GetHistory'
+import type { HistoryResponse } from '~/requests/FFXIV/GetHistory'
 import { Differences } from '../listings/Differences'
 import PriceHistoryChart from './PriceHistoryChart'
 import SaleHistoryTable from './SaleHistoryTable'

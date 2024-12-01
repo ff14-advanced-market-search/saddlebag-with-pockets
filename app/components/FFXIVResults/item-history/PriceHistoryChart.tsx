@@ -1,7 +1,7 @@
 import type { Options, PointOptionsObject } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import type { PriceHistory } from '~/requests/GetHistory'
+import type { PriceHistory } from '~/requests/FFXIV/GetHistory'
 
 export default function PriceHistoryChart({
   data,
