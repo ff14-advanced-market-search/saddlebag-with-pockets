@@ -1,11 +1,11 @@
 import { useActionData, useNavigation } from '@remix-run/react'
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import GetHistoryRequest from '~/requests/ffxiv/GetHistory'
+import GetHistoryRequest from '~/requests/FFXIV/GetHistory'
 import type {
   GetHistoryProps,
   GetHistoryResponse
-} from '~/requests/ffxiv/GetHistory'
+} from '~/requests/FFXIV/GetHistory'
 import NoResults from '~/components/Common/NoResults'
 import { getUserSessionData } from '~/sessions'
 import ItemSelect from '~/components/Common/ItemSelect'

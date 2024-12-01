@@ -1,5 +1,5 @@
 import React from 'react'
-import type { WoWServerRegion } from '~/requests/WOWScan'
+import type { WoWServerRegion } from '~/requests/WoW/WOWScan'
 import Label from '../Label'
 
 const regions: Array<{ label: string; value: WoWServerRegion }> = [

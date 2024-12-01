@@ -1,4 +1,4 @@
-import type { WOWScanProps } from '~/requests/WOWScan'
+import type { WOWScanProps } from '~/requests/WoW/WOWScan'
 
 const getServerIdAndNameFromInput = (selectString: string) => {
   const [id, name] = selectString.split('---')

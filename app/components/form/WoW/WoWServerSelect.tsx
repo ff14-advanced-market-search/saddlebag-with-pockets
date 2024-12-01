@@ -1,7 +1,7 @@
 import { findWoWServersIdByName } from '~/utils/WoWServers'
 import { useState } from 'react'
 import { ToolTip } from '~/components/Common/InfoToolTip'
-import type { WoWServerRegion } from '~/requests/WOWScan'
+import type { WoWServerRegion } from '~/requests/WoW/WOWScan'
 
 export interface ServerSelected {
   id: number

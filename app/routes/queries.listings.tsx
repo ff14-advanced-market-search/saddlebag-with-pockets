@@ -1,10 +1,10 @@
 import { useActionData, useNavigation } from '@remix-run/react'
 import type { ActionFunction } from '@remix-run/cloudflare'
-import GetListingRequest from '~/requests/ffxiv/GetListing'
+import GetListingRequest from '~/requests/FFXIV/GetListing'
 import type {
   GetListingProps,
   ListingResponseType
-} from '~/requests/ffxiv/GetListing'
+} from '~/requests/FFXIV/GetListing'
 import Results from '~/components/FFXIVResults/listings/Results'
 import { getUserSessionData } from '~/sessions'
 import type { ItemSelected } from '~/components/form/select/ItemSelect'
