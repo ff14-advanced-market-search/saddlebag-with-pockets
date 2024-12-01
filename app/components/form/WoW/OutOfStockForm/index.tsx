@@ -7,19 +7,21 @@ const OutOfStockForm = ({
   defaultValues,
   onFormChange
 }: {
-  defaultValues: Record<string, string | number | number[]>
+  defaultValues: Record<string, string>
   onFormChange: (name: string, value: string) => void
 }) => {
-  // Helper function to safely convert value to array of numbers
-  const parseCategories = (value: string | number | number[]): number[] => {
-    if (Array.isArray(value)) return value
-    if (typeof value === 'string' && value.trim() !== '') {
-      return value
-        .split(',')
-        .map(Number)
-        .filter((n) => !isNaN(n))
-    }
-    return []
+  // Helper function to safely convert string to array of numbers
+  const parseCategories = (value: string): number[] => {
+    if (!value || value.trim() === '') return []
+    return value
+      .split(',')
+      .map(Number)
+      .filter((n) => !isNaN(n))
+  }
+
+  // Helper function to convert array back to string
+  const categoriesToString = (categories: number[]): string => {
+    return categories.join(',')
   }
 
   return (
@@ -33,12 +35,18 @@ const OutOfStockForm = ({
         defaultValue={parseCategories(defaultValues.includeCategories)}
         options={wowCategories}
         title={'Item Categories (Include)'}
+        onChange={(categories) =>
+          onFormChange('includeCategories', categoriesToString(categories))
+        }
       />
       <Filter
         formName="excludeCategories"
         defaultValue={parseCategories(defaultValues.excludeCategories)}
         options={wowCategories}
         title={'Item Categories (Exclude)'}
+        onChange={(categories) =>
+          onFormChange('excludeCategories', categoriesToString(categories))
+        }
       />
       <InputWithLabel
         defaultValue={defaultValues.salesPerDay}

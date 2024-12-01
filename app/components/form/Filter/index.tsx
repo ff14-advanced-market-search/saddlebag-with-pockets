@@ -5,28 +5,36 @@ import { FFXIVModalContent } from '../ffxiv/FFXIVModalContent'
 
 const noop = () => {}
 
+interface FilterProps {
+  formName: string
+  defaultValue: number[]
+  options: Array<{ value: number; label: string }>
+  title: string
+  onChange?: (selectedValues: number[]) => void
+}
+
 const Filter = ({
   formName,
-  filterButtonText = 'Choose Filters',
-  selectedCountText = 'Filters',
   defaultValue,
-  title,
   options,
+  title,
   onChange
-}: {
-  formName: string
-  filterButtonText?: string
-  selectedCountText?: string
-  defaultValue: Array<number>
-  title: string
-  options?: Array<{ value: number; label: string }>
-  onChange?: (newIds: Array<number>) => void
-}) => {
-  const [ids, setIds] = useState(defaultValue)
+}: FilterProps) => {
+  const [selected, setSelected] = useState<number[]>(defaultValue)
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpen = () => setIsOpen(true)
   const handleClose = () => setIsOpen(false)
+
+  const handleChange = (value: number) => {
+    const newSelected = selected.includes(value)
+      ? selected.filter((v) => v !== value)
+      : [...selected, value]
+
+    setSelected(newSelected)
+    onChange?.(newSelected)
+  }
+
   return (
     <>
       <div className="col-span-6 sm:col-span-3 xl:col-span-2">
@@ -38,7 +46,7 @@ const Filter = ({
         <div className={`mt-1 flex rounded-md shadow-sm`}>
           <input
             name={formName}
-            value={ids.map((job) => job.toString())}
+            value={selected.map((job) => job.toString())}
             hidden
             onChange={noop}
           />
@@ -47,19 +55,17 @@ const Filter = ({
             aria-label="Choose filters"
             type="button"
             onClick={handleOpen}>
-            {filterButtonText}
+            Choose Filters
           </button>
         </div>
-        <p className="mt-2 text-sm text-gray-400">{`${selectedCountText} applied: ${ids.length}`}</p>
+        <p className="mt-2 text-sm text-gray-400">{`Filters applied: ${selected.length}`}</p>
       </div>
       {isOpen && (
-        <Modal
-          onClose={handleClose}
-          title={`${selectedCountText} Selected: ${ids.length}`}>
+        <Modal onClose={handleClose} title="Filters Selected: 1">
           {options ? (
             <>
               {options?.map((option) => {
-                const isSelected = ids.includes(option.value)
+                const isSelected = selected.includes(option.value)
                 return (
                   <CheckBoxRow
                     key={`${option.label}-${option.value}`}
@@ -67,16 +73,7 @@ const Filter = ({
                     selected={isSelected}
                     onChange={(e) => {
                       e.stopPropagation()
-                      if (isSelected) {
-                        const newIds = ids.filter((id) => id !== option.value)
-                        setIds(newIds)
-                        onChange?.(newIds)
-                        return
-                      }
-
-                      const newIds = [...ids, option.value]
-                      setIds(newIds)
-                      onChange?.(newIds)
+                      handleChange(option.value)
                     }}
                     id={option.value}
                   />
@@ -85,9 +82,9 @@ const Filter = ({
             </>
           ) : (
             <FFXIVModalContent
-              ids={ids}
+              ids={selected}
               setIds={(newIds) => {
-                setIds(newIds)
+                setSelected(newIds)
                 onChange?.(newIds)
               }}
             />
