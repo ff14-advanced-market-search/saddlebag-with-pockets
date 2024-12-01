@@ -22,7 +22,7 @@ import { getUserSessionData } from '~/sessions'
 import { Results } from '~/components/WoWResults/ShortagePredictor/Results'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { useState } from 'react'
-import type { WoWServerRegion } from '~/requests/WOWScan'
+import type { WoWServerRegion } from '~/requests/WoW/WOWScan'
 import {
   getActionUrl,
   handleCopyButton,
