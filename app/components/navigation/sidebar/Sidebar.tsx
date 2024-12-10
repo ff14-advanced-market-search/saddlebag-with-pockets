@@ -343,6 +343,24 @@ const navGroups: Array<{
         icon: GithubIcon
       },
       {
+        name: 'API ReDocs',
+        href: 'https://docs.saddlebagexchange.com/redoc',
+        external: true,
+        icon: GithubIcon
+      },
+      {
+        name: 'API Swagger Docs',
+        href: 'https://docs.saddlebagexchange.com/docs',
+        external: true,
+        icon: GithubIcon
+      },
+      {
+        name: 'API Postman Collection',
+        href: 'https://www.postman.com/restless-zodiac-865092/workspace/saddlebag-exchange-public-api',
+        external: true,
+        icon: GithubIcon
+      },
+      {
         name: 'YouTube',
         href: 'https://www.youtube.com/@saddlebagexchange704',
         external: true,

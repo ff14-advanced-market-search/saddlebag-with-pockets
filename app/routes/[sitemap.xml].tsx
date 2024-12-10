@@ -321,6 +321,16 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-07-07T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://docs.saddlebagexchange.com/docs</loc>
+  <lastmod>2024-07-07T00:27:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://docs.saddlebagexchange.com/redoc</loc>
+  <lastmod>2024-07-07T00:27:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 ${dynamicWoWURLs
   .map(
     (url) => `
