@@ -93,7 +93,7 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
-    name: 'Extened Sale History',
+    name: 'Extended Sale History',
     description:
       'See extended sale history of last 1800 sales on any FFXIV item.',
     Icon: ChartSquareBarIcon,
