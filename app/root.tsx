@@ -256,16 +256,24 @@ function App() {
             dl = l != 'dataLayer' ? '&l=' + l : ''
           j.async = true
           j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
-          f.parentNode.insertBefore(j, f)
+          f.parentNode?.insertBefore(j, f)
         })(window, document, 'script', 'dataLayer', 'GTM-WH4KFG5')
 
         // Load Ezoic script
-        const script = document.createElement('script')
-        script.src = '//www.ezojs.com/ezoic/sa.min.js'
-        script.async = true
-        document.body.appendChild(script)
+        const ezoicScript = document.createElement('script')
+        ezoicScript.src = '//www.ezojs.com/ezoic/sa.min.js'
+        ezoicScript.async = true
+        document.body.appendChild(ezoicScript)
 
-        script.onload = function () {
+        // Load HubSpot script
+        const hubspotScript = document.createElement('script')
+        hubspotScript.id = 'hs-script-loader'
+        hubspotScript.src = '//js-na1.hs-scripts.com/48701885.js'
+        hubspotScript.async = true
+        hubspotScript.defer = true
+        document.body.appendChild(hubspotScript)
+
+        ezoicScript.onload = function () {
           window.ezstandalone = window.ezstandalone || {}
           ezstandalone.cmd = ezstandalone.cmd || []
           ezstandalone.cmd.push(function () {
@@ -276,7 +284,7 @@ function App() {
           })
         }
       })
-    }, 3000) // Delay of 3000ms (3 second)
+    }, 3000)
 
     return () => clearTimeout(timer)
   }, [])
