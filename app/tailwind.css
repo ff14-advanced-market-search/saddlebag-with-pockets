@@ -818,6 +818,10 @@ select {
   right: 1rem;
 }
 
+.top-20 {
+  top: 5rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -844,6 +848,10 @@ select {
 
 .z-\[inherit\] {
   z-index: inherit;
+}
+
+.z-30 {
+  z-index: 30;
 }
 
 .col-span-6 {
