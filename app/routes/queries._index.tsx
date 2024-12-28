@@ -50,9 +50,9 @@ const ffxivPages = [
     Icon: PencilAltIcon
   },
   {
-    name: 'Discord Undercut Alert Generator',
+    name: 'Discord Undercut and Sale Alerts Generator',
     description:
-      'Undercut Alerts will notify you via discord direct message when you are undercut.',
+      'Undercut Alerts will notify you via discord direct message when you are undercut. Sale Alerts will notify you via discord direct message when you have a sale.',
     Icon: PencilAltIcon,
     href: '/undercut'
   },
