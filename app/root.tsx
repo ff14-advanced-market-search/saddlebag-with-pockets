@@ -54,6 +54,7 @@ import {
   setWoWRealmDataInLocalStorage
 } from './redux/localStorage/wowRealmHelpers'
 import { setCookie } from './utils/cookies'
+import HelpWidget from '~/components/widgets/HelpWidget'
 
 export const ErrorBoundary = () => {
   return (
@@ -309,6 +310,7 @@ function App() {
         <Sidebar data={data}>
           <Outlet />
         </Sidebar>
+        <HelpWidget />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
