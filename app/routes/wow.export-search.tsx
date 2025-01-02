@@ -35,8 +35,7 @@ import Banner from '~/components/Common/Banner'
 const PAGE_URL = '/wow/export-search'
 
 const defaultFormValues = {
-  itemId: '',
-  maxQuantity: 1000,
+  itemId: '',maxQuantity: 1000,
   minPrice: 1,
   populationWP: 3000,
   populationBlizz: 1,
