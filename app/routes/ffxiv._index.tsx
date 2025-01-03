@@ -5,7 +5,6 @@ import {
 } from '@heroicons/react/outline'
 import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
-import TileLink from '~/components/Common/TileLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -141,20 +140,76 @@ export default function Index() {
   return (
     <>
       <main className="flex-1">
-        <Banner />
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              FFXIV Market Board Tools for Gil Earning
+        {/* Hero Section */}
+        <section className="relative bg-gray-900">
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover opacity-50"
+              src="/images/hero-bg.jpg"
+              alt="Hero Background"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-transparent to-blue-900 opacity-70"></div>
+          </div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+            <h1 className="text-5xl font-extrabold text-white">
+              FFXIV Market Board Tools
             </h1>
-            <div
-              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
-              {ffxivPages.map((query) => {
-                return <TileLink key={query.name} {...query} />
-              })}
+            <p className="mt-4 text-xl text-gray-200">
+              Maximize your gil earnings with our advanced Market Board tools
+            </p>
+            <div className="mt-8 flex justify-center space-x-4">
+              <a
+                href="/queries/recommended"
+                className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                Cross-Server Reselling
+              </a>
+              <a
+                href="/ffxiv/marketshare/queries"
+                className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                Marketshare Overview
+              </a>
             </div>
           </div>
-        </div>
+        </section>
+        
+        <Banner />
+
+        {/* Tools Grid Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-base font-semibold text-purple-600 uppercase">
+                Tools & Features
+              </h2>
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Everything You Need for Gil Making
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {ffxivPages.map((query) => (
+                <a
+                  key={query.name}
+                  href={query.href}
+                  target={query.external ? '_blank' : '_self'}
+                  rel={query.external ? 'noopener noreferrer' : undefined}
+                  className="block">
+                  <div className="h-full p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-purple-50">
+                    <div className="flex items-center mb-4">
+                      <query.Icon className="h-6 w-6 text-purple-500" />
+                      <h3 className="ml-3 text-lg font-medium text-gray-900">
+                        {query.name}
+                      </h3>
+                    </div>
+                    <p className="text-gray-600">{query.description}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Hidden SEO content stays the same */}
         <p style={{ fontSize: '1px' }}>
           google keywords: ffxiv glamour, reddit ffxiv, ff14 mog station, ffxiv
           classes, ffxiv modders, ffxiv modpacks, ffxiv download, ffxiv jobs,
