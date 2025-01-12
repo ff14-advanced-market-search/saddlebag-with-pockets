@@ -362,7 +362,7 @@ const navGroups: Array<{
       },
       {
         name: 'YouTube',
-        href: 'https://www.youtube.com/@saddlebagexchange704',
+        href: 'https://www.youtube.com/@saddlebagexchange',
         external: true,
         icon: YoutubeIcon
       },
