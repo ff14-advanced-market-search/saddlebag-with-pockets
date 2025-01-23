@@ -151,14 +151,14 @@ const FFXIVScripExchange = () => {
       <>
         <div className="py-3">
           <SmallFormContainer
-            title="Find Scrip Exchange"
+            title="Currency Conversion"
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
             disabled={!formState}>
             <>
               <Select
-                title="Scrip Color"
+                title="Currency Type"
                 name="color"
                 defaultValue="Orange"
                 options={[
