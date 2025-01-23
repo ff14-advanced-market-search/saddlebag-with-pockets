@@ -166,7 +166,8 @@ export default function Index() {
               Azeroth Auction Assassin
             </h1>
             <p className="mt-4 text-xl text-gray-200">
-              Lightning-fast cross-realm auction sniper - Get the best deals seconds after they appear!
+              Lightning-fast cross-realm auction sniper - Get the best deals
+              seconds after they appear!
             </p>
             <div className="mt-8 flex justify-center space-x-4">
               <a
@@ -186,7 +187,7 @@ export default function Index() {
             </div>
           </div>
         </section>
-        
+
         <Banner />
 
         {/* Tools Grid Section */}

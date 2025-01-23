@@ -195,9 +195,12 @@ const FFXIVScripExchange = () => {
 const columnList = [
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'cost', header: 'Cost' },
-  { columnId: 'minPrice', header: 'Min Price' },
-  { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
-  { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
+  {
+    columnId: 'minPrice',
+    header: 'Min Price',
+    accessor: ({ row }) =>
+      row.minPrice === 999999999 ? 'Out of Stock' : row.minPrice
+  },
   { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
   {
     columnId: 'saddleLink',
@@ -213,15 +216,34 @@ const columnList = [
     columnId: 'webpage',
     header: 'wiki',
     accessor: ({ row }) => <ItemDataLink link={row.webpage} />
-  }
+  },
+  { columnId: 'medianNQ', header: 'Median NQ' },
+  { columnId: 'averageNQ', header: 'Average NQ' },
+  { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
+  { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
+  { columnId: 'medianHQ', header: 'Median HQ' },
+  { columnId: 'averageHQ', header: 'Average HQ' },
+  { columnId: 'salesAmountHQ', header: 'Sales Amount HQ' },
+  { columnId: 'quantitySoldHQ', header: 'Quantity Sold HQ' }
 ]
 
 const mobileColumnList = [
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'cost', header: 'Cost' },
-  { columnId: 'minPrice', header: 'Min Price' },
+  {
+    columnId: 'minPrice',
+    header: 'Min Price',
+    accessor: ({ row }) =>
+      row.minPrice === 999999999 ? 'Out of Stock' : row.minPrice
+  },
+  { columnId: 'medianNQ', header: 'Median NQ' },
+  { columnId: 'averageNQ', header: 'Average NQ' },
   { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
   { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
+  { columnId: 'medianHQ', header: 'Median HQ' },
+  { columnId: 'averageHQ', header: 'Average HQ' },
+  { columnId: 'salesAmountHQ', header: 'Sales Amount HQ' },
+  { columnId: 'quantitySoldHQ', header: 'Quantity Sold HQ' },
   { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
   {
     columnId: 'saddleLink',

@@ -172,7 +172,7 @@ export default function Index() {
             </div>
           </div>
         </section>
-        
+
         <Banner />
 
         {/* Tools Grid Section */}
