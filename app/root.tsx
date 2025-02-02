@@ -29,7 +29,7 @@ import { classNames } from '~/utils'
 import { store } from '~/redux/store'
 import { Provider, useDispatch } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
 import {
   getSession,
@@ -191,7 +191,6 @@ function App() {
   )
   const submit = useSubmit()
   const dispatch = useDispatch()
-  const navigationRef = useRef(null)
 
   /**
    * Setup theme for app

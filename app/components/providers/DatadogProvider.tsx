@@ -1,4 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum'
+import { useEffect } from 'react'
 
 const initDatadog = () => {
   if (typeof window === 'undefined') return
@@ -19,9 +20,9 @@ const initDatadog = () => {
 }
 
 export function DatadogProvider({ children }: { children: React.ReactNode }) {
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
     initDatadog()
-  }
+  }, [])
   
   return <>{children}</>
 } 
