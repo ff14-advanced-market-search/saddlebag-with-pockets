@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { WoWScanResponseWithPayload } from '~/requests/WOWScan'
+import type { WoWScanResponseWithPayload } from '~/requests/WoW/WOWScan'
 
 export interface WoWQueriesState {
   scan?: WoWScanResponseWithPayload

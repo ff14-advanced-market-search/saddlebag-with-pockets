@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { ListingResponseType } from '~/requests/GetListing'
-import type { HistoryResponse } from '~/requests/GetHistory'
-import type { ResponseType } from '~/requests/FullScan'
+import type { ListingResponseType } from '~/requests/FFXIV/GetListing'
+import type { HistoryResponse } from '~/requests/FFXIV/GetHistory'
+import type { ResponseType } from '~/requests/FFXIV/FullScan'
 
 type ScanResponse = Array<ResponseType>
 

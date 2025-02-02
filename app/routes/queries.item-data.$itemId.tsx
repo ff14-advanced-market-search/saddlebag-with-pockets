@@ -9,12 +9,12 @@ import {
   Title,
   TitleH2
 } from '~/components/Common'
-import type { HistoryResponse } from '~/requests/GetHistory'
-import GetHistory from '~/requests/GetHistory'
-import type { ListingResponseType } from '~/requests/GetListing'
-import GetListing from '~/requests/GetListing'
-import type { BlogResponseType } from '~/requests/GetBlog'
-import GetBlog from '~/requests/GetBlog'
+import type { HistoryResponse } from '~/requests/FFXIV/GetHistory'
+import GetHistory from '~/requests/FFXIV/GetHistory'
+import type { ListingResponseType } from '~/requests/FFXIV/GetListing'
+import GetListing from '~/requests/FFXIV/GetListing'
+import type { BlogResponseType } from '~/requests/FFXIV/GetBlog'
+import GetBlog from '~/requests/FFXIV/GetBlog'
 import { getUserSessionData } from '~/sessions'
 import { getItemNameById } from '~/utils/items'
 import HistoryResults from '~/components/FFXIVResults/item-history/Results'

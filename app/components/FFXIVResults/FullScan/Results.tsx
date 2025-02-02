@@ -15,7 +15,7 @@ import {
 } from '@tanstack/table-core'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
-import type { ResponseType } from '~/requests/FullScan'
+import type { ResponseType } from '~/requests/FFXIV/FullScan'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { compareItems, rankItem } from '@tanstack/match-sorter-utils'
 import {

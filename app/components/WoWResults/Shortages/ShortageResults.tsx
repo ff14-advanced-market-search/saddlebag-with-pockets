@@ -1,6 +1,6 @@
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import type { WoWServerRegion } from '~/requests/WoW/types'
-import type { WoWShortage } from '~/requests/WoWCommodities'
+import type { WoWShortage } from '~/requests/WoW/WoWCommodities'
 import { WoWShortageItem } from './ShortageResultItem'
 
 const ShortageResults = ({

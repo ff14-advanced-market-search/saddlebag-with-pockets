@@ -2,7 +2,7 @@ import type {
   WoWOutOfStock,
   WoWProfitableItems,
   WoWScanResponseWithPayload
-} from '~/requests/WOWScan'
+} from '~/requests/WoW/WOWScan'
 import SmallTable from './SmallTable'
 import type { ColumnList } from '~/components/types'
 import { Section } from '~/components/Common'
