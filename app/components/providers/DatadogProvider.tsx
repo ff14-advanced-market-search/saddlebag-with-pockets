@@ -23,6 +23,6 @@ export function DatadogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     initDatadog()
   }, [])
-  
+
   return <>{children}</>
-} 
+}
