@@ -1101,6 +1101,26 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@datadog/browser-core@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-6.1.0.tgz#789e367b4a5a692d5fc462d868031ca6f371cbe0"
+  integrity sha512-GQV4zkT1k6vdlFaSqRQ9oh4nPJ8aE47mw9gpD1bGIaxdnEDNtyJXo/KI17arwJBEznhcGf7pHI+2wLWx5SfQ8w==
+
+"@datadog/browser-rum-core@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-rum-core/-/browser-rum-core-6.1.0.tgz#5e0072596f757bb1f25c1dc3ce096de022aa0af0"
+  integrity sha512-zUL/GoFPfq7rcMTCYXQBfbBA3V5l1jjzrRH0ce/+VsqWIp8SKXao+fVDeT6Ef32MWCDevvkNrG+TCq7sG2qwMg==
+  dependencies:
+    "@datadog/browser-core" "6.1.0"
+
+"@datadog/browser-rum@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-rum/-/browser-rum-6.1.0.tgz#f312b9bb87534c3900f2e806c214f0d48b310071"
+  integrity sha512-38yP4qDnm/IMhjQrxVZMVJbGGpIj2KsXSoFUvdCXrF3h3zlbVu2mg16kmjBeekY0dZu2tf+9N8FPmBZbmzvTeg==
+  dependencies:
+    "@datadog/browser-core" "6.1.0"
+    "@datadog/browser-rum-core" "6.1.0"
+
 "@emotion/hash@^0.9.0":
   version "0.9.1"
   resolved "https://registry.npmjs.org/@emotion/hash/-/hash-0.9.1.tgz"
