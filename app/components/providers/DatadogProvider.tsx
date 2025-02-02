@@ -8,7 +8,7 @@ const initDatadog = () => {
     clientToken: 'pub58195f295af90ffce1b77c4a4e356e67',
     site: 'us5.datadoghq.com',
     service: 'saddlebag-exchange',
-    env: process.env.NODE_ENV,
+    env: 'production',
     sessionSampleRate: 100,
     sessionReplaySampleRate: 100,
     trackUserInteractions: true,
@@ -16,11 +16,6 @@ const initDatadog = () => {
     trackLongTasks: true,
     defaultPrivacyLevel: 'mask-user-input'
   })
-
-  // Optional: Log debug info in development
-  if (process.env.NODE_ENV === 'development') {
-    datadogRum.setDebug(true)
-  }
 }
 
 export function DatadogProvider({ children }: { children: React.ReactNode }) {
