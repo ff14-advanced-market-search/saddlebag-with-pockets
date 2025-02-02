@@ -149,9 +149,9 @@ const ItemPage = () => {
         <Section>
           <ContentContainer>
             <>
-              <div 
+              <div
                 style={{ fontSize: '1px' }}
-                dangerouslySetInnerHTML={{ __html: data.itemDescription }} 
+                dangerouslySetInnerHTML={{ __html: data.itemDescription }}
               />
             </>
           </ContentContainer>

@@ -220,7 +220,7 @@ const columnList = [
     columnId: 'webpage',
     header: 'wiki',
     accessor: ({ row }) => <ItemDataLink link={row.webpage} />
-  },
+  }
 ]
 
 const mobileColumnList = [
