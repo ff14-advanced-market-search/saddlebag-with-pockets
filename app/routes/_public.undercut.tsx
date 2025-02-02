@@ -20,11 +20,11 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Undercut Plugin, Discord Undercut alerts, sell faster!',
+    title: 'FFXIV Discord Undercut and Sale Alerts, sell faster!',
     description:
-      'Generate data for Sadddlebag Exchange discord bot ffxiv undercut alerts. Sell faster when no one can sell under you!',
+      'Generate data for Sadddlebag Exchange discord bot ffxiv undercut and sale alerts. Sell faster when no one can sell under you!',
     customHeading:
-      'Maximize Your Profits with FFXIV Undercut Alerts from Saddlebag Exchange'
+      'Maximize Your Profits with FFXIV Undercut and Sale Alerts from Saddlebag Exchange'
   }
 }
 

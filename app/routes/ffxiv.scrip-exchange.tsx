@@ -151,21 +151,24 @@ const FFXIVScripExchange = () => {
       <>
         <div className="py-3">
           <SmallFormContainer
-            title="Find Scrip Exchange"
+            title="Currency Conversion"
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
             disabled={!formState}>
             <>
               <Select
-                title="Scrip Color"
+                title="Currency Type"
                 name="color"
                 defaultValue="Orange"
                 options={[
                   { label: 'Orange Crafters', value: 'Orange Crafters' },
                   { label: 'Orange Gatherers', value: 'Orange Gatherers' },
                   { label: 'Purple Crafters', value: 'Purple Crafters' },
-                  { label: 'Purple Gatherers', value: 'Purple Gatherers' }
+                  { label: 'Purple Gatherers', value: 'Purple Gatherers' },
+                  { label: 'Storm Seals', value: 'Storm Seals' },
+                  { label: 'Serpent Seals', value: 'Serpent Seals' },
+                  { label: 'Flame Seals', value: 'Flame Seals' }
                 ]}
                 onChange={(e) => handleFormChange('color', e.target.value)}
               />
@@ -192,10 +195,17 @@ const FFXIVScripExchange = () => {
 const columnList = [
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'cost', header: 'Cost' },
-  { columnId: 'minPrice', header: 'Min Price' },
+  {
+    columnId: 'minPrice',
+    header: 'Min Price',
+    accessor: ({ row }) =>
+      row.minPrice === 999999999 ? 'Out of Stock' : row.minPrice
+  },
+  { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
+  { columnId: 'medianNQ', header: 'Median NQ' },
+  { columnId: 'averageNQ', header: 'Average NQ' },
   { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
   { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
-  { columnId: 'valuePerScrip', header: 'Value Per Scrip' },
   {
     columnId: 'saddleLink',
     header: 'Item-Data',
@@ -210,13 +220,20 @@ const columnList = [
     columnId: 'webpage',
     header: 'wiki',
     accessor: ({ row }) => <ItemDataLink link={row.webpage} />
-  }
+  },
 ]
 
 const mobileColumnList = [
   { columnId: 'itemName', header: 'Item Name' },
   { columnId: 'cost', header: 'Cost' },
-  { columnId: 'minPrice', header: 'Min Price' },
+  {
+    columnId: 'minPrice',
+    header: 'Min Price',
+    accessor: ({ row }) =>
+      row.minPrice === 999999999 ? 'Out of Stock' : row.minPrice
+  },
+  { columnId: 'medianNQ', header: 'Median NQ' },
+  { columnId: 'averageNQ', header: 'Average NQ' },
   { columnId: 'salesAmountNQ', header: 'Sales Amount NQ' },
   { columnId: 'quantitySoldNQ', header: 'Quantity Sold NQ' },
   { columnId: 'valuePerScrip', header: 'Value Per Scrip' },

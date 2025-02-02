@@ -146,7 +146,16 @@ const ItemPage = () => {
             )}
           </>
         </Section>
-
+        <Section>
+          <ContentContainer>
+            <>
+              <div 
+                style={{ fontSize: '1px' }}
+                dangerouslySetInnerHTML={{ __html: data.itemDescription }} 
+              />
+            </>
+          </ContentContainer>
+        </Section>
         <Section>
           <div className="flex flex-wrap gap-2">
             <CustomButton
@@ -192,13 +201,6 @@ const ItemPage = () => {
               ) : (
                 <NoResults title={`No listings data for ${data.itemName}`} />
               )}
-            </>
-          </ContentContainer>
-        </Section>
-        <Section>
-          <ContentContainer>
-            <>
-              <div dangerouslySetInnerHTML={{ __html: data.itemDescription }} />
             </>
           </ContentContainer>
         </Section>

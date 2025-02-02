@@ -111,6 +111,7 @@ export default function Index() {
       <PageWrapper>
         <Banner />
         <Title title={listing.itemName} />
+        <p style={{ fontSize: '1px' }}>{listing.blog}</p>
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
             <Differences
@@ -230,7 +231,6 @@ export default function Index() {
           columnSelectOptions={['price', 'quantity']}
           data={listing.listingData}
         />
-        <p style={{ fontSize: '1px' }}>{listing.blog}</p>
       </PageWrapper>
     )
   }

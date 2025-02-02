@@ -1,6 +1,6 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
-import TileLink from '~/components/Common/TileLink'
+import type { MetaFunction, LinksFunction } from '@remix-run/node'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -151,20 +151,81 @@ export default function Index() {
   return (
     <>
       <main className="flex-1">
-        <Banner />
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
-              World of Warcraft Auction House tools for Gold Earning
+        {/* Hero Section */}
+        <section className="relative bg-gray-900">
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover opacity-50"
+              src="/images/hero-bg.jpg"
+              alt="Hero Background"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-transparent to-blue-900 opacity-70"></div>
+          </div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+            <h1 className="text-5xl font-extrabold text-white">
+              Azeroth Auction Assassin
             </h1>
-            <div
-              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
-              {recommendedQueries.map((query) => {
-                return <TileLink key={query.name} {...query} />
-              })}
+            <p className="mt-4 text-xl text-gray-200">
+              Lightning-fast cross-realm auction sniper - Get the best deals
+              seconds after they appear!
+            </p>
+            <div className="mt-8 flex justify-center space-x-4">
+              <a
+                href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                Download Now
+              </a>
+              <a
+                href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                Learn More
+              </a>
             </div>
           </div>
-        </div>
+        </section>
+
+        <Banner />
+
+        {/* Tools Grid Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-base font-semibold text-blue-600 uppercase">
+                Tools & Features
+              </h2>
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Everything You Need for Gold Making
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {recommendedQueries.map((query) => (
+                <a
+                  key={query.name}
+                  href={query.href}
+                  target={query.external ? '_blank' : '_self'}
+                  rel={query.external ? 'noopener noreferrer' : undefined}
+                  className="block">
+                  <div className="h-full p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-blue-50">
+                    <div className="flex items-center mb-4">
+                      <query.Icon className="h-6 w-6 text-blue-500" />
+                      <h3 className="ml-3 text-lg font-medium text-gray-900">
+                        {query.name}
+                      </h3>
+                    </div>
+                    <p className="text-gray-600">{query.description}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Hidden SEO content - keep existing */}
         <p style={{ fontSize: '1px' }}>
           Google Keywords: wow classic hardcore addons, best sod addons wow, wow
           classic hardcore addon, wow sod addons, wow coordinates addon, wow
