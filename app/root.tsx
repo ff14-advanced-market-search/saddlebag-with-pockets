@@ -29,7 +29,7 @@ import { classNames } from '~/utils'
 import { store } from '~/redux/store'
 import { Provider, useDispatch } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
 import {
   getSession,
@@ -55,6 +55,7 @@ import {
 } from './redux/localStorage/wowRealmHelpers'
 import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
+import { DatadogProvider } from '~/components/providers/DatadogProvider'
 
 export const ErrorBoundary = () => {
   return (
@@ -189,8 +190,8 @@ function App() {
     (state) => state.user
   )
   const submit = useSubmit()
-  //const transition = useNavigation()
   const dispatch = useDispatch()
+  const navigationRef = useRef(null)
 
   /**
    * Setup theme for app
@@ -291,31 +292,33 @@ function App() {
   }, [])
 
   return (
-    <html lang="en" className={classNames(`h-full`, theme || '')}>
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <Meta />
-        <Links />
-        <EnsureThemeApplied />
-      </head>
-      <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
-        <noscript>
-          <iframe
-            title="GtagManager"
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WH4KFG5"
-            height="0"
-            width="0"
-            className={`hidden invisible`}></iframe>
-        </noscript>
-        <Sidebar data={data}>
-          <Outlet />
-        </Sidebar>
-        <HelpWidget />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
+    <DatadogProvider>
+      <html lang="en" className={classNames(`h-full`, theme || '')}>
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <Meta />
+          <Links />
+          <EnsureThemeApplied />
+        </head>
+        <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
+          <noscript>
+            <iframe
+              title="GtagManager"
+              src="https://www.googletagmanager.com/ns.html?id=GTM-WH4KFG5"
+              height="0"
+              width="0"
+              className={`hidden invisible`}></iframe>
+          </noscript>
+          <Sidebar data={data}>
+            <Outlet />
+          </Sidebar>
+          <HelpWidget />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </body>
+      </html>
+    </DatadogProvider>
   )
 }
 
