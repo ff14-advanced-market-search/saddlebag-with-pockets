@@ -165,6 +165,11 @@ const ItemPage = () => {
         <Section>
           <div className="flex flex-wrap gap-2">
             <CustomButton
+              link={`https://saddlebagexchange.com/queries/`}
+              buttonText="View all our tools here!"
+              rel="nofollow" // not working need to fix
+            />
+            <CustomButton
               link={`https://universalis.app/market/${itemId}`}
               buttonText="View on Universalis"
               rel="nofollow" // not working need to fix

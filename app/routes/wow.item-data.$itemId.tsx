@@ -178,6 +178,11 @@ export default function Index() {
               rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
+              link={`https://saddlebagexchange.com/wow/`}
+              buttonText="View all our tools here!"
+              rel="nofollow" // not working need to fix
+            />
+            <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
               rel="noopener noreferrer nofollow" // not working need to fix
