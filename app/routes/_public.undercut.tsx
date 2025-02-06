@@ -33,6 +33,11 @@ export const links: LinksFunction = () => [
   { rel: 'canonical', href: 'https://saddlebagexchange.com/undercut' }
 ]
 
+interface TrackedItem {
+  id: string
+  name: string
+}
+
 interface AlertConfig {
   retainer_names: string[]
   server: string
@@ -72,6 +77,9 @@ const Index = () => {
   }>({ type: 'retainers', open: false })
 
   const [alertType, setAlertType] = useState<'all' | 'selected'>('all')
+
+  const [trackedItems, setTrackedItems] = useState<TrackedItem[]>([])
+  const [ignoredItems, setIgnoredItems] = useState<TrackedItem[]>([])
 
   const jsonData = JSON.stringify(config, null, 2)
   const salesAlertJson = JSON.stringify(
@@ -302,21 +310,32 @@ const Index = () => {
                     if (!item) return
                     const arrayKey =
                       modal.type === 'add_items' ? 'add_ids' : 'ignore_ids'
+                    const itemsList =
+                      modal.type === 'add_items' ? trackedItems : ignoredItems
+                    const setItemsList =
+                      modal.type === 'add_items'
+                        ? setTrackedItems
+                        : setIgnoredItems
+
                     setConfig((prev) => ({
                       ...prev,
                       [arrayKey]: [...prev[arrayKey], item.id]
                     }))
+                    setItemsList([
+                      ...itemsList,
+                      { id: item.id, name: item.name }
+                    ])
                   }}
                 />
                 <ul className="mt-4">
                   {(modal.type === 'add_items'
-                    ? config.add_ids
-                    : config.ignore_ids
-                  ).map((id, idx) => (
+                    ? trackedItems
+                    : ignoredItems
+                  ).map((item, idx) => (
                     <li
                       key={idx}
                       className="flex justify-between items-center py-2">
-                      <span>{id}</span>
+                      <span>{item.name}</span>
                       <button
                         type="button"
                         onClick={() => {
@@ -324,12 +343,20 @@ const Index = () => {
                             modal.type === 'add_items'
                               ? 'add_ids'
                               : 'ignore_ids'
+                          const setItemsList =
+                            modal.type === 'add_items'
+                              ? setTrackedItems
+                              : setIgnoredItems
+
                           setConfig((prev) => ({
                             ...prev,
                             [arrayKey]: prev[arrayKey].filter(
                               (_, i) => i !== idx
                             )
                           }))
+                          setItemsList((prev) =>
+                            prev.filter((_, i) => i !== idx)
+                          )
                         }}>
                         <TrashIcon className="h-5 w-5 text-gray-500" />
                       </button>
