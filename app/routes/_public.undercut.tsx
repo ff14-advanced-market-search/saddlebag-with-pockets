@@ -193,7 +193,7 @@ const Index = () => {
                 if (world) {
                   setConfig((prev) => ({
                     ...prev,
-                    server: world
+                    server: world.world
                   }))
                 }
               }}
