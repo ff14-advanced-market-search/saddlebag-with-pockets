@@ -96,9 +96,10 @@ const Index = () => {
               use it with the '/ff undercut' command in our Discord server.
             </p>
           }
-          navigation={navigation}
           buttonTitle="Save Changes"
-          onClick={(e) => e.preventDefault()}>
+          onClick={(e) => {
+            e.preventDefault()
+          }}>
           <div className="p-4">
             <RadioButtons
               title="I want to be alerted on"
@@ -120,6 +121,7 @@ const Index = () => {
 
             <div className="flex flex-col gap-4 mt-4">
               <button
+                type="button"
                 className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
                 onClick={() => setModal({ type: 'retainers', open: true })}>
                 Add Retainers
@@ -127,6 +129,7 @@ const Index = () => {
 
               {alertType === 'selected' && (
                 <button
+                  type="button"
                   className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
                   onClick={() => setModal({ type: 'add_items', open: true })}>
                   Add Items to Track
@@ -135,6 +138,7 @@ const Index = () => {
 
               {alertType === 'all' && (
                 <button
+                  type="button"
                   className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
                   onClick={() =>
                     setModal({ type: 'ignore_items', open: true })
@@ -150,9 +154,9 @@ const Index = () => {
                 type="checkbox"
                 id="hq-only"
                 checked={config.hq_only}
-                onChange={(e) =>
+                onChange={(e) => {
                   setConfig((prev) => ({ ...prev, hq_only: e.target.checked }))
-                }
+                }}
                 className="ml-2 rounded p-1"
               />
             </div>
@@ -162,12 +166,12 @@ const Index = () => {
               labelTitle="Stop alerting after:"
               inputTag="Hours"
               value={config.ignore_data_after_hours}
-              onChange={(e) =>
+              onChange={(e) => {
                 setConfig((prev) => ({
                   ...prev,
-                  ignore_data_after_hours: parseInt(e.target.value, 10)
+                  ignore_data_after_hours: Number.parseInt(e.target.value, 10)
                 }))
-              }
+              }}
             />
 
             <InputWithLabel
@@ -175,15 +179,15 @@ const Index = () => {
               labelTitle="Ignore stacks larger than:"
               inputTag="Stack Size"
               value={config.ignore_undercuts_with_quantity_over}
-              onChange={(e) =>
+              onChange={(e) => {
                 setConfig((prev) => ({
                   ...prev,
-                  ignore_undercuts_with_quantity_over: parseInt(
+                  ignore_undercuts_with_quantity_over: Number.parseInt(
                     e.target.value,
                     10
                   )
                 }))
-              }
+              }}
             />
 
             <SelectDCandWorld
@@ -206,7 +210,9 @@ const Index = () => {
             title="Input for undercut alerts"
             buttonTitle="Copy to clipboard"
             codeString={jsonData}
-            onClick={() => alert('Copied to clipboard!')}>
+            onClick={() => {
+              alert('Copied to clipboard!')
+            }}>
             <p className="italic text-sm text-blue-900 py-2 dark:text-gray-100">
               Copy this to your clipboard and use it in our discord server for
               the bot slash command '/ff undercut' to activate or update patreon
@@ -239,7 +245,9 @@ const Index = () => {
               ? 'Add Items to Track'
               : 'Add Items to Ignore'
           }
-          onClose={() => setModal((prev) => ({ ...prev, open: false }))}>
+          onClose={() => {
+            setModal((prev) => ({ ...prev, open: false }))
+          }}>
           <div className="p-4">
             {modal.type === 'retainers' ? (
               <div className="flex flex-col gap-2">
@@ -267,6 +275,7 @@ const Index = () => {
                       className="flex justify-between items-center py-2">
                       <span>{name}</span>
                       <button
+                        type="button"
                         onClick={() =>
                           setConfig((prev) => ({
                             ...prev,
@@ -309,6 +318,7 @@ const Index = () => {
                       className="flex justify-between items-center py-2">
                       <span>{id}</span>
                       <button
+                        type="button"
                         onClick={() => {
                           const arrayKey =
                             modal.type === 'add_items'
