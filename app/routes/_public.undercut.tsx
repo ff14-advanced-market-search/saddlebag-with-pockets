@@ -122,8 +122,9 @@ const Index = () => {
             </p>
           }
           buttonTitle="Save Changes"
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault()
+          }}
           }}>
           <div className="p-4">
             <RadioButtons
@@ -133,7 +134,7 @@ const Index = () => {
                 { label: 'All items', value: 'all' },
                 { label: 'Selected items', value: 'selected' }
               ]}
-              onChange={(value) => {
+              onChange={(value: 'all' | 'selected') => {
                 setAlertType(value as 'all' | 'selected')
                 setConfig((prev) => ({
                   ...prev,
@@ -179,7 +180,7 @@ const Index = () => {
                 type="checkbox"
                 id="hq-only"
                 checked={config.hq_only}
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setConfig((prev) => ({ ...prev, hq_only: e.target.checked }))
                 }}
                 className="ml-2 rounded p-1"
@@ -192,11 +193,12 @@ const Index = () => {
               inputTag="Hours"
               value={config.ignore_data_after_hours}
               onChange={(e) => {
-                setConfig((prev) => ({
-                  ...prev,
-                  ignore_data_after_hours: Number.parseInt(e.target.value, 10)
-                }))
-              }}
+onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+  setConfig((prev) => ({
+    ...prev,
+    ignore_data_after_hours: Number.parseInt(e.target.value, 10)
+  }))
+}}
             />
 
             <InputWithLabel
@@ -204,7 +206,7 @@ const Index = () => {
               labelTitle="Ignore stacks larger than:"
               inputTag="Stack Size"
               value={config.ignore_undercuts_with_quantity_over}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setConfig((prev) => ({
                   ...prev,
                   ignore_undercuts_with_quantity_over: Number.parseInt(
