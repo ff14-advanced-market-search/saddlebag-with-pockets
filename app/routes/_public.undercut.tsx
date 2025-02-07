@@ -21,7 +21,7 @@ import SelectDCandWorld from '~/components/form/select/SelectWorld'
 
 export const meta: MetaFunction = () => {
   return {
-    title: 'FFXIV Discord Undercut and Sale Alerts',
+    title: 'FFXIV Discord Undercut and Sale Alerts, sell faster!',
     description:
       'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.',
     viewport: 'width=device-width,initial-scale=1',
@@ -97,11 +97,26 @@ const Index = () => {
       <Banner />
       <div className="max-w-4xl mx-auto px-4">
         <SmallFormContainer
-          title="Input for undercut alerts"
+          title="Input for Undercut Alerts and Sales Alerts"
           description={
             <p className="italic text-sm text-grey-700 px-3 py-1 dark:text-gray-300">
-              Configure your undercut alerts below. Copy the generated JSON and
-              use it with the '/ff undercut' command in our Discord server.
+              Configure your undercut alerts below. Copy the generated JSON and use it in our{' '}
+              <a
+                className="underline"
+                href="https://discord.gg/saddlebag-exchange-973380473281724476"
+                target="_blank"
+                rel="noreferrer">
+                discord server
+              </a>{' '}
+              for the bot slash command '/ff undercut' or '/ff sale-register' to activate or update{' '}
+              <a
+                className="underline"
+                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
+                target="_blank"
+                rel="noreferrer">
+                patreon undercut alerts
+              </a>
+              .
             </p>
           }
           buttonTitle="Save Changes"
@@ -215,16 +230,30 @@ const Index = () => {
 
         <div className="mt-8">
           <CodeBlock
-            title="Input for undercut alerts"
+            title="Input for Undercut Alerts"
             buttonTitle="Copy to clipboard"
             codeString={jsonData}
             onClick={() => {
               alert('Copied to clipboard!')
             }}>
             <p className="italic text-sm text-blue-900 py-2 dark:text-gray-100">
-              Copy this to your clipboard and use it in our discord server for
-              the bot slash command '/ff undercut' to activate or update patreon
-              undercut alerts.
+              Copy this to your clipboard and use it in our{' '}
+              <a
+                className="underline"
+                href="https://discord.gg/saddlebag-exchange-973380473281724476"
+                target="_blank"
+                rel="noreferrer">
+                discord server
+              </a>{' '}
+              for the bot slash command '/ff undercut' to activate or update{' '}
+              <a
+                className="underline"
+                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
+                target="_blank"
+                rel="noreferrer">
+                patreon undercut alerts
+              </a>
+              .
             </p>
           </CodeBlock>
         </div>
@@ -236,9 +265,23 @@ const Index = () => {
             codeString={salesAlertJson}
             onClick={() => alert('Copied to clipboard!')}>
             <p className="italic text-sm text-blue-900 py-2 dark:text-gray-100">
-              Copy this to your clipboard and use it in our discord server for
-              the bot slash command '/ff sale-register' to activate patreon sale
-              alerts.
+              Copy this to your clipboard and use it in our{' '}
+              <a
+                className="underline"
+                href="https://discord.gg/saddlebag-exchange-973380473281724476"
+                target="_blank"
+                rel="noreferrer">
+                discord server
+              </a>{' '}
+              for the bot slash command '/ff sale-register' to activate{' '}
+              <a
+                className="underline"
+                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Alerts"
+                target="_blank"
+                rel="noreferrer">
+                patreon sale alerts
+              </a>
+              .
             </p>
           </CodeBlock>
         </div>
