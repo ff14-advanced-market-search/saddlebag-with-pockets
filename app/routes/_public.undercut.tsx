@@ -124,7 +124,6 @@ const Index = () => {
           buttonTitle="Save Changes"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault()
-          }}
           }}>
           <div className="p-4">
             <RadioButtons
@@ -192,13 +191,12 @@ const Index = () => {
               labelTitle="Stop alerting after:"
               inputTag="Hours"
               value={config.ignore_data_after_hours}
-              onChange={(e) => {
-onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-  setConfig((prev) => ({
-    ...prev,
-    ignore_data_after_hours: Number.parseInt(e.target.value, 10)
-  }))
-}}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setConfig((prev) => ({
+                  ...prev,
+                  ignore_data_after_hours: Number.parseInt(e.target.value, 10)
+                }))
+              }}
             />
 
             <InputWithLabel
