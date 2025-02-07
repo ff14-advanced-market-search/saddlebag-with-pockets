@@ -5,24 +5,24 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Mastering Gil Earning on the FFXIV Marketboard',
+    title: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
     description:
-      'Explore strategies to maximize your Gil earnings on the FFXIV Marketboard.',
-    customHeading: 'Unlock the Secrets to Gil Mastery on the FFXIV Marketboard'
+      'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts. Master the Marketboard with real-time notifications.',
+    customHeading: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange'
   }
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs1' }
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/undercut' }
 ]
 
-const HowtoCrossServerTradeinFFXIV = () => {
+const FFXIVUndercuttingGuide = () => {
   return (
     <div className={`m-12`}>
       <Banner />
       <main className="flex-1">
-        <h1 id="mastering-gil-earning-on-the-ffxiv-marketboard">
-          Mastering Gil Earning on the FFXIV Marketboard
+        <h1 id="ffxiv-marketboard-undercutting-guide">
+          FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange
         </h1>
         <p>
           Mastering the Marketboard: The Essential Role of Undercutting and
@@ -60,7 +60,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           ignore non-threatening undercuts, and even filter by item quality (HQ or
           NQ). This level of customization ensures that you receive only the most
           relevant notifications. Setup and Usage Getting started with Saddlebag
-          Exchange is straightforward. Here’s how you can set it up: Join the
+          Exchange is straightforward. Here's how you can set it up: Join the
           Discord: The first step is to join the Saddlebag Exchange Discord
           server. You can either subscribe as a Patreon supporter or start with a
           free trial. Generate Undercut Alerts: Use the provided tools on their
@@ -68,7 +68,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           seller ID and selecting specific items you want to monitor. Activate the
           Alerts: Back in Discord, use the bot commands to activate your alerts.
           You can customize your settings to focus on specific items or ignore
-          others. Receive and Act on Alerts: Once everything is set up, you’ll
+          others. Receive and Act on Alerts: Once everything is set up, you'll
           start receiving real-time alerts whenever you are undercut. This allows
           you to react swiftly and reprice your items, keeping them competitive
           without constant monitoring. Why Use Saddlebag Exchange? Utilizing
@@ -126,12 +126,12 @@ const HowtoCrossServerTradeinFFXIV = () => {
           immediately update your listings as needed, ensuring they remain
           competitive. Leveraging Saddlebag Exchange for Market Success The
           combination of strategic undercutting and the use of Saddlebag
-          Exchange’s notifications creates a powerful toolset for any player
-          involved in FFXIV’s Marketboard. This approach not only saves time but
+          Exchange's notifications creates a powerful toolset for any player
+          involved in FFXIV's Marketboard. This approach not only saves time but
           also significantly enhances your ability to compete effectively in the
-          game’s economy. Conclusion Understanding and utilizing undercutting in
+          game's economy. Conclusion Understanding and utilizing undercutting in
           conjunction with tools like Saddlebag Exchange can lead to increased
-          sales and higher profits on FFXIV’s Marketboard. By automating the
+          sales and higher profits on FFXIV's Marketboard. By automating the
           monitoring process and reducing the operational demands of market
           management, players can focus more on enjoying the game while still
           engaging effectively in its economic aspects. Embrace these tools to
@@ -195,4 +195,4 @@ const HowtoCrossServerTradeinFFXIV = () => {
   )
 }
 
-export default HowtoCrossServerTradeinFFXIV
+export default FFXIVUndercuttingGuide
