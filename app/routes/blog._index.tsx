@@ -24,6 +24,12 @@ const recommendedQueries = [
     href: '/blog/wow/tldr'
   },
   {
+    name: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
+    description: 'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts. Master the Marketboard with real-time notifications.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/undercut'
+  },
+  {
     name: 'How to Cross Server Trade in FFXIV',
     description: 'Watch a youtube video on how to tade between servers',
     Icon: DocumentSearchIcon,
