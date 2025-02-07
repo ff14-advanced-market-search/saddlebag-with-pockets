@@ -61,19 +61,7 @@ const Index = () => {
   const navigation = useNavigation()
   const { world } = loaderData
 
-  if (!world) {
-    return (
-      <PageWrapper>
-        <Banner />
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-red-600 p-4">
-            Please select a server in the options page before configuring undercut alerts.
-          </div>
-        </div>
-      </PageWrapper>
-    )
-  }
-
+  // Always define hooks first
   const [config, setConfig] = useState<AlertConfig>({
     retainer_names: [],
     server: world,
@@ -83,6 +71,20 @@ const Index = () => {
     ignore_data_after_hours: 720,
     ignore_undercuts_with_quantity_over: 9999
   })
+
+  if (!world) {
+    return (
+      <PageWrapper>
+        <Banner />
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-red-600 p-4">
+            Please select a server in the options page before configuring
+            undercut alerts.
+          </div>
+        </div>
+      </PageWrapper>
+    )
+  }
 
   const [modal, setModal] = useState<{
     type: 'add_items' | 'ignore_items' | 'retainers'
