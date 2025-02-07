@@ -100,7 +100,8 @@ const Index = () => {
           title="Input for Undercut Alerts and Sales Alerts"
           description={
             <p className="italic text-sm text-grey-700 px-3 py-1 dark:text-gray-300">
-              Configure your undercut alerts below. Copy the generated JSON and use it in our{' '}
+              Configure your undercut alerts below. Copy the generated JSON and
+              use it in our{' '}
               <a
                 className="underline"
                 href="https://discord.gg/saddlebag-exchange-973380473281724476"
@@ -108,7 +109,8 @@ const Index = () => {
                 rel="noreferrer">
                 discord server
               </a>{' '}
-              for the bot slash command '/ff undercut' or '/ff sale-register' to activate or update{' '}
+              for the bot slash command '/ff undercut' or '/ff sale-register' to
+              activate or update{' '}
               <a
                 className="underline"
                 href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
@@ -302,23 +304,44 @@ const Index = () => {
           <div className="p-4">
             {modal.type === 'retainers' ? (
               <div className="flex flex-col gap-2">
-                <input
-                  type="text"
-                  placeholder="Enter retainer name"
-                  className="rounded p-2"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && e.currentTarget.value) {
-                      setConfig((prev) => ({
-                        ...prev,
-                        retainer_names: [
-                          ...prev.retainer_names,
-                          e.currentTarget.value
-                        ]
-                      }))
-                      e.currentTarget.value = ''
-                    }
-                  }}
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Enter retainer name"
+                    className="rounded p-2 flex-1"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault() // Prevent form submission
+                        const value = e.currentTarget.value.trim()
+                        if (value) {
+                          setConfig((prev) => ({
+                            ...prev,
+                            retainer_names: [...prev.retainer_names, value]
+                          }))
+                          e.currentTarget.value = '' // Clear input after adding
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      const input =
+                        e.currentTarget.parentElement?.querySelector('input')
+                      const value = input?.value.trim()
+                      if (value) {
+                        setConfig((prev) => ({
+                          ...prev,
+                          retainer_names: [...prev.retainer_names, value]
+                        }))
+                        if (input) input.value = '' // Clear input after adding
+                      }
+                    }}>
+                    Add
+                  </button>
+                </div>
                 <ul className="mt-4">
                   {config.retainer_names.map((name, idx) => (
                     <li
