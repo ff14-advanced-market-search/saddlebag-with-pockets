@@ -61,6 +61,19 @@ const Index = () => {
   const navigation = useNavigation()
   const { world } = loaderData
 
+  if (!world) {
+    return (
+      <PageWrapper>
+        <Banner />
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-red-600 p-4">
+            Please select a server in the options page before configuring undercut alerts.
+          </div>
+        </div>
+      </PageWrapper>
+    )
+  }
+
   const [config, setConfig] = useState<AlertConfig>({
     retainer_names: [],
     server: world,
@@ -121,7 +134,8 @@ const Index = () => {
               .
             </p>
           }
-          buttonTitle="Save Changes"
+          // this button does nothing but if we remove it we get this search button that breaks shit
+          buttonTitle="."
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault()
           }}>
