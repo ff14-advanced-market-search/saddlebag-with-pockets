@@ -260,19 +260,25 @@ function App() {
           f.parentNode?.insertBefore(j, f)
         })(window, document, 'script', 'dataLayer', 'GTM-WH4KFG5')
 
+        // Load Next Millennium script
+        const nextMilleniumScript = document.createElement('script')
+        nextMilleniumScript.src = 'https://powerad.ai/261066107350250/script.js'
+        nextMilleniumScript.async = true
+        document.body.appendChild(nextMilleniumScript)
+
+        // // Load HubSpot script
+        // const hubspotScript = document.createElement('script')
+        // hubspotScript.id = 'hs-script-loader'
+        // hubspotScript.src = '//js-na1.hs-scripts.com/48701885.js'
+        // hubspotScript.async = true
+        // hubspotScript.defer = true
+        // document.body.appendChild(hubspotScript)
+
         // Load Ezoic script
         const ezoicScript = document.createElement('script')
         ezoicScript.src = '//www.ezojs.com/ezoic/sa.min.js'
         ezoicScript.async = true
         document.body.appendChild(ezoicScript)
-
-        // Load HubSpot script
-        const hubspotScript = document.createElement('script')
-        hubspotScript.id = 'hs-script-loader'
-        hubspotScript.src = '//js-na1.hs-scripts.com/48701885.js'
-        hubspotScript.async = true
-        hubspotScript.defer = true
-        document.body.appendChild(hubspotScript)
 
         ezoicScript.onload = function () {
           window.ezstandalone = window.ezstandalone || {}
