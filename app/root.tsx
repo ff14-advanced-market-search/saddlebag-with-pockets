@@ -274,22 +274,21 @@ function App() {
         // hubspotScript.defer = true
         // document.body.appendChild(hubspotScript)
 
-        // Load Ezoic script
-        const ezoicScript = document.createElement('script')
-        ezoicScript.src = '//www.ezojs.com/ezoic/sa.min.js'
-        ezoicScript.async = true
-        document.body.appendChild(ezoicScript)
-
-        ezoicScript.onload = function () {
-          window.ezstandalone = window.ezstandalone || {}
-          ezstandalone.cmd = ezstandalone.cmd || []
-          ezstandalone.cmd.push(function () {
-            ezstandalone.define(118, 116)
-            ezstandalone.refresh()
-            ezstandalone.enable()
-            ezstandalone.display()
-          })
-        }
+        // // Load Ezoic script
+        // const ezoicScript = document.createElement('script')
+        // ezoicScript.src = '//www.ezojs.com/ezoic/sa.min.js'
+        // ezoicScript.async = true
+        // document.body.appendChild(ezoicScript)
+        // ezoicScript.onload = function () {
+        //   window.ezstandalone = window.ezstandalone || {}
+        //   ezstandalone.cmd = ezstandalone.cmd || []
+        //   ezstandalone.cmd.push(function () {
+        //     ezstandalone.define(118, 116)
+        //     ezstandalone.refresh()
+        //     ezstandalone.enable()
+        //     ezstandalone.display()
+        //   })
+        // }
       })
     }, 3000)
 
