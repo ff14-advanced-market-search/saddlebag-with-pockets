@@ -8792,6 +8792,7 @@ export const wowItemsMap: Record<string, string> = {
   '23923': 'Amani Sacrificial Dagger',
   '23938': 'Pristine Ravager Carapace',
   '23939': 'Pristine Ravager Claw',
+  '23941': 'Crushed Ravager Carapace',
   '23942': 'Crushed Ravager Fang',
   '23943': 'Crushed Ravager Claw',
   '23944': 'Broken Ravager Carapace',
@@ -30061,6 +30062,15 @@ export const wowItemsMap: Record<string, string> = {
   '232636': 'Rum-Soaked Handkerchief',
   '232637': 'Cracked Pirate Skull',
   '232638': 'Loosened Naga Scales',
+  '232655': "Vatwork Janitor's Wasteband",
+  '232656': "Psychopath's Ravemantle",
+  '232657': "Mechgineer's Blowtorch Cover",
+  '232658': "Firebug's Anklegear",
+  '232659': "Loyalist's Holdout Hood",
+  '232660': 'Midnight Lounge Cummerbund',
+  '232661': 'Bootleg Wrynn Shoulderplates',
+  '232662': 'Globlin-Fused Greatbelt',
+  '232663': "Undermine Merc's Dog Tags",
   '232694': 'Transcribed Kul Tiran Journal',
   '233486': 'Hallowfall Supply Cache',
   '233800': 'Decorated Gunpowder Flask',
@@ -30089,5 +30099,6 @@ export const wowItemsMap: Record<string, string> = {
   '234754': 'Bloodied Siren Pendant',
   '234972': 'Bloodwake Missive',
   '234973': 'Pearlshell Scroll Case',
-  '235015': 'Awakened Supply Crate'
+  '235015': 'Awakened Supply Crate',
+  '238946': 'Letter from Keg Leg'
 }
