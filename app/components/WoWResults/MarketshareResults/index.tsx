@@ -13,6 +13,7 @@ import type { WoWServerRegion } from '~/requests/WoW/types'
 import MobileTable from '../FullScan/MobileTable'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import JSONButton from '~/components/utilities/JSONButton'
+import AAAListButton from '~/components/utilities/AAAListButton'
 
 export interface WoWMarketShareActionResults {
   data: Array<ItemStats>
@@ -169,6 +170,7 @@ const MarketshareResults = ({
             filename="saddlebag_wow_marketshare.csv"
           />
           <JSONButton data={results.data} />
+          <AAAListButton data={results.data} />
         </div>
         
         <DebouncedInput
