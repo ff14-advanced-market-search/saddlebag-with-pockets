@@ -11,10 +11,12 @@ export default function AAAListButton<DataType extends { itemID: number }>({
 }: AAAListProps<DataType>) {
   const [isOpen, setIsOpen] = useState(false)
   const [minValue, setMinValue] = useState('10000')
+  const [minPrice, setMinPrice] = useState('1000')
   const [discount, setDiscount] = useState('10')
 
   const handleCopy = () => {
     const minMarketValue = parseInt(minValue) || 0
+    const minPriceValue = parseInt(minPrice) || 0
     const discountPercent = parseInt(discount) || 0
 
     const formattedData = data.reduce((acc, item) => {
@@ -24,14 +26,14 @@ export default function AAAListButton<DataType extends { itemID: number }>({
           ? (item as any).estimatedRegionMarketValue
           : (item as any).historicMarketValue
 
-      // Skip if below minimum value
-      if (marketValue < minMarketValue) return acc
-
-      // Calculate price with discount
+      // Get price for filtering
       const price =
         'avgTSMPrice' in item
           ? (item as any).avgTSMPrice
           : (item as any).historicPrice
+
+      // Skip if below minimum values
+      if (marketValue < minMarketValue || price < minPriceValue) return acc
 
       const discountedPrice =
         Math.round(price * (discountPercent / 100) * 100) / 100
@@ -71,6 +73,18 @@ export default function AAAListButton<DataType extends { itemID: number }>({
                 type="number"
                 value={minValue}
                 onChange={(e) => setMinValue(e.target.value)}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Minimum Average Price
+              </label>
+              <input
+                type="number"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
