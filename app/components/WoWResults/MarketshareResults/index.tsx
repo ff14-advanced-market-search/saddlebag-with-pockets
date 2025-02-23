@@ -12,6 +12,7 @@ import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import MobileTable from '../FullScan/MobileTable'
 import DebouncedInput from '~/components/Common/DebouncedInput'
+import JSONButton from '~/components/utilities/JSONButton'
 
 export interface WoWMarketShareActionResults {
   data: Array<ItemStats>
@@ -161,11 +162,15 @@ const MarketshareResults = ({
         </ContentContainer>
       </div>
       <div className="flex justify-between">
-        <CSVButton
-          data={results.data}
-          columns={csvColumns}
-          filename="saddlebag_wow_marketshare.csv"
-        />
+        <div className="flex gap-2">
+          <CSVButton
+            data={results.data}
+            columns={csvColumns}
+            filename="saddlebag_wow_marketshare.csv"
+          />
+          <JSONButton data={results.data} />
+        </div>
+        
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
