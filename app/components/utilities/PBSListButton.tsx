@@ -6,9 +6,9 @@ export interface PBSListProps<DataType> {
   data: Array<DataType>
 }
 
-export default function PBSListButton<DataType extends { itemID: number; itemName: string }>({
-  data
-}: PBSListProps<DataType>) {
+export default function PBSListButton<
+  DataType extends { itemID: number; itemName: string }
+>({ data }: PBSListProps<DataType>) {
   const [isOpen, setIsOpen] = useState(false)
   const [minValue, setMinValue] = useState('10000')
   const [minPrice, setMinPrice] = useState('1000')
@@ -39,7 +39,9 @@ export default function PBSListButton<DataType extends { itemID: number; itemNam
         Math.round(price * (discountPercent / 100) * 100) / 100
 
       // Format as PBS entry
-      const pbsEntry = `Snipe^${item.itemName};;0;0;0;0;0;0;0;${Math.round(discountedPrice)};;#;;`
+      const pbsEntry = `Snipe^${item.itemName};;0;0;0;0;0;0;0;${Math.round(
+        discountedPrice
+      )};;#;;`
       return acc + pbsEntry
     }, '')
 
@@ -117,4 +119,4 @@ export default function PBSListButton<DataType extends { itemID: number; itemNam
       </Dialog>
     </>
   )
-} 
+}
