@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { SubmitButton } from '../form/SubmitButton'
 import { Dialog } from '@headlessui/react'
 
-export interface AAAListProps<DataType> {
+export interface PBSListProps<DataType> {
   data: Array<DataType>
 }
 
-export default function AAAListButton<DataType extends { itemID: number }>({
+export default function PBSListButton<DataType extends { itemID: number; itemName: string }>({
   data
-}: AAAListProps<DataType>) {
+}: PBSListProps<DataType>) {
   const [isOpen, setIsOpen] = useState(false)
   const [minValue, setMinValue] = useState('10000')
   const [minPrice, setMinPrice] = useState('1000')
@@ -38,13 +38,12 @@ export default function AAAListButton<DataType extends { itemID: number }>({
       const discountedPrice =
         Math.round(price * (discountPercent / 100) * 100) / 100
 
-      return {
-        ...acc,
-        [item.itemID]: discountedPrice
-      }
-    }, {})
+      // Format as PBS entry
+      const pbsEntry = `Snipe^${item.itemName};;0;0;0;0;0;0;0;${Math.round(discountedPrice)};;#;;`
+      return acc + pbsEntry
+    }, '')
 
-    navigator.clipboard.writeText(JSON.stringify(formattedData, null, 2))
+    navigator.clipboard.writeText(formattedData)
     setIsOpen(false)
   }
 
@@ -52,7 +51,7 @@ export default function AAAListButton<DataType extends { itemID: number }>({
     <>
       <SubmitButton
         type="button"
-        title="Copy AAA List"
+        title="Copy PBS List"
         onClick={() => setIsOpen(true)}
       />
 
@@ -62,7 +61,7 @@ export default function AAAListButton<DataType extends { itemID: number }>({
         className="fixed inset-0 flex items-center justify-center p-4">
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
         <div className="relative bg-white rounded-lg p-6 max-w-sm w-full">
-          <h3 className="text-lg font-bold mb-4">AAA List Settings</h3>
+          <h3 className="text-lg font-bold mb-4">PBS List Settings</h3>
 
           <div className="space-y-4">
             <div>
@@ -118,4 +117,4 @@ export default function AAAListButton<DataType extends { itemID: number }>({
       </Dialog>
     </>
   )
-}
+} 

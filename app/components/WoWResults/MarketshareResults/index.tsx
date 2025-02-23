@@ -14,6 +14,7 @@ import MobileTable from '../FullScan/MobileTable'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import JSONButton from '~/components/utilities/JSONButton'
 import AAAListButton from '~/components/utilities/AAAListButton'
+import PBSListButton from '~/components/utilities/PBSListButton'
 
 export interface WoWMarketShareActionResults {
   data: Array<ItemStats>
@@ -171,6 +172,7 @@ const MarketshareResults = ({
           />
           <JSONButton data={results.data} />
           <AAAListButton data={results.data} />
+          <PBSListButton data={results.data} />
         </div>
 
         <DebouncedInput

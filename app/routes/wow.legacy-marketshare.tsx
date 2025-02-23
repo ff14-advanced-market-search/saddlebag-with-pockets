@@ -34,6 +34,8 @@ import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import CSVButton from '~/components/utilities/CSVButton'
 import JSONButton from '~/components/utilities/JSONButton'
+import PBSListButton from '~/components/utilities/PBSListButton'
+import AAAListButton from '~/components/utilities/AAAListButton'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -365,6 +367,8 @@ const Results = ({
           columns={csvColumns}
         />
         <JSONButton data={data} />
+        <AAAListButton data={data} />
+        <PBSListButton data={data} />
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
