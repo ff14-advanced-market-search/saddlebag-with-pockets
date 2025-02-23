@@ -11,10 +11,6 @@ export default function JSONButton<DataType>({ data }: JSONProps<DataType>) {
   }
 
   return (
-    <SubmitButton
-      type="button"
-      title="Copy as JSON"
-      onClick={handleCopy}
-    />
+    <SubmitButton type="button" title="Copy as JSON" onClick={handleCopy} />
   )
-} 
+}

@@ -172,7 +172,7 @@ const MarketshareResults = ({
           <JSONButton data={results.data} />
           <AAAListButton data={results.data} />
         </div>
-        
+
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
