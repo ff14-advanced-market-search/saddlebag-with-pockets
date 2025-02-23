@@ -33,6 +33,7 @@ import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import CSVButton from '~/components/utilities/CSVButton'
+import JSONButton from '~/components/utilities/JSONButton'
 
 const inputMap: Record<string, string> = {
   homeRealmId: 'Home Realm',
@@ -363,6 +364,7 @@ const Results = ({
           data={data}
           columns={csvColumns}
         />
+        <JSONButton data={data} />
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
