@@ -16,6 +16,9 @@ import DebouncedInput from '~/components/Common/DebouncedInput'
 import { TabbedButtons, hexMap } from '~/components/FFXIVResults/Marketshare'
 import { sortByOptions } from '~/routes/wow.pet-marketshare'
 import Select from '~/components/form/select'
+import JSONButton from '~/components/utilities/JSONButton'
+import AAAListButton from '~/components/utilities/AAAListButton'
+import PBSListButton from '~/components/utilities/PBSListButton'
 
 export interface WoWPetMarketShareActionResults {
   data: Array<PetMarketshareItem>
@@ -129,6 +132,9 @@ const PetMarketshareResults = ({
           columns={csvColumns}
           filename="saddlebag_wow_pet_marketshare.csv"
         />
+        <JSONButton data={results.data} />
+        <AAAListButton data={results.data} />
+        <PBSListButton data={results.data} />
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
