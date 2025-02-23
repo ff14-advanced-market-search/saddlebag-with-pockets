@@ -164,7 +164,7 @@ const MarketshareResults = ({
         </ContentContainer>
       </div>
       <div className="flex justify-between">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <CSVButton
             data={results.data}
             columns={csvColumns}
