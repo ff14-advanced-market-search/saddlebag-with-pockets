@@ -293,7 +293,7 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Dragonflight Commodity Shortage Futures',
+        name: 'Commodity Shortage Futures',
         href: 'wow/shortage-predictor',
         icon: ChartSquareBarIcon
       },
