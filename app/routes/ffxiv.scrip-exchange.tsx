@@ -168,7 +168,8 @@ const FFXIVScripExchange = () => {
                   { label: 'Purple Gatherers', value: 'Purple Gatherers' },
                   { label: 'Storm Seals', value: 'Storm Seals' },
                   { label: 'Serpent Seals', value: 'Serpent Seals' },
-                  { label: 'Flame Seals', value: 'Flame Seals' }
+                  { label: 'Flame Seals', value: 'Flame Seals' },
+                  { label: 'Bicolor Gemstone', value: 'Bicolor Gemstone' }
                 ]}
                 onChange={(e) => handleFormChange('color', e.target.value)}
               />
