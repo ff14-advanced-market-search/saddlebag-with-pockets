@@ -28,7 +28,8 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             }
           />
         )}
-        {'listing_time_diff' in data && (
+        {/* doesnt work anymore but leave it here for reference */}
+        {/* {'listing_time_diff' in data && (
           <Differences
             diffTitle="Avg Time Difference"
             diffAmount={`${data.listing_time_diff.avg_time_diff.toLocaleString()} minutes`}
@@ -49,7 +50,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
                 : 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
             }
           />
-        )}
+        )} */}
         {'min_price' in data && (
           <Differences
             diffTitle="Minimum Price"
