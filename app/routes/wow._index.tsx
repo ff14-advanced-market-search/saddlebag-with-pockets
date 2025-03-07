@@ -70,6 +70,12 @@ const recommendedQueries = [
     href: '/wow/shopping-list'
   },
   {
+    name: 'Item Level Shopping List',
+    description: 'Search for deals on raid BOE items with specific stats.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/ilvl-shopping-list'
+  },
+  {
     name: 'Current Content Marketshare Overview',
     description:
       'Find out what Dragonflight items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
