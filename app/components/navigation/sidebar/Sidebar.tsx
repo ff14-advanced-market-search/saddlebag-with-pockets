@@ -231,6 +231,11 @@ const navGroups: Array<{
         icon: ShoppingCartIcon
       },
       {
+        name: 'Item Level Shopping List',
+        href: '/wow/ilvl-shopping-list',
+        icon: ShoppingCartIcon
+      },
+      {
         name: 'Item Export Search',
         href: 'wow/export-search',
         icon: DocumentSearchIcon
