@@ -136,6 +136,13 @@ const ffxivPages = [
   }
 ]
 
+/**
+ * Renders the landing page for FFXIV Market Board Tools.
+ *
+ * This component displays a visually rich hero section with a background image,
+ * overlay, and prominent call-to-action buttons. It also includes a banner and a grid
+ * of available market board tools. Hidden SEO content is rendered for improved search engine visibility.
+ */
 export default function Index() {
   return (
     <>

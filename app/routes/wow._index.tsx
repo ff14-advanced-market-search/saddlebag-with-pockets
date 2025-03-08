@@ -160,6 +160,17 @@ const recommendedQueries = [
   }
 ]
 
+/**
+ * Renders the main page for the Azeroth Auction Assassin tool.
+ *
+ * This component composes the page layout by displaying:
+ * - A hero section featuring a background image, title, description, and call-to-action buttons ("Download Now" and "Learn More"),
+ * - A promotional banner component,
+ * - A responsive grid of tool cards linking to various World of Warcraft auction house features,
+ * - Hidden SEO content with keyword metadata.
+ *
+ * @returns A JSX element representing the complete auction house tools page.
+ */
 export default function Index() {
   return (
     <>
