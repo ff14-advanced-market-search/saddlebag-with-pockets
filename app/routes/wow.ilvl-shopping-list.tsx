@@ -7,6 +7,7 @@ import type { ListItem, IlvlWoWListResponse, ItemStat } from '~/requests/WoW/Ilv
 import IlvlShoppingList from '~/requests/WoW/IlvlShoppingList'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
+import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import {
   useActionData,
   useNavigation,
@@ -30,6 +31,21 @@ import {
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW BOE Item Level Shopping List',
+    description:
+      'Search for raid BOE items with specific item levels and stats across all realms with our WoW Item Level Shopping List!'
+  }
+}
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list' }
+]
 
 const PAGE_URL = '/wow/ilvl-shopping-list'
 
@@ -92,7 +108,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const itemID = params.get('itemId')
   const maxPurchasePrice = params.get('maxPurchasePrice') || '10000000'
-  const desiredMinIlvl = params.get('desiredMinIlvl') || '640'
+  const desiredMinIlvl = params.get('desiredMinIlvl') || '610'
   const desiredStats = params.getAll('desiredStats') as ItemStat[]
 
   if (itemID) {
@@ -153,7 +169,7 @@ const IlvlShoppingListComponent = () => {
   const transition = useNavigation()
   const [itemName, setItemName] = useState<string>('')
   const [maxPurchasePrice, setMaxPurchasePrice] = useState<string>('10000000')
-  const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('640')
+  const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('610')
   const [itemID, setItemID] = useState<string>('')
   const [selectedStats, setSelectedStats] = useState<ItemStat[]>([])
 
@@ -164,7 +180,7 @@ const IlvlShoppingListComponent = () => {
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')
     const maxPurchasePriceFromUrl = searchParams.get('maxPurchasePrice') || '10000000'
-    const desiredMinIlvlFromUrl = searchParams.get('desiredMinIlvl') || '640'
+    const desiredMinIlvlFromUrl = searchParams.get('desiredMinIlvl') || '610'
     const desiredStatsFromUrl = searchParams.getAll('desiredStats') as ItemStat[]
 
     if (itemIdFromUrl) {
@@ -211,7 +227,19 @@ const IlvlShoppingListComponent = () => {
   const renderForm = () => (
     <SmallFormContainer
       title="Item Level Shopping List"
-      description="Search for items with specific item levels and stats across all realms."
+      description={`
+        Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
+        Supports the following items:
+        - Undermine Merc's Dog Tags
+        - Psychopath's Ravemantle 
+        - Vatwork Janitor's Wasteband
+        - Mechgineer's Blowtorch Cover
+        - Firebug's Anklegear
+        - Loyalist's Holdout Hood
+        - Midnight Lounge Cummerbund
+        - Bootleg Wrynn Shoulderplates
+        - Globlin-Fused Greatbelt
+      `}
       onClick={handleSubmit}
       error={error}
       loading={isSubmitting}
@@ -314,7 +342,7 @@ const Results = ({
     <PageWrapper>
       <SmallTable
         title={'Best Deals for ' + name}
-        sortingOrder={[{ desc: true, id: sortby }]}
+        sortingOrder={[{ desc: false, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
         columnSelectOptions={['price', 'quantity', 'realmNames', 'ilvl', 'stats', 'link']}

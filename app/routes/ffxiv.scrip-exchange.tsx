@@ -15,7 +15,7 @@ import {
   ScripExchangeRequest,
   ScripExchangeResults
 } from '~/requests/FFXIV/scrip-exchange'
-import { ScripExchangeProps } from '~/requests/FFXIV/scripexchange'
+import { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 

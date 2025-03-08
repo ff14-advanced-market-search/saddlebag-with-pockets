@@ -49,6 +49,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/out-of-stock
   Disallow: /queries/world-comparison
   Disallow: /wow/ilvl-shopping-list
+  Disallow: /wow/ilvl-export-search
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `

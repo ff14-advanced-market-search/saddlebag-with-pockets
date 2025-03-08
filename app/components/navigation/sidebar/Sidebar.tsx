@@ -231,13 +231,18 @@ const navGroups: Array<{
         icon: ShoppingCartIcon
       },
       {
-        name: 'Item Level Shopping List',
+        name: 'Item Export Search',
+        href: 'wow/export-search',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Raid BOE Ilvl Shopping List',
         href: '/wow/ilvl-shopping-list',
         icon: ShoppingCartIcon
       },
       {
-        name: 'Item Export Search',
-        href: 'wow/export-search',
+        name: 'Raid BOE Ilvl Export Search',
+        href: 'wow/ilvl-export-search',
         icon: DocumentSearchIcon
       },
       {
@@ -262,12 +267,6 @@ const navGroups: Array<{
         external: true
       },
       {
-        name: 'TSM to AAA converter Addon',
-        href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
-        icon: DocumentSearchIcon,
-        external: true
-      },
-      {
         name: 'Current Content Marketshare Overview',
         href: '/wow/marketshare/recommended',
         icon: ChartSquareBarIcon
@@ -286,6 +285,12 @@ const navGroups: Array<{
         name: 'Out of Stock',
         href: '/wow/out-of-stock',
         icon: DocumentSearchIcon
+      },
+      {
+        name: 'TSM to AAA converter Addon',
+        href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
+        icon: DocumentSearchIcon,
+        external: true
       }
     ]
   },
