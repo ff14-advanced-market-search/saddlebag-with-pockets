@@ -227,7 +227,19 @@ const IlvlShoppingListComponent = () => {
   const renderForm = () => (
     <SmallFormContainer
       title="Item Level Shopping List"
-      description="Search for raid BOE items with specific item levels and stats across all realms."
+      description={`
+        Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
+        Supports the following items:
+        - Undermine Merc's Dog Tags
+        - Psychopath's Ravemantle 
+        - Vatwork Janitor's Wasteband
+        - Mechgineer's Blowtorch Cover
+        - Firebug's Anklegear
+        - Loyalist's Holdout Hood
+        - Midnight Lounge Cummerbund
+        - Bootleg Wrynn Shoulderplates
+        - Globlin-Fused Greatbelt
+      `}
       onClick={handleSubmit}
       error={error}
       loading={isSubmitting}
