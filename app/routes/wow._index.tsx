@@ -197,13 +197,13 @@ export default function Index() {
         <Banner />
 
         {/* Tools Grid Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-base font-semibold text-blue-600 uppercase">
+              <h2 className="text-base font-semibold text-blue-600 dark:text-blue-400 uppercase">
                 Tools & Features
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                 Everything You Need for Gold Making
               </p>
             </div>
@@ -216,14 +216,14 @@ export default function Index() {
                   target={query.external ? '_blank' : '_self'}
                   rel={query.external ? 'noopener noreferrer' : undefined}
                   className="block">
-                  <div className="h-full p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-blue-50">
+                  <div className="h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/50">
                     <div className="flex items-center mb-4">
-                      <query.Icon className="h-6 w-6 text-blue-500" />
-                      <h3 className="ml-3 text-lg font-medium text-gray-900">
+                      <query.Icon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+                      <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">
                         {query.name}
                       </h3>
                     </div>
-                    <p className="text-gray-600">{query.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300">{query.description}</p>
                   </div>
                 </a>
               ))}
