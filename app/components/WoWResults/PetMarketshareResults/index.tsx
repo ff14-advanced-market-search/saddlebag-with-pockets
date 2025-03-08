@@ -76,14 +76,14 @@ const PetMarketshareResults = ({
       columnId: 'undermineLink',
       header: 'Undermine Link',
       accessor: ({ getValue }) => (
-        <ExternalLink text='Undermine' link={getValue() as string} />
+        <ExternalLink text="Undermine" link={getValue() as string} />
       )
     },
     {
       columnId: 'warcraftPetsLink',
       header: 'Warcraft Pets Link',
       accessor: ({ getValue }) => (
-        <ExternalLink text='Warcraft Pets' link={getValue() as string} />
+        <ExternalLink text="Warcraft Pets" link={getValue() as string} />
       )
     }
   ]
@@ -107,12 +107,12 @@ const PetMarketshareResults = ({
             }}
             options={sortByOptions}
           />
-          <div className='md:hidden py-2'>
+          <div className="md:hidden py-2">
             <Select
-              title='Market Values to Show'
+              title="Market Values to Show"
               options={sortByOptions}
-              name='sortBy'
-              id='sortBy'
+              name="sortBy"
+              id="sortBy"
               onChange={(e) => {
                 const value = e.target.value
                 if (assertIsSortBy(value)) setSortBy(value)
@@ -126,11 +126,11 @@ const PetMarketshareResults = ({
           />
         </>
       </ContentContainer>
-      <div className='flex justify-between'>
+      <div className="flex justify-between">
         <CSVButton
           data={results.data}
           columns={csvColumns}
-          filename='saddlebag_wow_pet_marketshare.csv'
+          filename="saddlebag_wow_pet_marketshare.csv"
         />
         <JSONButton data={results.data} />
         <AAAListButton data={results.data} />
@@ -143,12 +143,12 @@ const PetMarketshareResults = ({
           placeholder={'Search...'}
         />
       </div>
-      <div className='hidden sm:block'>
+      <div className="hidden sm:block">
         <FullTable<PetMarketshareItem>
           data={results.data}
           columnList={itemsColumnList}
           sortingOrder={[{ id: results.sortBy, desc: true }]}
-          description='This shows pet market statistics!'
+          description="This shows pet market statistics!"
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
         />

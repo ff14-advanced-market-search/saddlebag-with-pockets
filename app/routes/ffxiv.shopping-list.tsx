@@ -127,7 +127,7 @@ const Results = ({
 
   return (
     <>
-      <div className='h-4 w-full' />
+      <div className="h-4 w-full" />
       <SmallTable
         data={data}
         sortingOrder={[{ id: 'worldName', desc: true }]}
@@ -175,15 +175,14 @@ const Row = ({
         error
           ? ' shadow-[0px_0px_4px_2px_rgba(0,0,0,0.3)] shadow-red-500 rounded dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400'
           : ''
-      }`}
-    >
+      }`}>
       <TableCell>{name}</TableCell>
       <TableCell>
         <input
-          className='w-[70px] border border-gray-300 rounded-md dark:border-gray-400 dark:bg-gray-600'
-          type='number'
-          min='1'
-          max='1000000000'
+          className="w-[70px] border border-gray-300 rounded-md dark:border-gray-400 dark:bg-gray-600"
+          type="number"
+          min="1"
+          max="1000000000"
           value={craft_amount ?? ''}
           onChange={(e) => {
             const value = e.target.value
@@ -201,12 +200,12 @@ const Row = ({
           }}
         />
         {error && (
-          <p className='text-red-500 text-sm'>Craft amount is required.</p>
+          <p className="text-red-500 text-sm">Craft amount is required.</p>
         )}
       </TableCell>
       <TableCell>
         <input
-          type='checkbox'
+          type="checkbox"
           checked={form.hq}
           onChange={(e) => {
             const checked = e.target.checked
@@ -225,16 +224,15 @@ const Row = ({
 
             updateRow({ ...form, job: parseInt(value) })
           }}
-          className='min-w-[100px]'
+          className="min-w-[100px]"
         />
       </TableCell>
       <TableCell>
         <SubmitButton
-          type='button'
+          type="button"
           onClick={() => {
             onClick(itemID)
-          }}
-        >
+          }}>
           <TrashIcon className={`h-4 w-4 mx-auto text-white`} />
         </SubmitButton>
       </TableCell>
@@ -242,11 +240,11 @@ const Row = ({
   )
 }
 const TableCell = ({ children }: { children: React.ReactNode }) => {
-  return <td className='text-center min-w-[80px]'>{children}</td>
+  return <td className="text-center min-w-[80px]">{children}</td>
 }
 
 const TableHead = ({ children }: { children: React.ReactNode }) => {
-  return <th className='text-center'>{children}</th>
+  return <th className="text-center">{children}</th>
 }
 
 const ShoppingListForm = ({
@@ -291,31 +289,30 @@ const ShoppingListForm = ({
   return (
     <SmallFormContainer
       onClick={() => {}}
-      title='Shopping list generator'
+      title="Shopping list generator"
       loading={loading}
       hideSubmitButton={hideResultsTable}
-      error={error}
-    >
-      <div className='py-2 flex flex-col max-w-md'>
+      error={error}>
+      <div className="py-2 flex flex-col max-w-md">
         <TitleTooltip
-          title='Find Items'
-          toolTip='Add up to 10 items to find crafting ingredients for'
+          title="Find Items"
+          toolTip="Add up to 10 items to find crafting ingredients for"
           relative
         />
         <DebouncedSelectInput
-          id='shopping-list-search'
+          id="shopping-list-search"
           selectOptions={ffxivItemsList}
           formName={'shoppingList'}
           onSelect={handleSelect}
           error={error}
-          placeholder='Search items...'
+          placeholder="Search items..."
           disabled={disableList}
         />
       </div>
       {!hideResultsTable && (
-        <div className='max-w-full overflow-x-scroll'>
-          <table className='min-w-full my-4 px-1 text-gray-800 dark:text-gray-100 border-t border-separate border-spacing-y-2'>
-            <thead className='mt-4 py-4'>
+        <div className="max-w-full overflow-x-scroll">
+          <table className="min-w-full my-4 px-1 text-gray-800 dark:text-gray-100 border-t border-separate border-spacing-y-2">
+            <thead className="mt-4 py-4">
               <tr>
                 <TableHead>Item</TableHead>
                 <TableHead>Craft Amount</TableHead>
@@ -357,8 +354,8 @@ const ShoppingListForm = ({
               value={JSON.stringify(shoppingList)}
             />
           </table>
-          <div className='w-fit'>
-            <CheckBox labelTitle='Use Region Wide Search' name={REGION_WIDE} />
+          <div className="w-fit">
+            <CheckBox labelTitle="Use Region Wide Search" name={REGION_WIDE} />
           </div>
         </div>
       )}

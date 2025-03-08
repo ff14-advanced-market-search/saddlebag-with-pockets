@@ -35,13 +35,12 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
 
   return (
     <fieldset
-      className='mt-6 bg-white dark:bg-transparent'
-      disabled={navigation.state === 'submitting'}
-    >
-      <legend className='block text-sm font-medium text-gray-700 dark:text-gray-100'>
+      className="mt-6 bg-white dark:bg-transparent"
+      disabled={navigation.state === 'submitting'}>
+      <legend className="block text-sm font-medium text-gray-700 dark:text-gray-100">
         Data Center
       </legend>
-      <div className='mt-1 shadow-sm'>
+      <div className="mt-1 shadow-sm">
         <SelectDataCenter
           onSelect={(newDataCenter) => {
             setDataCenter(newDataCenter)
@@ -56,7 +55,7 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
         />
       </div>
       <div className={`mt-6`}>
-        <legend className='block text-sm font-medium text-gray-700 dark:text-gray-100'>
+        <legend className="block text-sm font-medium text-gray-700 dark:text-gray-100">
           World
         </legend>
         <SelectWorld

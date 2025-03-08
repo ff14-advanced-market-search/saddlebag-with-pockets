@@ -353,29 +353,28 @@ const Results = ({ rows }: ResultTableProps) => {
     <>
       <div
         key={`${touchBackendRef.current}`}
-        className={`hidden sm:flex flex-col mt-0`}
-      >
-        <div className='py-2 sm:py-5'>
-          <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-            <div className='rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3'>
-              <div className='flex flex-wrap items-center justify-between'>
-                <div className='flex w-0 flex-1 items-center'>
-                  <span className='flex rounded-lg bg-blue-800 p-2'>
+        className={`hidden sm:flex flex-col mt-0`}>
+        <div className="py-2 sm:py-5">
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
+              <div className="flex flex-wrap items-center justify-between">
+                <div className="flex w-0 flex-1 items-center">
+                  <span className="flex rounded-lg bg-blue-800 p-2">
                     <ChevronDoubleRightIcon
-                      className='h-6 w-6 text-white'
-                      aria-hidden='true'
+                      className="h-6 w-6 text-white"
+                      aria-hidden="true"
                     />
                   </span>
-                  <p className='ml-3 truncate font-medium text-white flex flex-1 flex-col'>
-                    <span className='md:hidden'>This is a wide table!</span>
-                    <span className='md:hidden'>
+                  <p className="ml-3 truncate font-medium text-white flex flex-1 flex-col">
+                    <span className="md:hidden">This is a wide table!</span>
+                    <span className="md:hidden">
                       Drag a column name to move it!
                     </span>
-                    <span className='hidden md:inline'>
+                    <span className="hidden md:inline">
                       Heads up, this table is pretty wide. You'll probably need
                       to scroll horizontally (left & right).
                     </span>
-                    <span className='hidden md:inline'>
+                    <span className="hidden md:inline">
                       Click a column name to sort by that column. Drag a column
                       name to move it!
                     </span>
@@ -386,17 +385,17 @@ const Results = ({ rows }: ResultTableProps) => {
           </div>
         </div>
 
-        <div className='w-full my-2 flex justify-between'>
-          <div className='flex flex-wrap gap-y-3'>
+        <div className="w-full my-2 flex justify-between">
+          <div className="flex flex-wrap gap-y-3">
             <SubmitButton
               onClick={handleColumnReset}
               title={'Reset table columns'}
-              type='button'
+              type="button"
             />
             <CSVButton
               data={rows}
               columns={cvsFileList}
-              filename='saddlebag-fullscan.csv'
+              filename="saddlebag-fullscan.csv"
             />
           </div>
 
@@ -410,16 +409,14 @@ const Results = ({ rows }: ResultTableProps) => {
         </div>
 
         <DndProvider
-          backend={touchBackendRef.current ? TouchBackend : HTML5Backend}
-        >
+          backend={touchBackendRef.current ? TouchBackend : HTML5Backend}>
           <ScrollingComponent>
-            <div className='overflow-x-auto'>
-              <div className='inline-block min-w-full align-middle'>
-                <div className='overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-[calc(100vh-120px)]'>
+            <div className="overflow-x-auto">
+              <div className="inline-block min-w-full align-middle">
+                <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-[calc(100vh-120px)]">
                   <table
                     ref={tableRef}
-                    className='min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600'
-                  >
+                    className="min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">
                     <thead>
                       {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
@@ -437,11 +434,9 @@ const Results = ({ rows }: ResultTableProps) => {
                                   ? 'cursor-pointer'
                                   : '',
                                 `px-3 py-3.5 text-left bg-gray-50 dark:bg-gray-600 text-sm font-semibold text-gray-900 dark:text-gray-100 sticky top-0 z-10`
-                              )}
-                            >
+                              )}>
                               <div
-                                className={`group inline-flex  min-w-[100px]`}
-                              >
+                                className={`group inline-flex  min-w-[100px]`}>
                                 {header.isPlaceholder
                                   ? null
                                   : flexRender(
@@ -454,20 +449,17 @@ const Results = ({ rows }: ResultTableProps) => {
                                       ? 'bg-gray-200 dark:bg-gray-500'
                                       : '',
                                     ` ml-1 flex flex-0 p-1 justify-center items-center`
-                                  )}
-                                >
+                                  )}>
                                   {{
                                     asc: (
                                       <span
-                                        className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
-                                      >
+                                        className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                         <ChevronUpIcon className={`h-4 w-4`} />
                                       </span>
                                     ),
                                     desc: (
                                       <span
-                                        className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
-                                      >
+                                        className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                         <ChevronDownIcon
                                           className={`h-4 w-4`}
                                         />
@@ -475,8 +467,7 @@ const Results = ({ rows }: ResultTableProps) => {
                                     )
                                   }[header.column.getIsSorted() as string] ?? (
                                     <span
-                                      className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}
-                                    >
+                                      className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
                                       <ChevronDownIcon className={`h-4 w-4`} />
                                     </span>
                                   )}
@@ -487,14 +478,13 @@ const Results = ({ rows }: ResultTableProps) => {
                         </tr>
                       ))}
                     </thead>
-                    <tbody className='divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500'>
+                    <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
                       {table.getRowModel().rows.map((row) => (
                         <tr key={row.id}>
                           {row.getVisibleCells().map((cell) => (
                             <td
                               key={cell.id}
-                              className='whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100'
-                            >
+                              className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100">
                               {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext()
@@ -506,10 +496,9 @@ const Results = ({ rows }: ResultTableProps) => {
                     </tbody>
                   </table>
                 </div>
-                <div className='flex flex-0 '>
+                <div className="flex flex-0 ">
                   <p
-                    className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}
-                  >
+                    className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
                     {`${rows.length} results found`}
                   </p>
                 </div>
@@ -519,11 +508,11 @@ const Results = ({ rows }: ResultTableProps) => {
           <Preview />
         </DndProvider>
       </div>
-      <div className='flex sm:hidden mt-4'>
+      <div className="flex sm:hidden mt-4">
         <CSVButton
           data={rows}
           columns={cvsFileList}
-          filename='saddlebag-fullscan.csv'
+          filename="saddlebag-fullscan.csv"
         />
       </div>
       <MobileTable

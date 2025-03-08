@@ -120,8 +120,8 @@ const PredictionTable = ({
         const itemId = row.item_id
         return (
           <input
-            className='min-w-4 min-h-4 border-box rounded-md'
-            type='checkbox'
+            className="min-w-4 min-h-4 border-box rounded-md"
+            type="checkbox"
             checked={!filteredIds.includes(itemId)}
             onChange={(e) => {
               if (filteredIds.includes(itemId)) {
@@ -139,15 +139,14 @@ const PredictionTable = ({
       header: 'Last 24 Hours',
       accessor: ({ row }) => (
         <button
-          className='inline-flex items-center rounded-md bg-black px-2.5 py-2 text-sm font-medium text-white'
+          className="inline-flex items-center rounded-md bg-black px-2.5 py-2 text-sm font-medium text-white"
           onClick={() =>
             onRowPress({
               title: row.item_name,
               p: row.chart_p,
               q: row.chart_q
             })
-          }
-        >
+          }>
           Price V Quantity
         </button>
       )
@@ -211,11 +210,11 @@ const PredictionTable = ({
 
   return (
     <>
-      <div className='flex justify-between'>
+      <div className="flex justify-between">
         <CSVButton
           data={results.data}
           columns={csvColumns}
-          filename='saddlebag_wow_shortagePredictor.csv'
+          filename="saddlebag_wow_shortagePredictor.csv"
         />
         <DebouncedInput
           onDebouncedChange={(value) => {
@@ -225,7 +224,7 @@ const PredictionTable = ({
           placeholder={'Search...'}
         />
       </div>
-      <div className='hidden sm:block'>
+      <div className="hidden sm:block">
         <FullTable<Prediction>
           data={results.data}
           columnList={columnList}

@@ -237,22 +237,21 @@ export default function Index() {
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         error={error}
-        action={getActionUrl('/ffxiv/marketshare', searchParams)}
-      >
-        <div className='pt-4'>
-          <div className='flex justify-end mb-2'>
+        action={getActionUrl('/ffxiv/marketshare', searchParams)}>
+        <div className="pt-4">
+          <div className="flex justify-end mb-2">
             <SubmitButton
-              title='Share this search!'
+              title="Share this search!"
               onClick={handleCopyButton}
-              type='button'
+              type="button"
             />
           </div>
           <InputWithLabel
-            name='timePeriod'
-            labelTitle='Time Period'
-            type='number'
+            name="timePeriod"
+            labelTitle="Time Period"
+            type="number"
             defaultValue={loaderData.timePeriod}
-            inputTag='Hours'
+            inputTag="Hours"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
@@ -261,11 +260,11 @@ export default function Index() {
             }}
           />
           <InputWithLabel
-            name='salesAmount'
-            labelTitle='Sales Amount'
-            type='number'
+            name="salesAmount"
+            labelTitle="Sales Amount"
+            type="number"
             defaultValue={loaderData.salesAmount}
-            inputTag='No# of sales'
+            inputTag="No# of sales"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
@@ -274,11 +273,11 @@ export default function Index() {
             }}
           />
           <InputWithLabel
-            name='averagePrice'
-            labelTitle='Average Price'
-            type='number'
+            name="averagePrice"
+            labelTitle="Average Price"
+            type="number"
             defaultValue={loaderData.averagePrice}
-            inputTag='Gil'
+            inputTag="Gil"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {

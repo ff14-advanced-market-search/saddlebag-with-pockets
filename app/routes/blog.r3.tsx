@@ -18,8 +18,8 @@ export const links: LinksFunction = () => [
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
-      <main className='flex-1'>
-        <h1 id='how-to-trade-use-commodity-shortage-futures-as-a-crafter'>
+      <main className="flex-1">
+        <h1 id="how-to-trade-use-commodity-shortage-futures-as-a-crafter">
           How to trade use &quot;Commodity Shortage Futures&quot; as a crafter
         </h1>
         <p>
@@ -34,7 +34,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           what will go up in price so you can reliably post at higher prices to
           earn the most from your crafts!
         </p>
-        <h2 id='filtering-to-find-items-you-can-craft'>
+        <h2 id="filtering-to-find-items-you-can-craft">
           Filtering to find items you can craft
         </h2>
         <p>
@@ -54,7 +54,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           The search is highly customizable so I recommend trying different
           values and finding what works best for you!
         </p>
-        <h2 id='choosing-a-good-market'>Choosing a good market</h2>
+        <h2 id="choosing-a-good-market">Choosing a good market</h2>
         <p>
           This is the most difficult part of the tool as it relies mostly on
           game knowledge. You need to know your markets, know what people
@@ -63,10 +63,10 @@ const HowtoCrossServerTradeinFFXIV = () => {
           recommend also searching on wowhead.com to gain further insight into
           what an item is used for if you are unfamiliar with it.
         </p>
-        <h2 id='using-oribos-exchange'>Using Oribos Exchange</h2>
+        <h2 id="using-oribos-exchange">Using Oribos Exchange</h2>
         <p>
           The best tool for all of this is{' '}
-          <a href='https://oribos.exchange/'>Oribos Exchange</a> and this is why
+          <a href="https://oribos.exchange/">Oribos Exchange</a> and this is why
           we include a link to each item in our search results. Their
           visualization of prices and quantity over time looking at past
           shortages will tell you everything you need to know about the real
@@ -82,7 +82,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           present the data in a visually pleasing way and we use it to search
           for interesting opportunities.
         </p>
-        <h2 id='example-of-a-good-and-bad-shortage-based-on-game-knowledge'>
+        <h2 id="example-of-a-good-and-bad-shortage-based-on-game-knowledge">
           Example of a good and bad shortage based on game knowledge
         </h2>
         <p>
@@ -119,7 +119,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           selling epic enchant and for many classes/specs is BIS and required
           for raiding.
         </p>
-        <h2 id='-quantity-decline-rate-vs-tsm-sales-per-hour-'>
+        <h2 id="-quantity-decline-rate-vs-tsm-sales-per-hour-">
           &quot;Quantity Decline Rate&quot; vs &quot;TSM Sales Per Hour&quot;
         </h2>
         <p>
@@ -195,7 +195,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           sale rate its probably a shortage caused by market manipulation than a
           naturally occuring shortage.
         </p>
-        <h2 id='how-to-pick-prices'>How to pick prices</h2>
+        <h2 id="how-to-pick-prices">How to pick prices</h2>
         <p>This is one of the most difficult issues to solve.</p>
         <ul>
           <li>What is your item really worth? </li>

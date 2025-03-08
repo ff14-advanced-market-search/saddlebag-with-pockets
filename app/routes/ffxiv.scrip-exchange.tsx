@@ -149,19 +149,18 @@ const FFXIVScripExchange = () => {
   return (
     <PageWrapper>
       <>
-        <div className='py-3'>
+        <div className="py-3">
           <SmallFormContainer
-            title='Currency Conversion'
+            title="Currency Conversion"
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
-            disabled={!formState}
-          >
+            disabled={!formState}>
             <>
               <Select
-                title='Currency Type'
-                name='color'
-                defaultValue='Orange'
+                title="Currency Type"
+                name="color"
+                defaultValue="Orange"
                 options={[
                   { label: 'Orange Crafters', value: 'Orange Crafters' },
                   { label: 'Orange Gatherers', value: 'Orange Gatherers' },

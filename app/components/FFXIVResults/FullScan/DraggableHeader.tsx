@@ -59,8 +59,7 @@ const DraggableHeader = ({
         cursor: 'move',
         outline: isOver ? `solid 2px ${outlineColor}` : ''
       }}
-      {...rest}
-    >
+      {...rest}>
       {children}
     </th>
   )

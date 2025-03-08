@@ -145,20 +145,20 @@ function DesktopTable({
   return (
     <div className={wrapperClasses}>
       {title && (
-        <div className='mx-3'>
+        <div className="mx-3">
           <Title title={title} />
         </div>
       )}
       {description && (
-        <div className='mx-3'>
-          <p className='italic text-sm text-grey-500 dark:text-gray-300'>
+        <div className="mx-3">
+          <p className="italic text-sm text-grey-500 dark:text-gray-300">
             {description}
           </p>
         </div>
       )}
-      <div className='py-1 flex justify-between items-start'>
+      <div className="py-1 flex justify-between items-start">
         <PaginationControls table={table} />
-        <div className='w-full ml-2 flex flex-col justify-end items-end gap-3 lg:flex-row'>
+        <div className="w-full ml-2 flex flex-col justify-end items-end gap-3 lg:flex-row">
           {csvOptions && <CSVButton {...csvOptions} data={data} />}
           <DebouncedInput
             onDebouncedChange={(value) => {
@@ -169,10 +169,10 @@ function DesktopTable({
           />
         </div>
       </div>
-      <div className='overflow-x-auto my-2'>
-        <div className='inline-block min-w-full align-middle'>
-          <div className='overflow-scroll max-h-fit shadow ring-1 ring-black ring-opacity-5'>
-            <table className='min-w-full relative divide-y divide-gray-300'>
+      <div className="overflow-x-auto my-2">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-scroll max-h-fit shadow ring-1 ring-black ring-opacity-5">
+            <table className="min-w-full relative divide-y divide-gray-300">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -184,8 +184,7 @@ function DesktopTable({
                           header.column.getCanSort() ? 'cursor-pointer' : '',
                           `px-3 py-3.5 sticky bg-gray-50 top-0 text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600 text-center`
                         )}
-                        key={header.id}
-                      >
+                        key={header.id}>
                         <div className={`group inline-flex`}>
                           {header.isPlaceholder
                             ? null
@@ -199,27 +198,23 @@ function DesktopTable({
                                 ? 'bg-gray-200 rounded dark:bg-gray-500'
                                 : '',
                               ` ml-1 flex flex-0 p-1 justify-center items-center`
-                            )}
-                          >
+                            )}>
                             {{
                               asc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
-                                >
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronUpIcon className={`h-4 w-4`} />
                                 </span>
                               ),
                               desc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
-                                >
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronDownIcon className={`h-4 w-4`} />
                                 </span>
                               )
                             }[header.column.getIsSorted() as string] ?? (
                               <span
-                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}
-                              >
+                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
                                 <ChevronDownIcon className={`h-4 w-4`} />
                               </span>
                             )}
@@ -230,7 +225,7 @@ function DesktopTable({
                   </tr>
                 ))}
               </thead>
-              <tbody className='divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500'>
+              <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800 dark:divide-gray-500">
                 {table.getRowModel().rows.map((row, rowIndex) => (
                   <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
@@ -247,8 +242,7 @@ function DesktopTable({
                                   : 'before:-bottom-1/2'
                               }`
                             : ''
-                        )}
-                      >
+                        )}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -262,8 +256,7 @@ function DesktopTable({
           </div>
           <div>
             <p
-              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}
-            >
+              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
               {`${data.length} results found`}
               {summaryData && summaryData.length > 0 && (
                 <>

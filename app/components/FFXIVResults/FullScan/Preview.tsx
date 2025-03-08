@@ -13,11 +13,10 @@ const Preview = () => {
 
   return isDragging ? (
     <div
-      className='fixed pointer-events-none top-0 left-0 opacity-80 dark:opacity-30 dark:text-gray-100 z-20'
+      className="fixed pointer-events-none top-0 left-0 opacity-80 dark:opacity-30 dark:text-gray-100 z-20"
       style={{
         transform: `translate(${currentOffset?.x}px, ${currentOffset?.y}px) rotate(5deg)`
-      }}
-    >
+      }}>
       {item.stuff}
     </div>
   ) : null

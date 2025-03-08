@@ -107,12 +107,11 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
 
   return (
     <div
-      className={`mt-0 flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md`}
-    >
-      <div className='overflow-x-auto my-2'>
-        <div className='inline-block min-w-full align-middle'>
-          <div className='overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5'>
-            <table className='min-w-full relative divide-y divide-gray-300 dark:bg-gray-600 dark:divide-gray-600'>
+      className={`mt-0 flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md`}>
+      <div className="overflow-x-auto my-2">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
+            <table className="min-w-full relative divide-y divide-gray-300 dark:bg-gray-600 dark:divide-gray-600">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -124,8 +123,7 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
                           header.column.getCanSort() ? 'cursor-pointer' : '',
                           `whitespace-nowrap sticky top-0 px-3 py-3.5 text-center text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600`
                         )}
-                        key={header.id}
-                      >
+                        key={header.id}>
                         <div className={`group inline-flex`}>
                           {header.isPlaceholder
                             ? null
@@ -139,27 +137,23 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
                                 ? 'bg-gray-200 rounded bg-gray-200 dark:bg-gray-500'
                                 : '',
                               ` ml-1 flex-none p-1`
-                            )}
-                          >
+                            )}>
                             {{
                               asc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
-                                >
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronUpIcon className={`h-4 w-4`} />
                                 </span>
                               ),
                               desc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
-                                >
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:bg-gray-700 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
                                   <ChevronDownIcon className={`h-4 w-4`} />
                                 </span>
                               )
                             }[header.column.getIsSorted() as string] ?? (
                               <span
-                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}
-                              >
+                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
                                 <ChevronDownIcon className={`h-4 w-4`} />
                               </span>
                             )}
@@ -170,14 +164,13 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
                   </tr>
                 ))}
               </thead>
-              <tbody className='divide-y divide-gray-200 bg-white dark:bg-slate-800'>
+              <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800">
                 {table.getRowModel().rows.map((row) => (
                   <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className='whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100 text-center'
-                      >
+                        className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100 text-center">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -191,8 +184,7 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
           </div>
           <div>
             <p
-              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}
-            >
+              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
               {`${data.length} results found`}
             </p>
           </div>

@@ -167,16 +167,16 @@ const Index = () => {
     !displayNoResultsPage && results && 'data' in results
 
   return (
-    <main className='flex-1 w-full'>
-      <div className='py-6 w-full'>
-        <div className='w-full px-4 sm:px-6 md:px-8'>
-          <h1 className='text-2xl font-semibold text-green-900 py-6 dark:text-gray-100'>
+    <main className="flex-1 w-full">
+      <div className="py-6 w-full">
+        <div className="w-full px-4 sm:px-6 md:px-8">
+          <h1 className="text-2xl font-semibold text-green-900 py-6 dark:text-gray-100">
             FFXIV Import Search
           </h1>
           {fullScan && !results && (
-            <PreviousResultsLink to='/queries/previous-search?query=fullScan' />
+            <PreviousResultsLink to="/queries/previous-search?query=fullScan" />
           )}
-          <div className='w-full max-w-7xl mx-auto'>
+          <div className="w-full max-w-7xl mx-auto">
             <FullScanForm
               loading={transition.state === 'submitting'}
               onClick={onSubmit}
@@ -207,7 +207,7 @@ const Index = () => {
             </NoResults>
           )}
           {displayResultsTable && (
-            <div className='w-full'>
+            <div className="w-full">
               <Results rows={results.data} />
             </div>
           )}

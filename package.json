@@ -15,7 +15,7 @@
     "dev:remix": "remix watch",
     "dev:wrangler": "wrangler pages dev ./public",
     "generate:css": "npx tailwindcss -o ./app/tailwind.css",
-    "prettier": "prettier --write app",
+    "prettier": "prettier --version && prettier --write app",
     "prettier:check": "prettier --check app",
     "test": "vitest",
     "prepare": "husky install",

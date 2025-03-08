@@ -17,10 +17,10 @@ export const links: LinksFunction = () => [
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
-      <main className='flex-1'>
+      <main className="flex-1">
         <p>
           Our{' '}
-          <a href='https://saddlebagexchange.com/ffxiv/marketshare/queries'>
+          <a href="https://saddlebagexchange.com/ffxiv/marketshare/queries">
             Market overview
           </a>{' '}
           will show you the top 200 best items to sell on the marketboard from a
@@ -31,10 +31,10 @@ const HowtoCrossServerTradeinFFXIV = () => {
           highest quality sold, and the highest average/median/minimum prices!
         </p>
         {/*<p><img src="https://user-images.githubusercontent.com/17516896/225352949-d52f8a1e-fd08-4f51-aa1a-8df282bb38e4.png" alt="image"></p>*/}
-        <h1 id='how-to-earn-gil-with-the-market-overview'>
+        <h1 id="how-to-earn-gil-with-the-market-overview">
           How to earn gil with the market overview
         </h1>
-        <h2 id='tldr-'>TLDR:</h2>
+        <h2 id="tldr-">TLDR:</h2>
         <p>
           The simplest way to earn gil with this is by selling items that are{' '}
           <strong>
@@ -60,7 +60,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           fast-selling searches are great places to start. You can make your own
           search by changing the numbers, however, we have created searches with
           defaults open for public usage under the{' '}
-          <a href='https://saddlebagexchange.com/ffxiv/marketshare/queries'>
+          <a href="https://saddlebagexchange.com/ffxiv/marketshare/queries">
             main page for the market overviews.
           </a>
         </p>
@@ -96,18 +96,18 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             ✅ Here&#39;s a link to find that{' '}
-            <a href='https://saddlebagexchange.com/queries/item-history'>
+            <a href="https://saddlebagexchange.com/queries/item-history">
               history overview
             </a>{' '}
             search to find specific items on the <em>Region Price History</em>{' '}
             chart. Check out{' '}
-            <a href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-use-Item-Data-Searches-to-help-you-find-good-items-to-trade'>
+            <a href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-use-Item-Data-Searches-to-help-you-find-good-items-to-trade">
               our guide on this
             </a>{' '}
             for more info on how to use our history overview.{' '}
           </li>
         </ul>
-        <h2 id='how-to-search-for-items'>How to search for items</h2>
+        <h2 id="how-to-search-for-items">How to search for items</h2>
         <p>
           The market overview has several options which point out the{' '}
           <em>best</em> selling item based on a number of categories{' '}
@@ -187,7 +187,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             price.
           </li>
         </ul>
-        <h2 id='using-the-statistics-table'>Using the statistics table</h2>
+        <h2 id="using-the-statistics-table">Using the statistics table</h2>
         {/*<p><img src="https://user-images.githubusercontent.com/17516896/225390829-18d70faa-4348-480a-9bd7-ef692052cb02.png" alt="image"></p>*/}
         <p>
           The table below the heat map has columns that can be sorted (by
@@ -202,7 +202,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           <li>Percent Changed: The change in price vs the average price</li>
           <li>
             Market State:{' '}
-            <a href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-trade-using-our-FFXIV-Market-Overview#using-the-heatmap-tabs'>
+            <a href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-trade-using-our-FFXIV-Market-Overview#using-the-heatmap-tabs">
               See the info on this from the heatmap section
             </a>
           </li>
@@ -227,7 +227,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             vendor in-game
           </li>
         </ul>
-        <h2 id='using-the-heatmap-tabs'>Using the heatmap tabs</h2>
+        <h2 id="using-the-heatmap-tabs">Using the heatmap tabs</h2>
         <p>
           Clicking the different tabs on top of the heat map will show you
           different stats with boxes colored by price percent increase.
@@ -267,7 +267,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
         <p>
           This is most useful when using the <code>Sort Results by</code> option
           for the{' '}
-          <a href='https://saddlebagexchange.com/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=0&amp;sortBy=percentChange'>
+          <a href="https://saddlebagexchange.com/ffxiv/marketshare?timePeriod=168&amp;salesAmount=3&amp;averagePrice=10000&amp;filters=0&amp;sortBy=percentChange">
             Highest Price Percent Increases Weekly
           </a>
           , which shows dozens of high value out of stock items or items at such

@@ -11,8 +11,7 @@ export const TitleH2 = ({
     className={classNames(
       `text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100`,
       className
-    )}
-  >
+    )}>
     {title}
   </h2>
 )

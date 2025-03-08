@@ -21,7 +21,7 @@ const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
       <Banner />
-      <main className='flex-1'>
+      <main className="flex-1">
         <h1>
           <strong> Leveraging Social Trading Platforms</strong>
         </h1>

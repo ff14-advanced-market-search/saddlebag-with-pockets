@@ -67,30 +67,29 @@ const FullScanForm = ({
 
   return (
     <>
-      <Form method='POST' action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className='mt-5 md:mt-0 md:col-span-3 py-6'>
-          <div className='shadow sm:rounded-md'>
-            <div className='px-4 py-5 shadow sm:rounded-md bg-white sm:p-6 dark:bg-slate-700'>
-              <div className='flex justify-end mb-2'>
+      <Form method="POST" action={getActionUrl(PAGE_URL, searchParams)}>
+        <div className="mt-5 md:mt-0 md:col-span-3 py-6">
+          <div className="shadow sm:rounded-md">
+            <div className="px-4 py-5 shadow sm:rounded-md bg-white sm:p-6 dark:bg-slate-700">
+              <div className="flex justify-end mb-2">
                 <SubmitButton
-                  title='Share this search!'
+                  title="Share this search!"
                   onClick={handleCopyButton}
-                  type='button'
+                  type="button"
                 />
               </div>
-              <div className='grid grid-cols-6 gap-6'>
-                <div className='col-span-6 sm:col-span-3'>
+              <div className="grid grid-cols-6 gap-6">
+                <div className="col-span-6 sm:col-span-3">
                   <label
-                    htmlFor='scan-hours'
-                    className='block text-sm font-medium text-gray-700'
-                  >
+                    htmlFor="scan-hours"
+                    className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
-                      title='Scan Hours'
+                      title="Scan Hours"
                       relative
                       toolTip={
                         <>
                           The time period to search over. ex:{' '}
-                          <code className='font-mono'>24</code> is the past 24
+                          <code className="font-mono">24</code> is the past 24
                           hours. For more items to sell choose a higher number.
                         </>
                       }
@@ -98,9 +97,9 @@ const FullScanForm = ({
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
-                      type='number'
+                      type="number"
                       max={1000000000}
-                      id='scan-hours'
+                      id="scan-hours"
                       defaultValue={defaultHours}
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
@@ -111,28 +110,26 @@ const FullScanForm = ({
 
                         handleFormChange('hours', value.toString())
                       }}
-                      name='scan_hours'
-                      className='flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
+                      name="scan_hours"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}
-                    >
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       hours
                     </span>
                   </div>
                 </div>
-                <div className='col-span-6 sm:col-span-3'>
+                <div className="col-span-6 sm:col-span-3">
                   <label
-                    htmlFor='sale-amt'
-                    className='block text-sm font-medium text-gray-700'
-                  >
+                    htmlFor="sale-amt"
+                    className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
-                      title='Sale Amount'
+                      title="Sale Amount"
                       relative
                       toolTip={
                         <>
                           Number of sales in that time. ex:{' '}
-                          <code className='font-mono'>5</code> is 5 sales in
+                          <code className="font-mono">5</code> is 5 sales in
                           that selected time period. For more items to sell
                           choose a lower number.
                         </>
@@ -140,9 +137,9 @@ const FullScanForm = ({
                     />
                   </label>
                   <input
-                    type='number'
+                    type="number"
                     max={1000000000}
-                    id='sale-amt'
+                    id="sale-amt"
                     defaultValue={defaultSalesAmount}
                     onChange={(event) => {
                       const value = parseFloat(event.target.value)
@@ -152,23 +149,22 @@ const FullScanForm = ({
                       }
                       handleFormChange('salesAmount', value.toString())
                     }}
-                    name='sale_amount'
-                    className='mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
+                    name="sale_amount"
+                    className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                   />
                 </div>
 
-                <div className='col-span-6 sm:col-span-3 xl:col-span-2'>
+                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
-                    htmlFor='roi'
-                    className='block text-sm font-medium text-gray-700'
-                  >
+                    htmlFor="roi"
+                    className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
-                      title='Return on Investment'
+                      title="Return on Investment"
                       relative
                       toolTip={
                         <>
                           Desired R.O.I (return on investment): ex:{' '}
-                          <code className='font-mono'>50</code> means that 50%
+                          <code className="font-mono">50</code> means that 50%
                           of the revenue you get from a sale should be all
                           profit (after tax). For more profit, choose a higher
                           number from 1 to 100.
@@ -178,9 +174,9 @@ const FullScanForm = ({
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
-                      type='number'
+                      type="number"
                       max={1000000000}
-                      name='roi'
+                      name="roi"
                       defaultValue={defaultROI}
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
@@ -190,28 +186,26 @@ const FullScanForm = ({
                         }
                         handleFormChange('ROI', value.toString())
                       }}
-                      id='roi'
-                      className='flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
+                      id="roi"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}
-                    >
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       %
                     </span>
                   </div>
                 </div>
-                <div className='col-span-6 sm:col-span-3 xl:col-span-2'>
+                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
-                    htmlFor='price_per_unit'
-                    className='block text-sm font-medium text-gray-700'
-                  >
+                    htmlFor="price_per_unit"
+                    className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
-                      title='Average Price Per Unit'
+                      title="Average Price Per Unit"
                       relative
                       toolTip={
                         <>
                           Desired Average Price Per Unit. ex:{' '}
-                          <code className='font-mono'>10000</code> is only show
+                          <code className="font-mono">10000</code> is only show
                           deals that sell on average for 10000 gil or greater.
                           For more items to sell choose a lower number.
                         </>
@@ -220,9 +214,9 @@ const FullScanForm = ({
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
-                      type='number'
+                      type="number"
                       max={1000000000}
-                      name='price_per_unit'
+                      name="price_per_unit"
                       defaultValue={defaultPricePerUnit}
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
@@ -232,28 +226,26 @@ const FullScanForm = ({
                         }
                         handleFormChange('pricePerUnit', value.toString())
                       }}
-                      id='price_per_unit'
-                      className='flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
+                      id="price_per_unit"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}
-                    >
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       gil
                     </span>
                   </div>
                 </div>
-                <div className='col-span-6 sm:col-span-3 xl:col-span-2'>
+                <div className="col-span-6 sm:col-span-3 xl:col-span-2">
                   <label
-                    htmlFor='minimum_profit_amount'
-                    className='block text-sm font-medium text-gray-700'
-                  >
+                    htmlFor="minimum_profit_amount"
+                    className="block text-sm font-medium text-gray-700">
                     <TitleTooltip
-                      title='Minimum Profit Amount'
+                      title="Minimum Profit Amount"
                       relative
                       toolTip={
                         <>
                           Desired Min Profit Amount. ex:{' '}
-                          <code className='font-mono'>10000</code> is only show
+                          <code className="font-mono">10000</code> is only show
                           deals that yields 10000 gil profit or greater. For
                           more items to sell choose a lower number.
                         </>
@@ -262,9 +254,9 @@ const FullScanForm = ({
                   </label>
                   <div className={`mt-1 flex rounded-md shadow-sm`}>
                     <input
-                      type='number'
+                      type="number"
                       max={1000000000}
-                      name='minimum_profit_amount'
+                      name="minimum_profit_amount"
                       defaultValue={defaultMinimumProfitAmount}
                       onChange={(event) => {
                         const value = parseFloat(event.target.value)
@@ -277,12 +269,11 @@ const FullScanForm = ({
                           value.toString()
                         )
                       }}
-                      id='minimum_profit_amount'
-                      className='flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
+                      id="minimum_profit_amount"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                     />
                     <span
-                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}
-                    >
+                      className={`inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700 dark:border-gray-400`}>
                       gil
                     </span>
                   </div>
@@ -290,12 +281,11 @@ const FullScanForm = ({
               </div>
 
               <>
-                <div className='w-full flex justify-center items-center'>
+                <div className="w-full flex justify-center items-center">
                   <button
-                    className='text-center text-sm font-medium flex grow-0 shrink-0 justify-center items-center my-2 dark:text-gray-200'
-                    type='button'
-                    onClick={() => setFormOpened((state) => !state)}
-                  >
+                    className="text-center text-sm font-medium flex grow-0 shrink-0 justify-center items-center my-2 dark:text-gray-200"
+                    type="button"
+                    onClick={() => setFormOpened((state) => !state)}>
                     Advanced Search Options
                     <ChevronDownIcon
                       className={
@@ -310,20 +300,18 @@ const FullScanForm = ({
                     formOpened
                       ? 'grid grid-cols-6 gap-6'
                       : 'max-h-0 p-0 m-0 overflow-hidden'
-                  }
-                >
+                  }>
                   <div className={`col-span-6 sm:col-span-3 xl:col-span-2`}>
                     <label
-                      htmlFor='minimum_stack_size'
-                      className='block text-sm font-medium text-gray-700'
-                    >
+                      htmlFor="minimum_stack_size"
+                      className="block text-sm font-medium text-gray-700">
                       <TitleTooltip
-                        title='Minimum Stack Size'
+                        title="Minimum Stack Size"
                         relative
                         toolTip={
                           <>
                             Desired Min Stack Size. ex:{' '}
-                            <code className='font-mono'>10</code> is only show
+                            <code className="font-mono">10</code> is only show
                             deals you can get in stacks of 10 or greater. For
                             more items to sell choose a lower number.
                           </>
@@ -332,9 +320,9 @@ const FullScanForm = ({
                     </label>
                     <div className={`mt-1 flex rounded-md shadow-sm`}>
                       <input
-                        type='number'
+                        type="number"
                         max={1000000000}
-                        name='minimum_stack_size'
+                        name="minimum_stack_size"
                         defaultValue={defaultMinimumStackSize}
                         onChange={(event) => {
                           const value = parseFloat(event.target.value)
@@ -344,8 +332,8 @@ const FullScanForm = ({
                           }
                           handleFormChange('minimumStackSize', value.toString())
                         }}
-                        id='minimum_stack_size'
-                        className='flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
+                        id="minimum_stack_size"
+                        className="flex-1 min-w-0 block w-full px-3 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
                       />
                     </div>
                   </div>
@@ -355,16 +343,16 @@ const FullScanForm = ({
                     }
                     defaultFilters={defaultFilters}
                   />
-                  <div className='col-span-6 sm:col-span-3 xl:col-span-2'>
-                    <fieldset className='space-y-5'>
-                      <legend className='sr-only'>Force HQ only</legend>
-                      <div className='relative flex items-start'>
-                        <div className='flex items-center h-5'>
+                  <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                    <fieldset className="space-y-5">
+                      <legend className="sr-only">Force HQ only</legend>
+                      <div className="relative flex items-start">
+                        <div className="flex items-center h-5">
                           <input
-                            id='hq_only'
-                            aria-describedby='comments-description'
-                            name='hq_only'
-                            type='checkbox'
+                            id="hq_only"
+                            aria-describedby="comments-description"
+                            name="hq_only"
+                            type="checkbox"
                             defaultChecked={defaultHQChecked}
                             onChange={(event) => {
                               const value = event.target.checked
@@ -372,17 +360,16 @@ const FullScanForm = ({
                               handleFormChange('hQChecked', value.toString())
                               setHQChecked(value)
                             }}
-                            className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                            className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                           />
                         </div>
-                        <div className='ml-3 text-sm'>
+                        <div className="ml-3 text-sm">
                           <label
-                            htmlFor='hq_only'
-                            className='font-medium text-gray-700 dark:text-gray-200'
-                          >
+                            htmlFor="hq_only"
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Enable HQ only
                           </label>
-                          <p className='mt-2 text-sm text-gray-500 dark:text-gray-300'>
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Only search for hq prices
                           </p>
                         </div>
@@ -390,16 +377,16 @@ const FullScanForm = ({
                     </fieldset>
                   </div>
 
-                  <div className='col-span-6 sm:col-span-3 xl:col-span-2'>
-                    <fieldset className='space-y-5'>
-                      <legend className='sr-only'>Region Wide Search</legend>
-                      <div className='relative flex items-start'>
-                        <div className='flex items-center h-5'>
+                  <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                    <fieldset className="space-y-5">
+                      <legend className="sr-only">Region Wide Search</legend>
+                      <div className="relative flex items-start">
+                        <div className="flex items-center h-5">
                           <input
-                            id='region_wide'
-                            aria-describedby='comments-description'
-                            name='region_wide'
-                            type='checkbox'
+                            id="region_wide"
+                            aria-describedby="comments-description"
+                            name="region_wide"
+                            type="checkbox"
                             defaultChecked={defaultRegionWideChecked}
                             onChange={(event) => {
                               const value = event.target.checked
@@ -409,17 +396,16 @@ const FullScanForm = ({
                                 value.toString()
                               )
                             }}
-                            className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                            className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                           />
                         </div>
-                        <div className='ml-3 text-sm'>
+                        <div className="ml-3 text-sm">
                           <label
-                            htmlFor='region_wide'
-                            className='font-medium text-gray-700 dark:text-gray-200'
-                          >
+                            htmlFor="region_wide"
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Region Wide Search
                           </label>
-                          <p className='mt-2 text-sm text-gray-500 dark:text-gray-300'>
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Search all servers in all DataCenters in your
                             region.
                           </p>
@@ -428,16 +414,16 @@ const FullScanForm = ({
                     </fieldset>
                   </div>
 
-                  <div className='col-span-6 sm:col-span-3 xl:col-span-2'>
-                    <fieldset className='space-y-5'>
-                      <legend className='sr-only'>Include Out of Stock</legend>
-                      <div className='relative flex items-start'>
-                        <div className='flex items-center h-5'>
+                  <div className="col-span-6 sm:col-span-3 xl:col-span-2">
+                    <fieldset className="space-y-5">
+                      <legend className="sr-only">Include Out of Stock</legend>
+                      <div className="relative flex items-start">
+                        <div className="flex items-center h-5">
                           <input
-                            id='out_of_stock'
-                            aria-describedby='comments-description'
-                            name='out_of_stock'
-                            type='checkbox'
+                            id="out_of_stock"
+                            aria-describedby="comments-description"
+                            name="out_of_stock"
+                            type="checkbox"
                             defaultChecked={defaultOutOfStockChecked}
                             onChange={(event) => {
                               const value = event.target.checked
@@ -447,17 +433,16 @@ const FullScanForm = ({
                                 value.toString()
                               )
                             }}
-                            className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                            className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                           />
                         </div>
-                        <div className='ml-3 text-sm'>
+                        <div className="ml-3 text-sm">
                           <label
-                            htmlFor='out_of_stock'
-                            className='font-medium text-gray-700 dark:text-gray-200'
-                          >
+                            htmlFor="out_of_stock"
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Include Out of Stock
                           </label>
-                          <p className='mt-2 text-sm text-gray-500 dark:text-gray-300'>
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Include out of stock items from the list (they will
                             show up as having 100% profit margins and 1 bil gil
                             profit).
@@ -472,17 +457,16 @@ const FullScanForm = ({
                       hqChecked === true
                         ? 'h-0 w-0 p-0 m-0 overflow-hidden'
                         : 'col-span-6 sm:col-span-3 xl:col-span-2'
-                    }
-                  >
-                    <fieldset className='space-y-5'>
-                      <legend className='sr-only'>Include Vendor Prices</legend>
-                      <div className='relative flex items-start'>
-                        <div className='flex items-center h-5'>
+                    }>
+                    <fieldset className="space-y-5">
+                      <legend className="sr-only">Include Vendor Prices</legend>
+                      <div className="relative flex items-start">
+                        <div className="flex items-center h-5">
                           <input
-                            id='include_vendor'
-                            aria-describedby='comments-description'
-                            name='include_vendor'
-                            type='checkbox'
+                            id="include_vendor"
+                            aria-describedby="comments-description"
+                            name="include_vendor"
+                            type="checkbox"
                             defaultChecked={defaultIncludeVendorChecked}
                             onChange={(event) => {
                               const value = event.target.checked
@@ -492,17 +476,16 @@ const FullScanForm = ({
                                 value.toString()
                               )
                             }}
-                            className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                            className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                           />
                         </div>
-                        <div className='ml-3 text-sm'>
+                        <div className="ml-3 text-sm">
                           <label
-                            htmlFor='include_vendor'
-                            className='font-medium text-gray-700 dark:text-gray-200'
-                          >
+                            htmlFor="include_vendor"
+                            className="font-medium text-gray-700 dark:text-gray-200">
                             Include Vendor Prices
                           </label>
-                          <p className='mt-2 text-sm text-gray-500 dark:text-gray-300'>
+                          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                             Compare market prices vs vendor prices on NQ items
                             that can be purchased from vendors.
                           </p>
@@ -516,11 +499,11 @@ const FullScanForm = ({
           </div>
         </div>
 
-        <div className='flex justify-end mb-3'>
+        <div className="flex justify-end mb-3">
           {error && (
-            <p className='self-start text-red-500 dark:text-red-300'>{error}</p>
+            <p className="self-start text-red-500 dark:text-red-300">{error}</p>
           )}
-          <SubmitButton title='Search' loading={loading} onClick={onClick} />
+          <SubmitButton title="Search" loading={loading} onClick={onClick} />
         </div>
       </Form>
     </>

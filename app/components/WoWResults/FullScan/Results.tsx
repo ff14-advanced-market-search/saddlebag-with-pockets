@@ -14,7 +14,7 @@ import { findRegionByWorldId } from '~/utils/WoWServers'
 const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
   <ExternalLink
     link={'https://www.wowhead.com/item=' + row.itemID}
-    text='WoWHead'
+    text="WoWHead"
   />
 )
 
@@ -139,7 +139,7 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
   }
 
   return (
-    <div ref={divRef} className='my-4'>
+    <div ref={divRef} className="my-4">
       <Section>
         <>
           <SmallTable
@@ -148,8 +148,8 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             mobileColumnList={mobileProfitableItemsList}
             columnSelectOptions={profiableSelectOptions}
             sortingOrder={[{ id: 'profit', desc: true }]}
-            title='Profitable Items With Sales'
-            description='This shows items you can buy on your home server and sell on your new server for a profit!'
+            title="Profitable Items With Sales"
+            description="This shows items you can buy on your home server and sell on your new server for a profit!"
             fitScreen={true}
             csvOptions={{
               ...profitableItemsCSVOptions,
@@ -162,8 +162,8 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             mobileColumnList={mobileOosList}
             columnSelectOptions={oosSelectOptions}
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
-            title='Out of Stock Items With Sales'
-            description='This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!'
+            title="Out of Stock Items With Sales"
+            description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
             fitScreen={true}
             csvOptions={{
               ...outOfStockCSVOptions,
@@ -176,8 +176,8 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             mobileColumnList={mobileProfitableItemsList}
             columnSelectOptions={profiableSelectOptions}
             sortingOrder={[{ id: 'profit', desc: true }]}
-            title='Profitable Items'
-            description='This shows items you can buy on your home server and sell on your new server for a profit!'
+            title="Profitable Items"
+            description="This shows items you can buy on your home server and sell on your new server for a profit!"
             csvOptions={profitableItemsCSVOptions}
             fitScreen={true}
           />
@@ -187,8 +187,8 @@ export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
             mobileColumnList={mobileOosList}
             columnSelectOptions={oosSelectOptions}
             sortingOrder={[{ id: 'historicPrice', desc: true }]}
-            title='Out of Stock Items'
-            description='This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!'
+            title="Out of Stock Items"
+            description="This shows items that are not listed on the new server. You can buy on your home server and sell them for any price you want on your new server!"
             fitScreen={true}
             csvOptions={outOfStockCSVOptions}
           />

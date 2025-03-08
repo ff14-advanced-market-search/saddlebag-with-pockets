@@ -65,10 +65,10 @@ export const SortBySelect = ({
   onChange?: (value: MarketshareSortBy) => void
   defaultValue?: MarketshareSortBy
 }) => (
-  <div className='mt-2'>
-    <Label htmlFor='sortBy'>{label}</Label>
+  <div className="mt-2">
+    <Label htmlFor="sortBy">{label}</Label>
     <select
-      name='sortBy'
+      name="sortBy"
       defaultValue={defaultValue}
       onChange={(event) => {
         if (onChange) {
@@ -82,8 +82,7 @@ export const SortBySelect = ({
           }
         }
       }}
-      className='flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400'
-    >
+      className="flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
       {sortByOptions.map(({ label, value }) => (
         <option key={value} value={value}>
           {label}
@@ -102,7 +101,7 @@ export const TabbedButtons = ({
   onClick: (value: string) => void
   options: Array<{ value: string; label: string }>
 }) => (
-  <div className='hidden md:flex mt-2 gap-2 overflow-x-auto'>
+  <div className="hidden md:flex mt-2 gap-2 overflow-x-auto">
     {options.map(({ value, label }) => {
       const selected = value === currentValue
       return (
@@ -114,9 +113,8 @@ export const TabbedButtons = ({
               : 'bg-gray-200 text-gray-700 dark:bg-slate-700 dark:text-gray-200 shadow-[inset_0_-3px_3px_rgba(0,0,0,0.2)]'
           } px-2 py-1 grow w-1/3 rounded-t-md`}
           disabled={value === currentValue}
-          type='button'
-          onClick={() => onClick(value)}
-        >
+          type="button"
+          onClick={() => onClick(value)}>
           {label}
         </button>
       )
@@ -212,9 +210,8 @@ export const Results = ({
   const [globalFilter, setGlobalFilter] = useState('')
   const chartData = getChartData(data, sortBy)
 
-  const sortByTitleValue = sortByOptions.find(
-    ({ value }) => value === sortBy
-  )?.label
+  const sortByTitleValue = sortByOptions.find(({ value }) => value === sortBy)
+    ?.label
 
   const chartTitle = sortByTitleValue
     ? `Marketshare Overview - ${sortByTitleValue}`
@@ -235,8 +232,8 @@ export const Results = ({
             }}
             options={sortByOptions}
           />
-          <div className='md:hidden py-2'>
-            <SortBySelect onChange={setSortBy} label='Sort By' />
+          <div className="md:hidden py-2">
+            <SortBySelect onChange={setSortBy} label="Sort By" />
           </div>
 
           <TreemapChart
@@ -246,9 +243,9 @@ export const Results = ({
           />
         </>
       </ContentContainer>
-      <div className='my-2 flex justify-between'>
+      <div className="my-2 flex justify-between">
         <CSVButton
-          filename='saddlebag-marketshare.csv'
+          filename="saddlebag-marketshare.csv"
           data={data}
           columns={csvColumns}
         />
@@ -260,7 +257,7 @@ export const Results = ({
           placeholder={'Search...'}
         />
       </div>
-      <div className='hidden sm:block'>
+      <div className="hidden sm:block">
         <FullTable<MarketshareItem>
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}

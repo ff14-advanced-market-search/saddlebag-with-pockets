@@ -164,20 +164,18 @@ const Index = () => {
               Pick a list of your favorite World of Warcraft items for{' '}
               {priceOrQuantity} alerts. Then join the{' '}
               <a
-                href='https://discord.gg/saddlebag-exchange-973380473281724476'
-                target='_blank'
-                rel='noreferrer'
-                className='text-blue-500 dark:text-blue-300 hover:underline'
-              >
+                href="https://discord.gg/saddlebag-exchange-973380473281724476"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-500 dark:text-blue-300 hover:underline">
                 Saddlebag Exchange Discord Server
               </a>{' '}
               to use this list in for our{' '}
               <a
-                href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/WoW-discord-price-sniper-and-spike-alerts'
-                target='_blank'
-                rel='noreferrer'
-                className='text-blue-500 dark:text-blue-300 hover:underline'
-              >
+                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/WoW-discord-price-sniper-and-spike-alerts"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-500 dark:text-blue-300 hover:underline">
                 Price Sniper and Price Spike Discord Alerts.
               </a>{' '}
             </>
@@ -204,58 +202,56 @@ const Index = () => {
             setJsonData({ ...jsonData, userAuctions })
             setFormState(null)
           }}
-          buttonTitle='Add'
-        >
+          buttonTitle="Add">
           <>
             <div
-              className='p-4'
+              className="p-4"
               onChange={(event: React.SyntheticEvent<EventTarget>) => {
                 const value = (event.target as HTMLInputElement).value
                 if (value === 'price') setIsPrice(true)
                 if (value === 'quantity') setIsPrice(false)
-              }}
-            >
+              }}>
               <Label>Alert on Price or Quantity of item: </Label>
-              <div className='flex gap-2'>
-                <Label htmlFor='radio-price'>
+              <div className="flex gap-2">
+                <Label htmlFor="radio-price">
                   <input
-                    id='radio-price'
-                    type='radio'
-                    value='price'
-                    name='price-quantity'
+                    id="radio-price"
+                    type="radio"
+                    value="price"
+                    name="price-quantity"
                     defaultChecked={isPrice === true}
                   />{' '}
                   Price
                 </Label>
-                <Label htmlFor='radio-quantity'>
+                <Label htmlFor="radio-quantity">
                   <input
-                    id='radio-quantity'
-                    type='radio'
-                    value='quantity'
-                    name='price-quantity'
+                    id="radio-quantity"
+                    type="radio"
+                    value="quantity"
+                    name="price-quantity"
                     defaultChecked={isPrice === false}
                   />{' '}
                   Quantity
                 </Label>
               </div>
             </div>
-            <div className='px-4'>
+            <div className="px-4">
               <DebouncedSelectInput
-                id='wow-item-search'
-                title='Search for item by name'
-                tooltip='Select items to generate an alert for'
-                placeholder='Search for items...'
-                label='Item'
+                id="wow-item-search"
+                title="Search for item by name"
+                tooltip="Select items to generate an alert for"
+                placeholder="Search for items..."
+                label="Item"
                 selectOptions={wowItemsList}
                 onSelect={handleInputChange}
               />
             </div>
             {formState && (
-              <div className='sm:px-4'>
+              <div className="sm:px-4">
                 <InputWithLabel
                   labelTitle={`${isPrice ? 'Price' : 'Quantity'} to alert on`}
-                  type='number'
-                  inputTag='Gold'
+                  type="number"
+                  inputTag="Gold"
                   min={0.0}
                   step={100}
                   value={formState.price}
@@ -292,7 +288,7 @@ const Index = () => {
                   }}
                 />
                 <div
-                  className='my-2'
+                  className="my-2"
                   onChange={(event: React.SyntheticEvent<EventTarget>) => {
                     const value = (event.target as HTMLInputElement).value
                     if (value === 'above' || value === 'below') {
@@ -301,26 +297,25 @@ const Index = () => {
                         desiredState: value
                       })
                     }
-                  }}
-                >
+                  }}>
                   <Label> Alert when {priceOrQuantity} is: </Label>
-                  <Label htmlFor='radio-below'>
+                  <Label htmlFor="radio-below">
                     <input
-                      id='radio-below'
-                      type='radio'
-                      value='below'
-                      name='alertOn'
+                      id="radio-below"
+                      type="radio"
+                      value="below"
+                      name="alertOn"
                       defaultChecked={formState.desiredState === 'below'}
                     />{' '}
                     Below {formState.price.toLocaleString()}
                     {isPrice ? ' Gold' : ''}
                   </Label>
-                  <Label htmlFor='radio-above'>
+                  <Label htmlFor="radio-above">
                     <input
-                      id='radio-above'
-                      type='radio'
-                      value='above'
-                      name='alertOn'
+                      id="radio-above"
+                      type="radio"
+                      value="above"
+                      name="alertOn"
                       defaultChecked={formState.desiredState === 'above'}
                     />{' '}
                     Above {formState.price.toLocaleString()}
@@ -331,15 +326,14 @@ const Index = () => {
             )}
           </>
         </SmallFormContainer>
-        <div className='max-w-4xl mx-auto px-4'>
+        <div className="max-w-4xl mx-auto px-4">
           <CodeBlock
             title={`Input for ${priceOrQuantity} alerts`}
-            buttonTitle='Copy'
+            buttonTitle="Copy"
             codeString={jsonToDisplay}
-            onClick={() => alert('Copied to clipboard!')}
-          >
-            <div className='mb-1'>
-              <p className='italic text-sm text-blue-900 py-2 dark:text-gray-100'>
+            onClick={() => alert('Copied to clipboard!')}>
+            <div className="mb-1">
+              <p className="italic text-sm text-blue-900 py-2 dark:text-gray-100">
                 For the discord bot, use the{' '}
                 {isPrice ? (
                   <span>
@@ -355,7 +349,7 @@ const Index = () => {
               </p>
               <RegionAndServerSelect
                 region={jsonData.region}
-                serverSelectFormName='wow-server-select'
+                serverSelectFormName="wow-server-select"
                 defaultRealm={wowRealm}
                 regionOnChange={handleRegionChange}
                 onServerTextChange={handleTextChange}

@@ -9,7 +9,7 @@ type Props = {
 const UniversalisBadgedLink: FC<Props> = ({ link }) => {
   return (
     <a href={link} target={`_blank`} title={`Open link in Universalis`}>
-      <span className='group inline-flex items-center rounded-md bg-black px-2.5 py-1 text-sm font-medium text-white cursor-pointer overflow-hidden'>
+      <span className="group inline-flex items-center rounded-md bg-black px-2.5 py-1 text-sm font-medium text-white cursor-pointer overflow-hidden">
         <UniversalisBadge
           className={`w-[26px] h-[26px]  group-hover:scale-125 transition ease-in-out duration-300`}
         />

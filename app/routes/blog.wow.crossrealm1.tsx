@@ -20,7 +20,7 @@ export const links: LinksFunction = () => [
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
-      <main className='flex-1'>
+      <main className="flex-1">
         <h1 className={`text-2xl`}>
           Breaking News: WoW Cross Realm Trading Announcement
         </h1>
@@ -31,13 +31,13 @@ const HowtoCrossServerTradeinFFXIV = () => {
           be very useful.
         </p>
         <p>
-          <a href='https://saddlebagexchange.com/wow/full-scan'>
+          <a href="https://saddlebagexchange.com/wow/full-scan">
             For example here&#39;s a search that shows you the best dragonflight
             items to buy on one server to sell on another.
           </a>
         </p>
         <p>
-          <a href='https://github.com/ff14-advanced-market-search/mega-alerts'>
+          <a href="https://github.com/ff14-advanced-market-search/mega-alerts">
             We also have an Ultra Fast API based sniper that can find deals to
             snipe across all realms mere seconds after the blizzard ah api data
             updates!
@@ -46,7 +46,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           realm potential snipes are in!
         </p>
         <p>
-          <a href='https://temp.saddlebagexchange.com/'>
+          <a href="https://temp.saddlebagexchange.com/">
             Going further we just finished developing a whole set of pet
             arbitrage trading tools for more efficient trading of pets across
             servers.
@@ -66,24 +66,24 @@ const HowtoCrossServerTradeinFFXIV = () => {
         <ul>
           <li>
             An{' '}
-            <a href='https://temp.saddlebagexchange.com/petmarketshare'>
+            <a href="https://temp.saddlebagexchange.com/petmarketshare">
               &quot;Estimated Pet Marketshare&quot;
             </a>{' '}
             that lets you view all TSM sale rates in one page, to find fast
             selling pets to trade. We already have marketshare searches that use
             TSM sale data to find{' '}
-            <a href='https://saddlebagexchange.com/wow/marketshare'>
+            <a href="https://saddlebagexchange.com/wow/marketshare">
               Dragonflight Items
             </a>{' '}
             and{' '}
-            <a href='https://saddlebagexchange.com/wow/legacy-marketshare'>
+            <a href="https://saddlebagexchange.com/wow/legacy-marketshare">
               Legacy Items
             </a>{' '}
             to sell.
           </li>
           <li>
             A{' '}
-            <a href='https://temp.saddlebagexchange.com/petshoppinglist'>
+            <a href="https://temp.saddlebagexchange.com/petshoppinglist">
               &quot;Shopping List Search&quot;
             </a>{' '}
             search for finding which servers have the best deals for buying
@@ -92,17 +92,17 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             An{' '}
-            <a href='https://temp.saddlebagexchange.com/petexport'>
+            <a href="https://temp.saddlebagexchange.com/petexport">
               &quot;Export Search&quot;
             </a>{' '}
             to finding the best servers to sell items on by highest ah price and
             highest{' '}
-            <a href='https://wowprogress.com/realms/rank/'>WoW Progress</a>{' '}
+            <a href="https://wowprogress.com/realms/rank/">WoW Progress</a>{' '}
             population size (letting you filter out low pop realms).
           </li>
           <li>
             An{' '}
-            <a href='https://temp.saddlebagexchange.com/petexport'>
+            <a href="https://temp.saddlebagexchange.com/petexport">
               &quot;Import Search&quot;
             </a>{' '}
             for finding the best items to buy on other servers and sell on your
@@ -113,11 +113,11 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             A{' '}
-            <a href='https://temp.saddlebagexchange.com/regionundercut'>
+            <a href="https://temp.saddlebagexchange.com/regionundercut">
               <strong>Region Wide Undercut Check</strong>
             </a>{' '}
             made with our own{' '}
-            <a href='https://www.curseforge.com/wow/addons/saddlebag-exchange'>
+            <a href="https://www.curseforge.com/wow/addons/saddlebag-exchange">
               addon
             </a>{' '}
             that can check undercuts on all alts across all realms in one page!
@@ -127,7 +127,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             This one looks for the best discounts anywhere{' '}
-            <a href='https://temp.saddlebagexchange.com/bestdeals'>
+            <a href="https://temp.saddlebagexchange.com/bestdeals">
               https://temp.saddlebagexchange.com/bestdeals
             </a>
           </li>
@@ -143,12 +143,12 @@ const HowtoCrossServerTradeinFFXIV = () => {
           11th!
         </p>
         <p>
-          <a href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets'>
+          <a href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets">
             Join our open source Github projects
           </a>
         </p>
         <p>
-          <a href='https://discord.gg/Pbp5xhmBJ7'>
+          <a href="https://discord.gg/Pbp5xhmBJ7">
             Join our discord for more feature updates
           </a>
         </p>

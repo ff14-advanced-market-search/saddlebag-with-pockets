@@ -59,13 +59,13 @@ const Results = ({
     <PageWrapper>
       <ContentContainer>
         <>
-          <div className='flex flex-col my-2 gap-2'>
-            <Title title='Input for undercut alerts' />
+          <div className="flex flex-col my-2 gap-2">
+            <Title title="Input for undercut alerts" />
             <UndercutDescription />
-            <p className='text-gray-900 dark:text-gray-100'></p>
+            <p className="text-gray-900 dark:text-gray-100"></p>
             <RadioButtons
-              title='I want to be alerted on'
-              name='alert-type'
+              title="I want to be alerted on"
+              name="alert-type"
               radioOptions={[
                 { label: 'All items', value: 'removeIds' },
                 { label: 'Selected items', value: 'addIds' }
@@ -84,44 +84,42 @@ const Results = ({
 
             <div className={`mt-1 flex rounded-md shadow-sm max-w-fit`}>
               <button
-                className='w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600'
-                aria-label='Choose filters'
-                type='button'
+                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
+                aria-label="Choose filters"
+                type="button"
                 onClick={() => {
                   setModal({ ...modal, open: true })
-                }}
-              >
+                }}>
                 {isAddModal ? 'Alert on these items' : 'Filter out these items'}
               </button>
             </div>
-            <div className='mt-1 flex rounded-md shadow-sm max-w-fit'>
+            <div className="mt-1 flex rounded-md shadow-sm max-w-fit">
               <button
-                className='w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600'
-                aria-label='Add all Retainers'
-                type='button'
+                className="w-full py-2 px-4 text-sm bg-gray-100 border-gray-300 rounded text-left dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
+                aria-label="Add all Retainers"
+                type="button"
                 onClick={() => {
                   setModal({ form: 'sellerIds', open: true })
-                }}
-              >
+                }}>
                 Add all Retainers
               </button>
             </div>
-            <div className='flex justify-center mt-2 items-center max-w-fit dark:text-gray-300'>
-              <label htmlFor='hq-only'>High Quality Only</label>
+            <div className="flex justify-center mt-2 items-center max-w-fit dark:text-gray-300">
+              <label htmlFor="hq-only">High Quality Only</label>
               <input
-                className='ml-2 rounded p-1'
-                id='hq-only'
-                type='checkbox'
+                className="ml-2 rounded p-1"
+                id="hq-only"
+                type="checkbox"
                 checked={info.hqOnly}
                 onChange={() =>
                   setInfo((state) => ({ ...state, hqOnly: !state.hqOnly }))
                 }
               />
             </div>
-            <div className='max-w-sm'>
+            <div className="max-w-sm">
               <InputWithLabel
-                type='number'
-                labelTitle='Stop alerting after:'
+                type="number"
+                labelTitle="Stop alerting after:"
                 inputTag={'Hours'}
                 toolTip="Don't alert me after data is this many hours old"
                 min={1}
@@ -139,10 +137,10 @@ const Results = ({
                 }}
               />
             </div>
-            <div className='max-w-sm mb-2'>
+            <div className="max-w-sm mb-2">
               <InputWithLabel
-                type='number'
-                labelTitle='Ignore stacks larger than this:'
+                type="number"
+                labelTitle="Ignore stacks larger than this:"
                 inputTag={'Stack Size'}
                 toolTip="Don't alert me when undercut by large stacks at cheap prices."
                 min={1}
@@ -158,13 +156,13 @@ const Results = ({
               />
             </div>
 
-            <pre className='overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900'>
+            <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{jsonData}</code>
             </pre>
-            <div className='max-w-fit my-2'>
+            <div className="max-w-fit my-2">
               <SubmitButton
-                title='Copy to clipboard'
-                type='button'
+                title="Copy to clipboard"
+                type="button"
                 disabled={isAddModal && info.addIds.length === 0}
                 onClick={async () => {
                   if (
@@ -182,15 +180,15 @@ const Results = ({
               />
             </div>
 
-            <Title title='Input for Sales Alerts' />
+            <Title title="Input for Sales Alerts" />
             <SalesAlertDescription />
-            <pre className='overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900'>
+            <pre className="overflow-x-scroll bg-slate-700 text-gray-200 p-4 rounded dark:bg-slate-900">
               <code>{salesAlertJson}</code>
             </pre>
-            <div className='max-w-fit my-2'>
+            <div className="max-w-fit my-2">
               <SubmitButton
-                title='Copy to clipboard'
-                type='button'
+                title="Copy to clipboard"
+                type="button"
                 disabled={isAddModal && info.addIds.length === 0}
                 onClick={async () => {
                   if (
@@ -219,10 +217,9 @@ const Results = ({
               }
               onClose={() => {
                 setModal({ ...modal, open: false })
-              }}
-            >
+              }}>
               <div>
-                <p className='text-sm text-grey-500 my-1 dark:text-gray-200'>
+                <p className="text-sm text-grey-500 my-1 dark:text-gray-200">
                   {isAddModal
                     ? 'Please search for items that you would like to include in your alert.'
                     : isSellerModal
@@ -230,11 +227,11 @@ const Results = ({
                     : 'Please search for items that you do not wish to be included in your undercut alerts.'}
                 </p>
                 {isSellerModal ? (
-                  <div className='flex flex-col gap-2'>
+                  <div className="flex flex-col gap-2">
                     <input
-                      type='text'
-                      placeholder='Enter seller ID'
-                      className='rounded p-2'
+                      type="text"
+                      placeholder="Enter seller ID"
+                      className="rounded p-2"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && e.currentTarget.value) {
                           setInfo({
@@ -248,16 +245,15 @@ const Results = ({
                         }
                       }}
                     />
-                    <ul className='first-child:mt-0 last-child:mb-0 mt-2 px-4'>
+                    <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
                       {info.sellerIds.map((id, index) => (
                         <li
                           key={`${id}-${index}`}
-                          className='flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200'
-                        >
-                          <p className='text-ellipsis'>{id}</p>
+                          className="flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200">
+                          <p className="text-ellipsis">{id}</p>
                           <button
-                            className='rounded p-1 border-gray-300 min-w-fit'
-                            type='button'
+                            className="rounded p-1 border-gray-300 min-w-fit"
+                            type="button"
                             onClick={() => {
                               setInfo({
                                 ...info,
@@ -266,8 +262,7 @@ const Results = ({
                                 )
                               })
                             }}
-                            aria-label='Delete'
-                          >
+                            aria-label="Delete">
                             <TrashIcon
                               className={`h-4 w-4 text-gray-500 mx-auto dark:text-gray-300`}
                             />
@@ -295,16 +290,15 @@ const Results = ({
                   />
                 )}
                 {!isSellerModal && (
-                  <ul className='first-child:mt-0 last-child:mb-0 mt-2 px-4'>
+                  <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
                     {info[modal.form].map((id, index) => (
                       <li
                         key={`${id}-${index}`}
-                        className='flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200'
-                      >
-                        <p className='text-ellipsis'>{getItemNameById(id)}</p>
+                        className="flex items-center justify-between my-1 px-2 py-1 gap:3 dark:text-gray-200">
+                        <p className="text-ellipsis">{getItemNameById(id)}</p>
                         <button
-                          className='rounded p-1 border-gray-300 min-w-fit'
-                          type='button'
+                          className="rounded p-1 border-gray-300 min-w-fit"
+                          type="button"
                           onClick={() => {
                             setInfo({
                               ...info,
@@ -313,8 +307,7 @@ const Results = ({
                               )
                             })
                           }}
-                          aria-label='Delete'
-                        >
+                          aria-label="Delete">
                           <TrashIcon
                             className={`h-4 w-4 text-gray-500 mx-auto dark:text-gray-300`}
                           />
@@ -336,46 +329,42 @@ export default Results
 
 // TODO: rework both these into 1 component to prevent redundant code
 export const UndercutDescription = () => (
-  <p className='italic text-sm text-grey-500 mb-1 dark:text-gray-300'>
+  <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     Copy this to your clipboard and use it in our{' '}
     <a
-      className='underline'
-      href='https://discord.gg/saddlebag-exchange-973380473281724476'
-      target='_blank'
-      rel='noreferrer'
-    >
+      className="underline"
+      href="https://discord.gg/saddlebag-exchange-973380473281724476"
+      target="_blank"
+      rel="noreferrer">
       discord server
     </a>{' '}
     for the bot slash command '/ff undercut' to activate or update{' '}
     <a
-      className='underline'
-      href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version'
-      target='_blank'
-      rel='noreferrer'
-    >
+      className="underline"
+      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version"
+      target="_blank"
+      rel="noreferrer">
       patreon undercut alerts.
     </a>
   </p>
 )
 
 export const SalesAlertDescription = () => (
-  <p className='italic text-sm text-grey-500 mb-1 dark:text-gray-300'>
+  <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     To use Sales Alerts copy this to your clipboard and use it in our{' '}
     <a
-      className='underline'
-      href='https://discord.gg/saddlebag-exchange-973380473281724476'
-      target='_blank'
-      rel='noreferrer'
-    >
+      className="underline"
+      href="https://discord.gg/saddlebag-exchange-973380473281724476"
+      target="_blank"
+      rel="noreferrer">
       discord server
     </a>{' '}
     for the bot slash command '/ff sale-register' to activate{' '}
     <a
-      className='underline'
-      href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis#sale-and-undercut-alert-json-data'
-      target='_blank'
-      rel='noreferrer'
-    >
+      className="underline"
+      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis#sale-and-undercut-alert-json-data"
+      target="_blank"
+      rel="noreferrer">
       patreon sale alerts.
     </a>
   </p>

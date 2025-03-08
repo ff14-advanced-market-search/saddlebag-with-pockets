@@ -60,16 +60,15 @@ interface NavbarLinkProps {
 const PatreonLink = () => (
   <a
     href={'https://www.patreon.com/indopan'}
-    target='_blank'
-    rel='noreferrer'
-    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}
-  >
+    target="_blank"
+    rel="noreferrer"
+    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
     <PatreonIcon
       className={classNames(
         'text-gray-400 group-hover:text-gray-300',
         'mr-4 flex-shrink-0 h-6 w-6'
       )}
-      aria-hidden='true'
+      aria-hidden="true"
     />
     Patreon
   </a>
@@ -80,16 +79,15 @@ const WikiLink = () => (
     href={
       'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki'
     }
-    target='_blank'
-    rel='noreferrer'
-    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}
-  >
+    target="_blank"
+    rel="noreferrer"
+    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
     <GithubIcon
       className={classNames(
         'text-gray-400 group-hover:text-gray-300',
         'mr-4 flex-shrink-0 h-6 w-6'
       )}
-      aria-hidden='true'
+      aria-hidden="true"
     />
     Guides and Tutorials
   </a>
@@ -98,16 +96,15 @@ const WikiLink = () => (
 const DiscordLink = () => (
   <a
     href={'https://discord.gg/saddlebag-exchange-973380473281724476'}
-    target='_blank'
-    rel='noreferrer'
-    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}
-  >
+    target="_blank"
+    rel="noreferrer"
+    className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
     <DiscordIcon
       className={classNames(
         'text-gray-400 group-hover:text-gray-300',
         'mr-4 flex-shrink-0 h-6 w-6'
       )}
-      aria-hidden='true'
+      aria-hidden="true"
     />
     Join our Discord
   </a>
@@ -456,8 +453,7 @@ const ButtonAccordian = ({
         className={`flex justify-between items-center cursor-pointer border-0 p-2 ${
           isOpen ? 'text-white' : 'text-gray-300'
         } hover:bg-gray-500 hover:text-white rounded font-semibold`}
-        onClick={() => setIsOpen((current) => !current)}
-      >
+        onClick={() => setIsOpen((current) => !current)}>
         <span>{title}</span>
         {isOpen ? (
           <ChevronUpIcon className={`h-4 w-4`} />
@@ -466,8 +462,9 @@ const ButtonAccordian = ({
         )}
       </button>
       <div
-        className={`${isOpen ? 'animate-open' : 'animate-close'} flex flex-col`}
-      >
+        className={`${
+          isOpen ? 'animate-open' : 'animate-close'
+        } flex flex-col`}>
         {children}
       </div>
     </div>
@@ -485,73 +482,67 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       {/* Mobile View and toggle */}
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-40 md:hidden'
-          onClose={setSidebarOpen}
-        >
+          as="div"
+          className="relative z-40 md:hidden"
+          onClose={setSidebarOpen}>
           <Transition.Child
             as={Fragment}
-            enter='transition-opacity ease-linear duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='transition-opacity ease-linear duration-300'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <div className='fixed inset-0 bg-gray-600 bg-opacity-75' />
+            enter="transition-opacity ease-linear duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity ease-linear duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0">
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
           </Transition.Child>
 
-          <div className='fixed inset-0 flex z-40'>
+          <div className="fixed inset-0 flex z-40">
             <Transition.Child
               as={Fragment}
-              enter='transition ease-in-out duration-300 transform'
-              enterFrom='-translate-x-full'
-              enterTo='translate-x-0'
-              leave='transition ease-in-out duration-300 transform'
-              leaveFrom='translate-x-0'
-              leaveTo='-translate-x-full'
-            >
-              <Dialog.Panel className='relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800'>
+              enter="transition ease-in-out duration-300 transform"
+              enterFrom="-translate-x-full"
+              enterTo="translate-x-0"
+              leave="transition ease-in-out duration-300 transform"
+              leaveFrom="translate-x-0"
+              leaveTo="-translate-x-full">
+              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800">
                 <Transition.Child
                   as={Fragment}
-                  enter='ease-in-out duration-300'
-                  enterFrom='opacity-0'
-                  enterTo='opacity-100'
-                  leave='ease-in-out duration-300'
-                  leaveFrom='opacity-100'
-                  leaveTo='opacity-0'
-                >
-                  <div className='absolute top-0 right-0 -mr-12 pt-2'>
+                  enter="ease-in-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in-out duration-300"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0">
+                  <div className="absolute top-0 right-0 -mr-12 pt-2">
                     <button
-                      type='button'
-                      className='ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
-                      onClick={() => setSidebarOpen(false)}
-                    >
-                      <span className='sr-only'>Close sidebar</span>
+                      type="button"
+                      className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                      onClick={() => setSidebarOpen(false)}>
+                      <span className="sr-only">Close sidebar</span>
                       <XIcon
-                        className='h-6 w-6 text-white'
-                        aria-hidden='true'
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
                       />
                     </button>
                   </div>
                 </Transition.Child>
-                <div className='flex-shrink-0 flex items-center px-4'>
+                <div className="flex-shrink-0 flex items-center px-4">
                   <Link to={`/`}>
                     <img
-                      className='h-10 w-auto'
-                      src='/images/tiny-chocobo.png'
+                      className="h-10 w-auto"
+                      src="/images/tiny-chocobo.png"
                       alt={data.site_name}
                     />
                   </Link>
                 </div>
-                <div className='mt-5 flex-1 h-0 overflow-y-auto'>
-                  <nav className='px-2 space-y-1'>
+                <div className="mt-5 flex-1 h-0 overflow-y-auto">
+                  <nav className="px-2 space-y-1">
                     {navGroups.map((group) => (
                       <ButtonAccordian
                         key={group.title}
                         title={group.title}
-                        openOverride={group.openMatch === lastMatch}
-                      >
+                        openOverride={group.openMatch === lastMatch}>
                         {group.links.map((item) =>
                           !item.external ? (
                             <NavLink
@@ -564,8 +555,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                                     : 'text-gray-300 hover:bg-gray-500 hover:text-white',
                                   'group flex items-center px-2 py-2 text-base font-medium rounded-md animate-child'
                                 )
-                              }
-                            >
+                              }>
                               {({ isActive }) => (
                                 <>
                                   <item.icon
@@ -575,7 +565,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                                         : 'text-gray-400 group-hover:text-gray-300',
                                       'mr-4 flex-shrink-0 h-6 w-6 animate-child'
                                     )}
-                                    aria-hidden='true'
+                                    aria-hidden="true"
                                   />
                                   {item.name}
                                 </>
@@ -585,16 +575,15 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                             <a
                               key={item.name}
                               href={item.href}
-                              target='_blank'
-                              rel='noreferrer'
-                              className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}
-                            >
+                              target="_blank"
+                              rel="noreferrer"
+                              className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
                               <item.icon
                                 className={classNames(
                                   'text-gray-400 group-hover:text-gray-300',
                                   'mr-4 flex-shrink-0 h-6 w-6'
                                 )}
-                                aria-hidden='true'
+                                aria-hidden="true"
                               />
                               {item.name}
                             </a>
@@ -605,7 +594,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     <PatreonLink />
                     <WikiLink />
                     <DiscordLink />
-                    <p className='text-gray-400 text-xs mt-4'>
+                    <p className="text-gray-400 text-xs mt-4">
                       FINAL FANTASY is a registered trademark of Square Enix
                       Holdings Co., Ltd.
                       <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
@@ -618,7 +607,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 </div>
               </Dialog.Panel>
             </Transition.Child>
-            <div className='flex-shrink-0 w-14' aria-hidden='true'>
+            <div className="flex-shrink-0 w-14" aria-hidden="true">
               {/* Dummy element to force sidebar to shrink to fit close icon */}
             </div>
           </div>
@@ -626,26 +615,25 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className='hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0'>
+      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className='flex-1 flex flex-col min-h-0 bg-gray-900 dark:bg-slate-950 border-r border-gray-100 dark:border-slate-800'>
-          <div className='flex items-center h-12 flex-shrink-0 px-4 bg-gray-900 dark:bg-slate-950 group'>
+        <div className="flex-1 flex flex-col min-h-0 bg-gray-900 dark:bg-slate-950 border-r border-gray-100 dark:border-slate-800">
+          <div className="flex items-center h-12 flex-shrink-0 px-4 bg-gray-900 dark:bg-slate-950 group">
             <Link to={`/`}>
               <img
-                className='h-10 w-auto rounded-md hover:bg-gray-800'
-                src='/images/tiny-chocobo.png'
+                className="h-10 w-auto rounded-md hover:bg-gray-800"
+                src="/images/tiny-chocobo.png"
                 alt={data.site_name}
               />
             </Link>
           </div>
-          <div className='flex-1 flex flex-col overflow-y-auto pb-24 no-scroll'>
-            <nav className='flex-0 px-2 py-4 space-y-1'>
+          <div className="flex-1 flex flex-col overflow-y-auto pb-24 no-scroll">
+            <nav className="flex-0 px-2 py-4 space-y-1">
               {navGroups.map((group) => (
                 <ButtonAccordian
                   key={group.title}
                   title={group.title}
-                  openOverride={group.openMatch === lastMatch}
-                >
+                  openOverride={group.openMatch === lastMatch}>
                   {group.links.map((item) =>
                     !item.external ? (
                       <NavLink
@@ -658,8 +646,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                               : 'text-gray-300 hover:bg-gray-500 hover:text-white',
                             'group flex items-center px-2 py-2 text-sm font-medium rounded-md animate-child'
                           )
-                        }
-                      >
+                        }>
                         {({ isActive }) => (
                           <>
                             <item.icon
@@ -669,7 +656,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                                   : 'text-gray-400 group-hover:text-gray-300',
                                 'mr-3 flex-shrink-0 h-6 w-6'
                               )}
-                              aria-hidden='true'
+                              aria-hidden="true"
                             />
                             {item.name}
                           </>
@@ -679,16 +666,15 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                       <a
                         key={item.name}
                         href={item.href}
-                        target='_blank'
-                        rel='noreferrer'
-                        className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md animate-child`}
-                      >
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md animate-child`}>
                         <item.icon
                           className={classNames(
                             'text-gray-400 group-hover:text-gray-300',
                             'mr-4 flex-shrink-0 h-6 w-6'
                           )}
-                          aria-hidden='true'
+                          aria-hidden="true"
                         />
                         {item.name}
                       </a>
@@ -699,7 +685,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               <PatreonLink />
               <WikiLink />
               <DiscordLink />
-              <p className='text-gray-400 text-xs mt-4'>
+              <p className="text-gray-400 text-xs mt-4">
                 FINAL FANTASY is a registered trademark of Square Enix Holdings
                 Co., Ltd.
                 <br />© SQUARE ENIX CO., LTD. All Rights Reserved.
@@ -714,55 +700,53 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
         </div>
       </div>
       {/* Nav bar */}
-      <div className='md:pl-64 flex flex-col'>
-        <nav className='sticky top-0 z-40 flex-shrink-0 flex h-12 bg-white dark:bg-slate-900 shadow'>
+      <div className="md:pl-64 flex flex-col">
+        <nav className="sticky top-0 z-40 flex-shrink-0 flex h-12 bg-white dark:bg-slate-900 shadow">
           <button
-            type='button'
-            className='px-4 border-r border-gray-200 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden'
-            onClick={() => setSidebarOpen(true)}
-          >
-            <span className='sr-only'>Open sidebar</span>
-            <MenuAlt2Icon className='h-6 w-6' aria-hidden='true' />
+            type="button"
+            className="px-4 border-r border-gray-200 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
+            onClick={() => setSidebarOpen(true)}>
+            <span className="sr-only">Open sidebar</span>
+            <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
 
-          <div className='flex-1 px-4 flex justify-end'>
+          <div className="flex-1 px-4 flex justify-end">
             <ItemSearch />
             <div className={`ml-4 flex md:ml-6 basis-52 max-w-fit`}>
               <NavLink
                 to={'/options'}
-                type='button'
+                type="button"
                 className={classNames(
                   `group content-between flex flex-1`,
                   'hover:bg-gray-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500'
-                )}
-              >
+                )}>
                 <div className={`flex flex-wrap pl-1.5 flex-1`}>
-                  <div className='hidden md:flex gap-2 divide-x divide-gray-200 dark:divide-gray-700'>
-                    <div className='flex w-fit min-w-[150px]'>
-                      <div className='gap-1.5 flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100'>
+                  <div className="hidden md:flex gap-2 divide-x divide-gray-200 dark:divide-gray-700">
+                    <div className="flex w-fit min-w-[150px]">
+                      <div className="gap-1.5 flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
                         <FlatFFXIVIcon
-                          className='flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100'
-                          aria-hidden='true'
+                          className="flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100"
+                          aria-hidden="true"
                         />
-                        <div className='flex flex-col'>
-                          <p className='text-xs'>{data.data_center}</p>
-                          <p className='text-sm font-medium'>{data.world}</p>
+                        <div className="flex flex-col">
+                          <p className="text-xs">{data.data_center}</p>
+                          <p className="text-sm font-medium">{data.world}</p>
                         </div>
                       </div>
                     </div>
-                    <div className='flex w-fit min-w-[150px]'>
-                      <div className='pl-2 gap-1.5 flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100'>
+                    <div className="flex w-fit min-w-[150px]">
+                      <div className="pl-2 gap-1.5 flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
                         <FlatWoWIcon
-                          className='flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100'
-                          aria-hidden='true'
+                          className="flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100"
+                          aria-hidden="true"
                         />
-                        <div className='flex flex-col'>
-                          <p className='text-xs'>
+                        <div className="flex flex-col">
+                          <p className="text-xs">
                             {data.wowRegion === 'NA'
                               ? 'North America'
                               : 'Europe'}
                           </p>
-                          <p className='text-sm font-medium'>
+                          <p className="text-sm font-medium">
                             {data.wowRealm.name}
                           </p>
                         </div>
@@ -770,55 +754,52 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                     </div>
                   </div>
 
-                  <div className='flex md:hidden items-center text-sm font-medium text-gray-500 dark:text-gray-200 basis-full mr-1.5 dark:group-hover:text-gray-100'>
+                  <div className="flex md:hidden items-center text-sm font-medium text-gray-500 dark:text-gray-200 basis-full mr-1.5 dark:group-hover:text-gray-100">
                     Settings
                   </div>
                 </div>
                 <div className={`flex md:hidden items-center pr-1.5`}>
                   <CogIcon
-                    className='h-5 w-5 text-gray-400 dark:text-gray-200 basis-full group-hover:text-blue-500 dark:group-hover:text-gray-100'
-                    aria-hidden='true'
+                    className="h-5 w-5 text-gray-400 dark:text-gray-200 basis-full group-hover:text-blue-500 dark:group-hover:text-gray-100"
+                    aria-hidden="true"
                   />
                 </div>
               </NavLink>
             </div>
-            <div className='ml-4 flex items-center md:ml-6'>
+            <div className="ml-4 flex items-center md:ml-6">
               <button
-                type='button'
-                className='bg-white dark:bg-slate-900 p-1 dark:hover:bg-slate-800 rounded-full text-gray-400 dark:text-gray-200 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-              >
-                <span className='sr-only'>View notifications</span>
+                type="button"
+                className="bg-white dark:bg-slate-900 p-1 dark:hover:bg-slate-800 rounded-full text-gray-400 dark:text-gray-200 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <span className="sr-only">View notifications</span>
                 <BellIcon
-                  className='h-6 w-6 hover:text-blue-500 dark:hover:text-gray-100'
-                  aria-hidden='true'
+                  className="h-6 w-6 hover:text-blue-500 dark:hover:text-gray-100"
+                  aria-hidden="true"
                 />
               </button>
 
               {/* Profile dropdown */}
-              <Menu as='div' className='ml-3 relative'>
+              <Menu as="div" className="ml-3 relative">
                 <div>
-                  <Menu.Button className='max-w-xs shrink-0 w-fit bg-white dark:bg-slate-900 dark:hover:bg-slate-800 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'>
-                    <span className='sr-only'>Open user menu</span>
+                  <Menu.Button className="max-w-xs shrink-0 w-fit bg-white dark:bg-slate-900 dark:hover:bg-slate-800 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <span className="sr-only">Open user menu</span>
                     <img
-                      className='h-8 w-8 rounded-full shrink-0'
-                      src='/images/tiny-chocobo.png'
-                      alt='tiny-chocobo'
+                      className="h-8 w-8 rounded-full shrink-0"
+                      src="/images/tiny-chocobo.png"
+                      alt="tiny-chocobo"
                     />
                   </Menu.Button>
                 </div>
                 <Transition
                   as={Fragment}
-                  enter='transition ease-out duration-100'
-                  enterFrom='transform opacity-0 scale-95'
-                  enterTo='transform opacity-100 scale-100'
-                  leave='transition ease-in duration-75'
-                  leaveFrom='transform opacity-100 scale-100'
-                  leaveTo='transform opacity-0 scale-95'
-                >
-                  <Menu.Items className='origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95">
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <p
-                      className={`text-gray-700 dark:text-gray-200 text-sm py-2 px-4`}
-                    >
+                      className={`text-gray-700 dark:text-gray-200 text-sm py-2 px-4`}>
                       <strong>Welcome to Saddlebag!</strong> We're super
                       freaking hyped to see where this journey together goes.
                       Hoping you make it big! Join our Discord for spicy news!
@@ -904,78 +885,73 @@ const ItemSearch = () => {
   return (
     <div>
       <button
-        type='button'
+        type="button"
         onClick={handleFormToggle}
-        className='h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800'
-      >
-        <SearchIcon className='h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100' />
-        <p className='hidden md:block font-medium shrink-0 text-sm text-gray-500 dark:text-gray-200'>
+        className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
+        <SearchIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
+        <p className="hidden md:block font-medium shrink-0 text-sm text-gray-500 dark:text-gray-200">
           Item Search
         </p>
       </button>
       {isOpen && (
-        <div className='absolute w-full flex items-center h-28 md:h-16 px-4 left-0 shadow-lg py-1 bg-white dark:bg-slate-900 border-t border-black/5 dark:border-white/5 focus:outline-none'>
+        <div className="absolute w-full flex items-center h-28 md:h-16 px-4 left-0 shadow-lg py-1 bg-white dark:bg-slate-900 border-t border-black/5 dark:border-white/5 focus:outline-none">
           <Form
-            method='POST'
-            className='flex flex-col md:flex-row items-center my-2 gap-1 md:gap-2 h-full w-full'
-          >
+            method="POST"
+            className="flex flex-col md:flex-row items-center my-2 gap-1 md:gap-2 h-full w-full">
             <div
-              className='flex w-full md:w-fit p-1 rounded-md bg-gray-50 dark:bg-slate-700 items-center'
-              onChange={handleFormChange}
-            >
+              className="flex w-full md:w-fit p-1 rounded-md bg-gray-50 dark:bg-slate-700 items-center"
+              onChange={handleFormChange}>
               <label
                 htmlFor={`radio-ffxiv`}
-                className='cursor-pointer w-full md:w-fit'
-              >
+                className="cursor-pointer w-full md:w-fit">
                 <input
                   id={`radio-ffxiv`}
-                  type='radio'
+                  type="radio"
                   value={'ffxiv'}
-                  name='game-items'
+                  name="game-items"
                   defaultChecked={game === 'ffxiv'}
-                  className='peer hidden'
+                  className="peer hidden"
                 />
-                <span className='w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5'>
+                <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
                   FFXIV
                 </span>
               </label>
               <label
                 htmlFor={`radio-wow`}
-                className='cursor-pointer w-full md:w-fit'
-              >
+                className="cursor-pointer w-full md:w-fit">
                 <input
                   id={`radio-wow`}
-                  type='radio'
+                  type="radio"
                   value={'wow'}
-                  name='game-items'
+                  name="game-items"
                   defaultChecked={game === 'wow'}
-                  className='peer hidden'
+                  className="peer hidden"
                 />
-                <span className='w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5'>
+                <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
                   WoW
                 </span>
               </label>
             </div>
 
-            <div className='flex items-center w-full'>
+            <div className="flex items-center w-full">
               <DebouncedSelectInput
                 ref={inputRef}
-                id='nav-search'
+                id="nav-search"
                 selectOptions={dataFormItemList}
                 formName={ITEM_DATA_FORM_NAME}
                 onSelect={handleSelect}
                 error={searchError}
-                placeholder='Search items...'
-                containerClassNames='w-full'
+                placeholder="Search items..."
+                containerClassNames="w-full"
                 useDebounce={true}
               />
 
               <SubmitButton
-                title='Search'
-                type='button'
+                title="Search"
+                type="button"
                 onClick={handleSearchSubmit}
                 loading={isLoading}
-                className=''
+                className=""
               />
             </div>
           </Form>

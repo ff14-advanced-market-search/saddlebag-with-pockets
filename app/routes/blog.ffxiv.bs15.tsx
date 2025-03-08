@@ -18,7 +18,7 @@ export const links: LinksFunction = () => [
 const howtocrossservertradeinffxiv = () => {
   return (
     <div className={`m-12`}>
-      <main className='flex-1'>
+      <main className="flex-1">
         <h1 className={`text-2xl`}>
           <strong>
             &quot;The Impact of Social Dynamics on MMO Economies: Community,

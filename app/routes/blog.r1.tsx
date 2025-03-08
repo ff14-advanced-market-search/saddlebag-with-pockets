@@ -18,12 +18,12 @@ export const links: LinksFunction = () => [
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
-      <main className='flex-1'>
+      <main className="flex-1">
         <h1 className={`text-2xl`}>
           How to Import, Trade and Flip items on the FFXIV Market Board
         </h1>
         <p className={`text-prose`}>
-          <h2 id='how-to-import-trade-and-flip-items-on-the-ffxiv-market-board'>
+          <h2 id="how-to-import-trade-and-flip-items-on-the-ffxiv-market-board">
             How to Import, Trade and Flip items on the FFXIV Market Board
           </h2>
           <p>
@@ -91,7 +91,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             <li>
               <p>
                 A tool that will seriously improve your trading is the{' '}
-                <a href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version'>
+                <a href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version">
                   Saddlebag Exchange Undercut Alerts
                 </a>
                 . These alerts are a major quality-of-life improvement!{' '}
@@ -105,7 +105,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             retainers. These messages also mean you no longer need to pull your
             retainers off the Market Board to check if they&#39;ve been
             undercut. If you’re someone who has dozens of retainers,{' '}
-            <a href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version'>
+            <a href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version">
               Saddlebag Exchange Undercut Alerts
             </a>{' '}
             is a must-have for keeping tabs on all of your auctions and knowing
@@ -236,7 +236,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             hassle of dealing with NPC vendors.
           </p>
           <p>
-            <a href='https://na.finalfantasyxiv.com/lodestone/playguide/db/item/928a9b10d1d'>
+            <a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/928a9b10d1d">
               The bronze skillet we talked about
             </a>{' '}
             can be purchased from the vendor Syneyhil 246 gil. Instead of buying
@@ -248,19 +248,19 @@ const HowtoCrossServerTradeinFFXIV = () => {
           <p>The best vendors with the most stock are:</p>
           <ul>
             <li>
-              <a href='https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/acecca47523/?item=928a9b10d1d&amp;type=gil'>
+              <a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/acecca47523/?item=928a9b10d1d&amp;type=gil">
                 Syneyhil
               </a>{' '}
               for crafting gear at Limsa Lominsa Lower Decks (X: 6.3, Y:11.9)
             </li>
             <li>
-              <a href='https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/378e5c3a3b5/?item=ada19dd8fdd&amp;type=gil'>
+              <a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/378e5c3a3b5/?item=ada19dd8fdd&amp;type=gil">
                 Iron Thunder
               </a>{' '}
               for leveling armor at Limsa Lominsa Lower Decks (X: 8.1, Y: 11.6)
             </li>
             <li>
-              <a href='https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/4416c62758c/?item=30654ce2f28&amp;type=gil'>
+              <a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/4416c62758c/?item=30654ce2f28&amp;type=gil">
                 Faezghim
               </a>{' '}
               for leveling weapons at Limsa Lominsa Lower Decks (X: 6.5, Y:
@@ -269,7 +269,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </ul>
           <p>
             The best vendors of all are the various{' '}
-            <a href='https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/8c2af97deeb/?item=c8b983e661b&amp;type=gil'>
+            <a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/shop/8c2af97deeb/?item=c8b983e661b&amp;type=gil">
               Housing Merchant
             </a>{' '}
             NPCs. All housing items sell en masse — making NQ and housing items
@@ -296,7 +296,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </p>
           <p>
             This is why{' '}
-            <a href='https://saddlebagexchange.com/queries'>
+            <a href="https://saddlebagexchange.com/queries">
               Saddlebag Exchange
             </a>{' '}
             was founded!
@@ -312,7 +312,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           <p>
             If you are not using Saddlebag Exchange to trade, you’re seriously
             limiting yourself! You can view{' '}
-            <a href='https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-Import,-Trade-and-Flip-items-on-the-FFXIV-Marketboard-using-Saddlebag-Exchange-Import-Searches'>
+            <a href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-Import,-Trade-and-Flip-items-on-the-FFXIV-Marketboard-using-Saddlebag-Exchange-Import-Searches">
               a full guide on how to use our website here in this second guide
             </a>{' '}
             to importing, trading, and flipping.

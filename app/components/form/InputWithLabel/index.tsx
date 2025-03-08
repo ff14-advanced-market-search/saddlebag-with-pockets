@@ -21,17 +21,16 @@ export const InputWithLabel = ({
 }: InputWithLabelProps) => {
   const { type, max } = { ...rest }
   return (
-    <div className='mt-2 flex-col'>
-      <div className='relative flex flex-1 items-center gap-1'>
+    <div className="mt-2 flex-col">
+      <div className="relative flex flex-1 items-center gap-1">
         <label
           htmlFor={labelTitle}
-          className='block text-sm font-medium text-gray-700 dark:text-gray-100'
-        >
+          className="block text-sm font-medium text-gray-700 dark:text-gray-100">
           {labelTitle}
         </label>
         {toolTip && <ToolTip data={toolTip} />}
       </div>
-      <div className='mt-1 flex rounded-md shadow-sm border border-gray-300 dark:border-gray-400'>
+      <div className="mt-1 flex rounded-md shadow-sm border border-gray-300 dark:border-gray-400">
         <input
           id={labelTitle}
           {...rest}
@@ -44,8 +43,7 @@ export const InputWithLabel = ({
         />
         {inputTag && (
           <span
-            className={`inline-flex items-center justify-center text-center px-3 rounded-r-md bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700`}
-          >
+            className={`inline-flex items-center justify-center text-center px-3 rounded-r-md bg-gray-50 text-gray-500 sm:text-sm dark:text-gray-300 dark:bg-gray-700`}>
             {inputTag}
           </span>
         )}

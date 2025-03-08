@@ -179,26 +179,25 @@ const BestDeals = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title='Best Deals'
-        description='Find the best deals on your server and region wide with our Best Deals search!'
+        title="Best Deals"
+        description="Find the best deals on your server and region wide with our Best Deals search!"
         onClick={handleSubmit}
         error={error}
         loading={isSubmitting}
-        action={getActionUrl(PAGE_URL, searchParams)}
-      >
-        <div className='pt-2'>
-          <div className='flex justify-end mb-2'>
+        action={getActionUrl(PAGE_URL, searchParams)}>
+        <div className="pt-2">
+          <div className="flex justify-end mb-2">
             <SubmitButton
-              title='Share this search!'
+              title="Share this search!"
               onClick={handleCopyButton}
-              type='button'
+              type="button"
             />
           </div>
         </div>
-        <div className='pt-3 flex flex-col'>
+        <div className="pt-3 flex flex-col">
           <Select
-            title='Item Type'
-            name='type'
+            title="Item Type"
+            name="type"
             defaultValue={loaderData.type}
             options={[
               { label: 'Current Content', value: 'df' },
@@ -221,9 +220,9 @@ const BestDeals = () => {
             }}
           />
           <InputWithLabel
-            labelTitle='Discount Percentage'
-            name='discount'
-            type='number'
+            labelTitle="Discount Percentage"
+            name="discount"
+            type="number"
             defaultValue={loaderData.discount}
             min={0}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -231,9 +230,9 @@ const BestDeals = () => {
             }
           />
           <InputWithLabel
-            labelTitle='Minimum TSM Average Price'
-            name='minPrice'
-            type='number'
+            labelTitle="Minimum TSM Average Price"
+            name="minPrice"
+            type="number"
             defaultValue={loaderData.minPrice}
             min={0}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -241,9 +240,9 @@ const BestDeals = () => {
             }
           />
           <InputWithLabel
-            labelTitle='Sales Per Day'
-            name='salesPerDay'
-            type='number'
+            labelTitle="Sales Per Day"
+            name="salesPerDay"
+            type="number"
             defaultValue={loaderData.salesPerDay}
             step={0.01}
             min={0}
@@ -268,7 +267,7 @@ const Results = ({ data, sortby }: WoWDealResponse & { sortby: string }) => {
   return (
     <PageWrapper>
       <SmallTable
-        title='Best Deals'
+        title="Best Deals"
         sortingOrder={[{ desc: true, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
@@ -303,7 +302,7 @@ const columnList: Array<ColumnList<DealItem>> = [
     columnId: 'realmName',
     header: 'Realm Name',
     accessor: ({ row }) => (
-      <p className=' px-3 py-2 max-w-[200px] overflow-x-scroll'>
+      <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
         {row.realmName}
       </p>
     )

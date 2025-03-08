@@ -76,7 +76,7 @@ export default function Index() {
 
   if (results && !error) {
     if (!Object.keys(results).length) {
-      return <NoResults href='/ffxiv/self-purchase' />
+      return <NoResults href="/ffxiv/self-purchase" />
     }
 
     if ('data' in results) {
@@ -87,23 +87,22 @@ export default function Index() {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title='Self Purchase Items'
+        title="Self Purchase Items"
         error={error}
         loading={loading}
         onClick={(e) => {
           if (loading) {
             e.preventDefault()
           }
-        }}
-      >
-        <div className='py-2'>
+        }}>
+        <div className="py-2">
           <SelectDCandWorld navigation={transition} sessionData={loaderData} />
         </div>
         <InputWithLabel
-          type='text'
-          name='playerName'
-          labelTitle='Player Name'
-          toolTip='The name of your player'
+          type="text"
+          name="playerName"
+          labelTitle="Player Name"
+          toolTip="The name of your player"
         />
       </SmallFormContainer>
     </PageWrapper>
@@ -170,16 +169,16 @@ const Results = ({
 
   return (
     <PageWrapper>
-      <Title title='Self Purchase Items' />
+      <Title title="Self Purchase Items" />
       <Title
         title={`Total spent: ${totalSpent.toLocaleString()} gil`}
-        className='text-xl'
+        className="text-xl"
       />
-      <div className='flex justify-between'>
+      <div className="flex justify-between">
         <CSVButton
           data={data}
           columns={cvsFileList}
-          filename='saddlebag-selfpurchase.csv'
+          filename="saddlebag-selfpurchase.csv"
         />
         <DebouncedInput
           onDebouncedChange={(value) => {
@@ -189,7 +188,7 @@ const Results = ({
           placeholder={'Search...'}
         />
       </div>
-      <div className='hidden sm:block'>
+      <div className="hidden sm:block">
         <FullTable<SelfPurchase>
           data={data}
           sortingOrder={[{ id: 'timestamp', desc: true }]}

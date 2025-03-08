@@ -60,9 +60,8 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className='text-blue-500 hover:text-blue-700 focus:outline-none'
-    >
-      <ClipboardIcon className='h-5 w-5 inline' />
+      className="text-blue-500 hover:text-blue-700 focus:outline-none">
+      <ClipboardIcon className="h-5 w-5 inline" />
     </button>
   )
 }
@@ -270,21 +269,20 @@ export default function Index() {
         onClick={() => {}}
         error={error}
         loading={loading}
-        title='Crafting List'
-        action={getActionUrl(PAGE_URL, searchParams)}
-      >
-        <div className='pt-2'>
-          <div className='flex justify-end mb-2'>
+        title="Crafting List"
+        action={getActionUrl(PAGE_URL, searchParams)}>
+        <div className="pt-2">
+          <div className="flex justify-end mb-2">
             <SubmitButton
-              title='Share this search!'
+              title="Share this search!"
               onClick={handleCopyButton}
-              type='button'
+              type="button"
             />
           </div>
           <Filter
-            formName='jobs'
-            filterButtonText='Choose DoH'
-            selectedCountText='DoH'
+            formName="jobs"
+            filterButtonText="Choose DoH"
+            selectedCountText="DoH"
             defaultValue={loaderData.jobs}
             options={dOHOptions}
             title={inputMap.jobs}
@@ -301,7 +299,7 @@ export default function Index() {
               value,
               label: costMetricLabels[value]
             }))}
-            name='costMetric'
+            name="costMetric"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
@@ -316,7 +314,7 @@ export default function Index() {
               value,
               label: revenueMetricLabels[value]
             }))}
-            name='revenueMetric'
+            name="revenueMetric"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
@@ -327,8 +325,8 @@ export default function Index() {
           <InputWithLabel
             labelTitle={inputMap.salesPerWeek}
             defaultValue={loaderData.salesPerWeek}
-            name='salesPerWeek'
-            type='number'
+            name="salesPerWeek"
+            type="number"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -339,8 +337,8 @@ export default function Index() {
           <InputWithLabel
             labelTitle={inputMap.medianSalePrice}
             defaultValue={loaderData.medianSalePrice}
-            name='medianSalePrice'
-            type='number'
+            name="medianSalePrice"
+            type="number"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -351,8 +349,8 @@ export default function Index() {
           <InputWithLabel
             labelTitle={inputMap.maxMaterialCost}
             defaultValue={loaderData.maxMaterialCost}
-            name='maxMaterialCost'
-            type='number'
+            name="maxMaterialCost"
+            type="number"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -363,8 +361,8 @@ export default function Index() {
           <InputWithLabel
             labelTitle={inputMap.stars}
             defaultValue={loaderData.stars}
-            name='stars'
-            type='number'
+            name="stars"
+            type="number"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -375,8 +373,8 @@ export default function Index() {
           <InputWithLabel
             labelTitle={inputMap.lvlLowerLimit}
             defaultValue={loaderData.lvlLowerLimit}
-            name='lvlLowerLimit'
-            type='number'
+            name="lvlLowerLimit"
+            type="number"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -387,8 +385,8 @@ export default function Index() {
           <InputWithLabel
             labelTitle={inputMap.lvlUpperLimit}
             defaultValue={loaderData.lvlUpperLimit}
-            name='lvlUpperLimit'
-            type='number'
+            name="lvlUpperLimit"
+            type="number"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -399,8 +397,8 @@ export default function Index() {
           <InputWithLabel
             labelTitle={inputMap.yields}
             defaultValue={loaderData.yields}
-            name='yields'
-            type='number'
+            name="yields"
+            type="number"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -408,11 +406,11 @@ export default function Index() {
               }
             }}
           />
-          <div className='mt-2'>
+          <div className="mt-2">
             <CheckBox
               labelTitle={inputMap.hideExpertRecipes}
               defaultChecked={loaderData.hideExpertRecipes}
-              name='hideExpertRecipes'
+              name="hideExpertRecipes"
               onChange={(event) => {
                 const value = event.target.checked
                 handleFormChange('hideExpertRecipes', value.toString())
@@ -421,7 +419,7 @@ export default function Index() {
           </div>
         </div>
       </SmallFormContainer>
-      {showNoResults && <NoResults href='/ffxiv/crafting-list' />}
+      {showNoResults && <NoResults href="/ffxiv/crafting-list" />}
       {flatData && (
         <Results
           data={flatData}
@@ -477,7 +475,7 @@ const columnList: Array<ColumnList<FlatCraftingList>> = [
     columnId: 'itemName',
     header: 'Item Name',
     accessor: ({ row: { itemName } }) => (
-      <div className='flex items-center justify-between'>
+      <div className="flex items-center justify-between">
         <span>{itemName}</span>
         <CopyButton text={itemName} />
       </div>

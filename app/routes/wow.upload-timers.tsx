@@ -38,7 +38,7 @@ const Index = () => {
 
   if (results) {
     if (Object.keys(results).length === 0) {
-      return <NoResults href='/wow/upload-timers' />
+      return <NoResults href="/wow/upload-timers" />
     }
 
     if ('data' in results) {
@@ -48,7 +48,7 @@ const Index = () => {
           <Banner />
           <SmallTable
             // title="Upload Timers"
-            description='Shows when the WoW auction house data was last uploaded.'
+            description="Shows when the WoW auction house data was last uploaded."
             columnList={columnList}
             data={results.data}
             columnSelectOptions={selectOptions}
@@ -162,7 +162,7 @@ const Index = () => {
     }
   }
 
-  return <NoResults href='/wow/upload-timers' />
+  return <NoResults href="/wow/upload-timers" />
 }
 
 export default Index
@@ -176,7 +176,7 @@ const columnList: Array<ColumnList<UploadTimersItem>> = [
     columnId: 'dataSetName',
     header: 'Data Set Name',
     accessor: ({ row }) => (
-      <p className='py-2 px-3 w-[200px] overflow-x-scroll'>
+      <p className="py-2 px-3 w-[200px] overflow-x-scroll">
         {row.dataSetName.join(', ')}
       </p>
     )

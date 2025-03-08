@@ -18,8 +18,8 @@ export const links: LinksFunction = () => [
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
-      <main className='flex-1'>
-        <h1 id='wow-gold-making-using-the-auction-house'>
+      <main className="flex-1">
+        <h1 id="wow-gold-making-using-the-auction-house">
           WoW Gold Making Using the Auction House
         </h1>
         <p>
@@ -65,7 +65,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           With diligence, patience, and a shrewd eye for opportunity, you can
           become a titan of trade in Azeroth&#39;s bustling markets.
         </p>
-        <h3 id='ffxiv-gil-making-using-the-market-board'>
+        <h3 id="ffxiv-gil-making-using-the-market-board">
           FFXIV Gil Making Using the Market Board
         </h3>
         <p>
@@ -113,7 +113,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           trading strategies, you can carve out your place as a titan of
           commerce in the realm of FFXIV.
         </p>
-        <h3 id='wow-gold-making-using-the-auction-house'>
+        <h3 id="wow-gold-making-using-the-auction-house">
           WoW Gold Making Using the Auction House
         </h3>
         <ol>
@@ -154,7 +154,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             </p>
           </li>
         </ol>
-        <h3 id='ffxiv-gil-making-using-the-market-board'>
+        <h3 id="ffxiv-gil-making-using-the-market-board">
           FFXIV Gil Making Using the Market Board
         </h3>
         <ol>
@@ -204,7 +204,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           yourself as a formidable force in the virtual economies of WoW and
           FFXIV.
         </p>
-        <h3 id='wow-gold-making-using-the-auction-house'>
+        <h3 id="wow-gold-making-using-the-auction-house">
           WoW Gold Making Using the Auction House
         </h3>
         <ul>
@@ -238,7 +238,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
             </p>
           </li>
         </ul>
-        <h3 id='ffxiv-gil-making-using-the-market-board'>
+        <h3 id="ffxiv-gil-making-using-the-market-board">
           FFXIV Gil Making Using the Market Board
         </h3>
         <ul>
@@ -277,7 +277,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           endeavors, you can expand your repertoire of strategies and adapt to
           the ever-evolving landscapes of the Auction House and Market Board.
         </p>
-        <h3 id='wow-gold-making-using-the-auction-house'>
+        <h3 id="wow-gold-making-using-the-auction-house">
           WoW Gold Making Using the Auction House
         </h3>
         <ul>

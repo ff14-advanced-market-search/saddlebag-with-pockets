@@ -22,7 +22,7 @@ const Select = ({
   const classes = classNames(selectClassName, className || '')
 
   return (
-    <div className='my-2'>
+    <div className="my-2">
       {title && <Label htmlFor={id}>{title}</Label>}
       <select id={id} className={classes} {...rest}>
         {options.map(({ label, value }) => (
