@@ -84,18 +84,17 @@ export default function Index() {
         <Banner />
 
         {/* Features Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h2 className="text-base font-semibold text-purple-600 uppercase">
+              <h2 className="text-base font-semibold text-purple-600 dark:text-purple-400 uppercase">
                 Features
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                 What We Offer
               </p>
-              <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-                Powerful tools and analytics to enhance your MMO trading
-                experience.
+              <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
+                Powerful tools and analytics to enhance your MMO trading experience.
               </p>
             </div>
 
@@ -108,11 +107,11 @@ export default function Index() {
                     target={feature.external ? '_blank' : '_self'}
                     {...(feature.external && { rel: 'noopener noreferrer' })}
                     className="block">
-                    <div className="p-6 rounded-lg shadow-lg hover:bg-blue-600 hover:text-white transition duration-200">
-                      <h3 className="text-lg leading-6 font-medium">
+                    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition duration-200">
+                      <h3 className="text-lg leading-6 font-medium dark:text-white">
                         {feature.name}
                       </h3>
-                      <p className="mt-2 text-base">{feature.description}</p>
+                      <p className="mt-2 text-base dark:text-gray-300">{feature.description}</p>
                     </div>
                   </a>
                 ))}
@@ -122,28 +121,27 @@ export default function Index() {
         </section>
 
         {/* About Us Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h2 className="text-base font-semibold text-purple-600 uppercase">
+              <h2 className="text-base font-semibold text-purple-600 dark:text-purple-400 uppercase">
                 About Us
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                 Your Gateway to Mastering MMO Markets
               </p>
-              <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-                Saddlebag Exchange provides tools to revolutionize how you
-                engage with in-game economies.
+              <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
+                Saddlebag Exchange provides tools to revolutionize how you engage with in-game economies.
               </p>
             </div>
 
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* FFXIV Section */}
-              <div className="flex flex-col bg-purple-50 p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-semibold text-purple-800 mb-4">
+              <div className="flex flex-col bg-purple-50 dark:bg-purple-900/50 p-8 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-semibold text-purple-800 dark:text-purple-200 mb-4">
                   For Final Fantasy XIV Players
                 </h3>
-                <ul className="list-disc list-inside text-purple-700 space-y-2">
+                <ul className="list-disc list-inside text-purple-700 dark:text-purple-300 space-y-2">
                   <li>
                     Get real-time FFXIV Discord alerts for{' '}
                     <a
@@ -199,11 +197,11 @@ export default function Index() {
               </div>
 
               {/* WoW Section */}
-              <div className="flex flex-col bg-blue-50 p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-semibold text-blue-800 mb-4">
+              <div className="flex flex-col bg-blue-50 dark:bg-blue-900/50 p-8 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-semibold text-blue-800 dark:text-blue-200 mb-4">
                   For World of Warcraft Adventurers
                 </h3>
-                <ul className="list-disc list-inside text-blue-700 space-y-2">
+                <ul className="list-disc list-inside text-blue-700 dark:text-blue-300 space-y-2">
                   <li>
                     Get real-time WoW AH Discord{' '}
                     <a
