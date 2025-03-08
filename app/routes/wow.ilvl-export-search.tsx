@@ -45,7 +45,7 @@ const AVAILABLE_STATS: ItemStat[] = [
 
 const defaultFormValues = {
   itemId: '',
-  ilvl: 642,
+  ilvl: 610,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
