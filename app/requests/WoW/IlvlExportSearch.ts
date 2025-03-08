@@ -42,7 +42,7 @@ export interface ItemInfo {
 }
 
 export interface IlvlExportResponse {
-  data: Array<ExportItem>
+  data: ExportItem[]
   itemInfo: ItemInfo
 }
 
