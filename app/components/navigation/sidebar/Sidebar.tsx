@@ -267,12 +267,6 @@ const navGroups: Array<{
         external: true
       },
       {
-        name: 'TSM to AAA converter Addon',
-        href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
-        icon: DocumentSearchIcon,
-        external: true
-      },
-      {
         name: 'Current Content Marketshare Overview',
         href: '/wow/marketshare/recommended',
         icon: ChartSquareBarIcon
@@ -291,6 +285,12 @@ const navGroups: Array<{
         name: 'Out of Stock',
         href: '/wow/out-of-stock',
         icon: DocumentSearchIcon
+      },
+      {
+        name: 'TSM to AAA converter Addon',
+        href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
+        icon: DocumentSearchIcon,
+        external: true
       }
     ]
   },

@@ -57,23 +57,28 @@ const recommendedQueries = [
     href: '/wow/upload-timers'
   },
   {
-    name: 'Region Export Item Search',
-    description:
-      'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
-    Icon: DocumentSearchIcon,
-    href: '/wow/export-search'
-  },
-  {
     name: 'Shopping List',
     description: 'Search for the realms with the lowest price for an item.',
     Icon: DocumentSearchIcon,
     href: '/wow/shopping-list'
   },
   {
-    name: 'Item Level Shopping List',
+    name: 'Item Export Search',
+    description: 'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/export-search'
+  },
+  {
+    name: 'Raid BOE Item Level Shopping List',
     description: 'Search for deals on raid BOE items with specific stats.',
     Icon: DocumentSearchIcon,
     href: '/wow/ilvl-shopping-list'
+  },
+  {
+    name: 'Raid BOE Item Level Export Search',
+    description: 'Find the best servers to sell raid BOE items with specific stats and item levels.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/ilvl-export-search'
   },
   {
     name: 'Current Content Marketshare Overview',
