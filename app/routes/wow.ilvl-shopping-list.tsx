@@ -7,6 +7,7 @@ import type { ListItem, IlvlWoWListResponse, ItemStat } from '~/requests/WoW/Ilv
 import IlvlShoppingList from '~/requests/WoW/IlvlShoppingList'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
+import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import {
   useActionData,
   useNavigation,
@@ -30,6 +31,21 @@ import {
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW BOE Item Level Shopping List',
+    description:
+      'Search for raid BOE items with specific item levels and stats across all realms with our WoW Item Level Shopping List!'
+  }
+}
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list' }
+]
 
 const PAGE_URL = '/wow/ilvl-shopping-list'
 

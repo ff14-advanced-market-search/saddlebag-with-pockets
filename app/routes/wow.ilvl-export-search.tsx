@@ -7,6 +7,7 @@ import type { ExportItem, IlvlExportResponse } from '~/requests/WoW/IlvlExportSe
 import IlvlExportSearch from '~/requests/WoW/IlvlExportSearch'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
+import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import {
   useActionData,
   useNavigation,
@@ -487,4 +488,19 @@ const mobileColumnList: Array<ColumnList<ExportItem>> = [
     )
   },
   { columnId: 'realmPopulationType', header: 'Population Type' }
+]
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW BOE Item Level Export Search',
+    description:
+      'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!'
+  }
+}
+
+export const links: LinksFunction = () => [
+  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-export-search' }
 ]
