@@ -1,5 +1,11 @@
 import { useState } from 'react'
 
+/**
+ * Renders a help widget component that toggles between a compact help button and an expanded help panel.
+ *
+ * Initially, a circular button with a '?' symbol is displayed. When clicked, it opens a panel that provides support information and a button to join a Discord server,
+ * which opens the Discord invite link in a new browser tab. Clicking the close button on the panel will hide the widget.
+ */
 export default function HelpWidget() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -11,35 +17,38 @@ export default function HelpWidget() {
   }
 
   return (
-    <div className="fixed top-20 right-4 z-30">
+    <div className='fixed top-20 right-4 z-30'>
       {isOpen && (
-        <div className="mb-4 w-72 rounded-lg bg-white p-4 shadow-lg dark:bg-slate-700">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold dark:text-white">
+        <div className='mb-4 w-72 rounded-lg bg-white p-4 shadow-lg dark:bg-slate-700'>
+          <div className='flex items-center justify-between'>
+            <h3 className='text-lg font-semibold dark:text-white'>
               Need Help?
             </h3>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
-              <span className="text-xl">×</span>
+              className='text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+            >
+              <span className='text-xl'>×</span>
             </button>
           </div>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+          <p className='mt-2 text-sm text-gray-600 dark:text-gray-300'>
             Join our Discord community for support, tips, and discussions!
           </p>
           <button
             onClick={openDiscord}
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
-            <span className="font-bold">Join Discord Server</span>
+            className='mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700'
+          >
+            <span className='font-bold'>Join Discord Server</span>
           </button>
         </div>
       )}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700"
-          aria-label="Get Help">
-          <span className="text-2xl font-bold">?</span>
+          className='flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700'
+          aria-label='Get Help'
+        >
+          <span className='text-2xl font-bold'>?</span>
         </button>
       )}
     </div>

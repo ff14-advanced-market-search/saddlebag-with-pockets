@@ -173,20 +173,27 @@ const recommendedQueries = [
 //     'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
 //   Icon: DocumentSearchIcon,
 //   href: QUEST_SCAN_PATH
-// },
+/**
+ * Renders the Recommended Queries page.
+ *
+ * This component displays a banner along with a grid of query tiles that link to various reselling queries for FFXIV. The grid is built dynamically from the `recommendedQueries` array, ensuring the UI remains scalable.
+ *
+ * @returns The JSX element representing the Recommended Queries page.
+ */
 
 export default function Index() {
   return (
     <>
-      <main className="flex-1">
+      <main className='flex-1'>
         <Banner />
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
+        <div className='py-6'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 md:px-8'>
+            <h1 className='text-2xl font-semibold text-blue-900 dark:text-gray-100'>
               Recommended Queries
             </h1>
             <div
-              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
+              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}
+            >
               {recommendedQueries.map((query) => {
                 return <TileLink key={query.name} {...query} />
               })}

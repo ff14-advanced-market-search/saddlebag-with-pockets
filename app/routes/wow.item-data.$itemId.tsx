@@ -79,6 +79,19 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 type ResponseType = ItemListingResponse | { exception: string }
 
+/**
+ * Renders the item listing details with statistics, charts, and auction house data.
+ *
+ * This component retrieves data via the loader mechanism and displays:
+ * - An error message if an exception is found in the loader data.
+ * - A "no results" view when no data is returned.
+ * - Detailed item information, including various statistics, external links,
+ *   and charts for price and quantity over time when valid listing data is available.
+ * The component dynamically adjusts to dark mode settings and utilizes helper functions
+ * to format time series data for charting.
+ *
+ * @returns The rendered React element for the item listing page.
+ */
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
@@ -88,7 +101,7 @@ export default function Index() {
   if (error) {
     return (
       <PageWrapper>
-        <h2 className="text-red-800 dark:text-red-200">Error: {error}</h2>
+        <h2 className='text-red-800 dark:text-red-200'>Error: {error}</h2>
       </PageWrapper>
     )
   }
@@ -112,92 +125,92 @@ export default function Index() {
         <Banner />
         <Title title={listing.itemName} />
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>
-        <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
-          <div className="flex flex-col max-w-full">
+        <div className='flex flex-col justify-around mx-3 my-6 md:flex-row'>
+          <div className='flex flex-col max-w-full'>
             <Differences
-              diffTitle="Minimum Price"
+              diffTitle='Minimum Price'
               diffAmount={listing.minPrice.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
             <Differences
-              diffTitle="Historic Price"
+              diffTitle='Historic Price'
               diffAmount={listing.historicPrice.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
           </div>
-          <div className="flex flex-col max-w-full">
+          <div className='flex flex-col max-w-full'>
             <Differences
-              diffTitle="Current Market Value"
+              diffTitle='Current Market Value'
               diffAmount={listing.currentMarketValue.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
             <Differences
-              diffTitle="Historic Market Value"
+              diffTitle='Historic Market Value'
               diffAmount={listing.historicMarketValue.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
           </div>
-          <div className="flex flex-col max-w-full">
+          <div className='flex flex-col max-w-full'>
             <Differences
-              diffTitle="Sales Per Day"
+              diffTitle='Sales Per Day'
               diffAmount={listing.salesPerDay.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
             <Differences
-              diffTitle="Percent Change"
+              diffTitle='Percent Change'
               diffAmount={listing.percentChange.toLocaleString() + '%'}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
           </div>
-          <div className="flex flex-col max-w-full">
+          <div className='flex flex-col max-w-full'>
             <Differences
-              diffTitle="Current Quantity"
+              diffTitle='Current Quantity'
               diffAmount={listing.currentQuantity.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
             <Differences
-              diffTitle="Average Quantity"
+              diffTitle='Average Quantity'
               diffAmount={listing.avgQuantity.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
             <Differences
-              diffTitle="Avg v Current Quantity"
+              diffTitle='Avg v Current Quantity'
               diffAmount={
                 listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
               }
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
             />
           </div>
         </div>
-        <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
-          <div className="flex flex-wrap gap-2">
+        <div className='flex flex-col justify-around mx-3 my-6 md:flex-row'>
+          <div className='flex flex-wrap gap-2'>
             <CustomButton
               link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
               // link={`https://saddlebagexchange.com/wow/export-search`} // remove custom id as it might be slowing down the crawl
-              buttonText="Best Place to Sell!"
-              rel="noopener noreferrer nofollow" // not working need to fix
+              buttonText='Best Place to Sell!'
+              rel='noopener noreferrer nofollow' // not working need to fix
             />
             <CustomButton
               link={`https://saddlebagexchange.com/wow/`}
-              buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
+              buttonText='View all our tools here!'
+              rel='nofollow' // not working need to fix
             />
             <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
-              buttonText="View on WoWHead"
-              rel="noopener noreferrer nofollow" // not working need to fix
+              buttonText='View on WoWHead'
+              rel='noopener noreferrer nofollow' // not working need to fix
             />
             <CustomButton
               link={`${listing.link}`}
-              buttonText="View on Undermine Exchange"
-              rel="noopener noreferrer nofollow" // not working need to fix
+              buttonText='View on Undermine Exchange'
+              rel='noopener noreferrer nofollow' // not working need to fix
             />
           </div>
         </div>
         {listing.priceTimeData.length > 0 && (
           <ContentContainer>
             <GenericLineChart
-              chartTitle="Price Over Time"
+              chartTitle='Price Over Time'
               darkMode={darkmode}
               data={listing.priceTimeData}
               dataIterator={(val, ind) => [
@@ -214,7 +227,7 @@ export default function Index() {
         {listing.quantityTimeData.length > 0 && (
           <ContentContainer>
             <GenericLineChart
-              chartTitle="Quantity Over Time"
+              chartTitle='Quantity Over Time'
               darkMode={darkmode}
               data={listing.quantityTimeData}
               dataIterator={(val, ind) => [

@@ -60,6 +60,18 @@ export interface CSVProps<DataType> {
   columns: Array<CSVColumn<DataType>>
 }
 
+/**
+ * Renders a button that downloads data as a CSV file.
+ *
+ * When clicked, the button converts the provided data into CSV format based on the given column definitions using {@link createCSVFromData} and initiates a file download with the specified filename.
+ *
+ * @param filename - The name to assign to the downloaded CSV file.
+ * @param data - The dataset to be converted into CSV format.
+ * @param columns - Definitions mapping data fields to CSV column headers.
+ *
+ * @example
+ * <CSVButton filename="report.csv" data={dataArray} columns={columnsArray} />
+ */
 export default function CSVButton<DataType>({
   filename,
   data,
@@ -70,8 +82,8 @@ export default function CSVButton<DataType>({
   }
   return (
     <SubmitButton
-      type="button"
-      title="Download as .csv"
+      type='button'
+      title='Download as .csv'
       onClick={handleDownload}
     />
   )

@@ -5,12 +5,14 @@ export interface JSONProps<DataType> {
 }
 
 /**
- * Renders a button that copies the provided data as formatted JSON to the clipboard.
+ * Renders a button that copies a JSON-formatted representation of the provided data to the clipboard.
  *
- * When clicked, the button converts the given data into a pretty-printed JSON string (using a 2-space indent)
- * and attempts to write it to the clipboard via the Clipboard API. If the copy operation fails, the error is logged.
+ * When the button is clicked, the component converts the given data to a pretty-printed JSON string and attempts to write it to the clipboard.
+ * If the operation fails, an error is logged to the console.
  *
- * @param data - The array of data items to be converted to JSON and copied.
+ * @param data - The array of items to be converted into JSON.
+ *
+ * @returns A button element that triggers the copy-to-clipboard action on click.
  */
 export default function JSONButton<DataType>({ data }: JSONProps<DataType>) {
   const handleCopy = () => {
@@ -27,6 +29,6 @@ export default function JSONButton<DataType>({ data }: JSONProps<DataType>) {
   }
 
   return (
-    <SubmitButton type="button" title="Copy as JSON" onClick={handleCopy} />
+    <SubmitButton type='button' title='Copy as JSON' onClick={handleCopy} />
   )
 }

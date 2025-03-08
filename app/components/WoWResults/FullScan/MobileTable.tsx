@@ -18,6 +18,24 @@ const parseToLocaleString = (value: any) => {
 
 type Type = Record<string, any>
 
+/**
+ * Renders a mobile-friendly table with configurable sorting and a modal for detailed row information.
+ *
+ * This component displays provided data in a responsive layout optimized for mobile devices.
+ * Users can sort the table by selecting a column from the dropdown and toggling the sort order
+ * by clicking on the respective column header. Clicking on a row opens a modal that presents detailed
+ * information based on the predefined row labels.
+ *
+ * @param data - Array of data records to be displayed.
+ * @param sortingOrder - Array specifying the initial sort column and its sort direction.
+ * @param columnList - List of columns with header names and identifiers for table display.
+ * @param title - Optional title shown above the table.
+ * @param description - Optional description providing additional context.
+ * @param rowLabels - Configuration defining how to access and render data for each row and modal.
+ * @param columnSelectOptions - Array of column identifiers used to populate the sorting dropdown.
+ *
+ * @returns A React element rendering a mobile-optimized table with sorting functionality and a detail modal.
+ */
 function MobileTable({
   data,
   sortingOrder,
@@ -68,23 +86,24 @@ function MobileTable({
 
   return (
     <div
-      className={`flex flex-col sm:hidden mt-4 bg-white dark:bg-slate-700 sm:rounded-md shadow max-w-screen mb-24`}>
+      className={`flex flex-col sm:hidden mt-4 bg-white dark:bg-slate-700 sm:rounded-md shadow max-w-screen mb-24`}
+    >
       {!!title && (
-        <div className="mx-2">
+        <div className='mx-2'>
           <Title title={title} />
         </div>
       )}
       {!!description && (
-        <div className="mx-2">
-          <p className="italic text-sm text-grey-500 dark:text-gray-300">
+        <div className='mx-2'>
+          <p className='italic text-sm text-grey-500 dark:text-gray-300'>
             {description}
           </p>
         </div>
       )}
-      <div className="m-2 flex flex-col">
+      <div className='m-2 flex flex-col'>
         <Label>Table sort by</Label>
         <select
-          className="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400"
+          className='flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400'
           defaultValue={columnSort}
           onChange={(e) => {
             e.preventDefault()
@@ -103,7 +122,8 @@ function MobileTable({
             if (!newColumn) return
 
             setColumns([...filteredColumns, newColumn])
-          }}>
+          }}
+        >
           {columnSelectOptions.map((option, index) => {
             const row = rowLabels.find(({ columnId }) => columnId === option)
             if (!row) return <></>
@@ -116,24 +136,25 @@ function MobileTable({
           })}
         </select>
       </div>
-      <div className="overflow-y-scroll max-h-[calc(100vh-160px)]">
-        <table className="w-screen relative divide-y divide-gray-300 dark:divide-gray-600">
-          <thead className="w-screen">
-            <tr className="text-gray-900 font-semibold dark:text-gray-100">
+      <div className='overflow-y-scroll max-h-[calc(100vh-160px)]'>
+        <table className='w-screen relative divide-y divide-gray-300 dark:divide-gray-600'>
+          <thead className='w-screen'>
+            <tr className='text-gray-900 font-semibold dark:text-gray-100'>
               {columns.map((col) => {
                 if (col.columnId === sortingColumn) {
                   return (
                     <th
                       key={col.columnId}
                       onClick={() => setDesc((state) => !state)}
-                      className="py-2 px-3 sticky bg-gray-50 top-0 text-center cursor-pointer text-gray-900 dark:text-gray-100 dark:bg-gray-600">
-                      <div className="flex justify-center items-center p-2">
+                      className='py-2 px-3 sticky bg-gray-50 top-0 text-center cursor-pointer text-gray-900 dark:text-gray-100 dark:bg-gray-600'
+                    >
+                      <div className='flex justify-center items-center p-2'>
                         {col.header}
-                        <div className="bg-gray-200 rounded dark:bg-gray-500 p-2">
+                        <div className='bg-gray-200 rounded dark:bg-gray-500 p-2'>
                           {desc ? (
-                            <ChevronDownIcon className="h-4 w-4" />
+                            <ChevronDownIcon className='h-4 w-4' />
                           ) : (
-                            <ChevronUpIcon className="h-4 w-4" />
+                            <ChevronUpIcon className='h-4 w-4' />
                           )}
                         </div>
                       </div>
@@ -143,22 +164,24 @@ function MobileTable({
                 return (
                   <th
                     key={col.columnId}
-                    className="p-2 sticky bg-gray-50 top-0 dark:bg-gray-600">
+                    className='p-2 sticky bg-gray-50 top-0 dark:bg-gray-600'
+                  >
                     {col.header}
                   </th>
                 )
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-300 dark:divide-gray-700 bg-white dark:bg-slate-800 dark:divide-gray-500 max-w-screen">
+          <tbody className='divide-y divide-gray-300 dark:divide-gray-700 bg-white dark:bg-slate-800 dark:divide-gray-500 max-w-screen'>
             {sortedData.map((row, rowIndex) => {
               return (
                 <tr
                   key={`${rowIndex}-row`}
-                  className="text-gray-700 dark:text-gray-300"
+                  className='text-gray-700 dark:text-gray-300'
                   onClick={() => {
                     setModal({ title, data: row })
-                  }}>
+                  }}
+                >
                   {columns.map((col, i) => {
                     const maybeRow = rowLabels.find(
                       ({ columnId }) => columnId === col.columnId
@@ -168,7 +191,8 @@ function MobileTable({
                         key={`cell-${rowIndex}-${i}`}
                         className={`p-2 ${
                           i !== 0 ? 'text-center' : 'text-left'
-                        }`}>
+                        }`}
+                      >
                         {maybeRow?.accessor
                           ? maybeRow.accessor({
                               row,
@@ -187,7 +211,7 @@ function MobileTable({
 
       {modal && (
         <Modal onClose={() => setModal(null)} title={modal.title}>
-          <div className="bg-white dark:bg-slate-800 text-sm text-gray-800 dark:text-gray-200">
+          <div className='bg-white dark:bg-slate-800 text-sm text-gray-800 dark:text-gray-200'>
             {rowLabels.map((item, index) => {
               const modalItem = item.accessor
                 ? modal.data[item.columnId]
@@ -195,8 +219,9 @@ function MobileTable({
               return (
                 <div
                   key={`${index}-${item.header}`}
-                  className="dark:border-b dark:border-gray-500 shadow my-2 p-1 rounded">
-                  <p className="text-gray-900 dark:text-gray-100 font-semibold">
+                  className='dark:border-b dark:border-gray-500 shadow my-2 p-1 rounded'
+                >
+                  <p className='text-gray-900 dark:text-gray-100 font-semibold'>
                     {item.header}:
                   </p>
 

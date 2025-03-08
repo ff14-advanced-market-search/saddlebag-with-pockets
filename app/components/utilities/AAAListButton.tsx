@@ -6,6 +6,13 @@ export interface AAAListProps<DataType> {
   data: Array<DataType>
 }
 
+/**
+ * Renders a button that opens a dialog for filtering and copying a discounted list of items.
+ *
+ * When the button is clicked, a dialog appears allowing users to specify minimum market value, minimum average price, and discount percentage. The component then filters the provided data based on these thresholds, computes a discounted price for each qualifying item, and copies the formatted JSON to the clipboard.
+ *
+ * @param data - An array of items where each item includes an `itemID` and market value/price properties. Each item should have either `estimatedRegionMarketValue` or `historicMarketValue` for market value and either `avgTSMPrice` or `historicPrice` for price.
+ */
 export default function AAAListButton<DataType extends { itemID: number }>({
   data
 }: AAAListProps<DataType>) {
@@ -51,65 +58,68 @@ export default function AAAListButton<DataType extends { itemID: number }>({
   return (
     <>
       <SubmitButton
-        type="button"
-        title="Copy AAA List"
+        type='button'
+        title='Copy AAA List'
         onClick={() => setIsOpen(true)}
       />
 
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-        <div className="relative bg-white rounded-lg p-6 max-w-sm w-full">
-          <h3 className="text-lg font-bold mb-4">AAA List Settings</h3>
+        className='fixed inset-0 flex items-center justify-center p-4'
+      >
+        <Dialog.Overlay className='fixed inset-0 bg-black/50' />
+        <div className='relative bg-white rounded-lg p-6 max-w-sm w-full'>
+          <h3 className='text-lg font-bold mb-4'>AAA List Settings</h3>
 
-          <div className="space-y-4">
+          <div className='space-y-4'>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className='block text-sm font-medium text-gray-700'>
                 Minimum Market Value
               </label>
               <input
-                type="number"
+                type='number'
                 value={minValue}
                 onChange={(e) => setMinValue(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500'
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className='block text-sm font-medium text-gray-700'>
                 Minimum Average Price
               </label>
               <input
-                type="number"
+                type='number'
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500'
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className='block text-sm font-medium text-gray-700'>
                 Discount Percentage
               </label>
               <input
-                type="number"
+                type='number'
                 value={discount}
                 onChange={(e) => setDiscount(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500'
               />
             </div>
 
-            <div className="flex justify-end gap-2">
+            <div className='flex justify-end gap-2'>
               <button
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                className='px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200'
+              >
                 Cancel
               </button>
               <button
                 onClick={handleCopy}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                className='px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700'
+              >
                 Copy
               </button>
             </div>

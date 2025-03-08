@@ -137,42 +137,46 @@ const ffxivPages = [
 ]
 
 /**
- * Renders the landing page for FFXIV Market Board Tools.
+ * Renders the main index page for the FFXIV Market Board Tools.
  *
- * This component displays a visually rich hero section with a background image,
- * overlay, and prominent call-to-action buttons. It also includes a banner and a grid
- * of available market board tools. Hidden SEO content is rendered for improved search engine visibility.
+ * This component constructs the homepage layout comprising a hero section with a background image,
+ * a prominent title and description, and two call-to-action links. It further incorporates a banner
+ * component and a grid of tool cards, each linking to a specific feature—either opening in the same
+ * window or a new one if marked as external. Additionally, the component includes hidden SEO content
+ * intended to enhance search engine visibility.
  */
 export default function Index() {
   return (
     <>
-      <main className="flex-1">
+      <main className='flex-1'>
         {/* Hero Section */}
-        <section className="relative bg-gray-900">
-          <div className="absolute inset-0">
+        <section className='relative bg-gray-900'>
+          <div className='absolute inset-0'>
             <img
-              className="w-full h-full object-cover opacity-50"
-              src="/images/hero-bg.jpg"
-              alt="Hero Background"
+              className='w-full h-full object-cover opacity-50'
+              src='/images/hero-bg.jpg'
+              alt='Hero Background'
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-transparent to-blue-900 opacity-70"></div>
+            <div className='absolute inset-0 bg-gradient-to-r from-purple-900 via-transparent to-blue-900 opacity-70'></div>
           </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-            <h1 className="text-5xl font-extrabold text-white">
+          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center'>
+            <h1 className='text-5xl font-extrabold text-white'>
               FFXIV Market Board Tools
             </h1>
-            <p className="mt-4 text-xl text-gray-200">
+            <p className='mt-4 text-xl text-gray-200'>
               Maximize your gil earnings with our advanced Market Board tools
             </p>
-            <div className="mt-8 flex justify-center space-x-4">
+            <div className='mt-8 flex justify-center space-x-4'>
               <a
-                href="/queries/recommended"
-                className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                href='/queries/recommended'
+                className='inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md'
+              >
                 Cross-Server Reselling
               </a>
               <a
-                href="/ffxiv/marketshare/queries"
-                className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                href='/ffxiv/marketshare/queries'
+                className='inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-md shadow-md'
+              >
                 Marketshare Overview
               </a>
             </div>
@@ -182,33 +186,34 @@ export default function Index() {
         <Banner />
 
         {/* Tools Grid Section */}
-        <section className="py-16 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-base font-semibold text-purple-600 dark:text-purple-400 uppercase">
+        <section className='py-16 bg-gray-50 dark:bg-gray-900'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+            <div className='text-center mb-12'>
+              <h2 className='text-base font-semibold text-purple-600 dark:text-purple-400 uppercase'>
                 Tools & Features
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl'>
                 Everything You Need for Gil Making
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
               {ffxivPages.map((query) => (
                 <a
                   key={query.name}
                   href={query.href}
                   target={query.external ? '_blank' : '_self'}
                   rel={query.external ? 'noopener noreferrer' : undefined}
-                  className="block">
-                  <div className="h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-purple-50 dark:hover:bg-purple-900/50">
-                    <div className="flex items-center mb-4">
-                      <query.Icon className="h-6 w-6 text-purple-500 dark:text-purple-400" />
-                      <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">
+                  className='block'
+                >
+                  <div className='h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-purple-50 dark:hover:bg-purple-900/50'>
+                    <div className='flex items-center mb-4'>
+                      <query.Icon className='h-6 w-6 text-purple-500 dark:text-purple-400' />
+                      <h3 className='ml-3 text-lg font-medium text-gray-900 dark:text-white'>
                         {query.name}
                       </h3>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className='text-gray-600 dark:text-gray-300'>
                       {query.description}
                     </p>
                   </div>

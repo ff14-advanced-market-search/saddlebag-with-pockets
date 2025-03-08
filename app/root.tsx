@@ -183,6 +183,15 @@ export const meta: MetaFunction = ({ data }) => {
   }
 }
 
+/**
+ * Renders the main application layout and initializes key global settings.
+ *
+ * This component retrieves session data, sets the application theme based on the user's dark mode preference,
+ * synchronizes game server information (FFXIV world and WoW realm) between session data and local storage,
+ * and schedules the asynchronous loading of external analytics scripts.
+ *
+ * @returns A React element serving as the root layout of the application.
+ */
 function App() {
   const data = useLoaderData<LoaderData>()
   const [theme, setTheme] = useTheme()
@@ -298,9 +307,9 @@ function App() {
 
   return (
     <DatadogProvider>
-      <html lang="en" className={classNames(`h-full`, theme || '')}>
+      <html lang='en' className={classNames(`h-full`, theme || '')}>
         <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
           <Meta />
           <Links />
           <EnsureThemeApplied />
@@ -308,11 +317,12 @@ function App() {
         <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
           <noscript>
             <iframe
-              title="GtagManager"
-              src="https://www.googletagmanager.com/ns.html?id=GTM-WH4KFG5"
-              height="0"
-              width="0"
-              className={`hidden invisible`}></iframe>
+              title='GtagManager'
+              src='https://www.googletagmanager.com/ns.html?id=GTM-WH4KFG5'
+              height='0'
+              width='0'
+              className={`hidden invisible`}
+            ></iframe>
           </noscript>
           <Sidebar data={data}>
             <Outlet />

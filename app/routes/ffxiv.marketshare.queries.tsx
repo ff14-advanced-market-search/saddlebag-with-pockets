@@ -137,18 +137,26 @@ const recommendedQueries = [
   }
 ]
 
+/**
+ * Renders the main page displaying recommended marketshare queries for FFXIV.
+ *
+ * This component integrates a banner, a section header, and a grid layout that maps
+ * over a list of recommended queries. Each query is rendered as a tile link, directing
+ * the user to a specific marketshare analysis.
+ */
 export default function Index() {
   return (
     <>
-      <main className="flex-1">
+      <main className='flex-1'>
         <Banner />
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
+        <div className='py-6'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 md:px-8'>
+            <h1 className='text-2xl font-semibold text-blue-900 dark:text-gray-100'>
               Recommended Marketshare Queries
             </h1>
             <div
-              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
+              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}
+            >
               {recommendedQueries.map((query) => {
                 return <TileLink key={query.name} {...query} />
               })}

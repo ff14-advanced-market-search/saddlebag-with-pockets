@@ -194,6 +194,17 @@ export const loader: LoaderFunction = ({ request }) => {
   } else return defaultParams
 }
 
+/**
+ * Renders the market share overview page for FFXIV.
+ *
+ * This component displays a form for entering market share search parameters—including
+ * time period, sales amount, average price, filters, and sorting options—and updates these
+ * parameters as the user interacts with the form. It uses Remix hooks to load initial data,
+ * manage navigation transition states to prevent duplicate submissions, and conditionally
+ * renders either the fetched results or a "No Results" message.
+ *
+ * @returns The JSX element representing the market share overview page.
+ */
 export default function Index() {
   const transition = useNavigation()
   const loaderData = useLoaderData<MarketshareLoaderData>()
@@ -237,21 +248,22 @@ export default function Index() {
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         error={error}
-        action={getActionUrl('/ffxiv/marketshare', searchParams)}>
-        <div className="pt-4">
-          <div className="flex justify-end mb-2">
+        action={getActionUrl('/ffxiv/marketshare', searchParams)}
+      >
+        <div className='pt-4'>
+          <div className='flex justify-end mb-2'>
             <SubmitButton
-              title="Share this search!"
+              title='Share this search!'
               onClick={handleCopyButton}
-              type="button"
+              type='button'
             />
           </div>
           <InputWithLabel
-            name="timePeriod"
-            labelTitle="Time Period"
-            type="number"
+            name='timePeriod'
+            labelTitle='Time Period'
+            type='number'
             defaultValue={loaderData.timePeriod}
-            inputTag="Hours"
+            inputTag='Hours'
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
@@ -260,11 +272,11 @@ export default function Index() {
             }}
           />
           <InputWithLabel
-            name="salesAmount"
-            labelTitle="Sales Amount"
-            type="number"
+            name='salesAmount'
+            labelTitle='Sales Amount'
+            type='number'
             defaultValue={loaderData.salesAmount}
-            inputTag="No# of sales"
+            inputTag='No# of sales'
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
@@ -273,11 +285,11 @@ export default function Index() {
             }}
           />
           <InputWithLabel
-            name="averagePrice"
-            labelTitle="Average Price"
-            type="number"
+            name='averagePrice'
+            labelTitle='Average Price'
+            type='number'
             defaultValue={loaderData.averagePrice}
-            inputTag="Gil"
+            inputTag='Gil'
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {

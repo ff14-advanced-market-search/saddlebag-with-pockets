@@ -191,17 +191,25 @@ const recommendedQueries = [
   }
 ]
 
+/**
+ * Renders the main page for World of Warcraft best deals queries.
+ *
+ * This component displays a banner, a heading, and a grid of clickable tiles representing recommended queries for WoW auction house deals.
+ * It also includes a visually minimized paragraph containing a detailed promotional description of the Saddlebag Exchange tool.
+ *
+ * @returns A React element that serves as the index page for displaying WoW best deals queries.
+ */
 export default function Index() {
   return (
     <>
-      <main className="flex-1">
+      <main className='flex-1'>
         <Banner />
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
+        <div className='py-6'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 md:px-8'>
+            <h1 className='text-2xl font-semibold text-blue-900 dark:text-gray-100'>
               Recommended WoW Best Deals Queries
             </h1>
-            <div className="not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className='not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2'>
               {recommendedQueries.map((query) => (
                 <TileLink key={query.name} {...query} />
               ))}
