@@ -46,6 +46,15 @@ const recommendedQueries = [
   }
 ]
 
+/**
+ * Renders the main page for Saddlebag Exchange.
+ *
+ * This component builds the homepage layout by composing several sections:
+ * the hero section with a background image and buttons linking to Final Fantasy XIV and World of Warcraft resources,
+ * a banner, a features section displaying available MMO tools, an about section detailing offerings for gamers,
+ * a call-to-action encouraging user engagement, and a footer. Additionally, it includes hidden SEO content to enhance
+ * search engine visibility.
+ */
 export default function Index() {
   return (
     <>
