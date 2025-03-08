@@ -342,7 +342,7 @@ const Results = ({
     <PageWrapper>
       <SmallTable
         title={'Best Deals for ' + name}
-        sortingOrder={[{ desc: true, id: sortby }]}
+        sortingOrder={[{ desc: false, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
         columnSelectOptions={['price', 'quantity', 'realmNames', 'ilvl', 'stats', 'link']}
