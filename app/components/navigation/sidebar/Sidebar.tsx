@@ -231,13 +231,18 @@ const navGroups: Array<{
         icon: ShoppingCartIcon
       },
       {
-        name: 'Item Level Shopping List',
+        name: 'Item Export Search',
+        href: 'wow/export-search',
+        icon: DocumentSearchIcon
+      },
+      {
+        name: 'Raid BOE Ilvl Shopping List',
         href: '/wow/ilvl-shopping-list',
         icon: ShoppingCartIcon
       },
       {
-        name: 'Item Export Search',
-        href: 'wow/export-search',
+        name: 'Raid BOE Ilvl Export Search',
+        href: 'wow/ilvl-export-search',
         icon: DocumentSearchIcon
       },
       {
