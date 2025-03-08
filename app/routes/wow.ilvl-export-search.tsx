@@ -44,7 +44,7 @@ const AVAILABLE_STATS: ItemStat[] = [
 
 const defaultFormValues = {
   itemId: '',
-  ilvl: 640,
+  ilvl: 642,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
@@ -110,7 +110,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const params = url.searchParams
 
   const itemID = params.get('itemId')
-  const ilvl = params.get('ilvl') || '640'
+  const ilvl = params.get('ilvl') || '642'
   const populationWP = params.get('populationWP') || '3000'
   const populationBlizz = params.get('populationBlizz') || '1'
   const rankingWP = params.get('rankingWP') || '90'
@@ -188,7 +188,7 @@ const IlvlExportSearchComponent = () => {
 
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')
-    const ilvlFromUrl = searchParams.get('ilvl') || '640'
+    const ilvlFromUrl = searchParams.get('ilvl') || '642'
     const populationWPFromUrl = searchParams.get('populationWP') || '3000'
     const populationBlizzFromUrl = searchParams.get('populationBlizz') || '1'
     const rankingWPFromUrl = searchParams.get('rankingWP') || '90'
@@ -374,7 +374,8 @@ export default IlvlExportSearchComponent
 
 const Results = ({
   data,
-  sortby
+  sortby,
+  itemInfo
 }: IlvlExportResponse & { sortby: string }) => {
   useEffect(() => {
     if (window && document) {
@@ -384,6 +385,32 @@ const Results = ({
 
   return (
     <PageWrapper>
+      <ContentContainer>
+        <div className="flex flex-col min-w-full">
+          <div className="flex flex-col md:flex-row items-center gap-2">
+            <Title title={itemInfo.itemName} />
+            <ExternalLink link={itemInfo.link} text="Item Data" />
+          </div>
+          <div className="flex flex-col md:flex-row w-full">
+            <div className="flex flex-col md:min-w-[50%] justify-center">
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>Average Min Price: {itemInfo.avgMinPrice.toLocaleString()}</span>
+              </div>
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>Median Min Price: {itemInfo.medianMinPrice.toLocaleString()}</span>
+              </div>
+            </div>
+            <div className="flex flex-col md:min-w-[50%] justify-center">
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>Average Server Quantity: {itemInfo.avgServerQuantity.toLocaleString()}</span>
+              </div>
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>Total Selected Server Quantity: {itemInfo.totalSelectedServerQuantity.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ContentContainer>
       <SmallTable
         title="Export Results"
         description="Results for your item in different realms"
@@ -398,7 +425,20 @@ const Results = ({
           'realmPopulationType',
           'realmRanking'
         ]}
-        data={data}
+        data={data as any}
+        csvOptions={{
+          filename: 'saddlebag-wow-ilvl-export.csv',
+          columns: [
+            { title: 'Realm ID', value: 'connectedRealmID' },
+            { title: 'Realm Names', value: 'connectedRealmNames' },
+            { title: 'Minimum Price', value: 'minPrice' },
+            { title: 'Item Quantity', value: 'itemQuantity' },
+            { title: 'Stats', value: 'stats' },
+            { title: 'Realm Population', value: 'realmPopulationReal' },
+            { title: 'Population Type', value: 'realmPopulationType' },
+            { title: 'Realm Ranking', value: 'realmRanking' }
+          ]
+        }}
       />
     </PageWrapper>
   )

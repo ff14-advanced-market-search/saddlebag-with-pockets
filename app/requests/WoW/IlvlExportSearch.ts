@@ -27,8 +27,23 @@ export interface ExportItem {
   undermineLink: string
 }
 
+export interface ItemInfo {
+  itemID: number
+  itemName: string
+  ilvl: number
+  stats: ItemStat[]
+  link: string
+  undermineLink: string
+  avgMinPrice: number
+  medianMinPrice: number
+  avgServerQuantity: number
+  medianServerQuantity: number
+  totalSelectedServerQuantity: number
+}
+
 export interface IlvlExportResponse {
   data: Array<ExportItem>
+  itemInfo: ItemInfo
 }
 
 const IlvlExportSearch = async ({
