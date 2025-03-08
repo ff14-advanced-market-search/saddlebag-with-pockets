@@ -49,33 +49,35 @@ const recommendedQueries = [
 export default function Index() {
   return (
     <>
-      <main className="flex-1">
+      <main className='flex-1'>
         {/* Hero Section */}
-        <section className="relative bg-gray-900">
-          <div className="absolute inset-0">
+        <section className='relative bg-gray-900'>
+          <div className='absolute inset-0'>
             <img
-              className="w-full h-full object-cover opacity-50"
-              src="/images/hero-bg.jpg" // Placeholder image path
-              alt="Hero Background"
+              className='w-full h-full object-cover opacity-50'
+              src='/images/hero-bg.jpg' // Placeholder image path
+              alt='Hero Background'
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-transparent to-blue-900 opacity-70"></div>
+            <div className='absolute inset-0 bg-gradient-to-r from-purple-900 via-transparent to-blue-900 opacity-70'></div>
           </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-            <h1 className="text-5xl font-extrabold text-white">
+          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center'>
+            <h1 className='text-5xl font-extrabold text-white'>
               Saddlebag Exchange
             </h1>
-            <p className="mt-4 text-xl text-gray-200">
+            <p className='mt-4 text-xl text-gray-200'>
               Explore MMO Market Data for FFXIV and WoW
             </p>
-            <div className="mt-8 flex justify-center">
+            <div className='mt-8 flex justify-center'>
               <a
-                href="/queries"
-                className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md mr-4">
+                href='/queries'
+                className='inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md mr-4'
+              >
                 Final Fantasy XIV
               </a>
               <a
-                href="/wow"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                href='/wow'
+                className='inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md'
+              >
                 World of Warcraft
               </a>
             </div>
@@ -84,34 +86,38 @@ export default function Index() {
         <Banner />
 
         {/* Features Section */}
-        <section className="py-16 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h2 className="text-base font-semibold text-purple-600 dark:text-purple-400 uppercase">
+        <section className='py-16 bg-gray-50 dark:bg-gray-900'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+            <div className='text-center'>
+              <h2 className='text-base font-semibold text-purple-600 dark:text-purple-400 uppercase'>
                 Features
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl'>
                 What We Offer
               </p>
-              <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-                Powerful tools and analytics to enhance your MMO trading experience.
+              <p className='mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto'>
+                Powerful tools and analytics to enhance your MMO trading
+                experience.
               </p>
             </div>
 
-            <div className="mt-10">
-              <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+            <div className='mt-10'>
+              <dl className='space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10'>
                 {recommendedQueries.map((feature) => (
                   <a
                     key={feature.name}
                     href={feature.href}
                     target={feature.external ? '_blank' : '_self'}
                     {...(feature.external && { rel: 'noopener noreferrer' })}
-                    className="block">
-                    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition duration-200">
-                      <h3 className="text-lg leading-6 font-medium dark:text-white">
+                    className='block'
+                  >
+                    <div className='p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition duration-200'>
+                      <h3 className='text-lg leading-6 font-medium dark:text-white'>
                         {feature.name}
                       </h3>
-                      <p className="mt-2 text-base dark:text-gray-300">{feature.description}</p>
+                      <p className='mt-2 text-base dark:text-gray-300'>
+                        {feature.description}
+                      </p>
                     </div>
                   </a>
                 ))}
@@ -121,38 +127,41 @@ export default function Index() {
         </section>
 
         {/* About Us Section */}
-        <section className="py-16 bg-white dark:bg-gray-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h2 className="text-base font-semibold text-purple-600 dark:text-purple-400 uppercase">
+        <section className='py-16 bg-white dark:bg-gray-800'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+            <div className='text-center'>
+              <h2 className='text-base font-semibold text-purple-600 dark:text-purple-400 uppercase'>
                 About Us
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl'>
                 Your Gateway to Mastering MMO Markets
               </p>
-              <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-                Saddlebag Exchange provides tools to revolutionize how you engage with in-game economies.
+              <p className='mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto'>
+                Saddlebag Exchange provides tools to revolutionize how you
+                engage with in-game economies.
               </p>
             </div>
 
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className='mt-10 grid grid-cols-1 md:grid-cols-2 gap-8'>
               {/* FFXIV Section */}
-              <div className="flex flex-col bg-purple-50 dark:bg-purple-900/50 p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-semibold text-purple-800 dark:text-purple-200 mb-4">
+              <div className='flex flex-col bg-purple-50 dark:bg-purple-900/50 p-8 rounded-lg shadow-lg'>
+                <h3 className='text-2xl font-semibold text-purple-800 dark:text-purple-200 mb-4'>
                   For Final Fantasy XIV Players
                 </h3>
-                <ul className="list-disc list-inside text-purple-700 dark:text-purple-300 space-y-2">
+                <ul className='list-disc list-inside text-purple-700 dark:text-purple-300 space-y-2'>
                   <li>
                     Get real-time FFXIV Discord alerts for{' '}
                     <a
-                      href="https://saddlebagexchange.com/price-sniper"
-                      className="text-purple-600 underline">
+                      href='https://saddlebagexchange.com/price-sniper'
+                      className='text-purple-600 underline'
+                    >
                       Prices
                     </a>
                     ,{' '}
                     <a
-                      href="https://saddlebagexchange.com/undercut"
-                      className="text-purple-600 underline">
+                      href='https://saddlebagexchange.com/undercut'
+                      className='text-purple-600 underline'
+                    >
                       Undercuts, Sales
                     </a>
                     , and more!
@@ -160,8 +169,9 @@ export default function Index() {
                   <li>
                     Unlock the best deals with our{' '}
                     <a
-                      href="https://saddlebagexchange.com/queries/recommended"
-                      className="text-purple-600 underline">
+                      href='https://saddlebagexchange.com/queries/recommended'
+                      className='text-purple-600 underline'
+                    >
                       Cross-Server Reselling Tool
                     </a>
                     .
@@ -169,8 +179,9 @@ export default function Index() {
                   <li>
                     Discover high-demand items with our{' '}
                     <a
-                      href="https://saddlebagexchange.com/ffxiv/marketshare/queries"
-                      className="text-purple-600 underline">
+                      href='https://saddlebagexchange.com/ffxiv/marketshare/queries'
+                      className='text-purple-600 underline'
+                    >
                       Marketshare Overview Tool
                     </a>
                     .
@@ -178,8 +189,9 @@ export default function Index() {
                   <li>
                     Explore crafting opportunities with our{' '}
                     <a
-                      href="https://saddlebagexchange.com/ffxiv/craftsim/queries"
-                      className="text-purple-600 underline">
+                      href='https://saddlebagexchange.com/ffxiv/craftsim/queries'
+                      className='text-purple-600 underline'
+                    >
                       Crafting Profit Simulations
                     </a>
                     .
@@ -187,8 +199,9 @@ export default function Index() {
                   <li>
                     Optimize material costs with our{' '}
                     <a
-                      href="https://saddlebagexchange.com/ffxiv/shopping-list"
-                      className="text-purple-600 underline">
+                      href='https://saddlebagexchange.com/ffxiv/shopping-list'
+                      className='text-purple-600 underline'
+                    >
                       Shopping List Search
                     </a>
                     .
@@ -197,22 +210,24 @@ export default function Index() {
               </div>
 
               {/* WoW Section */}
-              <div className="flex flex-col bg-blue-50 dark:bg-blue-900/50 p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-semibold text-blue-800 dark:text-blue-200 mb-4">
+              <div className='flex flex-col bg-blue-50 dark:bg-blue-900/50 p-8 rounded-lg shadow-lg'>
+                <h3 className='text-2xl font-semibold text-blue-800 dark:text-blue-200 mb-4'>
                   For World of Warcraft Adventurers
                 </h3>
-                <ul className="list-disc list-inside text-blue-700 dark:text-blue-300 space-y-2">
+                <ul className='list-disc list-inside text-blue-700 dark:text-blue-300 space-y-2'>
                   <li>
                     Get real-time WoW AH Discord{' '}
                     <a
-                      href="https://saddlebagexchange.com/wow/price-alert"
-                      className="text-blue-600 underline">
+                      href='https://saddlebagexchange.com/wow/price-alert'
+                      className='text-blue-600 underline'
+                    >
                       Price Alerts
                     </a>
                     ,{' '}
                     <a
-                      href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
-                      className="text-blue-600 underline">
+                      href='https://www.curseforge.com/wow/addons/saddlebag-exchange'
+                      className='text-blue-600 underline'
+                    >
                       Undercut Alerts
                     </a>
                     , and more!
@@ -220,8 +235,9 @@ export default function Index() {
                   <li>
                     Discover ultra-cheap deals with our{' '}
                     <a
-                      href="https://saddlebagexchange.com/wow/best-deals?discount=99&minPrice=100&salesPerDay=0.1"
-                      className="text-blue-600 underline">
+                      href='https://saddlebagexchange.com/wow/best-deals?discount=99&minPrice=100&salesPerDay=0.1'
+                      className='text-blue-600 underline'
+                    >
                       Ultra Cheap Deals
                     </a>{' '}
                     search.
@@ -229,8 +245,9 @@ export default function Index() {
                   <li>
                     Experience cross-realm trading with{' '}
                     <a
-                      href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest"
-                      className="text-blue-600 underline">
+                      href='https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest'
+                      className='text-blue-600 underline'
+                    >
                       Azeroth Auction Assassin
                     </a>
                     .
@@ -238,8 +255,9 @@ export default function Index() {
                   <li>
                     Find lucrative items with our{' '}
                     <a
-                      href="https://saddlebagexchange.com/wow/marketshare"
-                      className="text-blue-600 underline">
+                      href='https://saddlebagexchange.com/wow/marketshare'
+                      className='text-blue-600 underline'
+                    >
                       Marketshare Gold Earning Searches
                     </a>
                     .
@@ -247,14 +265,16 @@ export default function Index() {
                   <li>
                     Utilize our{' '}
                     <a
-                      href="https://saddlebagexchange.com/wow/shopping-list"
-                      className="text-blue-600 underline">
+                      href='https://saddlebagexchange.com/wow/shopping-list'
+                      className='text-blue-600 underline'
+                    >
                       Shopping List
                     </a>{' '}
                     and{' '}
                     <a
-                      href="https://saddlebagexchange.com/wow/export-search"
-                      className="text-blue-600 underline">
+                      href='https://saddlebagexchange.com/wow/export-search'
+                      className='text-blue-600 underline'
+                    >
                       Export Search
                     </a>{' '}
                     tools.
@@ -266,21 +286,22 @@ export default function Index() {
         </section>
 
         {/* Call to Action Section */}
-        <section className="bg-gradient-to-r from-purple-600 to-blue-600 py-16 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-extrabold">
+        <section className='bg-gradient-to-r from-purple-600 to-blue-600 py-16 text-white'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center'>
+            <h2 className='text-3xl font-extrabold'>
               Join Saddlebag Exchange Today
             </h2>
-            <p className="mt-4 text-lg">
+            <p className='mt-4 text-lg'>
               Transform your MMO trading into a highly efficient, rewarding
               journey.
             </p>
-            <div className="mt-8">
+            <div className='mt-8'>
               <a
                 // href="/signup"
                 // href="/blog"
-                href="https://discord.gg/saddlebag-exchange-973380473281724476"
-                className="inline-block bg-white text-purple-600 font-semibold py-3 px-6 rounded-md shadow-md hover:bg-gray-100">
+                href='https://discord.gg/saddlebag-exchange-973380473281724476'
+                className='inline-block bg-white text-purple-600 font-semibold py-3 px-6 rounded-md shadow-md hover:bg-gray-100'
+              >
                 Get Started
               </a>
             </div>
@@ -289,8 +310,8 @@ export default function Index() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+      <footer className='bg-gray-900 py-8'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400'>
           <p>
             &copy; {new Date().getFullYear()} Saddlebag Exchange. All rights
             reserved.
@@ -300,7 +321,8 @@ export default function Index() {
 
       {/* Hidden SEO Content */}
       <div
-        style={{ fontSize: '1px', opacity: 0, height: 0, overflow: 'hidden' }}>
+        style={{ fontSize: '1px', opacity: 0, height: 0, overflow: 'hidden' }}
+      >
         <p>
           Join <strong>Saddlebag Exchange</strong> today and transform your MMO
           trading into a highly efficient, rewarding journey. Let us help you

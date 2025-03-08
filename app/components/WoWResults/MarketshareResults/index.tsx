@@ -128,17 +128,17 @@ const MarketshareResults = ({
   return (
     <div>
       <Title title={pageTitle} />
-      <div className="px-2 sm:px-4 my-2 sm:my-4">
+      <div className='px-2 sm:px-4 my-2 sm:my-4'>
         <ContentContainer>
           <>
             <TreemapChart
               chartData={chartData}
-              title="Marketshare Visualisation"
+              title='Marketshare Visualisation'
               darkMode={darkMode}
             />
             <RadioButtons
               title={'Market values to show'}
-              name="valuesToShow"
+              name='valuesToShow'
               radioOptions={currentMarketOptions}
               defaultChecked={
                 currentMarketValue
@@ -150,8 +150,8 @@ const MarketshareResults = ({
               }}
             />
             <RadioButtons
-              title="Color Visualisation"
-              name="chartColor"
+              title='Color Visualisation'
+              name='chartColor'
               radioOptions={currentColorOptions}
               defaultChecked={!results.commodity ? colorValue : 'state'}
               onChange={(value) => {
@@ -163,12 +163,12 @@ const MarketshareResults = ({
           </>
         </ContentContainer>
       </div>
-      <div className="flex justify-between">
-        <div className="flex flex-wrap gap-2">
+      <div className='flex justify-between'>
+        <div className='flex flex-wrap gap-2'>
           <CSVButton
             data={results.data}
             columns={csvColumns}
-            filename="saddlebag_wow_marketshare.csv"
+            filename='saddlebag_wow_marketshare.csv'
           />
           <JSONButton data={results.data} />
           <AAAListButton data={results.data} />
@@ -183,12 +183,12 @@ const MarketshareResults = ({
           placeholder={'Search...'}
         />
       </div>
-      <div className="hidden sm:block">
+      <div className='hidden sm:block'>
         <FullTable<ItemStats>
           data={results.data}
           columnList={itemsColumnList}
           sortingOrder={[{ id: 'currentMarketValue', desc: true }]}
-          description="This shows items market statistics!"
+          description='This shows items market statistics!'
           order={tableSortOrder}
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}

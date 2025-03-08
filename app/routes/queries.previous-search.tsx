@@ -18,13 +18,13 @@ const PreviousSearch = () => {
   const queries = useTypedSelector((state) => state.queries)
 
   if (!data || !data.query || data.query !== 'fullScan') {
-    return <NoResults href="/" />
+    return <NoResults href='/' />
   }
 
   const dataToUse = queries.fullScan
 
   if (!dataToUse) {
-    return <NoResults href="/" />
+    return <NoResults href='/' />
   }
 
   const rowData = dataToUse

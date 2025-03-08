@@ -135,13 +135,14 @@ const Index = () => {
   return (
     <PageWrapper>
       <>
-        <div className="py-3">
+        <div className='py-3'>
           <SmallFormContainer
-            title="Get Item Listing Details"
+            title='Get Item Listing Details'
             onClick={onSubmit}
             loading={transition.state === 'submitting'}
             disabled={!formState || !formState.id}
-            error={error}>
+            error={error}
+          >
             <ItemSelect
               onSelectChange={handleFormChange}
               onTextChange={handleTextChange}

@@ -115,13 +115,14 @@ const Index = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Single Item Shortage finder"
+        title='Single Item Shortage finder'
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}
         error={
           results && 'exception' in results ? results.exception : undefined
-        }>
+        }
+      >
         <WoWShortageFormFields
           desiredAvgPriceDefault={20}
           desiredSellPriceDefault={20}
@@ -132,32 +133,32 @@ const Index = () => {
         <RegionAndServerSelect
           defaultRealm={wowRealm}
           region={wowRegion}
-          serverSelectFormName="homeRealmId"
-          serverSelectTitle="Home Server"
+          serverSelectFormName='homeRealmId'
+          serverSelectTitle='Home Server'
           onServerSelectChange={(selectValue) => {
             if (selectValue) setServerName(selectValue.name)
           }}
-          serverSelectTooltip="Select your home world server, type to begin selection."
+          serverSelectTooltip='Select your home world server, type to begin selection.'
         />
         <InputWithLabel
           defaultValue={-1}
-          type="number"
-          labelTitle="Minimum Required Level"
-          inputTag="Level"
-          name="requiredLevel"
+          type='number'
+          labelTitle='Minimum Required Level'
+          inputTag='Level'
+          name='requiredLevel'
           min={-1}
           max={70}
-          toolTip="Search for the minimum required level. (-1 is for all levels)"
+          toolTip='Search for the minimum required level. (-1 is for all levels)'
         />
         <InputWithLabel
           defaultValue={-1}
-          type="number"
-          labelTitle="Minimum Item Level (ilvl)"
-          inputTag="Level"
-          name="iLvl"
+          type='number'
+          labelTitle='Minimum Item Level (ilvl)'
+          inputTag='Level'
+          name='iLvl'
           min={-1}
           max={1000}
-          toolTip="Search for the minimum item level (ilvl) that will be returned. (-1 is for all levels)"
+          toolTip='Search for the minimum item level (ilvl) that will be returned. (-1 is for all levels)'
         />
       </SmallFormContainer>
     </PageWrapper>

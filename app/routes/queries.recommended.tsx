@@ -178,15 +178,16 @@ const recommendedQueries = [
 export default function Index() {
   return (
     <>
-      <main className="flex-1">
+      <main className='flex-1'>
         <Banner />
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
+        <div className='py-6'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 md:px-8'>
+            <h1 className='text-2xl font-semibold text-blue-900 dark:text-gray-100'>
               Recommended Queries
             </h1>
             <div
-              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
+              className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}
+            >
               {recommendedQueries.map((query) => {
                 return <TileLink key={query.name} {...query} />
               })}

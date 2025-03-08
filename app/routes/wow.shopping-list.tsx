@@ -204,8 +204,8 @@ const ShoppingList = () => {
       return (
         <PageWrapper>
           <SmallFormContainer
-            title="Shopping List"
-            description="Search for the realms with the lowest price for an item."
+            title='Shopping List'
+            description='Search for the realms with the lowest price for an item.'
             onClick={handleSubmit}
             error={error}
             loading={isSubmitting}
@@ -213,21 +213,22 @@ const ShoppingList = () => {
             action={getActionUrl(PAGE_URL, {
               itemId: itemID,
               maxPurchasePrice
-            })}>
-            <div className="pt-3 flex flex-col">
+            })}
+          >
+            <div className='pt-3 flex flex-col'>
               <DebouncedSelectInput
                 title={'Item to search for'}
-                label="Item"
-                id="export-item-select"
+                label='Item'
+                id='export-item-select'
                 selectOptions={wowItemsList}
                 onSelect={handleSelect}
                 defaultValue={itemName}
               />
-              <input hidden name="itemID" value={itemID} />
+              <input hidden name='itemID' value={itemID} />
               <InputWithLabel
-                labelTitle="Maximum Purchase Price"
-                name="maxPurchasePrice"
-                type="number"
+                labelTitle='Maximum Purchase Price'
+                name='maxPurchasePrice'
+                type='number'
                 value={maxPurchasePrice}
                 min={0}
                 onChange={(e) => setMaxPurchasePrice(e.currentTarget.value)}
@@ -251,27 +252,28 @@ const ShoppingList = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Shopping List"
-        description="Search for the realms with the lowest price for an item."
+        title='Shopping List'
+        description='Search for the realms with the lowest price for an item.'
         onClick={handleSubmit}
         error={error}
         loading={isSubmitting}
         hideSubmitButton={!itemID}
-        action={getActionUrl(PAGE_URL, { itemId: itemID, maxPurchasePrice })}>
-        <div className="pt-3 flex flex-col">
+        action={getActionUrl(PAGE_URL, { itemId: itemID, maxPurchasePrice })}
+      >
+        <div className='pt-3 flex flex-col'>
           <DebouncedSelectInput
             title={'Item to search for'}
-            label="Item"
-            id="export-item-select"
+            label='Item'
+            id='export-item-select'
             selectOptions={wowItemsList}
             onSelect={handleSelect}
             defaultValue={itemName}
           />
-          <input hidden name="itemID" value={itemID} />
+          <input hidden name='itemID' value={itemID} />
           <InputWithLabel
-            labelTitle="Maximum Purchase Price"
-            name="maxPurchasePrice"
-            type="number"
+            labelTitle='Maximum Purchase Price'
+            name='maxPurchasePrice'
+            type='number'
             value={maxPurchasePrice}
             min={0}
             onChange={(e) => setMaxPurchasePrice(e.currentTarget.value)}
@@ -315,7 +317,7 @@ const columnList: Array<ColumnList<ListItem>> = [
     columnId: 'realmNames',
     header: 'Realm Names',
     accessor: ({ getValue }) => (
-      <p className="py-2 px-3 max-w-[200px] mx-auto overflow-x-scroll">
+      <p className='py-2 px-3 max-w-[200px] mx-auto overflow-x-scroll'>
         {getValue() as string}
       </p>
     )
@@ -324,7 +326,7 @@ const columnList: Array<ColumnList<ListItem>> = [
     columnId: 'link',
     header: 'Item Link',
     accessor: ({ getValue }) => (
-      <ExternalLink link={getValue() as string} text="" />
+      <ExternalLink link={getValue() as string} text='' />
     )
   }
 ]
@@ -335,7 +337,7 @@ const mobileColumnList: Array<ColumnList<ListItem>> = [
     columnId: 'realmNames',
     header: 'Realm Names',
     accessor: ({ getValue }) => (
-      <p className="py-2 px-3 w-[200px] overflow-x-scroll">
+      <p className='py-2 px-3 w-[200px] overflow-x-scroll'>
         {getValue() as string}
       </p>
     )

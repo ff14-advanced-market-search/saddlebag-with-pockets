@@ -192,13 +192,14 @@ const FFXIVSaleHistory = () => {
   return (
     <PageWrapper>
       <>
-        <div className="py-3">
+        <div className='py-3'>
           <SmallFormContainer
-            title="Find Extended Sale History of Last 1800 Sales"
+            title='Find Extended Sale History of Last 1800 Sales'
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
-            disabled={!formState}>
+            disabled={!formState}
+          >
             <>
               <ItemSelect
                 onSelectChange={handleFormChange}
@@ -211,7 +212,7 @@ const FFXIVSaleHistory = () => {
           <NoResults href={`/ffxiv-sale-history`} />
         )}
         {resultTitle && (
-          <div className="max-w-4xl mx-auto px-4">
+          <div className='max-w-4xl mx-auto px-4'>
             <TitleH2 title={resultTitle} />
           </div>
         )}
@@ -222,8 +223,8 @@ const FFXIVSaleHistory = () => {
               data={tableData}
               sortingOrder={sortingOrder}
               columnList={columnList}
-              title="Sale History"
-              description="A detailed history of last 1800 item sales"
+              title='Sale History'
+              description='A detailed history of last 1800 item sales'
               mobileColumnList={mobileColumnList}
               columnSelectOptions={columnSelectOptions}
             />

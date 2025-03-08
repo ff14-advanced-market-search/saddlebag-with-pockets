@@ -23,14 +23,15 @@ export const SelectWorld: FC<SelectWorldProps> = ({
   return (
     <select
       key={'world_select'}
-      name="world"
-      autoComplete="world"
-      className="focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100"
+      name='world'
+      autoComplete='world'
+      className='focus:ring-blue-500 focus:border-blue-500 relative block w-full rounded-sm bg-transparent focus:z-10 sm:text-sm border-gray-300 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100'
       // defaultValue={worldDefaultValue()}
       value={worldDefaultValue()}
       onChange={(event) => {
         onSelect(event.target.value)
-      }}>
+      }}
+    >
       {!world && (
         <option disabled hidden>
           {worldDefaultValue()}

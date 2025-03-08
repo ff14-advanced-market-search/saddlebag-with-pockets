@@ -206,36 +206,37 @@ const ExportSearch = () => {
     <PageWrapper>
       <Banner />
       <SmallFormContainer
-        title="Export Search: Find the Best Place to Sell!"
+        title='Export Search: Find the Best Place to Sell!'
         onClick={handleSubmit}
         error={error || itemName.error}
         loading={isSubmitting}
         disabled={!isItemValid}
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
+        action={getActionUrl(PAGE_URL, searchParams)}
+      >
+        <div className='pt-2'>
+          <div className='flex justify-end mb-2'>
             <SubmitButton
-              title="Share this search!"
+              title='Share this search!'
               onClick={handleCopyButton}
-              type="button"
+              type='button'
             />
           </div>
         </div>
-        <div className="pt-3 flex flex-col">
+        <div className='pt-3 flex flex-col'>
           <DebouncedSelectInput
             title={'Item to search for'}
             displayValue={itemName.name}
-            label="Item"
-            id="export-item-select"
+            label='Item'
+            id='export-item-select'
             selectOptions={wowItemsList}
             onSelect={handleSelect}
           />
-          <input hidden name="itemId" value={itemId} />
+          <input hidden name='itemId' value={itemId} />
           <InputWithLabel
             labelTitle={inputMap.maxQuantity}
             defaultValue={loaderData.maxQuantity}
-            name="maxQuantity"
-            type="number"
+            name='maxQuantity'
+            type='number'
             min={0}
             onChange={(e) => {
               const value = e.currentTarget.value
@@ -247,8 +248,8 @@ const ExportSearch = () => {
           <InputWithLabel
             labelTitle={inputMap.minPrice}
             defaultValue={loaderData.minPrice}
-            name="minPrice"
-            type="number"
+            name='minPrice'
+            type='number'
             min={0}
             onChange={(e) => {
               const value = e.currentTarget.value
@@ -260,8 +261,8 @@ const ExportSearch = () => {
           <InputWithLabel
             labelTitle={inputMap.populationWP}
             defaultValue={loaderData.populationWP}
-            name="populationWP"
-            type="number"
+            name='populationWP'
+            type='number'
             min={1}
             onChange={(e) => {
               const value = e.currentTarget.value
@@ -273,7 +274,7 @@ const ExportSearch = () => {
           <Select
             title={inputMap.populationBlizz}
             defaultValue={loaderData.populationBlizz.toString()}
-            name="populationBlizz"
+            name='populationBlizz'
             options={[
               { label: 'FULL', value: '3' },
               { label: 'HIGH', value: '2' },
@@ -290,8 +291,8 @@ const ExportSearch = () => {
           <InputWithLabel
             labelTitle={inputMap.rankingWP}
             defaultValue={loaderData.rankingWP}
-            name="rankingWP"
-            type="number"
+            name='rankingWP'
+            type='number'
             min={1}
             onChange={(e) => {
               const value = e.currentTarget.value
@@ -303,7 +304,7 @@ const ExportSearch = () => {
           <Select
             title={inputMap.sortBy}
             defaultValue={loaderData.sortBy}
-            name="sortBy"
+            name='sortBy'
             options={[
               { label: 'Minimum Price', value: 'minPrice' },
               { label: 'Item Quantity', value: 'itemQuantity' },
@@ -341,33 +342,33 @@ const Results = ({
   return (
     <PageWrapper>
       <ContentContainer>
-        <div className="flex flex-col min-w-full">
-          <div className="flex flex-col md:flex-row items-center gap-2">
+        <div className='flex flex-col min-w-full'>
+          <div className='flex flex-col md:flex-row items-center gap-2'>
             <Title title={itemInfo.itemName} />
             <ItemDataLink link={itemInfo.link} />
           </div>
-          <div className="flex flex-col md:flex-row w-full">
-            <div className="flex  flex-col md:min-w-[50%] justify-center">
+          <div className='flex flex-col md:flex-row w-full'>
+            <div className='flex  flex-col md:min-w-[50%] justify-center'>
               <Differences
                 className={differencesBlue}
-                diffTitle="Average Min Price"
+                diffTitle='Average Min Price'
                 diffAmount={itemInfo.avgMinPrice}
               />
               <Differences
                 className={differencesBlue}
-                diffTitle="Avg TSM Price"
+                diffTitle='Avg TSM Price'
                 diffAmount={itemInfo.avgTSMPrice}
               />
             </div>
-            <div className="flex flex-col md:min-w-[50%] justify-center">
+            <div className='flex flex-col md:min-w-[50%] justify-center'>
               <Differences
                 className={differencesBlue}
-                diffTitle="Sales per Day"
+                diffTitle='Sales per Day'
                 diffAmount={itemInfo.salesPerDay}
               />
               <Differences
                 className={differencesBlue}
-                diffTitle="Average Server Quantity"
+                diffTitle='Average Server Quantity'
                 diffAmount={itemInfo.avgServerQuantity}
               />
             </div>
@@ -375,8 +376,8 @@ const Results = ({
         </div>
       </ContentContainer>
       <SmallTable
-        title="Export Results"
-        description="Results for your item in different worlds"
+        title='Export Results'
+        description='Results for your item in different worlds'
         sortingOrder={[{ desc: true, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
@@ -409,7 +410,7 @@ const columnList: Array<ColumnList<ExportItem>> = [
     columnId: 'connectedRealmNames',
     header: 'Realm Names',
     accessor: ({ row }) => (
-      <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
+      <p className=' px-3 py-2 max-w-[200px] overflow-x-scroll'>
         {row.connectedRealmNames.join(', ')}
       </p>
     )
@@ -423,7 +424,7 @@ const columnList: Array<ColumnList<ExportItem>> = [
     columnId: 'undermineLink',
     header: 'Undermine Link',
     accessor: ({ getValue }) => (
-      <ExternalLink text="Undermine" link={getValue() as string} />
+      <ExternalLink text='Undermine' link={getValue() as string} />
     )
   }
 ]
@@ -432,7 +433,7 @@ const mobileColumnList: Array<ColumnList<ExportItem>> = [
     columnId: 'connectedRealmNames',
     header: 'Realm Names',
     accessor: ({ row }) => (
-      <p className=" px-3 py-2 max-w-[200px] overflow-x-scroll">
+      <p className=' px-3 py-2 max-w-[200px] overflow-x-scroll'>
         {row.connectedRealmNames.join(', ')}
       </p>
     )

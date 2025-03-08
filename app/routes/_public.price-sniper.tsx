@@ -104,7 +104,7 @@ const Index = () => {
       <>
         <Banner />
         <SmallFormContainer
-          title="Input for Price Sniper Alerts"
+          title='Input for Price Sniper Alerts'
           description={description}
           error={error}
           onClick={(e) => {
@@ -128,10 +128,11 @@ const Index = () => {
             setJsonData({ ...jsonData, userAuctions })
             setSubForm(null)
           }}
-          buttonTitle="Add">
-          <div className="pt-4">
+          buttonTitle='Add'
+        >
+          <div className='pt-4'>
             <ItemSelect
-              tooltip="Select an item to be alerted on"
+              tooltip='Select an item to be alerted on'
               onTextChange={() => {
                 if (error) {
                   setError(undefined)
@@ -158,32 +159,33 @@ const Index = () => {
             />
 
             {subForm && (
-              <div className="sm:px-4">
+              <div className='sm:px-4'>
                 <div
-                  className="my-2"
+                  className='my-2'
                   onChange={(event: React.SyntheticEvent<EventTarget>) => {
                     const value = (event.target as HTMLInputElement).value
                     if (value === 'price') setIsPrice(true)
                     if (value === 'quantity') setIsPrice(false)
-                  }}>
+                  }}
+                >
                   <Label>Alert on Price or Quantity of item: </Label>
-                  <div className="flex gap-2">
-                    <Label htmlFor="radio-price">
+                  <div className='flex gap-2'>
+                    <Label htmlFor='radio-price'>
                       <input
-                        id="radio-price"
-                        type="radio"
-                        value="price"
-                        name="price-quantity"
+                        id='radio-price'
+                        type='radio'
+                        value='price'
+                        name='price-quantity'
                         defaultChecked={isPrice === true}
                       />{' '}
                       Price
                     </Label>
-                    <Label htmlFor="radio-quantity">
+                    <Label htmlFor='radio-quantity'>
                       <input
-                        id="radio-quantity"
-                        type="radio"
-                        value="quantity"
-                        name="price-quantity"
+                        id='radio-quantity'
+                        type='radio'
+                        value='quantity'
+                        name='price-quantity'
                         defaultChecked={isPrice === false}
                       />{' '}
                       Quantity
@@ -192,8 +194,8 @@ const Index = () => {
                 </div>
                 <InputWithLabel
                   labelTitle={`${isPrice ? 'Price' : 'Quantity'} to alert on`}
-                  type="number"
-                  inputTag="Gil"
+                  type='number'
+                  inputTag='Gil'
                   min={0}
                   step={100}
                   value={subForm.price}
@@ -230,7 +232,7 @@ const Index = () => {
                   }}
                 />
                 <div
-                  className="my-2"
+                  className='my-2'
                   onChange={(event: React.SyntheticEvent<EventTarget>) => {
                     const value = (event.target as HTMLInputElement).value
                     if (value === 'above' || value === 'below') {
@@ -239,24 +241,25 @@ const Index = () => {
                         desiredState: value
                       })
                     }
-                  }}>
+                  }}
+                >
                   <Label> Alert when {isPriceValue} is: </Label>
-                  <Label htmlFor="radio-below">
+                  <Label htmlFor='radio-below'>
                     <input
-                      id="radio-below"
-                      type="radio"
-                      value="below"
-                      name="alertOn"
+                      id='radio-below'
+                      type='radio'
+                      value='below'
+                      name='alertOn'
                       defaultChecked={subForm.desiredState === 'below'}
                     />{' '}
                     Below {`${subForm.price} ${isPrice ? 'Gil' : ''}`}
                   </Label>
-                  <Label htmlFor="radio-above">
+                  <Label htmlFor='radio-above'>
                     <input
-                      id="radio-above"
-                      type="radio"
-                      value="above"
-                      name="alertOn"
+                      id='radio-above'
+                      type='radio'
+                      value='above'
+                      name='alertOn'
                       defaultChecked={subForm.desiredState === 'above'}
                     />{' '}
                     Above {`${subForm.price} ${isPrice ? 'Gil' : ''}`}
@@ -271,18 +274,19 @@ const Index = () => {
                     })
                   }
                 />
-                <div className="my-2 flex items-center">
+                <div className='my-2 flex items-center'>
                   <Label
-                    htmlFor="dc-only"
-                    className="font-medium text-gray-700 dark:text-gray-200">
+                    htmlFor='dc-only'
+                    className='font-medium text-gray-700 dark:text-gray-200'
+                  >
                     DC Only
                   </Label>
                   <CheckBox
-                    id="dc-only"
+                    id='dc-only'
                     checked={dcOnly}
                     onChange={() => setDcOnly(!dcOnly)}
-                    className="ml-2 rounded p-1"
-                    labelTitle=""
+                    className='ml-2 rounded p-1'
+                    labelTitle=''
                   />
                 </div>
               </div>
@@ -290,13 +294,14 @@ const Index = () => {
           </div>
         </SmallFormContainer>
 
-        <div className="max-w-4xl mx-auto px-4">
+        <div className='max-w-4xl mx-auto px-4'>
           <CodeBlock
             title={`Input for ${isPriceValue} sniper alert`}
-            buttonTitle="Copy to clipboard"
+            buttonTitle='Copy to clipboard'
             codeString={jsonToDisplay}
-            onClick={() => alert('Copied to clipboard!')}>
-            <p className="italic text-sm text-blue-900 py-2 dark:text-gray-100">
+            onClick={() => alert('Copied to clipboard!')}
+          >
+            <p className='italic text-sm text-blue-900 py-2 dark:text-gray-100'>
               For the discord bot, use the{' '}
               {isPrice ? (
                 <span>

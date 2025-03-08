@@ -175,7 +175,7 @@ const OutOfStock = () => {
   }
 
   if (result?.data) {
-    return <Results data={result.data} sortby="popWoWProgress" />
+    return <Results data={result.data} sortby='popWoWProgress' />
   }
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -192,20 +192,21 @@ const OutOfStock = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Out of Stock Items"
-        description="Find items that are not listed on the auctionhouse of super high pop realms!"
+        title='Out of Stock Items'
+        description='Find items that are not listed on the auctionhouse of super high pop realms!'
         onClick={handleSubmit}
         error={error}
         loading={isSubmitting}
-        role="search"
-        aria-label="Search out of stock items"
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
+        role='search'
+        aria-label='Search out of stock items'
+        action={getActionUrl(PAGE_URL, searchParams)}
+      >
+        <div className='pt-2'>
+          <div className='flex justify-end mb-2'>
             <SubmitButton
-              title="Share this search!"
+              title='Share this search!'
               onClick={handleCopyButton}
-              type="button"
+              type='button'
             />
           </div>
         </div>
@@ -236,7 +237,7 @@ const Results = ({
   return (
     <PageWrapper>
       <SmallTable
-        title="Out of Stock Items"
+        title='Out of Stock Items'
         sortingOrder={[{ desc: true, id: sortby }]}
         columnList={columnList(region)}
         mobileColumnList={mobileColumnList}
@@ -271,7 +272,7 @@ const columnList = (region: string): Array<ColumnList<OutOfStockItem>> => [
     columnId: 'realmNames',
     header: 'Realm',
     accessor: ({ row }) => (
-      <p className="px-3 py-2 max-w-[200px] overflow-x-scroll">
+      <p className='px-3 py-2 max-w-[200px] overflow-x-scroll'>
         {row.realmNames}
       </p>
     )

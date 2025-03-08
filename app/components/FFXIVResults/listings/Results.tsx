@@ -5,10 +5,10 @@ import ListingTable from './ListingTable'
 const Results = ({ data }: { data: ListingResponseType }) => {
   return (
     <>
-      <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
+      <div className='flex flex-col justify-around mx-3 my-1 sm:flex-row'>
         {'listing_price_diff' in data && (
           <Differences
-            diffTitle="Avg Price Difference"
+            diffTitle='Avg Price Difference'
             diffAmount={`${data.listing_price_diff.avg_price_diff.toLocaleString()} gil`}
             className={
               data.listing_price_diff.avg_price_diff >= 10000
@@ -19,7 +19,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         )}
         {'listing_price_diff' in data && (
           <Differences
-            diffTitle="Median Price Difference"
+            diffTitle='Median Price Difference'
             diffAmount={`${data.listing_price_diff.median_price_diff.toLocaleString()} gil`}
             className={
               data.listing_price_diff.median_price_diff >= 10000
@@ -53,7 +53,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         )} */}
         {'min_price' in data && (
           <Differences
-            diffTitle="Minimum Price"
+            diffTitle='Minimum Price'
             diffAmount={`${data.min_price.toLocaleString()} gil`}
             className={
               'bg-blue-100 font-semibold text-blue-600  dark:bg-blue-600 dark:text-gray-100'

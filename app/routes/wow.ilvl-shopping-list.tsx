@@ -3,7 +3,11 @@ import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { ListItem, IlvlWoWListResponse, ItemStat } from '~/requests/WoW/IlvlShoppingList'
+import type {
+  ListItem,
+  IlvlWoWListResponse,
+  ItemStat
+} from '~/requests/WoW/IlvlShoppingList'
 import IlvlShoppingList from '~/requests/WoW/IlvlShoppingList'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
@@ -44,7 +48,10 @@ export const meta: MetaFunction = () => {
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list' }
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list'
+  }
 ]
 
 const PAGE_URL = '/wow/ilvl-shopping-list'
@@ -53,7 +60,7 @@ const AVAILABLE_STATS: ItemStat[] = [
   'Socket',
   'Leech',
   'Speed',
-  'Avoidance',
+  'Avoidance'
   // 'Haste',
   // 'Crit',
   // 'Mastery',
@@ -153,7 +160,12 @@ type LoaderResponseType =
   | { exception: string }
   | (IlvlWoWListResponse & {
       sortby: string
-      formValues: { itemID: number; maxPurchasePrice: number; desiredMinIlvl: number; desiredStats: ItemStat[] }
+      formValues: {
+        itemID: number
+        maxPurchasePrice: number
+        desiredMinIlvl: number
+        desiredStats: ItemStat[]
+      }
     })
 
 type ActionResponseType =
@@ -175,13 +187,17 @@ const IlvlShoppingListComponent = () => {
 
   const isSubmitting = transition.state === 'submitting'
 
-  const error = result && 'exception' in result ? result.exception as string : undefined
+  const error =
+    result && 'exception' in result ? (result.exception as string) : undefined
 
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')
-    const maxPurchasePriceFromUrl = searchParams.get('maxPurchasePrice') || '10000000'
+    const maxPurchasePriceFromUrl =
+      searchParams.get('maxPurchasePrice') || '10000000'
     const desiredMinIlvlFromUrl = searchParams.get('desiredMinIlvl') || '610'
-    const desiredStatsFromUrl = searchParams.getAll('desiredStats') as ItemStat[]
+    const desiredStatsFromUrl = searchParams.getAll(
+      'desiredStats'
+    ) as ItemStat[]
 
     if (itemIdFromUrl) {
       const itemNameFromId = getItemNameById(itemIdFromUrl, wowItems)
@@ -209,10 +225,8 @@ const IlvlShoppingListComponent = () => {
   }
 
   const handleStatToggle = (stat: ItemStat) => {
-    setSelectedStats(prev => 
-      prev.includes(stat) 
-        ? prev.filter(s => s !== stat)
-        : [...prev, stat]
+    setSelectedStats((prev) =>
+      prev.includes(stat) ? prev.filter((s) => s !== stat) : [...prev, stat]
     )
   }
 
@@ -226,7 +240,7 @@ const IlvlShoppingListComponent = () => {
 
   const renderForm = () => (
     <SmallFormContainer
-      title="Item Level Shopping List"
+      title='Item Level Shopping List'
       description={`
         Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
         Supports the following items:
@@ -249,47 +263,50 @@ const IlvlShoppingListComponent = () => {
         maxPurchasePrice,
         desiredMinIlvl,
         desiredStats: selectedStats
-      })}>
-      <div className="pt-3 flex flex-col gap-4">
+      })}
+    >
+      <div className='pt-3 flex flex-col gap-4'>
         <DebouncedSelectInput
           title={'Item to search for'}
-          label="Item"
-          id="export-item-select"
+          label='Item'
+          id='export-item-select'
           selectOptions={wowItemsList}
           onSelect={handleSelect}
           displayValue={itemName}
         />
-        <input hidden name="itemID" value={itemID} />
+        <input hidden name='itemID' value={itemID} />
         <InputWithLabel
-          labelTitle="Maximum Purchase Price"
-          name="maxPurchasePrice"
-          type="number"
+          labelTitle='Maximum Purchase Price'
+          name='maxPurchasePrice'
+          type='number'
           value={maxPurchasePrice}
           min={0}
           onChange={(e) => setMaxPurchasePrice(e.currentTarget.value)}
         />
         <InputWithLabel
-          labelTitle="Minimum Item Level"
-          name="desiredMinIlvl"
-          type="number"
+          labelTitle='Minimum Item Level'
+          name='desiredMinIlvl'
+          type='number'
           value={desiredMinIlvl}
           min={0}
           onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
         />
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium dark:text-gray-200">Desired Stats</label>
-          <div className="flex flex-wrap gap-2">
-            {AVAILABLE_STATS.map(stat => (
-              <label key={stat} className="flex items-center gap-2">
+        <div className='flex flex-col gap-2'>
+          <label className='text-sm font-medium dark:text-gray-200'>
+            Desired Stats
+          </label>
+          <div className='flex flex-wrap gap-2'>
+            {AVAILABLE_STATS.map((stat) => (
+              <label key={stat} className='flex items-center gap-2'>
                 <input
-                  type="checkbox"
-                  name="desiredStats"
+                  type='checkbox'
+                  name='desiredStats'
                   value={stat}
                   checked={selectedStats.includes(stat)}
                   onChange={() => handleStatToggle(stat)}
-                  className="form-checkbox h-4 w-4"
+                  className='form-checkbox h-4 w-4'
                 />
-                <span className="text-sm dark:text-gray-200">{stat}</span>
+                <span className='text-sm dark:text-gray-200'>{stat}</span>
               </label>
             ))}
           </div>
@@ -298,18 +315,17 @@ const IlvlShoppingListComponent = () => {
     </SmallFormContainer>
   )
 
-  const hasSearched = actionData !== undefined || (loaderData && 'data' in loaderData)
+  const hasSearched =
+    actionData !== undefined || (loaderData && 'data' in loaderData)
 
   if (hasSearched) {
     if (error) {
-      return (
-        <PageWrapper>
-          {renderForm()}
-        </PageWrapper>
-      )
+      return <PageWrapper>{renderForm()}</PageWrapper>
     } else if (result && 'data' in result && Array.isArray(result.data)) {
       if (result.data.length > 0) {
-        return <Results {...(result as IlvlWoWListResponse & { sortby: string })} />
+        return (
+          <Results {...(result as IlvlWoWListResponse & { sortby: string })} />
+        )
       } else {
         return <NoResults href={PAGE_URL} />
       }
@@ -318,11 +334,7 @@ const IlvlShoppingListComponent = () => {
     }
   }
 
-  return (
-    <PageWrapper>
-      {renderForm()}
-    </PageWrapper>
-  )
+  return <PageWrapper>{renderForm()}</PageWrapper>
 }
 
 export default IlvlShoppingListComponent
@@ -345,7 +357,14 @@ const Results = ({
         sortingOrder={[{ desc: false, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
-        columnSelectOptions={['price', 'quantity', 'realmNames', 'ilvl', 'stats', 'link']}
+        columnSelectOptions={[
+          'price',
+          'quantity',
+          'realmNames',
+          'ilvl',
+          'stats',
+          'link'
+        ]}
         data={data as any}
       />
     </PageWrapper>
@@ -360,14 +379,14 @@ const columnList: Array<ColumnList<ListItem>> = [
     columnId: 'stats',
     header: 'Stats',
     accessor: ({ getValue }) => (
-      <p className="py-2 px-3">{(getValue() as string[]).join(', ')}</p>
+      <p className='py-2 px-3'>{(getValue() as string[]).join(', ')}</p>
     )
   },
   {
     columnId: 'realmNames',
     header: 'Realm Names',
     accessor: ({ getValue }) => (
-      <p className="py-2 px-3 max-w-[200px] mx-auto overflow-x-scroll">
+      <p className='py-2 px-3 max-w-[200px] mx-auto overflow-x-scroll'>
         {getValue() as string}
       </p>
     )
@@ -376,7 +395,7 @@ const columnList: Array<ColumnList<ListItem>> = [
     columnId: 'link',
     header: 'Item Link',
     accessor: ({ getValue }) => (
-      <ExternalLink link={getValue() as string} text="" />
+      <ExternalLink link={getValue() as string} text='' />
     )
   }
 ]
@@ -388,9 +407,9 @@ const mobileColumnList: Array<ColumnList<ListItem>> = [
     columnId: 'realmNames',
     header: 'Realm Names',
     accessor: ({ getValue }) => (
-      <p className="py-2 px-3 w-[200px] overflow-x-scroll">
+      <p className='py-2 px-3 w-[200px] overflow-x-scroll'>
         {getValue() as string}
       </p>
     )
   }
-] 
+]

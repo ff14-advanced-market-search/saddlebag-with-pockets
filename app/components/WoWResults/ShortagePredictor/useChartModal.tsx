@@ -13,8 +13,8 @@ export const useChartModal = () => {
 
   const ChartModal = () => {
     return chartData ? (
-      <Modal title="Price & Quantity" onClose={() => setChartData(null)}>
-        <div className="min-w-72 sm:min-w-96 md:min-w-[480px]">
+      <Modal title='Price & Quantity' onClose={() => setChartData(null)}>
+        <div className='min-w-72 sm:min-w-96 md:min-w-[480px]'>
           <PriceQuantityLineChart
             itemName={chartData.title}
             prices={chartData.p}

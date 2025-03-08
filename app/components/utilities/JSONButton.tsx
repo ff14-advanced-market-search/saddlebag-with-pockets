@@ -7,7 +7,8 @@ export interface JSONProps<DataType> {
 export default function JSONButton<DataType>({ data }: JSONProps<DataType>) {
   const handleCopy = () => {
     const jsonString = JSON.stringify(data, null, 2)
-    navigator.clipboard.writeText(jsonString)
+    navigator.clipboard
+      .writeText(jsonString)
       .then(() => {
         // Optional: Add success feedback
       })
@@ -18,6 +19,6 @@ export default function JSONButton<DataType>({ data }: JSONProps<DataType>) {
   }
 
   return (
-    <SubmitButton type="button" title="Copy as JSON" onClick={handleCopy} />
+    <SubmitButton type='button' title='Copy as JSON' onClick={handleCopy} />
   )
 }

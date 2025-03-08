@@ -18,7 +18,7 @@ export const links: LinksFunction = () => [
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
-      <main className="flex-1">
+      <main className='flex-1'>
         <h1>Mastering Goldmaking in World of Warcraft's Auction House</h1>
         <p>
           {' '}

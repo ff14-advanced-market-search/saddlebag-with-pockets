@@ -258,13 +258,14 @@ const Index = () => {
         onClick={onSubmit}
         action={getActionUrl(PAGE_URL, searchParams)}
         loading={transition.state === 'submitting'}
-        error={error}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
+        error={error}
+      >
+        <div className='pt-2'>
+          <div className='flex justify-end mb-2'>
             <SubmitButton
-              title="Share this search!"
+              title='Share this search!'
               onClick={handleCopyButton}
-              type="button"
+              type='button'
             />
           </div>
         </div>

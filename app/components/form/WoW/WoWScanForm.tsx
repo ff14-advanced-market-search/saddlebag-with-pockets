@@ -74,19 +74,20 @@ const WoWScanForm = ({
 }: Props) => {
   return (
     <SmallFormContainer
-      title="WoW Non-Commodity Server to Server Trade Search"
+      title='WoW Non-Commodity Server to Server Trade Search'
       onClick={onClick}
       loading={loading}
       disabled={loading}
-      error={error}>
-      <div className="flex flex-col lg:flex-row lg:gap-7">
-        <div className="w-full">
+      error={error}
+    >
+      <div className='flex flex-col lg:flex-row lg:gap-7'>
+        <div className='w-full'>
           <InputWithLabel
             defaultValue={10000}
-            type="number"
-            labelTitle="Minimum Average TSM Price"
-            inputTag="Amount"
-            name="minHistoricPrice"
+            type='number'
+            labelTitle='Minimum Average TSM Price'
+            inputTag='Amount'
+            name='minHistoricPrice'
             onChange={(e) => {
               onChange(e)
               clearErrors()
@@ -94,62 +95,62 @@ const WoWScanForm = ({
           />
           <InputWithLabel
             defaultValue={50}
-            type="number"
-            labelTitle="Return On Investment (%)"
-            inputTag="%"
-            name="roi"
+            type='number'
+            labelTitle='Return On Investment (%)'
+            inputTag='%'
+            name='roi'
             onChange={onChange}
             min={0}
           />
           <InputWithLabel
             defaultValue={0}
-            type="number"
-            step="0.01"
-            labelTitle="Minimum Sales Per Day"
-            inputTag="Min Sales"
-            name="salePerDay"
+            type='number'
+            step='0.01'
+            labelTitle='Minimum Sales Per Day'
+            inputTag='Min Sales'
+            name='salePerDay'
             onChange={onChange}
             min={0}
           />
           <InputWithLabel
             defaultValue={-1}
-            type="number"
-            labelTitle="Minimum Required Level"
-            inputTag="Level"
-            name="requiredLevel"
+            type='number'
+            labelTitle='Minimum Required Level'
+            inputTag='Level'
+            name='requiredLevel'
             onChange={onChange}
             min={-1}
             max={70}
           />
           <InputWithLabel
             defaultValue={-1}
-            type="number"
-            labelTitle="Minimum Item Level (ilvl)"
-            inputTag="Level"
-            name="iLvl"
+            type='number'
+            labelTitle='Minimum Item Level (ilvl)'
+            inputTag='Level'
+            name='iLvl'
             onChange={onChange}
             min={-1}
             max={1000}
           />
           <ItemQualitySelect />
         </div>
-        <div className="w-full">
+        <div className='w-full'>
           <ItemClassSelect
             onChange={(itemClassValue, itemSubClassValue) => {
               // Notify parent component
             }}
           />
           <RegionAndServerSelect
-            serverSelectFormName="homeRealmId"
-            serverSelectTitle="Home World"
+            serverSelectFormName='homeRealmId'
+            serverSelectTitle='Home World'
             region={defaultRegion}
             defaultRealm={defaultServer}
             onServerSelectChange={clearErrors}
             onServerTextChange={clearErrors}
           />
           <WoWServerSelect
-            formName="newRealmId"
-            title="New World"
+            formName='newRealmId'
+            title='New World'
             onSelectChange={clearErrors}
             onTextChange={clearErrors}
             regionValue={defaultRegion}
@@ -417,10 +418,10 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
   )?.subClasses
 
   return (
-    <div className="mt-2 flex-col mb-0.5">
-      <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
-        <Label htmlFor="itemClass">Item Category</Label>
-        <ToolTip data="Pick an item category to search for" />
+    <div className='mt-2 flex-col mb-0.5'>
+      <div className='flex flex-1 items-center gap-1 mt-0.5 relative'>
+        <Label htmlFor='itemClass'>Item Category</Label>
+        <ToolTip data='Pick an item category to search for' />
       </div>
       <Select
         id={'itemClass'}
@@ -431,7 +432,8 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
           setSelectedItemClass(newItemClassValue)
           setSelectedItemSubClass(-1) // Reset itemSubClass when itemClass changes
           onChange?.(newItemClassValue, -1) // Notify parent component with new values
-        }}>
+        }}
+      >
         <option value={-1}>All</option>
         {itemClasses.map(({ name, value }) => (
           <option key={name + value} value={value}>
@@ -439,9 +441,9 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
           </option>
         ))}
       </Select>
-      <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
-        <Label htmlFor="itemSubClass">Item Sub Category</Label>
-        <ToolTip data="Pick an item sub category to search for" />
+      <div className='flex flex-1 items-center gap-1 mt-0.5 relative'>
+        <Label htmlFor='itemSubClass'>Item Sub Category</Label>
+        <ToolTip data='Pick an item sub category to search for' />
       </div>
       <Select
         id={'itemSubClass'}
@@ -451,7 +453,8 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
           const newItemSubClassValue = parseInt(event.target.value, 10)
           setSelectedItemSubClass(newItemSubClassValue)
           onChange?.(selectedItemClass ?? -1, newItemSubClassValue) // Provide a default value for selectedItemClass
-        }}>
+        }}
+      >
         <option value={-1}>All</option>
         {subClassItems?.map(({ name, value }) => (
           <option key={name + value} value={value}>
@@ -472,16 +475,17 @@ export const ItemQualitySelect: React.FC<ItemQualitySelectProps> = ({
   defaultValue,
   onChange
 }) => (
-  <div className="w-full mt-2">
-    <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
-      <Label htmlFor="item-quality">Item Quality</Label>
-      <ToolTip data="Pick which quality item you would like to search from" />
+  <div className='w-full mt-2'>
+    <div className='flex flex-1 items-center gap-1 mt-0.5 relative'>
+      <Label htmlFor='item-quality'>Item Quality</Label>
+      <ToolTip data='Pick which quality item you would like to search from' />
     </div>
     <Select
-      id="item-quality"
-      name="itemQuality"
+      id='item-quality'
+      name='itemQuality'
       defaultValue={defaultValue}
-      onChange={(e) => onChange?.(e.target.value)}>
+      onChange={(e) => onChange?.(e.target.value)}
+    >
       {itemQuality.map(({ name, value }) => (
         <option key={name + value} value={value}>
           {name}
@@ -500,16 +504,17 @@ export const ExpansionSelect: React.FC<ExpansionSelectProps> = ({
   defaultValue,
   onChange
 }) => (
-  <div className="w-full mt-2">
-    <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
-      <Label htmlFor="expansion-select">Expansion</Label>
+  <div className='w-full mt-2'>
+    <div className='flex flex-1 items-center gap-1 mt-0.5 relative'>
+      <Label htmlFor='expansion-select'>Expansion</Label>
       <ToolTip data="Select the World of Warcraft expansion you're interested in" />
     </div>
     <Select
-      id="expansion-select"
-      name="expansionNumber"
+      id='expansion-select'
+      name='expansionNumber'
       defaultValue={defaultValue}
-      onChange={(e) => onChange?.(e.target.value)}>
+      onChange={(e) => onChange?.(e.target.value)}
+    >
       {expansionOptions.map(({ label, value }) => (
         <option key={value} value={value}>
           {label}
@@ -526,7 +531,7 @@ const Select = (
   >
 ) => (
   <select
-    className="mt-1 flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600"
+    className='mt-1 flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600'
     {...props}
   />
 )

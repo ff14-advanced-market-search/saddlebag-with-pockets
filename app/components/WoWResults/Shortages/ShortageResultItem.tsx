@@ -21,8 +21,9 @@ export const TextRow = ({
   <div
     className={`flex flex-1 max-w-full text-sm justify-between items-start dark:text-gray-200${
       bold ? ' font-semibold' : ''
-    }`}>
-    <p className="min-w-fit">{leftText}</p>
+    }`}
+  >
+    <p className='min-w-fit'>{leftText}</p>
     <p>{rightText}</p>
   </div>
 )
@@ -36,20 +37,21 @@ export const WoWShortageItem = (
   return (
     <div
       key={item.item_id + '-increase'}
-      className="my-0.5 mx-1 min-w-[260px] w-4/5 max-w-xs sm:w-1/2 max-h-fit shrink-0 p-3 border rounded border-gray-300 dark:bg-slate-700 dark:border-0 shadow">
-      <div className="flex flex-1 justify-between items-center">
-        <p className="font-bold my-2 text-blue-900 dark:text-blue-300">
+      className='my-0.5 mx-1 min-w-[260px] w-4/5 max-w-xs sm:w-1/2 max-h-fit shrink-0 p-3 border rounded border-gray-300 dark:bg-slate-700 dark:border-0 shadow'
+    >
+      <div className='flex flex-1 justify-between items-center'>
+        <p className='font-bold my-2 text-blue-900 dark:text-blue-300'>
           {item.name}
         </p>
         <OribosLink row={{ itemID: item.item_id }} />
       </div>
       {item.flip_price_levels.length > 0 && (
         <>
-          <p className="font-semibold">Shorting the market</p>
+          <p className='font-semibold'>Shorting the market</p>
 
-          <div className="my-2 px-3 border border-w-1 p-1 rounded">
+          <div className='my-2 px-3 border border-w-1 p-1 rounded'>
             <TextRow
-              leftText="Start Price:"
+              leftText='Start Price:'
               rightText={
                 item.flip_price_levels[0].listing_price_level.from_price_level
               }
@@ -57,15 +59,16 @@ export const WoWShortageItem = (
             {item.flip_price_levels.map((level, _) => (
               <div
                 key={`${item.item_id}-${level.total_price}`}
-                className="pb-2 border-b last:border-none">
+                className='pb-2 border-b last:border-none'
+              >
                 <TextRow
-                  leftText="Stop buying at:"
+                  leftText='Stop buying at:'
                   rightText={numberToLocaleStringWithDecimal(
                     level.listing_price_level.to_price_level
                   )}
                 />
                 <TextRow
-                  leftText="Shortage cost:"
+                  leftText='Shortage cost:'
                   rightText={numberToLocaleStringWithDecimal(level.total_price)}
                   bold
                 />
@@ -77,8 +80,8 @@ export const WoWShortageItem = (
 
       {item.max_sane_flip_level?.listing_price_level && (
         <>
-          <p className="font-semibold">Suggested resell price</p>
-          <div className="my-2 border-2 border-blue-900 dark:border-blue-300 rounded p-2">
+          <p className='font-semibold'>Suggested resell price</p>
+          <div className='my-2 border-2 border-blue-900 dark:border-blue-300 rounded p-2'>
             {Math.floor(
               item.max_sane_flip_level.listing_price_level.from_price_level - 1
             ) ===
@@ -86,7 +89,7 @@ export const WoWShortageItem = (
               item.max_sane_flip_level.listing_price_level.to_price_level - 1
             ) ? (
               <TextRow
-                leftText="List for:"
+                leftText='List for:'
                 rightText={numberToLocaleStringWithDecimal(
                   item.max_sane_flip_level.listing_price_level
                     .from_price_level - 1
@@ -94,7 +97,7 @@ export const WoWShortageItem = (
               />
             ) : (
               <TextRow
-                leftText="Between:"
+                leftText='Between:'
                 rightText={`${numberToLocaleStringWithDecimal(
                   Math.floor(
                     item.max_sane_flip_level.listing_price_level
@@ -127,8 +130,8 @@ export const WoWShortageItem = (
       {item.price_reset_info?.recommend_price &&
         item.price_reset_info.total_price && (
           <>
-            <p className="font-semibold">Reset the market</p>
-            <div className="my-2 border-2 border-blue-900 rounded p-2 dark:border-blue-200">
+            <p className='font-semibold'>Reset the market</p>
+            <div className='my-2 border-2 border-blue-900 rounded p-2 dark:border-blue-200'>
               <TextRow
                 leftText={'Total cost:'}
                 rightText={numberToLocaleStringWithDecimal(
@@ -152,9 +155,9 @@ export const WoWShortageItem = (
           </>
         )}
 
-      <p className="font-semibold mt-3">More item info</p>
-      <div className="my-2 px-3 border border-w-1 p-1 rounded dark:border-gray-300">
-        <div className="my-2 pb-2 border-b">
+      <p className='font-semibold mt-3'>More item info</p>
+      <div className='my-2 px-3 border border-w-1 p-1 rounded dark:border-gray-300'>
+        <div className='my-2 pb-2 border-b'>
           <TextRow leftText={'Item ID:'} rightText={item.item_id} />
           <TextRow
             leftText={'Avg price:'}
@@ -162,7 +165,7 @@ export const WoWShortageItem = (
           />
         </div>
 
-        <p className="font-semibold text-sm">No# of Sales</p>
+        <p className='font-semibold text-sm'>No# of Sales</p>
         <div>
           <TextRow
             leftText={'Daily:'}

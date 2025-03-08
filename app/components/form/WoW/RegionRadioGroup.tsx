@@ -17,26 +17,28 @@ export const RegionRadioGroup = ({
   title?: string
 }) => {
   return (
-    <div className="flex flex-col flex-1 my-1">
+    <div className='flex flex-col flex-1 my-1'>
       <Label>{title}</Label>
       <div
-        className="flex flex-1"
+        className='flex flex-1'
         onChange={(event: React.SyntheticEvent<EventTarget>) => {
           const value = (event.target as HTMLInputElement).value
           if (value === 'NA' || value === 'EU') onChange(value)
-        }}>
+        }}
+      >
         {regions.map(({ label, value }) => (
           <label
             key={label}
             htmlFor={`radio-${value}`}
-            className="flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300">
+            className='flex flex-0 shrink-0 mx-1 text-sm items-center gap-1 mr-2 last:mr-1 dark:text-gray-300'
+          >
             <input
               id={`radio-${value}`}
-              type="radio"
+              type='radio'
               value={value}
-              name="region"
+              name='region'
               defaultChecked={defaultChecked === value}
-              className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
+              className='dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3'
             />
             <span>{label}</span>
           </label>

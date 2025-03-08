@@ -222,7 +222,7 @@ const Index = () => {
 
   if (results) {
     if (!Object.keys(results)) {
-      return <NoResults href={PAGE_URL} title="No results found" />
+      return <NoResults href={PAGE_URL} title='No results found' />
     }
 
     if ('data' in results) {
@@ -239,26 +239,27 @@ const Index = () => {
         onClick={onSubmit}
         error={error}
         loading={loading}
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
+        action={getActionUrl(PAGE_URL, searchParams)}
+      >
+        <div className='pt-2'>
+          <div className='flex justify-end mb-2'>
             <SubmitButton
-              title="Share this search!"
+              title='Share this search!'
               onClick={handleCopyButton}
-              type="button"
+              type='button'
             />
           </div>
         </div>
-        <div className="pt-2 md:pt-4">
+        <div className='pt-2 md:pt-4'>
           <InputWithLabel
             defaultValue={loaderData.desiredAvgPrice}
             labelTitle={inputMap.desiredAvgPrice}
-            type="number"
-            inputTag="Gold"
-            name="desiredAvgPrice"
+            type='number'
+            inputTag='Gold'
+            name='desiredAvgPrice'
             min={0}
             step={0.01}
-            toolTip="Find items that on average sell for this amount of gold or more."
+            toolTip='Find items that on average sell for this amount of gold or more.'
             onChange={(e) =>
               handleFormChange('desiredAvgPrice', e.target.value)
             }
@@ -266,11 +267,11 @@ const Index = () => {
           <InputWithLabel
             defaultValue={loaderData.desiredSalesPerDay}
             labelTitle={inputMap.desiredSalesPerDay}
-            type="number"
-            inputTag="Sales"
-            name="desiredSalesPerDay"
+            type='number'
+            inputTag='Sales'
+            name='desiredSalesPerDay'
             min={0}
-            toolTip="Finds items that have this many sales per day."
+            toolTip='Finds items that have this many sales per day.'
             onChange={(e) =>
               handleFormChange('desiredSalesPerDay', e.target.value)
             }
@@ -292,7 +293,7 @@ const Index = () => {
             }}
           />
           <RegionAndServerSelect
-            serverSelectFormName="homeRealmName"
+            serverSelectFormName='homeRealmName'
             region={loaderData.region as WoWServerRegion}
             defaultRealm={
               {
@@ -310,24 +311,24 @@ const Index = () => {
           />
           <InputWithLabel
             defaultValue={loaderData.desiredPriceVsAvgPercent}
-            type="number"
+            type='number'
             labelTitle={inputMap.desiredPriceVsAvgPercent}
-            inputTag="%"
-            name="desiredPriceVsAvgPercent"
+            inputTag='%'
+            name='desiredPriceVsAvgPercent'
             min={0}
-            toolTip="What is the maximum price spike to look for? 120% is to only find item that are at most 20% above the average price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher."
+            toolTip='What is the maximum price spike to look for? 120% is to only find item that are at most 20% above the average price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher.'
             onChange={(e) =>
               handleFormChange('desiredPriceVsAvgPercent', e.target.value)
             }
           />
           <InputWithLabel
             defaultValue={loaderData.desiredQuantityVsAvgPercent}
-            type="number"
+            type='number'
             labelTitle={inputMap.desiredQuantityVsAvgPercent}
-            inputTag="%"
-            name="desiredQuantityVsAvgPercent"
+            inputTag='%'
+            name='desiredQuantityVsAvgPercent'
             min={0}
-            toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
+            toolTip='How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock.'
             onChange={(e) =>
               handleFormChange('desiredQuantityVsAvgPercent', e.target.value)
             }

@@ -108,10 +108,10 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
 
   return (
     <div className={`mt-0 flex flex-col`}>
-      <div className="overflow-x-auto">
-        <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table className="min-w-full divide-y relative divide-gray-300">
+      <div className='overflow-x-auto'>
+        <div className='inline-block min-w-full align-middle'>
+          <div className='overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'>
+            <table className='min-w-full divide-y relative divide-gray-300'>
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -123,7 +123,8 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                           header.column.getCanSort() ? 'cursor-pointer' : '',
                           `whitespace-nowrap px-3 sticky top-0 bg-gray-50 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 dark:bg-gray-600 z-50`
                         )}
-                        key={header.id}>
+                        key={header.id}
+                      >
                         <div className={`group inline-flex`}>
                           {header.isPlaceholder
                             ? null
@@ -137,23 +138,27 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                                 ? 'bg-gray-200 rounded bg-gray-200 dark:bg-gray-500'
                                 : '',
                               ` ml-1 flex-none p-1`
-                            )}>
+                            )}
+                          >
                             {{
                               asc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
+                                >
                                   <ChevronUpIcon className={`h-4 w-4`} />
                                 </span>
                               ),
                               desc: (
                                 <span
-                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}>
+                                  className={`text-gray-900 group-hover:bg-gray-300 dark:group-hover:bg-gray-500 dark:text-gray-300 dark:group-hover:text-gray-100`}
+                                >
                                   <ChevronDownIcon className={`h-4 w-4`} />
                                 </span>
                               )
                             }[header.column.getIsSorted() as string] ?? (
                               <span
-                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}>
+                                className={`invisible flex-none rounded text-gray-400 group-hover:visible group-focus:visible`}
+                              >
                                 <ChevronDownIcon className={`h-4 w-4`} />
                               </span>
                             )}
@@ -164,13 +169,14 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
                   </tr>
                 ))}
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800">
+              <tbody className='divide-y divide-gray-200 bg-white dark:bg-slate-800'>
                 {table.getRowModel().rows.map((row) => (
                   <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100 text-center">
+                        className='whitespace-nowrap px-2 py-2 text-sm text-gray-900 dark:text-gray-100 text-center'
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -182,15 +188,16 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
               </tbody>
             </table>
           </div>
-          <div className="flex justify-between">
+          <div className='flex justify-between'>
             <p
-              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}>
+              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300`}
+            >
               {`${data.listings.length} results found`}
             </p>
-            <div className="my-2 mr-1">
+            <div className='my-2 mr-1'>
               <CSVButton
                 data={data.listings}
-                filename="saddlebag-item-listings.csv"
+                filename='saddlebag-item-listings.csv'
                 columns={[
                   { value: 'retainerName', title: 'Retainer' },
                   { value: 'total', title: 'Total' },

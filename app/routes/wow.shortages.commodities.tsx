@@ -210,23 +210,24 @@ const Index = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Commodity Shortage finder"
+        title='Commodity Shortage finder'
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}
         error={
           results && 'exception' in results ? results.exception : undefined
-        }>
+        }
+      >
         <WoWShortageFormFields />
         <RegionAndServerSelect
           region={wowRegion}
-          serverSelectFormName="homeRealmId"
+          serverSelectFormName='homeRealmId'
           defaultRealm={wowRealm}
-          serverSelectTitle="Home Server"
+          serverSelectTitle='Home Server'
           onServerSelectChange={(selectValue) => {
             if (selectValue) setServerName(selectValue.name)
           }}
-          serverSelectTooltip="Select your home world server, type to begin selection."
+          serverSelectTooltip='Select your home world server, type to begin selection.'
         />
       </SmallFormContainer>
     </PageWrapper>
@@ -244,72 +245,72 @@ export const WoWShortageFormFields = ({
   overMarketPricePercentDefault = 0,
   underMarketPricePercentDefault = 0
 }) => (
-  <div className="flex flex-1 flex-col">
+  <div className='flex flex-1 flex-col'>
     <ItemClassSelect />
     <ItemQualitySelect />
     <InputWithLabel
       defaultValue={desiredAvgPriceDefault}
-      type="number"
-      labelTitle="Desired Avg Price"
-      inputTag="Amount"
-      name="desiredAvgPrice"
+      type='number'
+      labelTitle='Desired Avg Price'
+      inputTag='Amount'
+      name='desiredAvgPrice'
       min={0}
-      toolTip="Find items that on average sell for this price or more."
+      toolTip='Find items that on average sell for this price or more.'
     />
     <InputWithLabel
       defaultValue={desiredSalesPerDayDefault}
-      type="number"
-      step="0.01"
-      labelTitle="Desired Sales per Day"
-      inputTag="Sales"
-      name="desiredSalesPerDay"
+      type='number'
+      step='0.01'
+      labelTitle='Desired Sales per Day'
+      inputTag='Sales'
+      name='desiredSalesPerDay'
       min={0}
-      toolTip="Finds items that have this many sales per day on your region."
+      toolTip='Finds items that have this many sales per day on your region.'
     />
     <InputWithLabel
       defaultValue={desiredSellPriceDefault}
-      type="number"
-      labelTitle="Desired Minimum Sale Price"
-      inputTag="Price"
-      name="desiredSellPrice"
+      type='number'
+      labelTitle='Desired Minimum Sale Price'
+      inputTag='Price'
+      name='desiredSellPrice'
       min={0}
-      toolTip="Finds items that you can sell for this price or higher. Ex: 200 means we want to get the price up to 200 or more."
+      toolTip='Finds items that you can sell for this price or higher. Ex: 200 means we want to get the price up to 200 or more.'
     />
     <InputWithLabel
       defaultValue={desiredPriceIncreaseDefault}
-      type="number"
-      labelTitle="Desired Price Increase per Price Level"
-      inputTag="Price"
-      name="desiredPriceIncrease"
+      type='number'
+      labelTitle='Desired Price Increase per Price Level'
+      inputTag='Price'
+      name='desiredPriceIncrease'
       min={0}
-      toolTip="Only show price flip levels when the price difference is greater than this amount. Ex: 50 means that it will not show when we can increase the price from 100 to 120, but it will show when a price can be increased from 100 to 151 or more."
+      toolTip='Only show price flip levels when the price difference is greater than this amount. Ex: 50 means that it will not show when we can increase the price from 100 to 120, but it will show when a price can be increased from 100 to 151 or more.'
     />
     <InputWithLabel
       defaultValue={flipRiskLimitDefault}
-      type="number"
-      labelTitle="Price Risk Limit"
-      inputTag="%"
-      name="flipRiskLimit"
+      type='number'
+      labelTitle='Price Risk Limit'
+      inputTag='%'
+      name='flipRiskLimit'
       min={0}
-      toolTip="Change how risky something is by reducing the percentage amount.  The limit is the average price multiplied by your Price Risk Limit. Ex: if an item sells for 20g it will not consider any flips or resets over 2000g."
+      toolTip='Change how risky something is by reducing the percentage amount.  The limit is the average price multiplied by your Price Risk Limit. Ex: if an item sells for 20g it will not consider any flips or resets over 2000g.'
     />
     <InputWithLabel
       defaultValue={underMarketPricePercentDefault}
-      type="number"
-      labelTitle="Desired Discount Percent vs Average Price"
-      inputTag="%"
-      name="underMarketPricePercent"
+      type='number'
+      labelTitle='Desired Discount Percent vs Average Price'
+      inputTag='%'
+      name='underMarketPricePercent'
       min={0}
-      toolTip="Find items below the market price by choosing a desired discount vs average price. If price is usually 50g and desired discount is 50% then we look to see if its selling for 25g. Default of 0 skips checking this."
+      toolTip='Find items below the market price by choosing a desired discount vs average price. If price is usually 50g and desired discount is 50% then we look to see if its selling for 25g. Default of 0 skips checking this.'
     />
     <InputWithLabel
       defaultValue={overMarketPricePercentDefault}
-      type="number"
-      labelTitle="Desired Increase Percenet vs Average Price"
-      inputTag="%"
-      name="overMarketPricePercent"
+      type='number'
+      labelTitle='Desired Increase Percenet vs Average Price'
+      inputTag='%'
+      name='overMarketPricePercent'
       min={0}
-      toolTip="The percent over the average price you desire to sell at. EX: If an item usually sells for 100g and you choose a 100% increase, then we only show the item if you can sell at 200g. Default of 0 skips checking this."
+      toolTip='The percent over the average price you desire to sell at. EX: If an item usually sells for 100g and you choose a 100% increase, then we only show the item if you can sell at 200g. Default of 0 skips checking this.'
     />
   </div>
 )

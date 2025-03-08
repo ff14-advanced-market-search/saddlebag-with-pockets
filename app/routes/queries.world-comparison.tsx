@@ -182,47 +182,50 @@ const Index = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Compare the minimum price of items across worlds!"
-        description="Find out the minimum price of different items across multiple servers. Helps you find the best server to sell your items on, if you have alts on many servers."
+        title='Compare the minimum price of items across worlds!'
+        description='Find out the minimum price of different items across multiple servers. Helps you find the best server to sell your items on, if you have alts on many servers.'
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
         disabled={transition.state === 'submitting'}
         error={error}
-        action={getActionUrl('/queries/world-comparison', state)}>
-        <div className="pt-4">
-          <div className="sm:px-4 flex flex-col gap-4">
-            <div className="flex flex-col max-w-full relative">
+        action={getActionUrl('/queries/world-comparison', state)}
+      >
+        <div className='pt-4'>
+          <div className='sm:px-4 flex flex-col gap-4'>
+            <div className='flex flex-col max-w-full relative'>
               <TitleTooltip
-                title="Worlds to compare with your home server"
-                toolTip="Choose worlds to see which has the best price for your selected items"
+                title='Worlds to compare with your home server'
+                toolTip='Choose worlds to see which has the best price for your selected items'
                 relative
               />
               <ModalToggleButton
-                type="button"
-                onClick={() => setModal('exportServers')}>
+                type='button'
+                onClick={() => setModal('exportServers')}
+              >
                 Choose Worlds
               </ModalToggleButton>
-              <input name="exportServers" value={state.exportServers} hidden />
-              <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
+              <input name='exportServers' value={state.exportServers} hidden />
+              <p className='mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300'>
                 {serversLength > 3 || !serversLength
                   ? `${serversLength ? serversLength : 'No'} worlds selected`
                   : state.exportServers.map((name) => name).join(', ')}
               </p>
             </div>
 
-            <div className="flex flex-col max-w-full relative">
+            <div className='flex flex-col max-w-full relative'>
               <TitleTooltip
-                title="Items you want to compare"
-                toolTip="Choose worlds to see which has the best price for your selected items"
+                title='Items you want to compare'
+                toolTip='Choose worlds to see which has the best price for your selected items'
                 relative
               />
               <ModalToggleButton
-                type="button"
-                onClick={() => setModal('items')}>
+                type='button'
+                onClick={() => setModal('items')}
+              >
                 Choose Items
               </ModalToggleButton>
-              <input name="items" hidden value={state.items} />
-              <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
+              <input name='items' hidden value={state.items} />
+              <p className='mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300'>
                 {itemsLength > 3 || !itemsLength
                   ? `${itemsLength ? itemsLength : 'No'} items selected`
                   : state.items
@@ -230,13 +233,13 @@ const Index = () => {
                       .join(', ')}
               </p>
             </div>
-            <div className="flex flex-col max-w-full relative">
+            <div className='flex flex-col max-w-full relative'>
               <TitleTooltip
-                title="High quality items only"
-                toolTip="If selected will only return high quality items"
+                title='High quality items only'
+                toolTip='If selected will only return high quality items'
                 relative
               />
-              <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
+              <CheckBox labelTitle='HQ Only' id='hq-only' name='hqOnly' />
             </div>
           </div>
         </div>
@@ -247,8 +250,9 @@ const Index = () => {
                 ? 'Choose items to check price on'
                 : 'Choose worlds to compare'
             }
-            onClose={() => setModal(null)}>
-            <div className="mt-2 flex flex-col">
+            onClose={() => setModal(null)}
+          >
+            <div className='mt-2 flex flex-col'>
               {modal === 'items' && (
                 <>
                   <ItemSelect
@@ -260,9 +264,9 @@ const Index = () => {
                         items: [...state.items, selected.id]
                       })
                     }}
-                    tooltip="Type in at least 2 characters to search."
+                    tooltip='Type in at least 2 characters to search.'
                   />
-                  <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
+                  <ul className='first-child:mt-0 last-child:mb-0 mt-2 px-4'>
                     {state.items.map((id, index) => (
                       <ItemListRow
                         key={`${id}-${index}`}
@@ -282,7 +286,7 @@ const Index = () => {
                 <div>
                   {Object.entries(WorldList).map(([dataCenter, worlds]) => (
                     <div key={dataCenter}>
-                      <p className="text mt-1 font-semibold text-gray-800">
+                      <p className='text mt-1 font-semibold text-gray-800'>
                         {dataCenter}
                       </p>
                       {worlds.map(({ name }) => {
@@ -333,15 +337,16 @@ const ItemListRow = ({
   id: string | number
   onDelete: () => void
 }) => (
-  <li className="flex items-center w-full justify-between my-1 px-3 py-2 gap:3 bg-gray-100 dark:bg-slate-700 rounded-md">
-    <p className="text-ellipsis overflow-hidden no-wrap text-gray-600 dark:text-gray-200">
+  <li className='flex items-center w-full justify-between my-1 px-3 py-2 gap:3 bg-gray-100 dark:bg-slate-700 rounded-md'>
+    <p className='text-ellipsis overflow-hidden no-wrap text-gray-600 dark:text-gray-200'>
       {getItemNameById(id)}
     </p>
     <button
-      className="rounded p-1 border-gray-300 min-w-fit hover:scale-125 transition ease-in-out duration-300"
-      type="button"
+      className='rounded p-1 border-gray-300 min-w-fit hover:scale-125 transition ease-in-out duration-300'
+      type='button'
       onClick={onDelete}
-      aria-label="Delete">
+      aria-label='Delete'
+    >
       <TrashIcon className={`h-4 w-4 text-gray-700 mx-auto`} />
     </button>
   </li>
@@ -361,36 +366,38 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
   return (
     <PageWrapper>
       <ContentContainer>
-        <div className="flex justify-start mt-4">
+        <div className='flex justify-start mt-4'>
           <SubmitButton
-            title="Share this search!"
+            title='Share this search!'
             onClick={handleCopyButton}
-            type="button"
+            type='button'
           />
         </div>
-        <div className="flex w-full overflow-x-scroll gap-3 p-4">
+        <div className='flex w-full overflow-x-scroll gap-3 p-4'>
           {results.data.map((item) => {
             const sortedServers = item.export_servers.sort(getSortedTables)
             return (
               <div
                 key={item.item_id}
-                className="min-w-max rounded-md shadow-md p-3 dark:bg-slate-600">
+                className='min-w-max rounded-md shadow-md p-3 dark:bg-slate-600'
+              >
                 <Title title={getItemNameById(item.item_id) as string} />
                 <div>
-                  <table className="table-auto border-separate border-spacing-2 dark:text-gray-200">
+                  <table className='table-auto border-separate border-spacing-2 dark:text-gray-200'>
                     <tr>
-                      <th className="text-left py-1 px-2">World</th>
+                      <th className='text-left py-1 px-2'>World</th>
                       <th
-                        className="text-left py-1 px-2 flex items-center"
+                        className='text-left py-1 px-2 flex items-center'
                         onClick={(e) => {
                           e.preventDefault()
                           setTableDesc((state) => !state)
-                        }}>
+                        }}
+                      >
                         Price
                         {tableDesc ? (
-                          <ChevronDownIcon className="h-4 w-4 ml-1" />
+                          <ChevronDownIcon className='h-4 w-4 ml-1' />
                         ) : (
-                          <ChevronUpIcon className="h-4 w-4 ml-1" />
+                          <ChevronUpIcon className='h-4 w-4 ml-1' />
                         )}
                       </th>
                     </tr>
@@ -402,12 +409,13 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
                           <td
                             className={`text-left py-1 px-2${
                               isHomeServer ? ' font-semibold' : ''
-                            }`}>
+                            }`}
+                          >
                             {isHomeServer
                               ? `${server.server_name}*`
                               : server.server_name}
                           </td>
-                          <td className="text-left py-1 px-2">
+                          <td className='text-left py-1 px-2'>
                             {server.price === 0
                               ? 'Out of Stock on this Server'
                               : server.price.toLocaleString()}

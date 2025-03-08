@@ -18,7 +18,7 @@ export const links: LinksFunction = () => [
 const howtocrossservertradeinffxiv = () => {
   return (
     <div classname={`m-12`}>
-      <main classname="flex-1">
+      <main classname='flex-1'>
         <h1>
           Exploring Specialized Markets for Gil Making in Final Fantasy XIV
         </h1>

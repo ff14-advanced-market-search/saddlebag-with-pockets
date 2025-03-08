@@ -3,7 +3,10 @@ import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { ExportItem, IlvlExportResponse } from '~/requests/WoW/IlvlExportSearch'
+import type {
+  ExportItem,
+  IlvlExportResponse
+} from '~/requests/WoW/IlvlExportSearch'
 import IlvlExportSearch from '~/requests/WoW/IlvlExportSearch'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
@@ -36,12 +39,7 @@ import {
 
 const PAGE_URL = '/wow/ilvl-export-search'
 
-const AVAILABLE_STATS: ItemStat[] = [
-  'Socket',
-  'Leech',
-  'Speed',
-  'Avoidance'
-]
+const AVAILABLE_STATS: ItemStat[] = ['Socket', 'Leech', 'Speed', 'Avoidance']
 
 const defaultFormValues = {
   itemId: '',
@@ -119,13 +117,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const desiredStats = params.getAll('desiredStats') as ItemStat[]
 
   if (itemID) {
-    const formData = { 
-      itemId: itemID, 
-      ilvl, 
-      populationWP, 
-      populationBlizz, 
-      rankingWP, 
-      sortBy 
+    const formData = {
+      itemId: itemID,
+      ilvl,
+      populationWP,
+      populationBlizz,
+      rankingWP,
+      sortBy
     }
     const validatedFormData = validateInput.safeParse(formData)
     if (!validatedFormData.success) {
@@ -194,7 +192,9 @@ const IlvlExportSearchComponent = () => {
     const populationBlizzFromUrl = searchParams.get('populationBlizz') || '1'
     const rankingWPFromUrl = searchParams.get('rankingWP') || '90'
     const sortByFromUrl = searchParams.get('sortBy') || 'minPrice'
-    const desiredStatsFromUrl = searchParams.getAll('desiredStats') as ItemStat[]
+    const desiredStatsFromUrl = searchParams.getAll(
+      'desiredStats'
+    ) as ItemStat[]
 
     if (itemIdFromUrl) {
       const itemNameFromId = getItemNameById(itemIdFromUrl, wowItems)
@@ -223,18 +223,18 @@ const IlvlExportSearchComponent = () => {
     const itemId = getItemIDByName(value.trim(), wowItems)
     if (itemId) {
       setItemID(itemId.toString())
-      setFormValues(prev => ({ ...prev, itemId: itemId.toString() }))
+      setFormValues((prev) => ({ ...prev, itemId: itemId.toString() }))
     } else {
       setItemID('')
-      setFormValues(prev => ({ ...prev, itemId: '' }))
+      setFormValues((prev) => ({ ...prev, itemId: '' }))
     }
   }
 
   const handleStatToggle = (stat: ItemStat) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       desiredStats: prev.desiredStats.includes(stat)
-        ? prev.desiredStats.filter(s => s !== stat)
+        ? prev.desiredStats.filter((s) => s !== stat)
         : [...prev.desiredStats, stat]
     }))
   }
@@ -249,7 +249,7 @@ const IlvlExportSearchComponent = () => {
 
   const renderForm = () => (
     <SmallFormContainer
-      title="Item Level Export Search"
+      title='Item Level Export Search'
       description={`
         Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
         Supports the following items:
@@ -275,36 +275,47 @@ const IlvlExportSearchComponent = () => {
         rankingWP: formValues.rankingWP.toString(),
         sortBy: formValues.sortBy,
         desiredStats: formValues.desiredStats
-      })}>
-      <div className="pt-3 flex flex-col gap-4">
+      })}
+    >
+      <div className='pt-3 flex flex-col gap-4'>
         <DebouncedSelectInput
           title={'Item to search for'}
-          label="Item"
-          id="export-item-select"
+          label='Item'
+          id='export-item-select'
           selectOptions={wowItemsList}
           onSelect={handleSelect}
           displayValue={itemName}
         />
-        <input hidden name="itemId" value={itemID} />
+        <input hidden name='itemId' value={itemID} />
         <InputWithLabel
-          labelTitle="Minimum Item Level"
-          name="ilvl"
-          type="number"
+          labelTitle='Minimum Item Level'
+          name='ilvl'
+          type='number'
           value={formValues.ilvl.toString()}
           min={0}
-          onChange={(e) => setFormValues(prev => ({ ...prev, ilvl: parseInt(e.target.value) }))}
+          onChange={(e) =>
+            setFormValues((prev) => ({
+              ...prev,
+              ilvl: parseInt(e.target.value)
+            }))
+          }
         />
         <InputWithLabel
-          labelTitle="Population"
-          name="populationWP"
-          type="number"
+          labelTitle='Population'
+          name='populationWP'
+          type='number'
           value={formValues.populationWP.toString()}
           min={1}
-          onChange={(e) => setFormValues(prev => ({ ...prev, populationWP: parseInt(e.target.value) }))}
+          onChange={(e) =>
+            setFormValues((prev) => ({
+              ...prev,
+              populationWP: parseInt(e.target.value)
+            }))
+          }
         />
         <Select
-          title="Population Blizzard"
-          name="populationBlizz"
+          title='Population Blizzard'
+          name='populationBlizz'
           value={formValues.populationBlizz.toString()}
           options={[
             { label: 'FULL', value: '3' },
@@ -312,19 +323,29 @@ const IlvlExportSearchComponent = () => {
             { label: 'MEDIUM', value: '1' },
             { label: 'LOW', value: '0' }
           ]}
-          onChange={(e) => setFormValues(prev => ({ ...prev, populationBlizz: parseInt(e.target.value) }))}
+          onChange={(e) =>
+            setFormValues((prev) => ({
+              ...prev,
+              populationBlizz: parseInt(e.target.value)
+            }))
+          }
         />
         <InputWithLabel
-          labelTitle="Ranking"
-          name="rankingWP"
-          type="number"
+          labelTitle='Ranking'
+          name='rankingWP'
+          type='number'
           value={formValues.rankingWP.toString()}
           min={1}
-          onChange={(e) => setFormValues(prev => ({ ...prev, rankingWP: parseInt(e.target.value) }))}
+          onChange={(e) =>
+            setFormValues((prev) => ({
+              ...prev,
+              rankingWP: parseInt(e.target.value)
+            }))
+          }
         />
         <Select
-          title="Sort Results By"
-          name="sortBy"
+          title='Sort Results By'
+          name='sortBy'
           value={formValues.sortBy}
           options={[
             { label: 'Minimum Price', value: 'minPrice' },
@@ -332,22 +353,26 @@ const IlvlExportSearchComponent = () => {
             { label: 'Realm Population', value: 'realmPopulationReal' },
             { label: 'Realm Ranking', value: 'realmRanking' }
           ]}
-          onChange={(e) => setFormValues(prev => ({ ...prev, sortBy: e.target.value }))}
+          onChange={(e) =>
+            setFormValues((prev) => ({ ...prev, sortBy: e.target.value }))
+          }
         />
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium dark:text-gray-200">Desired Stats</label>
-          <div className="flex flex-wrap gap-2">
-            {AVAILABLE_STATS.map(stat => (
-              <label key={stat} className="flex items-center gap-2">
+        <div className='flex flex-col gap-2'>
+          <label className='text-sm font-medium dark:text-gray-200'>
+            Desired Stats
+          </label>
+          <div className='flex flex-wrap gap-2'>
+            {AVAILABLE_STATS.map((stat) => (
+              <label key={stat} className='flex items-center gap-2'>
                 <input
-                  type="checkbox"
-                  name="desiredStats"
+                  type='checkbox'
+                  name='desiredStats'
                   value={stat}
                   checked={formValues.desiredStats.includes(stat)}
                   onChange={() => handleStatToggle(stat)}
-                  className="form-checkbox h-4 w-4"
+                  className='form-checkbox h-4 w-4'
                 />
-                <span className="text-sm dark:text-gray-200">{stat}</span>
+                <span className='text-sm dark:text-gray-200'>{stat}</span>
               </label>
             ))}
           </div>
@@ -356,18 +381,17 @@ const IlvlExportSearchComponent = () => {
     </SmallFormContainer>
   )
 
-  const hasSearched = actionData !== undefined || (loaderData && 'data' in loaderData)
+  const hasSearched =
+    actionData !== undefined || (loaderData && 'data' in loaderData)
 
   if (hasSearched) {
     if (error) {
-      return (
-        <PageWrapper>
-          {renderForm()}
-        </PageWrapper>
-      )
+      return <PageWrapper>{renderForm()}</PageWrapper>
     } else if (result && 'data' in result && Array.isArray(result.data)) {
       if (result.data.length > 0) {
-        return <Results {...(result as IlvlExportResponse & { sortby: string })} />
+        return (
+          <Results {...(result as IlvlExportResponse & { sortby: string })} />
+        )
       } else {
         return <NoResults href={PAGE_URL} />
       }
@@ -376,11 +400,7 @@ const IlvlExportSearchComponent = () => {
     }
   }
 
-  return (
-    <PageWrapper>
-      {renderForm()}
-    </PageWrapper>
-  )
+  return <PageWrapper>{renderForm()}</PageWrapper>
 }
 
 export default IlvlExportSearchComponent
@@ -399,34 +419,44 @@ const Results = ({
   return (
     <PageWrapper>
       <ContentContainer>
-        <div className="flex flex-col min-w-full">
-          <div className="flex flex-col md:flex-row items-center gap-2">
+        <div className='flex flex-col min-w-full'>
+          <div className='flex flex-col md:flex-row items-center gap-2'>
             <Title title={itemInfo.itemName} />
-            <ExternalLink link={itemInfo.link} text="Item Data" />
+            <ExternalLink link={itemInfo.link} text='Item Data' />
           </div>
-          <div className="flex flex-col md:flex-row w-full">
-            <div className="flex flex-col md:min-w-[50%] justify-center">
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>Average Min Price: {itemInfo.avgMinPrice.toLocaleString()}</span>
+          <div className='flex flex-col md:flex-row w-full'>
+            <div className='flex flex-col md:min-w-[50%] justify-center'>
+              <div className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded'>
+                <span>
+                  Average Min Price: {itemInfo.avgMinPrice.toLocaleString()}
+                </span>
               </div>
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>Median Min Price: {itemInfo.medianMinPrice.toLocaleString()}</span>
+              <div className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded'>
+                <span>
+                  Median Min Price: {itemInfo.medianMinPrice.toLocaleString()}
+                </span>
               </div>
             </div>
-            <div className="flex flex-col md:min-w-[50%] justify-center">
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>Average Server Quantity: {itemInfo.avgServerQuantity.toLocaleString()}</span>
+            <div className='flex flex-col md:min-w-[50%] justify-center'>
+              <div className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded'>
+                <span>
+                  Average Server Quantity:{' '}
+                  {itemInfo.avgServerQuantity.toLocaleString()}
+                </span>
               </div>
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>Total Selected Server Quantity: {itemInfo.totalSelectedServerQuantity.toLocaleString()}</span>
+              <div className='bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded'>
+                <span>
+                  Total Selected Server Quantity:{' '}
+                  {itemInfo.totalSelectedServerQuantity.toLocaleString()}
+                </span>
               </div>
             </div>
           </div>
         </div>
       </ContentContainer>
       <SmallTable
-        title="Export Results"
-        description="Results for your item in different realms"
+        title='Export Results'
+        description='Results for your item in different realms'
         sortingOrder={[{ desc: true, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
@@ -462,7 +492,7 @@ const columnList: Array<ColumnList<ExportItem>> = [
     columnId: 'connectedRealmNames',
     header: 'Realm Names',
     accessor: ({ row }) => (
-      <p className="px-3 py-2 max-w-[200px] overflow-x-scroll">
+      <p className='px-3 py-2 max-w-[200px] overflow-x-scroll'>
         {row.connectedRealmNames.join(', ')}
       </p>
     )
@@ -472,9 +502,7 @@ const columnList: Array<ColumnList<ExportItem>> = [
   {
     columnId: 'stats',
     header: 'Stats',
-    accessor: ({ row }) => (
-      <p className="px-3 py-2">{row.stats.join(', ')}</p>
-    )
+    accessor: ({ row }) => <p className='px-3 py-2'>{row.stats.join(', ')}</p>
   },
   { columnId: 'realmPopulationReal', header: 'Realm Population' },
   { columnId: 'realmPopulationType', header: 'Population Type' },
@@ -483,7 +511,7 @@ const columnList: Array<ColumnList<ExportItem>> = [
     columnId: 'undermineLink',
     header: 'Undermine Link',
     accessor: ({ getValue }) => (
-      <ExternalLink text="Undermine" link={getValue() as string} />
+      <ExternalLink text='Undermine' link={getValue() as string} />
     )
   }
 ]
@@ -494,7 +522,7 @@ const mobileColumnList: Array<ColumnList<ExportItem>> = [
     columnId: 'connectedRealmNames',
     header: 'Realm Names',
     accessor: ({ row }) => (
-      <p className="px-3 py-2 w-[200px] overflow-x-scroll">
+      <p className='px-3 py-2 w-[200px] overflow-x-scroll'>
         {row.connectedRealmNames.join(', ')}
       </p>
     )
@@ -514,5 +542,8 @@ export const meta: MetaFunction = () => {
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-export-search' }
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/ilvl-export-search'
+  }
 ]

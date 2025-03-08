@@ -22,47 +22,47 @@ const PetMarketShareForm = ({
   excludeCategoriesDefault?: Array<number>
 }) => {
   return (
-    <div className="pt-2 md:pt-4">
+    <div className='pt-2 md:pt-4'>
       <InputWithLabel
         defaultValue={minPriceDefault}
-        type="number"
-        labelTitle="Minimum Desired price"
-        inputTag="Gold"
-        name="desiredPrice"
+        type='number'
+        labelTitle='Minimum Desired price'
+        inputTag='Gold'
+        name='desiredPrice'
         min={0}
         step={0.01}
       />
       <InputWithLabel
         defaultValue={salesPerDayDefault}
-        type="number"
-        labelTitle="Minimum Desired sales per day"
-        inputTag="Sales"
-        name="desiredSalesPerDay"
+        type='number'
+        labelTitle='Minimum Desired sales per day'
+        inputTag='Sales'
+        name='desiredSalesPerDay'
         min={0}
         step={0.01}
       />
       <RegionAndServerSelect
         region={regionDefault}
         defaultRealm={homeRealm}
-        serverSelectFormName="homeRealmName"
+        serverSelectFormName='homeRealmName'
       />
       <Filter
-        formName="includeCategories"
+        formName='includeCategories'
         defaultValue={includeCategoriesDefault}
         options={petMarketshareOptions}
         title={'Pet Filter (Include)'}
       />
       <Filter
-        formName="excludeCategories"
+        formName='excludeCategories'
         defaultValue={excludeCategoriesDefault}
         options={petMarketshareOptions}
         title={'Pet Filter (Exclude)'}
       />
       <Select
-        title="Sort Results By"
+        title='Sort Results By'
         options={sortByOptions}
-        name="sortBy"
-        id="sortBy"
+        name='sortBy'
+        id='sortBy'
       />
     </div>
   )

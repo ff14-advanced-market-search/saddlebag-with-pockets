@@ -50,4 +50,4 @@ const IlvlShoppingList = async ({
   })
 }
 
-export default IlvlShoppingList 
+export default IlvlShoppingList

@@ -20,14 +20,15 @@ const PaginationControls = ({ table }: { table: Table<any> }) => {
   const pageCount = table.getPageCount()
 
   return (
-    <div className="pt-1 flex flex-row gap-0.5 items-center justify-center dark:text-gray-200">
+    <div className='pt-1 flex flex-row gap-0.5 items-center justify-center dark:text-gray-200'>
       <select
         className={`flex-1 w-28 mr-4 block px-3 py-2 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400`}
-        aria-label="number of results to display"
+        aria-label='number of results to display'
         value={table.getState().pagination.pageSize}
         onChange={(e) => {
           table.setPageSize(Number(e.target.value))
-        }}>
+        }}
+      >
         {numberSelection.map((num) => (
           <option key={`pagination-${num}`} value={num}>
             {`Show ${num}`}
@@ -36,34 +37,38 @@ const PaginationControls = ({ table }: { table: Table<any> }) => {
       </select>
       <button
         className={getDisabledClassNames(previousDisabled)}
-        aria-label="previous"
+        aria-label='previous'
         onClick={() => table.setPageIndex(0)}
-        disabled={previousDisabled}>
-        <ChevronDoubleLeftIcon className="dark:text-gray-300" />
+        disabled={previousDisabled}
+      >
+        <ChevronDoubleLeftIcon className='dark:text-gray-300' />
       </button>
       <button
         className={getDisabledClassNames(previousDisabled)}
-        aria-label="previous"
+        aria-label='previous'
         onClick={() => table.previousPage()}
-        disabled={previousDisabled}>
-        <ChevronLeftIcon className="dark:text-gray-300" />
+        disabled={previousDisabled}
+      >
+        <ChevronLeftIcon className='dark:text-gray-300' />
       </button>
-      <p className="text-sm whitespace-nowrap">
+      <p className='text-sm whitespace-nowrap'>
         {`Page ${table.getState().pagination.pageIndex + 1} / ${pageCount}`}
       </p>
       <button
         className={getDisabledClassNames(nextDisabled)}
-        aria-label="next"
+        aria-label='next'
         onClick={() => table.nextPage()}
-        disabled={!table.getCanNextPage()}>
-        <ChevronRightIcon className="dark:text-gray-300" />
+        disabled={!table.getCanNextPage()}
+      >
+        <ChevronRightIcon className='dark:text-gray-300' />
       </button>
       <button
         className={getDisabledClassNames(nextDisabled)}
-        aria-label="next"
+        aria-label='next'
         onClick={() => table.setPageIndex(pageCount - 1)}
-        disabled={!table.getCanNextPage()}>
-        <ChevronDoubleRightIcon className="dark:text-gray-300" />
+        disabled={!table.getCanNextPage()}
+      >
+        <ChevronDoubleRightIcon className='dark:text-gray-300' />
       </button>
     </div>
   )

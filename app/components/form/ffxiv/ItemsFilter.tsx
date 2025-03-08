@@ -13,7 +13,7 @@ const ItemsFilter = ({
     <Filter
       formName={formName}
       defaultValue={defaultFilters}
-      title="Item Filter"
+      title='Item Filter'
       onChange={onChange}
     />
   )

@@ -158,7 +158,7 @@ const Index = () => {
     if (!results.data.length) {
       return (
         <PageWrapper>
-          <NoResults href="/wow/pet-marketshare" />
+          <NoResults href='/wow/pet-marketshare' />
         </PageWrapper>
       )
     }
@@ -179,7 +179,8 @@ const Index = () => {
         title={pageTitle}
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
-        error={error}>
+        error={error}
+      >
         <PetMarketShareForm regionDefault={wowRegion} homeRealm={wowRealm} />
       </SmallFormContainer>
     </PageWrapper>

@@ -24,10 +24,10 @@ export const InputGenerator = ({
             command '/wow price-register', so we can monitor these items and
             alert you when the price spike happens!
           </Label>
-          <div className="flex justify-between items-center">
-            <div className="h-9">
+          <div className='flex justify-between items-center'>
+            <div className='h-9'>
               <SubmitButton
-                title="Copy Input Data"
+                title='Copy Input Data'
                 onClick={async () => {
                   if (
                     typeof window !== 'undefined' &&
@@ -43,7 +43,7 @@ export const InputGenerator = ({
                 }}
               />
             </div>
-            <div className="max-w-[140px] my-3">
+            <div className='max-w-[140px] my-3'>
               <ModalToggleButton onClick={() => setModalIsOpen(true)}>
                 View input
               </ModalToggleButton>
@@ -52,8 +52,8 @@ export const InputGenerator = ({
         </>
       </ContentContainer>
       {modalIsOpen && (
-        <Modal title="" onClose={() => setModalIsOpen(false)}>
-          <pre className="overflow-x-scroll bg-slate-700 dark:bg-slate-900 text-gray-200 p-4 rounded-md w-full">
+        <Modal title='' onClose={() => setModalIsOpen(false)}>
+          <pre className='overflow-x-scroll bg-slate-700 dark:bg-slate-900 text-gray-200 p-4 rounded-md w-full'>
             <code>{codeString}</code>
           </pre>
         </Modal>

@@ -64,7 +64,8 @@ const recommendedQueries = [
   },
   {
     name: 'Item Export Search',
-    description: 'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
+    description:
+      'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
     Icon: DocumentSearchIcon,
     href: '/wow/export-search'
   },
@@ -76,7 +77,8 @@ const recommendedQueries = [
   },
   {
     name: 'Raid BOE Item Level Export Search',
-    description: 'Find the best servers to sell raid BOE items with specific stats and item levels.',
+    description:
+      'Find the best servers to sell raid BOE items with specific stats and item levels.',
     Icon: DocumentSearchIcon,
     href: '/wow/ilvl-export-search'
   },
@@ -161,38 +163,40 @@ const recommendedQueries = [
 export default function Index() {
   return (
     <>
-      <main className="flex-1">
+      <main className='flex-1'>
         {/* Hero Section */}
-        <section className="relative bg-gray-900">
-          <div className="absolute inset-0">
+        <section className='relative bg-gray-900'>
+          <div className='absolute inset-0'>
             <img
-              className="w-full h-full object-cover opacity-50"
-              src="/images/hero-bg.jpg"
-              alt="Hero Background"
+              className='w-full h-full object-cover opacity-50'
+              src='/images/hero-bg.jpg'
+              alt='Hero Background'
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-transparent to-blue-900 opacity-70"></div>
+            <div className='absolute inset-0 bg-gradient-to-r from-blue-900 via-transparent to-blue-900 opacity-70'></div>
           </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-            <h1 className="text-5xl font-extrabold text-white">
+          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center'>
+            <h1 className='text-5xl font-extrabold text-white'>
               Azeroth Auction Assassin
             </h1>
-            <p className="mt-4 text-xl text-gray-200">
+            <p className='mt-4 text-xl text-gray-200'>
               Lightning-fast cross-realm auction sniper - Get the best deals
               seconds after they appear!
             </p>
-            <div className="mt-8 flex justify-center space-x-4">
+            <div className='mt-8 flex justify-center space-x-4'>
               <a
-                href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                href='https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md'
+              >
                 Download Now
               </a>
               <a
-                href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                href='https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-md shadow-md'
+              >
                 Learn More
               </a>
             </div>
@@ -202,33 +206,36 @@ export default function Index() {
         <Banner />
 
         {/* Tools Grid Section */}
-        <section className="py-16 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-base font-semibold text-blue-600 dark:text-blue-400 uppercase">
+        <section className='py-16 bg-gray-50 dark:bg-gray-900'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+            <div className='text-center mb-12'>
+              <h2 className='text-base font-semibold text-blue-600 dark:text-blue-400 uppercase'>
                 Tools & Features
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl'>
                 Everything You Need for Gold Making
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
               {recommendedQueries.map((query) => (
                 <a
                   key={query.name}
                   href={query.href}
                   target={query.external ? '_blank' : '_self'}
                   rel={query.external ? 'noopener noreferrer' : undefined}
-                  className="block">
-                  <div className="h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/50">
-                    <div className="flex items-center mb-4">
-                      <query.Icon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-                      <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">
+                  className='block'
+                >
+                  <div className='h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/50'>
+                    <div className='flex items-center mb-4'>
+                      <query.Icon className='h-6 w-6 text-blue-500 dark:text-blue-400' />
+                      <h3 className='ml-3 text-lg font-medium text-gray-900 dark:text-white'>
                         {query.name}
                       </h3>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300">{query.description}</p>
+                    <p className='text-gray-600 dark:text-gray-300'>
+                      {query.description}
+                    </p>
                   </div>
                 </a>
               ))}

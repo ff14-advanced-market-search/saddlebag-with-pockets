@@ -140,15 +140,15 @@ const RegionUndercut = () => {
 
   if (results) {
     if (!Object.keys(results).length) {
-      return <NoResults href="/wow/region-undercut" />
+      return <NoResults href='/wow/region-undercut' />
     }
 
     if ('not_found_list' in results) {
       return (
         <PageWrapper>
           <SmallTable
-            title="Undercut Items"
-            description="Shows items that are undercut."
+            title='Undercut Items'
+            description='Shows items that are undercut.'
             columnList={columnList}
             data={results.undercut_list}
             columnSelectOptions={selectOptions}
@@ -160,8 +160,8 @@ const RegionUndercut = () => {
             }}
           />
           <SmallTable
-            title="Not Found Items"
-            description="Shows items that were sold, expired or not found."
+            title='Not Found Items'
+            description='Shows items that were sold, expired or not found.'
             columnList={columnList}
             data={results.not_found_list}
             columnSelectOptions={selectOptions}
@@ -173,8 +173,8 @@ const RegionUndercut = () => {
             }}
           />
           <SmallTable
-            title="Not Uploaded Items"
-            description="Shows items that were not yet uploaded to the Blizzard API. Wait 1 hour for these to appear in the data."
+            title='Not Uploaded Items'
+            description='Shows items that were not yet uploaded to the Blizzard API. Wait 1 hour for these to appear in the data.'
             columnList={columnList}
             data={results.not_in_dataset_list}
             columnSelectOptions={selectOptions}
@@ -193,16 +193,17 @@ const RegionUndercut = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
-        title="Region Undercuts"
+        title='Region Undercuts'
         description={
           <>
             See your undercuts region wide across all characters in one page
             using our{' '}
             <a
-              href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-500 dark:text-blue-300 hover:underline">
+              href='https://www.curseforge.com/wow/addons/saddlebag-exchange'
+              target='_blank'
+              rel='noreferrer'
+              className='text-blue-500 dark:text-blue-300 hover:underline'
+            >
               Undercut Tracker Addon.
             </a>{' '}
           </>
@@ -210,11 +211,12 @@ const RegionUndercut = () => {
         onClick={handleSubmit}
         loading={isLoading}
         disabled={isLoading}
-        error={error}>
-        <div className="p-3">
+        error={error}
+      >
+        <div className='p-3'>
           <TextArea
-            label="Region undercut data"
-            toolTip="Paste the data from our ingame tool here"
+            label='Region undercut data'
+            toolTip='Paste the data from our ingame tool here'
             formName={formName}
           />
         </div>
@@ -392,7 +394,7 @@ const columnList: Array<ColumnList<UndercutItems>> = [
     columnId: 'link',
     header: 'Undermine Link',
     accessor: ({ getValue }) => (
-      <ExternalLink text="Undermine" link={getValue() as string} />
+      <ExternalLink text='Undermine' link={getValue() as string} />
     )
   }
 ]

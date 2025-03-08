@@ -70,8 +70,8 @@ export default function CSVButton<DataType>({
   }
   return (
     <SubmitButton
-      type="button"
-      title="Download as .csv"
+      type='button'
+      title='Download as .csv'
       onClick={handleDownload}
     />
   )

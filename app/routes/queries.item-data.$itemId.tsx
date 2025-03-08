@@ -118,7 +118,7 @@ const ItemPage = () => {
   if ('exception' in data) {
     return (
       <PageWrapper>
-        <h2 className="text-red-800 dark:text-red-200">
+        <h2 className='text-red-800 dark:text-red-200'>
           Error: {data.exception}
         </h2>
       </PageWrapper>
@@ -142,12 +142,12 @@ const ItemPage = () => {
           <>
             <Title title={data.itemName} />
             {noResults && (
-              <Title title="No results found" className="text-xl" />
+              <Title title='No results found' className='text-xl' />
             )}
           </>
         </Section>
         <div
-          className="sr-only" // Screen reader only class
+          className='sr-only' // Screen reader only class
           aria-hidden={false}
           style={{
             position: 'absolute',
@@ -163,26 +163,26 @@ const ItemPage = () => {
           dangerouslySetInnerHTML={{ __html: data.itemDescription }}
         />
         <Section>
-          <div className="flex flex-wrap gap-2">
+          <div className='flex flex-wrap gap-2'>
             <CustomButton
               link={`https://saddlebagexchange.com/queries/`}
-              buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
+              buttonText='View all our tools here!'
+              rel='nofollow' // not working need to fix
             />
             <CustomButton
               link={`https://universalis.app/market/${itemId}`}
-              buttonText="View on Universalis"
-              rel="nofollow" // not working need to fix
+              buttonText='View on Universalis'
+              rel='nofollow' // not working need to fix
             />
             <CustomButton
               link={`https://ffxivteamcraft.com/db/en/item/${itemId}`}
-              buttonText="View on FFXIV Teamcraft"
-              rel="nofollow" // not working need to fix
+              buttonText='View on FFXIV Teamcraft'
+              rel='nofollow' // not working need to fix
             />
             <CustomButton
               link={`https://www.garlandtools.org/db/#item/${itemId}`}
-              buttonText="View on Garland Tools"
-              rel="nofollow" // not working need to fix
+              buttonText='View on Garland Tools'
+              rel='nofollow' // not working need to fix
             />
           </div>
         </Section>
@@ -191,7 +191,7 @@ const ItemPage = () => {
           <>
             <TitleH2 title={`${data.itemName} Sale History`} />
             {noResults && (
-              <TitleH2 title="No results found" className="text-xl" />
+              <TitleH2 title='No results found' className='text-xl' />
             )}
           </>
         </Section>

@@ -20,8 +20,8 @@ const HowtoCrossServerTradeinFFXIV = () => {
   return (
     <div className={`m-12`}>
       <Banner />
-      <main className="flex-1">
-        <h1 id="mastering-gil-earning-on-the-ffxiv-marketboard">
+      <main className='flex-1'>
+        <h1 id='mastering-gil-earning-on-the-ffxiv-marketboard'>
           Mastering Gil Earning on the FFXIV Marketboard
         </h1>
         <p>

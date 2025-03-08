@@ -175,7 +175,7 @@ const Index = () => {
     if (Object.keys(results).length === 0) {
       return (
         <PageWrapper>
-          <NoResults href="/wow/legacy-marketshare" />
+          <NoResults href='/wow/legacy-marketshare' />
         </PageWrapper>
       )
     }
@@ -201,38 +201,39 @@ const Index = () => {
         title={pageTitle}
         onClick={onSubmit}
         loading={transition.state === 'submitting'}
-        error={error}>
-        <div className="pt-4">
+        error={error}
+      >
+        <div className='pt-4'>
           <InputWithLabel
             defaultValue={1000}
-            type="number"
-            labelTitle="Minimum Desired average price"
-            inputTag="Gold"
-            name="desiredAvgPrice"
+            type='number'
+            labelTitle='Minimum Desired average price'
+            inputTag='Gold'
+            name='desiredAvgPrice'
             min={0.0}
             step={0.01}
           />
           <InputWithLabel
             defaultValue={0.01}
-            type="number"
-            labelTitle="Minimum Desired sales per day"
-            inputTag="Sales"
-            name="desiredSalesPerDay"
+            type='number'
+            labelTitle='Minimum Desired sales per day'
+            inputTag='Sales'
+            name='desiredSalesPerDay'
             min={0}
             step={0.01}
           />
           <ItemClassSelect />
           <ItemQualitySelect />
           <Select
-            title="Sort Results By"
+            title='Sort Results By'
             options={sortByOptions}
-            name="sortBy"
-            id="sortBy"
+            name='sortBy'
+            id='sortBy'
           />
           <RegionAndServerSelect
             region={wowRegion}
             defaultRealm={wowRealm}
-            serverSelectFormName="homeRealmId"
+            serverSelectFormName='homeRealmId'
           />
         </div>
       </SmallFormContainer>
@@ -340,12 +341,12 @@ const Results = ({
             }}
             options={sortByOptions}
           />
-          <div className="md:hidden py-2">
+          <div className='md:hidden py-2'>
             <Select
-              title="Sort Results By"
+              title='Sort Results By'
               options={sortByOptions}
-              name="sortBy"
-              id="sortBy"
+              name='sortBy'
+              id='sortBy'
               onChange={(e) => {
                 const value = e.target.value
                 if (assertIsSortBy(value)) setSortBy(value)
@@ -360,9 +361,9 @@ const Results = ({
         </>
       </ContentContainer>
 
-      <div className="flex justify-between">
+      <div className='flex justify-between'>
         <CSVButton
-          filename="legacy_marketshare.csv"
+          filename='legacy_marketshare.csv'
           data={data}
           columns={csvColumns}
         />
@@ -378,7 +379,7 @@ const Results = ({
         />
       </div>
 
-      <div className="hidden sm:block">
+      <div className='hidden sm:block'>
         <FullTable<LegacyMarketshareItem>
           data={data}
           sortingOrder={[{ id: sortBy, desc: true }]}

@@ -24,65 +24,72 @@ export const links: LinksFunction = () => [
 
 const FFXIVUndercuttingGuide = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className='max-w-4xl mx-auto px-4 py-8'>
       <Banner />
-      <main className="prose prose-lg prose-slate mx-auto">
+      <main className='prose prose-lg prose-slate mx-auto'>
         <h1
-          className="text-4xl font-bold mb-8"
-          id="ffxiv-marketboard-undercutting-guide">
+          className='text-4xl font-bold mb-8'
+          id='ffxiv-marketboard-undercutting-guide'
+        >
           FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag
           Exchange
         </h1>
 
         {/* Quick Links Section */}
-        <div className="bg-slate-100 p-6 rounded-lg mb-8">
-          <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
-          <div className="flex flex-col space-y-3">
+        <div className='bg-slate-100 p-6 rounded-lg mb-8'>
+          <h2 className='text-xl font-semibold mb-4'>Quick Links</h2>
+          <div className='flex flex-col space-y-3'>
             <Link
-              to="/undercut"
-              className="text-blue-600 hover:text-blue-800 flex items-center">
+              to='/undercut'
+              className='text-blue-600 hover:text-blue-800 flex items-center'
+            >
               🎯 Create Your Undercut Alerts
             </Link>
             <a
-              href="https://discord.gg/saddlebagexchange"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 flex items-center">
+              href='https://discord.gg/saddlebagexchange'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-blue-600 hover:text-blue-800 flex items-center'
+            >
               💬 Join Our Discord Community
             </a>
           </div>
         </div>
 
         {/* Table of Contents */}
-        <div className="bg-slate-100 p-6 rounded-lg mb-8">
-          <h2 className="text-xl font-semibold mb-4">Table of Contents</h2>
-          <nav className="flex flex-col space-y-2">
+        <div className='bg-slate-100 p-6 rounded-lg mb-8'>
+          <h2 className='text-xl font-semibold mb-4'>Table of Contents</h2>
+          <nav className='flex flex-col space-y-2'>
             <a
-              href="#understanding-undercutting"
-              className="text-blue-600 hover:text-blue-800">
+              href='#understanding-undercutting'
+              className='text-blue-600 hover:text-blue-800'
+            >
               Understanding Undercutting
             </a>
             <a
-              href="#saddlebag-exchange-solution"
-              className="text-blue-600 hover:text-blue-800">
+              href='#saddlebag-exchange-solution'
+              className='text-blue-600 hover:text-blue-800'
+            >
               Saddlebag Exchange Solution
             </a>
             <a
-              href="#getting-started"
-              className="text-blue-600 hover:text-blue-800">
+              href='#getting-started'
+              className='text-blue-600 hover:text-blue-800'
+            >
               Getting Started Guide
             </a>
             <a
-              href="#features-benefits"
-              className="text-blue-600 hover:text-blue-800">
+              href='#features-benefits'
+              className='text-blue-600 hover:text-blue-800'
+            >
               Features and Benefits
             </a>
           </nav>
         </div>
 
         {/* Main Content - Split into sections */}
-        <section id="understanding-undercutting">
-          <h2 className="text-2xl font-bold mb-4">
+        <section id='understanding-undercutting'>
+          <h2 className='text-2xl font-bold mb-4'>
             Understanding Undercutting
           </h2>
           <p>
@@ -95,8 +102,8 @@ const FFXIVUndercuttingGuide = () => {
           {/* ... rest of the undercutting section ... */}
         </section>
 
-        <section id="saddlebag-exchange-solution">
-          <h2 className="text-2xl font-bold mb-4">
+        <section id='saddlebag-exchange-solution'>
+          <h2 className='text-2xl font-bold mb-4'>
             Saddlebag Exchange: A Game-Changing Solution
           </h2>
           <p>
@@ -108,26 +115,28 @@ const FFXIVUndercuttingGuide = () => {
           {/* ... rest of the solution section ... */}
         </section>
 
-        <section id="getting-started">
-          <h2 className="text-2xl font-bold mb-4">
+        <section id='getting-started'>
+          <h2 className='text-2xl font-bold mb-4'>
             Getting Started with Saddlebag Exchange
           </h2>
-          <div className="bg-blue-50 p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-semibold mb-4">Quick Start Steps:</h3>
-            <ol className="list-decimal list-inside space-y-3">
+          <div className='bg-blue-50 p-6 rounded-lg mb-8'>
+            <h3 className='text-xl font-semibold mb-4'>Quick Start Steps:</h3>
+            <ol className='list-decimal list-inside space-y-3'>
               <li>
                 Join our{' '}
                 <a
-                  href="https://discord.gg/saddlebagexchange"
-                  className="text-blue-600 hover:text-blue-800">
+                  href='https://discord.gg/saddlebagexchange'
+                  className='text-blue-600 hover:text-blue-800'
+                >
                   Discord server
                 </a>
               </li>
               <li>
                 Visit the{' '}
                 <Link
-                  to="/undercut"
-                  className="text-blue-600 hover:text-blue-800">
+                  to='/undercut'
+                  className='text-blue-600 hover:text-blue-800'
+                >
                   Undercut Alert setup page
                 </Link>
               </li>
@@ -138,25 +147,27 @@ const FFXIVUndercuttingGuide = () => {
           {/* ... rest of the getting started content ... */}
         </section>
 
-        <div className="bg-blue-100 p-6 rounded-lg mt-8">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className='bg-blue-100 p-6 rounded-lg mt-8'>
+          <h2 className='text-2xl font-bold mb-4'>
             Ready to Dominate the Marketboard?
           </h2>
-          <p className="mb-4">
+          <p className='mb-4'>
             Join thousands of successful FFXIV traders using Saddlebag Exchange
             to maximize their profits.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className='flex flex-col sm:flex-row gap-4'>
             <Link
-              to="/undercut"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 text-center">
+              to='/undercut'
+              className='bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 text-center'
+            >
               Create Your Alerts
             </Link>
             <a
-              href="https://discord.gg/saddlebagexchange"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-slate-600 text-white px-6 py-3 rounded-lg hover:bg-slate-700 text-center">
+              href='https://discord.gg/saddlebagexchange'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='bg-slate-600 text-white px-6 py-3 rounded-lg hover:bg-slate-700 text-center'
+            >
               Join Our Community
             </a>
           </div>
