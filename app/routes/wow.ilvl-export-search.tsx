@@ -367,7 +367,7 @@ const IlvlExportSearchComponent = () => {
       )
     } else if (result && 'data' in result && Array.isArray(result.data)) {
       if (result.data.length > 0) {
-        return <Results {...(result as IlvlExportResponse & { sortby: string })} />
+        return <Results {...(result as IlvlExportResponse & { sortby: string })} ilvl={formValues.ilvl} desiredStats={formValues.desiredStats} />
       } else {
         return <NoResults href={PAGE_URL} />
       }
@@ -388,8 +388,14 @@ export default IlvlExportSearchComponent
 const Results = ({
   data,
   sortby,
-  itemInfo
-}: IlvlExportResponse & { sortby: string }) => {
+  itemInfo,
+  ilvl,
+  desiredStats
+}: IlvlExportResponse & { 
+  sortby: string;
+  ilvl: number;
+  desiredStats: ItemStat[];
+}) => {
   useEffect(() => {
     if (window && document) {
       window.scroll({ top: 0, behavior: 'smooth' })
@@ -403,6 +409,10 @@ const Results = ({
           <div className="flex flex-col md:flex-row items-center gap-2">
             <Title title={itemInfo.itemName} />
             <ExternalLink link={itemInfo.link} text="Item Data" />
+            <ExternalLink 
+              link={`/wow/ilvl-shopping-list?itemId=${itemInfo.itemID}&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${desiredStats.join(',')}`} 
+              text="Shopping List" 
+            />
           </div>
           <div className="flex flex-col md:flex-row w-full">
             <div className="flex flex-col md:min-w-[50%] justify-center">
