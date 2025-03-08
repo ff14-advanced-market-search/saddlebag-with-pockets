@@ -211,7 +211,7 @@ const IlvlShoppingListComponent = () => {
   const renderForm = () => (
     <SmallFormContainer
       title="Item Level Shopping List"
-      description="Search for items with specific item levels and stats across all realms."
+      description="Search for raid BOE items with specific item levels and stats across all realms."
       onClick={handleSubmit}
       error={error}
       loading={isSubmitting}

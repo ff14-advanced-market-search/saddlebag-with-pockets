@@ -249,7 +249,7 @@ const IlvlExportSearchComponent = () => {
   const renderForm = () => (
     <SmallFormContainer
       title="Item Level Export Search"
-      description="Search for items with specific item levels and stats across all realms, with additional realm data."
+      description="Search for raid BOE items with specific item levels and stats across all realms, with additional realm data."
       onClick={handleSubmit}
       error={error}
       loading={isSubmitting}
