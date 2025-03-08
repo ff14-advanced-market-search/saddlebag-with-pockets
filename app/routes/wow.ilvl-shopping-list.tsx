@@ -38,10 +38,10 @@ const AVAILABLE_STATS: ItemStat[] = [
   'Leech',
   'Speed',
   'Avoidance',
-  'Haste',
-  'Crit',
-  'Mastery',
-  'Versatility'
+  // 'Haste',
+  // 'Crit',
+  // 'Mastery',
+  // 'Versatility'
 ]
 
 const inputMap: Record<string, string> = {
@@ -249,7 +249,7 @@ const IlvlShoppingListComponent = () => {
           onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
         />
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Desired Stats</label>
+          <label className="text-sm font-medium dark:text-gray-200">Desired Stats</label>
           <div className="flex flex-wrap gap-2">
             {AVAILABLE_STATS.map(stat => (
               <label key={stat} className="flex items-center gap-2">
@@ -261,7 +261,7 @@ const IlvlShoppingListComponent = () => {
                   onChange={() => handleStatToggle(stat)}
                   className="form-checkbox h-4 w-4"
                 />
-                <span className="text-sm">{stat}</span>
+                <span className="text-sm dark:text-gray-200">{stat}</span>
               </label>
             ))}
           </div>

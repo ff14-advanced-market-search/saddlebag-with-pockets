@@ -1,7 +1,7 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { WoWServerRegion } from './WOWScan'
 
-export type ItemStat = 'Socket' | 'Leech' | 'Speed' | 'Avoidance' | 'Haste' | 'Crit' | 'Mastery' | 'Versatility'
+export type ItemStat = 'Socket' | 'Leech' | 'Speed' | 'Avoidance' // | 'Haste' | 'Crit' | 'Mastery' | 'Versatility'
 
 interface IlvlShoppingListProps {
   region: WoWServerRegion
