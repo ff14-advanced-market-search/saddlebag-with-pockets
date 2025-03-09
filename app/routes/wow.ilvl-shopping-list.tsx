@@ -243,7 +243,7 @@ const IlvlShoppingListComponent = () => {
       onClick={handleSubmit}
       error={error}
       loading={isSubmitting}
-      hideSubmitButton={!itemID}
+      disabled={!itemID}
       action={getActionUrl(PAGE_URL, {
         itemId: itemID,
         maxPurchasePrice,

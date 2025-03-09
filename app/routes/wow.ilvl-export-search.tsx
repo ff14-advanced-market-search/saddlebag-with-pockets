@@ -266,7 +266,7 @@ const IlvlExportSearchComponent = () => {
       onClick={handleSubmit}
       error={error}
       loading={isSubmitting}
-      hideSubmitButton={!itemID}
+      disabled={!itemID}
       action={getActionUrl(PAGE_URL, {
         itemId: itemID,
         ilvl: formValues.ilvl.toString(),
