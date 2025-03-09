@@ -1,8 +1,123 @@
 import type { ListingResponseType } from '~/requests/FFXIV/GetListing'
 import { Differences } from './Differences'
 import ListingTable from './ListingTable'
+import { format, subHours } from 'date-fns'
+import type { Options, PointOptionsObject } from 'highcharts'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+import { useTypedSelector } from '~/redux/useTypedSelector'
+import { ContentContainer } from '~/components/Common'
+
+const makeTimeString = ({
+  date,
+  hoursToDeduct,
+  formatString = 'dd/MM h aaaa'
+}: {
+  date: Date
+  hoursToDeduct: number
+  formatString?: string
+}) => {
+  const newDate = subHours(date, hoursToDeduct)
+  return format(newDate, formatString)
+}
+
+const GenericLineChart = ({
+  darkMode,
+  data,
+  chartTitle,
+  xTitle,
+  yTitle,
+  xLabelFormat,
+  yLabelFormat,
+  dataIterator,
+  xCategories
+}: {
+  darkMode: boolean
+  data: Array<number>
+  chartTitle?: string
+  xTitle?: string
+  yTitle?: string
+  xLabelFormat?: string
+  yLabelFormat?: string
+  dataIterator?: (value: number, index: number) => PointOptionsObject
+  xCategories?: Array<string>
+}) => {
+  const styles = darkMode
+    ? {
+        backgroundColor: '#334155',
+        color: 'white',
+        hoverColor: '#f8f8f8'
+      }
+    : {}
+  const options: Options = {
+    chart: {
+      type: 'line',
+      backgroundColor: styles?.backgroundColor
+    },
+    legend: {
+      itemStyle: { color: styles?.color },
+      align: 'center',
+      itemHoverStyle: { color: styles?.hoverColor }
+    },
+    title: {
+      text: chartTitle,
+      style: { color: styles?.color }
+    },
+    yAxis: {
+      title: {
+        text: yTitle,
+        style: {
+          color: styles?.color,
+          textAlign: 'center'
+        }
+      },
+      labels: {
+        style: { color: styles?.color },
+        align: 'center',
+        format: yLabelFormat
+      },
+      lineColor: styles?.color
+    },
+    xAxis: {
+      title: {
+        text: xTitle,
+        style: {
+          color: styles?.color,
+          textAlign: 'center'
+        }
+      },
+      categories: xCategories,
+      labels: {
+        style: { color: styles?.color },
+        align: 'right',
+        format: xLabelFormat
+      },
+      lineColor: styles?.color
+    },
+    series: [
+      {
+        data: dataIterator ? data.map<PointOptionsObject>(dataIterator) : data,
+        name: chartTitle,
+        type: 'line'
+      }
+    ],
+    credits: {
+      enabled: false
+    }
+  }
+  return <HighchartsReact highcharts={Highcharts} options={options} />
+}
 
 const Results = ({ data }: { data: ListingResponseType }) => {
+  const { darkmode } = useTypedSelector((state) => state.user)
+  const now = new Date()
+  const xCategories = data.priceTimeData.map((_, hoursToDeduct, arr) =>
+    makeTimeString({
+      date: now,
+      hoursToDeduct: arr.length - hoursToDeduct
+    })
+  )
+
   return (
     <>
       <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
@@ -61,7 +176,80 @@ const Results = ({ data }: { data: ListingResponseType }) => {
           />
         )}
       </div>
+
       <ListingTable data={data} />
+
+      {data.priceTimeData.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="NQ Price Over Time"
+            darkMode={darkmode}
+            data={data.priceTimeData}
+            dataIterator={(val, ind) => [
+              makeTimeString({
+                date: now,
+                hoursToDeduct: data.priceTimeData.length - ind
+              }),
+              val
+            ]}
+            xCategories={xCategories}
+          />
+        </ContentContainer>
+      )}
+
+      {data.priceTimeDataHQ.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="HQ Price Over Time"
+            darkMode={darkmode}
+            data={data.priceTimeDataHQ}
+            dataIterator={(val, ind) => [
+              makeTimeString({
+                date: now,
+                hoursToDeduct: data.priceTimeDataHQ.length - ind
+              }),
+              val
+            ]}
+            xCategories={xCategories}
+          />
+        </ContentContainer>
+      )}
+
+      {data.quantityTimeData.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="NQ Quantity Over Time"
+            darkMode={darkmode}
+            data={data.quantityTimeData}
+            dataIterator={(val, ind) => [
+              makeTimeString({
+                date: now,
+                hoursToDeduct: data.quantityTimeData.length - ind
+              }),
+              val
+            ]}
+            xCategories={xCategories}
+          />
+        </ContentContainer>
+      )}
+
+      {data.quantityTimeDataHQ.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="HQ Quantity Over Time"
+            darkMode={darkmode}
+            data={data.quantityTimeDataHQ}
+            dataIterator={(val, ind) => [
+              makeTimeString({
+                date: now,
+                hoursToDeduct: data.quantityTimeDataHQ.length - ind
+              }),
+              val
+            ]}
+            xCategories={xCategories}
+          />
+        </ContentContainer>
+      )}
     </>
   )
 }

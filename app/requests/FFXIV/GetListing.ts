@@ -26,6 +26,10 @@ export interface ListingResponseType {
   listings: Array<Listing>
   min_price: number
   payload: GetListingProps
+  priceTimeData: Array<number>
+  priceTimeDataHQ: Array<number>
+  quantityTimeData: Array<number>
+  quantityTimeDataHQ: Array<number>
 }
 
 export interface GetListingProps {
@@ -46,7 +50,7 @@ const GetListing: ({
   initialDays,
   endDays
 }) => {
-  return fetch(`${address}/api/listing`, {
+  return fetch(`${address}/api/ffxiv/v2/listing`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
