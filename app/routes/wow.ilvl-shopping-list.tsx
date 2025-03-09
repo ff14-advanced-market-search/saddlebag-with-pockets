@@ -294,6 +294,7 @@ const IlvlShoppingListComponent = () => {
             ))}
           </div>
         </div>
+        <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">Note: If the search button does not appear after you select your item, try refreshing the page.</p>
       </div>
     </SmallFormContainer>
   )
