@@ -182,7 +182,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
       {data.priceTimeData.length > 0 && (
         <ContentContainer>
           <GenericLineChart
-            chartTitle="NQ Price Over Time"
+            chartTitle="Minimum Price Over Time"
             darkMode={darkmode}
             data={data.priceTimeData}
             dataIterator={(val, ind) => [
@@ -200,7 +200,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
       {data.priceTimeDataHQ.length > 0 && (
         <ContentContainer>
           <GenericLineChart
-            chartTitle="HQ Price Over Time"
+            chartTitle="HQ Minimum Price Over Time"
             darkMode={darkmode}
             data={data.priceTimeDataHQ}
             dataIterator={(val, ind) => [
@@ -218,7 +218,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
       {data.quantityTimeData.length > 0 && (
         <ContentContainer>
           <GenericLineChart
-            chartTitle="NQ Quantity Over Time"
+            chartTitle="Total Quantity Over Time"
             darkMode={darkmode}
             data={data.quantityTimeData}
             dataIterator={(val, ind) => [
