@@ -266,7 +266,7 @@ const IlvlExportSearchComponent = () => {
       onClick={handleSubmit}
       error={error}
       loading={isSubmitting}
-      hideSubmitButton={!itemID}
+      disabled={!itemID}
       action={getActionUrl(PAGE_URL, {
         itemId: itemID,
         ilvl: formValues.ilvl.toString(),
@@ -352,6 +352,7 @@ const IlvlExportSearchComponent = () => {
             ))}
           </div>
         </div>
+        <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">Note: If the search button does not appear after you select your item, try refreshing the page.</p>
       </div>
     </SmallFormContainer>
   )
