@@ -26,10 +26,10 @@ export interface ListingResponseType {
   listings: Array<Listing>
   min_price: number
   payload: GetListingProps
-  priceTimeData: Array<number>
-  priceTimeDataHQ: Array<number>
-  quantityTimeData: Array<number>
-  quantityTimeDataHQ: Array<number>
+  priceTimeData: number[]
+  priceTimeDataHQ: number[]
+  quantityTimeData: number[]
+  quantityTimeDataHQ: number[]
 }
 
 export interface GetListingProps {
