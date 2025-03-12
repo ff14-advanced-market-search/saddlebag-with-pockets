@@ -554,10 +554,10 @@ export const validateServerAndRegion = (
 
   if (server) {
     return { server, region }
-  } else {
+  } 
     return {
       server: { name: 'Thrall', id: 3678 },
       region: 'NA' as const
     }
-  }
+  
 }

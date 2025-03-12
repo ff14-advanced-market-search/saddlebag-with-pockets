@@ -33,9 +33,9 @@ function mapValuesToString<DataType>(
 
           if (hasValue !== undefined && hasValue !== null) {
             return `"${hasValue.toString()}"`
-          } else {
+          } 
             return '""'
-          }
+          
         })
         .join(',')
     )

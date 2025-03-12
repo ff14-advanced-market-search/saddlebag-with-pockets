@@ -3,7 +3,7 @@ import type { WOWScanProps } from '~/requests/WoW/WOWScan'
 const getServerIdAndNameFromInput = (selectString: string) => {
   const [id, name] = selectString.split('---')
   if (!id || !name) return
-  else return { id, name }
+  return { id, name }
 }
 
 export const validateWoWScanInput = (
