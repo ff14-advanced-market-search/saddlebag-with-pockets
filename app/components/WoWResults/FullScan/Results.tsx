@@ -18,6 +18,18 @@ const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
   />
 )
 
+/**
+ * Renders a section with tables displaying data about the World of Warcraft items' profitability and stock status.
+ * @example
+ * (data) => results
+ * Renders HTML structure with sections and tables populated with item data
+ * @param {Object} data - WoWScanResponseWithPayload object containing server and item details.
+ * @returns {JSX.Element} JSX element representing the section with items' data tables.
+ * @description
+ *   - Utilizes the `useRef` and `useEffect` hooks to smoothly scroll into view the component after mounting.
+ *   - Prepares options for CSV export of profitable and out of stock item data.
+ *   - Dynamically constructs tables with customizable columns for different item characteristics and sales data.
+ */
 export const Results = ({ data }: { data: WoWScanResponseWithPayload }) => {
   const region = findRegionByWorldId(data.payload.homeRealmId)
   const newOribosLink = getOribosLink(

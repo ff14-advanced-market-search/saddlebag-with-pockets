@@ -45,6 +45,22 @@ const getCodeString = (alertJson: AlertJson, idsToFiler: Array<number>) => {
     .join(',')}\n  ]\n}`
 }
 
+/**
+ * Processes prediction results and renders components based on data.
+ * @example
+ * processPrediction({
+ *   results: sampleResults,
+ *   pageTitle: "Sample Title"
+ * })
+ * Rendered components based on provided sampleResults.
+ * @param {PredictionResponse} results - The prediction results data used for rendering components.
+ * @param {string} pageTitle - The title of the page to be displayed.
+ * @returns {JSX.Element} The rendered page components based on prediction results.
+ * @description
+ *   - Initializes a state for filtered IDs used in result processing.
+ *   - Generates a code string based on alert JSON and filtered IDs.
+ *   - Utilizes chart modal functionality to display chart data upon row selection.
+ */
 export const Results = ({
   results,
   pageTitle
@@ -86,6 +102,21 @@ export const Results = ({
 
 const excludeCols = ['item_id_filter', 'item_id', 'chart_button']
 
+/**
+ * Generates a dynamic table interface to display predictions and manage item alerts.
+ * @example
+ * functionName(predictionResponse, updateFilteredIds, existingFilteredIds, handleRowPress)
+ * returns rendered JSX component for the table
+ * @param {PredictionResponse} results - The data containing item predictions and associated information.
+ * @param {Array<number>} filteredIds - List of item IDs that are excluded from alerts.
+ * @param {Function} setFilteredIds - Function to update the list of excluded item IDs.
+ * @param {Function} onRowPress - Function to handle row interactions, like displaying charts.
+ * @returns {JSX.Element} A rendered React component as a table interface with alert and chart functionalities.
+ * @description
+ *   - Handles creation of columns for a table with custom accessors like checkboxes and buttons.
+ *   - Provides CSV export functionality for the displayed data.
+ *   - Integrates debounced input to filter results and toggleable components for different screen sizes.
+ */
 const PredictionTable = ({
   results,
   setFilteredIds,

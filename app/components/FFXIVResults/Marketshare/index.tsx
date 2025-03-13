@@ -56,6 +56,21 @@ const assertIsSortBy = (
   return sortByOptions.some(({ value }) => value === sortOption)
 }
 
+/**
+ * Renders a dropdown selection input for sorting results by specified criteria.
+ * @example
+ * renderSortResultsDropdown({ label: 'Filter By', onChange: handleSortChange, defaultValue: 'name' })
+ * <div>...</div>
+ * @param {Object} config - Configuration object for dropdown.
+ * @param {string} [config.label='Sort Results By'] - Label for the dropdown.
+ * @param {function} [config.onChange] - Callback function when the dropdown value changes.
+ * @param {MarketshareSortBy} [config.defaultValue='avg'] - The default selected value for the dropdown.
+ * @returns {JSX.Element} Rendered dropdown component allowing users to select how to sort results.
+ * @description
+ *   - If `onChange` is provided, it will be called with the selected option value when the dropdown value changes.
+ *   - The dropdown options are derived from a predefined list of valid sorting criteria.
+ *   - The component styles adapt for both light and dark themes.
+ */
 export const SortBySelect = ({
   label = 'Sort Results By',
   onChange,
@@ -92,6 +107,21 @@ export const SortBySelect = ({
   </div>
 )
 
+/**
+ * Renders a set of toggle buttons based on the provided options.
+ * @example
+ * createToggleButtonGroup({ currentValue: 'option1', onClick: handleClick, options: [{ value: 'option1', label: 'Option 1' }, { value: 'option2', label: 'Option 2' }] })
+ * // A button group is rendered, where clicking on a button changes its selected state.
+ * @param {Object} props - The properties object.
+ * @param {string} props.currentValue - The current selected value.
+ * @param {Function} props.onClick - Callback function to handle button click with the value as parameter.
+ * @param {Array<Object>} props.options - Array of options with a value and a label for each.
+ * @returns {JSX.Element} Returns a JSX element that represents a group of buttons.
+ * @description
+ *   - Buttons are styled differently when selected.
+ *   - Each button is disabled if it represents the current selected value.
+ *   - Layout is responsive with hidden elements for non-md screens.
+ */
 export const TabbedButtons = ({
   currentValue,
   onClick,
@@ -180,6 +210,17 @@ const columnList: Array<ColumnList<MarketshareItem>> = [
   }
 ]
 
+/**
+ * Retrieves sorting options for marketshare based on provided criteria.
+ * @example
+ * sortBy('price')
+ * // Returns columns configured for sorting by 'price'
+ * @param {MarketshareSortBy} sortBy - A string indicating the sorting criteria.
+ * @returns {Array<Object>} Returns an array of column header objects based on the sort criteria.
+ * @description
+ *   - If the specified sortBy value does not match any available options, defaults to showing 'Average Price'.
+ *   - Looks for a corresponding option label from the sortByOptions list to set the second column.
+ */
 const getMobileColumns = (sortBy: MarketshareSortBy) => {
   const sortByName = sortByOptions.find(({ value }) => sortBy === value)
   if (!sortByName) {
@@ -195,6 +236,26 @@ const getMobileColumns = (sortBy: MarketshareSortBy) => {
   ]
 }
 
+/**
+ * Renders a market share overview page with a chart and data tables.
+ * @example
+ * MarketshareComponent({
+ *   data: sampleData,
+ *   pageTitle: "Market Share",
+ *   darkmode: true,
+ *   sortByValue: "category"
+ * })
+ * returns a JSX element containing title, chart, and tables.
+ * @param {MarketshareResult} data - The market share data to display.
+ * @param {string} pageTitle - Optional title for the page.
+ * @param {boolean} darkmode - Indicates if dark mode is enabled.
+ * @param {MarketshareSortBy} sortByValue - Value by which data is sorted.
+ * @returns {JSX.Element} The complete market share overview component.
+ * @description
+ *   - Uses state to manage sorting and filtering.
+ *   - Renders different UI elements based on screen size.
+ *   - Allows exporting data to CSV format.
+ */
 export const Results = ({
   data,
   pageTitle,
@@ -278,6 +339,19 @@ export const Results = ({
   )
 }
 
+/**
+* Transforms market share data into a treemap node structure based on the specified sorting value.
+* @example
+* transformMarketshareData(data, 'sales')
+* // Returns an array of TreemapNode objects
+* @param {MarketshareResult} data - An array of market share data objects to transform.
+* @param {MarketshareSortBy} sortByValue - The property key to sort the market share data by.
+* @returns {Array<TreemapNode>} An array of formatted treemap node objects.
+* @description
+*   - Maps each market share item to a treemap node with attributes like id, value, name, toolTip, and color.
+*   - toolTip provides a string representation of the name and the value, formatted with locale-specific settings.
+*   - Uses a color map (hexMap) based on the item state to assign colors.
+*/
 const getChartData = (
   data: MarketshareResult,
   sortByValue: MarketshareSortBy

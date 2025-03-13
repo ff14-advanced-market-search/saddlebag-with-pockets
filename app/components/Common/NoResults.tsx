@@ -8,6 +8,21 @@ const NoResults: FC<{
   children?: React.ReactNode
   title?: string
   buttonTitle?: string
+/**
+ * Displays a 'no results' message with a search button when no results are found.
+ * @example
+ * NoResults({ href: '/search', children: <p>No items found.</p>, title: 'No matches!', buttonTitle: 'Try Again' })
+ * Returns a styled message box indicating no search results with a retry button.
+ * @param {string} href - URL to redirect when the search button is clicked, optional.
+ * @param {React.ReactNode} children - Child elements to display additional information, optional.
+ * @param {string} title - Title to display when no results are found, defaults to "We didn't get any results!".
+ * @param {string} buttonTitle - Text for the search button, defaults to 'Search again'.
+ * @returns {JSX.Element} A JSX element representing the 'no results' message with possible search button.
+ * @description
+ *   - Applies specific styling for both light and dark modes.
+ *   - Conditionally renders a search button if `href` is provided.
+ *   - Utilizes Tailwind CSS for styling elements and icons.
+ */
 }> = ({
   href,
   children,

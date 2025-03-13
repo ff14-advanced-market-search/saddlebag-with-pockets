@@ -8,6 +8,30 @@ export interface ItemSelected {
 }
 
 const DEFAULT_SELECT_VALUE = 'default'
+/**
+ * Handles item selection and text input changes for item list with tooltip and dynamic select options.
+ * @example
+ * ItemSelectComponent({
+ *   onSelectChange: (value) => console.log(value),
+ *   onTextChange: (text) => console.log(text),
+ *   tooltip: 'Enter item name',
+ *   selectId: 'item-select',
+ *   itemList: [['1', 'Item One'], ['2', 'Item Two']]
+ * })
+ * Returns a rendered React component allowing item selection and filtering by name.
+ * @param {Object} config - An object configuration for the component.
+ * @param {function} [config.onSelectChange] - Callback function called when an item is selected.
+ * @param {function} [config.onTextChange] - Callback function called when text input changes.
+ * @param {string} [config.tooltip] - Tooltip text displayed next to the input label.
+ * @param {string} [config.selectId] - Identifier for the select element.
+ * @param {Array} [config.itemList] - List of items available for selection.
+ * @returns {JSX.Element} A component that facilitates selection and input of item names.
+ * @description
+ *   - Updates component state with the search text and selected item ID.
+ *   - Disables selection if search text is fewer than 2 characters or if no items are found.
+ *   - Provides an option to reset input fields via changing the state.
+ *   - Dynamically populates select options based on search criteria.
+ */
 const ItemSelect = ({
   onSelectChange,
   onTextChange,

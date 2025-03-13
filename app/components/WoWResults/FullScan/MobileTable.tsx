@@ -18,6 +18,32 @@ const parseToLocaleString = (value: any) => {
 
 type Type = Record<string, any>
 
+/**
+ * Renders a sortable and responsive data table optimized for mobile viewing.
+ * @example
+ * MobileTable({
+ *   data: [],
+ *   sortingOrder: [{ id: 'name', desc: false }],
+ *   columnList: [{ header: 'Name', columnId: 'name' }],
+ *   title: 'Sample Table',
+ *   description: 'This is a sample table.',
+ *   rowLabels: [],
+ *   columnSelectOptions: ['name', 'age']
+ * })
+ * @param {Array<Type>} data - The array of data objects to be displayed in the table.
+ * @param {Array<{ id: keyof Type; desc: boolean }>} sortingOrder - A list defining sort order, starting column, and direction (ascending or descending).
+ * @param {Array<{ header: string; columnId: string }>} columnList - The initial set of columns to display in the table.
+ * @param {string} [title] - The title of the table, displayed above the component.
+ * @param {string} [description] - A brief description of the table's content or purpose.
+ * @param {Array<ColumnList<any>>} rowLabels - Metadata and configuration for row data display and access.
+ * @param {Array<string>} columnSelectOptions - Dropdown options for columns, allowing dynamic sorting of table data.
+ * @returns {JSX.Element} Returns a JSX element representing the mobile-optimized table component.
+ * @description
+ *   - The table supports sorting based on numerical column values.
+ *   - Clicking column headers triggers sorting toggle between ascending and descending order.
+ *   - Row data can optionally be formatted with custom accessor functions provided in rowLabels.
+ *   - Displays a modal with detailed information when a row is clicked.
+ */
 function MobileTable({
   data,
   sortingOrder,

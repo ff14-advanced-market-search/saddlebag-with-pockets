@@ -4,6 +4,20 @@ const Modal: React.FC<{
   onClose: () => void
   children: React.ReactNode
   title?: string
+/**
+* Renders a modal component with a title and close functionality.
+* @example
+* ModalComponent({ children: <Content />, onClose: handleClose, title: "Sample Title" })
+* returns JSX for a modal with the specified content and title.
+* @param {React.ReactNode} children - The content to be displayed inside the modal.
+* @param {Function} onClose - Callback function to execute when the modal is closed.
+* @param {string} title - The title of the modal.
+* @returns {JSX.Element} A modal component containing the provided children and title.
+* @description
+*   - The modal traps click events within itself unless the background is clicked, which triggers the close function.
+*   - The render includes two main blocks: the modal content and a transparent overlay for closing the modal.
+*   - The modal's position adapts responsively with tailored style properties for different screen sizes.
+*/
 }> = ({ children, onClose, title }) => {
   return (
     <>

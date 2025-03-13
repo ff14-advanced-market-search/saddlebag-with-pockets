@@ -38,6 +38,18 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
+/**
+* Renders a table displaying stack size sale history for the last 7 days within a region.
+* @example
+* SaleHistoryTable({ data: sampleData })
+* <div>...</div>
+* @param {{ data: Array<StackChance> }} { data } - Array of stack sale data to populate the table.
+* @returns {JSX.Element} A React component that renders the sale history table.
+* @description
+*   - Utilizes React Table for data display, filtering, and sorting.
+*   - Applies a default descending sort on the '% of Sales' column.
+*   - Includes features for exporting the table data as a CSV file.
+*/
 const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')

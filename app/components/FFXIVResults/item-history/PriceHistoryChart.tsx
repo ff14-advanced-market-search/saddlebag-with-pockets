@@ -3,6 +3,20 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import type { PriceHistory } from '~/requests/FFXIV/GetHistory'
 
+/**
+* Creates a price history column chart with custom styles based on dark mode preference
+* @example
+* PriceHistoryChart({ data: [{ sales_amount: 10, price_range: '0-10' }], darkMode: true })
+* // Returns a HighchartsReact component showing a column chart
+* @param {Object} param0 - An object containing the chart options.
+* @param {Array<PriceHistory>} param0.data - The price history data for generating the chart.
+* @param {boolean} param0.darkMode - A boolean indicating if dark mode styling should be applied.
+* @returns {JSX.Element} A HighchartsReact component configured with the provided data and styling.
+* @description
+*   - Applies specific styles to the chart elements based on the current dark mode setting.
+*   - Constructs axis titles and chart series data using mapped values from the input data.
+*   - Includes no chart credits for a cleaner look.
+*/
 export default function PriceHistoryChart({
   data,
   darkMode

@@ -53,6 +53,11 @@ type DataType = Record<
 
 type CSVOptions = Omit<CSVProps<DataType>, 'data'>
 
+/**
+ * Renders a desktop-styled table component with pagination, sorting, filtering, and exporting features.
+ * @example
+ * DesktopTable({
+ *  data: [/* data */
 function DesktopTable({
   data,
   sortingOrder,
@@ -277,6 +282,43 @@ function DesktopTable({
   )
 }
 
+/**
+* Render a responsive table layout for displaying data based on device type.
+* @example
+* renderTable({
+*   data: [...],
+*   sortingOrder: [...],
+*   columnList: [...],
+*   mobileColumnList: [...],
+*   title: "Sample Title",
+*   description: "Sample Description",
+*   columnSelectOptions: [...],
+*   csvOptions: {...},
+*   fitScreen: true,
+*   highlights: {...},
+*   summaryData: [...]
+* })
+* <>
+*   <MobileTable ... />
+*   <DesktopTable ... />
+* </>
+* @param {Array<DataType>} data - Array of data objects to be displayed in the tables.
+* @param {Array<{id: string, desc: boolean}>} sortingOrder - Array representing the order in which columns should be sorted.
+* @param {Array<ColumnList<any>>} columnList - List of column definitions for desktop table view.
+* @param {Array<ColumnList<any>>} mobileColumnList - List of column definitions for mobile table view.
+* @param {string} [title] - Optional title for the tables.
+* @param {string} [description] - Optional description for the tables.
+* @param {Array<string>} columnSelectOptions - List of options for selecting table columns.
+* @param {CSVOptions} [csvOptions] - Optional configuration settings for exporting table data to CSV.
+* @param {boolean} [fitScreen] - Optional flag indicating whether the table should fit the screen width.
+* @param {Record<string, string>} [highlights] - Optional record of styles or classes to highlight specific table cells.
+* @param {Array<{label: string, value: number}>} [summaryData] - Optional array of summary information to be displayed at the end of the tables.
+* @returns {JSX.Element} React fragment containing both MobileTable and DesktopTable components.
+* @description
+*   - Displays a mobile-optimized table when viewed on smaller screens, and a more detailed desktop table for larger screens.
+*   - Both tables are rendered conditionally based on device type.
+*   - It handles sorting, styling, and CSV export functionalities for the desktop table.
+*/
 const SmallTable = ({
   data,
   sortingOrder,

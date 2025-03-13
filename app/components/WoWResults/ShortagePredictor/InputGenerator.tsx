@@ -5,6 +5,20 @@ import Modal from '~/components/form/Modal'
 import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 import { SubmitButton } from '~/components/form/SubmitButton'
 
+/**
+ * Render a component that displays a title, alert data, and provides options to copy data to clipboard or view inputs in a modal.
+ * @example
+ * generateComponent(codeString, pageTitle)
+ * Returns a JSX element displaying the title and buttons for interactions.
+ * @param {string} codeString - The code snippet that is used for clipboard copying and displayed in the modal.
+ * @param {string} pageTitle - The title text to be rendered in the component.
+ * @returns {JSX.Element} A React component structured with content container, title, and controls for copying or viewing data.
+ * @description
+ *   - Manage modal state to determine if the modal displaying 'codeString' is open or closed.
+ *   - Alert user with a message if copying to clipboard fails due to insecure context.
+ *   - Use clipboard API to allow copying 'codeString' through a button click.
+ *   - Provides user feedback via alerts when successfully copied to clipboard.
+ */
 export const InputGenerator = ({
   codeString,
   pageTitle
