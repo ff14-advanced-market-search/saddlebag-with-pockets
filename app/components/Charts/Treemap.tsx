@@ -11,6 +11,21 @@ export interface TreemapNode {
   toolTip: string
 }
 
+/**
+* Renders a Highcharts treemap with customizable styles and options.
+* @example
+* renderTreemap(dataArray, 'Sample Title', true, '#000000')
+* Returns a HighchartsReact component configured with the specified treemap data and appearance.
+* @param {Array<TreemapNode>} chartData - Data for constructing the treemap.
+* @param {string} [title] - Optional title for the treemap.
+* @param {boolean} darkMode - Flag to determine if dark mode styles should be applied.
+* @param {string} [backgroundColor] - Optional background color for the chart.
+* @returns {JSX.Element} React component rendering the Highcharts treemap.
+* @description
+*   - Integrates Highcharts treemap with React via HighchartsReact component.
+*   - Applies different styles based on dark mode flag, affecting both background and text color.
+*   - Ensures immutability of the rendered component through the 'immutable' prop.
+*/
 const TreemapChart = ({
   chartData,
   title,
