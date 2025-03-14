@@ -3,8 +3,7 @@ import type {
   LoaderFunction,
   MetaFunction
 } from '@remix-run/cloudflare'
-import { redirect } from '@remix-run/cloudflare'
-import { json } from '@remix-run/cloudflare'
+import { redirect , json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import overrides from './base.css'
 import {
@@ -18,7 +17,15 @@ import {
   useSubmit
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData ,
+  getSession,
+  DATA_CENTER,
+  FF14_WORLD,
+  commitSession,
+  WOW_REGION,
+  WOW_REALM_ID,
+  WOW_REALM_NAME
+} from '~/sessions'
 import {
   EnsureThemeApplied,
   Theme,
@@ -31,15 +38,6 @@ import { Provider, useDispatch } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
-import {
-  getSession,
-  DATA_CENTER,
-  FF14_WORLD,
-  commitSession,
-  WOW_REGION,
-  WOW_REALM_ID,
-  WOW_REALM_NAME
-} from '~/sessions'
 import { z } from 'zod'
 import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
