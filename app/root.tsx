@@ -3,7 +3,7 @@ import type {
   LoaderFunction,
   MetaFunction
 } from '@remix-run/cloudflare'
-import { redirect , json } from '@remix-run/cloudflare'
+import { redirect, json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import overrides from './base.css'
 import {
@@ -17,7 +17,8 @@ import {
   useSubmit
 } from '@remix-run/react'
 import Sidebar from '~/components/navigation/sidebar'
-import { getUserSessionData ,
+import {
+  getUserSessionData,
   getSession,
   DATA_CENTER,
   FF14_WORLD,
