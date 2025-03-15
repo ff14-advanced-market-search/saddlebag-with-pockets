@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
-import type { WoWServerRegion } from '~/requests/WoW/types'
+import type { WoWServerRegion , WoWServerData } from '~/requests/WoW/types'
 import { RegionRadioGroup } from './RegionRadioGroup'
 import type { ServerSelected } from './WoWServerSelect'
 import ServerSelect from './WoWServerSelect'
 
-import type { WoWServerData } from '~/requests/WoW/types'
 import { findWoWServersIdByName } from '~/utils/WoWServers'
 
 interface Props {
