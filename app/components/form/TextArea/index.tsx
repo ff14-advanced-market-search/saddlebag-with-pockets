@@ -1,6 +1,23 @@
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import { classNames } from '~/utils'
 
+/**
+ * Creates a text area input component with optional label and tooltip.
+ * @example
+ * createTextArea({ label: 'Description', toolTip: 'Enter detailed description', formName: 'desc', placeholder: 'Type here...' })
+ * <div>...</div>
+ * @param {Object} argument - The configuration for the text area component.
+ * @param {string} [argument.label] - The label for the text area.
+ * @param {string} [argument.formName] - The name for the text area form input.
+ * @param {string} [argument.toolTip] - The tooltip information for additional context.
+ * @param {string} [argument.placeholder='Paste your data here...'] - The placeholder text inside the text area.
+ * @returns {JSX.Element} A React component representing a styled text area input with optional label and tooltip.
+ * @description
+ *   - If `toolTip` is provided, a corresponding ToolTip component will be rendered.
+ *   - Utilizes `classNames` utility to conditionally apply styles based on existence of `toolTip`.
+ *   - The component supports dark mode styling.
+ *   - The `textarea` has a default row count set to 5 for optimal text visibility.
+ */
 export const TextArea = ({
   label,
   toolTip,

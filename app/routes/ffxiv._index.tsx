@@ -201,7 +201,9 @@ export default function Index() {
                         {query.name}
                       </h3>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300">{query.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      {query.description}
+                    </p>
                   </div>
                 </a>
               ))}

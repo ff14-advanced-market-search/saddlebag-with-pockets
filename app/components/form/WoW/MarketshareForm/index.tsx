@@ -10,6 +10,28 @@ import {
 } from '../WoWScanForm'
 import type { defaultFormValuesMarketShare } from '~/routes/wow.marketshare'
 
+/**
+ * Renders and manages the market share form for World of Warcraft.
+ * @example
+ * MarketshareForm({
+ *   loaderData: {...},
+ *   handleFormChange: (name, value) => {...},
+ *   inputMap: {...},
+ *   commodityDefault: true
+ * })
+ * <div className="pt-2 md:pt-4">...</div>
+ * @param {Object} params - The parameters for the form.
+ * @param {function} params.handleFormChange - Function to handle form input changes.
+ * @param {Object} params.loaderData - The initial data for the form fields.
+ * @param {Object} params.inputMap - Map for input labels corresponding to form fields.
+ * @param {boolean} [params.commodityDefault] - Optional flag to set default commodity state.
+ * @returns {JSX.Element} A JSX element representing the form.
+ * @description
+ *   - The form contains inputs related to pricing, sales, region, realm, expansions, item details.
+ *   - Utilizes several custom components like InputWithLabel, RegionAndServerSelect, CheckBox, etc.
+ *   - Handles numeric inputs with specific constraints such as min, max values and step increments.
+ *   - Converts certain data for transmission back to the parent component utilizing `handleFormChange`.
+ */
 const MarketShareForm = ({
   loaderData,
   handleFormChange,

@@ -9,6 +9,24 @@ export const numberToLocaleStringWithDecimal = (value: number) => {
   })
 }
 
+/**
+ * Renders a flexbox container displaying two text elements with optional bold styling.
+ * @example
+ * ({
+ *   leftText: "Item Name",
+ *   rightText: 120,
+ *   bold: true
+ * })
+ * // Returns a JSX element displaying "Item Name" and "120" with bold styling.
+ * @param {string | number} leftText - Text content to be displayed on the left side.
+ * @param {string | number} rightText - Text content to be displayed on the right side.
+ * @param {boolean} [bold] - Optional parameter to apply bold styling to the text.
+ * @returns {JSX.Element} A component rendering the supplied `leftText` and `rightText` within a styled div.
+ * @description
+ *   - Utilizes Tailwind CSS classes for styling.
+ *   - Conditional styling applied based on the `bold` parameter.
+ *   - Designed to work within a dark theme environment with `dark:text-gray-200` classes applied.
+ */
 export const TextRow = ({
   leftText,
   rightText,
@@ -27,6 +45,20 @@ export const TextRow = ({
   </div>
 )
 
+/**
+ * Render a visual representation of the market shortage for a World of Warcraft item.
+ * @example
+ * renderShortageItem(item, homeServer, region)
+ * // Returns a JSX element displaying the item shortage details.
+ * @param {WoWShortage} item - The item object containing price levels and sales information.
+ * @param {string} [homeServer] - Optional home server name to customize Oribos links.
+ * @param {WoWServerRegion} region - Server region, defaults to 'NA'.
+ * @returns {JSX.Element} A JSX element representing the market shortage overview for the item.
+ * @description
+ *   - The function calculates and displays shortage costs and suggested resell prices based on item data.
+ *   - It includes links to the Oribos platform with item-specific information.
+ *   - Visual styling is conditionally rendered based on the presence of flip and price reset data.
+ */
 export const WoWShortageItem = (
   item: WoWShortage,
   homeServer?: string,

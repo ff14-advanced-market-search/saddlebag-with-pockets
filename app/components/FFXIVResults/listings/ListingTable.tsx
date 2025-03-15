@@ -39,6 +39,20 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
+/**
+ * Renders a table displaying listing information for FFXIV items.
+ * @example
+ * ListingTable({ data: sampleData })
+ * <table>...</table>
+ * @param {Object} data - The data object containing listings to be displayed.
+ * @param {ListingResponseType} data.listings - An array of listing data.
+ * @returns {JSX.Element} A table element showcasing item listings.
+ * @description
+ *   - Uses custom hooks and a state management system to handle column filters and global filters.
+ *   - Provides functionalities like sorting, filtering, and CSV export within the table.
+ *   - Displays tooltip icons for sortable columns which indicate sort direction.
+ *   - Utilizes FlexRender for dynamic rendering of headers and cells.
+ */
 const ListingTable = ({ data }: { data: ListingResponseType }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')

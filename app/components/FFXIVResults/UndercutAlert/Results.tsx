@@ -10,6 +10,23 @@ import ItemSelect from '~/components/form/select/ItemSelect'
 
 const MAX_HOURS = 24 * 30
 
+/**
+ * Renders a component for managing seller undercut and sales alerts.
+ * @example
+ * ({
+ *   sellerId: 'exampleSellerId',
+ *   homeServer: 'exampleHomeServer'
+ * })
+ * JSX.Element
+ * @param {string} sellerId - The ID of the seller.
+ * @param {string} homeServer - The name of the home server.
+ * @returns {JSX.Element} A React component for rendering undercut and sales alerts.
+ * @description
+ *   - Initializes state to track seller and item alert preferences.
+ *   - Generates JSON data strings used for alerts configuration.
+ *   - Provides interactive UI elements for users to customize alert criteria.
+ *   - Handles copying JSON data to clipboard via a button click.
+ */
 const Results = ({
   sellerId,
   homeServer
@@ -328,6 +345,16 @@ const Results = ({
 export default Results
 
 // TODO: rework both these into 1 component to prevent redundant code
+/**
+ * Returns a JSX snippet for displaying information about using discord bot commands for undercut alerts.
+ * @example
+ * generateJSXSnippet()
+ * <p className=...
+ * @returns {JSX.Element} A JSX paragraph element with informational text and clickable links.
+ * @description
+ *   - The function creates hyperlink elements that open in a new tab with `target="_blank"`.
+ *   - Rel attributes like `noreferrer` are used for security and privacy reasons.
+ */
 export const UndercutDescription = () => (
   <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     Copy this to your clipboard and use it in our{' '}
@@ -349,6 +376,17 @@ export const UndercutDescription = () => (
   </p>
 )
 
+/**
+ * Renders a paragraph element with instructions for using Sales Alerts.
+ * @example
+ * renderSalesAlertInstructions()
+ * Returns a JSX paragraph element with embedded links.
+ * @returns {JSX.Element} A JSX fragment with a formatted paragraph and links.
+ * @description
+ *   - Displays instructions within styled paragraph tags.
+ *   - Includes links to a Discord server and GitHub for additional resources.
+ *   - Informs how to use a specific bot slash command in Discord.
+ */
 export const SalesAlertDescription = () => (
   <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     To use Sales Alerts copy this to your clipboard and use it in our{' '}

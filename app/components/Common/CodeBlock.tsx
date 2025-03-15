@@ -2,6 +2,27 @@ import { SubmitButton } from '../form/SubmitButton'
 import { ContentContainer } from './ContentContainer'
 import { Title } from './Title'
 
+/**
+ * Renders a code block with a title, submit button, and optional children, and handles clipboard copying.
+ * @example
+ * renderCodeBlock({
+ *   codeString: "console.log('Hello World!');",
+ *   title: "Example Code",
+ *   buttonTitle: "Copy",
+ *   onClick: () => alert("Code copied!"),
+ *   children: <p>Some child component</p>
+ * })
+ * @param {string} codeString - The code snippet to be displayed and copied to clipboard.
+ * @param {string} title - The title displayed above the code block.
+ * @param {string} buttonTitle - The title of the button used to copy the code snippet.
+ * @param {function} [onClick] - Optional function to be called after a successful copy to clipboard.
+ * @param {React.ReactNode} [children] - Optional React nodes to be rendered alongside the code.
+ * @returns {JSX.Element} A JSX element containing the rendered code block and associated UI components.
+ * @description
+ *   - Copying to clipboard only attempts when in a secure context.
+ *   - Alerts the user if text copying fails due to lack of HTTPS context.
+ *   - Uses async clipboard API to perform the copy operation.
+ */
 const CodeBlock = ({
   codeString,
   title,

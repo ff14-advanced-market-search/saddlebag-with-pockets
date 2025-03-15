@@ -24,6 +24,26 @@ export interface WoWMarketShareActionResults {
   commodity: boolean
 }
 
+/**
+ * Renders the market share results based on World of Warcraft market data.
+ * @example
+ * renderWoWMarketShare({
+ *   results: { /* WoWMarketShareActionResults object * / },
+ *   pageTitle: "Market Share",
+ *   darkMode: true
+ * });
+ * // Output will be a complex component structure related to market data.
+ * @param {Object} params - The parameters for rendering the component.
+ * @param {WoWMarketShareActionResults} params.results - The market share results data.
+ * @param {string} params.pageTitle - The title of the page.
+ * @param {boolean} params.darkMode - Indicates if dark mode is enabled.
+ * @returns {JSX.Element} A JSX element representing the market share results component.
+ * @description
+ *   - Uses React hooks for state management such as `useState`.
+ *   - Displays charts with market visualization options including a treemap.
+ *   - Provides download options such as CSV and JSON for market data.
+ *   - Supports dynamic filtering and sorting of market data in both desktop and mobile views.
+ */
 const MarketshareResults = ({
   results,
   pageTitle,
@@ -215,6 +235,20 @@ const hexMap = {
   spiking: '#24b406'
 }
 
+/**
+ * Transforms marketplace overview data into a structured treemap node array.
+ * @example
+ * formatTreemapData(marketplaceData, 'state')
+ * // Returns an array of TreemapNode objects
+ * @param {Array<ItemStats>} marketplaceOverviewData - Array of item statistics including market values.
+ * @param {'state' | 'quantityState'} colorValue - Key to determine color mapping, defaults to 'state'.
+ * @returns {Array<TreemapNode>} Array of treemap nodes representing market value data.
+ * @description
+ *   - Aggregates and converts item statistics into a format suitable for treemap visualization.
+ *   - Each item is mapped to a treemap node with properties based on the specified colorValue.
+ *   - Includes a parent node representing the total historic market value.
+ *   - Tooltips are generated to provide formatted historic market values for each item.
+ */
 const getHistoryChartData = (
   marketplaceOverviewData: Array<ItemStats>,
   colorValue: 'state' | 'quantityState' = 'state'
@@ -248,6 +282,19 @@ const getHistoryChartData = (
   return result
 }
 
+/**
+ * Converts marketplace overview data into a format suitable for treemap visualization.
+ * @example
+ * transformData(marketplaceOverviewData, 'state')
+ * // Returns an array of TreemapNode objects representing each item's market value, with colors based on item state.
+ * @param {Array<ItemStats>} marketplaceOverviewData - Array of items containing statistics for the marketplace.
+ * @param {'state' | 'quantityState'} colorValue - Determines the property from ItemStats used for color mapping.
+ * @returns {Array<TreemapNode>} Array of objects representing nodes of a treemap, including item ID, name, and market value.
+ * @description
+ *   - Iterates over each item in marketplaceOverviewData to construct TreemapNode objects.
+ *   - Uses the provided colorValue to select appropriate coloring for nodes.
+ *   - Generates tooltips displaying item name and formatted market value.
+ */
 const getChartData = (
   marketplaceOverviewData: Array<ItemStats>,
   colorValue: 'state' | 'quantityState' = 'state'

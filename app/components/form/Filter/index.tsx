@@ -13,6 +13,24 @@ interface FilterProps {
   onChange?: (selectedValues: number[]) => void
 }
 
+/**
+ * Creates a filter selection component allowing users to select options from a list.
+ * @example
+ * createFilterComponent({ formName: 'jobFilter', defaultValue: [1, 2], options: jobOptions, title: 'Job Selection', onChange: handleFilterChange })
+ * Returns a JSX element for selecting filter options.
+ * @param {Object} props - The properties for the filter component.
+ * @param {string} props.formName - The name attribute for the hidden input element.
+ * @param {number[]} props.defaultValue - The initial values for selected options.
+ * @param {Array} props.options - The available options to display for selection with properties value and label.
+ * @param {string} props.title - The title label for the filter component.
+ * @param {Function} props.onChange - The callback function invoked when selected options change.
+ * @returns {JSX.Element} Returns a JSX layout containing the filter component and its logic.
+ * @description
+ *   - Utilizes controlled React state management to handle user selections.
+ *   - Toggles option selection based on user interaction within a modal.
+ *   - The modal opens and closes based on user actions on the component's button element.
+ *   - Translates selected numeric values into string format for display and hidden input value management.
+ */
 const Filter = ({
   formName,
   defaultValue,

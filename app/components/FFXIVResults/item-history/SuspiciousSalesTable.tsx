@@ -38,6 +38,19 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
+/**
+ * Generates a table to display suspicious sales data with filtering and sorting capabilities.
+ * @example
+ * SuspiciousSalesTable({ data: sampleDirtySales })
+ * // Returns a rendered table component showing sales with columns:
+ * // Price per unit, World, Quality, Retailer, Buyer Name, and Time.
+ * @param {Array<DirtySale>} data - An array of dirty sale data objects to be rendered in the table.
+ * @returns {JSX.Element} A React component featuring a sortable, filterable table of suspicious sales.
+ * @description
+ *   - Utilizes react-table for data management with custom filters, sorting, and column definitions.
+ *   - Column definitions are created using a column helper for accessing specific properties of `DirtySale`.
+ *   - The component includes an effect that sorts the entries by 'pricePerUnit' in descending order.
+ */
 const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
