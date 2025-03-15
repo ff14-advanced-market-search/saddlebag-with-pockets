@@ -3,13 +3,6 @@ import type { FC } from 'react'
 import { Link } from '@remix-run/react'
 import React from 'react'
 
-const NoResults: FC<{
-  href?: string
-  children?: React.ReactNode
-  title?: string
-  buttonTitle?: string
-import React from 'react'
-
 /**
  * Displays a 'no results' message with a search button when no results are found.
  * @example
@@ -30,11 +23,6 @@ const NoResults: FC<{
   children?: React.ReactNode
   title?: string
   buttonTitle?: string
-}> = ({
-  // component implementation
-}) => {
-  // ...
-}
 }> = ({
   href,
   children,

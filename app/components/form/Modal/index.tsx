@@ -1,10 +1,5 @@
 import XMarkIcon from '~/icons/XMarkIcon'
-
-const Modal: React.FC<{
-  onClose: () => void
-  children: React.ReactNode
-  title?: string
-import XMarkIcon from '~/icons/XMarkIcon'
+import React from 'react'
 
 /**
  * Renders a modal component with a title and close functionality.
@@ -24,9 +19,6 @@ const Modal: React.FC<{
   onClose: () => void
   children: React.ReactNode
   title?: string
-}> = ({ children, onClose, title }) => {
-  // Modal component implementation...
-};
 }> = ({ children, onClose, title }) => {
   return (
     <>
