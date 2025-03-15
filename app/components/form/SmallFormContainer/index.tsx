@@ -3,37 +3,37 @@ import React from 'react'
 import { SubmitButton } from '../SubmitButton'
 
 /**
-* Renders a small form container with optional title, description, error message, and a submit button.
-* @example
-* <SmallFormContainer
-*   title="Form Title"
-*   error="Error message"
-*   onClick={handleClick}
-*   loading={true}
-*   disabled={false}
-*   description="This is a description."
-*   buttonTitle="Submit"
-*   hideSubmitButton={false}
-*   action="/submit"
-* >
-*   <ChildComponent />
-* </SmallFormContainer>
-* @param {React.ReactNode} children - The content elements to be wrapped within the form container.
-* @param {string} [title] - An optional title to be displayed at the top of the form.
-* @param {string} [error] - An optional error message displayed within the form.
-* @param {boolean} [loading] - Flag indicating if the button displays a loading state.
-* @param {Function} onClick - Handler for the submit button's click event.
-* @param {boolean} [disabled] - Flag indicating if the submit button is disabled.
-* @param {string | JSX.Element} [description] - Optional description below the title, can be text or a JSX element.
-* @param {string} [buttonTitle="Search"] - Title for the submit button, defaults to 'Search'.
-* @param {boolean} [hideSubmitButton=false] - Flag to determine if the submit button should be hidden.
-* @param {string} [action] - The form action attribute value for form submission path.
-* @returns {JSX.Element} The rendered form component with the specified configuration.
-* @description
-*   - The function wraps children elements within a form container, optionally displaying a title and description.
-*   - Handles the display of error messages and submit button state (loading or disabled).
-*   - Supports hiding the submit button based on props.
-*/
+ * Renders a small form container with optional title, description, error message, and a submit button.
+ * @example
+ * <SmallFormContainer
+ *   title="Form Title"
+ *   error="Error message"
+ *   onClick={handleClick}
+ *   loading={true}
+ *   disabled={false}
+ *   description="This is a description."
+ *   buttonTitle="Submit"
+ *   hideSubmitButton={false}
+ *   action="/submit"
+ * >
+ *   <ChildComponent />
+ * </SmallFormContainer>
+ * @param {React.ReactNode} children - The content elements to be wrapped within the form container.
+ * @param {string} [title] - An optional title to be displayed at the top of the form.
+ * @param {string} [error] - An optional error message displayed within the form.
+ * @param {boolean} [loading] - Flag indicating if the button displays a loading state.
+ * @param {Function} onClick - Handler for the submit button's click event.
+ * @param {boolean} [disabled] - Flag indicating if the submit button is disabled.
+ * @param {string | JSX.Element} [description] - Optional description below the title, can be text or a JSX element.
+ * @param {string} [buttonTitle="Search"] - Title for the submit button, defaults to 'Search'.
+ * @param {boolean} [hideSubmitButton=false] - Flag to determine if the submit button should be hidden.
+ * @param {string} [action] - The form action attribute value for form submission path.
+ * @returns {JSX.Element} The rendered form component with the specified configuration.
+ * @description
+ *   - The function wraps children elements within a form container, optionally displaying a title and description.
+ *   - Handles the display of error messages and submit button state (loading or disabled).
+ *   - Supports hiding the submit button based on props.
+ */
 const SmallFormContainer = ({
   children,
   title,

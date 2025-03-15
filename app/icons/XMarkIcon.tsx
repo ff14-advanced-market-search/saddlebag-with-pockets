@@ -1,15 +1,15 @@
 /**
-* Returns an SVG component representing an "X" mark icon.
-* @example
-* XMarkIcon({ className: 'icon-custom' })
-* <svg xmlns="http://www.w3.org/2000/svg" ...></svg>
-* @param {Object} {className} - An optional CSS class name to apply additional styling.
-* @returns {JSX.Element} SVG element for displaying an "X" mark icon.
-* @description
-*   - The SVG is designed with defined height and width properties: w-6 h-6.
-*   - Stroke and fill properties are configured to allow flexible styling.
-*   - Uses 'currentColor' for stroke to integrate with surrounding text color.
-*/
+ * Returns an SVG component representing an "X" mark icon.
+ * @example
+ * XMarkIcon({ className: 'icon-custom' })
+ * <svg xmlns="http://www.w3.org/2000/svg" ...></svg>
+ * @param {Object} {className} - An optional CSS class name to apply additional styling.
+ * @returns {JSX.Element} SVG element for displaying an "X" mark icon.
+ * @description
+ *   - The SVG is designed with defined height and width properties: w-6 h-6.
+ *   - Stroke and fill properties are configured to allow flexible styling.
+ *   - Uses 'currentColor' for stroke to integrate with surrounding text color.
+ */
 const XMarkIcon = ({ className }: { className?: string }) => {
   return (
     <svg

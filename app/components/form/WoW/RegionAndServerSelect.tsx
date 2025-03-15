@@ -33,7 +33,7 @@ interface Props {
  *   onServerSelectChange: (server) => console.log(server)
  * })
  * Returns JSX elements for region and server selection.
- * @param {Object} props - Describes the properties passed to the component. 
+ * @param {Object} props - Describes the properties passed to the component.
  * @param {string} props.region - Initial region value.
  * @param {string} props.regionTitle - Title for the region selection component.
  * @param {string} props.serverSelectFormName - Form name attribute for the server select input.

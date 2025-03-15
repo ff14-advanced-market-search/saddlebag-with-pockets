@@ -75,20 +75,20 @@ export interface CSVProps<DataType> {
 }
 
 /**
-* Renders a button which triggers the download of data as a CSV file.
-* @example
-* CSVButton({ filename: 'data.csv', data: [{name: 'Alice', age: 30}], columns: ['name', 'age'] })
-* // Triggers download of a CSV file named 'data.csv'
-* @param {Object} props - The properties for configuring the CSV download.
-* @param {string} props.filename - Name of the CSV file to be downloaded.
-* @param {Array<DataType>} props.data - The data to be exported as CSV.
-* @param {Array<string>} props.columns - The headers for the CSV file.
-* @returns {JSX.Element} A submit button component for CSV download.
-* @description
-*   - Uses `createCSVFromData` to transform provided data into a CSV format.
-*   - The button, when clicked, triggers the CSV file download with specified filename.
-*   - Ensure `data` aligns with the `columns` for accurate CSV formatting.
-*/
+ * Renders a button which triggers the download of data as a CSV file.
+ * @example
+ * CSVButton({ filename: 'data.csv', data: [{name: 'Alice', age: 30}], columns: ['name', 'age'] })
+ * // Triggers download of a CSV file named 'data.csv'
+ * @param {Object} props - The properties for configuring the CSV download.
+ * @param {string} props.filename - Name of the CSV file to be downloaded.
+ * @param {Array<DataType>} props.data - The data to be exported as CSV.
+ * @param {Array<string>} props.columns - The headers for the CSV file.
+ * @returns {JSX.Element} A submit button component for CSV download.
+ * @description
+ *   - Uses `createCSVFromData` to transform provided data into a CSV format.
+ *   - The button, when clicked, triggers the CSV file download with specified filename.
+ *   - Ensure `data` aligns with the `columns` for accurate CSV formatting.
+ */
 export default function CSVButton<DataType>({
   filename,
   data,

@@ -27,21 +27,21 @@ export default function PBSListButton<
   const [discount, setDiscount] = useState('30')
 
   /**
-  * Processes and filters market data to calculate discounted prices and formats them as PBS entries.
-  * @example
-  * processAndFormatData([{itemName: "Widget", estimatedRegionMarketValue: 100, avgTSMPrice: 90}], "100", "80", "10")
-  * Returns formatted and discounted PBS entry text.
-  * @param {Array} data - An array of objects, each representing market data for an item.
-  * @param {string|number} minValue - The minimum market value to filter items by.
-  * @param {string|number} minPrice - The minimum price to filter items by.
-  * @param {string|number} discount - The discount percentage to apply to item prices.
-  * @returns {void} Writes the formatted PBS string to the clipboard.
-  * @description
-  *   - Assumes all prices and values are numbers, using 0 as default if parsing fails.
-  *   - Finds market value and price depending on property existence within item objects.
-  *   - Concatenates PBS formatted entries for each valid item to a single string.
-  *   - Copies the concatenated string to the clipboard and closes the dialog.
-  */
+   * Processes and filters market data to calculate discounted prices and formats them as PBS entries.
+   * @example
+   * processAndFormatData([{itemName: "Widget", estimatedRegionMarketValue: 100, avgTSMPrice: 90}], "100", "80", "10")
+   * Returns formatted and discounted PBS entry text.
+   * @param {Array} data - An array of objects, each representing market data for an item.
+   * @param {string|number} minValue - The minimum market value to filter items by.
+   * @param {string|number} minPrice - The minimum price to filter items by.
+   * @param {string|number} discount - The discount percentage to apply to item prices.
+   * @returns {void} Writes the formatted PBS string to the clipboard.
+   * @description
+   *   - Assumes all prices and values are numbers, using 0 as default if parsing fails.
+   *   - Finds market value and price depending on property existence within item objects.
+   *   - Concatenates PBS formatted entries for each valid item to a single string.
+   *   - Copies the concatenated string to the clipboard and closes the dialog.
+   */
   const handleCopy = () => {
     const minMarketValue = parseInt(minValue) || 0
     const minPriceValue = parseInt(minPrice) || 0

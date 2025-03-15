@@ -3,18 +3,18 @@ import type { FC, PropsWithChildren } from 'react'
 type SVGProps = PropsWithChildren<{ className: string }>
 
 /**
-* Returns an SVG component for the FlatWowIcon.
-* @example
-* FlatWowIcon({ className: 'icon-class' })
-* <svg class="icon-class" ...></svg>
-* @param {object} props - The properties for the SVG component.
-* @param {string} props.className - The CSS class name to apply to the SVG element.
-* @returns {JSX.Element} An SVG element representing the FlatWowIcon.
-* @description
-*   - Utilizes currentColor for fill, allowing it to inherit the text color.
-*   - SVG viewBox is set to "0 0 32 32" for a consistent size.
-*   - Uses fillRule and clipRule attributes for rendering complex icon shapes.
-*/
+ * Returns an SVG component for the FlatWowIcon.
+ * @example
+ * FlatWowIcon({ className: 'icon-class' })
+ * <svg class="icon-class" ...></svg>
+ * @param {object} props - The properties for the SVG component.
+ * @param {string} props.className - The CSS class name to apply to the SVG element.
+ * @returns {JSX.Element} An SVG element representing the FlatWowIcon.
+ * @description
+ *   - Utilizes currentColor for fill, allowing it to inherit the text color.
+ *   - SVG viewBox is set to "0 0 32 32" for a consistent size.
+ *   - Uses fillRule and clipRule attributes for rendering complex icon shapes.
+ */
 const FlatWowIcon: FC<SVGProps> = (props) => {
   return (
     <svg

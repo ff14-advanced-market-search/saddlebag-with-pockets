@@ -58,17 +58,17 @@ interface NavbarLinkProps {
 }
 
 /**
-* Creates a Patreon link with a styled anchor element and an icon.
-* @example
-* createPatreonLink()
-* // Returns a JSX element with a link to the Patreon page
-* @param {None} None - This arrow function does not take any parameters.
-* @returns {JSX.Element} A JSX anchor element styled for navigation with a Patreon link.
-* @description
-*   - Opens the link in a new tab using `target="_blank"`.
-*   - Includes `rel="noreferrer"` for security reasons.
-*   - Utilizes CSS classes for styling hover effects and icons.
-*/
+ * Creates a Patreon link with a styled anchor element and an icon.
+ * @example
+ * createPatreonLink()
+ * // Returns a JSX element with a link to the Patreon page
+ * @param {None} None - This arrow function does not take any parameters.
+ * @returns {JSX.Element} A JSX anchor element styled for navigation with a Patreon link.
+ * @description
+ *   - Opens the link in a new tab using `target="_blank"`.
+ *   - Includes `rel="noreferrer"` for security reasons.
+ *   - Utilizes CSS classes for styling hover effects and icons.
+ */
 const PatreonLink = () => (
   <a
     href={'https://www.patreon.com/indopan'}
@@ -87,16 +87,16 @@ const PatreonLink = () => (
 )
 
 /**
-* Creates a link to the GitHub wiki page for guides and tutorials.
-* @example
-* createGitHubLink()
-* // Returns a JSX element representing an anchor tag linking to the wiki
-* @returns {JSX.Element} A JSX element for the GitHub wiki link styled as a sidebar item.
-* @description
-*   - Applies specific styling for hover effects on text and background.
-*   - Uses a GitHub icon with conditional class names for styling adjustments.
-*   - The link opens in a new tab and is a focus element within a navigation sidebar.
-*/
+ * Creates a link to the GitHub wiki page for guides and tutorials.
+ * @example
+ * createGitHubLink()
+ * // Returns a JSX element representing an anchor tag linking to the wiki
+ * @returns {JSX.Element} A JSX element for the GitHub wiki link styled as a sidebar item.
+ * @description
+ *   - Applies specific styling for hover effects on text and background.
+ *   - Uses a GitHub icon with conditional class names for styling adjustments.
+ *   - The link opens in a new tab and is a focus element within a navigation sidebar.
+ */
 const WikiLink = () => (
   <a
     href={
@@ -917,18 +917,18 @@ const ItemSearch = () => {
   const dataFormItemList = isWoW ? wowItemsList : ffxivItemsList
 
   /**
-  * Handles click events on a button to navigate to item data pages.
-  * @example
-  * handleClickEvent(event)
-  * // Prevents navigation if itemName is empty or itemID is not found.
-  * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} event - The click event that triggers this handler.
-  * @returns {void} Does not return any value.
-  * @description
-  *   - Prevents default action if itemName is empty or itemID cannot be retrieved.
-  *   - Uses different API paths based on whether the isWoW boolean is true.
-  *   - Updates navigation path with the item ID before navigating.
-  *   - This function is used in the Sidebar component to fetch and display item data.
-  */
+   * Handles click events on a button to navigate to item data pages.
+   * @example
+   * handleClickEvent(event)
+   * // Prevents navigation if itemName is empty or itemID is not found.
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} event - The click event that triggers this handler.
+   * @returns {void} Does not return any value.
+   * @description
+   *   - Prevents default action if itemName is empty or itemID cannot be retrieved.
+   *   - Uses different API paths based on whether the isWoW boolean is true.
+   *   - Updates navigation path with the item ID before navigating.
+   *   - This function is used in the Sidebar component to fetch and display item data.
+   */
   const handleSearchSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {

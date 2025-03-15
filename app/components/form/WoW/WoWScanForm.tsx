@@ -66,14 +66,14 @@ const expansionOptions = [
 /**
  * Renders a form for searching World of Warcraft server-to-server trades.
  * @example
- * WoWScanForm({ 
- *   onClick: handleClick, 
- *   loading: isLoading, 
- *   error: fetchError, 
- *   onChange: handleChange, 
+ * WoWScanForm({
+ *   onClick: handleClick,
+ *   loading: isLoading,
+ *   error: fetchError,
+ *   onChange: handleChange,
  *   clearErrors: clearFormErrors,
  *   defaultRegion: 'EU',
- *   defaultServer: { name: 'Outland', id: 1234 } 
+ *   defaultServer: { name: 'Outland', id: 1234 }
  * })
  * Returns a JSX element for the form.
  * @param {function} {onClick} - Function to handle form submission.
@@ -432,23 +432,23 @@ interface ItemClassSelectProps {
 }
 
 /**
-* Renders a form for selecting item classes and subclasses with onchange handlers.
-* @example
-* WoWScanForm({
-*   itemClass: 1,
-*   itemSubClass: 2,
-*   onChange: (itemClass, itemSubClass) => console.log(itemClass, itemSubClass)
-* })
-* <div>...</div>
-* @param {number} itemClass - The initial selected item class.
-* @param {number} itemSubClass - The initial selected item subclass.
-* @param {function} onChange - Callback function to handle changes in selection.
-* @returns {JSX.Element} JSX element representing the form.
-* @description
-*   - Resets itemSubClass when itemClass changes.
-*   - Calls onChange with updated values on selection change.
-*   - Provides default values for selections when notifying parent components.
-*/
+ * Renders a form for selecting item classes and subclasses with onchange handlers.
+ * @example
+ * WoWScanForm({
+ *   itemClass: 1,
+ *   itemSubClass: 2,
+ *   onChange: (itemClass, itemSubClass) => console.log(itemClass, itemSubClass)
+ * })
+ * <div>...</div>
+ * @param {number} itemClass - The initial selected item class.
+ * @param {number} itemSubClass - The initial selected item subclass.
+ * @param {function} onChange - Callback function to handle changes in selection.
+ * @returns {JSX.Element} JSX element representing the form.
+ * @description
+ *   - Resets itemSubClass when itemClass changes.
+ *   - Calls onChange with updated values on selection change.
+ *   - Provides default values for selections when notifying parent components.
+ */
 export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
   itemClass,
   itemSubClass,
@@ -514,18 +514,18 @@ interface ItemQualitySelectProps {
 }
 
 /**
-* Renders a select input for choosing item quality in a form.
-* @example
-* renderItemQualitySelect("common", handleQualityChange)
-* // Renders a div containing a label, tooltip, and select element.
-* @param {string} defaultValue - The default value for the select element, indicating the initially selected item quality.
-* @param {function} onChange - Callback function that is triggered when the selected item quality changes.
-* @returns {JSX.Element} JSX for the item quality selection component.
-* @description
-*   - Utilizes a custom Label component for labeling the select input.
-*   - Incorporates a ToolTip component to provide additional information on item quality selection.
-*   - The options within the select input are dynamically generated from an itemQuality array.
-*/
+ * Renders a select input for choosing item quality in a form.
+ * @example
+ * renderItemQualitySelect("common", handleQualityChange)
+ * // Renders a div containing a label, tooltip, and select element.
+ * @param {string} defaultValue - The default value for the select element, indicating the initially selected item quality.
+ * @param {function} onChange - Callback function that is triggered when the selected item quality changes.
+ * @returns {JSX.Element} JSX for the item quality selection component.
+ * @description
+ *   - Utilizes a custom Label component for labeling the select input.
+ *   - Incorporates a ToolTip component to provide additional information on item quality selection.
+ *   - The options within the select input are dynamically generated from an itemQuality array.
+ */
 export const ItemQualitySelect: React.FC<ItemQualitySelectProps> = ({
   defaultValue,
   onChange

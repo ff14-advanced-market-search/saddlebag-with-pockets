@@ -31,18 +31,18 @@ export interface FullScanForm {
 }
 
 /**
-* Converts keys to corresponding filter parameters.
-* @example
-* convertKeyToFilter('sale_amount')
-* // Returns 'min_sales'
-* convertKeyToFilter('unknown_key')
-* // Returns 'unknown_key'
-* @param {string} key - The key to be converted.
-* @returns {string} The corresponding filter parameter or the original key if no match is found.
-* @description
-*   - Maps specific keys to their corresponding filter parameters for a full scan request in FFXIV.
-*   - If the key does not match any case, the function returns the original key, ensuring flexibility for unhandled keys.
-*/
+ * Converts keys to corresponding filter parameters.
+ * @example
+ * convertKeyToFilter('sale_amount')
+ * // Returns 'min_sales'
+ * convertKeyToFilter('unknown_key')
+ * // Returns 'unknown_key'
+ * @param {string} key - The key to be converted.
+ * @returns {string} The corresponding filter parameter or the original key if no match is found.
+ * @description
+ *   - Maps specific keys to their corresponding filter parameters for a full scan request in FFXIV.
+ *   - If the key does not match any case, the function returns the original key, ensuring flexibility for unhandled keys.
+ */
 const keyMap: (key: string) => string = (key) => {
   switch (key) {
     case 'sale_amount':
@@ -69,17 +69,17 @@ const keyMap: (key: string) => string = (key) => {
 }
 
 /**
-* Converts a FullScanForm object into a FullScanInput object with default values.
-* @example
-* input(sampleInput)
-* some sample return value
-* @param {FullScanForm} input - The full scan form object to be converted, optional.
-* @returns {FullScanInput} Returns an object that merges defaults with transformed input values.
-* @description
-*   - Utilizes `Object.entries()` to iterate over the input object.
-*   - Uses `reduce` to build a new object by mapping keys through `keyMap`.
-*   - The result merges with default values, ensuring all required fields are present.
-*/
+ * Converts a FullScanForm object into a FullScanInput object with default values.
+ * @example
+ * input(sampleInput)
+ * some sample return value
+ * @param {FullScanForm} input - The full scan form object to be converted, optional.
+ * @returns {FullScanInput} Returns an object that merges defaults with transformed input values.
+ * @description
+ *   - Utilizes `Object.entries()` to iterate over the input object.
+ *   - Uses `reduce` to build a new object by mapping keys through `keyMap`.
+ *   - The result merges with default values, ensuring all required fields are present.
+ */
 export const formatFullScanInput = (input?: FullScanForm): FullScanInput => {
   if (!input) return defaults
 

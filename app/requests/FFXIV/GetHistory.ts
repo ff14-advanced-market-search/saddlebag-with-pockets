@@ -69,7 +69,7 @@ const GetHistory: ({
   initialDays,
   endDays,
   itemType
-/**
+}: /**
  * Sends a POST request to fetch historical data for a specific item from a server.
  * @example
  * sync({ itemId: 12345, world: 'Cerberus', initialDays: 10, endDays: 5, itemType: 'weapon' })
@@ -82,7 +82,7 @@ const GetHistory: ({
  *   - Supports filtering by item type, defaulting to 'all'.
  *   - Ensures communication uses JSON format and includes a user-agent for identification.
  */
-}: GetHistoryProps) => Promise<Response> = async ({
+GetHistoryProps) => Promise<Response> = async ({
   itemId,
   world,
   initialDays = 7,
