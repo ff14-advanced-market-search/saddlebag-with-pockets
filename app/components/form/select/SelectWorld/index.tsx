@@ -17,6 +17,20 @@ type SelectWorldProps = PropsWithoutRef<{
   onChange?: (ffxiv: { world: string; data_center: string }) => void
 }>
 
+/**
+ * React component to manage Data Center and World selection within specified session data.
+ * @example
+ * const element = ComponentName(navigation, sessionData, onChange);
+ * element; // React component rendering selection fields.
+ * @param {object} navigation - Provides navigation state used to determine form submission status.
+ * @param {object} sessionData - Contains initial data for data center and world.
+ * @param {function} onChange - Callback function triggered on data center/world change.
+ * @returns {JSX.Element} A React element containing data center and world selection fields.
+ * @description
+ *   - Ensures the world list is updated whenever the data center changes.
+ *   - Handles selection changes and invokes onChange callback with updated values.
+ *   - Renders fields disabled during form submission process.
+ */
 export const SelectDCandWorld: FC<SelectWorldProps> = ({
   navigation,
   sessionData,

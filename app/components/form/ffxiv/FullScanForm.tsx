@@ -12,6 +12,37 @@ import {
 
 const PAGE_URL = '/queries/full-scan'
 
+/**
+ * Handles the form state and submission logic for a full scan form in FFXIV.
+ * @example
+ * FullScanForm({
+ *   loading: false,
+ *   onClick: handleClick,
+ *   defaultHours: 24,
+ *   defaultSalesAmount: 5
+ * })
+ * // Returns a React component with form controls and a submission button.
+ * @param {boolean} loading - Indicator whether the form submission is in progress.
+ * @param {function} onClick - Function to handle the form submission.
+ * @param {number} [defaultHours=24] - Default number of hours to search over.
+ * @param {number} [defaultSalesAmount=5] - Default number of sales in the specified time period.
+ * @param {number} [defaultROI=50] - Default desired return on investment percentage.
+ * @param {number} [defaultMinimumStackSize=1] - Default desired minimum stack size for items.
+ * @param {number} [defaultMinimumProfitAmount=10000] - Default desired minimum profit amount in gil.
+ * @param {number} [defaultPricePerUnit=10000] - Default desired average price per unit in gil.
+ * @param {Array<number>} [defaultFilters=[0]] - Default filters to be applied.
+ * @param {boolean} [defaultHQChecked=false] - Default state for HQ only checkbox.
+ * @param {boolean} [defaultRegionWideChecked=false] - Default state for region-wide search checkbox.
+ * @param {boolean} [defaultIncludeVendorChecked=false] - Default state for including vendor prices checkbox.
+ * @param {boolean} [defaultOutOfStockChecked=true] - Default state for including out of stock items checkbox.
+ * @param {string} [error] - Error message to be displayed if any.
+ * @returns {JSX.Element} React component containing the full scan form with configured state.
+ * @description
+ *   - Uses state management to control form input fields and checkboxes.
+ *   - Provides advanced search options that can be toggled for extended functionality.
+ *   - Handles form validation for numerical input fields ensuring they are within acceptable ranges.
+ *   - Displays error messages within the UI if the error parameter is passed.
+ */
 const FullScanForm = ({
   loading,
   onClick,

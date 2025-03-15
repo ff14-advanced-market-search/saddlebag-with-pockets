@@ -2,6 +2,20 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
+/**
+ * Renders an SVG icon with customizable class name.
+ * @example
+ * renderIcon({ className: 'icon-large' })
+ * // Returns an SVG element with the specified class
+ * @param {Object} props - The properties object.
+ * @param {string} props.className - A string that specifies the class name for styling the SVG.
+ * @returns {JSX.Element} A JSX element representing an SVG icon.
+ * @description
+ *   - The function utilizes SVG for scalable vector graphics rendering in React components.
+ *   - The 'currentColor' value for stroke and fill allows the icon to inherit its color from CSS.
+ *   - Role 'img' and namespace 'http://www.w3.org/2000/svg' ensure accessibility and proper rendering.
+ *   - The viewBox provides a coordinate system and aspect ratio for the SVG container.
+ */
 const KofiIcon: FC<SVGProps> = (props) => {
   return (
     <svg

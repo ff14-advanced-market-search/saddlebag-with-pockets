@@ -5,6 +5,21 @@ interface CheckboxRowProps {
   title: string
 }
 
+/**
+ * Renders a checkbox row with a label based on provided props.
+ * @example
+ * CheckboxRow({ selected: true, onChange: () => {}, id: "1", title: "Label" })
+ * // Returns a JSX element rendering a checkbox with a label
+ * @param {boolean} selected - Boolean indicating if the checkbox is checked.
+ * @param {function} onChange - Handler function to execute on checkbox change.
+ * @param {string} id - Unique identifier used for the checkbox element and label.
+ * @param {string} title - The text to display as the label next to the checkbox.
+ * @returns {JSX.Element} Returns a JSX element representing a checkbox and label row.
+ * @description
+ *   - Applies styling for both dark and light themes.
+ *   - The checkbox's id is composed using both title and id for uniqueness.
+ *   - Adopts flex styling to maintain structural consistency.
+ */
 export const CheckBoxRow = ({
   selected,
   onChange,

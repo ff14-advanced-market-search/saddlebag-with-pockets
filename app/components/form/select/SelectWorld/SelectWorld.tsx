@@ -8,6 +8,26 @@ type SelectWorldProps = {
   world: string | undefined
   worlds: GetDeepProp<WorldsList, 'name'> | undefined
 }
+/**
+ * Renders a dropdown selection for choosing a world or server based on data center status.
+ * @example
+ * SelectWorld({
+ *   onSelect: handleWorldSelect,
+ *   world: 'ExampleWorld',
+ *   dataCenter: true,
+ *   worlds: worldList
+ * })
+ * // Renders a <select> element for world selection.
+ * @param {function} onSelect - Callback function to handle the selection of a world.
+ * @param {string} world - Current selected world or server name.
+ * @param {boolean} dataCenter - Boolean representing if the data center is selected.
+ * @param {Array} worlds - List of available worlds or servers.
+ * @returns {JSX.Element} A fully rendered <select> element for selecting a world.
+ * @description
+ *   - The dropdown disables options and displays default messages if no world or data center is selected.
+ *   - Ensures the dropdown is appropriately themed with focus and border styles for both light and dark modes.
+ *   - Relies on external function `onSelect` for handling changes to the selected world.
+ */
 export const SelectWorld: FC<SelectWorldProps> = ({
   onSelect,
   world,

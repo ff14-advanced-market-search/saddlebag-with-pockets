@@ -69,6 +69,19 @@ const GetHistory: ({
   initialDays,
   endDays,
   itemType
+/**
+ * Sends a POST request to fetch historical data for a specific item from a server.
+ * @example
+ * sync({ itemId: 12345, world: 'Cerberus', initialDays: 10, endDays: 5, itemType: 'weapon' })
+ * Promise(response)
+ * @param {Object} {itemId, world, initialDays, endDays, itemType} - Configuration object containing parameters for the request.
+ * @returns {Promise} A promise representing the completion of the fetch operation, containing the server response.
+ * @description
+ *   - Utilizes a specified home server to gather item history data.
+ *   - Allows customization of the time range with `initialDays` and `endDays`.
+ *   - Supports filtering by item type, defaulting to 'all'.
+ *   - Ensures communication uses JSON format and includes a user-agent for identification.
+ */
 }: GetHistoryProps) => Promise<Response> = async ({
   itemId,
   world,

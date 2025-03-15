@@ -6,6 +6,18 @@ export interface PBSListProps<DataType> {
   data: Array<DataType>
 }
 
+/**
+ * Renders a button that opens a dialog to copy a formatted PBS list based on specified market and price filters.
+ * @example
+ * PBSListButton({ data: [{ itemID: 1, itemName: 'Sample Item' }] })
+ * // Opens a dialog allowing configuration and copying of the PBS list.
+ * @param {Object} { data } - The data object containing items with itemID and itemName.
+ * @returns {JSX.Element} The button and dialog component for PBS list manipulation.
+ * @description
+ *   - Filters the input data based on configurable minimum market values and discounts.
+ *   - Formats selected data entries according to a PBS specification.
+ *   - Copies the generated PBS list to the clipboard when confirmed.
+ */
 export default function PBSListButton<
   DataType extends { itemID: number; itemName: string }
 >({ data }: PBSListProps<DataType>) {
@@ -14,6 +26,22 @@ export default function PBSListButton<
   const [minPrice, setMinPrice] = useState('1000')
   const [discount, setDiscount] = useState('30')
 
+  /**
+  * Processes and filters market data to calculate discounted prices and formats them as PBS entries.
+  * @example
+  * processAndFormatData([{itemName: "Widget", estimatedRegionMarketValue: 100, avgTSMPrice: 90}], "100", "80", "10")
+  * Returns formatted and discounted PBS entry text.
+  * @param {Array} data - An array of objects, each representing market data for an item.
+  * @param {string|number} minValue - The minimum market value to filter items by.
+  * @param {string|number} minPrice - The minimum price to filter items by.
+  * @param {string|number} discount - The discount percentage to apply to item prices.
+  * @returns {void} Writes the formatted PBS string to the clipboard.
+  * @description
+  *   - Assumes all prices and values are numbers, using 0 as default if parsing fails.
+  *   - Finds market value and price depending on property existence within item objects.
+  *   - Concatenates PBS formatted entries for each valid item to a single string.
+  *   - Copies the concatenated string to the clipboard and closes the dialog.
+  */
   const handleCopy = () => {
     const minMarketValue = parseInt(minValue) || 0
     const minPriceValue = parseInt(minPrice) || 0

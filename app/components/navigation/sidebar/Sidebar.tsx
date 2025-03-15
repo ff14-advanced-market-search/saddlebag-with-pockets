@@ -57,6 +57,18 @@ interface NavbarLinkProps {
   external?: boolean
 }
 
+/**
+* Creates a Patreon link with a styled anchor element and an icon.
+* @example
+* createPatreonLink()
+* // Returns a JSX element with a link to the Patreon page
+* @param {None} None - This arrow function does not take any parameters.
+* @returns {JSX.Element} A JSX anchor element styled for navigation with a Patreon link.
+* @description
+*   - Opens the link in a new tab using `target="_blank"`.
+*   - Includes `rel="noreferrer"` for security reasons.
+*   - Utilizes CSS classes for styling hover effects and icons.
+*/
 const PatreonLink = () => (
   <a
     href={'https://www.patreon.com/indopan'}
@@ -74,6 +86,17 @@ const PatreonLink = () => (
   </a>
 )
 
+/**
+* Creates a link to the GitHub wiki page for guides and tutorials.
+* @example
+* createGitHubLink()
+* // Returns a JSX element representing an anchor tag linking to the wiki
+* @returns {JSX.Element} A JSX element for the GitHub wiki link styled as a sidebar item.
+* @description
+*   - Applies specific styling for hover effects on text and background.
+*   - Uses a GitHub icon with conditional class names for styling adjustments.
+*   - The link opens in a new tab and is a focus element within a navigation sidebar.
+*/
 const WikiLink = () => (
   <a
     href={
@@ -93,6 +116,17 @@ const WikiLink = () => (
   </a>
 )
 
+/**
+ * Renders a styled anchor link component directing users to join a Discord server
+ * @example
+ * createDiscordLinkComponent()
+ * <a>...</a>
+ * @returns {JSX.Element} Styled anchor link directing the user to a Discord server.
+ * @description
+ *   - The link opens in a new tab and ensures security by using 'noreferrer'.
+ *   - Utilizes Tailwind CSS classes for styling.
+ *   - Includes a Discord icon that changes color on hover.
+ */
 const DiscordLink = () => (
   <a
     href={'https://discord.gg/saddlebag-exchange-973380473281724476'}
@@ -429,6 +463,21 @@ const _userNavigation = [
   }
 ]
 
+/**
+ * A collapsible sidebar component that toggles open and closed states.
+ * @example
+ * Sidebar({ title: 'My Title', children: <div>Content</div>, openOverride: true })
+ * // Returns a sidebar component that is open due to the openOverride being true.
+ * @param {string} title - The title displayed at the top of the sidebar button.
+ * @param {React.ReactNode} children - The content displayed inside the sidebar when open.
+ * @param {boolean} openOverride - Forces the sidebar open when true.
+ * @returns {JSX.Element} The sidebar component which can be toggled open or closed.
+ * @description
+ *   - Uses React's useState hook to manage the sidebar's open state.
+ *   - Changes sidebar appearance using conditional styling based on the open state.
+ *   - Implements useEffect to synchronize sidebar's state with openOverride prop.
+ *   - Includes animations for open and close actions using CSS classes.
+ */
 const ButtonAccordian = ({
   title,
   children,
@@ -471,6 +520,20 @@ const ButtonAccordian = ({
   )
 }
 
+/**
+ * Creates a responsive sidebar menu for both mobile and desktop views.
+ * @example
+ * SidebarComponent({ children: <Content />, data: { site_name: 'MySite' } })
+ * // Returns a sidebar navigation component for different screen sizes
+ * @param {Object} children - The content to be rendered inside the main layout when sidebar is closed.
+ * @param {Object} data - An object containing site-specific metadata such as site_name, world, realm etc.
+ * @returns {JSX.Element} A complete navigation component including sidebar and top navigation menu.
+ * @description
+ *   - Utilizes `useState` to manage mobile sidebar visibility.
+ *   - Leverages `useMatches` to determine active navigation items based on current URL.
+ *   - Incorporates animated transitions for mobile sidebar.
+ *   - Contains multiple navigation links for different purposes like Patreon, Wiki, and Discord.
+ */
 export const Sidebar: FC<Props> = ({ children, data }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const matches = useMatches()
@@ -824,6 +887,22 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
   )
 }
 
+/**
+ * Sidebar component for managing item search in specified games.
+ * @example
+ * Sidebar()
+ * <div>
+ *   <button type="button">...</button>
+ *   <div>...</div>
+ * </div>
+ * @param {none} - This function does not take any parameters directly.
+ * @returns {JSX.Element} The rendered sidebar component containing search functionality.
+ * @description
+ *   - Utilizes React hooks such as useState and useEffect for managing component state and lifecycle.
+ *   - Offers item search functionality between two games: Final Fantasy XIV and World of Warcraft.
+ *   - Navigates to specific item data based on search results using the `useNavigate` hook.
+ *   - Toggles search input form visibility through a button click.
+ */
 const ItemSearch = () => {
   const transition = useNavigation()
   const [itemName, setItemName] = useState('')
@@ -837,6 +916,19 @@ const ItemSearch = () => {
 
   const dataFormItemList = isWoW ? wowItemsList : ffxivItemsList
 
+  /**
+  * Handles click events on a button to navigate to item data pages.
+  * @example
+  * handleClickEvent(event)
+  * // Prevents navigation if itemName is empty or itemID is not found.
+  * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} event - The click event that triggers this handler.
+  * @returns {void} Does not return any value.
+  * @description
+  *   - Prevents default action if itemName is empty or itemID cannot be retrieved.
+  *   - Uses different API paths based on whether the isWoW boolean is true.
+  *   - Updates navigation path with the item ID before navigating.
+  *   - This function is used in the Sidebar component to fetch and display item data.
+  */
   const handleSearchSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {

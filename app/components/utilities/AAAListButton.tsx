@@ -6,6 +6,19 @@ export interface AAAListProps<DataType> {
   data: Array<DataType>
 }
 
+/**
+* Creates a button that allows users to configure and copy a list of discounted prices based on specific criteria.
+* @example
+* AAAListButton({ data: itemsArray })
+* No explicit return; performs clipboard operation.
+* @param {AAAListProps<DataType extends { itemID: number }>} { data } - The data to be processed, where each item has an itemID.
+* @returns {void} No return value; the function triggers side-effects such as setting local state and writing to the clipboard.
+* @description
+*   - Utilizes a modal dialog to collect user input for filtering and computing discounted prices.
+*   - Parses and validates numeric input values for minimum market value, price, and discount percentage.
+*   - Writes a JSON string of filtered and processed data to the clipboard.
+*   - Uses state to manage the dialog visibility and stores user input values.
+*/
 export default function AAAListButton<DataType extends { itemID: number }>({
   data
 }: AAAListProps<DataType>) {
@@ -14,6 +27,22 @@ export default function AAAListButton<DataType extends { itemID: number }>({
   const [minPrice, setMinPrice] = useState('1000')
   const [discount, setDiscount] = useState('30')
 
+  /**
+  * Formats data and writes it to the clipboard after applying discount and filtering conditions.
+  * @example
+  * formatDataAndCopyToClipboard(data, minValue, minPrice, discount)
+  * // Sample return value depends on the data processed.
+  * @param {Array} data - Array of objects where each object represents an item with pricing and value information.
+  * @param {string|number} minValue - Minimum market value for filtering items.
+  * @param {string|number} minPrice - Minimum price value for filtering items.
+  * @param {string|number} discount - Discount percentage to apply to the filtered items.
+  * @returns {void} This function does not return any value.
+  * @description
+  *   - Parses string inputs into integers to allow tolerant numeric filtering.
+  *   - Uses either 'estimatedRegionMarketValue' or 'historicMarketValue' for evaluating market value.
+  *   - Uses either 'avgTSMPrice' or 'historicPrice' for evaluating price.
+  *   - The processed data is copied to the clipboard in JSON format.
+  */
   const handleCopy = () => {
     const minMarketValue = parseInt(minValue) || 0
     const minPriceValue = parseInt(minPrice) || 0

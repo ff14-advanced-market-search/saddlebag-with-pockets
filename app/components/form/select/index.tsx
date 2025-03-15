@@ -1,6 +1,21 @@
 import { classNames } from '~/utils'
 import Label from '../Label'
 
+/**
+ * Renders a styled select dropdown component with optional title label.
+ * @example
+ * SelectComponent({ title: "Choose option", options: [{ label: "Option 1", value: 1 }, { label: "Option 2", value: 2 }], id: "select-id", className: "custom-class" })
+ * Returns JSX element containing select dropdown with specified options and styling.
+ * @param {string} title - Optional title for the select dropdown.
+ * @param {Array<{ label: string; value: string | number }>} options - Array of objects representing the options for the dropdown.
+ * @param {string} id - Optional id for the select element to facilitate form handling.
+ * @param {string} className - Additional CSS class names for the select element styling.
+ * @returns {JSX.Element} JSX element representing a select dropdown with optional styling and title.
+ * @description
+ *   - Utilizes Tailwind CSS classes for styling the select element and its container.
+ *   - Dynamically adds a title label if the `title` parameter is provided.
+ *   - Merges custom class names with default styling using a utility function.
+ */
 const Select = ({
   title,
   options,

@@ -1,3 +1,15 @@
+/**
+ * Render a World of Warcraft themed SVG icon.
+ * @example
+ * WoWIcon()
+ * <svg height="48" width="48" viewBox="0 0 48 48">...</svg>
+ * @returns {JSX.Element} SVG icon component structured with various gradients and paths.
+ * @description
+ * - Utilizes multiple gradients to enhance the visual appeal of the icon.
+ * - The icon is composed of complex layered SVG elements to replicate a World of Warcraft look.
+ * - The SVG is built with specific dimensions of 48x48.
+ * - Ensures consistent rendering across browsers by specifying XML namespaces.
+ */
 export default function WoWIcon() {
   return (
     <svg
