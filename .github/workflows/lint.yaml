@@ -6,13 +6,13 @@ on: push
 jobs:
   "Prettier":
     runs-on: ubuntu-latest
-    container: node:16
+    container: node:20
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install dependencies
         run: yarn install
       - name: Get prettier version
-        run:  yarn run prettier --version
+        run: yarn run prettier --version
       - name: Run prettier check
         run: yarn run prettier:check
