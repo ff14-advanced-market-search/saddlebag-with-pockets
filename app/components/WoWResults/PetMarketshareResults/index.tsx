@@ -38,10 +38,10 @@ const assertIsSortBy = (
 /**
  * Renders the pet market share results page including tables, charts, and export options.
  * @example
- * renderPetMarketshareResults({ 
- *   results: actionResults, 
- *   pageTitle: "Pet Market Share", 
- *   darkMode: true 
+ * renderPetMarketshareResults({
+ *   results: actionResults,
+ *   pageTitle: "Pet Market Share",
+ *   darkMode: true
  * })
  * // Returns a React component for displaying pet market statistics.
  * @param {Object} results - Contains data and sorting options for rendering the market share information.
@@ -185,18 +185,18 @@ const PetMarketshareResults = ({
 export default PetMarketshareResults
 
 /**
-* Transforms an array of pet market share items into an array of treemap nodes suitable for visualization.
-* @example
-* dataToTreemapNodes(data, 'price')
-* Returns an array of treemap nodes with properties id, value, name, toolTip, and color.
-* @param {Array<PetMarketshareItem>} data - The input array containing market share items.
-* @param {PetMarketshareSortBy} sortByValue - The property name used to determine node values.
-* @returns {Array<TreemapNode>} An array of treemap nodes constructed from the input data.
-* @description
-*   - Constructs tooltip information by concatenating itemName with a formatted value.
-*   - Maps location identifiers to colors using a predefined hex color mapping.
-*   - Assumes data input contains necessary properties: itemID, sortByValue, itemName, and state.
-*/
+ * Transforms an array of pet market share items into an array of treemap nodes suitable for visualization.
+ * @example
+ * dataToTreemapNodes(data, 'price')
+ * Returns an array of treemap nodes with properties id, value, name, toolTip, and color.
+ * @param {Array<PetMarketshareItem>} data - The input array containing market share items.
+ * @param {PetMarketshareSortBy} sortByValue - The property name used to determine node values.
+ * @returns {Array<TreemapNode>} An array of treemap nodes constructed from the input data.
+ * @description
+ *   - Constructs tooltip information by concatenating itemName with a formatted value.
+ *   - Maps location identifiers to colors using a predefined hex color mapping.
+ *   - Assumes data input contains necessary properties: itemID, sortByValue, itemName, and state.
+ */
 const getChartData = (
   data: Array<PetMarketshareItem>,
   sortByValue: PetMarketshareSortBy

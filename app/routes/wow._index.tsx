@@ -64,7 +64,8 @@ const recommendedQueries = [
   },
   {
     name: 'Item Export Search',
-    description: 'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
+    description:
+      'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
     Icon: DocumentSearchIcon,
     href: '/wow/export-search'
   },
@@ -76,7 +77,8 @@ const recommendedQueries = [
   },
   {
     name: 'Raid BOE Item Level Export Search',
-    description: 'Find the best servers to sell raid BOE items with specific stats and item levels.',
+    description:
+      'Find the best servers to sell raid BOE items with specific stats and item levels.',
     Icon: DocumentSearchIcon,
     href: '/wow/ilvl-export-search'
   },
@@ -228,7 +230,9 @@ export default function Index() {
                         {query.name}
                       </h3>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300">{query.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      {query.description}
+                    </p>
                   </div>
                 </a>
               ))}

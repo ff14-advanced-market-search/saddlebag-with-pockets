@@ -346,15 +346,15 @@ export default Results
 
 // TODO: rework both these into 1 component to prevent redundant code
 /**
-* Returns a JSX snippet for displaying information about using discord bot commands for undercut alerts.
-* @example
-* generateJSXSnippet()
-* <p className=...
-* @returns {JSX.Element} A JSX paragraph element with informational text and clickable links.
-* @description
-*   - The function creates hyperlink elements that open in a new tab with `target="_blank"`.
-*   - Rel attributes like `noreferrer` are used for security and privacy reasons.
-*/
+ * Returns a JSX snippet for displaying information about using discord bot commands for undercut alerts.
+ * @example
+ * generateJSXSnippet()
+ * <p className=...
+ * @returns {JSX.Element} A JSX paragraph element with informational text and clickable links.
+ * @description
+ *   - The function creates hyperlink elements that open in a new tab with `target="_blank"`.
+ *   - Rel attributes like `noreferrer` are used for security and privacy reasons.
+ */
 export const UndercutDescription = () => (
   <p className="italic text-sm text-grey-500 mb-1 dark:text-gray-300">
     Copy this to your clipboard and use it in our{' '}

@@ -271,9 +271,8 @@ export const Results = ({
   const [globalFilter, setGlobalFilter] = useState('')
   const chartData = getChartData(data, sortBy)
 
-  const sortByTitleValue = sortByOptions.find(
-    ({ value }) => value === sortBy
-  )?.label
+  const sortByTitleValue = sortByOptions.find(({ value }) => value === sortBy)
+    ?.label
 
   const chartTitle = sortByTitleValue
     ? `Marketshare Overview - ${sortByTitleValue}`
@@ -340,18 +339,18 @@ export const Results = ({
 }
 
 /**
-* Transforms market share data into a treemap node structure based on the specified sorting value.
-* @example
-* transformMarketshareData(data, 'sales')
-* // Returns an array of TreemapNode objects
-* @param {MarketshareResult} data - An array of market share data objects to transform.
-* @param {MarketshareSortBy} sortByValue - The property key to sort the market share data by.
-* @returns {Array<TreemapNode>} An array of formatted treemap node objects.
-* @description
-*   - Maps each market share item to a treemap node with attributes like id, value, name, toolTip, and color.
-*   - toolTip provides a string representation of the name and the value, formatted with locale-specific settings.
-*   - Uses a color map (hexMap) based on the item state to assign colors.
-*/
+ * Transforms market share data into a treemap node structure based on the specified sorting value.
+ * @example
+ * transformMarketshareData(data, 'sales')
+ * // Returns an array of TreemapNode objects
+ * @param {MarketshareResult} data - An array of market share data objects to transform.
+ * @param {MarketshareSortBy} sortByValue - The property key to sort the market share data by.
+ * @returns {Array<TreemapNode>} An array of formatted treemap node objects.
+ * @description
+ *   - Maps each market share item to a treemap node with attributes like id, value, name, toolTip, and color.
+ *   - toolTip provides a string representation of the name and the value, formatted with locale-specific settings.
+ *   - Uses a color map (hexMap) based on the item state to assign colors.
+ */
 const getChartData = (
   data: MarketshareResult,
   sortByValue: MarketshareSortBy

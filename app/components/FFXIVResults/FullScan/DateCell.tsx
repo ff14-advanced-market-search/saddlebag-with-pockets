@@ -42,20 +42,20 @@ const getTimeFromNow = (dateFrom: Date, nowDate: Date) => {
 }
 
 /**
-* Renders a flexible date display component with hover effects.
-* @example
-* renderDateCell({ date: '2023-10-01T12:00:00Z', fixRight: true })
-* // Returns a React component with formatted date display.
-* @param {Object} config - Configuration object for rendering the date cell.
-* @param {string|number} config.date - The date to display, provided as a string or timestamp.
-* @param {boolean} [config.fixRight] - Optional flag to align tooltip to the right.
-* @returns {JSX.Element} A React component containing the date display with hover feature.
-* @description
-*   - Utilizes a flexbox layout to position elements.
-*   - Displays relative time text which updates based on the current date.
-*   - Shows full date in a tooltip that appears on hover.
-*   - The tooltip position can adjust based on the `fixRight` flag.
-*/
+ * Renders a flexible date display component with hover effects.
+ * @example
+ * renderDateCell({ date: '2023-10-01T12:00:00Z', fixRight: true })
+ * // Returns a React component with formatted date display.
+ * @param {Object} config - Configuration object for rendering the date cell.
+ * @param {string|number} config.date - The date to display, provided as a string or timestamp.
+ * @param {boolean} [config.fixRight] - Optional flag to align tooltip to the right.
+ * @returns {JSX.Element} A React component containing the date display with hover feature.
+ * @description
+ *   - Utilizes a flexbox layout to position elements.
+ *   - Displays relative time text which updates based on the current date.
+ *   - Shows full date in a tooltip that appears on hover.
+ *   - The tooltip position can adjust based on the `fixRight` flag.
+ */
 const DateCell = ({
   date,
   fixRight

@@ -9,22 +9,22 @@ interface Props {
 }
 
 /**
-* Renders a styled tile link component, which includes an icon, title, and description, with support for both external and internal links.
-* @example
-* TileLink({ name: 'Home', description: 'Go to homepage', href: '/', Icon: HomeIcon, external: false })
-* // Returns a JSX.Element with link pointing to homepage
-* @param {Object} props - The properties object.
-* @param {string} props.name - The name to be displayed on the tile.
-* @param {string} props.description - A brief description to be shown on the tile.
-* @param {string} props.href - The URL or path that the tile links to.
-* @param {React.ComponentType} [props.Icon] - An optional icon component to be displayed on the tile.
-* @param {boolean} props.external - Flag indicating whether the link is external or internal.
-* @returns {JSX.Element} A JSX element representing the tile link.
-* @description
-*   - The component uses conditional rendering to differentiate between external and internal links.
-*   - Applies a gradient border effect on hover for visual feedback.
-*   - Utilizes Tailwind CSS classes for styling and theme adaptation.
-*/
+ * Renders a styled tile link component, which includes an icon, title, and description, with support for both external and internal links.
+ * @example
+ * TileLink({ name: 'Home', description: 'Go to homepage', href: '/', Icon: HomeIcon, external: false })
+ * // Returns a JSX.Element with link pointing to homepage
+ * @param {Object} props - The properties object.
+ * @param {string} props.name - The name to be displayed on the tile.
+ * @param {string} props.description - A brief description to be shown on the tile.
+ * @param {string} props.href - The URL or path that the tile links to.
+ * @param {React.ComponentType} [props.Icon] - An optional icon component to be displayed on the tile.
+ * @param {boolean} props.external - Flag indicating whether the link is external or internal.
+ * @returns {JSX.Element} A JSX element representing the tile link.
+ * @description
+ *   - The component uses conditional rendering to differentiate between external and internal links.
+ *   - Applies a gradient border effect on hover for visual feedback.
+ *   - Utilizes Tailwind CSS classes for styling and theme adaptation.
+ */
 export default function TileLink({
   name,
   description,

@@ -1,16 +1,16 @@
 import { InformationCircleIcon } from '@heroicons/react/solid'
 
 /**
-* Renders a banner component with a message and a link to Discord.
-* @example
-* Banner()
-* <div class="rounded-md bg-blue-50 p-4 m-4 border-2 border-blue-100 dark:bg-blue-900 dark:border-blue-900">...</div>
-* @returns {JSX.Element} A styled JSX element representing a banner with information and a link to Discord.
-* @description
-*   - Utilizes Tailwind CSS classes for responsive styling.
-*   - Adjusts styles based on light and dark themes.
-*   - Includes an icon for visual emphasis using the InformationCircleIcon component.
-*/
+ * Renders a banner component with a message and a link to Discord.
+ * @example
+ * Banner()
+ * <div class="rounded-md bg-blue-50 p-4 m-4 border-2 border-blue-100 dark:bg-blue-900 dark:border-blue-900">...</div>
+ * @returns {JSX.Element} A styled JSX element representing a banner with information and a link to Discord.
+ * @description
+ *   - Utilizes Tailwind CSS classes for responsive styling.
+ *   - Adjusts styles based on light and dark themes.
+ *   - Includes an icon for visual emphasis using the InformationCircleIcon component.
+ */
 export default function Banner() {
   return (
     <div className="rounded-md bg-blue-50 p-4 m-4 border-2 border-blue-100 dark:bg-blue-900 dark:border-blue-900">
