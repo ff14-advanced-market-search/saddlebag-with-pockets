@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import type { WoWServerRegion , WoWServerData } from '~/requests/WoW/types'
+import type { WoWServerRegion, WoWServerData } from '~/requests/WoW/types'
 import { RegionRadioGroup } from './RegionRadioGroup'
 import type { ServerSelected } from './WoWServerSelect'
 import ServerSelect from './WoWServerSelect'

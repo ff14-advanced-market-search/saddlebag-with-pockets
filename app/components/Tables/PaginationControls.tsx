@@ -1,4 +1,9 @@
-import { ChevronLeftIcon , ChevronDoubleLeftIcon , ChevronRightIcon , ChevronDoubleRightIcon } from '@heroicons/react/solid'
+import {
+  ChevronLeftIcon,
+  ChevronDoubleLeftIcon,
+  ChevronRightIcon,
+  ChevronDoubleRightIcon
+} from '@heroicons/react/solid'
 import type { Table } from '@tanstack/react-table'
 import { classNames } from '~/utils'
 
