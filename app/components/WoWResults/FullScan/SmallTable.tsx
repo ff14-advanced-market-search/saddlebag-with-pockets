@@ -57,7 +57,13 @@ type CSVOptions = Omit<CSVProps<DataType>, 'data'>
  * Renders a desktop-styled table component with pagination, sorting, filtering, and exporting features.
  * @example
  * DesktopTable({
- *  data: [/* data */
+ *  data: [{ id: '1', name: 'Item 1' }],
+ *  sortingOrder: [{ id: 'name', desc: false }],
+ *  columnList: [{ columnId: 'name', header: 'Name' }],
+ *  title: 'Items Table',
+ *  description: 'Table displaying items'
+ * })
+ */
 function DesktopTable({
   data,
   sortingOrder,

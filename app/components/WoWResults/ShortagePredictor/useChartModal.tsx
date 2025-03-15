@@ -6,8 +6,11 @@ import Modal from '../../form/Modal'
 /**
 * Generates a chart modal for price and quantity visualization.
 * @example
-* functionName().ChartModal()
-* some sample return value
+* const { ChartModal, setChartData } = useChartModal();
+* // Later in component:
+* setChartData({ p: [10, 20, 30], q: [5, 10, 15], title: 'Item Sales' });
+* // Render the modal:
+* <ChartModal />
 * @param {Object|null} chartData - An object with arrays of numbers for 'p' and 'q', and a string 'title', or null to reset.
 * @returns {Object} Returns an object containing the ChartModal component and a function to set chart data.
 * @description
@@ -25,15 +28,15 @@ export const useChartModal = () => {
   /**
   * Renders a modal with a price and quantity line chart if chart data is available
   * @example
-  * renderChartModal()
-  * Returns a modal with a line chart displaying price and quantity information
-  * @param {Object} chartData - Object containing title, prices, and quantities for the chart.
+  * <ChartModal />
+  * // Returns a modal with a line chart displaying price and quantity information if chartData exists
   * @returns {JSX.Element|null} A modal containing the price and quantity chart, or null if no chart data.
   * @description
   *   - Utilizes a `Modal` component to display the chart.
   *   - The chart is rendered using the `PriceQuantityLineChart` component.
   *   - The modal title is "Price & Quantity" which reflects the data contents.
   *   - Ensures responsiveness with different minimum width classes.
+  *   - Uses chartData from the parent hook's state.
   */
   const ChartModal = () => {
     return chartData ? (

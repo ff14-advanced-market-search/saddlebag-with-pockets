@@ -105,7 +105,7 @@ const excludeCols = ['item_id_filter', 'item_id', 'chart_button']
 /**
  * Generates a dynamic table interface to display predictions and manage item alerts.
  * @example
- * functionName(predictionResponse, updateFilteredIds, existingFilteredIds, handleRowPress)
+ * PredictionTable(predictionResponse, updateFilteredIds, existingFilteredIds, handleRowPress)
  * returns rendered JSX component for the table
  * @param {PredictionResponse} results - The data containing item predictions and associated information.
  * @param {Array<number>} filteredIds - List of item IDs that are excluded from alerts.

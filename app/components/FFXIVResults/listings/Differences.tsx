@@ -1,7 +1,7 @@
 /**
  * Renders a styled component displaying a title and formatted amount.
  * @example
- * renderDifference({diffTitle: 'Price Difference', diffAmount: 300, className: 'highlight'})
+ * Differences({diffTitle: 'Price Difference', diffAmount: 300, className: 'highlight'})
  * // Returns a div element with a displayed title and amount
  * @param {string} diffTitle - The title to be displayed in the component.
  * @param {number|string} diffAmount - The amount to be displayed, formatted with commas.

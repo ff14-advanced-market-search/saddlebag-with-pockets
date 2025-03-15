@@ -21,8 +21,8 @@ const woWHeadLink = ({ row }: { row: { itemID: number } }) => (
 /**
  * Renders a section with tables displaying data about the World of Warcraft items' profitability and stock status.
  * @example
- * (data) => results
- * Renders HTML structure with sections and tables populated with item data
+ * <Results data={scanResponseData} />
+ * // Renders HTML structure with sections and tables populated with item data
  * @param {Object} data - WoWScanResponseWithPayload object containing server and item details.
  * @returns {JSX.Element} JSX element representing the section with items' data tables.
  * @description

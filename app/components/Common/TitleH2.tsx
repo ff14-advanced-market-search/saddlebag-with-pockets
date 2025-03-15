@@ -3,7 +3,7 @@ import { classNames } from '~/utils'
 /**
  * Renders a styled H2 component with a given title and optional additional class names.
  * @example
- * renderTitle({ title: "Sample Title", className: "custom-class" })
+ * <TitleH2 title="Sample Title" className="custom-class" />
  * // Returns: <h2> element with "Sample Title" text and specified classes
  * @param {Object} params - Object containing parameters for function.
  * @param {string} params.title - The title text to be displayed within the H2 element.

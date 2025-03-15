@@ -12,7 +12,7 @@ interface SelectInputOption {
 /**
  * Filters and sorts a list of options based on string matching.
  * @example
- * filterOptions('ap', [{label: 'Apple'}, {label: 'Grape'}, {label: 'Apricot'}])
+ getItems('ap', [{label: 'Apple'}, {label: 'Grape'}, {label: 'Apricot'}])
  * // returns [{label: 'Apple'}, {label: 'Apricot'}]
  * @param {string} string - The string used to filter the list of options.
  * @param {Array<SelectInputOption>} list - The list of options to be filtered.

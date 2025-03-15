@@ -24,6 +24,7 @@ import type { defaultFormValuesMarketShare } from '~/routes/wow.marketshare'
  * @param {function} params.handleFormChange - Function to handle form input changes.
  * @param {Object} params.loaderData - The initial data for the form fields.
  * @param {Object} params.inputMap - Map for input labels corresponding to form fields.
+ * @param {boolean} [params.commodityDefault] - Optional flag to set default commodity state.
  * @returns {JSX.Element} A JSX element representing the form.
  * @description
  *   - The form contains inputs related to pricing, sales, region, realm, expansions, item details.

@@ -8,6 +8,8 @@ const NoResults: FC<{
   children?: React.ReactNode
   title?: string
   buttonTitle?: string
+import React from 'react'
+
 /**
  * Displays a 'no results' message with a search button when no results are found.
  * @example
@@ -23,6 +25,16 @@ const NoResults: FC<{
  *   - Conditionally renders a search button if `href` is provided.
  *   - Utilizes Tailwind CSS for styling elements and icons.
  */
+const NoResults: FC<{
+  href?: string
+  children?: React.ReactNode
+  title?: string
+  buttonTitle?: string
+}> = ({
+  // component implementation
+}) => {
+  // ...
+}
 }> = ({
   href,
   children,

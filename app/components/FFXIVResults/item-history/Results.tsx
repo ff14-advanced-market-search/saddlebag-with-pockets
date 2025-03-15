@@ -10,7 +10,7 @@ import ServerDistributionChart from './ServerDistributionChart'
 /**
  * Renders a visual summary of pricing and sales data for a region in FFXIV.
  * @example
- * renderFFXIVResults({data, darkMode})
+ * Results({data, darkMode})
  * <div>...</div>
  * @param {Object} data - An object containing various historical data about sales and pricing in the region.
  * @param {boolean} darkMode - A boolean flag indicating if dark mode is enabled, affecting component styling.
