@@ -1,0 +1,38 @@
+name: Fix
+ 
+on:
+  pull_request:
+    branches: master
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    if: github.actor != 'github-actions[bot]'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn run prettier
+      - run: git add .
+
+      - uses: qoomon/actions--create-commit@v1
+        id: actions--create-commit
+        with:
+          message: |
+            🎨 yarn run prettier
+
+            [dependabot skip]
+          skip-empty: true
+
+      - if: ${{ steps.actions--create-commit.outputs.commit }}
+        run: git push

@@ -125,6 +125,19 @@ const isLastInTable = (
   return columnIndex === columnOrder.length - 1
 }
 
+/**
+ * Generates and manages a responsive table with filter, sort, and drag functionalities.
+ * @example
+ * ({ rows }: ResultTableProps)
+ * <ResponsiveTableComponent />
+ * @param {ResultTableProps} rows - The data rows to populate the table.
+ * @returns {JSX.Element} A component displaying a filterable, sortable, and draggable table.
+ * @description
+ *   - Integrates a custom column helper to format each column with specific headers and cell values.
+ *   - Employs react-table for advanced table management, including filtering and sorting.
+ *   - Utilizes device-specific touch or HTML5 drag-and-drop backends based on user environment.
+ *   - Implements side effects such as smooth scrolling and column order reset functionality.
+ */
 const Results = ({ rows }: ResultTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')

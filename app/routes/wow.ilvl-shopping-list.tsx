@@ -3,7 +3,11 @@ import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { ListItem, IlvlWoWListResponse, ItemStat } from '~/requests/WoW/IlvlShoppingList'
+import type {
+  ListItem,
+  IlvlWoWListResponse,
+  ItemStat
+} from '~/requests/WoW/IlvlShoppingList'
 import IlvlShoppingList from '~/requests/WoW/IlvlShoppingList'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
@@ -44,7 +48,10 @@ export const meta: MetaFunction = () => {
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list' }
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list'
+  }
 ]
 
 const PAGE_URL = '/wow/ilvl-shopping-list'
@@ -53,7 +60,7 @@ const AVAILABLE_STATS: ItemStat[] = [
   'Socket',
   'Leech',
   'Speed',
-  'Avoidance',
+  'Avoidance'
   // 'Haste',
   // 'Crit',
   // 'Mastery',
@@ -153,7 +160,12 @@ type LoaderResponseType =
   | { exception: string }
   | (IlvlWoWListResponse & {
       sortby: string
-      formValues: { itemID: number; maxPurchasePrice: number; desiredMinIlvl: number; desiredStats: ItemStat[] }
+      formValues: {
+        itemID: number
+        maxPurchasePrice: number
+        desiredMinIlvl: number
+        desiredStats: ItemStat[]
+      }
     })
 
 type ActionResponseType =
@@ -175,13 +187,17 @@ const IlvlShoppingListComponent = () => {
 
   const isSubmitting = transition.state === 'submitting'
 
-  const error = result && 'exception' in result ? result.exception as string : undefined
+  const error =
+    result && 'exception' in result ? (result.exception as string) : undefined
 
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')
-    const maxPurchasePriceFromUrl = searchParams.get('maxPurchasePrice') || '10000000'
+    const maxPurchasePriceFromUrl =
+      searchParams.get('maxPurchasePrice') || '10000000'
     const desiredMinIlvlFromUrl = searchParams.get('desiredMinIlvl') || '610'
-    const desiredStatsFromUrl = searchParams.getAll('desiredStats') as ItemStat[]
+    const desiredStatsFromUrl = searchParams.getAll(
+      'desiredStats'
+    ) as ItemStat[]
 
     if (itemIdFromUrl) {
       const itemNameFromId = getItemNameById(itemIdFromUrl, wowItems)
@@ -209,10 +225,8 @@ const IlvlShoppingListComponent = () => {
   }
 
   const handleStatToggle = (stat: ItemStat) => {
-    setSelectedStats(prev => 
-      prev.includes(stat) 
-        ? prev.filter(s => s !== stat)
-        : [...prev, stat]
+    setSelectedStats((prev) =>
+      prev.includes(stat) ? prev.filter((s) => s !== stat) : [...prev, stat]
     )
   }
 
@@ -277,9 +291,11 @@ const IlvlShoppingListComponent = () => {
           onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
         />
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium dark:text-gray-200">Desired Stats</label>
+          <label className="text-sm font-medium dark:text-gray-200">
+            Desired Stats
+          </label>
           <div className="flex flex-wrap gap-2">
-            {AVAILABLE_STATS.map(stat => (
+            {AVAILABLE_STATS.map((stat) => (
               <label key={stat} className="flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -294,23 +310,25 @@ const IlvlShoppingListComponent = () => {
             ))}
           </div>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">Note: If the search button does not appear after you select your item, try refreshing the page.</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
+          Note: If the search button does not appear after you select your item,
+          try refreshing the page.
+        </p>
       </div>
     </SmallFormContainer>
   )
 
-  const hasSearched = actionData !== undefined || (loaderData && 'data' in loaderData)
+  const hasSearched =
+    actionData !== undefined || (loaderData && 'data' in loaderData)
 
   if (hasSearched) {
     if (error) {
-      return (
-        <PageWrapper>
-          {renderForm()}
-        </PageWrapper>
-      )
+      return <PageWrapper>{renderForm()}</PageWrapper>
     } else if (result && 'data' in result && Array.isArray(result.data)) {
       if (result.data.length > 0) {
-        return <Results {...(result as IlvlWoWListResponse & { sortby: string })} />
+        return (
+          <Results {...(result as IlvlWoWListResponse & { sortby: string })} />
+        )
       } else {
         return <NoResults href={PAGE_URL} />
       }
@@ -319,11 +337,7 @@ const IlvlShoppingListComponent = () => {
     }
   }
 
-  return (
-    <PageWrapper>
-      {renderForm()}
-    </PageWrapper>
-  )
+  return <PageWrapper>{renderForm()}</PageWrapper>
 }
 
 export default IlvlShoppingListComponent
@@ -346,7 +360,14 @@ const Results = ({
         sortingOrder={[{ desc: false, id: sortby }]}
         columnList={columnList}
         mobileColumnList={mobileColumnList}
-        columnSelectOptions={['price', 'quantity', 'realmNames', 'ilvl', 'stats', 'link']}
+        columnSelectOptions={[
+          'price',
+          'quantity',
+          'realmNames',
+          'ilvl',
+          'stats',
+          'link'
+        ]}
         data={data as any}
       />
     </PageWrapper>
@@ -394,4 +415,4 @@ const mobileColumnList: Array<ColumnList<ListItem>> = [
       </p>
     )
   }
-] 
+]

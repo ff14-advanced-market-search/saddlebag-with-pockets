@@ -2,6 +2,20 @@ const getPluralEnding = (value: number) => {
   return value !== 1 ? 's' : ''
 }
 
+/**
+ * Converts a past Date object to a human-readable relative time string.
+ * @example
+ * calculateTimeDifference(new Date('2023-09-15T12:00:00Z'), new Date('2023-09-16T15:34:00Z'))
+ * '1 day ago'
+ * @param {Date} dateFrom - The past date to compare against the current date.
+ * @param {Date} nowDate - The current date.
+ * @returns {string} A string indicating time passed since 'dateFrom' relative to 'nowDate'.
+ * @description
+ *   - Outputs are rounded to the nearest integer for seconds, minutes, hours, and days.
+ *   - Returns relative time in the largest time unit that is less than the current time difference.
+ *   - Supports singular and plural units (e.g., '1 minute' vs '2 minutes').
+ *   - The function assumes 'nowDate' is always on or after 'dateFrom'.
+ */
 const getTimeFromNow = (dateFrom: Date, nowDate: Date) => {
   const timeDiffSec = Math.round(
     (nowDate.getTime() - dateFrom.getTime()) / 1000
@@ -27,6 +41,21 @@ const getTimeFromNow = (dateFrom: Date, nowDate: Date) => {
   return `${timeDiffDays} day${getPluralEnding(timeDiffDays)} ago`
 }
 
+/**
+ * Renders a flexible date display component with hover effects.
+ * @example
+ * renderDateCell({ date: '2023-10-01T12:00:00Z', fixRight: true })
+ * // Returns a React component with formatted date display.
+ * @param {Object} config - Configuration object for rendering the date cell.
+ * @param {string|number} config.date - The date to display, provided as a string or timestamp.
+ * @param {boolean} [config.fixRight] - Optional flag to align tooltip to the right.
+ * @returns {JSX.Element} A React component containing the date display with hover feature.
+ * @description
+ *   - Utilizes a flexbox layout to position elements.
+ *   - Displays relative time text which updates based on the current date.
+ *   - Shows full date in a tooltip that appears on hover.
+ *   - The tooltip position can adjust based on the `fixRight` flag.
+ */
 const DateCell = ({
   date,
   fixRight

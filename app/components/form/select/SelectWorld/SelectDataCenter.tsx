@@ -6,6 +6,23 @@ type SelectDataCenterProps = {
   onSelect: (data_center: string) => void
   dataCenter: string | undefined
 }
+/**
+ * Renders a select dropdown for choosing a data center based on region.
+ * @example
+ * dataCenterSelect({
+ *   onSelect: handleSelection,
+ *   dataCenter: 'RegionName'
+ * })
+ * // Returns a JSX select component with available data centers
+ * @param {function} onSelect - Callback function to handle selection changes.
+ * @param {string} dataCenter - Default selected data center name or placeholder if undefined.
+ * @returns {JSX.Element} A React component representing a dropdown selection list for data centers.
+ * @description
+ *   - Uses the `Array.from` method to extract region information.
+ *   - Applies styling classes for responsive design and theme adaptability.
+ *   - Loads data centers dynamically based on the selected region.
+ *   - Includes an option for cases where no specific data center is preselected.
+ */
 export const SelectDataCenter: FC<SelectDataCenterProps> = ({
   onSelect,
   dataCenter

@@ -7,6 +7,19 @@ import SalesByHourChart from './SalesByHourChart'
 import SuspiciousSaleTable from './SuspiciousSalesTable'
 import ServerDistributionChart from './ServerDistributionChart'
 
+/**
+ * Renders a visual summary of pricing and sales data for a region in FFXIV.
+ * @example
+ * Results({data, darkMode})
+ * <div>...</div>
+ * @param {Object} data - An object containing various historical data about sales and pricing in the region.
+ * @param {boolean} darkMode - A boolean flag indicating if dark mode is enabled, affecting component styling.
+ * @returns {JSX.Element} A DIV element structure presenting several charts and tables encapsulating region-wide sales data.
+ * @description
+ *   - Utilizes multiple sub-components like TitleH2, Differences, PriceHistoryChart, ServerDistributionChart, SaleHistoryTable, SalesByHourChart, SuspiciousSaleTable to display diverse data aspects.
+ *   - Applies different styling based on the darkMode boolean.
+ *   - Displays placeholder text in italic if no data is available to show in certain charts or tables.
+ */
 const Results = ({
   data,
   darkMode

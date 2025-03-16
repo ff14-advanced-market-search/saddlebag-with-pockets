@@ -35,6 +35,24 @@ const assertIsSortBy = (
   return sortByOptions.some(({ value }) => value === sortOption)
 }
 
+/**
+ * Renders the pet market share results page including tables, charts, and export options.
+ * @example
+ * renderPetMarketshareResults({
+ *   results: actionResults,
+ *   pageTitle: "Pet Market Share",
+ *   darkMode: true
+ * })
+ * // Returns a React component for displaying pet market statistics.
+ * @param {Object} results - Contains data and sorting options for rendering the market share information.
+ * @param {string} pageTitle - Title to be displayed at the top of the page.
+ * @param {boolean} darkMode - Indicates whether the dark mode theme is applied.
+ * @returns {JSX.Element} The rendered pet market share page component.
+ * @description
+ *   - Utilizes a variety of external links for detailed item information.
+ *   - Provides a toggle between desktop and mobile view components.
+ *   - Implements CSV, JSON, AAA, and PBS data export functionalities.
+ */
 const PetMarketshareResults = ({
   results,
   pageTitle,
@@ -166,6 +184,19 @@ const PetMarketshareResults = ({
 
 export default PetMarketshareResults
 
+/**
+ * Transforms an array of pet market share items into an array of treemap nodes suitable for visualization.
+ * @example
+ * dataToTreemapNodes(data, 'price')
+ * Returns an array of treemap nodes with properties id, value, name, toolTip, and color.
+ * @param {Array<PetMarketshareItem>} data - The input array containing market share items.
+ * @param {PetMarketshareSortBy} sortByValue - The property name used to determine node values.
+ * @returns {Array<TreemapNode>} An array of treemap nodes constructed from the input data.
+ * @description
+ *   - Constructs tooltip information by concatenating itemName with a formatted value.
+ *   - Maps location identifiers to colors using a predefined hex color mapping.
+ *   - Assumes data input contains necessary properties: itemID, sortByValue, itemName, and state.
+ */
 const getChartData = (
   data: Array<PetMarketshareItem>,
   sortByValue: PetMarketshareSortBy
@@ -179,6 +210,18 @@ const getChartData = (
   }))
 }
 
+/**
+ * Retrieves the column headers for sorting pet market share results by the specified criteria.
+ * @example
+ * getColumnHeadersBySort(PetMarketshareSortBy.NAME, optionsArray)
+ * // Returns an array of objects, each containing 'columnId' and 'header' keys.
+ * @param {PetMarketshareSortBy} sortBy - Criteria to sort pet market share data by.
+ * @param {Array<{ label: string; value: string }>} options - Available sorting options with labels and corresponding values.
+ * @returns {Array<{ columnId: string; header: string }>} Array of column header objects for displaying the results.
+ * @description
+ *   - If the provided sort criteria is not found within the given options, defaults to 'itemName' and 'avgTSMPrice'.
+ *   - Enables dynamic generation of column headers based on sort criteria input.
+ */
 const getMobileColumns = (
   sortBy: PetMarketshareSortBy,
   options: Array<{ label: string; value: string }>

@@ -1,4 +1,9 @@
-import { ChevronLeftIcon , ChevronDoubleLeftIcon , ChevronRightIcon , ChevronDoubleRightIcon } from '@heroicons/react/solid'
+import {
+  ChevronLeftIcon,
+  ChevronDoubleLeftIcon,
+  ChevronRightIcon,
+  ChevronDoubleRightIcon
+} from '@heroicons/react/solid'
 import type { Table } from '@tanstack/react-table'
 import { classNames } from '~/utils'
 
@@ -10,6 +15,18 @@ const getDisabledClassNames = (isDisabled: boolean) =>
     isDisabled ? 'cursor-not-allowed' : ''
   )
 
+/**
+ * Creates pagination controls for navigating through table pages.
+ * @example
+ * paginationControls({ table: myTable })
+ * Outputs the pagination controls component with buttons and page size selection.
+ * @param {Table<any>} table - The table instance with pagination state and methods.
+ * @returns {JSX.Element} JSX element representing pagination controls.
+ * @description
+ *   - Initializes disabled states for previous and next page buttons based on current page status.
+ *   - Adjusts pagination state by changing page size and navigating between pages.
+ *   - Displays current page number and total pages.
+ */
 const PaginationControls = ({ table }: { table: Table<any> }) => {
   const previousDisabled = !table.getCanPreviousPage()
   const nextDisabled = !table.getCanNextPage()

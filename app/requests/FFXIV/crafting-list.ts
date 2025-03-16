@@ -96,6 +96,32 @@ export interface CraftingListRepsonse {
   missing_materials_ids: Array<number>
 }
 
+/**
+ * Sends a POST request with crafting data to a specified API endpoint
+ * @example
+ * sync({
+ *   homeServer: 'serverName',
+ *   costMetric: 'cost',
+ *   revenueMetric: 'revenue',
+ *   salesPerWeek: 100,
+ *   medianSalePrice: 250,
+ *   maxMaterialCost: 600,
+ *   jobs: ['job1', 'job2'],
+ *   filters: ['filter1'],
+ *   stars: 3,
+ *   lvlLowerLimit: 50,
+ *   lvlUpperLimit: 70,
+ *   yields: 5,
+ *   hideExpertRecipes: false
+ * })
+ * @param {Object} CraftingListInput - The input parameters for the crafting list request.
+ * @returns {Promise<Response>} The response from the server.
+ * @description
+ *   - Uses the `fetch` API to send a POST request.
+ *   - The function asynchronously sends data and returns a promise.
+ *   - Ensures the request body is formatted as JSON string.
+ *   - Requires a pre-configured server address and user agent.
+ */
 const CraftingList = async ({
   homeServer,
   costMetric,

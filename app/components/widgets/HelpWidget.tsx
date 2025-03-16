@@ -1,5 +1,16 @@
 import { useState } from 'react'
 
+/**
+ * Displays a help widget that provides an option to join a Discord server for support.
+ * @example
+ * HelpWidget()
+ * <div>...</div>
+ * @returns {JSX.Element} A JSX element representing the help widget.
+ * @description
+ *   - Provides a toggleable UI element on the page for users to seek help.
+ *   - Opens a new tab directing to a Discord server when prompted.
+ *   - The widget is styled to switch between light and dark themes.
+ */
 export default function HelpWidget() {
   const [isOpen, setIsOpen] = useState(false)
 

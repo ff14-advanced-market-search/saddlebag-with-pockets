@@ -108,6 +108,18 @@ const GenericLineChart = ({
   return <HighchartsReact highcharts={Highcharts} options={options} />
 }
 
+/**
+ * Renders price and time differences as well as a listing table based on the data provided.
+ * @example
+ * renderDifferences({ data: listingResponse })
+ * // Returns a JSX element displaying price differences and listing table
+ * @param {Object} data - An object containing listing and difference data.
+ * @returns {JSX.Element} JSX to display the information.
+ * @description
+ *   - Displays the average and median price differences with conditional styling based on their values.
+ *   - Only the 'listing_price_diff' and 'min_price' are currently rendered; time differences are commented out.
+ *   - The class names used for styling are based on the price difference values.
+ */
 const Results = ({ data }: { data: ListingResponseType }) => {
   const { darkmode } = useTypedSelector((state) => state.user)
   const now = new Date()

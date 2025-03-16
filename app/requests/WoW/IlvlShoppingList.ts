@@ -27,6 +27,23 @@ export interface IlvlWoWListResponse {
   data: Array<ListItem>
 }
 
+/**
+ * Sends a POST request to retrieve a shopping list for items based on specified criteria.
+ * @example
+ * sync({ region: 'us', itemID: 1234, maxPurchasePrice: 5000, desiredStats: ['haste', 'crit'], desiredMinIlvl: 200 })
+ * // Returns a promise with the response from the API
+ * @param {Object} { Arguments } - An object containing parameters for the shopping list.
+ * @param {string} {region} - The region code for which the shopping list is requested.
+ * @param {number} {itemID} - The unique identifier for the item to search for.
+ * @param {number} {maxPurchasePrice} - The maximum purchase price of the desired item.
+ * @param {Array<string>} {desiredStats} - A list of desired item stats (e.g., 'haste', 'crit').
+ * @param {number} {desiredMinIlvl} - The minimum item level desired for the items.
+ * @returns {Promise<Response>} Returns a promise that resolves to the fetch API response.
+ * @description
+ *   - It uses a POST request to communicate with the specified API endpoint.
+ *   - It serializes the provided parameters into a JSON string for the request body.
+ *   - Sets necessary headers including content type and user agent.
+ */
 const IlvlShoppingList = async ({
   region,
   itemID,
@@ -50,4 +67,4 @@ const IlvlShoppingList = async ({
   })
 }
 
-export default IlvlShoppingList 
+export default IlvlShoppingList

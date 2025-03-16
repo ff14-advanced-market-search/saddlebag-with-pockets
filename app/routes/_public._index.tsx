@@ -94,7 +94,8 @@ export default function Index() {
                 What We Offer
               </p>
               <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-                Powerful tools and analytics to enhance your MMO trading experience.
+                Powerful tools and analytics to enhance your MMO trading
+                experience.
               </p>
             </div>
 
@@ -111,7 +112,9 @@ export default function Index() {
                       <h3 className="text-lg leading-6 font-medium dark:text-white">
                         {feature.name}
                       </h3>
-                      <p className="mt-2 text-base dark:text-gray-300">{feature.description}</p>
+                      <p className="mt-2 text-base dark:text-gray-300">
+                        {feature.description}
+                      </p>
                     </div>
                   </a>
                 ))}
@@ -131,7 +134,8 @@ export default function Index() {
                 Your Gateway to Mastering MMO Markets
               </p>
               <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-                Saddlebag Exchange provides tools to revolutionize how you engage with in-game economies.
+                Saddlebag Exchange provides tools to revolutionize how you
+                engage with in-game economies.
               </p>
             </div>
 

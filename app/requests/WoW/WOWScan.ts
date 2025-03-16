@@ -56,7 +56,40 @@ const WOWScan: ({
   minHistoricPrice,
   roi,
   salePerDay
-}: WOWScanProps) => Promise<Response> = async ({
+}: /**
+ * Sends a POST request to scan World of Warcraft items based on specific parameters.
+ * @example
+ * sync({
+ *   homeRealmId: 1,
+ *   newRealmId: 2,
+ *   minHistoricPrice: 100,
+ *   roi: 1.2,
+ *   salePerDay: 3,
+ *   itemQuality: 4,
+ *   requiredLevel: 10,
+ *   itemClass: 'Weapon',
+ *   itemSubClass: 'Sword',
+ *   iLvl: 100
+ * })
+ * Fetches the data while meeting specified conditions
+ * @param {number} homeRealmId - Identifies the home realm for the query.
+ * @param {number} newRealmId - Identifies the target realm for searching.
+ * @param {number} minHistoricPrice - Minimum historical price of the item.
+ * @param {number} roi - Desired return on investment.
+ * @param {number} salePerDay - Average sale per day of the item.
+ * @param {number} itemQuality - Quality rating of the item, higher is better.
+ * @param {number} requiredLevel - Minimum level required to use the item.
+ * @param {string} itemClass - General classification of the item.
+ * @param {string} itemSubClass - Detailed classification within the item class.
+ * @param {number} iLvl - Item level denoting its strength.
+ * @returns {Promise<Response>} The response object from the fetch API.
+ * @description
+ *   - The function communicates with a predefined server endpoint.
+ *   - JSON.stringify is used to serialize the body parameters.
+ *   - The 'User-Agent' header is set specifically for identifying client application.
+ *   - All communication is done over POST method ensuring data submission.
+ */
+WOWScanProps) => Promise<Response> = async ({
   homeRealmId,
   newRealmId,
   minHistoricPrice,

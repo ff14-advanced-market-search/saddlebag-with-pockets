@@ -13,6 +13,18 @@ type InputWithLabelProps = {
   'className'
 >
 
+/**
+ * Renders an input field with an associated label and optional tooltip and input tag.
+ * @example
+ * renderInputWithLabel({ labelTitle: "Name", inputTag: "$", toolTip: "Enter your name", type: "text" })
+ * <div>...</div> // Returns a JSX div containing the labeled input
+ * @param {Object} InputWithLabelProps - Object containing properties for rendering input with label.
+ * @returns {JSX.Element} Returns a JSX element representing the labeled input with optional components.
+ * @description
+ *   - The input's max attribute defaults to 1000000000 if the type is 'number' and no max is provided.
+ *   - Conditional rendering is used for the tooltip and input tag based on their presence.
+ *   - Uses a predefined style set for consistent theming across light and dark modes.
+ */
 export const InputWithLabel = ({
   labelTitle,
   inputTag,

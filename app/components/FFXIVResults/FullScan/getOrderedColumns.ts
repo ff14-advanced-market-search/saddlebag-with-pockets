@@ -1,3 +1,18 @@
+/**
+ * Rearranges an item in an array from a current position to a new position.
+ * @example
+ * rearrangeItem(1, 3, ['a', 'b', 'c', 'd'])
+ * // Returns ['a', 'c', 'd', 'b']
+ * @param {number} currentPos - The current index of the item to be moved.
+ * @param {number} newPos - The target index where the item should be moved to.
+ * @param {Array<string>} sortOrder - The array of strings where the item movement will occur.
+ * @returns {Array<string> | undefined} A new array with the item rearranged, or undefined if the item at currentPos doesn't exist.
+ * @description
+ *   - If the item is being moved to the right by one position, it is placed after the current item.
+ *   - Returns the original array unmodified if the currentPos and newPos are the same.
+ *   - Utilizes the `reduce` function to accumulate the new order of items.
+ *   - Safely handles edge cases by returning undefined when no item is present at the current position.
+ */
 export const getOrderedColumns = (
   currentPos: number,
   newPos: number,

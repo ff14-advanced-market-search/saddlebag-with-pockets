@@ -65,7 +65,19 @@ export interface AllaganResults {
 const AllaganRequest: ({
   server,
   allaganJson
-}: AllaganProps) => Promise<Response> = async ({ server, allaganJson }) => {
+}: /**
+ * Sends a POST request to parse allagan JSON data for a given server
+ * @example
+ * sync({ server: 'Hyperion', allaganJson: { someData: 'value' } })
+ * Promise resolving to the response of the fetch operation
+ * @param {Object} { server, allaganJson } - An object where 'server' is the target server name and 'allaganJson' contains the JSON data to be parsed.
+ * @returns {Promise<Response>} Promise resolving to the fetch response object.
+ * @description
+ *   - The function constructs and sends a POST request to a specific API endpoint.
+ *   - Custom User-Agent header is included in the request.
+ *   - The JSON payload includes the server name and allagan JSON data.
+ */
+AllaganProps) => Promise<Response> = async ({ server, allaganJson }) => {
   return fetch(`${address}/api/parseallagan`, {
     method: 'POST',
     headers: {

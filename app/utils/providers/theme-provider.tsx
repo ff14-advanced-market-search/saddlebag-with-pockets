@@ -15,6 +15,18 @@ const prefersDarkMQ = `(prefers-color-scheme: dark)`
 const getPreferredTheme = () =>
   window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
 
+/**
+ * Provides a theme context that includes the current theme and a function to update it.
+ * @example
+ * ({ children }) => { ... }
+ * <ThemeContext.Provider value={...}>{children}</ThemeContext.Provider>
+ * @param {ReactNode} {children} - React component tree to be wrapped with the theme provider.
+ * @returns {JSX.Element} Returns a provider component that supplies the current theme and a function to change it.
+ * @description
+ *   - Initializes theme state based on the user's preferred theme if available.
+ *   - Returns null as the theme if running in a non-browser environment.
+ *   - Uses ThemeContext to share theme state across components.
+ */
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme | null>(() => {
     if (typeof window !== 'object') {

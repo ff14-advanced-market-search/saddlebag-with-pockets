@@ -7,6 +7,19 @@ const ItemTypes = {
   ROW: 'ROW'
 }
 
+/**
+ * Handles the drag-and-drop functionality for table header columns.
+ * @example
+ * draggableHeader({ column, index, reorder, darkMode, children, ...rest })
+ * <th>...</th>
+ * @param {Object} { column, index, reorder, darkMode, children, ...rest } - Object containing necessary properties for draggable header.
+ * @returns {JSX.Element} A table header element with drag-and-drop capabilities.
+ * @description
+ *   - Integrates React DnD hooks for managing drag-and-drop actions within table header columns.
+ *   - Determines the outline color based on the darkMode flag.
+ *   - Utilizes refs to attach drag-and-drop functionality using JSX element properties.
+ *   - Leverages useEffect for setting up drag preview while capturing the dragging state.
+ */
 const DraggableHeader = ({
   column,
   index,

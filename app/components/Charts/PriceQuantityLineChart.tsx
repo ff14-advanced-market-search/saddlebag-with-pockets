@@ -8,6 +8,20 @@ const getHourString = (index: number, arrayLength: number) => {
   return `${format(subHours(new Date(), arrayLength - index), 'HH')}:00`
 }
 
+/**
+ * Renders a line chart displaying price and quantity over the previous 24 hours.
+ * @example
+ * PriceQuantityLineChart({ prices: [10, 20], quantities: [5, 15], darkMode: true, itemName: 'Product A' })
+ * Renders the line chart component with the specified data and styles.
+ * @param {Array<number>} prices - Array representing price points over the past 24 hours.
+ * @param {Array<number>} quantities - Array representing quantity points over the past 24 hours.
+ * @param {boolean} darkMode - Boolean flag to determine if dark mode styling should be applied.
+ * @param {string} itemName - Name of the item being represented in the chart.
+ * @returns {JSX.Element} Returns a Highcharts React component.
+ * @description
+ *   - Automatically adjusts styling based on the darkMode flag to enhance visibility.
+ *   - Constructs X-axis labels dynamically based on the 24-hour period.
+ */
 export default function PriceQuantityLineChart({
   prices,
   quantities,

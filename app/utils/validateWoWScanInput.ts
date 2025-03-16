@@ -6,6 +6,18 @@ const getServerIdAndNameFromInput = (selectString: string) => {
   else return { id, name }
 }
 
+/**
+ * Validates and extracts required data from FormData for a World of Warcraft scan.
+ * @example
+ * validateWoWScanInput(formData)
+ * Returns an object containing the validated scan properties from FormData.
+ * @param {FormData} formData - The FormData object containing various server and item details.
+ * @returns {WOWScanProps | { exception: string }} An object containing the scan properties or an exception message string.
+ * @description
+ *   - Extracts server IDs and names for home and new realms using getServerIdAndNameFromInput.
+ *   - Converts string data to integers for various game properties like item quality, required level, etc.
+ *   - Returns specific exceptions for missing or invalid input data.
+ */
 export const validateWoWScanInput = (
   formData: FormData
 ): WOWScanProps | { exception: string } => {

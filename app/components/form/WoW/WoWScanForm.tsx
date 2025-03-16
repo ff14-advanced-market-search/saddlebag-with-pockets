@@ -63,6 +63,33 @@ const expansionOptions = [
   { label: 'The War Within', value: '11' }
 ]
 
+/**
+ * Renders a form for searching World of Warcraft server-to-server trades.
+ * @example
+ * WoWScanForm({
+ *   onClick: handleClick,
+ *   loading: isLoading,
+ *   error: fetchError,
+ *   onChange: handleChange,
+ *   clearErrors: clearFormErrors,
+ *   defaultRegion: 'EU',
+ *   defaultServer: { name: 'Outland', id: 1234 }
+ * })
+ * Returns a JSX element for the form.
+ * @param {function} {onClick} - Function to handle form submission.
+ * @param {boolean} {loading} - Indicates whether data is being loaded.
+ * @param {string} {error} - Error message during data fetch.
+ * @param {function} {onChange} - Function to handle input changes.
+ * @param {function} {clearErrors} - Function to reset error logs.
+ * @param {string} {defaultRegion} - Pre-selected region for server selection, defaults to 'NA'.
+ * @param {object} {defaultServer} - Pre-selected server details, defaults to { name: 'Thrall', id: 3678 }.
+ * @returns {JSX.Element} Returns a JSX element containing the form.
+ * @description
+ *   - Integrates various input fields specific to WoW trade servers, including TSM price, ROI, sales per day, etc.
+ *   - Provides functionality to select item quality, item class, and server regions.
+ *   - Handles loading state and error reporting gracefully.
+ *   - Utilizes clearErrors function extensively to reset state during selection changes.
+ */
 const WoWScanForm = ({
   onClick,
   loading,
@@ -404,6 +431,24 @@ interface ItemClassSelectProps {
   onChange?: (itemClassValue: number, itemSubClassValue: number) => void
 }
 
+/**
+ * Renders a form for selecting item classes and subclasses with onchange handlers.
+ * @example
+ * ItemClassSelect({
+ *   itemClass: 1,
+ *   itemSubClass: 2,
+ *   onChange: (itemClass, itemSubClass) => console.log(itemClass, itemSubClass)
+ * })
+ * <div>...</div>
+ * @param {number} itemClass - The initial selected item class.
+ * @param {number} itemSubClass - The initial selected item subclass.
+ * @param {function} onChange - Callback function to handle changes in selection.
+ * @returns {JSX.Element} JSX element representing the form.
+ * @description
+ *   - Resets itemSubClass when itemClass changes.
+ *   - Calls onChange with updated values on selection change.
+ *   - Provides default values for selections when notifying parent components.
+ */
 export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
   itemClass,
   itemSubClass,
@@ -468,6 +513,19 @@ interface ItemQualitySelectProps {
   onChange?: (value: string) => void
 }
 
+/**
+ * Renders a select input for choosing item quality in a form.
+ * @example
+ * ItemQualitySelect({ defaultValue: "common", onChange: handleQualityChange })
+ * // Renders a div containing a label, tooltip, and select element.
+ * @param {string} defaultValue - The default value for the select element, indicating the initially selected item quality.
+ * @param {function} onChange - Callback function that is triggered when the selected item quality changes.
+ * @returns {JSX.Element} JSX for the item quality selection component.
+ * @description
+ *   - Utilizes a custom Label component for labeling the select input.
+ *   - Incorporates a ToolTip component to provide additional information on item quality selection.
+ *   - The options within the select input are dynamically generated from an itemQuality array.
+ */
 export const ItemQualitySelect: React.FC<ItemQualitySelectProps> = ({
   defaultValue,
   onChange
@@ -496,6 +554,19 @@ interface ExpansionSelectProps {
   onChange?: (value: string) => void
 }
 
+/**
+ * Renders a World of Warcraft expansion selection form component.
+ * @example
+ * ExpansionSelect({ defaultValue, onChange })
+ * <div>...</div>
+ * @param {string} defaultValue - The default selected value for the expansion dropdown.
+ * @param {function} onChange - Callback function called when the selected value in the dropdown changes.
+ * @returns {JSX.Element} A JSX element representing the WoW expansion selection form.
+ * @description
+ *   - The component includes a label and a tooltip explaining the dropdown's purpose.
+ *   - The 'onChange' function is only invoked if it is provided.
+ *   - Utilizes a predefined set of expansion options using `expansionOptions`.
+ */
 export const ExpansionSelect: React.FC<ExpansionSelectProps> = ({
   defaultValue,
   onChange
