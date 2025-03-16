@@ -191,77 +191,81 @@ const Results = ({ data }: { data: ListingResponseType }) => {
 
       <ListingTable data={data} />
 
-      {data.priceTimeData.length > 0 && (
-        <ContentContainer>
-          <GenericLineChart
-            chartTitle="Minimum Price Over Time"
-            darkMode={darkmode}
-            data={data.priceTimeData}
-            dataIterator={(val, ind) => [
-              makeTimeString({
-                date: now,
-                hoursToDeduct: data.priceTimeData.length - ind
-              }),
-              val
-            ]}
-            xCategories={xCategories}
-          />
-        </ContentContainer>
-      )}
+      {data.priceTimeData.length > 0 &&
+        data.priceTimeData.some((val) => val !== 0) && (
+          <ContentContainer>
+            <GenericLineChart
+              chartTitle="Minimum Price Over Time"
+              darkMode={darkmode}
+              data={data.priceTimeData}
+              dataIterator={(val, ind) => [
+                makeTimeString({
+                  date: now,
+                  hoursToDeduct: data.priceTimeData.length - ind
+                }),
+                val
+              ]}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
 
-      {data.priceTimeDataHQ.length > 0 && (
-        <ContentContainer>
-          <GenericLineChart
-            chartTitle="HQ Minimum Price Over Time"
-            darkMode={darkmode}
-            data={data.priceTimeDataHQ}
-            dataIterator={(val, ind) => [
-              makeTimeString({
-                date: now,
-                hoursToDeduct: data.priceTimeDataHQ.length - ind
-              }),
-              val
-            ]}
-            xCategories={xCategories}
-          />
-        </ContentContainer>
-      )}
+      {data.priceTimeDataHQ.length > 0 &&
+        data.priceTimeDataHQ.some((val) => val !== 0) && (
+          <ContentContainer>
+            <GenericLineChart
+              chartTitle="HQ Minimum Price Over Time"
+              darkMode={darkmode}
+              data={data.priceTimeDataHQ}
+              dataIterator={(val, ind) => [
+                makeTimeString({
+                  date: now,
+                  hoursToDeduct: data.priceTimeDataHQ.length - ind
+                }),
+                val
+              ]}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
 
-      {data.quantityTimeData.length > 0 && (
-        <ContentContainer>
-          <GenericLineChart
-            chartTitle="Total Quantity Over Time"
-            darkMode={darkmode}
-            data={data.quantityTimeData}
-            dataIterator={(val, ind) => [
-              makeTimeString({
-                date: now,
-                hoursToDeduct: data.quantityTimeData.length - ind
-              }),
-              val
-            ]}
-            xCategories={xCategories}
-          />
-        </ContentContainer>
-      )}
+      {data.quantityTimeData.length > 0 &&
+        data.quantityTimeData.some((val) => val !== 0) && (
+          <ContentContainer>
+            <GenericLineChart
+              chartTitle="Total Quantity Over Time"
+              darkMode={darkmode}
+              data={data.quantityTimeData}
+              dataIterator={(val, ind) => [
+                makeTimeString({
+                  date: now,
+                  hoursToDeduct: data.quantityTimeData.length - ind
+                }),
+                val
+              ]}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
 
-      {data.quantityTimeDataHQ.length > 0 && (
-        <ContentContainer>
-          <GenericLineChart
-            chartTitle="HQ Quantity Over Time"
-            darkMode={darkmode}
-            data={data.quantityTimeDataHQ}
-            dataIterator={(val, ind) => [
-              makeTimeString({
-                date: now,
-                hoursToDeduct: data.quantityTimeDataHQ.length - ind
-              }),
-              val
-            ]}
-            xCategories={xCategories}
-          />
-        </ContentContainer>
-      )}
+      {data.quantityTimeDataHQ.length > 0 &&
+        data.quantityTimeDataHQ.some((val) => val !== 0) && (
+          <ContentContainer>
+            <GenericLineChart
+              chartTitle="HQ Quantity Over Time"
+              darkMode={darkmode}
+              data={data.quantityTimeDataHQ}
+              dataIterator={(val, ind) => [
+                makeTimeString({
+                  date: now,
+                  hoursToDeduct: data.quantityTimeDataHQ.length - ind
+                }),
+                val
+              ]}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
     </>
   )
 }
