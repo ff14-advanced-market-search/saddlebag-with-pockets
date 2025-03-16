@@ -2,6 +2,19 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
+/**
+ * Returns an SVG representation of an Earth icon with configurable styles.
+ * @example
+ * props => { return (<svg className={props.className} ... />) }
+ * <svg ...>...</svg>
+ * @param {Object} props - Properties object containing settings for the SVG icon.
+ * @param {string} props.className - CSS class to apply to the SVG for styling purposes.
+ * @returns {JSX.Element} An SVG element representing an Earth icon.
+ * @description
+ *   - The SVG stroke and fill colors are both set to "currentColor" to inherit from parent styles.
+ *   - The default viewBox is set to "0 0 24 24", defining the aspect ratio and coordinate system for the SVG.
+ *   - The icon's styling can be adjusted via CSS classes passed in through the `className` prop.
+ */
 const EarthIcon: FC<SVGProps> = (props) => {
   return (
     <svg

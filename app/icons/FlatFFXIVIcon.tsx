@@ -2,6 +2,19 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
+/**
+ * Renders a scalable vector graphic (SVG) icon component using provided properties.
+ * @example
+ * iconComponent({ className: 'icon-style' })
+ * Returns an SVG element with specified class name as an attribute.
+ * @param {Object} props - The properties object containing attributes for the SVG component.
+ * @param {string} props.className - A string representing the CSS class name(s) to be applied to the SVG element for styling.
+ * @returns {JSX.Element} An SVG element representing the FFXIV icon with customizable styling.
+ * @description
+ *   - Uses `props.className` to set the class attribute of the SVG, allowing external styling.
+ *   - The SVG uses a viewBox of "0 0 32 32", making it scalable to fit different sizes.
+ *   - The SVG path utilizes "currentColor" fill, which inherits the color style from its parent.
+ */
 const FlatFFXIVIcon: FC<SVGProps> = (props) => {
   return (
     <svg

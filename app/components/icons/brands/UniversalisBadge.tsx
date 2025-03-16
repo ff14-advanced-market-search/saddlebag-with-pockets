@@ -4,6 +4,18 @@ type Props = {
   className?: string
 }
 
+/**
+ * Renders an SVG icon with a badge design, potentially for branding purposes.
+ * @example
+ * <UniversalisBadge className="w-8 h-8 text-blue-500" />
+ * @param {string} className - A CSS class name applied to the SVG element to control styling.
+ * @returns {JSX.Element} The rendered SVG JSX element with the specified badge design.
+ * @description
+ *   - Utilizes a complex SVG path and mask for visual effects.
+ *   - Includes a drop shadow filter for added depth and dimension.
+ *   - The SVG is designed to be scalable and maintains quality across different resolutions.
+ *   - Created by Zac Bruce for Saddlebag Exchange, providing unique branding elements.
+ */
 const UniversalisBadge: FC<Props> = ({ className }) => {
   return (
     <svg

@@ -1,5 +1,27 @@
 import { classNames } from '~/utils'
 
+/**
+ * A customizable submit button component for forms with loading and disabled states.
+ * @example
+ * <SubmitButton
+ *   title="Submit"
+ *   onClick={handleSubmit}
+ *   loading={isSubmitting}
+ *   disabled={!isValidForm}
+ *   className="extra-class"
+ * />
+ * @param {string} title - Optional text to display on the button.
+ * @param {(event: React.MouseEvent<HTMLButtonElement>) => void} onClick - Callback function executed on button click.
+ * @param {boolean} loading - If true, a loading spinner is shown and the button is disabled; defaults to false.
+ * @param {boolean} disabled - If true, the button is rendered in a disabled state; defaults to false.
+ * @param {string} className - Additional classes to style the button.
+ * @param {React.ReactNode} children - Content to display within the button when 'title' is not provided.
+ * @returns {React.ReactElement} A React element representing a customizable submit button.
+ * @description
+ *   - Button shows a loading spinner when `loading` is true.
+ *   - Mixed state is possible when `loading` and `disabled` are both true.
+ *   - Additional props are spread onto the underlying button element.
+ */
 export const SubmitButton = ({
   title,
   onClick,

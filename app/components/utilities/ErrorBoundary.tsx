@@ -8,6 +8,20 @@ const parseError = (error: unknown): string | undefined => {
   return undefined
 }
 
+/**
+ * Renders an error boundary component with a message and error details.
+ * @example
+ * ErrorBoundary({ message: "An error occurred" })
+ * // returns a JSX.Element containing error information
+ * @param {Object} param0 - Component props.
+ * @param {string} [param0.message] - Optional error message to display.
+ * @returns {JSX.Element} A styled error message component for rendering in React.
+ * @description
+ *   - Utilizes the `useRouteError` hook to fetch the current routing error.
+ *   - If no message is provided, the function parses the error using `parseError`.
+ *   - Displays a link to the Discord bug-reporting channel for user reports.
+ *   - Renders a visual error indication using `ExclamationCircleIcon`.
+ */
 export default function ErrorBoundary({ message }: { message?: string }) {
   const error = useRouteError()
   console.error('errorBoundary', error)

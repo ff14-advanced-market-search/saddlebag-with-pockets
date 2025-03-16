@@ -2,6 +2,18 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
+/**
+ * Renders a GitHub SVG icon with customizable className through props.
+ * @example
+ * GithubIcon({ className: "custom-class" })
+ * Returns a JSX element rendering a GitHub icon with the applied class.
+ * @param {Object} props - Props for the SVG component.
+ * @param {string} props.className - A string to apply custom CSS classes to the icon.
+ * @returns {JSX.Element} A JSX element representing a GitHub icon.
+ * @description
+ *   - Uses currentColor for stroke and fill, allowing it to inherit current text color.
+ *   - The viewBox is set to "0 0 24 24", ensuring consistent icon size.
+ */
 const GithubIcon: FC<SVGProps> = (props) => {
   return (
     <svg

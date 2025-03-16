@@ -10,6 +10,34 @@ export interface ServerSelected {
 
 const DEFAULT_SELECT_VALUE = 'default'
 
+/**
+ * Renders a server selection form component.
+ * @example
+ * serverSelectionForm({
+ *   onSelectChange: handleSelectChange,
+ *   onTextChange: handleTextChange,
+ *   formName: 'serverForm',
+ *   title: 'Server Selection',
+ *   toolTip: 'Select a server from the dropdown',
+ *   defaultServerId: 'default123',
+ *   defaultServerName: 'Sample Server',
+ *   regionValue: 'EU'
+ * })
+ * @param {Object} params - Parameters for the server selection component.
+ * @param {function} [params.onSelectChange] - Callback function to handle select changes.
+ * @param {function} [params.onTextChange] - Callback function to handle text input changes.
+ * @param {string} params.formName - Unique name identifier for the form element.
+ * @param {string} [params.title] - The title of the component displayed to the user.
+ * @param {string} [params.toolTip] - Tooltip text providing extra information.
+ * @param {string} [params.defaultServerId] - Server ID to be selected by default.
+ * @param {string} [params.defaultServerName] - Default name of the server to be displayed.
+ * @param {string} [params.regionValue] - Initial region value for server search.
+ * @returns {JSX.Element} Rendered server selection JSX component.
+ * @description
+ *   - Dynamically renders server options based on text input and region.
+ *   - Disables the select component if criteria are not met (e.g., short name).
+ *   - Utilizes a dual input system (text and select) for server selection.
+ */
 const WoWServerSelect = ({
   onSelectChange,
   onTextChange,

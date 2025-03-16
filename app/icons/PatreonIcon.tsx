@@ -2,6 +2,19 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
+/**
+ * Renders a Patreon SVG icon with customizable className
+ * @example
+ * renderPatreonIcon({ className: "icon-large" })
+ * // Returns JSX for a Patreon SVG icon with "icon-large" class applied
+ * @param {Object} props - The properties object.
+ * @param {string} props.className - An optional className for styling the SVG element.
+ * @returns {JSX.Element} A JSX element representing a Patreon icon.
+ * @description
+ *   - The SVG icon includes a circle and a rectangle path using specific dimensions.
+ *   - The SVG uses currentColor for stroke and fill, allowing it to adapt to surrounding text color.
+ *   - The component uses non-zero fill rule for the icon's path to determine the "insideness" of a point in the path.
+ */
 const PatreonIcon: FC<SVGProps> = (props) => {
   return (
     <svg

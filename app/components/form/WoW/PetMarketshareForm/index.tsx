@@ -6,6 +6,31 @@ import Filter from '../../Filter'
 import { petMarketshareOptions } from '~/consts'
 import { sortByOptions } from '~/routes/wow.pet-marketshare'
 
+/**
+ * Creates a form component for configuring pet market share in World of Warcraft.
+ * @example
+ * WoWPetMarketshareForm({
+ *   regionDefault: 'EU',
+ *   homeRealm: { id: 123, name: 'Stormrage' },
+ *   minPriceDefault: 1500,
+ *   salesPerDayDefault: 0.05,
+ *   includeCategoriesDefault: [1, 2],
+ *   excludeCategoriesDefault: [3]
+ * })
+ * <div>...</div>
+ * @param {WoWServerRegion} regionDefault - The default server region, e.g., 'NA' or 'EU'.
+ * @param {WoWServerData} homeRealm - Details of the user's default server realm, including its id and name.
+ * @param {number} minPriceDefault - Minimum desired price for the pets, default is 1000.
+ * @param {number} salesPerDayDefault - Minimum desired sales per day, default is 0.01.
+ * @param {Array<number>} includeCategoriesDefault - List of category IDs to include in filtering.
+ * @param {Array<number>} excludeCategoriesDefault - List of category IDs to exclude from filtering.
+ * @returns {JSX.Element} The form component for configuring pet market share, with various inputs.
+ * @description
+ *   - The form contains inputs for setting minimum desired price and sales per day.
+ *   - Region and server realm selections are customizable through dropdowns.
+ *   - Includes filters to specify categories for inclusion and exclusion.
+ *   - Users can sort results with a dropdown selection.
+ */
 const PetMarketShareForm = ({
   regionDefault = 'NA',
   homeRealm,

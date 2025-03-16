@@ -7,6 +7,19 @@ type Props = {
   title?: string
 }
 
+/**
+ * Creates a navigation link to display item listing and history data.
+ * @example
+ * <ItemDataLink link="/item/123" title="View item data" />
+ * // Returns a NavLink component configured for the specified item.
+ * @param {string} link - The URL to navigate to upon clicking the link.
+ * @param {string} [title='See item listing and history data'] - The title attribute for the NavLink, providing additional information on the link's purpose.
+ * @returns {JSX.Element} A NavLink component styled for item data presentation.
+ * @description
+ *   - Uses Tailwind CSS classes for styling the appearance and transition effects.
+ *   - Incorporates a 'LinkIcon' component visually indicating a hyperlink.
+ *   - Opens the link in a new browser tab using the 'target' attribute with '_blank'.
+ */
 const ItemDataLink: FC<Props> = ({
   link,
   title = 'See item listing and history data'

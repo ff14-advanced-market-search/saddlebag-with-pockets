@@ -2,6 +2,22 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
+/**
+ * Renders an SVG component representing the Discord icon.
+ *
+ * @example
+ * <DiscordIcon className="my-discord-icon" />
+ * Returns an SVG representing the Discord icon.
+ *
+ * @param {object} props - Properties to customize the SVG element.
+ * @param {string} props.className - CSS class for styling the SVG.
+ * @returns {JSX.Element} SVG element representing the Discord icon.
+ *
+ * @description
+ *   - The SVG component is styled to fit within a 1em x 1em box and scales with its container's font size.
+ *   - The `fill` and `stroke` of the SVG use the current text color (`currentColor`).
+ *   - The SVG paths create the Discord logo with details defined by a single clip path for the entire icon.
+ */
 const DiscordIcon: FC<SVGProps> = (props) => {
   return (
     <svg

@@ -8,6 +8,27 @@ export interface ItemSelected {
 }
 
 const DEFAULT_SELECT_VALUE = 'default'
+/**
+ * A component for selecting an item by name or ID, with optional event handlers.
+ * @example
+ * ItemSelectComponent({
+ *   onSelectChange: handleSelectChange,
+ *   onTextChange: handleTextChange,
+ *   tooltip: 'This is a tooltip',
+ *   selectId: 'itemSelect'
+ * })
+ * React component structure rendered.
+ * @param {function} [onSelectChange] - Optional callback function executed when the selection changes.
+ * @param {function} [onTextChange] - Optional callback function executed when the text input changes.
+ * @param {string} [tooltip] - Optional tooltip text displayed next to the input label.
+ * @param {string} [selectId] - HTML id attribute value for the select input element.
+ * @returns {JSX.Element} The rendered component allowing item selection based on name.
+ * @description
+ *   - Initializes item name state and sort items based on input.
+ *   - Disables selection when no items match the criteria.
+ *   - Resets item selection if input text changes with minimal characters.
+ *   - Optionally triggers callbacks for changes in input or selection.
+ */
 const ItemSelect = ({
   onSelectChange,
   onTextChange,
