@@ -56,6 +56,16 @@ import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
 
+/**
+* Generates the basic HTML structure with linked resources and error boundaries.
+* @example
+* createHtmlStructure()
+* returns the complete HTML layout wrapped in JSX.
+* @returns {JSX.Element} The JSX representation of an HTML document with <head> and <body> sections.
+* @description
+*   - The returned HTML includes error boundaries within the <main> tag to manage rendering errors effectively.
+*   - This function encapsulates the structure within a single return statement, simplifying the JSX tree.
+*/
 export const ErrorBoundary = () => {
   return (
     <html>
@@ -71,6 +81,19 @@ export const ErrorBoundary = () => {
   )
 }
 
+/**
+ * Generates an array of link objects for stylesheets and favicon settings.
+ * @example
+ * generateLinkObjects('/path/styles.css', '/path/overrides.css')
+ * // returns an array of link objects for stylesheets and icon
+ * @param {string} styles - The path to the main stylesheet.
+ * @param {string} overrides - The path to the override stylesheet.
+ * @returns {Array<Object>} An array of link object configurations including stylesheets and a favicon.
+ * @description
+ *   - The function constructs link objects conforming to HTML link element attributes.
+ *   - Assumes favicon is always a PNG with specified dimensions included in the links.
+ *   - Preset dimensions (32x32) are used for the favicon link object, intended for browser display purposes.
+ */
 export const links = () => {
   return [
     {
@@ -98,6 +121,17 @@ export type LoaderData = {
   wowRegion: WoWServerRegion
 }
 
+/**
+* Retrieves user session data and constructs a response with site and session information.
+* @example
+* sync({ request, context })
+* // Returns JSON object with site_name, data_center, world, wowRealm, and wowRegion
+* @param {Object} {request, context} - Contains request data and context information.
+* @returns {Object} JSON object containing site name, data center, world, WoW realm, and region.
+* @description
+*   - Fetches user session data using the provided request object.
+*   - Defaults site name to "Saddlebag Exchange" if none is provided in the context.
+*/
 export const loader: LoaderFunction = async ({ request, context }) => {
   const { getWorld, getDataCenter, getWoWSessionData } =
     await getUserSessionData(request)
@@ -126,6 +160,19 @@ const validator = z.object({
     .transform((val) => parseInt(val, 10))
 })
 
+/**
+ * Processes form data from a request, validates it, and updates the session before redirecting.
+ * @example
+ * sync({ request })
+ * Redirects with updated session cookies on validation success
+ * @param {Object} request - Incoming request object containing form data.
+ * @returns {Object} Response object with a redirect and set-cookie headers.
+ * @description
+ *   - Validates form data using predefined validators for world, data center, server, and region.
+ *   - Updates session with validated data and sets associated cookies.
+ *   - Redirects to the root path with updated session and cookies upon successful validation.
+ *   - Returns a failed JSON response if validation is unsuccessful.
+ */
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
@@ -182,6 +229,17 @@ export const meta: MetaFunction = ({ data }) => {
   }
 }
 
+/**
+ * Main application component that sets up theme, synchronizes server data, and loads external scripts.
+ * @example
+ * App()
+ * <DatadogProvider>...</DatadogProvider>
+ * @returns {JSX.Element} The main application component wrapped with providers and including necessary scripts and styles.
+ * @description
+ *   - Uses multiple useEffect hooks to manage various settings like theme and data synchronization.
+ *   - Loads external resources such as Google Tag Manager and Next Millennium scripts upon mounting.
+ *   - Provides a consistent theme by checking user preferences and applying them accordingly.
+ */
 function App() {
   const data = useLoaderData<LoaderData>()
   const [theme, setTheme] = useTheme()

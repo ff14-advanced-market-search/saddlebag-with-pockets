@@ -29,6 +29,19 @@ const WorldsOfDataCenter: (
   throw new DataCenterNotFoundException(data_center_key)
 }
 
+/**
+* Validates the provided world and data center names.
+* @example
+* validateLocation("world1", "dataCenter1")
+* { world: "world1", data_center: "dataCenter1" }
+* @param {string|null} world - Name of the world to validate.
+* @param {string|null} data_center - Name of the data center to validate.
+* @returns {object} Returns an object containing the validated world and data center.
+* @description
+*   - If the provided data center and world are valid, the function returns them.
+*   - If either the data center or the world is invalid, it returns defaults.
+*   - Relies on predefined arrays WorldList and DataCenterArray for validation.
+*/
 const validateWorldAndDataCenter = (
   world?: string | null,
   data_center?: string | null

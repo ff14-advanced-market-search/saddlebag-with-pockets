@@ -60,6 +60,25 @@ const MarketShare: ({
   sortBy: MarketshareSortBy
   averagePrice: number
   filters: Array<number>
+/**
+* Sends a POST request to the server for fetching market share data of FFXIV.
+* @example
+* sync({ server: 'Balmung', timePeriod: 'weekly', salesAmount: 1500, averagePrice: 500, sortBy: 'price', filters: {} })
+* Returns a promise resolving to the server's response.
+* @param {Object} params - An object containing the necessary parameters.
+* @param {string} params.server - The name of the server to query data from.
+* @param {string} params.timePeriod - The time period for which data is fetched.
+* @param {number} params.salesAmount - The amount of sales to consider.
+* @param {number} params.averagePrice - The average price to filter the results by.
+* @param {string} params.sortBy - The parameter by which to sort the results.
+* @param {Object} params.filters - Additional filters to apply on the data.
+* @returns {Promise<Response>} A promise resolving to the response from the fetch request.
+* @description
+*   - Sends a POST HTTP request with specified content headers.
+*   - Converts the parameters to a JSON string for the request body.
+*   - The endpoint is specified by `address` which is assumed to be defined globally.
+*   - Utilizes a fixed 'User-Agent' for all requests.
+*/
 }) => Promise<Response> = async ({
   server,
   timePeriod,

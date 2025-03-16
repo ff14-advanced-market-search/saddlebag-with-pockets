@@ -539,6 +539,20 @@ export const findNAWoWServerByID = (idToFind: number) => {
   return NAdata.find(({ id }) => id === idToFind)
 }
 
+/**
+ * Fetches WoW server information based on region and server details.
+ * @example
+ * functionName('EU', '1234', 'Darkspear')
+ * { server: { name: 'Darkspear', id: 1234 }, region: 'EU' }
+ * @param {WoWServerRegion} region - The region code ('EU' or 'NA') to look up.
+ * @param {number|string|undefined} serverId - The ID of the server, which can be a number or a string representing a number.
+ * @param {string|undefined} serverName - The name of the server.
+ * @returns {{server: {name: string, id: number}, region: string}} An object containing the server details and region code.
+ * @description
+ *   - Parses the serverId if it is provided as a string to ensure correct filtering.
+ *   - Defaults to server 'Thrall' with ID 3678 in 'NA' region if server is not found.
+ *   - Utilizes different data sources based on the specified region.
+ */
 export const validateServerAndRegion = (
   region: WoWServerRegion,
   serverId: number | string | undefined,

@@ -47,6 +47,18 @@ export interface WoWExportResponse {
   itemInfo: ExportItemInfo
 }
 
+/**
+ * Performs a synchronous fetch request to the WoW export API.
+ * @example
+ * sync({ region: 'US', itemID: 12345, populationWP: 'high', populationBlizz: 'low', rankingWP: 5, minPrice: 100, maxQuantity: 200, sortBy: 'price', connectedRealmIDs: [1, 2, 3] })
+ * some sample return value
+ * @param {WoWExportSearchProps} {region, itemID, populationWP, populationBlizz, rankingWP, minPrice, maxQuantity, sortBy, connectedRealmIDs} - Object containing search properties for WoW export.
+ * @returns {Promise<Response>} Returns a Promise that resolves to the response of the fetch request.
+ * @description
+ *   - Sends request as 'POST' method with JSON stringified body to the endpoint.
+ *   - Includes content types and user agent in the headers.
+ *   - Address endpoint and UserAgent need to be defined elsewhere in the codebase.
+ */
 const WoWExportSearch = async ({
   region,
   itemID,

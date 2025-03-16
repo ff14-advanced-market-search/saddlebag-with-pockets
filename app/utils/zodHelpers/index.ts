@@ -46,6 +46,17 @@ export function createUnionSchema<T extends readonly [Primitive]>(
 export function createUnionSchema<
   T extends readonly [Primitive, Primitive, ...Primitive[]]
 >(values: T): z.ZodUnion<MappedZodLiterals<T>>
+/**
+ * Creates a union schema based on the provided values.
+ * @example
+ * createUnionSchema(['string', 'number'])
+ * Returns a Zod union type for string and number literals.
+ * @param {readonly Primitive[]} values - Array of primitive values to create a union type from. Must have a length of at least 1.
+ * @returns {ZodType} A union schema created using Zod library functions.
+ * @description
+ *   - Checks the length of the input array to determine whether to create a union, a literal, or a `never` schema.
+ *   - Throws an error if the input array is empty.
+ */
 export function createUnionSchema<T extends readonly Primitive[]>(values: T) {
   if (values.length > 1) {
     return createManyUnion(

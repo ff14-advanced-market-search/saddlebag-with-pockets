@@ -52,6 +52,42 @@ export interface PredictionResponse {
 
 const WoWShortagePredictor: (
   props: ShortagePredictorProps
+/**
+ * Sends a POST request to the 'commodityfutures' API endpoint with specified parameters.
+ * 
+ * @example
+ * sync({
+ *   desiredAvgPrice: 100,
+ *   desiredSalesPerDay: 50,
+ *   itemQuality: 2,
+ *   itemClass: 4,
+ *   itemSubClass: 1,
+ *   region: 'us',
+ *   homeRealmName: 'realmName',
+ *   desiredPriceVsAvgPercent: 10,
+ *   desiredQuantityVsAvgPercent: 20,
+ *   expansionNumber: 2
+ * })
+ * 
+ * @param {number} desiredAvgPrice - The average price that is desired for the item.
+ * @param {number} desiredSalesPerDay - The desired number of sales per day for the item.
+ * @param {number} itemQuality - Quality rating of the item.
+ * @param {number} itemClass - Class ID of the item.
+ * @param {number} itemSubClass - Subclass ID of the item.
+ * @param {string} region - The region where the query is to be made.
+ * @param {string} homeRealmName - Name of the home realm.
+ * @param {number} desiredPriceVsAvgPercent - Desired price comparison to the average price in percentage.
+ * @param {number} desiredQuantityVsAvgPercent - Desired quantity comparison to the average quantity in percentage.
+ * @param {number} expansionNumber - The expansion number related to the item.
+ * 
+ * @returns {Promise<Response>} A promise that resolves to the API response object.
+ * 
+ * @description
+ *   - The function utilizes the fetch API to perform HTTP requests.
+ *   - Ensure network connectivity for the API call to succeed.
+ *   - The User-Agent header is set for the request.
+ *   - JSON.stringify is used to convert the payload into JSON format.
+ */
 ) => Promise<Response> = async ({
   desiredAvgPrice,
   desiredSalesPerDay,

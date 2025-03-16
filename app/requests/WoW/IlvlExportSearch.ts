@@ -46,6 +46,18 @@ export interface IlvlExportResponse {
   itemInfo: ItemInfo
 }
 
+/**
+ * Sends a request to the ilvlexport API with specified parameters.
+ * @example
+ * sync({ region: 'US', itemID: 12345, ilvl: 400, desiredStats: ['strength'], populationWP: 1000, populationBlizz: 50000, rankingWP: 20, sortBy: 'rank' })
+ * Promise<Response>
+ * @param {IlvlExportSearchProps} {Object} - Object containing parameters for the API request.
+ * @returns {Promise<Response>} A promise that resolves to the response of the fetch request.
+ * @description
+ *   - Utilizes POST method for data submission.
+ *   - Constructs request body using JSON.stringify.
+ *   - Requires a User-Agent header for API interaction.
+ */
 const IlvlExportSearch = async ({
   region,
   itemID,

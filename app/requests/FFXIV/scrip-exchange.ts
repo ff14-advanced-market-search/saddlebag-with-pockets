@@ -20,6 +20,19 @@ export interface ScripExchange {
 
 export type ScripExchangeResults = ScripExchange[]
 
+/**
+ * Sends a POST request to retrieve Scrip Exchange results for Final Fantasy XIV.
+ * @example
+ * sync({ home_server: "ServerName", color: "red" })
+ * Promise<ScripExchangeResults>
+ * @param {ScripExchangeProps} {home_server, color} - Contains the server name and color for the request.
+ * @returns {Promise<ScripExchangeResults>} Returns a promise that resolves with the Scrip Exchange results as JSON.
+ * @description
+ *   - Requires a valid server name and color as input parameters.
+ *   - Throws an error if the network response is not ok.
+ *   - Uses JSON format for both request payload and response.
+ *   - The function utilizes async/await for handling asynchronous operations.
+ */
 export const ScripExchangeRequest = async ({
   home_server,
   color
