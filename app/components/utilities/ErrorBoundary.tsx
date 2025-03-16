@@ -31,7 +31,7 @@ export default function ErrorBoundary({ message }: { message?: string }) {
   return (
     <div className="rounded-md bg-red-50 p-4 m-4 border-2 border-red-100 dark:bg-red-900 dark:border-red-900">
       <div className="flex">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <ExclamationCircleIcon
             className="h-5 w-5 text-red-400 dark:text-gray-200"
             aria-hidden="true"
