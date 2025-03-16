@@ -53,7 +53,7 @@ export const FFXIVModalContent = ({
                     <CheckBoxRow
                       key={subItem.id}
                       selected={isSubSelected}
-                      title={' -- ' + subItem.name}
+                      title={` -- ${  subItem.name}`}
                       onChange={(e) => {
                         e.stopPropagation()
                         if (isSubSelected) {

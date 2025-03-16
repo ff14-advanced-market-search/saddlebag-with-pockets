@@ -231,7 +231,7 @@ const Results = ({ rows }: ResultTableProps) => {
     columnHelper.accessor('item_id', {
       header: 'Item Data',
       cell: (info) => (
-        <ItemDataLink link={'/queries/item-data/' + info.getValue()} />
+        <ItemDataLink link={`/queries/item-data/${  info.getValue()}`} />
       )
     }),
     columnHelper.accessor('regionWeeklyMedianNQ', {
