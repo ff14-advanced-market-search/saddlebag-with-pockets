@@ -319,10 +319,9 @@ const FullScanForm = ({
                     onClick={() => setFormOpened((state) => !state)}>
                     Advanced Search Options
                     <ChevronDownIcon
-                      className={
-                        'h-4 w-4 transition duration-200' +
-                        (formOpened ? 'transform rotate-180' : '')
-                      }
+                      className={`h-4 w-4 transition duration-200${
+                        formOpened ? ' transform rotate-180' : ''
+                      }`}
                     />
                   </button>
                 </div>

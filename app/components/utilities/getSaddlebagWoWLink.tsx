@@ -14,6 +14,8 @@ export const getSaddlebagWoWLink =
    *   - Uses `itemID` to form the URL for the link.
    *   - Provides a tooltip with item-specific information.
    */
+
+
     (title: string) =>
     ({ row }: { row: { itemID: number } }) => {
       const itemID = row.itemID
