@@ -17,22 +17,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
-      - uses: pnpm/action-setup@v4
-        with:
-          version: latest
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - run: pnpm run lint:fix
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn run prettier
       - run: git add .
 
       - uses: qoomon/actions--create-commit@v1
         id: actions--create-commit
         with:
           message: |
-            🎨 pnpm run lint:fix
+            🎨 yarn run prettier
 
             [dependabot skip]
           skip-empty: true
