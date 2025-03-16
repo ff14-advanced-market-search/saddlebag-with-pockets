@@ -5,7 +5,7 @@ type SVGProps = PropsWithChildren<{ className: string }>
 /**
  * Renders an SVG icon with customizable class name.
  * @example
- * renderIcon({ className: 'icon-large' })
+ * KofiIcon({ className: 'icon-large' })
  * // Returns an SVG element with the specified class
  * @param {Object} props - The properties object.
  * @param {string} props.className - A string that specifies the class name for styling the SVG.

@@ -7,8 +7,8 @@ export interface JSONProps<DataType> {
 /**
  * Renders a button to copy given data as a JSON string to the clipboard
  * @example
- * JSONButton({ data: { key: "value" } })
- * Button rendered with click functionality to copy JSON string
+ * <JSONButton data={[{ key: "value" }]} />
+ * // Button rendered with click functionality to copy JSON string
  * @param {Object} data - The data object to be converted and copied as a JSON string.
  * @returns {JSX.Element} JSX element for a submit button that copies the data as JSON.
  * @description

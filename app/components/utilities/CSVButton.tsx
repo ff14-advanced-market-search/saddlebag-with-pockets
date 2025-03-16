@@ -77,7 +77,7 @@ export interface CSVProps<DataType> {
 /**
  * Renders a button which triggers the download of data as a CSV file.
  * @example
- * CSVButton({ filename: 'data.csv', data: [{name: 'Alice', age: 30}], columns: ['name', 'age'] })
+ * CSVButton({ filename: 'data.csv', data: [{name: 'Alice', age: 30}], columns: [{title: 'Name', value: 'name'}, {title: 'Age', value: 'age'}] })
  * // Triggers download of a CSV file named 'data.csv'
  * @param {Object} props - The properties for configuring the CSV download.
  * @param {string} props.filename - Name of the CSV file to be downloaded.

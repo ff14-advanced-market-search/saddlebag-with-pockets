@@ -71,8 +71,8 @@ const keyMap: (key: string) => string = (key) => {
 /**
  * Converts a FullScanForm object into a FullScanInput object with default values.
  * @example
- * input(sampleInput)
- * some sample return value
+ * formatFullScanInput({ sale_amount: 10, roi: 25 })
+ * // Returns { min_sales: 10, preferred_roi: 25, hours_ago: 24, ... } with other default values
  * @param {FullScanForm} input - The full scan form object to be converted, optional.
  * @returns {FullScanInput} Returns an object that merges defaults with transformed input values.
  * @description

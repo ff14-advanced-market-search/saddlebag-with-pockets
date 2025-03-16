@@ -10,8 +10,8 @@ type Props = {
 /**
  * Creates a navigation link to display item listing and history data.
  * @example
- * createNavLink('/item/123', 'View item data')
- * Returns a NavLink component configured for the specified item.
+ * <ItemDataLink link="/item/123" title="View item data" />
+ * // Returns a NavLink component configured for the specified item.
  * @param {string} link - The URL to navigate to upon clicking the link.
  * @param {string} [title='See item listing and history data'] - The title attribute for the NavLink, providing additional information on the link's purpose.
  * @returns {JSX.Element} A NavLink component styled for item data presentation.

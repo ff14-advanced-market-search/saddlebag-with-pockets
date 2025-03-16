@@ -9,8 +9,8 @@ type Props = {
 /**
  * Renders a styled link component that opens a specified URL in a new tab.
  * @example
- * UniversalisBadgedLink('https://example.com')
- * <a href="https://example.com" target="_blank">...</a>
+ * <UniversalisBadgedLink link="https://example.com" />
+ * // Renders: <a href="https://example.com" target="_blank">...</a>
  * @param {string} link - The URL to which the link should direct.
  * @returns {JSX.Element} A React element that represents a button-like link.
  * @description

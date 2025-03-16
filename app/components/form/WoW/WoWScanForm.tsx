@@ -434,7 +434,7 @@ interface ItemClassSelectProps {
 /**
  * Renders a form for selecting item classes and subclasses with onchange handlers.
  * @example
- * WoWScanForm({
+ * ItemClassSelect({
  *   itemClass: 1,
  *   itemSubClass: 2,
  *   onChange: (itemClass, itemSubClass) => console.log(itemClass, itemSubClass)
@@ -516,7 +516,7 @@ interface ItemQualitySelectProps {
 /**
  * Renders a select input for choosing item quality in a form.
  * @example
- * renderItemQualitySelect("common", handleQualityChange)
+ * ItemQualitySelect({ defaultValue: "common", onChange: handleQualityChange })
  * // Renders a div containing a label, tooltip, and select element.
  * @param {string} defaultValue - The default value for the select element, indicating the initially selected item quality.
  * @param {function} onChange - Callback function that is triggered when the selected item quality changes.
@@ -557,7 +557,7 @@ interface ExpansionSelectProps {
 /**
  * Renders a World of Warcraft expansion selection form component.
  * @example
- * WoWScanForm(defaultValue, onChange)
+ * ExpansionSelect({ defaultValue, onChange })
  * <div>...</div>
  * @param {string} defaultValue - The default selected value for the expansion dropdown.
  * @param {function} onChange - Callback function called when the selected value in the dropdown changes.

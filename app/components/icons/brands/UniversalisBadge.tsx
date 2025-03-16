@@ -7,8 +7,7 @@ type Props = {
 /**
  * Renders an SVG icon with a badge design, potentially for branding purposes.
  * @example
- * UniversalisBadge({ className: 'icon-class' })
- * <svg>...</svg>
+ * <UniversalisBadge className="w-8 h-8 text-blue-500" />
  * @param {string} className - A CSS class name applied to the SVG element to control styling.
  * @returns {JSX.Element} The rendered SVG JSX element with the specified badge design.
  * @description

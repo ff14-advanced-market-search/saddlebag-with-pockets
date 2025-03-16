@@ -12,8 +12,8 @@ export interface GetBlogProps {
 /**
  * Sends a POST request to the FFXIV blog API with the specified itemId
  * @example
- * sync({ itemId: '12345' })
- * Promise { <pending> }
+ * GetBlog({ itemId: 12345 })
+ * // Returns Promise<Response>
  * @param {Object} {itemId} - ID of the item to be synced with the blog.
  * @returns {Promise<Response>} Returns a promise that resolves to the response of the fetch call.
  * @description

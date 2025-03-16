@@ -20,7 +20,7 @@ type SelectWorldProps = PropsWithoutRef<{
 /**
  * React component to manage Data Center and World selection within specified session data.
  * @example
- * const element = ComponentName(navigation, sessionData, onChange);
+ * const element = SelectDCandWorld({ navigation, sessionData, onChange });
  * element; // React component rendering selection fields.
  * @param {object} navigation - Provides navigation state used to determine form submission status.
  * @param {object} sessionData - Contains initial data for data center and world.

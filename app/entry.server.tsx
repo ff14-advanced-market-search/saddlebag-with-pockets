@@ -8,7 +8,7 @@ import { redirectOnPath } from './utils/redirectOnPath'
  * Processes an incoming request and generates an appropriate HTML response.
  * @example
  * handleRequest(sampleRequest, 200, sampleHeaders, sampleRemixContext)
- * Response object containing HTML document string.
+ * // Response object containing HTML document string.
  * @param {Request} request - The incoming HTTP request object to process.
  * @param {number} responseStatusCode - The HTTP status code to use for the response.
  * @param {Headers} responseHeaders - Headers to set on the HTTP response.

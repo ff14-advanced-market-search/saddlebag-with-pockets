@@ -6,7 +6,7 @@ const FFXIV_DATA_CENTER_KEY = 'ffxiv_data_center'
 /**
  * Retrieves and validates Final Fantasy XIV world and data center information from local storage.
  * @example
- * anonymousFunction()
+ * getFFWorldDataFromLocalStorage()
  * { world: 'A sample world', data_center: 'A sample data center' }
  * @returns {Object} An object containing validated world and data center information.
  * @description

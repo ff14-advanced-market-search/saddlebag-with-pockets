@@ -3,8 +3,11 @@ import Filter from '../Filter'
 /**
  * Renders a Filter component with specified properties.
  * @example
- * renderFilterComponent(defaultFilters, onChange, formName)
- * FilterComponent
+ * ItemsFilter({
+ *   defaultFilters: [1, 2], 
+ *   formName: 'myFilter',
+ *   onChange: (ids) => console.log(ids)
+ * })
  * @param {Array<number>} {defaultFilters} - An optional array of default filter IDs.
  * @param {string} {formName} - An optional form name for the Filter component.
  * @param {function} {onChange} - An optional callback function triggered when filters change.

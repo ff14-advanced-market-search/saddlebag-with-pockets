@@ -28,7 +28,7 @@ const ItemServerComparison: ({
   /**
    * Synchronizes item data across specified servers
    * @example
-   * sync({ itemIds: [1, 2, 3], homeServer: 'server1', exportServers: ['server2', 'server3'], hqOnly: true })
+   * ItemServerComparison({ itemIds: [1, 2, 3], homeServer: 'server1', exportServers: ['server2', 'server3'], hqOnly: true })
    * Promise { <pending> }
    * @param {Array<number>} itemIds - An array of item IDs to be synchronized.
    * @param {string} homeServer - The name of the home server from which items are exported.

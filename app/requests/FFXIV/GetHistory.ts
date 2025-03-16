@@ -72,7 +72,7 @@ const GetHistory: ({
 }: /**
  * Sends a POST request to fetch historical data for a specific item from a server.
  * @example
- * sync({ itemId: 12345, world: 'Cerberus', initialDays: 10, endDays: 5, itemType: 'weapon' })
+ * GetHistory({ itemId: 12345, world: 'Cerberus', initialDays: 10, endDays: 5, itemType: 'weapon' })
  * Promise(response)
  * @param {Object} {itemId, world, initialDays, endDays, itemType} - Configuration object containing parameters for the request.
  * @returns {Promise} A promise representing the completion of the fetch operation, containing the server response.

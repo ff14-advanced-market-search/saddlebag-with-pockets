@@ -4,7 +4,7 @@ import Label from '../Label'
 /**
  * Renders a styled select dropdown component with optional title label.
  * @example
- * SelectComponent({ title: "Choose option", options: [{ label: "Option 1", value: 1 }, { label: "Option 2", value: 2 }], id: "select-id", className: "custom-class" })
+ * Select({ title: "Choose option", options: [{ label: "Option 1", value: 1 }, { label: "Option 2", value: 2 }], id: "select-id", className: "custom-class" })
  * Returns JSX element containing select dropdown with specified options and styling.
  * @param {string} title - Optional title for the select dropdown.
  * @param {Array<{ label: string; value: string | number }>} options - Array of objects representing the options for the dropdown.

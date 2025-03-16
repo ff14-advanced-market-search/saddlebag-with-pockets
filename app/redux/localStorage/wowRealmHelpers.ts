@@ -15,16 +15,15 @@ const parseRegion = z.union([z.literal('NA'), z.literal('EU')])
 /**
  * Retrieves and validates server and region information for a World of Warcraft realm from local storage.
  * @example
- * anonymousFunction()
+ * getWoWRealmDataFromLocalStorage()
  * { valid: true, server: { id: 3678, name: 'Thrall' }, region: 'us' }
- * @param {string} WOW_REALM_KEY - The key used to access realm information in local storage.
- * @param {string} WOW_REGION_KEY - The key used to access region information in local storage.
  * @returns {Object} An object containing the validation result, server details, and region.
  * @description
  *   - If the data stored in local storage is unavailable or invalid, fallback values are used.
  *   - The function handles errors gracefully by providing a fallback region and server data.
  *   - The parsed data objects for server and region are individually validated.
  *   - Local storage is updated with fallback data when an error occurs.
+ *   - Uses WOW_REALM_KEY and WOW_REGION_KEY constants to access localStorage data.
  */
 export const getWoWRealmDataFromLocalStorage = () => {
   try {
@@ -49,7 +48,7 @@ export const getWoWRealmDataFromLocalStorage = () => {
 /**
  * Stores WoW realm and region data in localStorage.
  * @example
- * storeWoWData(serverData, serverRegion)
+ * setWoWRealmDataInLocalStorage(serverData, serverRegion)
  * { success: true }
  * @param {WoWServerData} realm - The WoW server data to be stored.
  * @param {WoWServerRegion} region - The WoW server region data to be stored.
