@@ -40,7 +40,7 @@ const GetListing: ({
   world,
   initialDays,
   endDays
-/**
+}: /**
  * Sends a POST request to fetch listing information based on provided parameters.
  * @example
  * sync({ itemId: 123, world: 'Ultros', initialDays: 1, endDays: 7 })
@@ -56,7 +56,7 @@ const GetListing: ({
  *   - Makes a network request to the endpoint defined by 'address' variable.
  *   - Intended for use in fetching game data listings in FFXIV.
  */
-}: GetListingProps) => Promise<Response> = async ({
+GetListingProps) => Promise<Response> = async ({
   itemId,
   world,
   initialDays,

@@ -14,16 +14,17 @@ export const getSaddlebagWoWLink =
    *   - Uses `itemID` to form the URL for the link.
    *   - Provides a tooltip with item-specific information.
    */
-  (title: string) =>
-  ({ row }: { row: { itemID: number } }) => {
-    const itemID = row.itemID
-    if (typeof itemID !== 'number') return null
 
-    return (
-      <ExternalLink
-        link={`https://saddlebagexchange.com/wow/item-data/${itemID}`}
-        text={title}
-        tooltip={`Best Data For item ${itemID}`}
-      />
-    )
-  }
+    (title: string) =>
+    ({ row }: { row: { itemID: number } }) => {
+      const itemID = row.itemID
+      if (typeof itemID !== 'number') return null
+
+      return (
+        <ExternalLink
+          link={`https://saddlebagexchange.com/wow/item-data/${itemID}`}
+          text={title}
+          tooltip={`Best Data For item ${itemID}`}
+        />
+      )
+    }

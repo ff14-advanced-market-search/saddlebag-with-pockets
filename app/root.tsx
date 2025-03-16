@@ -57,15 +57,15 @@ import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
 
 /**
-* Generates the basic HTML structure with linked resources and error boundaries.
-* @example
-* createHtmlStructure()
-* returns the complete HTML layout wrapped in JSX.
-* @returns {JSX.Element} The JSX representation of an HTML document with <head> and <body> sections.
-* @description
-*   - The returned HTML includes error boundaries within the <main> tag to manage rendering errors effectively.
-*   - This function encapsulates the structure within a single return statement, simplifying the JSX tree.
-*/
+ * Generates the basic HTML structure with linked resources and error boundaries.
+ * @example
+ * createHtmlStructure()
+ * returns the complete HTML layout wrapped in JSX.
+ * @returns {JSX.Element} The JSX representation of an HTML document with <head> and <body> sections.
+ * @description
+ *   - The returned HTML includes error boundaries within the <main> tag to manage rendering errors effectively.
+ *   - This function encapsulates the structure within a single return statement, simplifying the JSX tree.
+ */
 export const ErrorBoundary = () => {
   return (
     <html>
@@ -122,16 +122,16 @@ export type LoaderData = {
 }
 
 /**
-* Retrieves user session data and constructs a response with site and session information.
-* @example
-* sync({ request, context })
-* // Returns JSON object with site_name, data_center, world, wowRealm, and wowRegion
-* @param {Object} {request, context} - Contains request data and context information.
-* @returns {Object} JSON object containing site name, data center, world, WoW realm, and region.
-* @description
-*   - Fetches user session data using the provided request object.
-*   - Defaults site name to "Saddlebag Exchange" if none is provided in the context.
-*/
+ * Retrieves user session data and constructs a response with site and session information.
+ * @example
+ * sync({ request, context })
+ * // Returns JSON object with site_name, data_center, world, wowRealm, and wowRegion
+ * @param {Object} {request, context} - Contains request data and context information.
+ * @returns {Object} JSON object containing site name, data center, world, WoW realm, and region.
+ * @description
+ *   - Fetches user session data using the provided request object.
+ *   - Defaults site name to "Saddlebag Exchange" if none is provided in the context.
+ */
 export const loader: LoaderFunction = async ({ request, context }) => {
   const { getWorld, getDataCenter, getWoWSessionData } =
     await getUserSessionData(request)

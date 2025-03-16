@@ -80,17 +80,17 @@ export interface RegionUndercutResponse {
 }
 
 /**
-* Sends a POST request to the WoW RegionUndercut API endpoint with specified data.
-* @example
-* sync({ homeRealmId: 123, region: 'US', addonData: { someKey: 'someValue' } })
-* // some sample return value
-* @param {object} {homeRealmId, region, addonData} - The data to be sent in the request.
-* @returns {Promise<Response>} A promise that resolves to the response from the API.
-* @description
-*   - Ensure that the address variable is properly defined and points to the correct API base URL.
-*   - The request requires JSON-formatted data to be passed in the body.
-*   - The 'User-Agent' header must conform to the server's expected value for successful authentication.
-*/
+ * Sends a POST request to the WoW RegionUndercut API endpoint with specified data.
+ * @example
+ * sync({ homeRealmId: 123, region: 'US', addonData: { someKey: 'someValue' } })
+ * // some sample return value
+ * @param {object} {homeRealmId, region, addonData} - The data to be sent in the request.
+ * @returns {Promise<Response>} A promise that resolves to the response from the API.
+ * @description
+ *   - Ensure that the address variable is properly defined and points to the correct API base URL.
+ *   - The request requires JSON-formatted data to be passed in the body.
+ *   - The 'User-Agent' header must conform to the server's expected value for successful authentication.
+ */
 const RegionUndercutRequest = async ({
   homeRealmId,
   region,

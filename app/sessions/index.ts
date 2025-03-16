@@ -30,18 +30,18 @@ const getFF14WorldAndDataCenter = (session: Session) => {
 }
 
 /**
-* Retrieves World of Warcraft session details and validates server and region.
-* @example
-* getSessionDetails(session)
-* true
-* @param {Session} session - Current session object containing WoW details.
-* @returns {boolean} Whether the server and region are valid.
-* @description
-*   - Defaults WoW realm ID to 'NA' if not present in the session.
-*   - WoW region will be 'undefined' if not available in the session.
-*   - WoW realm name will be 'undefined' if not available in the session.
-*   - Validates server and region integration using external function.
-*/
+ * Retrieves World of Warcraft session details and validates server and region.
+ * @example
+ * getSessionDetails(session)
+ * true
+ * @param {Session} session - Current session object containing WoW details.
+ * @returns {boolean} Whether the server and region are valid.
+ * @description
+ *   - Defaults WoW realm ID to 'NA' if not present in the session.
+ *   - WoW region will be 'undefined' if not available in the session.
+ *   - WoW realm name will be 'undefined' if not available in the session.
+ *   - Validates server and region integration using external function.
+ */
 const getUserWoWSessionData = (session: Session) => {
   const sessionWoWRealm = session.has(WOW_REALM_ID)
     ? session.get(WOW_REALM_ID)
@@ -63,18 +63,18 @@ const getUserWoWSessionData = (session: Session) => {
 }
 
 /**
-* Retrieves game-related session data for a user based on request cookies.
-* @example
-* getUserSessionData(request)
-* { getWorld: [Function], getDataCenter: [Function], getWoWSessionData: [Function], getAllUserSessionData: [Function] }
-* @param {Request} request - The request object containing session and cookie information.
-* @returns {Object} An object containing methods to access various session data.
-* @description
-*   - Utilizes cookies to find specific game session information for FF14 and WoW.
-*   - Provides methods to access world and data center information for FF14.
-*   - Validates, retrieves, and constructs WoW session information including server region.
-*   - Combines both FF14 and WoW data into a single comprehensive session data object.
-*/
+ * Retrieves game-related session data for a user based on request cookies.
+ * @example
+ * getUserSessionData(request)
+ * { getWorld: [Function], getDataCenter: [Function], getWoWSessionData: [Function], getAllUserSessionData: [Function] }
+ * @param {Request} request - The request object containing session and cookie information.
+ * @returns {Object} An object containing methods to access various session data.
+ * @description
+ *   - Utilizes cookies to find specific game session information for FF14 and WoW.
+ *   - Provides methods to access world and data center information for FF14.
+ *   - Validates, retrieves, and constructs WoW session information including server region.
+ *   - Combines both FF14 and WoW data into a single comprehensive session data object.
+ */
 async function getUserSessionData(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
   const cookieHeader = request.headers.get('Cookie') || ''
@@ -96,18 +96,18 @@ async function getUserSessionData(request: Request) {
   }
 
   /**
-  * Retrieves server and region data from cookies or session information.
-  * @example
-  * functionName()
-  * some sample return value
-  * @param {object} session - Session object containing user session data.
-  * @returns {object|null} Validated server and region data or user WoW session data.
-  * @description
-  *   - Uses predefined constants WOW_REGION, WOW_REALM_ID, WOW_REALM_NAME to get cookie values.
-  *   - Calls validateServerAndRegion if all necessary cookies are present.
-  *   - Falls back to getUserWoWSessionData if cookies are not set.
-  *   - Assumes WoWServerRegion type for region validation.
-  */
+   * Retrieves server and region data from cookies or session information.
+   * @example
+   * functionName()
+   * some sample return value
+   * @param {object} session - Session object containing user session data.
+   * @returns {object|null} Validated server and region data or user WoW session data.
+   * @description
+   *   - Uses predefined constants WOW_REGION, WOW_REALM_ID, WOW_REALM_NAME to get cookie values.
+   *   - Calls validateServerAndRegion if all necessary cookies are present.
+   *   - Falls back to getUserWoWSessionData if cookies are not set.
+   *   - Assumes WoWServerRegion type for region validation.
+   */
   const getWoWData = () => {
     const regionCookie = getCookieValue(WOW_REGION)
     const realmIdCookie = getCookieValue(WOW_REALM_ID)

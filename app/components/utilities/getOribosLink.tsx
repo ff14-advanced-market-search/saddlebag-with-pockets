@@ -25,22 +25,23 @@ export const getOribosLink =
    *   - Defaults to 'us' region in the link if 'EU' is not specified.
    *   - Returns null if 'itemID' is not a number or 'serverName' is undefined.
    */
-  (serverName: string | undefined, title: string, region?: WoWServerRegion) =>
-  ({ row }: { row: { itemID: number } }) => {
-    const itemId = row.itemID
-    if (typeof itemId !== 'number') return null
 
-    if (!serverName) return null
+    (serverName: string | undefined, title: string, region?: WoWServerRegion) =>
+    ({ row }: { row: { itemID: number } }) => {
+      const itemId = row.itemID
+      if (typeof itemId !== 'number') return null
 
-    const parsedServerName = parseServerName(serverName)
+      if (!serverName) return null
 
-    const regionForLink = region === 'EU' ? 'eu' : 'us'
+      const parsedServerName = parseServerName(serverName)
 
-    return (
-      <ExternalLink
-        link={`https://undermine.exchange/#${regionForLink}-${parsedServerName}/${itemId}`}
-        text={title}
-        tooltip={`Undermine Marketplace For ${serverName}`}
-      />
-    )
-  }
+      const regionForLink = region === 'EU' ? 'eu' : 'us'
+
+      return (
+        <ExternalLink
+          link={`https://undermine.exchange/#${regionForLink}-${parsedServerName}/${itemId}`}
+          text={title}
+          tooltip={`Undermine Marketplace For ${serverName}`}
+        />
+      )
+    }

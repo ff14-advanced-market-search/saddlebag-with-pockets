@@ -27,7 +27,7 @@ export type SelfPurchaseResults =
 const SelfPurchaseRequest: ({
   server,
   playerName
-/**
+}: /**
  * Sends a purchase request to the server for a specific player.
  * @example
  * sync({ server: 'Aether', playerName: 'WarriorOfLight' })
@@ -38,7 +38,7 @@ const SelfPurchaseRequest: ({
  *   - Ensures that the request body is properly formatted as JSON.
  *   - Utilizes the specified server address and user agent for the request.
  */
-}: SelfPurchaseProps) => Promise<Response> = async ({ server, playerName }) => {
+SelfPurchaseProps) => Promise<Response> = async ({ server, playerName }) => {
   return fetch(`${address}/api/selfpurchase`, {
     method: 'POST',
     headers: {
