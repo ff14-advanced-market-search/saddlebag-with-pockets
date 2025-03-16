@@ -205,8 +205,7 @@ const ItemPage = () => {
           <ContentContainer>
             <>
               <TitleH2 title={`${data.itemName} Current Listings`} />
-              {listing &&
-              'listings' in listing ? (
+              {listing && 'listings' in listing ? (
                 <ListingResults data={listing} />
               ) : (
                 <NoResults title={`No listings data for ${data.itemName}`} />
