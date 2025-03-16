@@ -4,7 +4,7 @@ import Filter from '../Filter'
  * Renders a Filter component with specified properties.
  * @example
  * ItemsFilter({
- *   defaultFilters: [1, 2], 
+ *   defaultFilters: [1, 2],
  *   formName: 'myFilter',
  *   onChange: (ids) => console.log(ids)
  * })
