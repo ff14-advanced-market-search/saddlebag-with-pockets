@@ -38,6 +38,30 @@ interface LegacyMarketshareProps {
 
 const LegacyMarketshare: (
   props: LegacyMarketshareProps
+  /**
+   * Sends a request to the server to synchronize the legacy market data for World of Warcraft.
+   * @example
+   * sync({
+   *   homeRealmId: 123,
+   *   desiredSalesPerDay: 50,
+   *   desiredAvgPrice: 100,
+   *   itemClass: 'Weapon',
+   *   itemSubClass: 'Sword',
+   *   sortBy: 'price'
+   * })
+   * Promise resolves with server response.
+   * @param {number} {homeRealmId} - Identifier for the realm to which the request pertains.
+   * @param {number} {desiredSalesPerDay} - Target number of sales expected per day.
+   * @param {number} {desiredAvgPrice} - Target average price criteria for the items.
+   * @param {string} {itemClass} - Primary categorization for the item types.
+   * @param {string} {itemSubClass} - Secondary categorization within the item class.
+   * @param {string} {sortBy} - Conditions to sort the result set, e.g., by 'price' or 'sales'.
+   * @returns {Promise<Response>} Promise resolving to the server's response object.
+   * @description
+   *   - Endpoint: `${address}/api/wow/legacymarket`.
+   *   - Requires authentication headers related to the application's User-Agent.
+   *   - Utilizes HTTP POST method for transmitting JSON payloads.
+   */
 ) => Promise<Response> = async ({
   homeRealmId,
   desiredSalesPerDay,

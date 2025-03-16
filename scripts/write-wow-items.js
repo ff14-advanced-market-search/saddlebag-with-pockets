@@ -20,6 +20,20 @@ const INVALID_STRINGS = [
   '=>'
 ]
 
+/**
+* Validates an item ID and item name and returns a sanitized item name.
+* @example
+* functionName("123", "example_item")
+* "example item"
+* @param {string} id - The ID of the item, which should be a numeric string.
+* @param {string} itemName - The name of the item, which should be a non-empty string.
+* @returns {string|undefined} Returns the sanitized item name if valid; otherwise, returns undefined.
+* @description
+*   - Returns undefined if ID or item name is null, non-string, or empty.
+*   - Returns undefined if the ID contains any non-numeric characters.
+*   - Checks against invalid strings in a global array `INVALID_STRINGS`.
+*   - Replaces non-breaking spaces in the item name with regular spaces.
+*/
 const validateItem = (id, itemName) => {
   if (id == null || itemName == null) {
     return undefined
@@ -48,6 +62,17 @@ const validateItem = (id, itemName) => {
   return isInvalid ? undefined : itemName.replace('\u00a0', ' ')
 }
 
+/**
+ * Fetches items from a specified address and returns the response data.
+ * @example
+ * sync()
+ * some sample return value
+ * @returns {Object} Returns the fetched data from the specified address.
+ * @description
+ *   - Utilizes 'axios' for making HTTP requests and handles exceptions.
+ *   - Logs the error message and terminates the process in case of any request failure.
+ *   - Operates asynchronously using 'await' in an async function.
+ */
 const getItems = async () => {
   try {
     console.log('Fetching items from:', ITEMS_ADDRESS)
@@ -65,6 +90,19 @@ const getItems = async () => {
   }
 }
 
+/**
+ * Synchronizes a collection of items by validating them and writing to a file.
+ * @example
+ * sync({ item1: 'value1', item2: 'value2' })
+ * No# of items successfully written: 2
+ * @param {Object} items - Collection of items with unique identifiers.
+ * @returns {void} No value is returned when execution completes.
+ * @description
+ *   - Writes to FILE_PATH defined in the script.
+ *   - Expects each item to be validated using validateItem function.
+ *   - Exits the process with error if no items are valid for writing.
+ *   - Asynchronously writes JSON to a file using writeFile.
+ */
 const saveItemList = async (items) => {
   console.log('Writing file...')
 

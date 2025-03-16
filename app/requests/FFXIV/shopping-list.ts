@@ -29,6 +29,21 @@ export interface GetShoppingListResponse {
   data: Array<ShoppingListItem>
 }
 
+/**
+ * Executes a network request to fetch a shopping list.
+ * @example
+ * sync({ homeServer: 'server1', shoppingList: ['item1', 'item2'], regionWide: true })
+ * Promise { <pending> }
+ * @param {Object} {GetShoppingListInput} - An object containing the necessary input parameters.
+ * @param {string} {homeServer} - The server from which the shopping list is fetched.
+ * @param {Array} {shoppingList} - The list of items to be included in the shopping list.
+ * @param {boolean} {regionWide} - A flag indicating if the list fetch is region-wide.
+ * @returns {Promise<Response>} A promise that resolves to the response of the fetch request.
+ * @description
+ *   - This function uses the Fetch API to send a POST request to a specific endpoint.
+ *   - It serializes the request body as JSON.
+ *   - Sets the 'Content-Type' header to 'application/json' for the request.
+ */
 const GetShoppingList = async ({
   homeServer,
   shoppingList,
