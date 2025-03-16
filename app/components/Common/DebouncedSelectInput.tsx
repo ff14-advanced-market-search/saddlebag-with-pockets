@@ -126,7 +126,7 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
               id={id}
               onDebouncedChange={handleDebounceChange}
               className={inputClassname}
-              list={`items-${  id}`}
+              list={`items-${id}`}
               name={formName}
               placeholder={placeholder}
               debounceTimer={debounceTimer}
@@ -139,7 +139,7 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
               id={id}
               onChange={handleChange}
               className={inputClassname}
-              list={`items-${  id}`}
+              list={`items-${id}`}
               name={formName}
               placeholder={placeholder}
               defaultValue={displayValue}
@@ -153,9 +153,9 @@ const DebouncedSelectInput = forwardRef<HTMLInputElement, Props>(
           )}
         </div>
         {items.length > 0 && (
-          <datalist id={`items-${  id}`}>
+          <datalist id={`items-${id}`}>
             {items.map((item) => (
-              <option key={`${item.value  }-${  item.label}`} value={item.label} />
+              <option key={`${item.value}-${item.label}`} value={item.label} />
             ))}
           </datalist>
         )}
