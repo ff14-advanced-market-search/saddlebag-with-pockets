@@ -1,0 +1,41 @@
+name: Fix
+ 
+on:
+  pull_request:
+    branches: master
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    if: github.actor != 'github-actions[bot]'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run lint:fix
+      - run: git add .
+
+      - uses: qoomon/actions--create-commit@v1
+        id: actions--create-commit
+        with:
+          message: |
+            🎨 pnpm run lint:fix
+
+            [dependabot skip]
+          skip-empty: true
+
+      - if: ${{ steps.actions--create-commit.outputs.commit }}
+        run: git push
