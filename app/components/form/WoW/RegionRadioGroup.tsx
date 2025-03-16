@@ -7,6 +7,19 @@ const regions: Array<{ label: string; value: WoWServerRegion }> = [
   { label: 'Europe', value: 'EU' }
 ]
 
+/**
+ * Region selection component with radio inputs for WoW server regions.
+ * @example
+ * onChange={(region) => console.log(region)}
+ * Renders radio buttons for 'NA' and 'EU' regions.
+ * @param {Function} onChange - Callback function invoked when the selected region changes.
+ * @param {WoWServerRegion} [defaultChecked='NA'] - The region that should be checked by default.
+ * @param {string} [title='Select your Region'] - Title label for the region selection component.
+ * @returns {JSX.Element} JSX structure for the region selection UI component with radio buttons.
+ * @description
+ *   - Allows for dynamic default selection of regions.
+ *   - Radio buttons are styled for dark mode compatibility.
+ */
 export const RegionRadioGroup = ({
   onChange,
   defaultChecked = 'NA',

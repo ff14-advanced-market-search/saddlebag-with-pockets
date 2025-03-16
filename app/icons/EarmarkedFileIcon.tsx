@@ -2,6 +2,19 @@ import type { FC, PropsWithChildren } from 'react'
 
 type SVGProps = PropsWithChildren<{ className: string }>
 
+/**
+ * Renders an SVG icon representing an earmarked file.
+ * @example
+ * EarmarkedFileIcon({ className: "icon-class" })
+ * // Returns an SVG component for display.
+ * @param {Object} props - Props containing styling information for the SVG element.
+ * @param {string} props.className - A string representing the CSS class for styling the SVG.
+ * @returns {JSX.Element} A JSX element rendering a file icon.
+ * @description
+ *   - The SVG uses "currentColor" for both stroke and fill, inheriting from the surrounding text.
+ *   - The default SVG dimensions are set to "1em" for scalable sizing.
+ *   - The function does not manage any user interactions or states.
+ */
 const EarmarkedFileIcon: FC<SVGProps> = (props) => {
   return (
     <svg

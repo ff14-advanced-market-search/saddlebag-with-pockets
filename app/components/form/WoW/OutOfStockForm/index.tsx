@@ -3,6 +3,18 @@ import { ExpansionSelect } from '../WoWScanForm'
 import Filter from '../../Filter'
 import { wowCategories } from '~/consts'
 
+/**
+ * Component that manages various input fields and filters for a form.
+ * @example
+ * renderFormComponent({ defaultValues: { expansionNumber: '1', includeCategories: '2,3', salesPerDay: '10' }, onFormChange: (name, value) => console.log(name, value) })
+ * @param {Object} defaultValues - Record containing default values keyed by input field names.
+ * @param {Function} onFormChange - Callback function invoked when the value in a form field is changed; takes the name of the field and the new value as its arguments.
+ * @returns {JSX.Element} A div containing a series of input components such as ExpansionSelect, Filter, and InputWithLabel.
+ * @description
+ *   - Utilizes helper functions to parse and convert category values to and from strings and arrays.
+ *   - Includes both minimum and maximum range validation for numeric input fields.
+ *   - Allows configuring multiple input components dynamically based on provided defaultValues.
+ */
 const OutOfStockForm = ({
   defaultValues,
   onFormChange

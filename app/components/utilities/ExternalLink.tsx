@@ -7,6 +7,21 @@ type Props = {
   tooltip?: string
 }
 
+/**
+ * Renders an external link with a styled text and an icon.
+ * @example
+ * externalLink({ link: 'https://example.com', text: 'Visit Site', tooltip: 'Click to visit' })
+ * <a href="https://example.com" target="_blank" title="Click to visit"><span className="...">Visit Site<LinkIcon /></span></a>
+ * @param {Object} params - The parameters for rendering the link.
+ * @param {string} params.link - The URL of the external link.
+ * @param {string} params.text - The text displayed for the link.
+ * @param {string} params.tooltip - The text displayed on hover as a tooltip.
+ * @returns {JSX.Element} A JSX element representing the styled external link.
+ * @description
+ *   - The link opens in a new tab.
+ *   - The link includes a hover effect that scales the text.
+ *   - An icon is displayed next to the text.
+ */
 const ExternalLink: FC<Props> = ({ link, text, tooltip }) => {
   return (
     <a href={link} target={`_blank`} title={tooltip}>

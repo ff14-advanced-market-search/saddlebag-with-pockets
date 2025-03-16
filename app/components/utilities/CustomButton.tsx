@@ -8,6 +8,20 @@ type Props = {
   buttonText: string
 }
 
+/**
+ * Renders a button that links to an external page.
+ * @example
+ * renderExternalLink({ link: 'https://example.com', buttonText: 'Visit Example' })
+ * // Returns JSX component with a styled link button
+ * @param {Object} params - The parameters object.
+ * @param {string} params.link - The URL that the button will navigate to.
+ * @param {string} params.buttonText - The text displayed on the button.
+ * @returns {JSX.Element} A styled button component with a link icon.
+ * @description
+ *   - Opens the link in a new browser tab.
+ *   - Applies hover effect to the button to indicate interactivity.
+ *   - Utilizes Tailwind CSS utility classes for styling.
+ */
 const CustomButton: FC<Props> = ({ link, buttonText }) => {
   return (
     <NavLink to={link} target="_blank" title={buttonText}>
