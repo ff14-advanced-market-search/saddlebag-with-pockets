@@ -24,8 +24,9 @@ const recommendedQueries = [
     href: '/blog/wow/tldr'
   },
   {
-    name: 'How to make gold in WoW with cross realm trading',
-    description: 'Easy 4 step method to making gold.',
+    name: 'Preparing for Mythic+: Key Points',
+    description:
+      'How to best prepare and properly complete Mythic+ dungeons in World of Warcraft, where you can get the best weapons and gear',
     Icon: DocumentSearchIcon,
     href: '/blog/wow/skycoach'
   },
