@@ -24,6 +24,13 @@ const recommendedQueries = [
     href: '/blog/wow/tldr'
   },
   {
+    name: 'Preparing for Mythic+: Key Points',
+    description:
+      'How to best prepare and properly complete Mythic+ dungeons in World of Warcraft, where you can get the best weapons and gear',
+    Icon: DocumentSearchIcon,
+    href: '/blog/wow/skycoach'
+  },
+  {
     name: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
     description:
       'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts. Master the Marketboard with real-time notifications.',
