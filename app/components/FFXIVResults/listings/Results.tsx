@@ -33,7 +33,7 @@ const GenericLineChart = ({
   xCategories
 }: {
   darkMode: boolean
-  data: Array<number>
+  data: number[]
   chartTitle?: string
   xTitle?: string
   yTitle?: string
