@@ -26,7 +26,7 @@ const MythicPlusGuide = () => {
           Join Our Discord for access to our best tools!
         </span>
         <a
-          href="https://discord.gg/your-discord"
+          href="https://discord.gg/saddlebag-exchange-973380473281724476"
           className="text-blue-600 hover:text-blue-800">
           Discord →
         </a>
@@ -65,7 +65,7 @@ const MythicPlusGuide = () => {
         <p className="text-gray-700">
           In this guide, we will analyze the main ideas and tips for your
           successful{' '}
-          <a href="#" className="text-blue-600 hover:underline">
+          <a href="https://skycoach.gg/wow-boost/dungeons" className="text-blue-600 hover:underline">
             mythic plus carry
           </a>{' '}
           in raids, where teamwork, speed and confident actions in your roles
@@ -239,7 +239,7 @@ const MythicPlusGuide = () => {
           Studying the game maps and understanding the correct and quick
           direction on the way to the boss is the key to a successful and
           correct{' '}
-          <a href="#" className="text-blue-600 hover:underline">
+          <a href="https://skycoach.gg/wow-boost/dungeons" className="text-blue-600 hover:underline">
             WoW Mythic+ raid carry
           </a>
           .
