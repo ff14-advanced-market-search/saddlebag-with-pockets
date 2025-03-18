@@ -1462,6 +1462,10 @@ select {
   max-width: 20rem;
 }
 
+.max-w-\[800px\] {
+  max-width: 800px;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
