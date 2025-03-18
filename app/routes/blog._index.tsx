@@ -24,6 +24,12 @@ const recommendedQueries = [
     href: '/blog/wow/tldr'
   },
   {
+    name: 'How to make gold in WoW with cross realm trading',
+    description: 'Easy 4 step method to making gold.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/wow/skycoach'
+  },
+  {
     name: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
     description:
       'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts. Master the Marketboard with real-time notifications.',
