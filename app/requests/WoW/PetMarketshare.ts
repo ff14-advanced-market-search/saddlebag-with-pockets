@@ -1,5 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
-import type { WoWServerRegion } from '../WOWScan'
+import type { WoWServerRegion } from './WOWScan'
 import type { WoWMarketState } from './types'
 
 export interface PetMarketshareResponse {

@@ -121,6 +121,10 @@ const undercutColumns: Array<{ value: keyof UndercutItems; title: string }> = [
   {
     title: 'Connected Realm Id',
     value: 'connectedRealmId'
+  },
+  {
+    title: 'Export Link',
+    value: 'exportLink'
   }
 ]
 
@@ -391,10 +395,15 @@ const columnList: Array<ColumnList<UndercutItems>> = [
   { columnId: 'lowest_price', header: 'Lowest Price' },
   { columnId: 'realmName', header: 'Realm' },
   {
+    columnId: 'exportLink',
+    header: 'Where to Sell',
+    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
+  },
+  {
     columnId: 'link',
     header: 'Undermine Link',
     accessor: ({ getValue }) => (
-      <ExternalLink text="Undermine" link={getValue() as string} />
+      <ExternalLink text="" link={getValue() as string} />
     )
   }
 ]
