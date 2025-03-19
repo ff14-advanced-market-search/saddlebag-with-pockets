@@ -196,15 +196,17 @@ const RegionUndercut = () => {
         title="Region Undercuts"
         description={
           <>
-            See your undercuts region wide across all characters in one page
-            using our{' '}
+            <span className="dark:text-gray-200">
+              See your undercuts region wide across all characters in one page
+              using our
+            </span>{' '}
             <a
               href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
               target="_blank"
               rel="noreferrer"
-              className="text-blue-500 dark:text-blue-300 hover:underline">
+              className="text-blue-500 hover:underline">
               Undercut Tracker Addon.
-            </a>{' '}
+            </a>
           </>
         }
         onClick={handleSubmit}

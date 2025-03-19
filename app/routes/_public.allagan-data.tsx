@@ -132,15 +132,17 @@ const Index = () => {
         title="Allagan Data"
         description={
           <>
-            Input your Allagan generated data here, and we will turn it into
-            useful stuff!{' '}
-            <a
-              href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">
-              Learn more about the Allagan Tools Inventory Analysis.
-            </a>
+            <span className="dark:text-gray-200">
+              Input your Allagan generated data here, and we will turn it into
+              useful stuff!{' '}
+              <a
+                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 visited:text-purple-600 dark:visited:text-purple-400">
+                Learn more about the Allagan Tools Inventory Analysis.
+              </a>
+            </span>
           </>
         }
         onClick={handleSubmit}
