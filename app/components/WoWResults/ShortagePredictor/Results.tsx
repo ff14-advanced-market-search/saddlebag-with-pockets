@@ -8,6 +8,7 @@ import type { Prediction, PredictionResponse } from '~/requests/WoW/ShortagePred
 import MobileTable from '../FullScan/MobileTable'
 import { useChartModal } from './useChartModal'
 import DebouncedInput from '~/components/Common/DebouncedInput'
+import { ContentContainer, Title } from '~/components/Common'
 
 const mobileColumnList = [
   { columnId: 'item_name', header: 'Item Name' },
@@ -51,6 +52,9 @@ export const Results = ({
   return (
     <PageWrapper>
       <>
+        <ContentContainer>
+          <Title title={pageTitle} />
+        </ContentContainer>
         <PredictionTable
           results={results}
           onRowPress={handleRowPress}
@@ -78,7 +82,7 @@ const PredictionTable = ({
 }) => {
   const [globalFilter, setGlobalFilter] = useState('')
 
-  const OribosLink = getOribosLink('', 'Oribos', 'NA')
+  const OribosLink = getOribosLink('', '', 'NA')
 
   const columnList: Array<ColumnList<Prediction>> = [
     { columnId: 'item_name', header: 'Item Name' },
@@ -101,7 +105,7 @@ const PredictionTable = ({
     },
     {
       columnId: 'item_id',
-      header: 'Oribos Link',
+      header: 'Undermine',
       accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
     },
     { columnId: 'quality', header: 'Quality' },
