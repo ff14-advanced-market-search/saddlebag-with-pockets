@@ -84,11 +84,7 @@ const PredictionTable = ({
   const [globalFilter, setGlobalFilter] = useState('')
   const { wowRealm } = useTypedSelector((state) => state.user)
 
-  const OribosLink = getOribosLink(
-    wowRealm.server.name,
-    '',
-    wowRealm.region
-  )
+  const OribosLink = getOribosLink(wowRealm.server.name, '', wowRealm.region)
 
   const columnList: Array<ColumnList<Prediction>> = [
     { columnId: 'item_name', header: 'Item Name' },
