@@ -32,21 +32,7 @@ export interface Prediction {
   chart_q: Array<number>
 }
 
-export interface PredictionAuction {
-  desired_state: 'above' | 'below'
-  itemID: number
-  price: number
-}
-
-export interface AlertJson {
-  homeRealmName: string
-  region: WoWServerRegion
-  user_auctions: Array<PredictionAuction>
-}
-
 export interface PredictionResponse {
-  alert_item_names: Record<string, number>
-  alert_json: AlertJson
   data: Array<Prediction>
 }
 
