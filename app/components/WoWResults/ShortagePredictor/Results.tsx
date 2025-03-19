@@ -93,6 +93,15 @@ const PredictionTable = ({
   const columnList: Array<ColumnList<Prediction>> = [
     { columnId: 'item_name', header: 'Item Name' },
     {
+      columnId: 'quality',
+      header: 'Quality',
+      accessor: ({ getValue }) => {
+        const value = getValue()
+        if (value === '4') return <span>No Quality</span>
+        return <span>{'⭐'.repeat(value as number)}</span>
+      }
+    },
+    {
       columnId: 'chart_button',
       header: 'Last 24 Hours',
       accessor: ({ row }) => (
@@ -114,7 +123,6 @@ const PredictionTable = ({
       header: 'Oribos Link',
       accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
     },
-    { columnId: 'quality', header: 'Quality' },
     {
       columnId: 'current_price_vs_avg_percent',
       header: 'Price vs Avg %',
