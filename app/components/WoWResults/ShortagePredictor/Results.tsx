@@ -4,15 +4,15 @@ import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
-import { InputGenerator } from '~/components/WoWResults/ShortagePredictor/InputGenerator'
 import type {
-  AlertJson,
   Prediction,
   PredictionResponse
 } from '~/requests/WoW/ShortagePredictor'
 import MobileTable from '../FullScan/MobileTable'
 import { useChartModal } from './useChartModal'
 import DebouncedInput from '~/components/Common/DebouncedInput'
+import { ContentContainer, Title } from '~/components/Common'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 const mobileColumnList = [
   { columnId: 'item_name', header: 'Item Name' },
@@ -34,33 +34,6 @@ const mobileSelectOptions = [
   'current_price_vs_avg_percent'
 ]
 
-const getCodeString = (alertJson: AlertJson, idsToFiler: Array<number>) => {
-  return `{\n  "homeRealmName": "${alertJson.homeRealmName}",\n  "region": "${
-    alertJson.region
-  }",\n  "user_auctions": [${alertJson.user_auctions
-    .filter((auction) => !idsToFiler.includes(auction.itemID))
-    .map(({ itemID, price, desired_state }) => {
-      return `\n    { "itemID": ${itemID}, "price": ${price}, "desired_state": "${desired_state}" }`
-    })
-    .join(',')}\n  ]\n}`
-}
-
-/**
- * Processes prediction results and renders components based on data.
- * @example
- * processPrediction({
- *   results: sampleResults,
- *   pageTitle: "Sample Title"
- * })
- * Rendered components based on provided sampleResults.
- * @param {PredictionResponse} results - The prediction results data used for rendering components.
- * @param {string} pageTitle - The title of the page to be displayed.
- * @returns {JSX.Element} The rendered page components based on prediction results.
- * @description
- *   - Initializes a state for filtered IDs used in result processing.
- *   - Generates a code string based on alert JSON and filtered IDs.
- *   - Utilizes chart modal functionality to display chart data upon row selection.
- */
 export const Results = ({
   results,
   pageTitle
@@ -68,10 +41,6 @@ export const Results = ({
   results: PredictionResponse
   pageTitle: string
 }) => {
-  const [filteredIds, setFilteredIds] = useState<Array<number>>([])
-
-  const codeString = getCodeString(results.alert_json, filteredIds)
-
   const { ChartModal, setChartData } = useChartModal()
 
   const handleRowPress = (
@@ -87,45 +56,23 @@ export const Results = ({
   return (
     <PageWrapper>
       <>
-        <InputGenerator codeString={codeString} pageTitle={pageTitle} />
-        <PredictionTable
-          results={results}
-          setFilteredIds={setFilteredIds}
-          filteredIds={filteredIds}
-          onRowPress={handleRowPress}
-        />
+        <ContentContainer>
+          <Title title={pageTitle} />
+        </ContentContainer>
+        <PredictionTable results={results} onRowPress={handleRowPress} />
         <ChartModal />
       </>
     </PageWrapper>
   )
 }
 
-const excludeCols = ['item_id_filter', 'item_id', 'chart_button']
+const excludeCols = ['item_id', 'chart_button']
 
-/**
- * Generates a dynamic table interface to display predictions and manage item alerts.
- * @example
- * PredictionTable(predictionResponse, updateFilteredIds, existingFilteredIds, handleRowPress)
- * returns rendered JSX component for the table
- * @param {PredictionResponse} results - The data containing item predictions and associated information.
- * @param {Array<number>} filteredIds - List of item IDs that are excluded from alerts.
- * @param {Function} setFilteredIds - Function to update the list of excluded item IDs.
- * @param {Function} onRowPress - Function to handle row interactions, like displaying charts.
- * @returns {JSX.Element} A rendered React component as a table interface with alert and chart functionalities.
- * @description
- *   - Handles creation of columns for a table with custom accessors like checkboxes and buttons.
- *   - Provides CSV export functionality for the displayed data.
- *   - Integrates debounced input to filter results and toggleable components for different screen sizes.
- */
 const PredictionTable = ({
   results,
-  setFilteredIds,
-  filteredIds,
   onRowPress
 }: {
   results: PredictionResponse
-  filteredIds: Array<number>
-  setFilteredIds: (ids: Array<number>) => void
   onRowPress: (
     chart: {
       p: number[]
@@ -135,34 +82,19 @@ const PredictionTable = ({
   ) => void
 }) => {
   const [globalFilter, setGlobalFilter] = useState('')
+  const { wowRealm } = useTypedSelector((state) => state.user)
 
-  const homeRealmName = results.alert_json.homeRealmName
-
-  const region = results.alert_json.region
-
-  const OribosLink = getOribosLink(homeRealmName, 'Oribos', region)
+  const OribosLink = getOribosLink(wowRealm.server.name, '', wowRealm.region)
 
   const columnList: Array<ColumnList<Prediction>> = [
     { columnId: 'item_name', header: 'Item Name' },
     {
-      columnId: 'item_id_filter',
-      header: 'Added to Alert Input',
-      accessor: ({ row }) => {
-        const itemId = row.item_id
-        return (
-          <input
-            className="min-w-4 min-h-4 border-box rounded-md"
-            type="checkbox"
-            checked={!filteredIds.includes(itemId)}
-            onChange={(e) => {
-              if (filteredIds.includes(itemId)) {
-                setFilteredIds(filteredIds.filter((id) => id !== itemId))
-              } else {
-                setFilteredIds([...filteredIds, itemId])
-              }
-            }}
-          />
-        )
+      columnId: 'quality',
+      header: 'Quality',
+      accessor: ({ getValue }) => {
+        const value = getValue()
+        if (value === '4') return <span>No Quality</span>
+        return <span>{'⭐'.repeat(value as number)}</span>
       }
     },
     {
@@ -184,10 +116,21 @@ const PredictionTable = ({
     },
     {
       columnId: 'item_id',
-      header: 'Oribos Link',
+      header: 'Undermine',
       accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
     },
-    { columnId: 'quality', header: 'Quality' },
+    {
+      columnId: 'current_price_vs_avg_percent',
+      header: 'Price vs Avg %',
+      accessor: ({ getValue }) => {
+        const value = getValue()
+        if (typeof value === 'string') {
+          return <p>{Number.parseFloat(value).toFixed(2)}%</p>
+        }
+        return <p>{(value as number).toFixed(2)}%</p>
+      }
+    },
+    { columnId: 'current_price', header: 'Price' },
     {
       columnId: 'hours_til_shortage',
       header: 'Estimated Hours until Shortage'
@@ -216,20 +159,8 @@ const PredictionTable = ({
       header: 'Current Quantity Amount Available'
     },
     { columnId: 'avg_quantity', header: 'Avg Quantity' },
-    { columnId: 'current_price', header: 'Price' },
     { columnId: 'current_avg_price', header: 'Avg Price' },
-    { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
-    {
-      columnId: 'current_price_vs_avg_percent',
-      header: 'Price vs Avg %',
-      accessor: ({ getValue }) => {
-        const value = getValue()
-        if (typeof value === 'string') {
-          return <p>{parseFloat(value).toFixed(2)}%</p>
-        }
-        return <p>{(value as number).toFixed(2)}%</p>
-      }
-    }
+    { columnId: 'tsm_avg_price', header: 'TSM Avg Price' }
   ]
 
   const csvColumns = columnList
@@ -256,21 +187,22 @@ const PredictionTable = ({
         />
       </div>
       <div className="hidden sm:block">
-        <FullTable<Prediction>
+        <FullTable
           data={results.data}
           columnList={columnList}
-          sortingOrder={[{ id: 'quality', desc: true }]}
           globalFilter={globalFilter}
-          setGlobalFilter={setGlobalFilter}
+          sortingOrder={[{ id: 'quality', desc: true }]}
         />
       </div>
-      <MobileTable
-        data={results.data}
-        columnList={mobileColumnList}
-        rowLabels={columnList}
-        columnSelectOptions={mobileSelectOptions}
-        sortingOrder={[{ id: 'quality', desc: true }]}
-      />
+      <div className="sm:hidden">
+        <MobileTable
+          data={results.data}
+          columnList={mobileColumnList}
+          rowLabels={columnList}
+          columnSelectOptions={mobileSelectOptions}
+          sortingOrder={[{ id: 'quality', desc: true }]}
+        />
+      </div>
     </>
   )
 }
