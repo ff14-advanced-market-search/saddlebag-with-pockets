@@ -125,7 +125,7 @@ const PredictionTable = ({
       accessor: ({ getValue }) => {
         const value = getValue()
         if (typeof value === 'string') {
-          return <p>{parseFloat(value).toFixed(2)}%</p>
+          return <p>{Number.parseFloat(value).toFixed(2)}%</p>
         }
         return <p>{(value as number).toFixed(2)}%</p>
       }
