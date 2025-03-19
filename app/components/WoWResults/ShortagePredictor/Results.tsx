@@ -4,11 +4,15 @@ import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
-import type { Prediction, PredictionResponse } from '~/requests/WoW/ShortagePredictor'
+import type {
+  Prediction,
+  PredictionResponse
+} from '~/requests/WoW/ShortagePredictor'
 import MobileTable from '../FullScan/MobileTable'
 import { useChartModal } from './useChartModal'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import { ContentContainer, Title } from '~/components/Common'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 const mobileColumnList = [
   { columnId: 'item_name', header: 'Item Name' },
@@ -55,10 +59,7 @@ export const Results = ({
         <ContentContainer>
           <Title title={pageTitle} />
         </ContentContainer>
-        <PredictionTable
-          results={results}
-          onRowPress={handleRowPress}
-        />
+        <PredictionTable results={results} onRowPress={handleRowPress} />
         <ChartModal />
       </>
     </PageWrapper>
@@ -81,8 +82,13 @@ const PredictionTable = ({
   ) => void
 }) => {
   const [globalFilter, setGlobalFilter] = useState('')
+  const { wowRealm } = useTypedSelector((state) => state.user)
 
-  const OribosLink = getOribosLink('', '', 'NA')
+  const OribosLink = getOribosLink(
+    wowRealm.server.name,
+    'Oribos',
+    wowRealm.region
+  )
 
   const columnList: Array<ColumnList<Prediction>> = [
     { columnId: 'item_name', header: 'Item Name' },
@@ -105,10 +111,22 @@ const PredictionTable = ({
     },
     {
       columnId: 'item_id',
-      header: 'Undermine',
+      header: 'Oribos Link',
       accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
     },
     { columnId: 'quality', header: 'Quality' },
+    {
+      columnId: 'current_price_vs_avg_percent',
+      header: 'Price vs Avg %',
+      accessor: ({ getValue }) => {
+        const value = getValue()
+        if (typeof value === 'string') {
+          return <p>{parseFloat(value).toFixed(2)}%</p>
+        }
+        return <p>{(value as number).toFixed(2)}%</p>
+      }
+    },
+    { columnId: 'current_price', header: 'Price' },
     {
       columnId: 'hours_til_shortage',
       header: 'Estimated Hours until Shortage'
@@ -137,20 +155,8 @@ const PredictionTable = ({
       header: 'Current Quantity Amount Available'
     },
     { columnId: 'avg_quantity', header: 'Avg Quantity' },
-    { columnId: 'current_price', header: 'Price' },
     { columnId: 'current_avg_price', header: 'Avg Price' },
-    { columnId: 'tsm_avg_price', header: 'TSM Avg Price' },
-    {
-      columnId: 'current_price_vs_avg_percent',
-      header: 'Price vs Avg %',
-      accessor: ({ getValue }) => {
-        const value = getValue()
-        if (typeof value === 'string') {
-          return <p>{parseFloat(value).toFixed(2)}%</p>
-        }
-        return <p>{(value as number).toFixed(2)}%</p>
-      }
-    }
+    { columnId: 'tsm_avg_price', header: 'TSM Avg Price' }
   ]
 
   const csvColumns = columnList
