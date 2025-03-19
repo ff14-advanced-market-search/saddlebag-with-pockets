@@ -421,7 +421,7 @@ const columnList: Array<ColumnList<ExportItem>> = [
   { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'itemQuantity', header: 'Item Quantity' },
   { columnId: 'realmPopulationReal', header: 'Realm Population' },
-  { columnId: 'realmPopulationInt', header: 'Blizzard Realm Size' },
+  { columnId: 'realmPopulationType', header: 'Blizzard Realm Size' },
   { columnId: 'realmRanking', header: 'Realm Ranking' },
   {
     columnId: 'undermineLink',
