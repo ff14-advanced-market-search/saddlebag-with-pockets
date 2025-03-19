@@ -86,7 +86,7 @@ const PredictionTable = ({
 
   const OribosLink = getOribosLink(
     wowRealm.server.name,
-    'Oribos',
+    '',
     wowRealm.region
   )
 
@@ -120,7 +120,7 @@ const PredictionTable = ({
     },
     {
       columnId: 'item_id',
-      header: 'Oribos Link',
+      header: 'Undermine',
       accessor: ({ row }) => OribosLink({ row: { itemID: row.item_id } })
     },
     {
