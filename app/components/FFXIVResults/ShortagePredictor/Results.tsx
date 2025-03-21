@@ -274,8 +274,6 @@ const PredictionTable = ({
       }
     },
     { columnId: 'current_price', header: 'Current Price' },
-    { columnId: 'median_nq', header: 'NQ Median' },
-    { columnId: 'median_hq', header: 'HQ Median' },
     {
       columnId: 'hours_til_shortage',
       header: 'Estimated Hours until Shortage'
@@ -305,7 +303,9 @@ const PredictionTable = ({
     },
     { columnId: 'avg_quantity', header: 'Avg Quantity' },
     { columnId: 'current_avg_price', header: 'Current Avg Price' },
+    { columnId: 'median_nq', header: 'NQ Median' },
     { columnId: 'sales_amount_nq', header: 'NQ Sales' },
+    { columnId: 'median_hq', header: 'HQ Median' },
     { columnId: 'sales_amount_hq', header: 'HQ Sales' }
   ]
 
