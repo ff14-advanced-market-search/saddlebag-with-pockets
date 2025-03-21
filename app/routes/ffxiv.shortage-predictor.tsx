@@ -247,14 +247,6 @@ const Index = () => {
               handleFormChange('desiredSalesPerWeek', e.target.value)
             }
           />
-          <CheckBox
-            defaultChecked={loaderData.hqOnly}
-            name="hqOnly"
-            labelTitle="HQ Only"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleFormChange('hqOnly', e.target.checked)
-            }
-          />
           <InputWithLabel
             defaultValue={loaderData.desiredPriceVsMedianPercent}
             type="number"
@@ -277,6 +269,14 @@ const Index = () => {
             toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
             onChange={(e) =>
               handleFormChange('desiredQuantityVsAvgPercent', e.target.value)
+            }
+          />
+          <CheckBox
+            defaultChecked={loaderData.hqOnly}
+            name="hqOnly"
+            labelTitle="HQ Only"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange('hqOnly', e.target.checked)
             }
           />
         </div>
