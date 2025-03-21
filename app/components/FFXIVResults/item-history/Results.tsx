@@ -109,10 +109,12 @@ const Results = ({
     <ContentContainer>
       <>
         <TitleH2 title="Home Server Sales per Hour" />
-        <SalesByHourChart
-          data={data.home_server_sales_by_hour_chart}
-          darkMode={darkMode}
-        />
+        <ContentContainer>
+          <SalesByHourChart
+            data={data.home_server_sales_by_hour_chart}
+            darkMode={darkMode}
+          />
+        </ContentContainer>
       </>
     </ContentContainer>
   </div>
