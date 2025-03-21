@@ -1013,6 +1013,11 @@ select {
   margin-bottom: 1.5rem;
 }
 
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .-ml-1 {
   margin-left: -0.25rem;
 }
@@ -1233,10 +1238,6 @@ select {
   height: 2rem;
 }
 
-.h-9 {
-  height: 2.25rem;
-}
-
 .h-\[26px\] {
   height: 26px;
 }
@@ -1433,10 +1434,6 @@ select {
   max-width: 80rem;
 }
 
-.max-w-\[140px\] {
-  max-width: 140px;
-}
-
 .max-w-\[200px\] {
   max-width: 200px;
 }
@@ -1464,6 +1461,14 @@ select {
 
 .max-w-xs {
   max-width: 20rem;
+}
+
+.max-w-\[1200px\] {
+  max-width: 1200px;
+}
+
+.max-w-\[850px\] {
+  max-width: 850px;
 }
 
 .flex-1 {
@@ -3397,6 +3402,11 @@ select {
   color: rgb(219 234 254 / var(--tw-text-opacity));
 }
 
+:is(.dark .dark\:hover\:text-blue-200:hover) {
+  --tw-text-opacity: 1;
+  color: rgb(191 219 254 / var(--tw-text-opacity));
+}
+
 :is(.dark .dark\:hover\:text-gray-100:hover) {
   --tw-text-opacity: 1;
   color: rgb(243 244 246 / var(--tw-text-opacity));
@@ -3410,11 +3420,6 @@ select {
 :is(.dark .dark\:hover\:text-red-300:hover) {
   --tw-text-opacity: 1;
   color: rgb(252 165 165 / var(--tw-text-opacity));
-}
-
-:is(.dark .dark\:hover\:text-blue-200:hover) {
-  --tw-text-opacity: 1;
-  color: rgb(191 219 254 / var(--tw-text-opacity));
 }
 
 :is(.dark .dark\:focus\:border-gray-100:focus) {

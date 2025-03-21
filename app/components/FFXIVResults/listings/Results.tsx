@@ -108,6 +108,102 @@ const GenericLineChart = ({
   return <HighchartsReact highcharts={Highcharts} options={options} />
 }
 
+const CombinedPriceQuantityChart = ({
+  darkMode,
+  priceData,
+  quantityData,
+  chartTitle,
+  xCategories
+}: {
+  darkMode: boolean
+  priceData: number[]
+  quantityData: number[]
+  chartTitle: string
+  xCategories: string[]
+}) => {
+  const styles = darkMode
+    ? {
+        backgroundColor: '#334155',
+        color: 'white',
+        hoverColor: '#f8f8f8'
+      }
+    : {}
+
+  const options: Options = {
+    chart: {
+      type: 'line',
+      backgroundColor: styles?.backgroundColor,
+      height: 400,
+      spacingBottom: 5
+    },
+    legend: {
+      itemStyle: { color: styles?.color },
+      align: 'center',
+      itemHoverStyle: { color: styles?.hoverColor }
+    },
+    title: {
+      text: chartTitle,
+      style: { color: styles?.color },
+      margin: 20
+    },
+    yAxis: [
+      {
+        title: {
+          text: 'Price',
+          style: { color: styles?.color }
+        },
+        labels: { style: { color: styles?.color } },
+        lineColor: styles?.color,
+        min: 0,
+        softMax: Math.max(...priceData) * 1.1,
+        startOnTick: false,
+        endOnTick: false,
+        tickAmount: 8
+      },
+      {
+        title: {
+          text: 'Total Quantity',
+          style: { color: styles?.color }
+        },
+        labels: { style: { color: styles?.color } },
+        lineColor: styles?.color,
+        opposite: true,
+        min: 0,
+        softMax: Math.max(...quantityData) * 1.1,
+        startOnTick: false,
+        endOnTick: false,
+        tickAmount: 8
+      }
+    ],
+    xAxis: {
+      categories: xCategories,
+      labels: { style: { color: styles?.color } },
+      lineColor: styles?.color
+    },
+    series: [
+      {
+        name: 'Minimum Price',
+        type: 'area',
+        color: '#dae4ff',
+        data: priceData,
+        yAxis: 0
+      },
+      {
+        name: 'Total Quantity',
+        type: 'line',
+        color: '#fbb7b2',
+        data: quantityData,
+        yAxis: 1
+      }
+    ],
+    credits: {
+      enabled: false
+    }
+  }
+
+  return <HighchartsReact highcharts={Highcharts} options={options} />
+}
+
 /**
  * Renders price and time differences as well as a listing table based on the data provided.
  * @example
@@ -126,12 +222,42 @@ const Results = ({ data }: { data: ListingResponseType }) => {
   const xCategories = data.priceTimeData.map((_, hoursToDeduct, arr) =>
     makeTimeString({
       date: now,
-      hoursToDeduct: arr.length - hoursToDeduct
+      hoursToDeduct: arr.length - hoursToDeduct,
+      formatString: 'HH:mm'
     })
   )
 
   return (
     <>
+      {data.priceTimeData.length > 0 &&
+        data.quantityTimeData.length > 0 &&
+        data.priceTimeData.some((val) => val !== 0) &&
+        data.quantityTimeData.some((val) => val !== 0) && (
+          <ContentContainer>
+            <CombinedPriceQuantityChart
+              chartTitle="Price & Quanitity previous 24 hours"
+              darkMode={darkmode}
+              priceData={data.priceTimeData}
+              quantityData={data.quantityTimeData}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
+
+      {data.priceTimeDataHQ.length > 0 &&
+        data.quantityTimeDataHQ.length > 0 &&
+        data.priceTimeDataHQ.some((val) => val !== 0) &&
+        data.quantityTimeDataHQ.some((val) => val !== 0) && (
+          <ContentContainer>
+            <CombinedPriceQuantityChart
+              chartTitle="HQ Price & Quanitity previous 24 hours"
+              darkMode={darkmode}
+              priceData={data.priceTimeDataHQ}
+              quantityData={data.quantityTimeDataHQ}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
       <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
         {'listing_price_diff' in data && (
           <Differences
@@ -190,82 +316,6 @@ const Results = ({ data }: { data: ListingResponseType }) => {
       </div>
 
       <ListingTable data={data} />
-
-      {data.priceTimeData.length > 0 &&
-        data.priceTimeData.some((val) => val !== 0) && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Minimum Price Over Time"
-              darkMode={darkmode}
-              data={data.priceTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: data.priceTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-
-      {data.priceTimeDataHQ.length > 0 &&
-        data.priceTimeDataHQ.some((val) => val !== 0) && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="HQ Minimum Price Over Time"
-              darkMode={darkmode}
-              data={data.priceTimeDataHQ}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: data.priceTimeDataHQ.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-
-      {data.quantityTimeData.length > 0 &&
-        data.quantityTimeData.some((val) => val !== 0) && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Total Quantity Over Time"
-              darkMode={darkmode}
-              data={data.quantityTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: data.quantityTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-
-      {data.quantityTimeDataHQ.length > 0 &&
-        data.quantityTimeDataHQ.some((val) => val !== 0) && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="HQ Quantity Over Time"
-              darkMode={darkmode}
-              data={data.quantityTimeDataHQ}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: data.quantityTimeDataHQ.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
     </>
   )
 }

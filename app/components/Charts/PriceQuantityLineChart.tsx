@@ -59,14 +59,25 @@ export default function PriceQuantityLineChart({
       text: `${itemName} Price & Quanitity previous 24 hours`,
       style: { color: styles?.color }
     },
-    yAxis: {
-      title: {
-        text: 'Price & Quantity',
-        style: { color: styles?.color, textAlign: 'center' }
+    yAxis: [
+      {
+        title: {
+          text: 'Price',
+          style: { color: styles?.color, textAlign: 'center' }
+        },
+        labels: { style: { color: styles?.color }, align: 'center' },
+        lineColor: styles?.color
       },
-      labels: { style: { color: styles?.color }, align: 'center' },
-      lineColor: styles?.color
-    },
+      {
+        title: {
+          text: 'Total Quantity',
+          style: { color: styles?.color, textAlign: 'center' }
+        },
+        labels: { style: { color: styles?.color }, align: 'center' },
+        lineColor: styles?.color,
+        opposite: true
+      }
+    ],
 
     xAxis: {
       categories: xAxisCategories,
@@ -79,17 +90,19 @@ export default function PriceQuantityLineChart({
         data: prices.map<PointOptionsObject>((amount, index, array) => {
           return [getHourString(index, array.length), amount]
         }),
-        name: 'Avg Price per Hour',
+        name: 'Minimum Price',
         type: 'area',
-        color: '#dae4ff'
+        color: '#dae4ff',
+        yAxis: 0
       },
       {
         data: quantities.map<PointOptionsObject>((amount, index, array) => {
           return [getHourString(index, array.length), amount]
         }),
-        name: 'Avg Quantity per Hour',
+        name: 'Total Quantity',
         type: 'line',
-        color: '#fbb7b2'
+        color: '#fbb7b2',
+        yAxis: 1
       }
     ],
     credits: {
