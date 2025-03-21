@@ -205,10 +205,6 @@ const PredictionTable = ({
       header: 'Quantity Decline Rate per Hour'
     },
     {
-      columnId: 'avg_sale_rate_per_hour',
-      header: 'Sales Per Hour'
-    },
-    {
       columnId: 'current_quantity_vs_avg_percent',
       header: 'Quantity Percent Available',
       accessor: ({ getValue }) => {
@@ -225,6 +221,10 @@ const PredictionTable = ({
     },
     { columnId: 'avg_quantity', header: 'Avg Quantity' },
     { columnId: 'current_avg_price', header: 'Current Avg Price' },
+    {
+      columnId: 'avg_sale_rate_per_hour',
+      header: 'Regional Sales Per Hour'
+    },
     { columnId: 'median_nq', header: 'NQ Weekly Regional Median' },
     { columnId: 'sales_amount_nq', header: 'NQ Weekly Regional Sales' },
     { columnId: 'median_hq', header: 'HQ Weekly Regional Median' },
