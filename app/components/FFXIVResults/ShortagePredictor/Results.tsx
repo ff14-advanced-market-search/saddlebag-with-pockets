@@ -113,7 +113,7 @@ export const Results = ({
                   defaultFilters={state.filters}
                   onChange={(value) => {
                     if (value !== undefined) {
-                      setState(prev => ({...prev, filters: value}))
+                      setState((prev) => ({ ...prev, filters: value }))
                     }
                   }}
                 />
@@ -122,11 +122,19 @@ export const Results = ({
                   onClick={() => setModal('exportServers')}>
                   Choose Worlds to Compare
                 </ModalToggleButton>
-                <input name="exportServers" value={state.exportServers} hidden />
+                <input
+                  name="exportServers"
+                  value={state.exportServers}
+                  hidden
+                />
                 <input name="filters" value={state.filters.join(',')} hidden />
                 <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
                   {state.exportServers.length > 3 || !state.exportServers.length
-                    ? `${state.exportServers.length ? state.exportServers.length : 'No'} worlds selected`
+                    ? `${
+                        state.exportServers.length
+                          ? state.exportServers.length
+                          : 'No'
+                      } worlds selected`
                     : state.exportServers.map((name) => name).join(', ')}
                 </p>
                 <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
@@ -156,14 +164,14 @@ export const Results = ({
                         id={name}
                         onChange={() => {
                           if (isSelected) {
-                            setState(prev => ({
+                            setState((prev) => ({
                               ...prev,
                               exportServers: prev.exportServers.filter(
                                 (world) => world !== name
                               )
                             }))
                           } else {
-                            setState(prev => ({
+                            setState((prev) => ({
                               ...prev,
                               exportServers: [...prev.exportServers, name]
                             }))

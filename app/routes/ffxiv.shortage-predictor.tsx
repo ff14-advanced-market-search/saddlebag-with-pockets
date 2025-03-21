@@ -27,6 +27,7 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
+import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 
 const PAGE_URL = '/ffxiv/shortage-predictor'
 
@@ -56,6 +57,9 @@ const pageDescription =
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+  const session = await getUserSessionData(request)
+  formData.append('homeServer', session.getWorld())
+
   const formPayload = Object.fromEntries(formData)
 
   const validateFormData = z.object({
@@ -270,6 +274,14 @@ const Index = () => {
             onChange={(e) =>
               handleFormChange('desiredQuantityVsAvgPercent', e.target.value)
             }
+          />
+          <ItemsFilter
+            defaultFilters={loaderData.filters}
+            onChange={(value) => {
+              if (value !== undefined) {
+                handleFormChange('filters', value)
+              }
+            }}
           />
           <CheckBox
             defaultChecked={loaderData.hqOnly}
