@@ -90,7 +90,9 @@ export const Results = ({
 
                     return (
                       <CheckBox
-                        key={dataCenter + name + state.exportServers}
+                        key={`${dataCenter}-${name}-${state.exportServers.join(
+                          '_'
+                        )}`}
                         labelTitle={`-- ${name}`}
                         id={name}
                         onChange={() => {
