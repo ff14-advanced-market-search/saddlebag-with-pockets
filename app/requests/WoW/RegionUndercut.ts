@@ -1,5 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
-import type { WoWServerRegion } from '../WOWScan'
+import type { WoWServerRegion } from './WOWScan'
 
 interface PetAuction {
   petID: number
@@ -41,6 +41,7 @@ export interface UndercutItems {
   item_id: number
   item_name: string
   link: string
+  exportLink: string
   lowest_price: number
   realmName: string
   user_price: number
@@ -52,6 +53,7 @@ interface ResultByRealm {
     item_id: number
     item_name: string
     link: string
+    exportLink: string
     lowest_auction_id: number
     lowest_price: number
     price_found: boolean

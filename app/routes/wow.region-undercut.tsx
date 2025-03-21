@@ -121,6 +121,10 @@ const undercutColumns: Array<{ value: keyof UndercutItems; title: string }> = [
   {
     title: 'Connected Realm Id',
     value: 'connectedRealmId'
+  },
+  {
+    title: 'Export Link',
+    value: 'exportLink'
   }
 ]
 
@@ -196,15 +200,17 @@ const RegionUndercut = () => {
         title="Region Undercuts"
         description={
           <>
-            See your undercuts region wide across all characters in one page
-            using our{' '}
+            <span className="dark:text-gray-200">
+              See your undercuts region wide across all characters in one page
+              using our
+            </span>{' '}
             <a
               href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
               target="_blank"
               rel="noreferrer"
-              className="text-blue-500 dark:text-blue-300 hover:underline">
+              className="text-blue-500 hover:underline">
               Undercut Tracker Addon.
-            </a>{' '}
+            </a>
           </>
         }
         onClick={handleSubmit}
@@ -389,10 +395,15 @@ const columnList: Array<ColumnList<UndercutItems>> = [
   { columnId: 'lowest_price', header: 'Lowest Price' },
   { columnId: 'realmName', header: 'Realm' },
   {
+    columnId: 'exportLink',
+    header: 'Where to Sell',
+    accessor: ({ getValue }) => <ExternalLink link={getValue() as string} />
+  },
+  {
     columnId: 'link',
     header: 'Undermine Link',
     accessor: ({ getValue }) => (
-      <ExternalLink text="Undermine" link={getValue() as string} />
+      <ExternalLink text="" link={getValue() as string} />
     )
   }
 ]

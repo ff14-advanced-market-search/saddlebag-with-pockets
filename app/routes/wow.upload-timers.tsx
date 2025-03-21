@@ -44,7 +44,7 @@ const Index = () => {
     if ('data' in results) {
       return (
         <PageWrapper>
-          <h1>World of Warcraft API Upload Times</h1>
+          <h1 className="text-white">World of Warcraft API Upload Times</h1>
           <Banner />
           <SmallTable
             // title="Upload Timers"
