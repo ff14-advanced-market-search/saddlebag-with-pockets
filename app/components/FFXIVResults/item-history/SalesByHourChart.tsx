@@ -55,23 +55,26 @@ export default function SalesByHourChart({
       text: undefined,
       style: { color: styles?.color }
     },
-    yAxis: [{
-      title: {
-        text: 'No# of Sales',
-        style: { color: styles?.color, textAlign: 'center' }
+    yAxis: [
+      {
+        title: {
+          text: 'No# of Sales',
+          style: { color: styles?.color, textAlign: 'center' }
+        },
+        labels: { style: { color: styles?.color }, align: 'center' },
+        lineColor: styles?.color,
+        opposite: false
       },
-      labels: { style: { color: styles?.color }, align: 'center' },
-      lineColor: styles?.color,
-      opposite: false
-    }, {
-      title: {
-        text: 'No# of Sales',
-        style: { color: styles?.color, textAlign: 'center' }
-      },
-      labels: { style: { color: styles?.color }, align: 'center' },
-      lineColor: styles?.color,
-      opposite: true
-    }],
+      {
+        title: {
+          text: 'No# of Sales',
+          style: { color: styles?.color, textAlign: 'center' }
+        },
+        labels: { style: { color: styles?.color }, align: 'center' },
+        lineColor: styles?.color,
+        opposite: true
+      }
+    ],
 
     xAxis: {
       categories: xAxisCategories,

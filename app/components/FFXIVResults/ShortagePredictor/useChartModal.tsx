@@ -4,6 +4,12 @@ import PriceQuantityLineChart from '../../Charts/PriceQuantityLineChart'
 import Modal from '../../form/Modal'
 
 export const useChartModal = () => {
+  /**
+   * Chart data state type
+   * @property {number[]} p - Array of prices
+   * @property {number[]} q - Array of quantities
+   * @property {string} title - Chart title (usually item name)
+   */
   const [chartData, setChartData] = useState<{
     p: number[]
     q: number[]

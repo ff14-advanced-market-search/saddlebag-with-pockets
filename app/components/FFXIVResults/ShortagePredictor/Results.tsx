@@ -91,7 +91,7 @@ export const Results = ({
                     return (
                       <CheckBox
                         key={dataCenter + name + state.exportServers}
-                        labelTitle={'-- ' + name}
+                        labelTitle={`-- ${name}`}
                         id={name}
                         onChange={() => {
                           if (isSelected) {
@@ -143,7 +143,8 @@ const PredictionTable = ({
   ) => void
 }) => {
   const [globalFilter, setGlobalFilter] = useState('')
-  const { darkmode } = useTypedSelector((state) => state.user)
+  // If darkmode is needed later, uncomment the following line
+  // const { darkmode } = useTypedSelector((state) => state.user)
 
   const columnList: Array<ColumnList<Prediction>> = [
     { columnId: 'item_name', header: 'Item Name' },
@@ -172,6 +173,7 @@ const PredictionTable = ({
       header: 'Last 24 Hours',
       accessor: ({ row }) => (
         <button
+          type="button"
           className="inline-flex items-center rounded-md bg-black px-2.5 py-2 text-sm font-medium text-white"
           onClick={() =>
             onRowPress({
