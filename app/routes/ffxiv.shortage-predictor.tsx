@@ -290,7 +290,7 @@ const Index = () => {
             labelTitle="HQ Only"
             id="hq-only"
             name="hqOnly"
-            defaultChecked={true}
+            defaultChecked={false}
           />
         </div>
       </SmallFormContainer>
