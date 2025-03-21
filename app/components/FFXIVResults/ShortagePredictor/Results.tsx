@@ -12,6 +12,12 @@ import DebouncedInput from '~/components/Common/DebouncedInput'
 import { ContentContainer, Title } from '~/components/Common'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import MobileTable from '../../WoWResults/FullScan/MobileTable'
+import { WorldList } from '~/utils/locations/Worlds'
+import CheckBox from '~/components/form/CheckBox'
+import { InputWithLabel } from '~/components/form/InputWithLabel'
+import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
+import Modal from '~/components/form/Modal'
+import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 
 const mobileColumnList = [
   { columnId: 'item_name', header: 'Item Name' },
@@ -40,6 +46,14 @@ export const Results = ({
   pageTitle: string
 }) => {
   const { ChartModal, setChartData } = useChartModal()
+  const [modal, setModal] = useState<'exportServers' | null>(null)
+  const [state, setState] = useState<{
+    exportServers: string[]
+    filters: number[]
+  }>({
+    exportServers: [],
+    filters: [0]
+  })
 
   const handleRowPress = (
     chart: {
@@ -53,13 +67,118 @@ export const Results = ({
 
   return (
     <PageWrapper>
-      <>
+      <div className="flex flex-col w-full">
         <ContentContainer>
           <Title title={pageTitle} />
+          <div className="pt-4">
+            <div className="sm:px-4 flex flex-col gap-4">
+              <div className="flex flex-col max-w-full relative">
+                <InputWithLabel
+                  defaultValue={500}
+                  labelTitle="Minimum Desired Median Price"
+                  type="number"
+                  inputTag="Gil"
+                  name="desiredMedianPrice"
+                  min={0}
+                  toolTip="Find items that on average sell for this amount of gil or more."
+                />
+                <InputWithLabel
+                  defaultValue={400}
+                  labelTitle="Minimum Desired Sales Per Week"
+                  type="number"
+                  inputTag="Sales"
+                  name="desiredSalesPerWeek"
+                  min={0}
+                  toolTip="Finds items that have this many sales per week."
+                />
+                <InputWithLabel
+                  defaultValue={140}
+                  type="number"
+                  labelTitle="Current Price Percent Above Median"
+                  inputTag="%"
+                  name="desiredPriceVsMedianPercent"
+                  min={0}
+                  toolTip="What is the maximum price spike to look for? 140% means to only find items that are at most 40% above the median price."
+                />
+                <InputWithLabel
+                  defaultValue={50}
+                  type="number"
+                  labelTitle="Current Market Quantity Percentage"
+                  inputTag="%"
+                  name="desiredQuantityVsAvgPercent"
+                  min={0}
+                  toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
+                />
+                <ItemsFilter
+                  defaultFilters={state.filters}
+                  onChange={(value) => {
+                    if (value !== undefined) {
+                      setState(prev => ({...prev, filters: value}))
+                    }
+                  }}
+                />
+                <ModalToggleButton
+                  type="button"
+                  onClick={() => setModal('exportServers')}>
+                  Choose Worlds to Compare
+                </ModalToggleButton>
+                <input name="exportServers" value={state.exportServers} hidden />
+                <input name="filters" value={state.filters.join(',')} hidden />
+                <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
+                  {state.exportServers.length > 3 || !state.exportServers.length
+                    ? `${state.exportServers.length ? state.exportServers.length : 'No'} worlds selected`
+                    : state.exportServers.map((name) => name).join(', ')}
+                </p>
+                <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
+              </div>
+            </div>
+          </div>
         </ContentContainer>
         <PredictionTable results={results} onRowPress={handleRowPress} />
         <ChartModal />
-      </>
+        {modal && (
+          <Modal
+            title="Choose worlds to compare"
+            onClose={() => setModal(null)}>
+            <div>
+              {Object.entries(WorldList).map(([dataCenter, worlds]) => (
+                <div key={dataCenter}>
+                  <p className="text mt-1 font-semibold text-gray-800">
+                    {dataCenter}
+                  </p>
+                  {worlds.map(({ name }) => {
+                    const isSelected = state.exportServers.includes(name)
+
+                    return (
+                      <CheckBox
+                        key={dataCenter + name + state.exportServers}
+                        labelTitle={'-- ' + name}
+                        id={name}
+                        onChange={() => {
+                          if (isSelected) {
+                            setState(prev => ({
+                              ...prev,
+                              exportServers: prev.exportServers.filter(
+                                (world) => world !== name
+                              )
+                            }))
+                          } else {
+                            setState(prev => ({
+                              ...prev,
+                              exportServers: [...prev.exportServers, name]
+                            }))
+                          }
+                        }}
+                        checked={isSelected}
+                      />
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
+          </Modal>
+        )}
+      </div>
     </PageWrapper>
   )
 }
