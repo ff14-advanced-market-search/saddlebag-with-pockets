@@ -79,7 +79,7 @@ export default function PriceQuantityLineChart({
         data: prices.map<PointOptionsObject>((amount, index, array) => {
           return [getHourString(index, array.length), amount]
         }),
-        name: 'Avg Price per Hour',
+        name: 'Minimum Price',
         type: 'area',
         color: '#dae4ff'
       },
@@ -87,7 +87,7 @@ export default function PriceQuantityLineChart({
         data: quantities.map<PointOptionsObject>((amount, index, array) => {
           return [getHourString(index, array.length), amount]
         }),
-        name: 'Avg Quantity per Hour',
+        name: 'Total Quantity',
         type: 'line',
         color: '#fbb7b2'
       }
