@@ -95,14 +95,14 @@ export const Results = ({
                         id={name}
                         onChange={() => {
                           if (isSelected) {
-                            setState(prev => ({
+                            setState((prev) => ({
                               ...prev,
                               exportServers: prev.exportServers.filter(
                                 (world) => world !== name
                               )
                             }))
                           } else {
-                            setState(prev => ({
+                            setState((prev) => ({
                               ...prev,
                               exportServers: [...prev.exportServers, name]
                             }))
@@ -225,10 +225,10 @@ const PredictionTable = ({
     },
     { columnId: 'avg_quantity', header: 'Avg Quantity' },
     { columnId: 'current_avg_price', header: 'Current Avg Price' },
-    { columnId: 'median_nq', header: 'NQ Median' },
-    { columnId: 'sales_amount_nq', header: 'NQ Sales' },
-    { columnId: 'median_hq', header: 'HQ Median' },
-    { columnId: 'sales_amount_hq', header: 'HQ Sales' }
+    { columnId: 'median_nq', header: 'NQ Weekly Regional Median' },
+    { columnId: 'sales_amount_nq', header: 'NQ Weekly Regional Sales' },
+    { columnId: 'median_hq', header: 'HQ Weekly Regional Median' },
+    { columnId: 'sales_amount_hq', header: 'HQ Weekly Regional Sales' }
   ]
 
   const csvColumns = columnList
