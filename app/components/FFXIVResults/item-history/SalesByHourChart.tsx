@@ -62,7 +62,7 @@ export default function SalesByHourChart({
           style: { color: styles?.color, textAlign: 'center' }
         },
         labels: { style: { color: styles?.color }, align: 'center' },
-        lineColor: styles?.color,
+        lineColor: styles.color,
         opposite: false
       },
       {

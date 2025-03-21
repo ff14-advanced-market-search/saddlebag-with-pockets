@@ -10,14 +10,10 @@ import type {
 import { useChartModal } from '../../WoWResults/ShortagePredictor/useChartModal'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import { ContentContainer, Title } from '~/components/Common'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 import MobileTable from '../../WoWResults/FullScan/MobileTable'
 import { WorldList } from '~/utils/locations/Worlds'
 import CheckBox from '~/components/form/CheckBox'
-import { InputWithLabel } from '~/components/form/InputWithLabel'
-import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import Modal from '~/components/form/Modal'
-import { ModalToggleButton } from '~/components/form/Modal/ModalToggleButton'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 
@@ -148,7 +144,7 @@ const PredictionTable = ({
   // If darkmode is needed later, uncomment the following line
   // const { darkmode } = useTypedSelector((state) => state.user)
 
-  const columnList: Array<ColumnList<Prediction>> = [
+  const columnList: ColumnList<Prediction>[] = [
     { columnId: 'item_name', header: 'Item Name' },
     {
       columnId: 'item_id',
@@ -214,7 +210,7 @@ const PredictionTable = ({
       accessor: ({ getValue }) => {
         const value = getValue()
         if (typeof value === 'string') {
-          return <p>{parseFloat(value).toFixed(2)}%</p>
+          return <p>{Number.parseFloat(value).toFixed(2)}%</p>
         }
         return <p>{(value as number).toFixed(2)}%</p>
       }

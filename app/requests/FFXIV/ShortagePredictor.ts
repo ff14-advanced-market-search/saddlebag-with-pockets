@@ -40,7 +40,7 @@ export interface Prediction {
 }
 
 export interface PredictionResponse {
-  data: Array<Prediction>
+  data: Prediction[]
 }
 
 const FFXIVShortagePredictor: (

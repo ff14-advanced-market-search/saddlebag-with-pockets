@@ -97,7 +97,7 @@ export const action: ActionFunction = async ({ request }) => {
   return FFXIVShortagePredictor(validInput.data)
 }
 
-type ActionResponse = PredictionResponse | { exception: string } | {}
+type ActionResponse = PredictionResponse | { exception: string }
 
 export const meta: MetaFunction = () => {
   return {
@@ -142,22 +142,22 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 
   const input = {
-    homeServer: params.get('homeServer') || world,
+    homeServer: params.get('homeServer') ?? world,
     filters:
-      params.get('filters')?.split(',').map(Number) ||
+      params.get('filters')?.split(',').map(Number) ??
       defaultFormValues.filters,
     hqOnly: params.get('hqOnly') !== 'false',
     desiredMedianPrice:
-      params.get('desiredMedianPrice') ||
+      params.get('desiredMedianPrice') ??
       defaultFormValues.desiredMedianPrice.toString(),
     desiredSalesPerWeek:
-      params.get('desiredSalesPerWeek') ||
+      params.get('desiredSalesPerWeek') ??
       defaultFormValues.desiredSalesPerWeek.toString(),
     desiredPriceVsMedianPercent:
-      params.get('desiredPriceVsMedianPercent') ||
+      params.get('desiredPriceVsMedianPercent') ??
       defaultFormValues.desiredPriceVsMedianPercent.toString(),
     desiredQuantityVsAvgPercent:
-      params.get('desiredQuantityVsAvgPercent') ||
+      params.get('desiredQuantityVsAvgPercent') ??
       defaultFormValues.desiredQuantityVsAvgPercent.toString()
   }
 
