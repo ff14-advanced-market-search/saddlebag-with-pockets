@@ -34,7 +34,7 @@ const PAGE_URL = '/ffxiv/shortage-predictor'
 const defaultFormValues = {
   homeServer: 'Adamantoise',
   filters: [0],
-  hqOnly: false,
+  hqOnly: true,
   desiredMedianPrice: '500',
   desiredSalesPerWeek: '400',
   desiredPriceVsMedianPercent: '140',
@@ -68,7 +68,7 @@ export const action: ActionFunction = async ({ request }) => {
       (val) => (Array.isArray(val) ? val : [Number(val)]),
       z.array(z.number())
     ),
-    hqOnly: z.preprocess((val) => val === 'true', z.boolean()),
+    hqOnly: z.preprocess((val) => val === 'true' || val === true, z.boolean()),
     desiredMedianPrice: parseStringToNumber,
     desiredSalesPerWeek: parseStringToNumber,
     desiredPriceVsMedianPercent: parseStringToNumber,
@@ -131,7 +131,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       (val) => (Array.isArray(val) ? val : [Number(val)]),
       z.array(z.number())
     ),
-    hqOnly: z.preprocess((val) => val === 'true', z.boolean()),
+    hqOnly: z.preprocess((val) => val === 'true' || val === true, z.boolean()),
     desiredMedianPrice: parseStringToNumber,
     desiredSalesPerWeek: parseStringToNumber,
     desiredPriceVsMedianPercent: parseStringToNumber,
@@ -143,7 +143,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     filters:
       params.get('filters')?.split(',').map(Number) ||
       defaultFormValues.filters,
-    hqOnly: params.get('hqOnly') === 'true' || defaultFormValues.hqOnly,
+    hqOnly: params.get('hqOnly') !== 'false',
     desiredMedianPrice:
       params.get('desiredMedianPrice') ||
       defaultFormValues.desiredMedianPrice.toString(),
@@ -287,6 +287,8 @@ const Index = () => {
             defaultChecked={loaderData.hqOnly}
             name="hqOnly"
             labelTitle="HQ Only"
+            id="hq-only"
+            checked={searchParams.hqOnly}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleFormChange('hqOnly', e.target.checked)
             }
