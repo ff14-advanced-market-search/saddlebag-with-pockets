@@ -34,7 +34,7 @@ const PAGE_URL = '/ffxiv/shortage-predictor'
 const defaultFormValues = {
   homeServer: 'Adamantoise',
   filters: [0],
-  hqOnly: true,
+  hqOnly: false,
   desiredMedianPrice: '500',
   desiredSalesPerWeek: '400',
   desiredPriceVsMedianPercent: '140',
@@ -68,7 +68,10 @@ export const action: ActionFunction = async ({ request }) => {
       (val) => (Array.isArray(val) ? val : [Number(val)]),
       z.array(z.number())
     ),
-    hqOnly: z.preprocess((val) => val === 'true' || val === true, z.boolean()),
+    hqOnly: z.preprocess(
+      (val) => val === 'true' || val === true || val === 'on',
+      z.boolean()
+    ),
     desiredMedianPrice: parseStringToNumber,
     desiredSalesPerWeek: parseStringToNumber,
     desiredPriceVsMedianPercent: parseStringToNumber,
@@ -284,14 +287,10 @@ const Index = () => {
             }}
           />
           <CheckBox
-            defaultChecked={loaderData.hqOnly}
-            name="hqOnly"
             labelTitle="HQ Only"
             id="hq-only"
-            checked={searchParams.hqOnly}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleFormChange('hqOnly', e.target.checked)
-            }
+            name="hqOnly"
+            defaultChecked={true}
           />
         </div>
       </SmallFormContainer>
