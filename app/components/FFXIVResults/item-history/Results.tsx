@@ -95,16 +95,6 @@ const Results = ({
 
     <ContentContainer>
       <>
-        <TitleH2 title="Home Server Sales per Hour" />
-        <SalesByHourChart
-          data={data.home_server_sales_by_hour_chart}
-          darkMode={darkMode}
-        />
-      </>
-    </ContentContainer>
-
-    <ContentContainer>
-      <>
         <TitleH2 title="Region Wide Suspicious Sales" />
         {data.dirty_sales.length ? (
           <SuspiciousSaleTable data={data.dirty_sales} />
@@ -113,6 +103,16 @@ const Results = ({
             No suspicious sales found
           </p>
         )}
+      </>
+    </ContentContainer>
+
+    <ContentContainer>
+      <>
+        <TitleH2 title="Home Server Sales per Hour" />
+        <SalesByHourChart
+          data={data.home_server_sales_by_hour_chart}
+          darkMode={darkMode}
+        />
       </>
     </ContentContainer>
   </div>

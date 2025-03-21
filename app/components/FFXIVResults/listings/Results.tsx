@@ -229,6 +229,35 @@ const Results = ({ data }: { data: ListingResponseType }) => {
 
   return (
     <>
+      {data.priceTimeData.length > 0 &&
+        data.quantityTimeData.length > 0 &&
+        data.priceTimeData.some((val) => val !== 0) &&
+        data.quantityTimeData.some((val) => val !== 0) && (
+          <ContentContainer>
+            <CombinedPriceQuantityChart
+              chartTitle="Price & Quanitity previous 24 hours"
+              darkMode={darkmode}
+              priceData={data.priceTimeData}
+              quantityData={data.quantityTimeData}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
+
+      {data.priceTimeDataHQ.length > 0 &&
+        data.quantityTimeDataHQ.length > 0 &&
+        data.priceTimeDataHQ.some((val) => val !== 0) &&
+        data.quantityTimeDataHQ.some((val) => val !== 0) && (
+          <ContentContainer>
+            <CombinedPriceQuantityChart
+              chartTitle="HQ Price & Quanitity previous 24 hours"
+              darkMode={darkmode}
+              priceData={data.priceTimeDataHQ}
+              quantityData={data.quantityTimeDataHQ}
+              xCategories={xCategories}
+            />
+          </ContentContainer>
+        )}
       <div className="flex flex-col justify-around mx-3 my-1 sm:flex-row">
         {'listing_price_diff' in data && (
           <Differences
@@ -287,30 +316,6 @@ const Results = ({ data }: { data: ListingResponseType }) => {
       </div>
 
       <ListingTable data={data} />
-
-      {data.priceTimeData.length > 0 && data.quantityTimeData.length > 0 && (
-        <ContentContainer>
-          <CombinedPriceQuantityChart
-            chartTitle="Price & Quanitity previous 24 hours"
-            darkMode={darkmode}
-            priceData={data.priceTimeData}
-            quantityData={data.quantityTimeData}
-            xCategories={xCategories}
-          />
-        </ContentContainer>
-      )}
-
-      {data.priceTimeDataHQ.length > 0 && data.quantityTimeDataHQ.length > 0 && (
-        <ContentContainer>
-          <CombinedPriceQuantityChart
-            chartTitle="HQ Price & Quanitity previous 24 hours"
-            darkMode={darkmode}
-            priceData={data.priceTimeDataHQ}
-            quantityData={data.quantityTimeDataHQ}
-            xCategories={xCategories}
-          />
-        </ContentContainer>
-      )}
     </>
   )
 }
