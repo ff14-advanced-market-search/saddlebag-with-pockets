@@ -175,7 +175,7 @@ type ActionResponseType =
 const IlvlExportSearchComponent = () => {
   const actionData = useActionData<ActionResponseType>()
   const loaderData = useLoaderData<LoaderResponseType>()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const result = actionData ?? loaderData
   const transition = useNavigation()
   const [itemName, setItemName] = useState<string>('')
@@ -186,15 +186,24 @@ const IlvlExportSearchComponent = () => {
   const error = result && 'exception' in result ? result.exception : undefined
 
   useEffect(() => {
+    // If there's an error, reset everything
+    if (error) {
+      setItemName('')
+      setItemID('')
+      setFormValues(defaultFormValues)
+      setSearchParams({})
+      return
+    }
+
     const itemIdFromUrl = searchParams.get('itemId')
     const ilvlFromUrl = searchParams.get('ilvl') || '642'
     const populationWPFromUrl = searchParams.get('populationWP') || '3000'
     const populationBlizzFromUrl = searchParams.get('populationBlizz') || '1'
     const rankingWPFromUrl = searchParams.get('rankingWP') || '90'
     const sortByFromUrl = searchParams.get('sortBy') || 'minPrice'
-    const desiredStatsFromUrl = searchParams.getAll(
-      'desiredStats'
-    ) as ItemStat[]
+    const desiredStatsFromUrl = [
+      ...new Set(searchParams.getAll('desiredStats'))
+    ] as ItemStat[]
 
     if (itemIdFromUrl) {
       const itemNameFromId = getItemNameById(itemIdFromUrl, wowItems)
@@ -216,7 +225,7 @@ const IlvlExportSearchComponent = () => {
       sortBy: sortByFromUrl,
       desiredStats: desiredStatsFromUrl
     })
-  }, [searchParams])
+  }, [searchParams, error])
 
   const handleSelect = (value: string) => {
     setItemName(value)
@@ -439,10 +448,14 @@ const Results = ({
             <ExternalLink
               link={`/wow/ilvl-shopping-list?itemId=${
                 itemInfo.itemID
-              }&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${desiredStats.join(
-                ','
-              )}`}
+              }&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${[
+                ...new Set(desiredStats)
+              ].join('%2C')}`}
               text="Shopping List"
+            />
+            <ExternalLink
+              link={`/wow/ilvl-export-search`}
+              text="Search again"
             />
           </div>
           <div className="flex flex-col md:flex-row w-full">
