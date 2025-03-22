@@ -235,7 +235,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         data.quantityTimeData.some((val) => val !== 0) && (
           <ContentContainer>
             <CombinedPriceQuantityChart
-              chartTitle="Price & Quanitity previous 24 hours"
+              chartTitle="Min Price & Total Quanitity"
               darkMode={darkmode}
               priceData={data.priceTimeData}
               quantityData={data.quantityTimeData}
@@ -250,7 +250,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         data.quantityTimeDataHQ.some((val) => val !== 0) && (
           <ContentContainer>
             <CombinedPriceQuantityChart
-              chartTitle="HQ Price & Quanitity previous 24 hours"
+              chartTitle="HQ Min Price & Total Quanitity"
               darkMode={darkmode}
               priceData={data.priceTimeDataHQ}
               quantityData={data.quantityTimeDataHQ}
