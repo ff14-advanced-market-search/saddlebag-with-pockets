@@ -36,6 +36,7 @@ import {
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 const PAGE_URL = '/wow/ilvl-export-search'
 
@@ -175,7 +176,7 @@ type ActionResponseType =
 const IlvlExportSearchComponent = () => {
   const actionData = useActionData<ActionResponseType>()
   const loaderData = useLoaderData<LoaderResponseType>()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const result = actionData ?? loaderData
   const transition = useNavigation()
   const [itemName, setItemName] = useState<string>('')
@@ -186,15 +187,29 @@ const IlvlExportSearchComponent = () => {
   const error = result && 'exception' in result ? result.exception : undefined
 
   useEffect(() => {
+    // If there's an error, reset form values but keep the error message
+    if (error) {
+      setItemName('')
+      setItemID('')
+      setFormValues(defaultFormValues)
+      // Clear URL params but preserve the error state
+      const currentParams = new URLSearchParams(searchParams)
+      const hasException = currentParams.has('exception')
+      setSearchParams(
+        hasException ? { exception: currentParams.get('exception')! } : {}
+      )
+      return
+    }
+
     const itemIdFromUrl = searchParams.get('itemId')
     const ilvlFromUrl = searchParams.get('ilvl') || '642'
     const populationWPFromUrl = searchParams.get('populationWP') || '3000'
     const populationBlizzFromUrl = searchParams.get('populationBlizz') || '1'
     const rankingWPFromUrl = searchParams.get('rankingWP') || '90'
     const sortByFromUrl = searchParams.get('sortBy') || 'minPrice'
-    const desiredStatsFromUrl = searchParams.getAll(
-      'desiredStats'
-    ) as ItemStat[]
+    const desiredStatsFromUrl = [
+      ...new Set(searchParams.getAll('desiredStats'))
+    ] as ItemStat[]
 
     if (itemIdFromUrl) {
       const itemNameFromId = getItemNameById(itemIdFromUrl, wowItems)
@@ -216,7 +231,7 @@ const IlvlExportSearchComponent = () => {
       sortBy: sortByFromUrl,
       desiredStats: desiredStatsFromUrl
     })
-  }, [searchParams])
+  }, [searchParams, error])
 
   const handleSelect = (value: string) => {
     setItemName(value)
@@ -379,6 +394,11 @@ const IlvlExportSearchComponent = () => {
         <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
           Note: If the search button does not appear after you select your item,
           try refreshing the page.
+          <br />
+          <br />
+          Note: If this page reset, then no items were found. Make sure you
+          search for the exact ilvls you want and current 11.1 BOE levels 629,
+          642 or 655.
         </p>
       </div>
     </SmallFormContainer>
@@ -439,10 +459,21 @@ const Results = ({
             <ExternalLink
               link={`/wow/ilvl-shopping-list?itemId=${
                 itemInfo.itemID
-              }&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${desiredStats.join(
-                ','
-              )}`}
+              }&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${[
+                ...new Set(desiredStats)
+              ]
+                .map((stat) => encodeURIComponent(stat))
+                .join('&desiredStats=')}`}
               text="Shopping List"
+            />
+            <ExternalLink
+              link={`/wow/ilvl-export-search`}
+              text="Search again"
+            />
+            <SubmitButton
+              title="Share this search!"
+              onClick={handleCopyButton}
+              type="button"
             />
           </div>
           <div className="flex flex-col md:flex-row w-full">
@@ -457,6 +488,9 @@ const Results = ({
                   Median Min Price: {itemInfo.medianMinPrice.toLocaleString()}
                 </span>
               </div>
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>Ilvl: {itemInfo.ilvl.toLocaleString()}</span>
+              </div>
             </div>
             <div className="flex flex-col md:min-w-[50%] justify-center">
               <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
@@ -469,6 +503,14 @@ const Results = ({
                 <span>
                   Total Selected Server Quantity:{' '}
                   {itemInfo.totalSelectedServerQuantity.toLocaleString()}
+                </span>
+              </div>
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>
+                  Stats:{' '}
+                  {itemInfo.stats.length === 0
+                    ? 'Any'
+                    : itemInfo.stats.join(', ')}
                 </span>
               </div>
             </div>
