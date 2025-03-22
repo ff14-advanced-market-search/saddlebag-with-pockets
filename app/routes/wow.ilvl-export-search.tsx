@@ -186,12 +186,17 @@ const IlvlExportSearchComponent = () => {
   const error = result && 'exception' in result ? result.exception : undefined
 
   useEffect(() => {
-    // If there's an error, reset everything
+    // If there's an error, reset form values but keep the error message
     if (error) {
       setItemName('')
       setItemID('')
       setFormValues(defaultFormValues)
-      setSearchParams({})
+      // Clear URL params but preserve the error state
+      const currentParams = new URLSearchParams(searchParams)
+      const hasException = currentParams.has('exception')
+      setSearchParams(
+        hasException ? { exception: currentParams.get('exception')! } : {}
+      )
       return
     }
 
@@ -388,6 +393,11 @@ const IlvlExportSearchComponent = () => {
         <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
           Note: If the search button does not appear after you select your item,
           try refreshing the page.
+          <br />
+          <br />
+          Note: If this page reset, then no items were found. Make sure you
+          search for the exact ilvls you want and current 11.1 BOE levels 629,
+          642 or 655.
         </p>
       </div>
     </SmallFormContainer>
@@ -450,7 +460,9 @@ const Results = ({
                 itemInfo.itemID
               }&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${[
                 ...new Set(desiredStats)
-              ].join('%2C')}`}
+              ]
+                .map((stat) => encodeURIComponent(stat))
+                .join('&desiredStats=')}`}
               text="Shopping List"
             />
             <ExternalLink

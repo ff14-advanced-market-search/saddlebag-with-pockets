@@ -116,7 +116,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   const itemID = params.get('itemId')
   const maxPurchasePrice = params.get('maxPurchasePrice') || '10000000'
   const desiredMinIlvl = params.get('desiredMinIlvl') || '610'
-  const desiredStats = params.getAll('desiredStats') as ItemStat[]
+  const desiredStats = [
+    ...new Set(
+      params
+        .getAll('desiredStats')
+        .flatMap((stat) => stat.split(','))
+        .filter((stat) => AVAILABLE_STATS.includes(stat as ItemStat))
+    )
+  ] as ItemStat[]
 
   if (itemID) {
     const validateInput = z.object({
