@@ -36,6 +36,7 @@ import {
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
+import { SubmitButton } from '~/components/form/SubmitButton'
 
 const PAGE_URL = '/wow/ilvl-export-search'
 
@@ -469,6 +470,11 @@ const Results = ({
               link={`/wow/ilvl-export-search`}
               text="Search again"
             />
+            <SubmitButton
+              title="Share this search!"
+              onClick={handleCopyButton}
+              type="button"
+            />
           </div>
           <div className="flex flex-col md:flex-row w-full">
             <div className="flex flex-col md:min-w-[50%] justify-center">
@@ -482,6 +488,9 @@ const Results = ({
                   Median Min Price: {itemInfo.medianMinPrice.toLocaleString()}
                 </span>
               </div>
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>Ilvl: {itemInfo.ilvl.toLocaleString()}</span>
+              </div>
             </div>
             <div className="flex flex-col md:min-w-[50%] justify-center">
               <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
@@ -494,6 +503,14 @@ const Results = ({
                 <span>
                   Total Selected Server Quantity:{' '}
                   {itemInfo.totalSelectedServerQuantity.toLocaleString()}
+                </span>
+              </div>
+              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                <span>
+                  Stats:{' '}
+                  {itemInfo.stats.length === 0
+                    ? 'Any'
+                    : itemInfo.stats.join(', ')}
                 </span>
               </div>
             </div>
