@@ -357,7 +357,7 @@ const navGroups: Array<{
     title: 'FFXIV Experimental Tools',
     links: [
       {
-        name: 'Local Market Shortage Finder',
+        name: 'Marketboard Shortage Futures',
         href: '/ffxiv/shortage-predictor',
         icon: ChartSquareBarIcon
       }

@@ -1013,11 +1013,6 @@ select {
   margin-bottom: 1.5rem;
 }
 
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .-ml-1 {
   margin-left: -0.25rem;
 }
@@ -1461,14 +1456,6 @@ select {
 
 .max-w-xs {
   max-width: 20rem;
-}
-
-.max-w-\[1200px\] {
-  max-width: 1200px;
-}
-
-.max-w-\[850px\] {
-  max-width: 850px;
 }
 
 .flex-1 {
