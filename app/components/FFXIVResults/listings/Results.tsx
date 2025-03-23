@@ -119,7 +119,7 @@ const CombinedPriceQuantityChart = ({
   priceData: number[]
   quantityData: number[]
   chartTitle: string
-  xCategories: string[]
+  xCategories: Array<{ name: string; fullDate: string }>
 }) => {
   const styles = darkMode
     ? {
@@ -176,9 +176,16 @@ const CombinedPriceQuantityChart = ({
       }
     ],
     xAxis: {
-      categories: xCategories,
+      categories: xCategories.map((x) => x.name),
       labels: { style: { color: styles?.color } },
       lineColor: styles?.color
+    },
+    tooltip: {
+      formatter: function () {
+        const point = this.point
+        const index = point.index || 0
+        return `${xCategories[index].fullDate}<br/>${point.series.name}: ${point.y}`
+      }
     },
     series: [
       {
@@ -200,7 +207,6 @@ const CombinedPriceQuantityChart = ({
       enabled: false
     }
   }
-
   return <HighchartsReact highcharts={Highcharts} options={options} />
 }
 
@@ -219,13 +225,23 @@ const CombinedPriceQuantityChart = ({
 const Results = ({ data }: { data: ListingResponseType }) => {
   const { darkmode } = useTypedSelector((state) => state.user)
   const now = new Date()
-  const xCategories = data.priceTimeData.map((_, hoursToDeduct, arr) =>
-    makeTimeString({
+  // Ensure we show exactly 168 hours (7 days) of data
+  const totalHours = 168
+  const xCategories = data.priceTimeData.map((_, index) => {
+    // Add 5 hours to align with sales chart
+    const hoursToDeduct = totalHours - index - 5
+    const time = makeTimeString({
       date: now,
-      hoursToDeduct: arr.length - hoursToDeduct,
-      formatString: 'HH:mm'
+      hoursToDeduct,
+      formatString: 'HH:00'
     })
-  )
+    const fullDate = makeTimeString({
+      date: now,
+      hoursToDeduct,
+      formatString: 'yyyy-MM-dd HH:00'
+    })
+    return { name: time, fullDate }
+  })
 
   return (
     <>
@@ -235,10 +251,10 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         data.quantityTimeData.some((val) => val !== 0) && (
           <ContentContainer>
             <CombinedPriceQuantityChart
-              chartTitle="Min Price & Total Quanitity"
+              chartTitle="Min Price & Total Quantity"
               darkMode={darkmode}
-              priceData={data.priceTimeData}
-              quantityData={data.quantityTimeData}
+              priceData={data.priceTimeData.slice(-totalHours)}
+              quantityData={data.quantityTimeData.slice(-totalHours)}
               xCategories={xCategories}
             />
           </ContentContainer>
@@ -250,7 +266,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         data.quantityTimeDataHQ.some((val) => val !== 0) && (
           <ContentContainer>
             <CombinedPriceQuantityChart
-              chartTitle="HQ Min Price & Total Quanitity"
+              chartTitle="HQ Min Price & Total Quantity"
               darkMode={darkmode}
               priceData={data.priceTimeDataHQ}
               quantityData={data.quantityTimeDataHQ}
