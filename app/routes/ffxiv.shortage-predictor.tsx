@@ -134,7 +134,10 @@ export const loader: LoaderFunction = async ({ request }) => {
       (val) => (Array.isArray(val) ? val : String(val).split(',').map(Number)),
       z.array(z.number())
     ),
-    hqOnly: z.preprocess((val) => val === 'true' || val === true, z.boolean()),
+    hqOnly: z.preprocess(
+      (val) => val === 'true' || val === true || val === 'on',
+      z.boolean()
+    ),
     desiredMedianPrice: parseStringToNumber,
     desiredSalesPerWeek: parseStringToNumber,
     desiredPriceVsMedianPercent: parseStringToNumber,
@@ -148,7 +151,7 @@ export const loader: LoaderFunction = async ({ request }) => {
           .split(',')
           .map(Number)
       : defaultFormValues.filters,
-    hqOnly: params.get('hqOnly') !== 'false',
+    hqOnly: params.get('hqOnly') === 'true',
     desiredMedianPrice:
       params.get('desiredMedianPrice') ??
       defaultFormValues.desiredMedianPrice.toString(),
@@ -292,7 +295,7 @@ const Index = () => {
             labelTitle="HQ Only"
             id="hq-only"
             name="hqOnly"
-            defaultChecked={false}
+            defaultChecked={loaderData.hqOnly}
             onChange={(e) => handleFormChange('hqOnly', e.target.checked)}
           />
         </div>
