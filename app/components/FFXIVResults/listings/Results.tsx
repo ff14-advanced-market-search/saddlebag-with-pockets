@@ -268,8 +268,8 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             <CombinedPriceQuantityChart
               chartTitle="HQ Min Price & Total Quantity"
               darkMode={darkmode}
-              priceData={data.priceTimeDataHQ}
-              quantityData={data.quantityTimeDataHQ}
+              priceData={data.priceTimeDataHQ.slice(-totalHours)}
+              quantityData={data.quantityTimeDataHQ.slice(-totalHours)}
               xCategories={xCategories}
             />
           </ContentContainer>
