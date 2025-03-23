@@ -30,6 +30,10 @@ export interface ListingResponseType {
   priceTimeDataHQ: number[]
   quantityTimeData: number[]
   quantityTimeDataHQ: number[]
+  current_price_vs_median_percent: number
+  current_hq_price_vs_median_percent: number
+  current_quantity_vs_median_percent: number
+  current_hq_quantity_vs_median_percent: number
 }
 
 export interface GetListingProps {

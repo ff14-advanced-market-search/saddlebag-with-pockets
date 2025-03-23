@@ -21,93 +21,6 @@ const makeTimeString = ({
   return format(newDate, formatString)
 }
 
-const GenericLineChart = ({
-  darkMode,
-  data,
-  chartTitle,
-  xTitle,
-  yTitle,
-  xLabelFormat,
-  yLabelFormat,
-  dataIterator,
-  xCategories
-}: {
-  darkMode: boolean
-  data: number[]
-  chartTitle?: string
-  xTitle?: string
-  yTitle?: string
-  xLabelFormat?: string
-  yLabelFormat?: string
-  dataIterator?: (value: number, index: number) => PointOptionsObject
-  xCategories?: Array<string>
-}) => {
-  const styles = darkMode
-    ? {
-        backgroundColor: '#334155',
-        color: 'white',
-        hoverColor: '#f8f8f8'
-      }
-    : {}
-  const options: Options = {
-    chart: {
-      type: 'line',
-      backgroundColor: styles?.backgroundColor
-    },
-    legend: {
-      itemStyle: { color: styles?.color },
-      align: 'center',
-      itemHoverStyle: { color: styles?.hoverColor }
-    },
-    title: {
-      text: chartTitle,
-      style: { color: styles?.color }
-    },
-    yAxis: {
-      title: {
-        text: yTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      labels: {
-        style: { color: styles?.color },
-        align: 'center',
-        format: yLabelFormat
-      },
-      lineColor: styles?.color
-    },
-    xAxis: {
-      title: {
-        text: xTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      categories: xCategories,
-      labels: {
-        style: { color: styles?.color },
-        align: 'right',
-        format: xLabelFormat
-      },
-      lineColor: styles?.color
-    },
-    series: [
-      {
-        data: dataIterator ? data.map<PointOptionsObject>(dataIterator) : data,
-        name: chartTitle,
-        type: 'line'
-      }
-    ],
-    credits: {
-      enabled: false
-    }
-  }
-  return <HighchartsReact highcharts={Highcharts} options={options} />
-}
-
 const CombinedPriceQuantityChart = ({
   darkMode,
   priceData,
@@ -326,6 +239,64 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             diffAmount={`${data.min_price.toLocaleString()} gil`}
             className={
               'bg-blue-100 font-semibold text-blue-600  dark:bg-blue-600 dark:text-gray-100'
+            }
+          />
+        )}
+        {data.current_price_vs_median_percent > 0 && (
+          <Differences
+            diffTitle="NQ Price vs Median"
+            diffAmount={`${data.current_price_vs_median_percent.toFixed(1)}%`}
+            className={
+              data.current_price_vs_median_percent < 70
+                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
+                : data.current_price_vs_median_percent <= 130
+                ? 'bg-yellow-100 font-semibold text-yellow-600 dark:bg-yellow-600 dark:text-gray-100'
+                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
+            }
+          />
+        )}
+        {data.current_hq_price_vs_median_percent > 0 && (
+          <Differences
+            diffTitle="HQ Price vs Median"
+            diffAmount={`${data.current_hq_price_vs_median_percent.toFixed(
+              1
+            )}%`}
+            className={
+              data.current_hq_price_vs_median_percent < 70
+                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
+                : data.current_hq_price_vs_median_percent <= 130
+                ? 'bg-yellow-100 font-semibold text-yellow-600 dark:bg-yellow-600 dark:text-gray-100'
+                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
+            }
+          />
+        )}
+        {data.current_quantity_vs_median_percent > 0 && (
+          <Differences
+            diffTitle="NQ Quantity vs Median"
+            diffAmount={`${data.current_quantity_vs_median_percent.toFixed(
+              1
+            )}%`}
+            className={
+              data.current_quantity_vs_median_percent > 130
+                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
+                : data.current_quantity_vs_median_percent >= 70
+                ? 'bg-yellow-100 font-semibold text-yellow-600 dark:bg-yellow-600 dark:text-gray-100'
+                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
+            }
+          />
+        )}
+        {data.current_hq_quantity_vs_median_percent > 0 && (
+          <Differences
+            diffTitle="HQ Quantity vs Median"
+            diffAmount={`${data.current_hq_quantity_vs_median_percent.toFixed(
+              1
+            )}%`}
+            className={
+              data.current_hq_quantity_vs_median_percent > 130
+                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
+                : data.current_hq_quantity_vs_median_percent >= 70
+                ? 'bg-yellow-100 font-semibold text-yellow-600 dark:bg-yellow-600 dark:text-gray-100'
+                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
             }
           />
         )}
