@@ -244,7 +244,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         )}
         {data.current_price_vs_median_percent > 0 && (
           <Differences
-            diffTitle="NQ Price vs Median"
+            diffTitle="Min Price vs Median"
             diffAmount={`${data.current_price_vs_median_percent.toFixed(1)}%`}
             className={
               data.current_price_vs_median_percent < 70
@@ -257,7 +257,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         )}
         {data.current_hq_price_vs_median_percent > 0 && (
           <Differences
-            diffTitle="HQ Price vs Median"
+            diffTitle="HQ Min Price vs Median"
             diffAmount={`${data.current_hq_price_vs_median_percent.toFixed(
               1
             )}%`}
@@ -272,7 +272,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         )}
         {data.current_quantity_vs_median_percent > 0 && (
           <Differences
-            diffTitle="NQ Quantity vs Median"
+            diffTitle="Total Quantity vs Median"
             diffAmount={`${data.current_quantity_vs_median_percent.toFixed(
               1
             )}%`}
@@ -287,7 +287,7 @@ const Results = ({ data }: { data: ListingResponseType }) => {
         )}
         {data.current_hq_quantity_vs_median_percent > 0 && (
           <Differences
-            diffTitle="HQ Quantity vs Median"
+            diffTitle="HQ Total Quantity vs Median"
             diffAmount={`${data.current_hq_quantity_vs_median_percent.toFixed(
               1
             )}%`}
