@@ -65,7 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
   const validateFormData = z.object({
     homeServer: z.string().min(1),
     filters: z.preprocess(
-      (val) => (Array.isArray(val) ? val : [Number(val)]),
+      (val) => (Array.isArray(val) ? val : String(val).split(',').map(Number)),
       z.array(z.number())
     ),
     hqOnly: z.preprocess(
@@ -131,7 +131,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const validateFormData = z.object({
     homeServer: z.string().min(1),
     filters: z.preprocess(
-      (val) => (Array.isArray(val) ? val : [Number(val)]),
+      (val) => (Array.isArray(val) ? val : String(val).split(',').map(Number)),
       z.array(z.number())
     ),
     hqOnly: z.preprocess((val) => val === 'true' || val === true, z.boolean()),
@@ -143,9 +143,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const input = {
     homeServer: params.get('homeServer') ?? world,
-    filters:
-      params.get('filters')?.split(',').map(Number) ??
-      defaultFormValues.filters,
+    filters: params.has('filters')
+      ? decodeURIComponent(params.get('filters') as string)
+          .split(',')
+          .map(Number)
+      : defaultFormValues.filters,
     hqOnly: params.get('hqOnly') !== 'false',
     desiredMedianPrice:
       params.get('desiredMedianPrice') ??
@@ -291,6 +293,7 @@ const Index = () => {
             id="hq-only"
             name="hqOnly"
             defaultChecked={false}
+            onChange={(e) => handleFormChange('hqOnly', e.target.checked)}
           />
         </div>
       </SmallFormContainer>
