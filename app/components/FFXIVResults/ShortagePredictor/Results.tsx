@@ -16,6 +16,8 @@ import CheckBox from '~/components/form/CheckBox'
 import Modal from '~/components/form/Modal'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
+import { SubmitButton } from '~/components/form/SubmitButton'
+import { handleCopyButton } from '~/utils/urlSeachParamsHelpers'
 
 const mobileColumnList = [
   { columnId: 'item_name', header: 'Item Name' },
@@ -61,6 +63,10 @@ export const Results = ({
     } | null
   ) => {
     setChartData(chart)
+  }
+
+  const handleShareClick = () => {
+    navigator.clipboard.writeText(window.location.href)
   }
 
   return (
@@ -241,11 +247,18 @@ const PredictionTable = ({
   return (
     <>
       <div className="flex justify-between">
-        <CSVButton
-          data={results.data}
-          columns={csvColumns}
-          filename="saddlebag_ffxiv_shortagePredictor.csv"
-        />
+        <div className="flex gap-2">
+          <CSVButton
+            data={results.data}
+            columns={csvColumns}
+            filename="saddlebag_ffxiv_shortagePredictor.csv"
+          />
+          <SubmitButton
+            title="Share this search!"
+            onClick={handleCopyButton}
+            type="button"
+          />
+        </div>
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
