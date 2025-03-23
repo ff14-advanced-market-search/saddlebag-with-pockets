@@ -147,14 +147,6 @@ const PredictionTable = ({
   const columnList: ColumnList<Prediction>[] = [
     { columnId: 'item_name', header: 'Item Name' },
     {
-      columnId: 'item_id',
-      header: 'Item Data',
-      accessor: ({ row }) => {
-        if (!row.item_id) return null
-        return <ItemDataLink link={`/queries/item-data/${row.item_id}`} />
-      }
-    },
-    {
       columnId: 'universalis_link',
       header: 'Universalis Link',
       accessor: ({ row }) => {
@@ -164,6 +156,14 @@ const PredictionTable = ({
             link={`https://universalis.app/market/${row.item_id}`}
           />
         )
+      }
+    },
+    {
+      columnId: 'item_id',
+      header: 'Item Data',
+      accessor: ({ row }) => {
+        if (!row.item_id) return null
+        return <ItemDataLink link={`/queries/item-data/${row.item_id}`} />
       }
     },
     {
