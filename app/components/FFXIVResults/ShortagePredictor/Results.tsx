@@ -207,9 +207,10 @@ const PredictionTable = ({
       header: 'Estimated Hours until Shortage'
     },
     {
-      columnId: 'quantity_decline_rate_per_hour',
-      header: 'Quantity Decline Rate per Hour'
+      columnId: 'current_quantity',
+      header: 'Current Quantity Available'
     },
+    { columnId: 'avg_quantity', header: 'Avg Quantity' },
     {
       columnId: 'current_quantity_vs_avg_percent',
       header: 'Quantity Percent Available',
@@ -222,10 +223,9 @@ const PredictionTable = ({
       }
     },
     {
-      columnId: 'current_quantity',
-      header: 'Current Quantity Available'
+      columnId: 'quantity_decline_rate_per_hour',
+      header: 'Quantity Decline Rate per Hour'
     },
-    { columnId: 'avg_quantity', header: 'Avg Quantity' },
     { columnId: 'current_avg_price', header: 'Current Avg Price' },
     {
       columnId: 'avg_sale_rate_per_hour',
