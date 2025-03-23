@@ -93,18 +93,14 @@ const Results = ({
 
     <SaleHistoryTable data={data.stack_chance} />
 
-    <ContentContainer>
-      <>
-        <TitleH2 title="Region Wide Suspicious Sales" />
-        {data.dirty_sales.length ? (
+    {data.dirty_sales.length > 0 && (
+      <ContentContainer>
+        <>
+          <TitleH2 title="Region Wide Suspicious Sales" />
           <SuspiciousSaleTable data={data.dirty_sales} />
-        ) : (
-          <p className="italic text-sm text-grey-500 px-3 dark:text-gray-200">
-            No suspicious sales found
-          </p>
-        )}
-      </>
-    </ContentContainer>
+        </>
+      </ContentContainer>
+    )}
 
     <ContentContainer>
       <>
