@@ -255,21 +255,6 @@ const Results = ({ data }: { data: ListingResponseType }) => {
             }
           />
         )}
-        {data.current_hq_price_vs_median_percent > 0 && (
-          <Differences
-            diffTitle="HQ Min Price vs Median"
-            diffAmount={`${data.current_hq_price_vs_median_percent.toFixed(
-              1
-            )}%`}
-            className={
-              data.current_hq_price_vs_median_percent < 70
-                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
-                : data.current_hq_price_vs_median_percent <= 130
-                ? 'bg-yellow-100 font-semibold text-yellow-600 dark:bg-yellow-600 dark:text-gray-100'
-                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
-            }
-          />
-        )}
         {data.current_quantity_vs_median_percent > 0 && (
           <Differences
             diffTitle="Total Quantity vs Median"
@@ -280,6 +265,21 @@ const Results = ({ data }: { data: ListingResponseType }) => {
               data.current_quantity_vs_median_percent > 130
                 ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
                 : data.current_quantity_vs_median_percent >= 70
+                ? 'bg-yellow-100 font-semibold text-yellow-600 dark:bg-yellow-600 dark:text-gray-100'
+                : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
+            }
+          />
+        )}
+        {data.current_hq_price_vs_median_percent > 0 && (
+          <Differences
+            diffTitle="HQ Min Price vs Median"
+            diffAmount={`${data.current_hq_price_vs_median_percent.toFixed(
+              1
+            )}%`}
+            className={
+              data.current_hq_price_vs_median_percent < 70
+                ? 'bg-red-100 font-semibold text-red-600 dark:bg-red-600 dark:text-gray-100'
+                : data.current_hq_price_vs_median_percent <= 130
                 ? 'bg-yellow-100 font-semibold text-yellow-600 dark:bg-yellow-600 dark:text-gray-100'
                 : 'bg-green-100 font-semibold text-green-600 dark:bg-green-600 dark:text-gray-100'
             }
