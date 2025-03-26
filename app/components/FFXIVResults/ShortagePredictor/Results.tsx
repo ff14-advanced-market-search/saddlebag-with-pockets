@@ -65,10 +65,6 @@ export const Results = ({
     setChartData(chart)
   }
 
-  const handleShareClick = () => {
-    navigator.clipboard.writeText(window.location.href)
-  }
-
   return (
     <PageWrapper>
       <div className="flex flex-col w-full">
@@ -80,7 +76,9 @@ export const Results = ({
         {modal && (
           <Modal
             title="Choose worlds to compare"
-            onClose={() => setModal(null)}>
+            onClose={() => {
+              setModal(null)
+            }}>
             <div>
               {Object.entries(WorldList).map(([dataCenter, worlds]) => (
                 <div key={dataCenter}>
