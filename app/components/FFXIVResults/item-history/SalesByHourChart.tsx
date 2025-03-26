@@ -5,20 +5,15 @@ import type { HomeServerSalesByHour } from '~/requests/FFXIV/GetHistory'
 
 const makeDateString = (timeStampInSeconds: number) => {
   const date = new Date(timeStampInSeconds * 1000)
+  // Set minutes to 00 for consistent hourly display
+  date.setMinutes(0)
   return {
-    time: date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    }),
-    fullDate: date.toLocaleString('en-US', {
+    time: `${date.getHours().toString().padStart(2, '0')}:00`,
+    fullDate: `${date.toLocaleString('en-US', {
       year: 'numeric',
       month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    })
+      day: '2-digit'
+    })} ${date.getHours().toString().padStart(2, '0')}:00`
   }
 }
 
@@ -45,7 +40,24 @@ export default function SalesByHourChart({
   // Sort data by time in descending order to ensure newest first
   const sortedData = [...data].sort((a, b) => b.time - a.time)
 
-  const xAxisCategories = sortedData.map(
+  // Group sales by hour and sum them
+  const hourlyData = sortedData.reduce<
+    Record<string, { time: number; sale_amt: number }>
+  >((acc, curr) => {
+    const dateStr = makeDateString(curr.time)
+    if (!acc[dateStr.time]) {
+      acc[dateStr.time] = { time: curr.time, sale_amt: 0 }
+    }
+    acc[dateStr.time].sale_amt += curr.sale_amt
+    return acc
+  }, {})
+
+  // Convert back to array and sort by time
+  const aggregatedData = Object.values(hourlyData).sort(
+    (a, b) => b.time - a.time
+  )
+
+  const xAxisCategories = aggregatedData.map(
     ({ time }) => makeDateString(time).time
   )
 
@@ -100,7 +112,7 @@ export default function SalesByHourChart({
 
     series: [
       {
-        data: sortedData.map<PointOptionsObject>(({ sale_amt, time }) => {
+        data: aggregatedData.map<PointOptionsObject>(({ sale_amt, time }) => {
           const dateStr = makeDateString(time)
           return {
             x: xAxisCategories.indexOf(dateStr.time),

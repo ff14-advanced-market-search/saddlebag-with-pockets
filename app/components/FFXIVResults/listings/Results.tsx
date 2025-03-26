@@ -18,20 +18,15 @@ const makeTimeString = ({
   formatString?: string
 }) => {
   const newDate = new Date(date.getTime() - hoursToDeduct * 60 * 60 * 1000)
+  // Set minutes to 00 for consistent hourly display
+  newDate.setMinutes(0)
   return {
-    name: newDate.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    }),
-    fullDate: newDate.toLocaleString('en-US', {
+    name: `${newDate.getHours().toString().padStart(2, '0')}:00`,
+    fullDate: `${newDate.toLocaleString('en-US', {
       year: 'numeric',
       month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    })
+      day: '2-digit'
+    })} ${newDate.getHours().toString().padStart(2, '0')}:00`
   }
 }
 
