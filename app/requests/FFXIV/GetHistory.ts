@@ -41,6 +41,7 @@ export interface HistoryResponse {
   average_quantity_sold_per_day: number
   average_sales_per_day: number
   total_quantity_sold: number
+  total_purchase_amount: number
   home_server_sales_by_hour_chart: Array<HomeServerSalesByHour>
   price_history: Array<PriceHistory>
   stack_chance: Array<StackChance>
