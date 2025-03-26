@@ -50,7 +50,7 @@ const Results = ({
         />
         <Differences
           diffTitle="Total Purchases per week"
-          diffAmount={data.total_purchase_amount}
+          diffAmount={data.total_quantity_sold}
           className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
         />
       </div>
