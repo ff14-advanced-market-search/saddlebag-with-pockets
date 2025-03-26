@@ -11,14 +11,28 @@ import { ContentContainer } from '~/components/Common'
 const makeTimeString = ({
   date,
   hoursToDeduct,
-  formatString = 'dd/MM h aaaa'
+  formatString = 'HH:00'
 }: {
   date: Date
   hoursToDeduct: number
   formatString?: string
 }) => {
-  const newDate = subHours(date, hoursToDeduct)
-  return format(newDate, formatString)
+  const newDate = new Date(date.getTime() - hoursToDeduct * 60 * 60 * 1000)
+  return {
+    name: newDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }),
+    fullDate: newDate.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    })
+  }
 }
 
 const CombinedPriceQuantityChart = ({
@@ -141,19 +155,11 @@ const Results = ({ data }: { data: ListingResponseType }) => {
   // Ensure we show exactly 168 hours (7 days) of data
   const totalHours = 168
   const xCategories = data.priceTimeData.map((_, index) => {
-    // Add 5 hours to align with sales chart
-    const hoursToDeduct = totalHours - index - 5
-    const time = makeTimeString({
-      date: now,
-      hoursToDeduct,
-      formatString: 'HH:00'
+    const hoursToDeduct = data.priceTimeData.length - index - 1
+    return makeTimeString({
+      date: new Date(),
+      hoursToDeduct
     })
-    const fullDate = makeTimeString({
-      date: now,
-      hoursToDeduct,
-      formatString: 'yyyy-MM-dd HH:00'
-    })
-    return { name: time, fullDate }
   })
 
   return (

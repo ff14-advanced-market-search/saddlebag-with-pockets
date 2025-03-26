@@ -5,8 +5,21 @@ import type { HomeServerSalesByHour } from '~/requests/FFXIV/GetHistory'
 
 const makeDateString = (timeStampInSeconds: number) => {
   const date = new Date(timeStampInSeconds * 1000)
-  const dateStringParts = date.toISOString().split('T')
-  return `${dateStringParts[0]} ${dateStringParts[1].split(':')[0]}:00`
+  return {
+    time: date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }),
+    fullDate: date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    })
+  }
 }
 
 /**
@@ -29,8 +42,11 @@ export default function SalesByHourChart({
   data: Array<HomeServerSalesByHour>
   darkMode: boolean
 }) {
-  const xAxisCategories = data.map(
-    ({ time }) => makeDateString(time).split(' ')[1]
+  // Sort data by time in descending order to ensure newest first
+  const sortedData = [...data].sort((a, b) => b.time - a.time)
+
+  const xAxisCategories = sortedData.map(
+    ({ time }) => makeDateString(time).time
   )
 
   const styles = darkMode
@@ -84,8 +100,13 @@ export default function SalesByHourChart({
 
     series: [
       {
-        data: data.map<PointOptionsObject>(({ sale_amt, time }) => {
-          return [makeDateString(time), sale_amt]
+        data: sortedData.map<PointOptionsObject>(({ sale_amt, time }) => {
+          const dateStr = makeDateString(time)
+          return {
+            x: xAxisCategories.indexOf(dateStr.time),
+            y: sale_amt,
+            name: dateStr.fullDate
+          }
         }),
         name: 'Sales per Hour',
         type: 'line'
