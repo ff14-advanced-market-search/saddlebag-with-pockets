@@ -12,7 +12,7 @@ export default function SalesByHourChart({
 }) {
   const now = new Date()
   // Get just the sale amounts in order
-  const salesData = data.map(d => d.sale_amt)
+  const salesData = data.map((d) => d.sale_amt)
 
   // Generate time categories the same way as the other chart
   const xCategories = salesData.map((_, index) => {
@@ -69,7 +69,7 @@ export default function SalesByHourChart({
       }
     ],
     xAxis: {
-      categories: xCategories.map(x => x.name),
+      categories: xCategories.map((x) => x.name),
       labels: { style: { color: styles?.color } },
       lineColor: styles?.color
     },
