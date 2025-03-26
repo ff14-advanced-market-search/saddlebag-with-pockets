@@ -42,7 +42,9 @@ export default function SalesByHourChart({
       type: 'line',
       backgroundColor: styles?.backgroundColor,
       height: 400,
-      spacingBottom: 5
+      spacingBottom: 5,
+      marginLeft: 80,
+      marginRight: 80
     },
     legend: {
       itemStyle: { color: styles?.color },
