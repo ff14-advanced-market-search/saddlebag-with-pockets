@@ -93,26 +93,24 @@ const Results = ({
 
     <SaleHistoryTable data={data.stack_chance} />
 
-    <ContentContainer>
-      <>
-        <TitleH2 title="Home Server Sales per Hour" />
-        <SalesByHourChart
-          data={data.home_server_sales_by_hour_chart}
-          darkMode={darkMode}
-        />
-      </>
-    </ContentContainer>
+    {data.dirty_sales.length > 0 && (
+      <ContentContainer>
+        <>
+          <TitleH2 title="Region Wide Suspicious Sales" />
+          <SuspiciousSaleTable data={data.dirty_sales} />
+        </>
+      </ContentContainer>
+    )}
 
     <ContentContainer>
       <>
-        <TitleH2 title="Region Wide Suspicious Sales" />
-        {data.dirty_sales.length ? (
-          <SuspiciousSaleTable data={data.dirty_sales} />
-        ) : (
-          <p className="italic text-sm text-grey-500 px-3 dark:text-gray-200">
-            No suspicious sales found
-          </p>
-        )}
+        <TitleH2 title="Home Server Sales per Hour" />
+        <ContentContainer>
+          <SalesByHourChart
+            data={data.home_server_sales_by_hour_chart}
+            darkMode={darkMode}
+          />
+        </ContentContainer>
       </>
     </ContentContainer>
   </div>

@@ -1,27 +1,8 @@
-import type { Options, PointOptionsObject } from 'highcharts'
+import type { Options } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import type { HomeServerSalesByHour } from '~/requests/FFXIV/GetHistory'
 
-const makeDateString = (timeStampInSeconds: number) => {
-  const date = new Date(timeStampInSeconds * 1000)
-  const dateStringParts = date.toISOString().split('T')
-  return `${dateStringParts[0]} ${dateStringParts[1].split(':')[0]}:00`
-}
-
-/**
- * Generates a configurable line chart representing sales by hour.
- * @example
- * SalesByHourChart({ data: salesData, darkMode: true })
- * // returns a line chart component displaying sales data per hour.
- * @param {Array<HomeServerSalesByHour>} data - Array of sales data objects with time and sale amount.
- * @param {boolean} darkMode - Flag indicating whether to use dark mode styling.
- * @returns {JSX.Element} A React component rendering a line chart configured with the provided sales data.
- * @description
- *   - The function maps the sales data to extract time information for x-axis categories.
- *   - Styles are conditionally applied based on the darkMode flag.
- *   - HighchartsReact component is used to render the chart with options defined via props.
- */
 export default function SalesByHourChart({
   data,
   darkMode
@@ -29,9 +10,24 @@ export default function SalesByHourChart({
   data: Array<HomeServerSalesByHour>
   darkMode: boolean
 }) {
-  const xAxisCategories = data.map(
-    ({ time }) => makeDateString(time).split(' ')[1]
-  )
+  const now = new Date()
+  // Get just the sale amounts in order
+  const salesData = data.map((d) => d.sale_amt)
+
+  // Generate time categories the same way as the other chart
+  const xCategories = salesData.map((_, index) => {
+    const hoursToDeduct = salesData.length - index - 1
+    const date = new Date(now.getTime() - hoursToDeduct * 60 * 60 * 1000)
+    date.setMinutes(0)
+    return {
+      name: `${date.getHours().toString().padStart(2, '0')}:00`,
+      fullDate: `${date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      })} ${date.getHours().toString().padStart(2, '0')}:00`
+    }
+  })
 
   const styles = darkMode
     ? {
@@ -44,7 +40,11 @@ export default function SalesByHourChart({
   const options: Options = {
     chart: {
       type: 'line',
-      backgroundColor: styles?.backgroundColor
+      backgroundColor: styles?.backgroundColor,
+      height: 400,
+      spacingBottom: 5,
+      marginLeft: 80,
+      marginRight: 80
     },
     legend: {
       itemStyle: { color: styles?.color },
@@ -55,26 +55,36 @@ export default function SalesByHourChart({
       text: undefined,
       style: { color: styles?.color }
     },
-    yAxis: {
-      title: {
-        text: 'No# of Sales',
-        style: { color: styles?.color, textAlign: 'center' }
-      },
-      labels: { style: { color: styles?.color }, align: 'center' },
-      lineColor: styles?.color
-    },
-
+    yAxis: [
+      {
+        title: {
+          text: 'No# of Sales',
+          style: { color: styles?.color }
+        },
+        labels: { style: { color: styles?.color } },
+        lineColor: styles?.color,
+        min: 0,
+        softMax: Math.max(...salesData) * 1.1,
+        startOnTick: false,
+        endOnTick: false,
+        tickAmount: 8
+      }
+    ],
     xAxis: {
-      categories: xAxisCategories,
-      labels: { style: { color: styles?.color }, align: 'center' },
+      categories: xCategories.map((x) => x.name),
+      labels: { style: { color: styles?.color } },
       lineColor: styles?.color
     },
-
+    tooltip: {
+      formatter: function () {
+        const point = this.point
+        const index = point.index || 0
+        return `${xCategories[index].fullDate}<br/>${point.series.name}: ${point.y}`
+      }
+    },
     series: [
       {
-        data: data.map<PointOptionsObject>(({ sale_amt, time }) => {
-          return [makeDateString(time), sale_amt]
-        }),
+        data: salesData,
         name: 'Sales per Hour',
         type: 'line'
       }

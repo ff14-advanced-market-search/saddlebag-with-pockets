@@ -26,6 +26,14 @@ export interface ListingResponseType {
   listings: Array<Listing>
   min_price: number
   payload: GetListingProps
+  priceTimeData: number[]
+  priceTimeDataHQ: number[]
+  quantityTimeData: number[]
+  quantityTimeDataHQ: number[]
+  current_price_vs_median_percent: number
+  current_hq_price_vs_median_percent: number
+  current_quantity_vs_median_percent: number
+  current_hq_quantity_vs_median_percent: number
 }
 
 export interface GetListingProps {
@@ -42,6 +50,23 @@ const GetListing: ({
   endDays
 }: /**
  * Sends a POST request to fetch listing information based on provided parameters.
+ * Fetches market listing information for a specific item from the FFXIV market board.
+ *
+ * @param {Object} props - The listing request parameters
+ * @param {number} props.itemId - Unique identifier for the item in FFXIV
+ * @param {string} props.world - The server world name to fetch listings from
+ * @param {number} props.initialDays - Start of the time range in days from now
+ * @param {number} props.endDays - End of the time range in days from now
+ *
+ * @returns {Promise<Response>} A promise that resolves to a Response object
+ *   The response body when parsed will contain a ListingResponseType object with:
+ *   - listings: Array of current market listings with price and quantity info
+ *   - listing_price_diff: Average and median price differences
+ *   - listing_time_diff: Average and median time differences
+ *   - min_price: Current minimum price
+ *   - priceTimeData/priceTimeDataHQ: Historical price data for normal/HQ items
+ *   - quantityTimeData/quantityTimeDataHQ: Historical quantity data for normal/HQ items
+ *
  * @example
  * sync({ itemId: 123, world: 'Ultros', initialDays: 1, endDays: 7 })
  * Promise<Response> object containing listing data
@@ -62,7 +87,7 @@ GetListingProps) => Promise<Response> = async ({
   initialDays,
   endDays
 }) => {
-  return fetch(`${address}/api/listing`, {
+  return fetch(`${address}/api/ffxiv/v2/listing`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

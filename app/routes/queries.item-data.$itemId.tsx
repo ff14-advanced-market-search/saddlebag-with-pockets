@@ -13,7 +13,6 @@ import type { HistoryResponse } from '~/requests/FFXIV/GetHistory'
 import GetHistory from '~/requests/FFXIV/GetHistory'
 import type { ListingResponseType } from '~/requests/FFXIV/GetListing'
 import GetListing from '~/requests/FFXIV/GetListing'
-import type { BlogResponseType } from '~/requests/FFXIV/GetBlog'
 import GetBlog from '~/requests/FFXIV/GetBlog'
 import { getUserSessionData } from '~/sessions'
 import { getItemNameById } from '~/utils/items'
@@ -205,9 +204,7 @@ const ItemPage = () => {
           <ContentContainer>
             <>
               <TitleH2 title={`${data.itemName} Current Listings`} />
-              {listing &&
-              'listings' in listing &&
-              listing.listings.length > 0 ? (
+              {listing && 'listings' in listing ? (
                 <ListingResults data={listing} />
               ) : (
                 <NoResults title={`No listings data for ${data.itemName}`} />
