@@ -42,6 +42,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /queries/full-scan
   Disallow: /ffxiv/marketshare
   Disallow: /ffxiv/craftsim
+  Disallow: /ffxiv/shortage-predictor
   Disallow: /wow/best-deals
   Disallow: /wow/export-search
   Disallow: /wow/marketshare
