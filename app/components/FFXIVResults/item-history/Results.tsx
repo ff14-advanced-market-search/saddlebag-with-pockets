@@ -68,6 +68,15 @@ const Results = ({
       </div>
     </div>
 
+    {data.total_purchase_amount === 7000 && (
+      <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md dark:bg-yellow-900/20 dark:border-yellow-700">
+        <p className="text-sm text-yellow-800 dark:text-yellow-200">
+          Note: We only pull 7,000 sales per week from Universalis. Actual
+          region-wide sales per week may be higher.
+        </p>
+      </div>
+    )}
+
     <ContentContainer>
       <>
         <TitleH2 title="Region Price History" />
@@ -100,6 +109,16 @@ const Results = ({
           <SuspiciousSaleTable data={data.dirty_sales} />
         </>
       </ContentContainer>
+    )}
+
+    {data.total_purchase_amount === 7000 && (
+      <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md dark:bg-yellow-900/20 dark:border-yellow-700">
+        <p className="text-sm text-yellow-800 dark:text-yellow-200">
+          Note: We only pull 7,000 sales per week from Universalis. If the left
+          side of the chart is empty, then there may be more sales on your home
+          server we did not pull from Universalis.
+        </p>
+      </div>
     )}
 
     <ContentContainer>
