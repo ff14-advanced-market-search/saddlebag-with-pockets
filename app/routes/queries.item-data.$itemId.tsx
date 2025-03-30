@@ -80,9 +80,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const input = { itemId: parsedItemId, world, itemType, initialDays, endDays }
 
   try {
-    const historyResponse = await GetHistory(input)
-    const listingResponse = await GetListing(input)
-    const blogResponse = await GetBlog({ itemId: parsedItemId })
+    const [historyResponse, listingResponse, blogResponse] = await Promise.all([
+      GetHistory(input),
+      GetListing(input),
+      GetBlog({ itemId: parsedItemId })
+    ])
 
     if (!historyResponse.ok) {
       return { exception: historyResponse.statusText }
