@@ -58,7 +58,7 @@ const PriceGroupForm = ({
   }
 
   const removeItem = (idToRemove: number) => {
-    const newIds = itemIds.filter(id => id !== idToRemove)
+    const newIds = itemIds.filter((id) => id !== idToRemove)
     setItemIds(newIds)
     onChange({
       name,
@@ -70,8 +70,8 @@ const PriceGroupForm = ({
   const handleAddCategory = (newCategory: PriceGroup['categories'][0]) => {
     // Check if this category already exists
     const exists = categories.some(
-      cat => 
-        cat.item_class === newCategory.item_class && 
+      (cat) =>
+        cat.item_class === newCategory.item_class &&
         cat.item_subclass === newCategory.item_subclass &&
         cat.expansion_number === newCategory.expansion_number &&
         cat.min_quality === newCategory.min_quality
@@ -90,11 +90,16 @@ const PriceGroupForm = ({
 
   const getQualityDisplay = (quality: number): string => {
     switch (quality) {
-      case 0: return 'No quality'
-      case 1: return '⭐'
-      case 2: return '⭐⭐'
-      case 3: return '⭐⭐⭐'
-      default: return `Quality ${quality}`
+      case 0:
+        return 'No quality'
+      case 1:
+        return '⭐'
+      case 2:
+        return '⭐⭐'
+      case 3:
+        return '⭐⭐⭐'
+      default:
+        return `Quality ${quality}`
     }
   }
 
@@ -137,13 +142,17 @@ const PriceGroupForm = ({
           <h4 className="text-sm font-medium mb-2">Selected Items:</h4>
           <div className="space-y-2">
             {itemIds.map((id) => {
-              const itemEntry = wowItemsList.find(item => item.value === id.toString())
-              const itemName = itemEntry ? itemEntry.label : `Unknown Item (${id})`
+              const itemEntry = wowItemsList.find(
+                (item) => item.value === id.toString()
+              )
+              const itemName = itemEntry
+                ? itemEntry.label
+                : `Unknown Item (${id})`
               return (
-                <div key={id} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <div className="flex-1 text-sm">
-                    {itemName}
-                  </div>
+                <div
+                  key={id}
+                  className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                  <div className="flex-1 text-sm">{itemName}</div>
                   <button
                     type="button"
                     className="text-red-500 hover:text-red-700 text-sm"
@@ -171,19 +180,25 @@ const PriceGroupForm = ({
         {categories.length > 0 && (
           <div className="space-y-2">
             {categories.map((cat, index) => (
-              <div key={index} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
+              <div
+                key={index}
+                className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
                 <div className="flex-1 text-sm">
-                  <div>Class: {cat.item_class}, Subclass: {cat.item_subclass}</div>
+                  <div>
+                    Class: {cat.item_class}, Subclass: {cat.item_subclass}
+                  </div>
                   <div className="text-xs text-gray-500 dark:text-gray-300">
-                    Quality: {getQualityDisplay(cat.min_quality)}, 
-                    Expansion: {cat.expansion_number === -1 ? 'All' : cat.expansion_number}
+                    Quality: {getQualityDisplay(cat.min_quality)}, Expansion:{' '}
+                    {cat.expansion_number === -1 ? 'All' : cat.expansion_number}
                   </div>
                 </div>
                 <button
                   type="button"
                   className="text-red-500 hover:text-red-700"
                   onClick={() => {
-                    const updatedCategories = categories.filter((_, i) => i !== index)
+                    const updatedCategories = categories.filter(
+                      (_, i) => i !== index
+                    )
                     setCategories(updatedCategories)
                     onChange({
                       name,

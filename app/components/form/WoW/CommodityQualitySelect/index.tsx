@@ -66,4 +66,4 @@ const CommodityQualitySelect = ({
   )
 }
 
-export default CommodityQualitySelect 
+export default CommodityQualitySelect

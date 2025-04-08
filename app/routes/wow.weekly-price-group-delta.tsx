@@ -1,5 +1,10 @@
 import { json } from '@remix-run/cloudflare'
-import type { ActionFunction, LoaderFunction, MetaFunction, LinksFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction
+} from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useState } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
@@ -20,7 +25,7 @@ import type { Options } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import PriceGroupForm from '~/components/form/WoW/PriceGroupForm'
-import type { 
+import type {
   WeeklyPriceGroupDeltaResponse,
   ItemData,
   PriceGroup
@@ -34,7 +39,8 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Weekly Price Group Delta Analysis',
-    description: 'Analyze weekly price changes for groups of WoW items and categories'
+    description:
+      'Analyze weekly price changes for groups of WoW items and categories'
   }
 }
 
@@ -73,9 +79,11 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
-  
+
   if (!region || !server) {
-    throw new Error('Please configure your WoW settings in the user settings page')
+    throw new Error(
+      'Please configure your WoW settings in the user settings page'
+    )
   }
 
   return json<WoWLoaderData>({
@@ -99,7 +107,9 @@ export const action: ActionFunction = async ({ request }) => {
   const startYear = parseInt(formData.get('startYear') as string)
   const startMonth = parseInt(formData.get('startMonth') as string)
   const startDay = parseInt(formData.get('startDay') as string)
-  const priceGroups = JSON.parse(formData.get('priceGroups') as string) as PriceGroup[]
+  const priceGroups = JSON.parse(
+    formData.get('priceGroups') as string
+  ) as PriceGroup[]
 
   try {
     const response = await WeeklyPriceGroupDelta({
@@ -118,7 +128,8 @@ export const action: ActionFunction = async ({ request }) => {
     return json(data)
   } catch (error) {
     return json({
-      exception: error instanceof Error ? error.message : 'An unknown error occurred'
+      exception:
+        error instanceof Error ? error.message : 'An unknown error occurred'
     })
   }
 }
@@ -204,7 +215,9 @@ const Index = () => {
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
 
   if (actionData) {
-    return <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />
+    return (
+      <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />
+    )
   }
 
   // Create the request data preview
@@ -263,16 +276,24 @@ const Index = () => {
                   setPriceGroups(newGroups)
                   setError(undefined)
                 }}
-                onRemove={priceGroups.length > 1 ? () => {
-                  setPriceGroups(priceGroups.filter((_, i) => i !== index))
-                  setError(undefined)
-                } : undefined}
+                onRemove={
+                  priceGroups.length > 1
+                    ? () => {
+                        setPriceGroups(
+                          priceGroups.filter((_, i) => i !== index)
+                        )
+                        setError(undefined)
+                      }
+                    : undefined
+                }
               />
             ))}
             <button
               type="button"
               className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ${
-                priceGroups.length >= MAX_PRICE_GROUPS ? 'opacity-50 cursor-not-allowed' : ''
+                priceGroups.length >= MAX_PRICE_GROUPS
+                  ? 'opacity-50 cursor-not-allowed'
+                  : ''
               }`}
               onClick={handleAddPriceGroup}
               disabled={priceGroups.length >= MAX_PRICE_GROUPS}>
@@ -292,7 +313,9 @@ const Index = () => {
               onClick={onSubmit}
               disabled={transition.state === 'submitting'}
               className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse">
-              {transition.state === 'submitting' ? 'Searching...' : 'Search Price Groups'}
+              {transition.state === 'submitting'
+                ? 'Searching...'
+                : 'Search Price Groups'}
             </button>
           </div>
 
@@ -305,7 +328,8 @@ const Index = () => {
                 codeString={JSON.stringify(requestData, null, 2)}
                 onClick={() => alert('Copied to clipboard!')}>
                 <p className="italic text-sm text-blue-900 dark:text-gray-100 py-2">
-                  This is the data that will be sent to the API when you submit the form.
+                  This is the data that will be sent to the API when you submit
+                  the form.
                 </p>
               </CodeBlock>
             </div>
@@ -326,7 +350,9 @@ const Results = ({
   pageTitle: string
   darkMode: boolean
 }) => {
-  const [selectedGroup, setSelectedGroup] = useState<string>(Object.keys(data)[0])
+  const [selectedGroup, setSelectedGroup] = useState<string>(
+    Object.keys(data)[0]
+  )
   const [globalFilter, setGlobalFilter] = useState('')
 
   const styles = darkMode
@@ -355,7 +381,8 @@ const Results = ({
       type: 'line',
       backgroundColor: styles?.backgroundColor,
       style: {
-        fontFamily: '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+        fontFamily:
+          '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       }
     },
     title: {
@@ -364,10 +391,10 @@ const Results = ({
     },
     xAxis: {
       categories: timestamps.map(formatTimestamp),
-      labels: { 
+      labels: {
         style: { color: styles?.color },
         rotation: -45,
-        formatter: function() {
+        formatter: function () {
           return this.value as string
         }
       },
@@ -384,7 +411,8 @@ const Results = ({
       shared: true,
       useHTML: true,
       headerFormat: '<b>{point.key}</b><br/>',
-      pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
+      pointFormat:
+        '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
       backgroundColor: darkMode ? '#1f2937' : '#ffffff',
       style: {
         color: darkMode ? '#ffffff' : '#000000'
@@ -433,7 +461,7 @@ const Results = ({
   }
 
   // Transform the data to include computed fields
-  const csvData = Object.values(groupData.item_data).map(item => ({
+  const csvData = Object.values(groupData.item_data).map((item) => ({
     ...item,
     currentPrice: item.weekly_data[item.weekly_data.length - 1]?.p || 0,
     currentDelta: item.weekly_data[item.weekly_data.length - 1]?.delta || 0
@@ -465,7 +493,10 @@ const Results = ({
 
           {/* Delta chart */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <HighchartsReact highcharts={Highcharts} options={deltaChartOptions} />
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={deltaChartOptions}
+            />
           </div>
 
           {/* Item details table */}

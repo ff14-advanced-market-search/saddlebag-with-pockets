@@ -40,7 +40,9 @@ export interface WeeklyPriceGroupDeltaResponse {
   [groupName: string]: GroupData
 }
 
-const WeeklyPriceGroupDelta = async (props: WeeklyPriceGroupDeltaProps): Promise<Response> => {
+const WeeklyPriceGroupDelta = async (
+  props: WeeklyPriceGroupDeltaProps
+): Promise<Response> => {
   const response = await fetch(`${address}/api/wow/weekly-price-group-delta`, {
     method: 'POST',
     headers: {
@@ -53,4 +55,4 @@ const WeeklyPriceGroupDelta = async (props: WeeklyPriceGroupDeltaProps): Promise
   return response
 }
 
-export default WeeklyPriceGroupDelta 
+export default WeeklyPriceGroupDelta

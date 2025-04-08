@@ -15,14 +15,20 @@ interface CategorySelectionPopupProps {
   onAdd: (category: Category) => void
 }
 
-const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps) => {
+const CategorySelectionPopup = ({
+  onClose,
+  onAdd
+}: CategorySelectionPopupProps) => {
   const [expansion, setExpansion] = useState('-1')
   const [quality, setQuality] = useState('0')
   const [itemClass, setItemClass] = useState(-1)
   const [itemSubClass, setItemSubClass] = useState(-1)
   const [error, setError] = useState<string | null>(null)
 
-  const handleCategoryChange = (newItemClass: number, newItemSubClass: number) => {
+  const handleCategoryChange = (
+    newItemClass: number,
+    newItemSubClass: number
+  ) => {
     setItemClass(newItemClass)
     setItemSubClass(newItemSubClass)
     setError(null)
@@ -45,16 +51,16 @@ const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps)
       return
     }
 
-    // Check if at least one other field has been changed from default
-    const isAllDefault = 
-      expansion === '-1' && 
-      quality === '0' && 
-      itemSubClass === -1
+    // // Check if at least one other field has been changed from default
+    // const isAllDefault =
+    //   expansion === '-1' &&
+    //   quality === '0' &&
+    //   itemSubClass === -1
 
-    if (isAllDefault) {
-      setError('Please change at least one additional option (expansion, quality, or subcategory)')
-      return
-    }
+    // if (isAllDefault) {
+    //   setError('Please change at least one additional option (expansion, quality, or subcategory)')
+    //   return
+    // }
 
     onAdd({
       item_class: itemClass,
@@ -82,7 +88,7 @@ const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps)
             defaultValue={expansion}
             onChange={handleExpansionChange}
           />
-          
+
           <CommodityQualitySelect
             defaultValue={quality}
             onChange={handleQualityChange}
@@ -94,11 +100,7 @@ const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps)
             onChange={handleCategoryChange}
           />
 
-          {error && (
-            <div className="text-red-500 text-sm mt-2">
-              {error}
-            </div>
-          )}
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
 
           <div className="flex justify-end space-x-3 mt-6">
             <button
@@ -120,4 +122,4 @@ const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps)
   )
 }
 
-export default CategorySelectionPopup 
+export default CategorySelectionPopup
