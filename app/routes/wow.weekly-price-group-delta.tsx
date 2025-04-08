@@ -340,19 +340,37 @@ const Results = ({
   const groupData = data[selectedGroup]
   const timestamps = Object.keys(groupData.deltas).sort()
 
+  // Format timestamp into YYYY-MM-DD
+  const formatTimestamp = (timestamp: string) => {
+    const dateStr = timestamp.padStart(8, '0') // Ensure 8 digits
+    const year = dateStr.slice(0, 4)
+    const month = dateStr.slice(4, 6)
+    const day = dateStr.slice(6, 8)
+    return `${year}-${month}-${day}`
+  }
+
   // Chart options for group deltas
   const deltaChartOptions: Options = {
     chart: {
       type: 'line',
-      backgroundColor: styles?.backgroundColor
+      backgroundColor: styles?.backgroundColor,
+      style: {
+        fontFamily: '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+      }
     },
     title: {
       text: `${selectedGroup} - Weekly Price Deltas`,
       style: { color: styles?.color }
     },
     xAxis: {
-      categories: timestamps.map((t) => new Date(parseInt(t)).toLocaleDateString()),
-      labels: { style: { color: styles?.color } },
+      categories: timestamps.map(formatTimestamp),
+      labels: { 
+        style: { color: styles?.color },
+        rotation: -45,
+        formatter: function() {
+          return this.value as string
+        }
+      },
       title: { text: 'Week', style: { color: styles?.color } }
     },
     yAxis: {
@@ -362,9 +380,19 @@ const Results = ({
       },
       labels: { style: { color: styles?.color } }
     },
+    tooltip: {
+      shared: true,
+      useHTML: true,
+      headerFormat: '<b>{point.key}</b><br/>',
+      pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
+      backgroundColor: darkMode ? '#1f2937' : '#ffffff',
+      style: {
+        color: darkMode ? '#ffffff' : '#000000'
+      }
+    },
     series: [
       {
-        name: 'Price Delta %',
+        name: selectedGroup,
         data: timestamps.map((t) => groupData.deltas[t]),
         type: 'line'
       }
