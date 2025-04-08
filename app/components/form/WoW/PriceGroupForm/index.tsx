@@ -131,17 +131,24 @@ const PriceGroupForm = ({
         <div className="mt-4">
           <h4 className="text-sm font-medium mb-2">Selected Items:</h4>
           <div className="space-y-2">
-            {itemIds.map((id) => (
-              <div key={id} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                <span>{wowItems[id] || id}</span>
-                <button
-                  type="button"
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => removeItem(id)}>
-                  Remove
-                </button>
-              </div>
-            ))}
+            {itemIds.map((id) => {
+              // Get the item name from wowItemsList
+              const itemEntry = wowItemsList.find(item => item.value === id.toString())
+              const itemName = itemEntry ? itemEntry.label : `Unknown Item (${id})`
+              return (
+                <div key={id} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                  <div className="flex-1 text-sm">
+                    {itemName}
+                  </div>
+                  <button
+                    type="button"
+                    className="text-red-500 hover:text-red-700 text-sm"
+                    onClick={() => removeItem(id)}>
+                    Remove
+                  </button>
+                </div>
+              )
+            })}
           </div>
         </div>
       )}
