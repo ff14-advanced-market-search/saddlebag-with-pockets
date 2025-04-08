@@ -26,6 +26,7 @@ import type {
   PriceGroup
 } from '~/requests/WoW/WeeklyPriceGroupDelta'
 import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
+import CodeBlock from '~/components/Common/CodeBlock'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -105,7 +106,13 @@ const Index = () => {
   const { darkmode } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
   const actionData = useActionData<WeeklyPriceGroupDeltaResponse>()
-  const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([])
+  const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([
+    {
+      name: '',
+      item_ids: [],
+      categories: []
+    }
+  ])
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -113,13 +120,22 @@ const Index = () => {
     }
   }
 
-  const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm} (${wowRegion})`
+  const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
 
   if (actionData) {
     return <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />
   }
 
   const error = undefined // TODO: Implement error handling
+
+  // Create the request data preview
+  const requestData = {
+    region: wowRegion,
+    start_year: 2023,
+    start_month: 5,
+    start_day: 1,
+    price_groups: priceGroups
+  }
 
   return (
     <PageWrapper>
@@ -134,15 +150,15 @@ const Index = () => {
               labelTitle="Start Year"
               name="startYear"
               type="number"
-              defaultValue={new Date().getFullYear()}
+              defaultValue={2023}
               min={2020}
-              max={2030}
+              max={2090}
             />
             <InputWithLabel
               labelTitle="Start Month"
               name="startMonth"
               type="number"
-              defaultValue={new Date().getMonth() + 1}
+              defaultValue={5}
               min={1}
               max={12}
             />
@@ -150,7 +166,7 @@ const Index = () => {
               labelTitle="Start Day"
               name="startDay"
               type="number"
-              defaultValue={new Date().getDate()}
+              defaultValue={1}
               min={1}
               max={31}
             />
@@ -167,9 +183,9 @@ const Index = () => {
                   newGroups[index] = updatedGroup
                   setPriceGroups(newGroups)
                 }}
-                onRemove={() => {
+                onRemove={priceGroups.length > 1 ? () => {
                   setPriceGroups(priceGroups.filter((_, i) => i !== index))
-                }}
+                } : undefined}
               />
             ))}
             <button
@@ -194,6 +210,21 @@ const Index = () => {
             name="priceGroups"
             value={JSON.stringify(priceGroups)}
           />
+
+          <div className="mt-8">
+            <h3 className="text-lg font-medium mb-4">Request Data Preview</h3>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+              <CodeBlock
+                title="Input for weekly price group delta"
+                buttonTitle="Copy"
+                codeString={JSON.stringify(requestData, null, 2)}
+                onClick={() => alert('Copied to clipboard!')}>
+                <p className="italic text-sm text-blue-900 dark:text-gray-100 py-2">
+                  This is the data that will be sent to the API when you submit the form.
+                </p>
+              </CodeBlock>
+            </div>
+          </div>
         </form>
       </SmallFormContainer>
     </PageWrapper>

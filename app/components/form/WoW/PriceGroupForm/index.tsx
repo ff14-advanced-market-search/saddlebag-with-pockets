@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { InputWithLabel } from '../../InputWithLabel'
 import { ItemClassSelect } from '../WoWScanForm'
+import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
+import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
+import { getItemIDByName } from '~/utils/items'
+import CodeBlock from '~/components/Common/CodeBlock'
 
 export interface PriceGroup {
   name: string
@@ -27,6 +31,7 @@ const PriceGroupForm = ({
   const [name, setName] = useState(defaultValue?.name || '')
   const [itemIds, setItemIds] = useState<number[]>(defaultValue?.item_ids || [])
   const [categories, setCategories] = useState(defaultValue?.categories || [])
+  const [currentItemName, setCurrentItemName] = useState('')
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value
@@ -38,12 +43,22 @@ const PriceGroupForm = ({
     })
   }
 
-  const handleItemIdsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newIds = e.target.value
-      .split(',')
-      .map((id) => parseInt(id.trim()))
-      .filter((id) => !isNaN(id))
+  const handleItemSelect = (value: string) => {
+    setCurrentItemName(value)
+    const itemId = getItemIDByName(value.trim(), wowItems)
+    if (itemId) {
+      const newIds = [...new Set([...itemIds, parseInt(itemId)])]
+      setItemIds(newIds)
+      onChange({
+        name,
+        item_ids: newIds,
+        categories
+      })
+    }
+  }
 
+  const removeItem = (idToRemove: number) => {
+    const newIds = itemIds.filter(id => id !== idToRemove)
     setItemIds(newIds)
     onChange({
       name,
@@ -101,14 +116,35 @@ const PriceGroupForm = ({
         placeholder="e.g., Test IDs"
       />
 
-      <InputWithLabel
-        labelTitle="Item IDs"
-        name="itemIds"
-        type="text"
-        value={itemIds.join(', ')}
-        onChange={handleItemIdsChange}
-        placeholder="e.g., 190320, 190321, 6037"
-      />
+      <div className="mt-4">
+        <DebouncedSelectInput
+          title="Add item by name"
+          label="Item"
+          id="item-select"
+          selectOptions={wowItemsList}
+          onSelect={handleItemSelect}
+          displayValue={currentItemName}
+        />
+      </div>
+
+      {itemIds.length > 0 && (
+        <div className="mt-4">
+          <h4 className="text-sm font-medium mb-2">Selected Items:</h4>
+          <div className="space-y-2">
+            {itemIds.map((id) => (
+              <div key={id} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                <span>{wowItems[id] || id}</span>
+                <button
+                  type="button"
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => removeItem(id)}>
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="mt-4">
         <h4 className="text-sm font-medium mb-2">Categories</h4>
@@ -121,19 +157,15 @@ const PriceGroupForm = ({
         {categories.length > 0 && (
           <div className="mt-2">
             <h5 className="text-sm font-medium mb-1">Selected Categories:</h5>
-            <ul className="text-sm">
+            <div className="space-y-2">
               {categories.map((cat, index) => (
-                <li key={index} className="flex items-center gap-2">
-                  <span>
-                    Class: {cat.item_class}, Subclass: {cat.item_subclass}
-                  </span>
+                <div key={index} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                  <span>Class: {cat.item_class}, Subclass: {cat.item_subclass}</span>
                   <button
                     type="button"
                     className="text-red-500 hover:text-red-700"
                     onClick={() => {
-                      const newCategories = categories.filter(
-                        (_, i) => i !== index
-                      )
+                      const newCategories = categories.filter((_, i) => i !== index)
                       setCategories(newCategories)
                       onChange({
                         name,
@@ -143,9 +175,9 @@ const PriceGroupForm = ({
                     }}>
                     Remove
                   </button>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         )}
       </div>
