@@ -384,18 +384,20 @@ const Results = ({
     if (selectedGroup === 'All') {
       return Object.entries(data).map(([groupName, groupData]) => ({
         name: groupName,
-        data: allTimestamps.map(timestamp => 
-          groupData.deltas[timestamp] || null
-        ),
+        data: allTimestamps.map(timestamp => {
+          const value = groupData.deltas[timestamp]
+          return value !== undefined ? value : null
+        }),
         type: 'line' as const
       }))
     } else {
       const groupData = data[selectedGroup]
       return [{
         name: selectedGroup,
-        data: allTimestamps.map(timestamp => 
-          groupData.deltas[timestamp] || null
-        ),
+        data: allTimestamps.map(timestamp => {
+          const value = groupData.deltas[timestamp]
+          return value !== undefined ? value : null
+        }),
         type: 'line' as const
       }]
     }
@@ -445,7 +447,11 @@ const Results = ({
     },
     plotOptions: {
       series: {
-        connectNulls: true
+        connectNulls: true,
+        marker: {
+          enabled: true,
+          radius: 3
+        }
       }
     },
     series: generateSeriesData(),
