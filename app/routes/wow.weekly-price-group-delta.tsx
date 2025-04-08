@@ -123,6 +123,34 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
+const MAX_PRICE_GROUPS = 10
+const MAX_NAME_LENGTH = 64
+const VALID_NAME_REGEX = /^[a-zA-Z0-9\s'.,\-_]*$/
+
+const validatePriceGroup = (group: PriceGroup): string | null => {
+  // Check for empty name
+  if (!group.name.trim()) {
+    return 'Price group name cannot be empty'
+  }
+
+  // Validate name length
+  if (group.name.length > MAX_NAME_LENGTH) {
+    return 'Price group name must be less than 64 characters'
+  }
+
+  // Validate name characters
+  if (!VALID_NAME_REGEX.test(group.name)) {
+    return 'Price group name can only contain alphanumeric characters, periods, commas, spaces, hyphens, and underscores'
+  }
+
+  // Check if both item_ids and categories are empty
+  if (group.item_ids.length === 0 && group.categories.length === 0) {
+    return 'Price group must have at least one item or category'
+  }
+
+  return null
+}
+
 // Main component
 const Index = () => {
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
@@ -136,11 +164,41 @@ const Index = () => {
       categories: []
     }
   ])
+  const [error, setError] = useState<string | undefined>(undefined)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
+      return
     }
+
+    // Validate all price groups before submission
+    for (const group of priceGroups) {
+      const validationError = validatePriceGroup(group)
+      if (validationError) {
+        e.preventDefault()
+        setError(validationError)
+        return
+      }
+    }
+
+    setError(undefined)
+  }
+
+  const handleAddPriceGroup = () => {
+    if (priceGroups.length >= MAX_PRICE_GROUPS) {
+      setError('Maximum of 10 price groups allowed')
+      return
+    }
+
+    setPriceGroups([
+      ...priceGroups,
+      {
+        name: '',
+        item_ids: [],
+        categories: []
+      }
+    ])
   }
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
@@ -148,8 +206,6 @@ const Index = () => {
   if (actionData) {
     return <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />
   }
-
-  const error = undefined // TODO: Implement error handling
 
   // Create the request data preview
   const requestData = {
@@ -205,25 +261,21 @@ const Index = () => {
                   const newGroups = [...priceGroups]
                   newGroups[index] = updatedGroup
                   setPriceGroups(newGroups)
+                  setError(undefined)
                 }}
                 onRemove={priceGroups.length > 1 ? () => {
                   setPriceGroups(priceGroups.filter((_, i) => i !== index))
+                  setError(undefined)
                 } : undefined}
               />
             ))}
             <button
               type="button"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              onClick={() => {
-                setPriceGroups([
-                  ...priceGroups,
-                  {
-                    name: '',
-                    item_ids: [],
-                    categories: []
-                  }
-                ])
-              }}>
+              className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ${
+                priceGroups.length >= MAX_PRICE_GROUPS ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              onClick={handleAddPriceGroup}
+              disabled={priceGroups.length >= MAX_PRICE_GROUPS}>
               Add Price Group
             </button>
           </div>
