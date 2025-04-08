@@ -176,6 +176,9 @@ const Index = () => {
     }
   ])
   const [error, setError] = useState<string | undefined>(undefined)
+  const [startYear, setStartYear] = useState(2025)
+  const [startMonth, setStartMonth] = useState(1)
+  const [startDay, setStartDay] = useState(1)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -223,9 +226,9 @@ const Index = () => {
   // Create the request data preview
   const requestData = {
     region: wowRegion,
-    start_year: 2023,
-    start_month: 5,
-    start_day: 1,
+    start_year: startYear,
+    start_month: startMonth,
+    start_day: startDay,
     price_groups: priceGroups
   }
 
@@ -242,7 +245,8 @@ const Index = () => {
               labelTitle="Start Year"
               name="startYear"
               type="number"
-              defaultValue={2023}
+              value={startYear}
+              onChange={(e) => setStartYear(parseInt(e.target.value))}
               min={2020}
               max={2090}
             />
@@ -250,7 +254,8 @@ const Index = () => {
               labelTitle="Start Month"
               name="startMonth"
               type="number"
-              defaultValue={5}
+              value={startMonth}
+              onChange={(e) => setStartMonth(parseInt(e.target.value))}
               min={1}
               max={12}
             />
@@ -258,7 +263,8 @@ const Index = () => {
               labelTitle="Start Day"
               name="startDay"
               type="number"
-              defaultValue={1}
+              value={startDay}
+              onChange={(e) => setStartDay(parseInt(e.target.value))}
               min={1}
               max={31}
             />
@@ -364,9 +370,7 @@ const Results = ({
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
     new Set(
-      Object.values(data).flatMap(groupData => 
-        Object.keys(groupData.deltas)
-      )
+      Object.values(data).flatMap((groupData) => Object.keys(groupData.deltas))
     )
   ).sort()
 
@@ -384,7 +388,7 @@ const Results = ({
     if (selectedGroup === 'All') {
       return Object.entries(data).map(([groupName, groupData]) => ({
         name: groupName,
-        data: allTimestamps.map(timestamp => {
+        data: allTimestamps.map((timestamp) => {
           const value = groupData.deltas[timestamp]
           return value !== undefined ? value : null
         }),
@@ -395,7 +399,7 @@ const Results = ({
       // Create a series for the group average
       const groupSeries = {
         name: `${selectedGroup} (Average)`,
-        data: allTimestamps.map(timestamp => {
+        data: allTimestamps.map((timestamp) => {
           const value = groupData.deltas[timestamp]
           return value !== undefined ? value : null
         }),
@@ -403,23 +407,27 @@ const Results = ({
         lineWidth: 3,
         zIndex: 2
       }
-      
+
       // Create series for each item in the group
-      const itemSeries = Object.entries(groupData.item_data).map(([itemId, itemData]) => {
-        const itemName = groupData.item_names[itemId]
-        return {
-          name: itemName,
-          data: allTimestamps.map(timestamp => {
-            const weekData = itemData.weekly_data.find(d => d.t.toString() === timestamp)
-            return weekData ? weekData.delta : null
-          }),
-          type: 'line' as const,
-          lineWidth: 1,
-          dashStyle: 'Dot',
-          opacity: 0.7,
-          zIndex: 1
+      const itemSeries = Object.entries(groupData.item_data).map(
+        ([itemId, itemData]) => {
+          const itemName = groupData.item_names[itemId]
+          return {
+            name: itemName,
+            data: allTimestamps.map((timestamp) => {
+              const weekData = itemData.weekly_data.find(
+                (d) => d.t.toString() === timestamp
+              )
+              return weekData ? weekData.delta : null
+            }),
+            type: 'line' as const,
+            lineWidth: 1,
+            dashStyle: 'Dot',
+            opacity: 0.7,
+            zIndex: 1
+          }
         }
-      })
+      )
 
       return [groupSeries, ...itemSeries]
     }
@@ -435,11 +443,19 @@ const Results = ({
           '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       },
       // Add height based on number of series when viewing a specific group
-      height: selectedGroup !== 'All' ? 
-        Math.max(600, (Object.keys(data[selectedGroup].item_data).length * 30) + 400) : 600
+      height:
+        selectedGroup !== 'All'
+          ? Math.max(
+              600,
+              Object.keys(data[selectedGroup].item_data).length * 30 + 400
+            )
+          : 600
     },
     title: {
-      text: selectedGroup === 'All' ? 'All Groups - Weekly Price Deltas' : `${selectedGroup} - Weekly Price Deltas`,
+      text:
+        selectedGroup === 'All'
+          ? 'All Groups - Weekly Price Deltas'
+          : `${selectedGroup} - Weekly Price Deltas`,
       style: { color: styles?.color }
     },
     xAxis: {
@@ -465,22 +481,24 @@ const Results = ({
       useHTML: true,
       headerFormat: '<b>{point.key}</b><br/>',
       // Custom formatter to sort points by value
-      formatter: function() {
-        if (!this.points) return '';
-        
+      formatter: function () {
+        if (!this.points) return ''
+
         // Sort points by value (delta) in descending order
         const sortedPoints = this.points
-          .filter(point => point.y !== null && point.y !== undefined)
-          .sort((a, b) => (b.y || 0) - (a.y || 0));
+          .filter((point) => point.y !== null && point.y !== undefined)
+          .sort((a, b) => (b.y || 0) - (a.y || 0))
 
-        let s = `<b>${this.x}</b><br/>`;
-        
+        let s = `<b>${this.x}</b><br/>`
+
         // Add each point's data
-        sortedPoints.forEach(point => {
-          s += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y?.toFixed(2)}%</b><br/>`;
-        });
-        
-        return s;
+        sortedPoints.forEach((point) => {
+          s += `<span style="color:${point.color}">●</span> ${
+            point.series.name
+          }: <b>${point.y?.toFixed(2)}%</b><br/>`
+        })
+
+        return s
       },
       backgroundColor: darkMode ? '#1f2937' : '#ffffff',
       style: {
@@ -500,11 +518,11 @@ const Results = ({
         },
         events: {
           // Ensure all series remain visible when clicking legend items
-          legendItemClick: function() {
+          legendItemClick: function () {
             if (selectedGroup !== 'All') {
-              return false; // Prevent toggling visibility
+              return false // Prevent toggling visibility
             }
-            return true; // Allow toggling for All Groups view
+            return true // Allow toggling for All Groups view
           }
         }
       }
@@ -516,8 +534,12 @@ const Results = ({
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
-      maxHeight: selectedGroup !== 'All' ? 
-        Math.floor((Object.keys(data[selectedGroup].item_data).length * 30) + 200) : 300,
+      maxHeight:
+        selectedGroup !== 'All'
+          ? Math.floor(
+              Object.keys(data[selectedGroup].item_data).length * 30 + 200
+            )
+          : 300,
       itemMarginTop: 4,
       itemMarginBottom: 4,
       symbolRadius: 2,
@@ -625,10 +647,12 @@ const Results = ({
               {/* Export buttons */}
               <div className="flex gap-2 mt-4">
                 <CSVButton
-                  data={Object.values(groupData.item_data).map(item => ({
+                  data={Object.values(groupData.item_data).map((item) => ({
                     ...item,
-                    currentPrice: item.weekly_data[item.weekly_data.length - 1]?.p || 0,
-                    currentDelta: item.weekly_data[item.weekly_data.length - 1]?.delta || 0
+                    currentPrice:
+                      item.weekly_data[item.weekly_data.length - 1]?.p || 0,
+                    currentDelta:
+                      item.weekly_data[item.weekly_data.length - 1]?.delta || 0
                   }))}
                   columns={[
                     { title: 'Item Name', value: 'itemName' },
