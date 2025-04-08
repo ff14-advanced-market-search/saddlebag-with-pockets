@@ -20,13 +20,42 @@ const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps)
   const [quality, setQuality] = useState('0')
   const [itemClass, setItemClass] = useState(-1)
   const [itemSubClass, setItemSubClass] = useState(-1)
+  const [error, setError] = useState<string | null>(null)
 
   const handleCategoryChange = (newItemClass: number, newItemSubClass: number) => {
     setItemClass(newItemClass)
     setItemSubClass(newItemSubClass)
+    setError(null)
+  }
+
+  const handleExpansionChange = (value: string) => {
+    setExpansion(value)
+    setError(null)
+  }
+
+  const handleQualityChange = (value: string) => {
+    setQuality(value)
+    setError(null)
   }
 
   const handleAdd = () => {
+    // Check if item category is "All"
+    if (itemClass === -1) {
+      setError('Please select an item category')
+      return
+    }
+
+    // Check if at least one other field has been changed from default
+    const isAllDefault = 
+      expansion === '-1' && 
+      quality === '0' && 
+      itemSubClass === -1
+
+    if (isAllDefault) {
+      setError('Please change at least one additional option (expansion, quality, or subcategory)')
+      return
+    }
+
     onAdd({
       item_class: itemClass,
       item_subclass: itemSubClass,
@@ -51,12 +80,12 @@ const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps)
         <div className="space-y-4">
           <ExpansionSelect
             defaultValue={expansion}
-            onChange={setExpansion}
+            onChange={handleExpansionChange}
           />
           
           <CommodityQualitySelect
             defaultValue={quality}
-            onChange={setQuality}
+            onChange={handleQualityChange}
           />
 
           <ItemClassSelect
@@ -64,6 +93,12 @@ const CategorySelectionPopup = ({ onClose, onAdd }: CategorySelectionPopupProps)
             itemSubClass={itemSubClass}
             onChange={handleCategoryChange}
           />
+
+          {error && (
+            <div className="text-red-500 text-sm mt-2">
+              {error}
+            </div>
+          )}
 
           <div className="flex justify-end space-x-3 mt-6">
             <button

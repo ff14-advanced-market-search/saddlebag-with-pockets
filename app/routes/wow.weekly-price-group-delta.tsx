@@ -38,11 +38,34 @@ export const meta: MetaFunction = () => {
   }
 }
 
+// Add keyframe animation for the pulsing effect
+const styles = `
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.pulse {
+  animation: pulse-border 2s infinite;
+}
+`
+
 // Overwrite default links in the root.tsx
 export const links: LinksFunction = () => [
   {
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/wow/weekly-price-group-delta'
+  },
+  {
+    rel: 'stylesheet',
+    href: 'data:text/css,' + encodeURIComponent(styles)
   }
 ]
 
@@ -141,9 +164,9 @@ const Index = () => {
     <PageWrapper>
       <SmallFormContainer
         title={pageTitle}
-        onClick={onSubmit}
         loading={transition.state === 'submitting'}
-        error={error}>
+        error={error}
+        onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4">
           <div className="grid grid-cols-3 gap-4">
             <InputWithLabel
@@ -210,6 +233,16 @@ const Index = () => {
             name="priceGroups"
             value={JSON.stringify(priceGroups)}
           />
+
+          <div className="flex justify-center my-8">
+            <button
+              type="submit"
+              onClick={onSubmit}
+              disabled={transition.state === 'submitting'}
+              className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse">
+              {transition.state === 'submitting' ? 'Searching...' : 'Search Price Groups'}
+            </button>
+          </div>
 
           <div className="mt-8">
             <h3 className="text-lg font-medium mb-4">Request Data Preview</h3>
