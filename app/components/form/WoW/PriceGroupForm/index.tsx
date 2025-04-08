@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { InputWithLabel } from '../../InputWithLabel'
-import { ItemClassSelect } from '../WoWScanForm'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
-import CodeBlock from '~/components/Common/CodeBlock'
+import CategorySelectionPopup from '../CategorySelectionPopup'
 
 export interface PriceGroup {
   name: string
@@ -32,6 +31,7 @@ const PriceGroupForm = ({
   const [itemIds, setItemIds] = useState<number[]>(defaultValue?.item_ids || [])
   const [categories, setCategories] = useState(defaultValue?.categories || [])
   const [currentItemName, setCurrentItemName] = useState('')
+  const [showCategoryPopup, setShowCategoryPopup] = useState(false)
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value
@@ -67,30 +67,35 @@ const PriceGroupForm = ({
     })
   }
 
-  const handleCategoryChange = (itemClass: number, itemSubClass: number) => {
-    const newCategories = [...categories]
-    const existingIndex = categories.findIndex(
-      (cat: { item_class: number; item_subclass: number }) =>
-        cat.item_class === itemClass && cat.item_subclass === itemSubClass
+  const handleAddCategory = (newCategory: PriceGroup['categories'][0]) => {
+    // Check if this category already exists
+    const exists = categories.some(
+      cat => 
+        cat.item_class === newCategory.item_class && 
+        cat.item_subclass === newCategory.item_subclass &&
+        cat.expansion_number === newCategory.expansion_number &&
+        cat.min_quality === newCategory.min_quality
     )
 
-    if (existingIndex >= 0) {
-      newCategories.splice(existingIndex, 1)
-    } else {
-      newCategories.push({
-        item_class: itemClass,
-        item_subclass: itemSubClass,
-        expansion_number: -1, // Default to all expansions
-        min_quality: -1 // Default to all qualities
+    if (!exists) {
+      const updatedCategories = [...categories, newCategory]
+      setCategories(updatedCategories)
+      onChange({
+        name,
+        item_ids: itemIds,
+        categories: updatedCategories
       })
     }
+  }
 
-    setCategories(newCategories)
-    onChange({
-      name,
-      item_ids: itemIds,
-      categories: newCategories
-    })
+  const getQualityDisplay = (quality: number): string => {
+    switch (quality) {
+      case 0: return 'No quality'
+      case 1: return '⭐'
+      case 2: return '⭐⭐'
+      case 3: return '⭐⭐⭐'
+      default: return `Quality ${quality}`
+    }
   }
 
   return (
@@ -132,7 +137,6 @@ const PriceGroupForm = ({
           <h4 className="text-sm font-medium mb-2">Selected Items:</h4>
           <div className="space-y-2">
             {itemIds.map((id) => {
-              // Get the item name from wowItemsList
               const itemEntry = wowItemsList.find(item => item.value === id.toString())
               const itemName = itemEntry ? itemEntry.label : `Unknown Item (${id})`
               return (
@@ -154,40 +158,53 @@ const PriceGroupForm = ({
       )}
 
       <div className="mt-4">
-        <h4 className="text-sm font-medium mb-2">Categories</h4>
-        <ItemClassSelect
-          itemClass={-1}
-          itemSubClass={-1}
-          onChange={handleCategoryChange}
-        />
+        <div className="flex justify-between items-center mb-2">
+          <h4 className="text-sm font-medium">Categories</h4>
+          <button
+            type="button"
+            onClick={() => setShowCategoryPopup(true)}
+            className="text-blue-500 hover:text-blue-600 text-sm">
+            Add Category
+          </button>
+        </div>
 
         {categories.length > 0 && (
-          <div className="mt-2">
-            <h5 className="text-sm font-medium mb-1">Selected Categories:</h5>
-            <div className="space-y-2">
-              {categories.map((cat, index) => (
-                <div key={index} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <span>Class: {cat.item_class}, Subclass: {cat.item_subclass}</span>
-                  <button
-                    type="button"
-                    className="text-red-500 hover:text-red-700"
-                    onClick={() => {
-                      const newCategories = categories.filter((_, i) => i !== index)
-                      setCategories(newCategories)
-                      onChange({
-                        name,
-                        item_ids: itemIds,
-                        categories: newCategories
-                      })
-                    }}>
-                    Remove
-                  </button>
+          <div className="space-y-2">
+            {categories.map((cat, index) => (
+              <div key={index} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                <div className="flex-1 text-sm">
+                  <div>Class: {cat.item_class}, Subclass: {cat.item_subclass}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-300">
+                    Quality: {getQualityDisplay(cat.min_quality)}, 
+                    Expansion: {cat.expansion_number === -1 ? 'All' : cat.expansion_number}
+                  </div>
                 </div>
-              ))}
-            </div>
+                <button
+                  type="button"
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => {
+                    const updatedCategories = categories.filter((_, i) => i !== index)
+                    setCategories(updatedCategories)
+                    onChange({
+                      name,
+                      item_ids: itemIds,
+                      categories: updatedCategories
+                    })
+                  }}>
+                  Remove
+                </button>
+              </div>
+            ))}
           </div>
         )}
       </div>
+
+      {showCategoryPopup && (
+        <CategorySelectionPopup
+          onClose={() => setShowCategoryPopup(false)}
+          onAdd={handleAddCategory}
+        />
+      )}
     </div>
   )
 }
