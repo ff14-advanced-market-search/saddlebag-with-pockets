@@ -1,13 +1,11 @@
 import { json } from '@remix-run/cloudflare'
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction, MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useState } from 'react'
-import { z } from 'zod'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
@@ -18,71 +16,87 @@ import type { ColumnList } from '~/components/types'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import CSVButton from '~/components/utilities/CSVButton'
 import JSONButton from '~/components/utilities/JSONButton'
-import type { Options, PointOptionsObject } from 'highcharts'
+import type { Options } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import PriceGroupForm, {
+import PriceGroupForm from '~/components/form/WoW/PriceGroupForm'
+import type { 
+  WeeklyPriceGroupDeltaResponse,
+  ItemData,
   PriceGroup
-} from '~/components/form/WoW/PriceGroupForm'
+} from '~/requests/WoW/WeeklyPriceGroupDelta'
+import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
 
-// Types for the API request/response
-interface RequestData {
-  region: string
-  start_year: number
-  start_month: number
-  start_day: number
-  price_groups: PriceGroup[]
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW Weekly Price Group Delta Analysis',
+    description: 'Analyze weekly price changes for groups of WoW items and categories'
+  }
 }
 
-interface ItemData {
-  itemID: number
-  itemName: string
-  weekly_data: Array<{
-    p: number // price
-    q: number // quantity
-    t: number // timestamp
-    delta: number // price change %
-  }>
-}
-
-interface GroupData {
-  deltas: Record<string, number>
-  item_names: Record<string, string>
-  item_data: Record<string, ItemData>
-}
-
-interface ResponseData {
-  [groupName: string]: GroupData
-}
+// Overwrite default links in the root.tsx
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/weekly-price-group-delta'
+  }
+]
 
 // Loader function to get session data
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
-  return json({ wowRealm: server, wowRegion: region })
+  
+  if (!region || !server) {
+    throw new Error('Please configure your WoW settings in the user settings page')
+  }
+
+  return json<WoWLoaderData>({
+    wowRealm: server,
+    wowRegion: region
+  })
 }
 
 // Action function to handle form submission
 export const action: ActionFunction = async ({ request }) => {
+  const { getWoWSessionData } = await getUserSessionData(request)
+  const { region } = getWoWSessionData()
+
+  if (!region) {
+    return json({
+      exception: 'Region is required. Please configure it in your settings.'
+    })
+  }
+
   const formData = await request.formData()
-  const region = formData.get('region') as string
   const startYear = parseInt(formData.get('startYear') as string)
   const startMonth = parseInt(formData.get('startMonth') as string)
   const startDay = parseInt(formData.get('startDay') as string)
-  const priceGroups = JSON.parse(
-    formData.get('priceGroups') as string
-  ) as PriceGroup[]
+  const priceGroups = JSON.parse(formData.get('priceGroups') as string) as PriceGroup[]
 
-  const requestData: RequestData = {
-    region,
-    start_year: startYear,
-    start_month: startMonth,
-    start_day: startDay,
-    price_groups: priceGroups
+  try {
+    const response = await WeeklyPriceGroupDelta({
+      region,
+      start_year: startYear,
+      start_month: startMonth,
+      start_day: startDay,
+      price_groups: priceGroups
+    })
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
+    }
+
+    const data = await response.json()
+    return json(data)
+  } catch (error) {
+    return json({
+      exception: error instanceof Error ? error.message : 'An unknown error occurred'
+    })
   }
-
-  // TODO: Make actual API call
-  return json({})
 }
 
 // Main component
@@ -90,7 +104,7 @@ const Index = () => {
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
-  const results = useActionData<ResponseData>()
+  const actionData = useActionData<WeeklyPriceGroupDeltaResponse>()
   const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([])
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -99,10 +113,10 @@ const Index = () => {
     }
   }
 
-  const pageTitle = 'Weekly Price Group Delta Analysis'
+  const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm} (${wowRegion})`
 
-  if (results) {
-    return <Results data={results} pageTitle={pageTitle} darkMode={darkmode} />
+  if (actionData) {
+    return <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />
   }
 
   const error = undefined // TODO: Implement error handling
@@ -115,12 +129,6 @@ const Index = () => {
         loading={transition.state === 'submitting'}
         error={error}>
         <form method="post" className="space-y-4">
-          <RegionAndServerSelect
-            region={wowRegion}
-            defaultRealm={wowRealm}
-            serverSelectFormName="homeRealmId"
-          />
-
           <div className="grid grid-cols-3 gap-4">
             <InputWithLabel
               labelTitle="Start Year"
@@ -198,13 +206,11 @@ const Results = ({
   pageTitle,
   darkMode
 }: {
-  data: ResponseData
+  data: WeeklyPriceGroupDeltaResponse
   pageTitle: string
   darkMode: boolean
 }) => {
-  const [selectedGroup, setSelectedGroup] = useState<string>(
-    Object.keys(data)[0]
-  )
+  const [selectedGroup, setSelectedGroup] = useState<string>(Object.keys(data)[0])
   const [globalFilter, setGlobalFilter] = useState('')
 
   const styles = darkMode
@@ -229,9 +235,7 @@ const Results = ({
       style: { color: styles?.color }
     },
     xAxis: {
-      categories: timestamps.map((t) =>
-        new Date(parseInt(t)).toLocaleDateString()
-      ),
+      categories: timestamps.map((t) => new Date(parseInt(t)).toLocaleDateString()),
       labels: { style: { color: styles?.color } },
       title: { text: 'Week', style: { color: styles?.color } }
     },
@@ -278,6 +282,26 @@ const Results = ({
     }
   ]
 
+  // Define the type for our transformed data
+  type CSVDataType = ItemData & {
+    currentPrice: number
+    currentDelta: number
+  }
+
+  // Transform the data to include computed fields
+  const csvData = Object.values(groupData.item_data).map(item => ({
+    ...item,
+    currentPrice: item.weekly_data[item.weekly_data.length - 1]?.p || 0,
+    currentDelta: item.weekly_data[item.weekly_data.length - 1]?.delta || 0
+  }))
+
+  const csvColumns: Array<{ title: string; value: keyof CSVDataType }> = [
+    { title: 'Item Name', value: 'itemName' },
+    { title: 'Item ID', value: 'itemID' },
+    { title: 'Current Price', value: 'currentPrice' },
+    { title: 'Current Delta %', value: 'currentDelta' }
+  ]
+
   return (
     <PageWrapper>
       <Title title={pageTitle} />
@@ -297,10 +321,7 @@ const Results = ({
 
           {/* Delta chart */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={deltaChartOptions}
-            />
+            <HighchartsReact highcharts={Highcharts} options={deltaChartOptions} />
           </div>
 
           {/* Item details table */}
@@ -337,11 +358,8 @@ const Results = ({
           {/* Export buttons */}
           <div className="flex gap-2">
             <CSVButton
-              data={Object.values(groupData.item_data)}
-              columns={columnList.map((col) => ({
-                title: col.header,
-                value: col.columnId as keyof ItemData
-              }))}
+              data={csvData}
+              columns={csvColumns}
               filename={`${selectedGroup}_items.csv`}
             />
             <JSONButton data={Object.values(groupData.item_data)} />
