@@ -162,6 +162,150 @@ const validatePriceGroup = (group: PriceGroup): string | null => {
   return null
 }
 
+// Add this interface for the import data structure
+interface ImportData {
+  region?: string
+  start_year?: number
+  start_month?: number
+  start_day?: number
+  price_groups?: PriceGroup[]
+}
+
+// Add this validation function
+const validateImportData = (data: any): { valid: boolean; error?: string } => {
+  try {
+    // Parse if string
+    const jsonData = typeof data === 'string' ? JSON.parse(data) : data
+
+    // Check required fields and types
+    if (typeof jsonData.region !== 'string') {
+      return { valid: false, error: 'Region must be a string' }
+    }
+    if (typeof jsonData.start_year !== 'number' || jsonData.start_year < 2020 || jsonData.start_year > 2090) {
+      return { valid: false, error: 'Start year must be a number between 2020 and 2090' }
+    }
+    if (typeof jsonData.start_month !== 'number' || jsonData.start_month < 1 || jsonData.start_month > 12) {
+      return { valid: false, error: 'Start month must be a number between 1 and 12' }
+    }
+    if (typeof jsonData.start_day !== 'number' || jsonData.start_day < 1 || jsonData.start_day > 31) {
+      return { valid: false, error: 'Start day must be a number between 1 and 31' }
+    }
+    if (!Array.isArray(jsonData.price_groups)) {
+      return { valid: false, error: 'Price groups must be an array' }
+    }
+
+    // Validate each price group
+    for (const group of jsonData.price_groups) {
+      if (typeof group.name !== 'string') {
+        return { valid: false, error: 'Each price group must have a name string' }
+      }
+      if (!Array.isArray(group.item_ids)) {
+        return { valid: false, error: 'item_ids must be an array' }
+      }
+      if (!Array.isArray(group.categories)) {
+        return { valid: false, error: 'categories must be an array' }
+      }
+      
+      // Validate each category
+      for (const category of group.categories) {
+        if (typeof category.item_class !== 'number') {
+          return { valid: false, error: 'item_class must be a number' }
+        }
+        if (typeof category.item_subclass !== 'number') {
+          return { valid: false, error: 'item_subclass must be a number' }
+        }
+        if (typeof category.expansion_number !== 'number') {
+          return { valid: false, error: 'expansion_number must be a number' }
+        }
+        if (typeof category.min_quality !== 'number') {
+          return { valid: false, error: 'min_quality must be a number' }
+        }
+      }
+    }
+
+    return { valid: true }
+  } catch (e) {
+    return { valid: false, error: 'Invalid JSON format' }
+  }
+}
+
+// Add this component for the import popup
+const ImportPopup = ({
+  onClose,
+  onImport
+}: {
+  onClose: () => void
+  onImport: (data: ImportData) => void
+}) => {
+  const [jsonInput, setJsonInput] = useState('')
+  const [error, setError] = useState<string | undefined>()
+
+  const handleImport = () => {
+    const validation = validateImportData(jsonInput)
+    if (!validation.valid) {
+      setError(validation.error)
+      return
+    }
+
+    try {
+      const data = JSON.parse(jsonInput)
+      onImport(data)
+      onClose()
+    } catch (e) {
+      setError('Invalid JSON format')
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl w-full mx-4">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-medium">Import Configuration</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+            ✕
+          </button>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Paste your JSON configuration:
+            </label>
+            <textarea
+              className="w-full h-64 p-2 border rounded font-mono text-sm dark:bg-gray-700 dark:border-gray-600"
+              value={jsonInput}
+              onChange={(e) => {
+                setJsonInput(e.target.value)
+                setError(undefined)
+              }}
+              placeholder="Paste your JSON here..."
+            />
+          </div>
+
+          {error && <div className="text-red-500 text-sm">{error}</div>}
+
+          <div className="flex justify-end space-x-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleImport}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+              Import
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // Main component
 const Index = () => {
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
@@ -179,6 +323,7 @@ const Index = () => {
   const [startYear, setStartYear] = useState(2025)
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
+  const [showImport, setShowImport] = useState(false)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -215,6 +360,13 @@ const Index = () => {
     ])
   }
 
+  const handleImport = (data: ImportData) => {
+    if (data.start_year) setStartYear(data.start_year)
+    if (data.start_month) setStartMonth(data.start_month)
+    if (data.start_day) setStartDay(data.start_day)
+    if (data.price_groups) setPriceGroups(data.price_groups)
+  }
+
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
 
   if (actionData) {
@@ -240,6 +392,22 @@ const Index = () => {
         error={error}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4">
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => setShowImport(true)}
+              className="text-blue-500 hover:text-blue-600 text-sm">
+              Import Configuration
+            </button>
+          </div>
+
+          {showImport && (
+            <ImportPopup
+              onClose={() => setShowImport(false)}
+              onImport={handleImport}
+            />
+          )}
+
           <div className="grid grid-cols-3 gap-4">
             <InputWithLabel
               labelTitle="Start Year"
