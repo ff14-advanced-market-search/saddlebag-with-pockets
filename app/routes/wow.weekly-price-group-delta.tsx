@@ -350,9 +350,7 @@ const Results = ({
   pageTitle: string
   darkMode: boolean
 }) => {
-  const [selectedGroup, setSelectedGroup] = useState<string>(
-    Object.keys(data)[0]
-  )
+  const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
 
   const styles = darkMode
@@ -363,8 +361,14 @@ const Results = ({
       }
     : {}
 
-  const groupData = data[selectedGroup]
-  const timestamps = Object.keys(groupData.deltas).sort()
+  // Get all unique timestamps across all groups
+  const allTimestamps = Array.from(
+    new Set(
+      Object.values(data).flatMap(groupData => 
+        Object.keys(groupData.deltas)
+      )
+    )
+  ).sort()
 
   // Format timestamp into YYYY-MM-DD
   const formatTimestamp = (timestamp: string) => {
@@ -373,6 +377,28 @@ const Results = ({
     const month = dateStr.slice(4, 6)
     const day = dateStr.slice(6, 8)
     return `${year}-${month}-${day}`
+  }
+
+  // Generate series data for all groups or single group
+  const generateSeriesData = () => {
+    if (selectedGroup === 'All') {
+      return Object.entries(data).map(([groupName, groupData]) => ({
+        name: groupName,
+        data: allTimestamps.map(timestamp => 
+          groupData.deltas[timestamp] || null
+        ),
+        type: 'line' as const
+      }))
+    } else {
+      const groupData = data[selectedGroup]
+      return [{
+        name: selectedGroup,
+        data: allTimestamps.map(timestamp => 
+          groupData.deltas[timestamp] || null
+        ),
+        type: 'line' as const
+      }]
+    }
   }
 
   // Chart options for group deltas
@@ -386,11 +412,11 @@ const Results = ({
       }
     },
     title: {
-      text: `${selectedGroup} - Weekly Price Deltas`,
+      text: selectedGroup === 'All' ? 'All Groups - Weekly Price Deltas' : `${selectedGroup} - Weekly Price Deltas`,
       style: { color: styles?.color }
     },
     xAxis: {
-      categories: timestamps.map(formatTimestamp),
+      categories: allTimestamps.map(formatTimestamp),
       labels: {
         style: { color: styles?.color },
         rotation: -45,
@@ -411,26 +437,28 @@ const Results = ({
       shared: true,
       useHTML: true,
       headerFormat: '<b>{point.key}</b><br/>',
-      pointFormat:
-        '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
+      pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
       backgroundColor: darkMode ? '#1f2937' : '#ffffff',
       style: {
         color: darkMode ? '#ffffff' : '#000000'
       }
     },
-    series: [
-      {
-        name: selectedGroup,
-        data: timestamps.map((t) => groupData.deltas[t]),
-        type: 'line'
+    plotOptions: {
+      series: {
+        connectNulls: true
       }
-    ],
+    },
+    series: generateSeriesData(),
     legend: {
       itemStyle: { color: styles?.color },
       itemHoverStyle: { color: styles?.hoverColor }
     },
     credits: { enabled: false }
   }
+
+  // Only show item details if a specific group is selected
+  const showItemDetails = selectedGroup !== 'All'
+  const groupData = showItemDetails ? data[selectedGroup] : null
 
   // Table columns for item details
   const columnList: Array<ColumnList<ItemData>> = [
@@ -454,42 +482,35 @@ const Results = ({
     }
   ]
 
-  // Define the type for our transformed data
-  type CSVDataType = ItemData & {
-    currentPrice: number
-    currentDelta: number
-  }
-
-  // Transform the data to include computed fields
-  const csvData = Object.values(groupData.item_data).map((item) => ({
-    ...item,
-    currentPrice: item.weekly_data[item.weekly_data.length - 1]?.p || 0,
-    currentDelta: item.weekly_data[item.weekly_data.length - 1]?.delta || 0
-  }))
-
-  const csvColumns: Array<{ title: string; value: keyof CSVDataType }> = [
-    { title: 'Item Name', value: 'itemName' },
-    { title: 'Item ID', value: 'itemID' },
-    { title: 'Current Price', value: 'currentPrice' },
-    { title: 'Current Delta %', value: 'currentDelta' }
-  ]
-
   return (
     <PageWrapper>
       <Title title={pageTitle} />
       <ContentContainer>
         <div className="space-y-4">
           {/* Group selector */}
-          <select
-            className="w-full p-2 border rounded"
-            value={selectedGroup}
-            onChange={(e) => setSelectedGroup(e.target.value)}>
+          <div className="flex flex-col space-y-2">
+            <button
+              onClick={() => setSelectedGroup('All')}
+              className={`w-full p-2 text-left rounded ${
+                selectedGroup === 'All'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+              }`}>
+              All Groups
+            </button>
             {Object.keys(data).map((group) => (
-              <option key={group} value={group}>
+              <button
+                key={group}
+                onClick={() => setSelectedGroup(group)}
+                className={`w-full p-2 text-left rounded ${
+                  selectedGroup === group
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                }`}>
                 {group}
-              </option>
+              </button>
             ))}
-          </select>
+          </div>
 
           {/* Delta chart */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
@@ -499,46 +520,57 @@ const Results = ({
             />
           </div>
 
-          {/* Item details table */}
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-medium">Item Details</h3>
-              <DebouncedInput
-                onDebouncedChange={setGlobalFilter}
-                className="p-2 border rounded"
-                placeholder="Search items..."
-              />
-            </div>
+          {/* Item details table - only shown when a specific group is selected */}
+          {showItemDetails && groupData && (
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-medium">Item Details</h3>
+                <DebouncedInput
+                  onDebouncedChange={setGlobalFilter}
+                  className="p-2 border rounded"
+                  placeholder="Search items..."
+                />
+              </div>
 
-            <div className="hidden md:block">
-              <FullTable
-                data={Object.values(groupData.item_data)}
-                columnList={columnList}
-                globalFilter={globalFilter}
-                sortingOrder={[]}
-              />
-            </div>
-            <div className="md:hidden">
-              <MobileTable
-                data={Object.values(groupData.item_data)}
-                columnList={columnList}
-                sortingOrder={[{ id: 'itemName', desc: false }]}
-                title="Item Details"
-                rowLabels={[]}
-                columnSelectOptions={[]}
-              />
-            </div>
-          </div>
+              <div className="hidden md:block">
+                <FullTable
+                  data={Object.values(groupData.item_data)}
+                  columnList={columnList}
+                  globalFilter={globalFilter}
+                  sortingOrder={[]}
+                />
+              </div>
+              <div className="md:hidden">
+                <MobileTable
+                  data={Object.values(groupData.item_data)}
+                  columnList={columnList}
+                  sortingOrder={[{ id: 'itemName', desc: false }]}
+                  title="Item Details"
+                  rowLabels={[]}
+                  columnSelectOptions={[]}
+                />
+              </div>
 
-          {/* Export buttons */}
-          <div className="flex gap-2">
-            <CSVButton
-              data={csvData}
-              columns={csvColumns}
-              filename={`${selectedGroup}_items.csv`}
-            />
-            <JSONButton data={Object.values(groupData.item_data)} />
-          </div>
+              {/* Export buttons */}
+              <div className="flex gap-2 mt-4">
+                <CSVButton
+                  data={Object.values(groupData.item_data).map(item => ({
+                    ...item,
+                    currentPrice: item.weekly_data[item.weekly_data.length - 1]?.p || 0,
+                    currentDelta: item.weekly_data[item.weekly_data.length - 1]?.delta || 0
+                  }))}
+                  columns={[
+                    { title: 'Item Name', value: 'itemName' },
+                    { title: 'Item ID', value: 'itemID' },
+                    { title: 'Current Price', value: 'currentPrice' },
+                    { title: 'Current Delta %', value: 'currentDelta' }
+                  ]}
+                  filename={`${selectedGroup}_items.csv`}
+                />
+                <JSONButton data={Object.values(groupData.item_data)} />
+              </div>
+            </div>
+          )}
         </div>
       </ContentContainer>
     </PageWrapper>
