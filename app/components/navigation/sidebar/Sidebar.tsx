@@ -350,6 +350,11 @@ const navGroups: Array<{
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
         icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Weekly Price Group Delta',
+        href: 'wow/weekly-price-group-delta',
+        icon: ChartSquareBarIcon
       }
     ]
   },
