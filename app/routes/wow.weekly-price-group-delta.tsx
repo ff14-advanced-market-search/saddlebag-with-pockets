@@ -433,7 +433,10 @@ const Results = ({
       style: {
         fontFamily:
           '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
-      }
+      },
+      // Add height based on number of series when viewing a specific group
+      height: selectedGroup !== 'All' ? 
+        Math.max(600, (Object.keys(data[selectedGroup].item_data).length * 30) + 400) : 600
     },
     title: {
       text: selectedGroup === 'All' ? 'All Groups - Weekly Price Deltas' : `${selectedGroup} - Weekly Price Deltas`,
@@ -461,11 +464,32 @@ const Results = ({
       shared: true,
       useHTML: true,
       headerFormat: '<b>{point.key}</b><br/>',
-      pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
+      // Custom formatter to sort points by value
+      formatter: function() {
+        if (!this.points) return '';
+        
+        // Sort points by value (delta) in descending order
+        const sortedPoints = this.points
+          .filter(point => point.y !== null && point.y !== undefined)
+          .sort((a, b) => (b.y || 0) - (a.y || 0));
+
+        let s = `<b>${this.x}</b><br/>`;
+        
+        // Add each point's data
+        sortedPoints.forEach(point => {
+          s += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y?.toFixed(2)}%</b><br/>`;
+        });
+        
+        return s;
+      },
       backgroundColor: darkMode ? '#1f2937' : '#ffffff',
       style: {
         color: darkMode ? '#ffffff' : '#000000'
-      }
+      },
+      padding: 8,
+      // Ensure tooltip doesn't get cut off at screen edges
+      followPointer: true,
+      outside: true
     },
     plotOptions: {
       series: {
@@ -473,6 +497,15 @@ const Results = ({
         marker: {
           enabled: true,
           radius: 3
+        },
+        events: {
+          // Ensure all series remain visible when clicking legend items
+          legendItemClick: function() {
+            if (selectedGroup !== 'All') {
+              return false; // Prevent toggling visibility
+            }
+            return true; // Allow toggling for All Groups view
+          }
         }
       }
     },
@@ -483,7 +516,13 @@ const Results = ({
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
-      maxHeight: 300
+      maxHeight: selectedGroup !== 'All' ? 
+        Math.floor((Object.keys(data[selectedGroup].item_data).length * 30) + 200) : 300,
+      itemMarginTop: 4,
+      itemMarginBottom: 4,
+      symbolRadius: 2,
+      symbolHeight: 8,
+      symbolWidth: 8
     },
     credits: { enabled: false }
   }
