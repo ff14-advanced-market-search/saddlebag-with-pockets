@@ -392,14 +392,36 @@ const Results = ({
       }))
     } else {
       const groupData = data[selectedGroup]
-      return [{
-        name: selectedGroup,
+      // Create a series for the group average
+      const groupSeries = {
+        name: `${selectedGroup} (Average)`,
         data: allTimestamps.map(timestamp => {
           const value = groupData.deltas[timestamp]
           return value !== undefined ? value : null
         }),
-        type: 'line' as const
-      }]
+        type: 'line' as const,
+        lineWidth: 3,
+        zIndex: 2
+      }
+      
+      // Create series for each item in the group
+      const itemSeries = Object.entries(groupData.item_data).map(([itemId, itemData]) => {
+        const itemName = groupData.item_names[itemId]
+        return {
+          name: itemName,
+          data: allTimestamps.map(timestamp => {
+            const weekData = itemData.weekly_data.find(d => d.t.toString() === timestamp)
+            return weekData ? weekData.delta : null
+          }),
+          type: 'line' as const,
+          lineWidth: 1,
+          dashStyle: 'Dot',
+          opacity: 0.7,
+          zIndex: 1
+        }
+      })
+
+      return [groupSeries, ...itemSeries]
     }
   }
 
@@ -457,7 +479,11 @@ const Results = ({
     series: generateSeriesData(),
     legend: {
       itemStyle: { color: styles?.color },
-      itemHoverStyle: { color: styles?.hoverColor }
+      itemHoverStyle: { color: styles?.hoverColor },
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle',
+      maxHeight: 300
     },
     credits: { enabled: false }
   }
