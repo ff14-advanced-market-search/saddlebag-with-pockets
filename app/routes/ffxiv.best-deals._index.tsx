@@ -162,7 +162,7 @@ const BestDeals = () => {
   }
 
   if (result && 'data' in result && !error) {
-    return <Results results={result} pageTitle={pageTitle} />
+    return <Results results={{ ...result, hq_only: loaderData.hq_only }} pageTitle={pageTitle} />
   }
 
   const handleSubmit = (
