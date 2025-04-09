@@ -14,6 +14,9 @@ const mobileColumnList: Array<ColumnList<Record<string, any>>> = [
 
 const columnList: Array<ColumnList<Record<string, any>>> = [
   { columnId: 'itemName', header: 'Item Name' },
+  { columnId: 'worldName', header: 'Server' },
+  { columnId: 'discount', header: 'Discount' },
+  { columnId: 'minPrice', header: 'Minimum Price' },
   {
     columnId: 'universalisLink',
     header: 'Universalis Link',
@@ -30,13 +33,14 @@ const columnList: Array<ColumnList<Record<string, any>>> = [
       <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
     )
   },
-  { columnId: 'discount', header: 'Discount' },
-  { columnId: 'minPrice', header: 'Minimum Price' },
   { columnId: 'medianNQ', header: 'NQ Median Price' },
-  { columnId: 'medianHQ', header: 'HQ Median Price' },
+  { columnId: 'averageNQ', header: 'NQ Average Price' },
   { columnId: 'salesAmountNQ', header: 'NQ Sales' },
+  { columnId: 'quantitySoldNQ', header: 'NQ Quantity Sold' },
+  { columnId: 'medianHQ', header: 'HQ Median Price' },
+  { columnId: 'averageHQ', header: 'HQ Average Price' },
   { columnId: 'salesAmountHQ', header: 'HQ Sales' },
-  { columnId: 'worldName', header: 'World' }
+  { columnId: 'quantitySoldHQ', header: 'HQ Quantity Sold' }
 ]
 
 export const Results = ({
