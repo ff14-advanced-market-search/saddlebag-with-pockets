@@ -775,7 +775,7 @@ const Results = ({
           },
           point: {
             events: {
-              click: function() {
+              click: function () {
                 const timestamp = allTimestamps[this.index]
                 setSelectedDate(timestamp)
               }
@@ -812,7 +812,7 @@ const Results = ({
 
   // Helper function to get data for a specific timestamp
   const getDataForTimestamp = (itemData: ItemData, timestamp: string) => {
-    return itemData.weekly_data.find(d => d.t.toString() === timestamp)
+    return itemData.weekly_data.find((d) => d.t.toString() === timestamp)
   }
 
   // Table columns for item details
@@ -919,19 +919,29 @@ const Results = ({
               {/* Visibility Controls */}
               <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
                 <h4 className="font-medium p-4 pb-2">Show/Hide Items</h4>
-                <div className="flex-1 overflow-auto p-4 pt-2" style={{
-                  maxHeight: selectedGroup !== 'All'
-                    ? Math.max(600, Object.keys(data[selectedGroup].item_data).length * 30 + 400)
-                    : 600
-                }}>
+                <div
+                  className="flex-1 overflow-auto p-4 pt-2"
+                  style={{
+                    maxHeight:
+                      selectedGroup !== 'All'
+                        ? Math.max(
+                            600,
+                            Object.keys(data[selectedGroup].item_data).length *
+                              30 +
+                              400
+                          )
+                        : 600
+                  }}>
                   <div className="space-y-2">
                     {Object.entries(visibleItems).map(([name, isVisible]) => (
-                      <label key={name} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+                      <label
+                        key={name}
+                        className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
                         <input
                           type="checkbox"
                           checked={isVisible}
                           onChange={() => {
-                            setVisibleItems(prev => ({
+                            setVisibleItems((prev) => ({
                               ...prev,
                               [name]: !prev[name]
                             }))
@@ -1006,10 +1016,18 @@ const Results = ({
                   columns={[
                     { title: 'Item Name', value: 'itemName' },
                     { title: 'Item ID', value: 'itemID' },
-                    { title: `Price (${formatTimestamp(selectedDate)})`, value: 'price' },
-                    { title: `Delta % (${formatTimestamp(selectedDate)})`, value: 'delta' }
+                    {
+                      title: `Price (${formatTimestamp(selectedDate)})`,
+                      value: 'price'
+                    },
+                    {
+                      title: `Delta % (${formatTimestamp(selectedDate)})`,
+                      value: 'delta'
+                    }
                   ]}
-                  filename={`${selectedGroup}_items_${formatTimestamp(selectedDate)}.csv`}
+                  filename={`${selectedGroup}_items_${formatTimestamp(
+                    selectedDate
+                  )}.csv`}
                 />
                 <JSONButton data={Object.values(groupData.item_data)} />
               </div>
