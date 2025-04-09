@@ -850,6 +850,29 @@ const Results = ({
               </div>
             </div>
           )}
+
+          {/* Request Data Section */}
+          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mt-4">
+            <h3 className="text-lg font-medium mb-4">Request Data</h3>
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <CodeBlock
+                title="Request data used for this analysis"
+                buttonTitle="Copy"
+                codeString={JSON.stringify({
+                  region: wowRegion,
+                  price_groups: Object.entries(data).map(([name, groupData]) => ({
+                    name,
+                    item_ids: Object.keys(groupData.item_data).map(id => parseInt(id)),
+                    categories: []
+                  }))
+                }, null, 2)}
+                onClick={() => alert('Copied to clipboard!')}>
+                <p className="italic text-sm text-blue-900 dark:text-gray-100 py-2">
+                  You can copy this data to recreate the same analysis later.
+                </p>
+              </CodeBlock>
+            </div>
+          </div>
         </div>
       </ContentContainer>
     </PageWrapper>
