@@ -183,14 +183,35 @@ const validateImportData = (data: any): { valid: boolean; error?: string } => {
     if (typeof jsonData.region !== 'string') {
       return { valid: false, error: 'Region must be a string' }
     }
-    if (typeof jsonData.start_year !== 'number' || jsonData.start_year < 2020 || jsonData.start_year > 2090) {
-      return { valid: false, error: 'Start year must be a number between 2020 and 2090' }
+    if (
+      typeof jsonData.start_year !== 'number' ||
+      jsonData.start_year < 2020 ||
+      jsonData.start_year > 2090
+    ) {
+      return {
+        valid: false,
+        error: 'Start year must be a number between 2020 and 2090'
+      }
     }
-    if (typeof jsonData.start_month !== 'number' || jsonData.start_month < 1 || jsonData.start_month > 12) {
-      return { valid: false, error: 'Start month must be a number between 1 and 12' }
+    if (
+      typeof jsonData.start_month !== 'number' ||
+      jsonData.start_month < 1 ||
+      jsonData.start_month > 12
+    ) {
+      return {
+        valid: false,
+        error: 'Start month must be a number between 1 and 12'
+      }
     }
-    if (typeof jsonData.start_day !== 'number' || jsonData.start_day < 1 || jsonData.start_day > 31) {
-      return { valid: false, error: 'Start day must be a number between 1 and 31' }
+    if (
+      typeof jsonData.start_day !== 'number' ||
+      jsonData.start_day < 1 ||
+      jsonData.start_day > 31
+    ) {
+      return {
+        valid: false,
+        error: 'Start day must be a number between 1 and 31'
+      }
     }
     if (!Array.isArray(jsonData.price_groups)) {
       return { valid: false, error: 'Price groups must be an array' }
@@ -199,7 +220,10 @@ const validateImportData = (data: any): { valid: boolean; error?: string } => {
     // Validate each price group
     for (const group of jsonData.price_groups) {
       if (typeof group.name !== 'string') {
-        return { valid: false, error: 'Each price group must have a name string' }
+        return {
+          valid: false,
+          error: 'Each price group must have a name string'
+        }
       }
       if (!Array.isArray(group.item_ids)) {
         return { valid: false, error: 'item_ids must be an array' }
@@ -207,7 +231,7 @@ const validateImportData = (data: any): { valid: boolean; error?: string } => {
       if (!Array.isArray(group.categories)) {
         return { valid: false, error: 'categories must be an array' }
       }
-      
+
       // Validate each category
       for (const category of group.categories) {
         if (typeof category.item_class !== 'number') {
@@ -368,17 +392,21 @@ const Index = () => {
     if (data.start_month) setStartMonth(data.start_month)
     if (data.start_day) setStartDay(data.start_day)
     if (data.price_groups && data.price_groups.length > 0) {
-      setPriceGroups(data.price_groups.map(group => ({
-        name: group.name,
-        item_ids: group.item_ids || [],
-        categories: group.categories || []
-      })))
+      setPriceGroups(
+        data.price_groups.map((group) => ({
+          name: group.name,
+          item_ids: group.item_ids || [],
+          categories: group.categories || []
+        }))
+      )
     } else {
-      setPriceGroups([{
-        name: '',
-        item_ids: [],
-        categories: []
-      }])
+      setPriceGroups([
+        {
+          name: '',
+          item_ids: [],
+          categories: []
+        }
+      ])
     }
   }
 
@@ -542,6 +570,29 @@ const Results = ({
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
+
+  // Initialize visible items when group changes
+  useEffect(() => {
+    if (selectedGroup === 'All') {
+      // For 'All' view, show all groups
+      const newVisibleItems: Record<string, boolean> = {}
+      Object.keys(data).forEach((groupName) => {
+        newVisibleItems[groupName] = true
+      })
+      setVisibleItems(newVisibleItems)
+    } else {
+      // For specific group view, show average and all items
+      const newVisibleItems: Record<string, boolean> = {
+        [`${selectedGroup} (Average)`]: true
+      }
+      const groupData = data[selectedGroup]
+      Object.keys(groupData.item_data).forEach((itemId) => {
+        newVisibleItems[groupData.item_names[itemId]] = true
+      })
+      setVisibleItems(newVisibleItems)
+    }
+  }, [selectedGroup, data])
 
   const styles = darkMode
     ? {
@@ -567,36 +618,42 @@ const Results = ({
     return `${year}-${month}-${day}`
   }
 
-  // Generate series data for all groups or single group
+  // Modified generateSeriesData to use visibility state
   const generateSeriesData = () => {
     if (selectedGroup === 'All') {
-      return Object.entries(data).map(([groupName, groupData]) => ({
-        name: groupName,
-        data: allTimestamps.map((timestamp) => {
-          const value = groupData.deltas[timestamp]
-          return value !== undefined ? value : null
-        }),
-        type: 'line' as const
-      }))
+      return Object.entries(data)
+        .filter(([groupName]) => visibleItems[groupName])
+        .map(([groupName, groupData]) => ({
+          name: groupName,
+          data: allTimestamps.map((timestamp) => {
+            const value = groupData.deltas[timestamp]
+            return value !== undefined ? value : null
+          }),
+          type: 'line' as const
+        }))
     } else {
       const groupData = data[selectedGroup]
-      // Create a series for the group average
-      const groupSeries = {
-        name: `${selectedGroup} (Average)`,
-        data: allTimestamps.map((timestamp) => {
-          const value = groupData.deltas[timestamp]
-          return value !== undefined ? value : null
-        }),
-        type: 'line' as const,
-        lineWidth: 3,
-        zIndex: 2
+      const series = []
+
+      // Add average line if visible
+      if (visibleItems[`${selectedGroup} (Average)`]) {
+        series.push({
+          name: `${selectedGroup} (Average)`,
+          data: allTimestamps.map((timestamp) => {
+            const value = groupData.deltas[timestamp]
+            return value !== undefined ? value : null
+          }),
+          type: 'line' as const,
+          lineWidth: 3,
+          zIndex: 2
+        })
       }
 
-      // Create series for each item in the group
-      const itemSeries = Object.entries(groupData.item_data).map(
-        ([itemId, itemData]) => {
-          const itemName = groupData.item_names[itemId]
-          return {
+      // Add individual items if visible
+      Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
+        const itemName = groupData.item_names[itemId]
+        if (visibleItems[itemName]) {
+          series.push({
             name: itemName,
             data: allTimestamps.map((timestamp) => {
               const weekData = itemData.weekly_data.find(
@@ -609,11 +666,11 @@ const Results = ({
             dashStyle: 'Dot',
             opacity: 0.7,
             zIndex: 1
-          }
+          })
         }
-      )
+      })
 
-      return [groupSeries, ...itemSeries]
+      return series
     }
   }
 
@@ -811,12 +868,64 @@ const Results = ({
             ))}
           </div>
 
-          {/* Delta chart */}
+          {/* Chart and Controls Container */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={deltaChartOptions}
-            />
+            <div className="flex flex-col md:flex-row gap-4">
+              {/* Chart */}
+              <div className="flex-grow min-w-0">
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    ...deltaChartOptions,
+                    legend: {
+                      ...deltaChartOptions.legend,
+                      enabled: false // Disable default legend since we're using checkboxes
+                    }
+                  }}
+                />
+              </div>
+
+              {/* Visibility Controls */}
+              <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
+                <h4 className="font-medium p-4 pb-2">Show/Hide Items</h4>
+                <div
+                  className="flex-1 overflow-auto p-4 pt-2"
+                  style={{
+                    maxHeight:
+                      selectedGroup !== 'All'
+                        ? Math.max(
+                            600,
+                            Object.keys(data[selectedGroup].item_data).length *
+                              30 +
+                              400
+                          )
+                        : 600
+                  }}>
+                  <div className="space-y-2">
+                    {Object.entries(visibleItems).map(([name, isVisible]) => (
+                      <label
+                        key={name}
+                        className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+                        <input
+                          type="checkbox"
+                          checked={isVisible}
+                          onChange={() => {
+                            setVisibleItems((prev) => ({
+                              ...prev,
+                              [name]: !prev[name]
+                            }))
+                          }}
+                          className="form-checkbox h-4 w-4 text-blue-500"
+                        />
+                        <span className="text-sm" title={name}>
+                          {name}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Item details table - only shown when a specific group is selected */}
@@ -880,17 +989,25 @@ const Results = ({
               <CodeBlock
                 title="Request data used for this analysis"
                 buttonTitle="Copy"
-                codeString={JSON.stringify({
-                  region: wowRegion,
-                  start_year: parseInt(allTimestamps[0].slice(0, 4)),
-                  start_month: parseInt(allTimestamps[0].slice(4, 6)),
-                  start_day: parseInt(allTimestamps[0].slice(6, 8)),
-                  price_groups: Object.entries(data).map(([name, groupData]) => ({
-                    name,
-                    item_ids: Object.keys(groupData.item_data).map(id => parseInt(id)),
-                    categories: []
-                  }))
-                }, null, 2)}
+                codeString={JSON.stringify(
+                  {
+                    region: wowRegion,
+                    start_year: parseInt(allTimestamps[0].slice(0, 4)),
+                    start_month: parseInt(allTimestamps[0].slice(4, 6)),
+                    start_day: parseInt(allTimestamps[0].slice(6, 8)),
+                    price_groups: Object.entries(data).map(
+                      ([name, groupData]) => ({
+                        name,
+                        item_ids: Object.keys(groupData.item_data).map((id) =>
+                          parseInt(id)
+                        ),
+                        categories: []
+                      })
+                    )
+                  },
+                  null,
+                  2
+                )}
                 onClick={() => alert('Copied to clipboard!')}>
                 <p className="italic text-sm text-blue-900 dark:text-gray-100 py-2">
                   You can copy this data to recreate the same analysis later.
