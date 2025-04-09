@@ -494,6 +494,17 @@ const Index = () => {
 
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Price Groups</h3>
+            <div className="flex justify-center my-8">
+              <button
+                type="submit"
+                onClick={onSubmit}
+                disabled={transition.state === 'submitting'}
+                className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse">
+                {transition.state === 'submitting'
+                  ? 'Searching...'
+                  : 'Search Price Groups'}
+              </button>
+            </div>
             {priceGroups.map((group, index) => (
               <PriceGroupForm
                 key={index}
@@ -535,7 +546,7 @@ const Index = () => {
             value={JSON.stringify(priceGroups)}
           />
 
-          <div className="flex justify-center my-8">
+          {/* <div className="flex justify-center my-8">
             <button
               type="submit"
               onClick={onSubmit}
@@ -545,7 +556,7 @@ const Index = () => {
                 ? 'Searching...'
                 : 'Search Price Groups'}
             </button>
-          </div>
+          </div> */}
 
           <div className="mt-8">
             <h3 className="text-lg font-medium mb-4">Request Data Preview</h3>
