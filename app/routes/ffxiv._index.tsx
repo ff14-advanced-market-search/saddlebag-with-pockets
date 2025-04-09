@@ -32,8 +32,7 @@ const ffxivPages = [
   {
     name: 'Best Deals',
     href: '/ffxiv/best-deals/recommended',
-    description:
-      'Find the best deals on items across all categories!',
+    description: 'Find the best deals on items across all categories!',
     Icon: ExclamationCircleIcon
   },
   {

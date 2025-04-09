@@ -18,7 +18,9 @@ const columnList: Array<ColumnList<Record<string, any>>> = [
     columnId: 'universalisLink',
     header: 'Universalis Link',
     accessor: ({ row }) => (
-      <UniversalisBadgedLink link={`https://universalis.app/market/${row.itemID}`} />
+      <UniversalisBadgedLink
+        link={`https://universalis.app/market/${row.itemID}`}
+      />
     )
   },
   {
@@ -82,4 +84,4 @@ export const Results = ({
       </div>
     </PageWrapper>
   )
-} 
+}

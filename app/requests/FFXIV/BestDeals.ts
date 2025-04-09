@@ -64,4 +64,4 @@ const FFXIVBestDeals: (
   })
 }
 
-export default FFXIVBestDeals 
+export default FFXIVBestDeals

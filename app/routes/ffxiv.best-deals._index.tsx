@@ -1,9 +1,17 @@
-import type { ActionFunction, LoaderFunction, MetaFunction, LinksFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { BestDealsProps, BestDealsResponse } from '~/requests/FFXIV/BestDeals'
+import type {
+  BestDealsProps,
+  BestDealsResponse
+} from '~/requests/FFXIV/BestDeals'
 import FFXIVBestDeals from '~/requests/FFXIV/BestDeals'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
@@ -44,7 +52,8 @@ const inputMap: Record<keyof BestDealsProps, string> = {
 }
 
 const pageTitle = 'Best Deals'
-const pageDescription = 'Find the best deals on your server and region wide with our Best Deals search!'
+const pageDescription =
+  'Find the best deals on your server and region wide with our Best Deals search!'
 
 export const meta: MetaFunction = () => {
   return {
@@ -93,9 +102,12 @@ export const loader: LoaderFunction = async ({ request }) => {
       : defaultFormValues.filters,
     hq_only: params.get('hq_only') === 'true',
     discount: params.get('discount') ?? defaultFormValues.discount.toString(),
-    medianPrice: params.get('medianPrice') ?? defaultFormValues.medianPrice.toString(),
-    salesAmount: params.get('salesAmount') ?? defaultFormValues.salesAmount.toString(),
-    maxBuyPrice: params.get('maxBuyPrice') ?? defaultFormValues.maxBuyPrice.toString()
+    medianPrice:
+      params.get('medianPrice') ?? defaultFormValues.medianPrice.toString(),
+    salesAmount:
+      params.get('salesAmount') ?? defaultFormValues.salesAmount.toString(),
+    maxBuyPrice:
+      params.get('maxBuyPrice') ?? defaultFormValues.maxBuyPrice.toString()
   }
 
   const validInput = validateInput.safeParse(input)
@@ -118,7 +130,10 @@ export const action: ActionFunction = async ({ request }) => {
     return json({
       exception: `Missing: ${validatedFormData.error.issues
         .map(({ path }) =>
-          path.map((field) => inputMap[field as keyof BestDealsProps] || 'Unknown input error')
+          path.map(
+            (field) =>
+              inputMap[field as keyof BestDealsProps] || 'Unknown input error'
+          )
         )
         .join(', ')}`
     })
@@ -239,4 +254,4 @@ const BestDeals = () => {
   )
 }
 
-export default BestDeals 
+export default BestDeals
