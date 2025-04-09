@@ -32,6 +32,8 @@ import type {
 } from '~/requests/WoW/WeeklyPriceGroupDelta'
 import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
 import CodeBlock from '~/components/Common/CodeBlock'
+import { getOribosLink } from '~/components/utilities/getOribosLink'
+import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -526,6 +528,7 @@ const Results = ({
 }) => {
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
+  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
 
   const styles = darkMode
     ? {
@@ -739,6 +742,19 @@ const Results = ({
       accessor: ({ row }) => {
         const lastData = row.weekly_data[row.weekly_data.length - 1]
         return <span>{lastData ? `${lastData.delta.toFixed(2)}%` : 'N/A'}</span>
+      }
+    },
+    {
+      columnId: 'links',
+      header: 'Links',
+      accessor: ({ row }) => {
+        return (
+          <div className="flex space-x-2">
+            {getSaddlebagWoWLink('Item-Data')({ row })}
+            <span className="text-gray-400">|</span>
+            {getOribosLink(wowRealm.name, 'TUJ', wowRegion)({ row })}
+          </div>
+        )
       }
     }
   ]
