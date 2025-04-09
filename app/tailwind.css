@@ -3805,6 +3805,10 @@ select {
     width: fit-content;
   }
 
+  .md\:w-72 {
+    width: 18rem;
+  }
+
   .md\:min-w-\[480px\] {
     min-width: 480px;
   }

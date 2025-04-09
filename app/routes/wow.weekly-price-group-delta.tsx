@@ -844,7 +844,7 @@ const Results = ({
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
             <div className="flex flex-col md:flex-row gap-4">
               {/* Chart */}
-              <div className="flex-grow">
+              <div className="flex-grow min-w-0">
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={{
@@ -858,27 +858,35 @@ const Results = ({
               </div>
 
               {/* Visibility Controls */}
-              <div className="md:w-64 space-y-2 p-4 bg-gray-50 dark:bg-gray-700 rounded">
-                <h4 className="font-medium mb-2">Show/Hide Items</h4>
-                <div className="max-h-[400px] overflow-y-auto space-y-2">
-                  {Object.entries(visibleItems).map(([name, isVisible]) => (
-                    <label key={name} className="flex items-center space-x-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={isVisible}
-                        onChange={() => {
-                          setVisibleItems(prev => ({
-                            ...prev,
-                            [name]: !prev[name]
-                          }))
-                        }}
-                        className="form-checkbox h-4 w-4 text-blue-500"
-                      />
-                      <span className="text-sm truncate" title={name}>
-                        {name}
-                      </span>
-                    </label>
-                  ))}
+              <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
+                <h4 className="font-medium p-4 pb-2">Show/Hide Items</h4>
+                <div 
+                  className="flex-1 overflow-auto p-4 pt-2"
+                  style={{
+                    maxHeight: selectedGroup !== 'All'
+                      ? Math.max(600, Object.keys(data[selectedGroup].item_data).length * 30 + 400)
+                      : 600
+                  }}>
+                  <div className="space-y-2">
+                    {Object.entries(visibleItems).map(([name, isVisible]) => (
+                      <label key={name} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+                        <input
+                          type="checkbox"
+                          checked={isVisible}
+                          onChange={() => {
+                            setVisibleItems(prev => ({
+                              ...prev,
+                              [name]: !prev[name]
+                            }))
+                          }}
+                          className="form-checkbox h-4 w-4 text-blue-500"
+                        />
+                        <span className="text-sm" title={name}>
+                          {name}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
