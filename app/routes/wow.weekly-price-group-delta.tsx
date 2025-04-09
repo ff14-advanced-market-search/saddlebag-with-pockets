@@ -860,6 +860,9 @@ const Results = ({
                 buttonTitle="Copy"
                 codeString={JSON.stringify({
                   region: wowRegion,
+                  start_year: parseInt(allTimestamps[0].slice(0, 4)),
+                  start_month: parseInt(allTimestamps[0].slice(4, 6)),
+                  start_day: parseInt(allTimestamps[0].slice(6, 8)),
                   price_groups: Object.entries(data).map(([name, groupData]) => ({
                     name,
                     item_ids: Object.keys(groupData.item_data).map(id => parseInt(id)),
