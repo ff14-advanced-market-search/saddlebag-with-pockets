@@ -165,6 +165,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Best Deals',
+        href: 'ffxiv/best-deals/recommended',
+        icon: ExclamationCircleIcon
+      },
+      {
         name: 'Marketshare Overview',
         href: 'ffxiv/marketshare/queries',
         icon: ChartSquareBarIcon

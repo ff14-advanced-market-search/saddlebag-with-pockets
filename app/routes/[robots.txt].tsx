@@ -36,6 +36,7 @@ export const loader: LoaderFunction = () => {
   Allow: /wow/pet-marketshare
   Allow: /ffxiv/scrip-exchange
   Allow: /ffxiv/extended-history
+  Allow: /ffxiv/best-deals/recommended
 
   Disallow: /nogooglebot/
   Disallow: /build/
@@ -43,6 +44,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /ffxiv/marketshare
   Disallow: /ffxiv/craftsim
   Disallow: /ffxiv/shortage-predictor
+  Disallow: /ffxiv/best-deals
   Disallow: /wow/best-deals
   Disallow: /wow/export-search
   Disallow: /wow/marketshare

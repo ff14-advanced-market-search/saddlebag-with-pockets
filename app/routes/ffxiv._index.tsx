@@ -3,6 +3,7 @@ import {
   ChartSquareBarIcon,
   PencilAltIcon
 } from '@heroicons/react/outline'
+import { ExclamationCircleIcon } from '@heroicons/react/solid'
 import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
@@ -27,6 +28,12 @@ const ffxivPages = [
       'Find items you can buy on other servers and resell on your own for a profit!',
     Icon: ChartSquareBarIcon,
     href: '/queries/recommended'
+  },
+  {
+    name: 'Best Deals',
+    href: '/ffxiv/best-deals/recommended',
+    description: 'Find the best deals on items across all categories!',
+    Icon: ExclamationCircleIcon
   },
   {
     name: 'Marketshare Overview',
