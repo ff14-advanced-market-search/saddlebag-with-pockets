@@ -37,8 +37,10 @@ const searchParams = {
     '/ffxiv/best-deals?filters=5,43,44,45,46&hq_only=true&discount=50&medianPrice=1000&salesAmount=1000&maxBuyPrice=10000',
   gearAndWeapons:
     '/ffxiv/best-deals?filters=1,2,3,4&hq_only=true&discount=50&medianPrice=75000&salesAmount=500&maxBuyPrice=200000',
-  materials:
-    '/ffxiv/best-deals?filters=6,7&hq_only=false&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000'
+  materialsNQ:
+    '/ffxiv/best-deals?filters=6&hq_only=false&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000',
+  materialsHQ:
+    '/ffxiv/best-deals?filters=6&hq_only=true&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000'
 }
 
 const recommendedQueries = [
@@ -93,10 +95,16 @@ const recommendedQueries = [
     href: searchParams.gearAndWeapons
   },
   {
-    name: 'Crafting Materials',
-    description: 'Raw materials and crafting components at a discount.',
+    name: 'HQ Crafting Materials',
+    description: 'NQ Raw materials and crafting components at a discount.',
     Icon: DocumentSearchIcon,
-    href: searchParams.materials
+    href: searchParams.materialsNQ
+  },
+  {
+    name: 'HQ Crafting Materials',
+    description: 'HQ Raw materials and crafting components at a discount.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.materialsHQ
   }
 ]
 
