@@ -155,6 +155,7 @@ const BestDeals = () => {
   ) => {
     if (isSubmitting) {
       event.preventDefault()
+      return
     }
   }
 
