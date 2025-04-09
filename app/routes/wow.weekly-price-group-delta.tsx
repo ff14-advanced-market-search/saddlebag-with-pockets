@@ -562,6 +562,18 @@ const Index = () => {
               </CodeBlock>
             </div>
           </div>
+
+          <div className="flex justify-center my-8">
+            <button
+              type="submit"
+              onClick={onSubmit}
+              disabled={transition.state === 'submitting'}
+              className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse">
+              {transition.state === 'submitting'
+                ? 'Searching...'
+                : 'Search Price Groups'}
+            </button>
+          </div>
         </form>
       </SmallFormContainer>
     </PageWrapper>
