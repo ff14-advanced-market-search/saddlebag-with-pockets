@@ -764,6 +764,15 @@ const Results = ({
       <Title title={pageTitle} />
       <ContentContainer>
         <div className="space-y-4">
+          {/* Search Again Link */}
+          <div className="flex justify-end">
+            <a
+              href="/wow/weekly-price-group-delta"
+              className="text-blue-500 hover:text-blue-600 font-medium">
+              ← Search Again
+            </a>
+          </div>
+
           {/* Group selector */}
           <div className="flex flex-col space-y-2">
             <button
