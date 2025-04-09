@@ -40,7 +40,11 @@ const searchParams = {
   materialsNQ:
     '/ffxiv/best-deals?filters=6&hq_only=false&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000',
   materialsHQ:
-    '/ffxiv/best-deals?filters=6&hq_only=true&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000'
+    '/ffxiv/best-deals?filters=6&hq_only=true&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000',
+  megaValueNQ:
+    '/ffxiv/best-deals?filters=6,7&hq_only=false&discount=50&medianPrice=300000&salesAmount=2&maxBuyPrice=1000000',
+  megaValueHQ:
+    '/ffxiv/best-deals?filters=0&hq_only=true&discount=50&medianPrice=300000&salesAmount=2&maxBuyPrice=1000000'
 }
 
 const recommendedQueries = [
@@ -105,6 +109,18 @@ const recommendedQueries = [
     description: 'HQ Raw materials and crafting components at a discount.',
     Icon: DocumentSearchIcon,
     href: searchParams.materialsHQ
+  },
+  {
+    name: 'Mega Value NQ',
+    description: 'Find NQ items with a mega value at a discount.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.megaValueNQ
+  },
+  {
+    name: 'Mega Value HQ',
+    description: 'Find HQ items with a mega value at a discount.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.megaValueHQ
   }
 ]
 
