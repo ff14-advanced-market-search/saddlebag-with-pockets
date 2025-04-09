@@ -30,16 +30,15 @@ const searchParams = {
   fastSellingItemsNQ:
     '/ffxiv/best-deals?filters=0&hq_only=false&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000',
   housing:
-    '/ffxiv/best-deals?filters=65,66,67,68,69,70,71,72&hq_only=false&discount=50&medianPrice=10000&salesAmount=2&maxBuyPrice=50000',
+    '/ffxiv/best-deals?filters=65,66,67,68,69,70,71,72&hq_only=false&discount=50&medianPrice=10000&salesAmount=500&maxBuyPrice=50000',
   collectables:
-    '/ffxiv/best-deals?filters=75,80,90&hq_only=false&discount=50&medianPrice=10000&salesAmount=2&maxBuyPrice=100000',
+    '/ffxiv/best-deals?filters=75,80,90&hq_only=false&discount=50&medianPrice=10000&salesAmount=500&maxBuyPrice=100000',
   foodAndPotions:
-    '/ffxiv/best-deals?filters=5,46&hq_only=true&discount=50&medianPrice=1000&salesAmount=50&maxBuyPrice=10000',
+    '/ffxiv/best-deals?filters=5,43,44,45,46&hq_only=true&discount=50&medianPrice=1000&salesAmount=1000&maxBuyPrice=10000',
   gearAndWeapons:
-    '/ffxiv/best-deals?filters=1,2,3,4&hq_only=true&discount=50&medianPrice=75000&salesAmount=10&maxBuyPrice=200000',
-
+    '/ffxiv/best-deals?filters=1,2,3,4&hq_only=true&discount=50&medianPrice=75000&salesAmount=500&maxBuyPrice=200000',
   materials:
-    '/ffxiv/best-deals?filters=6,7&hq_only=false&discount=50&medianPrice=100&salesAmount=50&maxBuyPrice=10000'
+    '/ffxiv/best-deals?filters=6,7&hq_only=false&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000'
 }
 
 const recommendedQueries = [
