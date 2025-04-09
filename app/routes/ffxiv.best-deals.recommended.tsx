@@ -22,7 +22,7 @@ export const links: LinksFunction = () => [
 
 const searchParams = {
   ultraCheapDealsHQ:
-    '/ffxiv/best-deals?filters=0&hq_only=true&discount=99&medianPrice=100&salesAmount=25&maxBuyPrice=10000',
+    '/ffxiv/best-deals?filters=0&hq_only=true&discount=95&medianPrice=1000&salesAmount=25&maxBuyPrice=10000',
   ultraCheapDealsNQ:
     '/ffxiv/best-deals?filters=0&hq_only=false&discount=99&medianPrice=100&salesAmount=5&maxBuyPrice=10000',
   fastSellingItemsHQ:
@@ -47,7 +47,7 @@ const recommendedQueries = [
   {
     name: 'HQ Ultra Cheap Deals (Beginner Friendly)',
     description:
-      'Find HQ items with massive discounts (99%+) for quick profits.',
+      'Find HQ items with massive discounts (95%+) for quick profits.',
     Icon: DocumentSearchIcon,
     href: searchParams.ultraCheapDealsHQ
   },
