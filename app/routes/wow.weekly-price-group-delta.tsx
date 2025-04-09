@@ -6,7 +6,7 @@ import type {
   LinksFunction
 } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -314,13 +314,7 @@ const Index = () => {
   const { darkmode } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
   const actionData = useActionData<WeeklyPriceGroupDeltaResponse>()
-  const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([
-    {
-      name: '',
-      item_ids: [],
-      categories: []
-    }
-  ])
+  const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([])
   const [error, setError] = useState<string | undefined>(undefined)
   const [startYear, setStartYear] = useState(2025)
   const [startMonth, setStartMonth] = useState(1)
@@ -330,6 +324,13 @@ const Index = () => {
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
+      return
+    }
+
+    // Check if there are any price groups
+    if (priceGroups.length === 0) {
+      e.preventDefault()
+      setError('Please add at least one price group')
       return
     }
 
@@ -366,7 +367,19 @@ const Index = () => {
     if (data.start_year) setStartYear(data.start_year)
     if (data.start_month) setStartMonth(data.start_month)
     if (data.start_day) setStartDay(data.start_day)
-    if (data.price_groups) setPriceGroups(data.price_groups)
+    if (data.price_groups && data.price_groups.length > 0) {
+      setPriceGroups(data.price_groups.map(group => ({
+        name: group.name,
+        item_ids: group.item_ids || [],
+        categories: group.categories || []
+      })))
+    } else {
+      setPriceGroups([{
+        name: '',
+        item_ids: [],
+        categories: []
+      }])
+    }
   }
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
