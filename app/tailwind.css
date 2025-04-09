@@ -1271,6 +1271,10 @@ select {
   height: 16rem;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
 .max-h-0 {
   max-height: 0px;
 }
@@ -1310,6 +1314,14 @@ select {
 
 .max-h-screen {
   max-height: 100vh;
+}
+
+.max-h-\[400px\] {
+  max-height: 400px;
+}
+
+.max-h-\[600px\] {
+  max-height: 600px;
 }
 
 .min-h-0 {
@@ -1407,6 +1419,10 @@ select {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-3 {
+  width: 0.75rem;
 }
 
 .min-w-0 {
@@ -3883,6 +3899,10 @@ select {
 
   .lg\:flex {
     display: flex;
+  }
+
+  .lg\:w-72 {
+    width: 18rem;
   }
 
   .lg\:grid-cols-3 {

@@ -542,6 +542,29 @@ const Results = ({
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
+
+  // Initialize visible items when group changes
+  useEffect(() => {
+    if (selectedGroup === 'All') {
+      // For 'All' view, show all groups
+      const newVisibleItems: Record<string, boolean> = {}
+      Object.keys(data).forEach(groupName => {
+        newVisibleItems[groupName] = true
+      })
+      setVisibleItems(newVisibleItems)
+    } else {
+      // For specific group view, show average and all items
+      const newVisibleItems: Record<string, boolean> = {
+        [`${selectedGroup} (Average)`]: true
+      }
+      const groupData = data[selectedGroup]
+      Object.keys(groupData.item_data).forEach(itemId => {
+        newVisibleItems[groupData.item_names[itemId]] = true
+      })
+      setVisibleItems(newVisibleItems)
+    }
+  }, [selectedGroup, data])
 
   const styles = darkMode
     ? {
@@ -567,36 +590,42 @@ const Results = ({
     return `${year}-${month}-${day}`
   }
 
-  // Generate series data for all groups or single group
+  // Modified generateSeriesData to use visibility state
   const generateSeriesData = () => {
     if (selectedGroup === 'All') {
-      return Object.entries(data).map(([groupName, groupData]) => ({
-        name: groupName,
-        data: allTimestamps.map((timestamp) => {
-          const value = groupData.deltas[timestamp]
-          return value !== undefined ? value : null
-        }),
-        type: 'line' as const
-      }))
+      return Object.entries(data)
+        .filter(([groupName]) => visibleItems[groupName])
+        .map(([groupName, groupData]) => ({
+          name: groupName,
+          data: allTimestamps.map((timestamp) => {
+            const value = groupData.deltas[timestamp]
+            return value !== undefined ? value : null
+          }),
+          type: 'line' as const
+        }))
     } else {
       const groupData = data[selectedGroup]
-      // Create a series for the group average
-      const groupSeries = {
-        name: `${selectedGroup} (Average)`,
-        data: allTimestamps.map((timestamp) => {
-          const value = groupData.deltas[timestamp]
-          return value !== undefined ? value : null
-        }),
-        type: 'line' as const,
-        lineWidth: 3,
-        zIndex: 2
+      const series = []
+
+      // Add average line if visible
+      if (visibleItems[`${selectedGroup} (Average)`]) {
+        series.push({
+          name: `${selectedGroup} (Average)`,
+          data: allTimestamps.map((timestamp) => {
+            const value = groupData.deltas[timestamp]
+            return value !== undefined ? value : null
+          }),
+          type: 'line' as const,
+          lineWidth: 3,
+          zIndex: 2
+        })
       }
 
-      // Create series for each item in the group
-      const itemSeries = Object.entries(groupData.item_data).map(
-        ([itemId, itemData]) => {
-          const itemName = groupData.item_names[itemId]
-          return {
+      // Add individual items if visible
+      Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
+        const itemName = groupData.item_names[itemId]
+        if (visibleItems[itemName]) {
+          series.push({
             name: itemName,
             data: allTimestamps.map((timestamp) => {
               const weekData = itemData.weekly_data.find(
@@ -609,11 +638,11 @@ const Results = ({
             dashStyle: 'Dot',
             opacity: 0.7,
             zIndex: 1
-          }
+          })
         }
-      )
+      })
 
-      return [groupSeries, ...itemSeries]
+      return series
     }
   }
 
@@ -811,12 +840,48 @@ const Results = ({
             ))}
           </div>
 
-          {/* Delta chart */}
+          {/* Chart and Controls Container */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={deltaChartOptions}
-            />
+            <div className="flex flex-col md:flex-row gap-4">
+              {/* Chart */}
+              <div className="flex-grow">
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    ...deltaChartOptions,
+                    legend: {
+                      ...deltaChartOptions.legend,
+                      enabled: false // Disable default legend since we're using checkboxes
+                    }
+                  }}
+                />
+              </div>
+
+              {/* Visibility Controls */}
+              <div className="md:w-64 space-y-2 p-4 bg-gray-50 dark:bg-gray-700 rounded">
+                <h4 className="font-medium mb-2">Show/Hide Items</h4>
+                <div className="max-h-[400px] overflow-y-auto space-y-2">
+                  {Object.entries(visibleItems).map(([name, isVisible]) => (
+                    <label key={name} className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={isVisible}
+                        onChange={() => {
+                          setVisibleItems(prev => ({
+                            ...prev,
+                            [name]: !prev[name]
+                          }))
+                        }}
+                        className="form-checkbox h-4 w-4 text-blue-500"
+                      />
+                      <span className="text-sm truncate" title={name}>
+                        {name}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Item details table - only shown when a specific group is selected */}
