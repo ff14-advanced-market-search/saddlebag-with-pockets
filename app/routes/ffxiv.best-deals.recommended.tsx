@@ -21,12 +21,14 @@ export const links: LinksFunction = () => [
 ]
 
 const searchParams = {
-  defaultDeals:
-    '/ffxiv/best-deals?filters=0&hq_only=false&discount=70&medianPrice=50000&salesAmount=20&maxBuyPrice=20000',
-  ultraCheapDeals:
-    '/ffxiv/best-deals?filters=0&hq_only=false&discount=99&medianPrice=100&salesAmount=1&maxBuyPrice=1000',
-  fastSellingItems:
-    '/ffxiv/best-deals?filters=0&hq_only=false&discount=50&medianPrice=1&salesAmount=100&maxBuyPrice=10000',
+  ultraCheapDealsNQ:
+    '/ffxiv/best-deals?filters=0&hq_only=false&discount=99&medianPrice=100&salesAmount=5&maxBuyPrice=10000',
+  ultraCheapDealsHQ:
+    '/ffxiv/best-deals?filters=0&hq_only=true&discount=99&medianPrice=100&salesAmount=25&maxBuyPrice=10000',
+  fastSellingItemsNQ:
+    '/ffxiv/best-deals?filters=0&hq_only=false&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000',
+  fastSellingItemsHQ:
+    '/ffxiv/best-deals?filters=0&hq_only=true&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000',
   foodAndPotions:
     '/ffxiv/best-deals?filters=5,46&hq_only=true&discount=50&medianPrice=1000&salesAmount=50&maxBuyPrice=10000',
   furnitureAndGlamour:
@@ -47,22 +49,30 @@ const searchParams = {
 
 const recommendedQueries = [
   {
-    name: 'Default Deals',
-    description: 'Default search for profitable items across all categories.',
+    name: 'HQ Ultra Cheap Deals (Beginner Friendly)',
+    description:
+      'Find HQ items with massive discounts (99%+) for quick profits.',
     Icon: DocumentSearchIcon,
-    href: searchParams.defaultDeals
+    href: searchParams.ultraCheapDealsHQ
   },
   {
-    name: 'Ultra Cheap Deals (Beginner Friendly)',
-    description: 'Find items with massive discounts (99%+) for quick profits.',
+    name: 'NQ Ultra Cheap Deals (Beginner Friendly)',
+    description:
+      'Find NQ items with massive discounts (99%+) for quick profits.',
     Icon: DocumentSearchIcon,
-    href: searchParams.ultraCheapDeals
+    href: searchParams.ultraCheapDealsNQ
   },
   {
-    name: 'Fast Selling Items',
-    description: 'Items that sell quickly with good profit margins.',
+    name: 'HQ Fast Selling Items',
+    description: 'HQ Items that sell quickly with good profit margins.',
     Icon: DocumentSearchIcon,
-    href: searchParams.fastSellingItems
+    href: searchParams.fastSellingItemsHQ
+  },
+  {
+    name: 'NQ Fast Selling Items',
+    description: 'NQ Items that sell quickly with good profit margins.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.fastSellingItemsNQ
   },
   {
     name: 'Food & Potions',

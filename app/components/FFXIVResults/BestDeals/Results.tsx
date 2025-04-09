@@ -12,7 +12,9 @@ const mobileColumnList: Array<ColumnList<Record<string, any>>> = [
   { columnId: 'discount', header: 'Discount' }
 ]
 
-const getColumnList = (hqOnly: boolean): Array<ColumnList<Record<string, any>>> => {
+const getColumnList = (
+  hqOnly: boolean
+): Array<ColumnList<Record<string, any>>> => {
   const baseColumns = [
     { columnId: 'itemName', header: 'Item Name' },
     { columnId: 'worldName', header: 'Server' },
@@ -64,7 +66,7 @@ export const Results = ({
   const columnSelectOptions = [
     'discount',
     'minPrice',
-    ...(results.hq_only 
+    ...(results.hq_only
       ? ['medianHQ', 'salesAmountHQ']
       : ['medianNQ', 'salesAmountNQ'])
   ]
@@ -88,7 +90,7 @@ export const Results = ({
               { title: 'Item ID', value: 'itemID' },
               { title: 'Item Name', value: 'itemName' },
               { title: 'Min Price', value: 'minPrice' },
-              ...(results.hq_only 
+              ...(results.hq_only
                 ? [
                     { title: 'HQ Median', value: 'medianHQ' },
                     { title: 'HQ Sales', value: 'salesAmountHQ' }
