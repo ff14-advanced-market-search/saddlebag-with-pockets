@@ -30,9 +30,9 @@ const searchParams = {
   fastSellingItemsNQ:
     '/ffxiv/best-deals?filters=0&hq_only=false&discount=50&medianPrice=100&salesAmount=1000&maxBuyPrice=10000',
   housing:
-    '/ffxiv/best-deals?filters=65,66,67,68,69,70,71,72&hq_only=false&discount=50&medianPrice=10000&salesAmount=500&maxBuyPrice=50000',
+    '/ffxiv/best-deals?filters=65,66,67,68,69,70,71,72&hq_only=false&discount=50&medianPrice=10000&salesAmount=200&maxBuyPrice=50000',
   collectables:
-    '/ffxiv/best-deals?filters=75,80,90&hq_only=false&discount=50&medianPrice=10000&salesAmount=500&maxBuyPrice=100000',
+    '/ffxiv/best-deals?filters=75,80,90&hq_only=false&discount=50&medianPrice=10000&salesAmount=200&maxBuyPrice=100000',
   foodAndPotions:
     '/ffxiv/best-deals?filters=5,43,44,45,46&hq_only=true&discount=50&medianPrice=1000&salesAmount=1000&maxBuyPrice=10000',
   gearAndWeapons:
@@ -95,7 +95,7 @@ const recommendedQueries = [
     href: searchParams.gearAndWeapons
   },
   {
-    name: 'HQ Crafting Materials',
+    name: 'NQ Crafting Materials',
     description: 'NQ Raw materials and crafting components at a discount.',
     Icon: DocumentSearchIcon,
     href: searchParams.materialsNQ
