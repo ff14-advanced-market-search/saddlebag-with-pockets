@@ -569,8 +569,32 @@ const Results = ({
 }) => {
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
+  const [selectedDate, setSelectedDate] = useState<string>('')
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
+
+  // Get all unique timestamps across all groups
+  const allTimestamps = Array.from(
+    new Set(
+      Object.values(data).flatMap((groupData) => Object.keys(groupData.deltas))
+    )
+  ).sort()
+
+  // Initialize selected date to latest timestamp
+  useEffect(() => {
+    if (allTimestamps.length > 0 && !selectedDate) {
+      setSelectedDate(allTimestamps[allTimestamps.length - 1])
+    }
+  }, [allTimestamps])
+
+  // Format timestamp into YYYY-MM-DD
+  const formatTimestamp = (timestamp: string) => {
+    const dateStr = timestamp.padStart(8, '0') // Ensure 8 digits
+    const year = dateStr.slice(0, 4)
+    const month = dateStr.slice(4, 6)
+    const day = dateStr.slice(6, 8)
+    return `${year}-${month}-${day}`
+  }
 
   // Initialize visible items when group changes
   useEffect(() => {
@@ -601,22 +625,6 @@ const Results = ({
         hoverColor: '#f8f8f8'
       }
     : {}
-
-  // Get all unique timestamps across all groups
-  const allTimestamps = Array.from(
-    new Set(
-      Object.values(data).flatMap((groupData) => Object.keys(groupData.deltas))
-    )
-  ).sort()
-
-  // Format timestamp into YYYY-MM-DD
-  const formatTimestamp = (timestamp: string) => {
-    const dateStr = timestamp.padStart(8, '0') // Ensure 8 digits
-    const year = dateStr.slice(0, 4)
-    const month = dateStr.slice(4, 6)
-    const day = dateStr.slice(6, 8)
-    return `${year}-${month}-${day}`
-  }
 
   // Modified generateSeriesData to use visibility state
   const generateSeriesData = () => {
@@ -674,7 +682,7 @@ const Results = ({
     }
   }
 
-  // Chart options for group deltas
+  // Modified chart options
   const deltaChartOptions: Options = {
     chart: {
       type: 'line',
@@ -764,6 +772,14 @@ const Results = ({
               return false // Prevent toggling visibility
             }
             return true // Allow toggling for All Groups view
+          },
+          point: {
+            events: {
+              click: function() {
+                const timestamp = allTimestamps[this.index]
+                setSelectedDate(timestamp)
+              }
+            }
           }
         }
       }
@@ -794,24 +810,39 @@ const Results = ({
   const showItemDetails = selectedGroup !== 'All'
   const groupData = showItemDetails ? data[selectedGroup] : null
 
+  // Helper function to get data for a specific timestamp
+  const getDataForTimestamp = (itemData: ItemData, timestamp: string) => {
+    return itemData.weekly_data.find(d => d.t.toString() === timestamp)
+  }
+
   // Table columns for item details
   const columnList: Array<ColumnList<ItemData>> = [
     { columnId: 'itemName', header: 'Item Name' },
     { columnId: 'itemID', header: 'Item ID' },
     {
-      columnId: 'currentPrice',
-      header: 'Current Price',
+      columnId: 'price',
+      header: `Price (${formatTimestamp(selectedDate)})`,
       accessor: ({ row }) => {
-        const lastData = row.weekly_data[row.weekly_data.length - 1]
-        return <span>{lastData ? lastData.p.toLocaleString() : 'N/A'}</span>
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.p.toLocaleString() : 'N/A'}</span>
+      },
+      sortingFn: (a, b) => {
+        const aData = getDataForTimestamp(a, selectedDate)
+        const bData = getDataForTimestamp(b, selectedDate)
+        return (aData?.p || 0) - (bData?.p || 0)
       }
     },
     {
-      columnId: 'currentDelta',
-      header: 'Current Delta %',
+      columnId: 'delta',
+      header: `Delta % (${formatTimestamp(selectedDate)})`,
       accessor: ({ row }) => {
-        const lastData = row.weekly_data[row.weekly_data.length - 1]
-        return <span>{lastData ? `${lastData.delta.toFixed(2)}%` : 'N/A'}</span>
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? `${data.delta.toFixed(2)}%` : 'N/A'}</span>
+      },
+      sortingFn: (a, b) => {
+        const aData = getDataForTimestamp(a, selectedDate)
+        const bData = getDataForTimestamp(b, selectedDate)
+        return (aData?.delta || 0) - (bData?.delta || 0)
       }
     },
     {
@@ -879,7 +910,7 @@ const Results = ({
                     ...deltaChartOptions,
                     legend: {
                       ...deltaChartOptions.legend,
-                      enabled: false // Disable default legend since we're using checkboxes
+                      enabled: false
                     }
                   }}
                 />
@@ -888,29 +919,19 @@ const Results = ({
               {/* Visibility Controls */}
               <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
                 <h4 className="font-medium p-4 pb-2">Show/Hide Items</h4>
-                <div
-                  className="flex-1 overflow-auto p-4 pt-2"
-                  style={{
-                    maxHeight:
-                      selectedGroup !== 'All'
-                        ? Math.max(
-                            600,
-                            Object.keys(data[selectedGroup].item_data).length *
-                              30 +
-                              400
-                          )
-                        : 600
-                  }}>
+                <div className="flex-1 overflow-auto p-4 pt-2" style={{
+                  maxHeight: selectedGroup !== 'All'
+                    ? Math.max(600, Object.keys(data[selectedGroup].item_data).length * 30 + 400)
+                    : 600
+                }}>
                   <div className="space-y-2">
                     {Object.entries(visibleItems).map(([name, isVisible]) => (
-                      <label
-                        key={name}
-                        className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+                      <label key={name} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
                         <input
                           type="checkbox"
                           checked={isVisible}
                           onChange={() => {
-                            setVisibleItems((prev) => ({
+                            setVisibleItems(prev => ({
                               ...prev,
                               [name]: !prev[name]
                             }))
@@ -931,11 +952,23 @@ const Results = ({
           {/* Item details table - only shown when a specific group is selected */}
           {showItemDetails && groupData && (
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex flex-wrap gap-4 items-center mb-4">
                 <h3 className="text-lg font-medium">Item Details</h3>
+                <div className="flex-1 min-w-[200px]">
+                  <select
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                    {allTimestamps.map((timestamp) => (
+                      <option key={timestamp} value={timestamp}>
+                        {formatTimestamp(timestamp)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <DebouncedInput
                   onDebouncedChange={setGlobalFilter}
-                  className="p-2 border rounded"
+                  className="p-2 border rounded min-w-[200px]"
                   placeholder="Search items..."
                 />
               </div>
@@ -962,20 +995,21 @@ const Results = ({
               {/* Export buttons */}
               <div className="flex gap-2 mt-4">
                 <CSVButton
-                  data={Object.values(groupData.item_data).map((item) => ({
-                    ...item,
-                    currentPrice:
-                      item.weekly_data[item.weekly_data.length - 1]?.p || 0,
-                    currentDelta:
-                      item.weekly_data[item.weekly_data.length - 1]?.delta || 0
-                  }))}
+                  data={Object.values(groupData.item_data).map((item) => {
+                    const data = getDataForTimestamp(item, selectedDate)
+                    return {
+                      ...item,
+                      price: data?.p || 0,
+                      delta: data?.delta || 0
+                    }
+                  })}
                   columns={[
                     { title: 'Item Name', value: 'itemName' },
                     { title: 'Item ID', value: 'itemID' },
-                    { title: 'Current Price', value: 'currentPrice' },
-                    { title: 'Current Delta %', value: 'currentDelta' }
+                    { title: `Price (${formatTimestamp(selectedDate)})`, value: 'price' },
+                    { title: `Delta % (${formatTimestamp(selectedDate)})`, value: 'delta' }
                   ]}
-                  filename={`${selectedGroup}_items.csv`}
+                  filename={`${selectedGroup}_items_${formatTimestamp(selectedDate)}.csv`}
                 />
                 <JSONButton data={Object.values(groupData.item_data)} />
               </div>
