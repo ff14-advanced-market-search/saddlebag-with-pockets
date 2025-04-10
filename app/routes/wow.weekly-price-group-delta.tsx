@@ -740,8 +740,8 @@ const Results = ({
                 return weekData ? weekData.delta : null
               }),
               type: 'line' as const,
-              lineWidth: 1,
-              dashStyle: 'Dot',
+              lineWidth: 2,
+              // dashStyle: 'Dot',
               opacity: 0.7,
               zIndex: 1
             })
