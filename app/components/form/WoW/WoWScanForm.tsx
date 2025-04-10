@@ -7,6 +7,8 @@ import Label from '../Label'
 import WoWServerSelect from './WoWServerSelect'
 import RegionAndServerSelect from './RegionAndServerSelect'
 import { itemClasses } from '~/utils/WoWFilers/itemClasses'
+import { itemQuality } from '~/utils/WoWFilers/itemQuality'
+import { expansionOptions } from '~/utils/WoWFilers/expansions'
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -17,52 +19,6 @@ interface Props {
   defaultRegion?: WoWServerRegion
   defaultServer?: WoWServerData
 }
-
-const itemQuality = [
-  {
-    name: 'Common',
-    value: 1
-  },
-  {
-    name: 'Uncommon',
-    value: 2
-  },
-  {
-    name: 'Rare',
-    value: 3
-  },
-  {
-    name: 'Epic',
-    value: 4
-  },
-  {
-    name: 'Legendary',
-    value: 5
-  },
-  {
-    name: 'Artifact',
-    value: 6
-  },
-  {
-    name: 'Heirloom',
-    value: 7
-  }
-]
-
-const expansionOptions = [
-  { label: 'All', value: '-1' },
-  { label: 'Classic (Vanilla)', value: '1' },
-  { label: 'The Burning Crusade', value: '2' },
-  { label: 'Wrath of the Lich King', value: '3' },
-  { label: 'Cataclysm', value: '4' },
-  { label: 'Mists of Pandaria', value: '5' },
-  { label: 'Warlords of Draenor', value: '6' },
-  { label: 'Legion', value: '7' },
-  { label: 'Battle for Azeroth', value: '8' },
-  { label: 'Shadowlands', value: '9' },
-  { label: 'Dragonflight', value: '10' },
-  { label: 'The War Within', value: '11' }
-]
 
 /**
  * Renders a form for searching World of Warcraft server-to-server trades.
