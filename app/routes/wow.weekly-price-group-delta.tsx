@@ -656,9 +656,14 @@ const Results = ({
         .filter(([groupName]) => visibleItems[groupName])
         .map(([groupName, groupData]) => {
           // Calculate average performance for the group
-          const values = Object.values(groupData.deltas).filter(v => v !== undefined && v !== null)
-          const avgPerformance = values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0
-          
+          const values = Object.values(groupData.deltas).filter(
+            (v) => v !== undefined && v !== null
+          )
+          const avgPerformance =
+            values.length > 0
+              ? values.reduce((a, b) => a + b, 0) / values.length
+              : 0
+
           // Only include if above threshold
           if (avgPerformance >= performanceThreshold) {
             return {
@@ -672,16 +677,23 @@ const Results = ({
           }
           return undefined
         })
-        .filter((series): series is NonNullable<typeof series> => series !== undefined)
+        .filter(
+          (series): series is NonNullable<typeof series> => series !== undefined
+        )
     } else {
       const groupData = data[selectedGroup]
       const series = []
 
       // Add average line if visible
       if (visibleItems[`${selectedGroup} (Average)`]) {
-        const values = Object.values(groupData.deltas).filter(v => v !== undefined && v !== null)
-        const avgPerformance = values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0
-        
+        const values = Object.values(groupData.deltas).filter(
+          (v) => v !== undefined && v !== null
+        )
+        const avgPerformance =
+          values.length > 0
+            ? values.reduce((a, b) => a + b, 0) / values.length
+            : 0
+
         if (avgPerformance >= performanceThreshold) {
           series.push({
             name: `${selectedGroup} (Average)`,
@@ -701,9 +713,14 @@ const Results = ({
         const itemName = groupData.item_names[itemId]
         if (visibleItems[itemName]) {
           // Calculate average performance for the item
-          const values = itemData.weekly_data.map(d => d.delta).filter(v => v !== undefined && v !== null)
-          const avgPerformance = values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0
-          
+          const values = itemData.weekly_data
+            .map((d) => d.delta)
+            .filter((v) => v !== undefined && v !== null)
+          const avgPerformance =
+            values.length > 0
+              ? values.reduce((a, b) => a + b, 0) / values.length
+              : 0
+
           if (avgPerformance >= performanceThreshold) {
             series.push({
               name: itemName,

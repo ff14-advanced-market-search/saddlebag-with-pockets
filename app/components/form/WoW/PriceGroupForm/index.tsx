@@ -4,6 +4,7 @@ import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import CategorySelectionPopup from '../CategorySelectionPopup'
+import { itemClasses } from '~/utils/WoWFilers/itemClasses'
 
 export interface PriceGroup {
   name: string
@@ -103,6 +104,28 @@ const PriceGroupForm = ({
     }
   }
 
+  // Helper function to get class and subclass names
+  const getClassAndSubclassNames = (
+    itemClass: number,
+    itemSubclass: number
+  ) => {
+    const classInfo = itemClasses.find((c) => c.value === itemClass)
+    if (!classInfo)
+      return {
+        className: `Unknown (${itemClass})`,
+        subclassName: `Unknown (${itemSubclass})`
+      }
+
+    const subclassInfo =
+      itemSubclass === -1
+        ? null
+        : classInfo.subClasses.find((s) => s.value === itemSubclass)
+    return {
+      className: classInfo.name,
+      subclassName: subclassInfo ? subclassInfo.name : 'All'
+    }
+  }
+
   return (
     <div className="border rounded-md p-4 mb-4">
       <div className="flex justify-between items-center mb-4">
@@ -179,37 +202,45 @@ const PriceGroupForm = ({
 
         {categories.length > 0 && (
           <div className="space-y-2">
-            {categories.map((cat, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                <div className="flex-1 text-sm">
-                  <div>
-                    Class: {cat.item_class}, Subclass: {cat.item_subclass}
+            {categories.map((cat, index) => {
+              const { className, subclassName } = getClassAndSubclassNames(
+                cat.item_class,
+                cat.item_subclass
+              )
+              return (
+                <div
+                  key={index}
+                  className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                  <div className="flex-1 text-sm">
+                    <div>
+                      Class: {className}, Subclass: {subclassName}
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">
+                      Quality: {getQualityDisplay(cat.min_quality)}, Expansion:{' '}
+                      {cat.expansion_number === -1
+                        ? 'All'
+                        : cat.expansion_number}
+                    </div>
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-300">
-                    Quality: {getQualityDisplay(cat.min_quality)}, Expansion:{' '}
-                    {cat.expansion_number === -1 ? 'All' : cat.expansion_number}
-                  </div>
+                  <button
+                    type="button"
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => {
+                      const updatedCategories = categories.filter(
+                        (_, i) => i !== index
+                      )
+                      setCategories(updatedCategories)
+                      onChange({
+                        name,
+                        item_ids: itemIds,
+                        categories: updatedCategories
+                      })
+                    }}>
+                    Remove
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => {
-                    const updatedCategories = categories.filter(
-                      (_, i) => i !== index
-                    )
-                    setCategories(updatedCategories)
-                    onChange({
-                      name,
-                      item_ids: itemIds,
-                      categories: updatedCategories
-                    })
-                  }}>
-                  Remove
-                </button>
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </div>
