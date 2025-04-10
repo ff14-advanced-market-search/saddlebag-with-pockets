@@ -601,7 +601,8 @@ const Results = ({
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
   const [selectedDate, setSelectedDate] = useState<string>('')
-  const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
+  const [maxThreshold, setMaxThreshold] = useState<number>(Infinity)
+  const [minThreshold, setMinThreshold] = useState<number>(-Infinity)
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
 
@@ -628,27 +629,90 @@ const Results = ({
     return `${year}-${month}-${day}`
   }
 
-  // Initialize visible items when group changes
+  // Threshold options
+  const maxThresholdOptions = [
+    { label: 'No limit', value: Infinity },
+    { label: 'Above 4000%', value: 4000 },
+    { label: 'Above 3000%', value: 3000 },
+    { label: 'Above 2000%', value: 2000 },
+    { label: 'Above 1000%', value: 1000 },
+    { label: 'Above 500%', value: 500 },
+    { label: 'Above 400%', value: 400 },
+    { label: 'Above 300%', value: 300 },
+    { label: 'Above 200%', value: 200 },
+    { label: 'Above 100%', value: 100 },
+    { label: 'Above 0%', value: 0 },
+    { label: 'Below -25%', value: -25 },
+    { label: 'Below -50%', value: -50 },
+    { label: 'Below -75%', value: -75 },
+    { label: 'Below -85%', value: -85 },
+    { label: 'Below -95%', value: -95 },
+    { label: 'Below -100%', value: -100 }
+  ]
+
+  const minThresholdOptions = [
+    { label: 'Above 4000%', value: 4000 },
+    { label: 'Above 3000%', value: 3000 },
+    { label: 'Above 2000%', value: 2000 },
+    { label: 'Above 1000%', value: 1000 },
+    { label: 'Above 500%', value: 500 },
+    { label: 'Above 400%', value: 400 },
+    { label: 'Above 300%', value: 300 },
+    { label: 'Above 200%', value: 200 },
+    { label: 'Above 100%', value: 100 },
+    { label: 'Above 0%', value: 0 },
+    { label: 'Below -25%', value: -25 },
+    { label: 'Below -50%', value: -50 },
+    { label: 'Below -75%', value: -75 },
+    { label: 'Below -85%', value: -85 },
+    { label: 'Below -95%', value: -95 },
+    { label: 'Below -100%', value: -100 },
+    { label: 'No limit', value: -Infinity }
+  ]
+
+  // Function to check if an item's performance is within thresholds
+  const isItemInRange = (itemData: ItemData) => {
+    // Skip the first data point which is always 0
+    const relevantData = itemData.weekly_data.slice(1)
+    const deltas = relevantData.map((d) => d.delta)
+
+    // Check if ALL points are above minThreshold and NO points are above maxThreshold
+    return (
+      deltas.every((delta) => delta >= minThreshold) &&
+      deltas.every((delta) => delta <= maxThreshold)
+    )
+  }
+
+  // Update visible items based on thresholds
   useEffect(() => {
     if (selectedGroup === 'All') {
-      // For 'All' view, show all groups
+      // For 'All' view, check group averages
       const newVisibleItems: Record<string, boolean> = {}
-      Object.keys(data).forEach((groupName) => {
-        newVisibleItems[groupName] = true
+      Object.entries(data).forEach(([groupName, groupData]) => {
+        const values = Object.values(groupData.deltas)
+          .slice(1) // Skip first value
+          .filter((v) => v !== undefined && v !== null)
+
+        const isInRange =
+          values.every((v) => v >= minThreshold) &&
+          values.every((v) => v <= maxThreshold)
+        newVisibleItems[groupName] = isInRange
       })
       setVisibleItems(newVisibleItems)
     } else {
-      // For specific group view, show average and all items
-      const newVisibleItems: Record<string, boolean> = {
-        [`${selectedGroup} (Average)`]: true
-      }
+      // For specific group view
       const groupData = data[selectedGroup]
-      Object.keys(groupData.item_data).forEach((itemId) => {
-        newVisibleItems[groupData.item_names[itemId]] = true
+      const newVisibleItems: Record<string, boolean> = {
+        [`${selectedGroup} (Average)`]: true // Always show average line
+      }
+
+      Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
+        const itemName = groupData.item_names[itemId]
+        newVisibleItems[itemName] = isItemInRange(itemData)
       })
       setVisibleItems(newVisibleItems)
     }
-  }, [selectedGroup, data])
+  }, [selectedGroup, data, minThreshold, maxThreshold])
 
   const styles = darkMode
     ? {
@@ -674,7 +738,7 @@ const Results = ({
               : 0
 
           // Only include if above threshold
-          if (avgPerformance >= performanceThreshold) {
+          if (avgPerformance >= maxThreshold) {
             return {
               name: groupName,
               data: allTimestamps.map((timestamp) => {
@@ -703,7 +767,7 @@ const Results = ({
             ? values.reduce((a, b) => a + b, 0) / values.length
             : 0
 
-        if (avgPerformance >= performanceThreshold) {
+        if (avgPerformance >= maxThreshold) {
           series.push({
             name: `${selectedGroup} (Average)`,
             data: allTimestamps.map((timestamp) => {
@@ -730,7 +794,7 @@ const Results = ({
               ? values.reduce((a, b) => a + b, 0) / values.length
               : 0
 
-          if (avgPerformance >= performanceThreshold) {
+          if (avgPerformance >= maxThreshold) {
             series.push({
               name: itemName,
               data: allTimestamps.map((timestamp) => {
@@ -953,22 +1017,35 @@ const Results = ({
     }
   ]
 
-  // Add performance threshold control
-  const renderPerformanceControl = () => (
-    <div className="mb-4 flex items-center gap-2">
-      <label className="text-sm font-medium">Hide items below</label>
-      <select
-        value={performanceThreshold}
-        onChange={(e) => setPerformanceThreshold(Number(e.target.value))}
-        className="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-        <option value={-100}>Show All</option>
-        <option value={-50}>-50%</option>
-        <option value={-25}>-25%</option>
-        <option value={0}>0%</option>
-        <option value={25}>+25%</option>
-        <option value={50}>+50%</option>
-      </select>
-      <span className="text-sm text-gray-500">performance</span>
+  // Add new performance range controls component
+  const renderPerformanceRangeControls = () => (
+    <div className="flex flex-col gap-2 p-4 border-b dark:border-gray-600">
+      <div className="flex items-center gap-2">
+        <label className="text-sm font-medium whitespace-nowrap">Max %:</label>
+        <select
+          value={maxThreshold}
+          onChange={(e) => setMaxThreshold(Number(e.target.value))}
+          className="flex-1 p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-sm">
+          {maxThresholdOptions.map(({ label, value }) => (
+            <option key={label} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex items-center gap-2">
+        <label className="text-sm font-medium whitespace-nowrap">Min %:</label>
+        <select
+          value={minThreshold}
+          onChange={(e) => setMinThreshold(Number(e.target.value))}
+          className="flex-1 p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-sm">
+          {minThresholdOptions.map(({ label, value }) => (
+            <option key={label} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   )
 
@@ -984,7 +1061,6 @@ const Results = ({
               className="text-blue-500 hover:text-blue-600 font-medium">
               ← Search Again
             </a>
-            {renderPerformanceControl()}
           </div>
 
           {/* Group selector */}
@@ -1031,6 +1107,7 @@ const Results = ({
 
               {/* Visibility Controls */}
               <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
+                {renderPerformanceRangeControls()}
                 <h4 className="font-medium p-4 pb-2">Show/Hide Items</h4>
                 <div
                   className="flex-1 overflow-auto p-4 pt-2"
