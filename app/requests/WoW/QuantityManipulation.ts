@@ -40,6 +40,12 @@ export interface ManipulationResponse {
   data: Array<ManipulationItem>
 }
 
+export interface ErrorResponse {
+  Type: string
+  Message: string
+  Elements?: Array<string>
+}
+
 const WoWQuantityManipulation = async ({
   historicPrice,
   salesPerDay,
@@ -54,27 +60,36 @@ const WoWQuantityManipulation = async ({
   homeRealmName,
   expansionNumber
 }: QuantityManipulationProps): Promise<Response> => {
-  return fetch(`${address}/api/wow/quantity-manipulation`, {
+  const response = await fetch(`${address}/api/wow/quantity-manipulation`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
-      historic_price: historicPrice,
-      sales_per_day: salesPerDay,
+      region,
+      itemQuality,
+      historicPrice,
+      salesPerDay: parseFloat(salesPerDay.toString()),
       min_quantity_change_percent: minQuantityChangePercent,
       min_quantity_swings: minQuantitySwings,
       hours_to_analyze: hoursToAnalyze,
-      min_price_multiplier: minPriceMultiplier,
-      itemQuality,
+      min_price_multiplier: parseFloat(minPriceMultiplier.toString()),
       item_class: itemClass,
       item_subclass: itemSubClass,
-      region,
-      homeRealmName,
       expansion_number: expansionNumber
     })
   })
+
+  if (!response.ok) {
+    const errorData = await response.json() as ErrorResponse
+    return new Response(JSON.stringify(errorData), {
+      status: response.status,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+  return response
 }
 
 export default WoWQuantityManipulation 

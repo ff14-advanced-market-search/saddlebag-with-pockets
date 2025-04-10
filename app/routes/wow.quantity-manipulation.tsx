@@ -18,7 +18,8 @@ import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import type {
   QuantityManipulationProps,
-  ManipulationResponse
+  ManipulationResponse,
+  ErrorResponse
 } from '~/requests/WoW/QuantityManipulation'
 import WoWQuantityManipulation from '~/requests/WoW/QuantityManipulation'
 import NoResults from '~/components/Common/NoResults'
@@ -109,7 +110,19 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  return WoWQuantityManipulation(validInput.data)
+  const response = await WoWQuantityManipulation(validInput.data)
+  const data = await response.json()
+
+  if (!response.ok) {
+    const errorData = data as ErrorResponse
+    return json({
+      exception: `${errorData.Type}: ${errorData.Message}${
+        errorData.Elements ? ` (${errorData.Elements.join(', ')})` : ''
+      }`
+    })
+  }
+
+  return json(data)
 }
 
 type ActionResponse = ManipulationResponse | { exception: string } | {}
