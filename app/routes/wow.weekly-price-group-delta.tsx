@@ -711,7 +711,7 @@ const Results = ({
               return value !== undefined ? value : null
             }),
             type: 'line' as const,
-            lineWidth: 3,
+            lineWidth: 5,
             zIndex: 2
           })
         }
@@ -740,8 +740,8 @@ const Results = ({
                 return weekData ? weekData.delta : null
               }),
               type: 'line' as const,
-              lineWidth: 2,
-              // dashStyle: 'Dot',
+              lineWidth: 1,
+              dashStyle: 'LongDash',
               opacity: 0.7,
               zIndex: 1
             })
