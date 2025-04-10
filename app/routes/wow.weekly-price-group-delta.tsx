@@ -546,18 +546,6 @@ const Index = () => {
             value={JSON.stringify(priceGroups)}
           />
 
-          {/* <div className="flex justify-center my-8">
-            <button
-              type="submit"
-              onClick={onSubmit}
-              disabled={transition.state === 'submitting'}
-              className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse">
-              {transition.state === 'submitting'
-                ? 'Searching...'
-                : 'Search Price Groups'}
-            </button>
-          </div> */}
-
           <div className="mt-8">
             <h3 className="text-lg font-medium mb-4">Request Data Preview</h3>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
@@ -604,6 +592,7 @@ const Results = ({
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
   const [selectedDate, setSelectedDate] = useState<string>('')
+  const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
 
@@ -660,55 +649,77 @@ const Results = ({
       }
     : {}
 
-  // Modified generateSeriesData to use visibility state
+  // Modified generateSeriesData to use visibility state and performance threshold
   const generateSeriesData = () => {
     if (selectedGroup === 'All') {
       return Object.entries(data)
         .filter(([groupName]) => visibleItems[groupName])
-        .map(([groupName, groupData]) => ({
-          name: groupName,
-          data: allTimestamps.map((timestamp) => {
-            const value = groupData.deltas[timestamp]
-            return value !== undefined ? value : null
-          }),
-          type: 'line' as const
-        }))
+        .map(([groupName, groupData]) => {
+          // Calculate average performance for the group
+          const values = Object.values(groupData.deltas).filter(v => v !== undefined && v !== null)
+          const avgPerformance = values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0
+          
+          // Only include if above threshold
+          if (avgPerformance >= performanceThreshold) {
+            return {
+              name: groupName,
+              data: allTimestamps.map((timestamp) => {
+                const value = groupData.deltas[timestamp]
+                return value !== undefined ? value : null
+              }),
+              type: 'line' as const
+            }
+          }
+          return undefined
+        })
+        .filter((series): series is NonNullable<typeof series> => series !== undefined)
     } else {
       const groupData = data[selectedGroup]
       const series = []
 
       // Add average line if visible
       if (visibleItems[`${selectedGroup} (Average)`]) {
-        series.push({
-          name: `${selectedGroup} (Average)`,
-          data: allTimestamps.map((timestamp) => {
-            const value = groupData.deltas[timestamp]
-            return value !== undefined ? value : null
-          }),
-          type: 'line' as const,
-          lineWidth: 3,
-          zIndex: 2
-        })
+        const values = Object.values(groupData.deltas).filter(v => v !== undefined && v !== null)
+        const avgPerformance = values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0
+        
+        if (avgPerformance >= performanceThreshold) {
+          series.push({
+            name: `${selectedGroup} (Average)`,
+            data: allTimestamps.map((timestamp) => {
+              const value = groupData.deltas[timestamp]
+              return value !== undefined ? value : null
+            }),
+            type: 'line' as const,
+            lineWidth: 3,
+            zIndex: 2
+          })
+        }
       }
 
-      // Add individual items if visible
+      // Add individual items if visible and above threshold
       Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
         const itemName = groupData.item_names[itemId]
         if (visibleItems[itemName]) {
-          series.push({
-            name: itemName,
-            data: allTimestamps.map((timestamp) => {
-              const weekData = itemData.weekly_data.find(
-                (d) => d.t.toString() === timestamp
-              )
-              return weekData ? weekData.delta : null
-            }),
-            type: 'line' as const,
-            lineWidth: 1,
-            dashStyle: 'Dot',
-            opacity: 0.7,
-            zIndex: 1
-          })
+          // Calculate average performance for the item
+          const values = itemData.weekly_data.map(d => d.delta).filter(v => v !== undefined && v !== null)
+          const avgPerformance = values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0
+          
+          if (avgPerformance >= performanceThreshold) {
+            series.push({
+              name: itemName,
+              data: allTimestamps.map((timestamp) => {
+                const weekData = itemData.weekly_data.find(
+                  (d) => d.t.toString() === timestamp
+                )
+                return weekData ? weekData.delta : null
+              }),
+              type: 'line' as const,
+              lineWidth: 1,
+              dashStyle: 'Dot',
+              opacity: 0.7,
+              zIndex: 1
+            })
+          }
         }
       })
 
@@ -894,18 +905,38 @@ const Results = ({
     }
   ]
 
+  // Add performance threshold control
+  const renderPerformanceControl = () => (
+    <div className="mb-4 flex items-center gap-2">
+      <label className="text-sm font-medium">Hide items below</label>
+      <select
+        value={performanceThreshold}
+        onChange={(e) => setPerformanceThreshold(Number(e.target.value))}
+        className="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+        <option value={-100}>Show All</option>
+        <option value={-50}>-50%</option>
+        <option value={-25}>-25%</option>
+        <option value={0}>0%</option>
+        <option value={25}>+25%</option>
+        <option value={50}>+50%</option>
+      </select>
+      <span className="text-sm text-gray-500">performance</span>
+    </div>
+  )
+
   return (
     <PageWrapper>
       <Title title={pageTitle} />
       <ContentContainer>
         <div className="space-y-4">
           {/* Search Again Link */}
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center">
             <a
               href="/wow/weekly-price-group-delta"
               className="text-blue-500 hover:text-blue-600 font-medium">
               ← Search Again
             </a>
+            {renderPerformanceControl()}
           </div>
 
           {/* Group selector */}
