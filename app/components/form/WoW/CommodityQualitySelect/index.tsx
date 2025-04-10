@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Label from '../../Label'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 
 interface CommodityQualitySelectProps {
   defaultValue?: string
@@ -19,7 +20,10 @@ const CommodityQualitySelect = ({
 
   return (
     <div className="space-y-2">
-      <Label>Commodity Quality</Label>
+      <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+        <Label>Minimum Commodity Quality</Label>
+        <ToolTip data="Select the minimum quality of commodities you're interested in." />
+      </div>
       <div className="flex flex-col space-y-2">
         <label className="flex items-center space-x-2 cursor-pointer">
           <input
