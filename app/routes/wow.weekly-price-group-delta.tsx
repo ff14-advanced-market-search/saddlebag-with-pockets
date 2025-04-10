@@ -794,7 +794,9 @@ const Results = ({
         text: 'Price Change %',
         style: { color: styles?.color }
       },
-      labels: { style: { color: styles?.color } }
+      labels: { style: { color: styles?.color } },
+      min: -100,
+      softMin: -100
     },
     tooltip: {
       shared: true,
