@@ -388,26 +388,35 @@ const Index = () => {
   }
 
   const handleImport = (data: ImportData) => {
+    // First update the date values if they exist
     if (data.start_year) setStartYear(data.start_year)
     if (data.start_month) setStartMonth(data.start_month)
     if (data.start_day) setStartDay(data.start_day)
-    if (data.price_groups && data.price_groups.length > 0) {
-      setPriceGroups(
-        data.price_groups.map((group) => ({
+
+    // Immediately set price groups to empty array to clear all existing groups
+    setPriceGroups([])
+
+    // Use setTimeout to ensure the state is cleared before adding new groups
+    setTimeout(() => {
+      if (data.price_groups && data.price_groups.length > 0) {
+        // Map and set the new price groups
+        const newGroups = data.price_groups.map((group) => ({
           name: group.name,
           item_ids: group.item_ids || [],
           categories: group.categories || []
         }))
-      )
-    } else {
-      setPriceGroups([
-        {
-          name: '',
-          item_ids: [],
-          categories: []
-        }
-      ])
-    }
+        setPriceGroups(newGroups)
+      } else {
+        // If no price groups in import, create a single empty one
+        setPriceGroups([
+          {
+            name: '',
+            item_ids: [],
+            categories: []
+          }
+        ])
+      }
+    }, 0)
   }
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
