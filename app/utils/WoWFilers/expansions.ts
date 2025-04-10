@@ -16,4 +16,17 @@ export const expansionOptions: ExpansionOption[] = [
   { label: 'Shadowlands', value: '9' },
   { label: 'Dragonflight', value: '10' },
   { label: 'The War Within', value: '11' }
-] 
+]
+
+/**
+ * Gets the expansion name from its number
+ * @param expansionNumber The expansion number to look up
+ * @returns The expansion name or "All" for -1, or "Unknown Expansion" if not found
+ */
+export const getExpansionName = (expansionNumber: number): string => {
+  if (expansionNumber === -1) return 'All'
+  const expansion = expansionOptions.find(
+    (exp) => parseInt(exp.value) === expansionNumber
+  )
+  return expansion?.label ?? `Unknown Expansion (${expansionNumber})`
+}

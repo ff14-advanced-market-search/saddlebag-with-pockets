@@ -5,6 +5,7 @@ import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import CategorySelectionPopup from '../CategorySelectionPopup'
 import { itemClasses } from '~/utils/WoWFilers/itemClasses'
+import { getExpansionName } from '~/utils/WoWFilers/expansions'
 
 export interface PriceGroup {
   name: string
@@ -217,9 +218,7 @@ const PriceGroupForm = ({
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-300">
                       Quality: {getQualityDisplay(cat.min_quality)}, Expansion:{' '}
-                      {cat.expansion_number === -1
-                        ? 'All'
-                        : cat.expansion_number}
+                      {getExpansionName(cat.expansion_number)}
                     </div>
                   </div>
                   <button

@@ -227,5 +227,5 @@ export const itemClasses = [
   }
 ]
 
-export type ItemClass = typeof itemClasses[0]
-export type ItemSubClass = typeof itemClasses[0]['subClasses'][0] 
+export type ItemClass = (typeof itemClasses)[0]
+export type ItemSubClass = (typeof itemClasses)[0]['subClasses'][0]

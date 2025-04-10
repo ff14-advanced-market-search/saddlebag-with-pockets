@@ -32,4 +32,4 @@ export const itemQuality: ItemQuality[] = [
     name: 'Heirloom',
     value: 7
   }
-] 
+]
