@@ -40,10 +40,17 @@ export interface ManipulationResponse {
   data: Array<ManipulationItem>
 }
 
+export interface ErrorElement {
+  name: string
+  type_error: string
+  expected: string
+  payload: string
+}
+
 export interface ErrorResponse {
   Type: string
   Message: string
-  Elements?: Array<string>
+  Elements?: Array<ErrorElement>
 }
 
 const WoWQuantityManipulation = async ({
@@ -70,11 +77,11 @@ const WoWQuantityManipulation = async ({
       region,
       itemQuality,
       historicPrice,
-      salesPerDay: parseFloat(salesPerDay.toString()),
+      salesPerDay,
       min_quantity_change_percent: minQuantityChangePercent,
       min_quantity_swings: minQuantitySwings,
       hours_to_analyze: hoursToAnalyze,
-      min_price_multiplier: parseFloat(minPriceMultiplier.toString()),
+      min_price_multiplier: minPriceMultiplier,
       item_class: itemClass,
       item_subclass: itemSubClass,
       expansion_number: expansionNumber

@@ -78,11 +78,15 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validateFormData = z.object({
     historicPrice: parseStringToNumber,
-    salesPerDay: parseStringToNumber,
+    salesPerDay: z.string()
+      .min(1)
+      .transform((val) => Number(parseFloat(val).toFixed(1))),
     minQuantityChangePercent: parseStringToNumber,
     minQuantitySwings: parseStringToNumber,
     hoursToAnalyze: parseStringToNumber,
-    minPriceMultiplier: parseStringToNumber,
+    minPriceMultiplier: z.string()
+      .min(1)
+      .transform((val) => Number(parseFloat(val).toFixed(1))),
     itemQuality: parseStringToNumber,
     itemClass: parseStringToNumber,
     itemSubClass: parseStringToNumber,
@@ -115,11 +119,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!response.ok) {
     const errorData = data as ErrorResponse
-    return json({
-      exception: `${errorData.Type}: ${errorData.Message}${
-        errorData.Elements ? ` (${errorData.Elements.join(', ')})` : ''
-      }`
-    })
+    return json({ exception: JSON.stringify(errorData, null, 2) })
   }
 
   return json(data)
