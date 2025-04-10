@@ -888,6 +888,26 @@ const Results = ({
 
   // Table columns for item details
   const columnList: Array<ColumnList<ItemData>> = [
+    {
+      columnId: 'visibility',
+      header: 'Show in Chart',
+      accessor: ({ row }) => {
+        const itemName = groupData.item_names[row.itemID]
+        return (
+          <input
+            type="checkbox"
+            checked={visibleItems[itemName]}
+            onChange={() => {
+              setVisibleItems((prev) => ({
+                ...prev,
+                [itemName]: !prev[itemName]
+              }))
+            }}
+            className="form-checkbox h-4 w-4 text-blue-500"
+          />
+        )
+      }
+    },
     { columnId: 'itemName', header: 'Item Name' },
     { columnId: 'itemID', header: 'Item ID' },
     {
