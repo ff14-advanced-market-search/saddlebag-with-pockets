@@ -80,13 +80,13 @@ export const action: ActionFunction = async ({ request }) => {
     historicPrice: parseStringToNumber,
     salesPerDay: z.string()
       .min(1)
-      .transform((val) => Number(parseFloat(val).toFixed(1))),
+      .transform((value) => parseFloat(value)),
     minQuantityChangePercent: parseStringToNumber,
     minQuantitySwings: parseStringToNumber,
     hoursToAnalyze: parseStringToNumber,
     minPriceMultiplier: z.string()
       .min(1)
-      .transform((val) => Number(parseFloat(val).toFixed(1))),
+      .transform((value) => parseFloat(value)),
     itemQuality: parseStringToNumber,
     itemClass: parseStringToNumber,
     itemSubClass: parseStringToNumber,
@@ -158,21 +158,23 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validateFormData = z.object({
     historicPrice: parseStringToNumber,
-    salesPerDay: parseStringToNumber,
+    salesPerDay: z.string()
+      .min(0.01)
+      .transform((value) => parseFloat(value)),
     minQuantityChangePercent: parseStringToNumber,
     minQuantitySwings: parseStringToNumber,
     hoursToAnalyze: parseStringToNumber,
-    minPriceMultiplier: parseStringToNumber,
+    minPriceMultiplier: z.string()
+      .min(0.01)
+      .transform((value) => parseFloat(value)),
     itemQuality: parseStringToNumber,
     itemClass: parseStringToNumber,
     itemSubClass: parseStringToNumber,
     region: z.union([z.literal('NA'), z.literal('EU')]),
     homeRealmName: z
-      .object({
-        id: z.number(),
-        name: z.string()
-      })
-      .transform((value) => `${value.id}---${value.name}`),
+      .string()
+      .min(1)
+      .transform((value) => value.split('---')[1]),
     expansionNumber: parseStringToNumber
   })
 
@@ -281,7 +283,6 @@ const Index = () => {
             inputTag="Gold"
             name="historicPrice"
             min={0}
-            step={0.01}
             toolTip="Find items that historically sell for this amount of gold or more."
             onChange={(e) =>
               handleFormChange('historicPrice', e.target.value)
@@ -294,6 +295,7 @@ const Index = () => {
             inputTag="Sales"
             name="salesPerDay"
             min={0}
+            step={0.01}
             toolTip="Finds items that have this many sales per day."
             onChange={(e) =>
               handleFormChange('salesPerDay', e.target.value)
@@ -343,7 +345,7 @@ const Index = () => {
             inputTag="x"
             name="minPriceMultiplier"
             min={0}
-            step={0.1}
+            step={0.01}
             toolTip="The minimum price multiplier between highest and lowest price."
             onChange={(e) =>
               handleFormChange('minPriceMultiplier', e.target.value)
