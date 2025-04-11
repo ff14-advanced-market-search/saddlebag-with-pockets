@@ -45,7 +45,7 @@ export default function WeeklyPriceQuantityChart({
       height: 400
     },
     title: {
-      text: `${itemName} Price & Quantity previous 24 hours`,
+      text: `${itemName} Price & Quantity`,
       style: { color: styles?.color }
     },
     yAxis: [

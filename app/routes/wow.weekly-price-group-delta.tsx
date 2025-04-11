@@ -909,7 +909,7 @@ const Results = ({
       }
     },
     { columnId: 'itemName', header: 'Item Name' },
-    { columnId: 'itemID', header: 'Item ID' },
+    // { columnId: 'itemID', header: 'Item ID' },
     {
       columnId: 'price',
       header: `Price (${formatTimestamp(selectedDate)})`,
@@ -928,7 +928,7 @@ const Results = ({
     },
     {
       columnId: 'priceQuantity',
-      header: 'Last 24 Hours',
+      header: 'Price V Quantity',
       accessor: ({ row }) => {
         if (!groupData) return null
         const itemName = groupData.item_names[row.itemID]
