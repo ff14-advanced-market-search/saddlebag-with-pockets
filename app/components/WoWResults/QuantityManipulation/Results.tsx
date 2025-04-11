@@ -116,7 +116,9 @@ const ManipulationTable = ({
       header: 'Volatility',
       accessor: ({ getValue }) => {
         const value = getValue()
-        return <p>{(value as number).toFixed(2)}%</p>
+        const num =
+          typeof value === 'number' ? value : parseFloat(value as string)
+        return <p>{isNaN(num) ? '0.00' : num.toFixed(2)}%</p>
       }
     },
     {
@@ -124,7 +126,9 @@ const ManipulationTable = ({
       header: 'Max Quantity Spike',
       accessor: ({ getValue }) => {
         const value = getValue()
-        return <p>{(value as number).toFixed(2)}%</p>
+        const num =
+          typeof value === 'number' ? value : parseFloat(value as string)
+        return <p>{isNaN(num) ? '0.00' : num.toFixed(2)}%</p>
       }
     },
     {
@@ -132,7 +136,9 @@ const ManipulationTable = ({
       header: 'Max Quantity Drop',
       accessor: ({ getValue }) => {
         const value = getValue()
-        return <p>{(value as number).toFixed(2)}%</p>
+        const num =
+          typeof value === 'number' ? value : parseFloat(value as string)
+        return <p>{isNaN(num) ? '0.00' : num.toFixed(2)}%</p>
       }
     },
     {
@@ -152,7 +158,9 @@ const ManipulationTable = ({
       header: 'Price Multiplier',
       accessor: ({ getValue }) => {
         const value = getValue()
-        return <p>{(value as number).toFixed(2)}x</p>
+        const num =
+          typeof value === 'number' ? value : parseFloat(value as string)
+        return <p>{isNaN(num) ? '0.00' : num.toFixed(2)}x</p>
       }
     }
   ]
@@ -199,4 +207,4 @@ const ManipulationTable = ({
       </div>
     </>
   )
-} 
+}

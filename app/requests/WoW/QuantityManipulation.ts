@@ -89,7 +89,7 @@ const WoWQuantityManipulation = async ({
   })
 
   if (!response.ok) {
-    const errorData = await response.json() as ErrorResponse
+    const errorData = (await response.json()) as ErrorResponse
     return new Response(JSON.stringify(errorData), {
       status: response.status,
       headers: { 'Content-Type': 'application/json' }
@@ -99,4 +99,4 @@ const WoWQuantityManipulation = async ({
   return response
 }
 
-export default WoWQuantityManipulation 
+export default WoWQuantityManipulation

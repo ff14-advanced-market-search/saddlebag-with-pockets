@@ -55,4 +55,4 @@ export const useChartModal = () => {
   }
 
   return { ChartModal, setChartData }
-} 
+}

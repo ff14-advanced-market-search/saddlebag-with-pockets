@@ -78,13 +78,15 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validateFormData = z.object({
     historicPrice: parseStringToNumber,
-    salesPerDay: z.string()
+    salesPerDay: z
+      .string()
       .min(1)
       .transform((value) => parseFloat(value)),
     minQuantityChangePercent: parseStringToNumber,
     minQuantitySwings: parseStringToNumber,
     hoursToAnalyze: parseStringToNumber,
-    minPriceMultiplier: z.string()
+    minPriceMultiplier: z
+      .string()
       .min(1)
       .transform((value) => parseFloat(value)),
     itemQuality: parseStringToNumber,
@@ -158,13 +160,15 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validateFormData = z.object({
     historicPrice: parseStringToNumber,
-    salesPerDay: z.string()
+    salesPerDay: z
+      .string()
       .min(0.01)
       .transform((value) => parseFloat(value)),
     minQuantityChangePercent: parseStringToNumber,
     minQuantitySwings: parseStringToNumber,
     hoursToAnalyze: parseStringToNumber,
-    minPriceMultiplier: z.string()
+    minPriceMultiplier: z
+      .string()
       .min(0.01)
       .transform((value) => parseFloat(value)),
     itemQuality: parseStringToNumber,
@@ -289,9 +293,7 @@ const Index = () => {
             name="historicPrice"
             min={0}
             toolTip="Find items that historically sell for this amount of gold or more."
-            onChange={(e) =>
-              handleFormChange('historicPrice', e.target.value)
-            }
+            onChange={(e) => handleFormChange('historicPrice', e.target.value)}
           />
           <InputWithLabel
             defaultValue={loaderData.salesPerDay}
@@ -302,9 +304,7 @@ const Index = () => {
             min={0}
             step={0.01}
             toolTip="Finds items that have this many sales per day."
-            onChange={(e) =>
-              handleFormChange('salesPerDay', e.target.value)
-            }
+            onChange={(e) => handleFormChange('salesPerDay', e.target.value)}
           />
           <InputWithLabel
             defaultValue={loaderData.minQuantityChangePercent}
@@ -339,9 +339,7 @@ const Index = () => {
             min={24}
             max={336}
             toolTip="How many hours of history to analyze (max 336 hours / 2 weeks)."
-            onChange={(e) =>
-              handleFormChange('hoursToAnalyze', e.target.value)
-            }
+            onChange={(e) => handleFormChange('hoursToAnalyze', e.target.value)}
           />
           <InputWithLabel
             defaultValue={loaderData.minPriceMultiplier}
@@ -395,4 +393,4 @@ const Index = () => {
   )
 }
 
-export default Index 
+export default Index
