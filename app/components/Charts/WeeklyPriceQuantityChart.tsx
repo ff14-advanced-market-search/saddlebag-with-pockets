@@ -9,14 +9,17 @@ interface WeeklyDataPoint {
   delta: number // price change %
 }
 
+// Format timestamp into YYYY-MM-DD
+const formatTimestamp = (timestamp: number) => {
+  const dateStr = timestamp.toString().padStart(8, '0') // Ensure 8 digits
+  const year = dateStr.slice(0, 4)
+  const month = dateStr.slice(4, 6)
+  const day = dateStr.slice(6, 8)
+  return `${year}-${month}-${day}`
+}
+
 /**
- * Renders a scatter plot showing price vs quantity relationship from weekly data points.
- * @example
- * WeeklyPriceQuantityChart({ 
- *   weeklyData: [{p: 10, q: 5, t: 123, delta: 0}],
- *   darkMode: true, 
- *   itemName: 'Product A' 
- * })
+ * Renders a line chart showing price and quantity over time.
  */
 export default function WeeklyPriceQuantityChart({
   weeklyData,
@@ -37,76 +40,93 @@ export default function WeeklyPriceQuantityChart({
 
   const options: Options = {
     chart: {
-      type: 'scatter',
+      type: 'line',
       backgroundColor: styles?.backgroundColor,
-      zooming: {
-        type: 'xy'
-      }
-    },
-    legend: {
-      itemStyle: { color: styles?.color },
-      align: 'center',
-      itemHoverStyle: { color: styles?.hoverColor }
+      height: 400
     },
     title: {
-      text: `${itemName} Price vs Quantity Analysis`,
+      text: `${itemName} Price & Quantity previous 24 hours`,
       style: { color: styles?.color }
     },
-    yAxis: {
-      title: {
-        text: 'Price',
-        style: { color: styles?.color }
-      },
-      labels: { style: { color: styles?.color } },
-      lineColor: styles?.color,
-      gridLineColor: darkMode ? '#4a5568' : '#e2e8f0'
-    },
-    xAxis: {
-      title: {
-        text: 'Quantity',
-        style: { color: styles?.color }
-      },
-      labels: { style: { color: styles?.color } },
-      lineColor: styles?.color,
-      gridLineColor: darkMode ? '#4a5568' : '#e2e8f0'
-    },
-    plotOptions: {
-      scatter: {
-        states: {
-          hover: {
-            enabled: true,
-            lineWidth: 1
+    yAxis: [
+      {
+        // Left y-axis for price
+        title: {
+          text: 'Price',
+          style: { color: styles?.color }
+        },
+        labels: {
+          style: { color: styles?.color },
+          formatter: function() {
+            return (this.value as number).toLocaleString()
           }
-        }
+        },
+        lineColor: styles?.color,
+        gridLineColor: darkMode ? '#4a5568' : '#e2e8f0'
+      },
+      {
+        // Right y-axis for quantity
+        title: {
+          text: 'Total Quantity',
+          style: { color: styles?.color }
+        },
+        labels: {
+          style: { color: styles?.color },
+          formatter: function() {
+            return (this.value as number).toLocaleString()
+          }
+        },
+        lineColor: styles?.color,
+        gridLineColor: darkMode ? '#4a5568' : '#e2e8f0',
+        opposite: true
       }
+    ],
+    xAxis: {
+      categories: weeklyData.map(point => formatTimestamp(point.t)),
+      labels: { 
+        style: { color: styles?.color }
+      },
+      lineColor: styles?.color,
+      gridLineColor: darkMode ? '#4a5568' : '#e2e8f0'
     },
     tooltip: {
+      shared: true,
       backgroundColor: darkMode ? '#1f2937' : '#ffffff',
       style: {
         color: darkMode ? '#ffffff' : '#000000'
       },
       formatter: function() {
-        if (!this.point) return ''
-        const point = this.point as any
-        const date = new Date(point.timestamp)
+        if (!this.points) return ''
+        const point = this.points[0]
+        const data = weeklyData[point.point.index]
         return `<b>${itemName}</b><br/>
-                Date: ${date.toLocaleDateString()}<br/>
-                Price: ${point.y.toLocaleString()}<br/>
-                Quantity: ${point.x.toLocaleString()}<br/>
-                Delta: ${point.delta.toFixed(2)}%`
+                Date: ${formatTimestamp(data.t)}<br/>
+                Price: ${data.p.toLocaleString()}<br/>
+                Quantity: ${data.q.toLocaleString()}<br/>
+                Delta: ${data.delta.toFixed(2)}%`
       }
     },
-    series: [{
-      type: 'scatter',
-      name: 'Price vs Quantity',
-      data: weeklyData.map((point) => ({
-        x: point.q,
-        y: point.p,
-        timestamp: point.t,
-        delta: point.delta
-      })),
-      color: '#34d399'
-    }],
+    series: [
+      {
+        name: 'Minimum Price',
+        type: 'area',
+        data: weeklyData.map(point => point.p),
+        color: '#dae4ff',
+        yAxis: 0
+      },
+      {
+        name: 'Total Quantity',
+        type: 'line',
+        data: weeklyData.map(point => point.q),
+        color: '#fbb7b2',
+        yAxis: 1
+      }
+    ],
+    legend: {
+      itemStyle: { color: styles?.color },
+      align: 'center',
+      itemHoverStyle: { color: styles?.hoverColor }
+    },
     credits: {
       enabled: false
     }

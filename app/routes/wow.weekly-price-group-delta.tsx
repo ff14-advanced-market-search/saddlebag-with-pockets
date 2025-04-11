@@ -605,6 +605,7 @@ const Results = ({
   const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
+  const [showPriceQuantityCharts, setShowPriceQuantityCharts] = useState(false)
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -1055,6 +1056,55 @@ const Results = ({
             </div>
           </div>
 
+          {/* Price vs Quantity Analysis Button */}
+          {showItemDetails && groupData && (
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
+              <button
+                onClick={() => setShowPriceQuantityCharts(!showPriceQuantityCharts)}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    fillRule="evenodd"
+                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm1 0v12h12V3H4z"
+                    clipRule="evenodd"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    d="M3 7a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {showPriceQuantityCharts ? 'Hide' : 'Show'} Price vs Quantity Analysis
+              </button>
+            </div>
+          )}
+
+          {/* Price vs Quantity Charts */}
+          {showItemDetails && showPriceQuantityCharts && groupData && (
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
+              <div className="grid grid-cols-1 gap-4">
+                {Object.entries(groupData.item_data)
+                  .filter(([itemId]) => {
+                    const itemName = groupData.item_names[itemId]
+                    return visibleItems[itemName]
+                  })
+                  .map(([itemId, itemData]) => (
+                    <div key={itemId} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                      <WeeklyPriceQuantityChart
+                        weeklyData={itemData.weekly_data}
+                        darkMode={darkMode}
+                        itemName={groupData.item_names[itemId]}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
           {/* Item details table - only shown when a specific group is selected */}
           {showItemDetails && groupData && (
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
@@ -1077,27 +1127,6 @@ const Results = ({
                   className="p-2 border rounded min-w-[200px]"
                   placeholder="Search items..."
                 />
-              </div>
-
-              {/* Add Price vs Quantity Chart */}
-              <div className="mb-8">
-                <h4 className="text-lg font-medium mb-4">Price vs Quantity Analysis</h4>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {Object.entries(groupData.item_data)
-                    .filter(([itemId]) => {
-                      const itemName = groupData.item_names[itemId]
-                      return visibleItems[itemName]
-                    })
-                    .map(([itemId, itemData]) => (
-                      <div key={itemId} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <WeeklyPriceQuantityChart
-                          weeklyData={itemData.weekly_data}
-                          darkMode={darkMode}
-                          itemName={groupData.item_names[itemId]}
-                        />
-                      </div>
-                    ))}
-                </div>
               </div>
 
               <div className="hidden md:block">
