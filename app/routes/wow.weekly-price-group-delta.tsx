@@ -35,6 +35,7 @@ import CodeBlock from '~/components/Common/CodeBlock'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import WeeklyPriceQuantityChart from '~/components/Charts/WeeklyPriceQuantityChart'
+import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -606,6 +607,9 @@ const Results = ({
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
   const [showPriceQuantityCharts, setShowPriceQuantityCharts] = useState(false)
+  const [selectedItemForChart, setSelectedItemForChart] = useState<
+    string | null
+  >(null)
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -923,6 +927,21 @@ const Results = ({
       }
     },
     {
+      columnId: 'priceQuantity',
+      header: 'Last 24 Hours',
+      accessor: ({ row }) => {
+        if (!groupData) return null
+        const itemName = groupData.item_names[row.itemID]
+        return (
+          <button
+            onClick={() => setSelectedItemForChart(row.itemID.toString())}
+            className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm">
+            Price V Quantity
+          </button>
+        )
+      }
+    },
+    {
       columnId: 'links',
       header: 'Links',
       accessor: ({ row }) => {
@@ -1060,7 +1079,9 @@ const Results = ({
           {showItemDetails && groupData && (
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
               <button
-                onClick={() => setShowPriceQuantityCharts(!showPriceQuantityCharts)}
+                onClick={() =>
+                  setShowPriceQuantityCharts(!showPriceQuantityCharts)
+                }
                 className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1078,7 +1099,8 @@ const Results = ({
                     clipRule="evenodd"
                   />
                 </svg>
-                {showPriceQuantityCharts ? 'Hide' : 'Show'} Price vs Quantity Analysis
+                {showPriceQuantityCharts ? 'Hide' : 'Show'} Price vs Quantity
+                Analysis
               </button>
             </div>
           )}
@@ -1093,7 +1115,9 @@ const Results = ({
                     return visibleItems[itemName]
                   })
                   .map(([itemId, itemData]) => (
-                    <div key={itemId} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div
+                      key={itemId}
+                      className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                       <WeeklyPriceQuantityChart
                         weeklyData={itemData.weekly_data}
                         darkMode={darkMode}
@@ -1178,6 +1202,16 @@ const Results = ({
                 <JSONButton data={Object.values(groupData.item_data)} />
               </div>
             </div>
+          )}
+
+          {/* Price vs Quantity Chart Popup */}
+          {selectedItemForChart && groupData && (
+            <PriceQuantityChartPopup
+              onClose={() => setSelectedItemForChart(null)}
+              weeklyData={groupData.item_data[selectedItemForChart].weekly_data}
+              darkMode={darkMode}
+              itemName={groupData.item_names[selectedItemForChart]}
+            />
           )}
 
           {/* Request Data Section */}

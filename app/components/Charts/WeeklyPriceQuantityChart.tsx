@@ -57,7 +57,7 @@ export default function WeeklyPriceQuantityChart({
         },
         labels: {
           style: { color: styles?.color },
-          formatter: function() {
+          formatter: function () {
             return (this.value as number).toLocaleString()
           }
         },
@@ -72,7 +72,7 @@ export default function WeeklyPriceQuantityChart({
         },
         labels: {
           style: { color: styles?.color },
-          formatter: function() {
+          formatter: function () {
             return (this.value as number).toLocaleString()
           }
         },
@@ -82,8 +82,8 @@ export default function WeeklyPriceQuantityChart({
       }
     ],
     xAxis: {
-      categories: weeklyData.map(point => formatTimestamp(point.t)),
-      labels: { 
+      categories: weeklyData.map((point) => formatTimestamp(point.t)),
+      labels: {
         style: { color: styles?.color }
       },
       lineColor: styles?.color,
@@ -95,7 +95,7 @@ export default function WeeklyPriceQuantityChart({
       style: {
         color: darkMode ? '#ffffff' : '#000000'
       },
-      formatter: function() {
+      formatter: function () {
         if (!this.points) return ''
         const point = this.points[0]
         const data = weeklyData[point.point.index]
@@ -110,14 +110,14 @@ export default function WeeklyPriceQuantityChart({
       {
         name: 'Minimum Price',
         type: 'area',
-        data: weeklyData.map(point => point.p),
+        data: weeklyData.map((point) => point.p),
         color: '#dae4ff',
         yAxis: 0
       },
       {
         name: 'Total Quantity',
         type: 'line',
-        data: weeklyData.map(point => point.q),
+        data: weeklyData.map((point) => point.q),
         color: '#fbb7b2',
         yAxis: 1
       }
@@ -133,4 +133,4 @@ export default function WeeklyPriceQuantityChart({
   }
 
   return <HighchartsReact highcharts={Highcharts} options={options} />
-} 
+}
