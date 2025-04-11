@@ -24,7 +24,9 @@ export default function PriceQuantityChartPopup({
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium">Price & Quantity Analysis</h3>
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Close price and quantity analysis"
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
             ✕
           </button>

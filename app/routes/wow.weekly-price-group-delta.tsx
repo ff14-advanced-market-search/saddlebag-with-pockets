@@ -76,7 +76,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'data:text/css,' + encodeURIComponent(styles)
+    href: `data:text/css,${encodeURIComponent(styles)}`
   }
 ]
 
@@ -109,9 +109,9 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const formData = await request.formData()
-  const startYear = parseInt(formData.get('startYear') as string)
-  const startMonth = parseInt(formData.get('startMonth') as string)
-  const startDay = parseInt(formData.get('startDay') as string)
+  const startYear = Number.parseInt(formData.get('startYear') as string)
+  const startMonth = Number.parseInt(formData.get('startMonth') as string)
+  const startDay = Number.parseInt(formData.get('startDay') as string)
   const priceGroups = JSON.parse(
     formData.get('priceGroups') as string
   ) as PriceGroup[]
@@ -299,10 +299,13 @@ const ImportPopup = ({
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label
+              htmlFor="jsonConfig"
+              className="block text-sm font-medium mb-2">
               Paste your JSON configuration:
             </label>
             <textarea
+              id="jsonConfig"
               className="w-full h-64 p-2 border rounded font-mono text-sm dark:bg-gray-700 dark:border-gray-600"
               value={jsonInput}
               onChange={(e) => {
@@ -460,7 +463,10 @@ const Index = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 viewBox="0 0 20 20"
-                fill="currentColor">
+                fill="currentColor"
+                role="img"
+                aria-label="Import configuration icon">
+                <title>Import configuration</title>
                 <path
                   fillRule="evenodd"
                   d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
@@ -484,7 +490,7 @@ const Index = () => {
               name="startYear"
               type="number"
               value={startYear}
-              onChange={(e) => setStartYear(parseInt(e.target.value))}
+              onChange={(e) => setStartYear(Number.parseInt(e.target.value))}
               min={2020}
               max={2090}
             />
@@ -493,7 +499,7 @@ const Index = () => {
               name="startMonth"
               type="number"
               value={startMonth}
-              onChange={(e) => setStartMonth(parseInt(e.target.value))}
+              onChange={(e) => setStartMonth(Number.parseInt(e.target.value))}
               min={1}
               max={12}
             />
@@ -502,7 +508,7 @@ const Index = () => {
               name="startDay"
               type="number"
               value={startDay}
-              onChange={(e) => setStartDay(parseInt(e.target.value))}
+              onChange={(e) => setStartDay(Number.parseInt(e.target.value))}
               min={1}
               max={31}
             />
@@ -969,11 +975,16 @@ const Results = ({
   // Add performance threshold control
   const renderPerformanceControl = () => (
     <div className="mb-4 flex items-center gap-2">
-      <label className="text-sm font-medium">Hide items below</label>
+      <label htmlFor="performanceThreshold" className="text-sm font-medium">
+        Hide items below
+      </label>
       <select
+        id="performanceThreshold"
         value={performanceThreshold}
-        onChange={(e) => setPerformanceThreshold(Number(e.target.value))}
-        className="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+        onChange={(e) =>
+          setPerformanceThreshold(Number.parseInt(e.target.value))
+        }
+        className="ml-2 p-1 rounded border dark:bg-gray-700 dark:border-gray-600">
         <option value={-100}>Show All</option>
         <option value={-50}>-50%</option>
         <option value={-25}>-25%</option>
@@ -1097,15 +1108,13 @@ const Results = ({
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
                   viewBox="0 0 20 20"
-                  fill="currentColor">
+                  fill="currentColor"
+                  role="img"
+                  aria-label="Chart analysis icon">
+                  <title>Chart analysis</title>
                   <path
                     fillRule="evenodd"
-                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm1 0v12h12V3H4z"
-                    clipRule="evenodd"
-                  />
-                  <path
-                    fillRule="evenodd"
-                    d="M3 7a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
                     clipRule="evenodd"
                   />
                 </svg>
@@ -1234,14 +1243,14 @@ const Results = ({
                 codeString={JSON.stringify(
                   {
                     region: wowRegion,
-                    start_year: parseInt(allTimestamps[0].slice(0, 4)),
-                    start_month: parseInt(allTimestamps[0].slice(4, 6)),
-                    start_day: parseInt(allTimestamps[0].slice(6, 8)),
+                    start_year: Number.parseInt(allTimestamps[0].slice(0, 4)),
+                    start_month: Number.parseInt(allTimestamps[0].slice(4, 6)),
+                    start_day: Number.parseInt(allTimestamps[0].slice(6, 8)),
                     price_groups: Object.entries(data).map(
                       ([name, groupData]) => ({
                         name,
-                        item_ids: Object.keys(groupData.item_data).map((id) =>
-                          parseInt(id)
+                        item_ids: Object.keys(groupData.item_data).map(
+                          (id: string) => Number.parseInt(id)
                         ),
                         categories: []
                       })
