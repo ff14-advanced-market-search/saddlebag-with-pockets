@@ -172,9 +172,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     itemSubClass: parseStringToNumber,
     region: z.union([z.literal('NA'), z.literal('EU')]),
     homeRealmName: z
-      .string()
-      .min(1)
-      .transform((value) => value.split('---')[1]),
+      .object({
+        id: z.number(),
+        name: z.string()
+      })
+      .transform((value) => `${value.id}---${value.name}`),
     expansionNumber: parseStringToNumber
   })
 
@@ -202,7 +204,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     itemSubClass:
       params.get('itemSubClass') || defaultFormValues.itemSubClass.toString(),
     region: params.get('region') || region,
-    homeRealmName: `${server.id}---${server.name}`,
+    homeRealmName: {
+      id: server.id,
+      name: server.name
+    },
     expansionNumber:
       params.get('expansionNumber') ||
       defaultFormValues.expansionNumber.toString()
