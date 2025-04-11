@@ -34,6 +34,9 @@ import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
 import CodeBlock from '~/components/Common/CodeBlock'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
+import WeeklyPriceQuantityChart from '~/components/Charts/WeeklyPriceQuantityChart'
+import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
+import ErrorPopup from '~/components/Common/ErrorPopup'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -344,6 +347,7 @@ const Index = () => {
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
   const [showImport, setShowImport] = useState(false)
+  const [showErrorPopup, setShowErrorPopup] = useState(false)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -355,6 +359,7 @@ const Index = () => {
     if (priceGroups.length === 0) {
       e.preventDefault()
       setError('Please add at least one price group')
+      setShowErrorPopup(true)
       return
     }
 
@@ -364,11 +369,13 @@ const Index = () => {
       if (validationError) {
         e.preventDefault()
         setError(validationError)
+        setShowErrorPopup(true)
         return
       }
     }
 
     setError(undefined)
+    setShowErrorPopup(false)
   }
 
   const handleAddPriceGroup = () => {
@@ -441,7 +448,7 @@ const Index = () => {
       <SmallFormContainer
         title={pageTitle}
         loading={transition.state === 'submitting'}
-        error={error}
+        error={undefined}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4">
           <div className="flex justify-end">
@@ -584,6 +591,11 @@ const Index = () => {
           </div>
         </form>
       </SmallFormContainer>
+
+      {/* Error Popup */}
+      {error && showErrorPopup && (
+        <ErrorPopup error={error} onClose={() => setShowErrorPopup(false)} />
+      )}
     </PageWrapper>
   )
 }
@@ -605,6 +617,10 @@ const Results = ({
   const [minThreshold, setMinThreshold] = useState<number>(-Infinity)
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
+  const [showPriceQuantityCharts, setShowPriceQuantityCharts] = useState(false)
+  const [selectedItemForChart, setSelectedItemForChart] = useState<
+    string | null
+  >(null)
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -903,20 +919,11 @@ const Results = ({
           radius: 3
         },
         events: {
-          // Ensure all series remain visible when clicking legend items
           legendItemClick: function () {
             if (selectedGroup !== 'All') {
               return false // Prevent toggling visibility
             }
             return true // Allow toggling for All Groups view
-          },
-          point: {
-            events: {
-              click: function () {
-                const timestamp = allTimestamps[this.index]
-                setSelectedDate(timestamp)
-              }
-            }
           }
         }
       }
@@ -958,6 +965,7 @@ const Results = ({
       columnId: 'visibility',
       header: 'Show in Chart',
       accessor: ({ row }) => {
+        if (!groupData) return null
         const itemName = groupData.item_names[row.itemID]
         return (
           <input
@@ -975,18 +983,13 @@ const Results = ({
       }
     },
     { columnId: 'itemName', header: 'Item Name' },
-    { columnId: 'itemID', header: 'Item ID' },
+    // { columnId: 'itemID', header: 'Item ID' },
     {
       columnId: 'price',
       header: `Price (${formatTimestamp(selectedDate)})`,
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? data.p.toLocaleString() : 'N/A'}</span>
-      },
-      sortingFn: (a, b) => {
-        const aData = getDataForTimestamp(a, selectedDate)
-        const bData = getDataForTimestamp(b, selectedDate)
-        return (aData?.p || 0) - (bData?.p || 0)
       }
     },
     {
@@ -995,11 +998,21 @@ const Results = ({
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? `${data.delta.toFixed(2)}%` : 'N/A'}</span>
-      },
-      sortingFn: (a, b) => {
-        const aData = getDataForTimestamp(a, selectedDate)
-        const bData = getDataForTimestamp(b, selectedDate)
-        return (aData?.delta || 0) - (bData?.delta || 0)
+      }
+    },
+    {
+      columnId: 'priceQuantity',
+      header: 'Price V Quantity',
+      accessor: ({ row }) => {
+        if (!groupData) return null
+        const itemName = groupData.item_names[row.itemID]
+        return (
+          <button
+            onClick={() => setSelectedItemForChart(row.itemID.toString())}
+            className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm">
+            Price V Quantity
+          </button>
+        )
       }
     },
     {
@@ -1149,6 +1162,60 @@ const Results = ({
             </div>
           </div>
 
+          {/* Price vs Quantity Analysis Button */}
+          {showItemDetails && groupData && (
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
+              <button
+                onClick={() =>
+                  setShowPriceQuantityCharts(!showPriceQuantityCharts)
+                }
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    fillRule="evenodd"
+                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm1 0v12h12V3H4z"
+                    clipRule="evenodd"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    d="M3 7a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {showPriceQuantityCharts ? 'Hide' : 'Show'} Price vs Quantity
+                Analysis
+              </button>
+            </div>
+          )}
+
+          {/* Price vs Quantity Charts */}
+          {showItemDetails && showPriceQuantityCharts && groupData && (
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
+              <div className="grid grid-cols-1 gap-4">
+                {Object.entries(groupData.item_data)
+                  .filter(([itemId]) => {
+                    const itemName = groupData.item_names[itemId]
+                    return visibleItems[itemName]
+                  })
+                  .map(([itemId, itemData]) => (
+                    <div
+                      key={itemId}
+                      className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                      <WeeklyPriceQuantityChart
+                        weeklyData={itemData.weekly_data}
+                        darkMode={darkMode}
+                        itemName={groupData.item_names[itemId]}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
           {/* Item details table - only shown when a specific group is selected */}
           {showItemDetails && groupData && (
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
@@ -1222,6 +1289,16 @@ const Results = ({
                 <JSONButton data={Object.values(groupData.item_data)} />
               </div>
             </div>
+          )}
+
+          {/* Price vs Quantity Chart Popup */}
+          {selectedItemForChart && groupData && (
+            <PriceQuantityChartPopup
+              onClose={() => setSelectedItemForChart(null)}
+              weeklyData={groupData.item_data[selectedItemForChart].weekly_data}
+              darkMode={darkMode}
+              itemName={groupData.item_names[selectedItemForChart]}
+            />
           )}
 
           {/* Request Data Section */}
