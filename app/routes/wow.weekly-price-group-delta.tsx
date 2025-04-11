@@ -34,6 +34,7 @@ import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
 import CodeBlock from '~/components/Common/CodeBlock'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
+import WeeklyPriceQuantityChart from '~/components/Charts/WeeklyPriceQuantityChart'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -839,20 +840,11 @@ const Results = ({
           radius: 3
         },
         events: {
-          // Ensure all series remain visible when clicking legend items
           legendItemClick: function () {
             if (selectedGroup !== 'All') {
               return false // Prevent toggling visibility
             }
             return true // Allow toggling for All Groups view
-          },
-          point: {
-            events: {
-              click: function () {
-                const timestamp = allTimestamps[this.index]
-                setSelectedDate(timestamp)
-              }
-            }
           }
         }
       }
@@ -894,6 +886,7 @@ const Results = ({
       columnId: 'visibility',
       header: 'Show in Chart',
       accessor: ({ row }) => {
+        if (!groupData) return null
         const itemName = groupData.item_names[row.itemID]
         return (
           <input
@@ -918,11 +911,6 @@ const Results = ({
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? data.p.toLocaleString() : 'N/A'}</span>
-      },
-      sortingFn: (a, b) => {
-        const aData = getDataForTimestamp(a, selectedDate)
-        const bData = getDataForTimestamp(b, selectedDate)
-        return (aData?.p || 0) - (bData?.p || 0)
       }
     },
     {
@@ -931,11 +919,6 @@ const Results = ({
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? `${data.delta.toFixed(2)}%` : 'N/A'}</span>
-      },
-      sortingFn: (a, b) => {
-        const aData = getDataForTimestamp(a, selectedDate)
-        const bData = getDataForTimestamp(b, selectedDate)
-        return (aData?.delta || 0) - (bData?.delta || 0)
       }
     },
     {
@@ -1094,6 +1077,27 @@ const Results = ({
                   className="p-2 border rounded min-w-[200px]"
                   placeholder="Search items..."
                 />
+              </div>
+
+              {/* Add Price vs Quantity Chart */}
+              <div className="mb-8">
+                <h4 className="text-lg font-medium mb-4">Price vs Quantity Analysis</h4>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {Object.entries(groupData.item_data)
+                    .filter(([itemId]) => {
+                      const itemName = groupData.item_names[itemId]
+                      return visibleItems[itemName]
+                    })
+                    .map(([itemId, itemData]) => (
+                      <div key={itemId} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <WeeklyPriceQuantityChart
+                          weeklyData={itemData.weekly_data}
+                          darkMode={darkMode}
+                          itemName={groupData.item_names[itemId]}
+                        />
+                      </div>
+                    ))}
+                </div>
               </div>
 
               <div className="hidden md:block">
