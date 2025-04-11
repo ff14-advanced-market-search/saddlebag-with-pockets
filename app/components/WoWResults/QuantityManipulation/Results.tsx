@@ -4,6 +4,7 @@ import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
+import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import type {
   ManipulationItem,
   ManipulationResponse
@@ -86,6 +87,7 @@ const ManipulationTable = ({
   const { wowRealm } = useTypedSelector((state) => state.user)
 
   const OribosLink = getOribosLink(wowRealm.server.name, '', wowRealm.region)
+  const SaddlebagLink = getSaddlebagWoWLink('Item Data')
 
   const columnList: Array<ColumnList<ManipulationItem>> = [
     { columnId: 'item_name', header: 'Item Name' },
@@ -105,6 +107,11 @@ const ManipulationTable = ({
           Price V Quantity
         </button>
       )
+    },
+    {
+      columnId: 'item_id',
+      header: 'Item Data',
+      accessor: ({ row }) => SaddlebagLink({ row: { itemID: row.item_id } })
     },
     {
       columnId: 'item_id',
