@@ -36,6 +36,7 @@ import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import WeeklyPriceQuantityChart from '~/components/Charts/WeeklyPriceQuantityChart'
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
+import ErrorPopup from '~/components/Common/ErrorPopup'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -346,6 +347,7 @@ const Index = () => {
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
   const [showImport, setShowImport] = useState(false)
+  const [showErrorPopup, setShowErrorPopup] = useState(false)
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -357,6 +359,7 @@ const Index = () => {
     if (priceGroups.length === 0) {
       e.preventDefault()
       setError('Please add at least one price group')
+      setShowErrorPopup(true)
       return
     }
 
@@ -366,11 +369,13 @@ const Index = () => {
       if (validationError) {
         e.preventDefault()
         setError(validationError)
+        setShowErrorPopup(true)
         return
       }
     }
 
     setError(undefined)
+    setShowErrorPopup(false)
   }
 
   const handleAddPriceGroup = () => {
@@ -443,7 +448,7 @@ const Index = () => {
       <SmallFormContainer
         title={pageTitle}
         loading={transition.state === 'submitting'}
-        error={error}
+        error={undefined}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4">
           <div className="flex justify-end">
@@ -586,6 +591,14 @@ const Index = () => {
           </div>
         </form>
       </SmallFormContainer>
+
+      {/* Error Popup */}
+      {error && showErrorPopup && (
+        <ErrorPopup
+          error={error}
+          onClose={() => setShowErrorPopup(false)}
+        />
+      )}
     </PageWrapper>
   )
 }
