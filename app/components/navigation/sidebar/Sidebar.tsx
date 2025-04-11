@@ -337,6 +337,11 @@ const navGroups: Array<{
     title: 'WoW Experimental Tools',
     links: [
       {
+        name: 'Big Goblin Tracker',
+        href: '/wow/quantity-manipulation',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
         icon: ChartSquareBarIcon

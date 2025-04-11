@@ -157,6 +157,13 @@ const recommendedQueries = [
     description: 'Find items that are out of stock on any realm!',
     Icon: DocumentSearchIcon,
     href: '/wow/out-of-stock'
+  },
+  {
+    name: 'Big Goblin Tracker',
+    description:
+      'Find items controlled by big goblins who are oligopolists, these skyrocket in price whenever the big goblin takes a WoW break or lets their auctions expire.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/quantity-manipulation'
   }
 ]
 

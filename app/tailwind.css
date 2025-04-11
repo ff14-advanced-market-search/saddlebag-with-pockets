@@ -3719,6 +3719,10 @@ select {
     min-width: 50%;
   }
 
+  .md\:min-w-\[640px\] {
+    min-width: 640px;
+  }
+
   .md\:max-w-md {
     max-width: 28rem;
   }
@@ -3805,6 +3809,10 @@ select {
 
   .lg\:flex {
     display: flex;
+  }
+
+  .lg\:min-w-\[800px\] {
+    min-width: 800px;
   }
 
   .lg\:grid-cols-3 {
