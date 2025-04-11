@@ -594,10 +594,7 @@ const Index = () => {
 
       {/* Error Popup */}
       {error && showErrorPopup && (
-        <ErrorPopup
-          error={error}
-          onClose={() => setShowErrorPopup(false)}
-        />
+        <ErrorPopup error={error} onClose={() => setShowErrorPopup(false)} />
       )}
     </PageWrapper>
   )
