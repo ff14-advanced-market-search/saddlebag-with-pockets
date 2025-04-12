@@ -450,11 +450,12 @@ const Index = () => {
   return (
     <PageWrapper>
       <SmallFormContainer
+        hideSubmitButton={true}
         title={pageTitle}
         loading={transition.state === 'submitting'}
         error={undefined}
         onClick={(e) => e.preventDefault()}>
-        <form method="post" className="space-y-4">
+        <form method="post" className="space-y-4 mb-4">
           <div className="flex justify-end">
             <button
               type="button"
