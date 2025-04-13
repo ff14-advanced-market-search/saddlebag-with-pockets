@@ -151,17 +151,17 @@ const validatePriceGroup = (group: PriceGroup): string | null => {
 
   // Validate name length
   if (group.name.length > MAX_NAME_LENGTH) {
-    return 'Price group name must be less than 64 characters'
+    return `Price group "${group.name}" name must be less than 64 characters`
   }
 
   // Validate name characters
   if (!VALID_NAME_REGEX.test(group.name)) {
-    return 'Price group name can only contain alphanumeric characters, periods, commas, spaces, hyphens, and underscores'
+    return `Price group "${group.name}" name can only contain alphanumeric characters, periods, commas, spaces, hyphens, and underscores`
   }
 
   // Check if both item_ids and categories are empty
   if (group.item_ids.length === 0 && group.categories.length === 0) {
-    return 'Price group must have at least one item or category'
+    return `Price group "${group.name}" must have at least one item or category`
   }
 
   return null
