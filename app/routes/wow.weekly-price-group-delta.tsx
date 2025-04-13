@@ -1102,10 +1102,10 @@ const Results = ({
           </div>
 
           {/* Group selector */}
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedGroup('All')}
-              className={`w-full p-2 text-left rounded ${
+              className={`p-2 rounded ${
                 selectedGroup === 'All'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -1116,7 +1116,7 @@ const Results = ({
               <button
                 key={group}
                 onClick={() => setSelectedGroup(group)}
-                className={`w-full p-2 text-left rounded ${
+                className={`p-2 rounded ${
                   selectedGroup === group
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
