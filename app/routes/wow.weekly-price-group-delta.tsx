@@ -37,6 +37,7 @@ import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import WeeklyPriceQuantityChart from '~/components/Charts/WeeklyPriceQuantityChart'
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 import ErrorPopup from '~/components/Common/ErrorPopup'
+import { getWowheadLink } from '~/components/utilities/getWowheadLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -994,13 +995,7 @@ const Results = ({
             <span className="text-gray-400">|</span>
             {getOribosLink(wowRealm.name, 'TUJ', wowRegion)({ row })}
             <span className="text-gray-400">|</span>
-            <a
-              href={`https://www.wowhead.com/item=${row.itemID}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:text-blue-600">
-              WoWHead
-            </a>
+            {getWowheadLink('WoWHead')({ row })}
           </div>
         )
       }
