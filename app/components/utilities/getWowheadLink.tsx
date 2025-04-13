@@ -14,16 +14,17 @@ export const getWowheadLink =
    *   - Uses `itemID` to form the URL for the WoWHead link.
    *   - Provides a tooltip with item-specific information.
    */
-  (title: string) =>
-  ({ row }: { row: { itemID: number } }) => {
-    const itemID = row.itemID
-    if (typeof itemID !== 'number') return null
 
-    return (
-      <ExternalLink
-        link={`https://www.wowhead.com/item=${itemID}`}
-        text={title}
-        tooltip={`WoWHead Data For item ${itemID}`}
-      />
-    )
-  } 
+    (title: string) =>
+    ({ row }: { row: { itemID: number } }) => {
+      const itemID = row.itemID
+      if (typeof itemID !== 'number') return null
+
+      return (
+        <ExternalLink
+          link={`https://www.wowhead.com/item=${itemID}`}
+          text={title}
+          tooltip={`WoWHead Data For item ${itemID}`}
+        />
+      )
+    }
