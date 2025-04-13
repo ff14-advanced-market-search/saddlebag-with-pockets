@@ -993,6 +993,14 @@ const Results = ({
             {getSaddlebagWoWLink('Item-Data')({ row })}
             <span className="text-gray-400">|</span>
             {getOribosLink(wowRealm.name, 'TUJ', wowRegion)({ row })}
+            <span className="text-gray-400">|</span>
+            <a
+              href={`https://www.wowhead.com/item=${row.itemID}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:text-blue-600">
+              WoWHead
+            </a>
           </div>
         )
       }
