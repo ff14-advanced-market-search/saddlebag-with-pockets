@@ -619,6 +619,8 @@ const Results = ({
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [globalFilter, setGlobalFilter] = useState('')
   const [selectedDate, setSelectedDate] = useState<string>('')
+  const [startDate, setStartDate] = useState<string>('')
+  const [endDate, setEndDate] = useState<string>('')
   const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
@@ -634,12 +636,25 @@ const Results = ({
     )
   ).sort()
 
-  // Initialize selected date to latest timestamp
+  // Initialize selected dates to full range
   useEffect(() => {
-    if (allTimestamps.length > 0 && !selectedDate) {
-      setSelectedDate(allTimestamps[allTimestamps.length - 1])
+    if (allTimestamps.length > 0) {
+      if (!selectedDate) {
+        setSelectedDate(allTimestamps[allTimestamps.length - 1])
+      }
+      if (!startDate) {
+        setStartDate(allTimestamps[0])
+      }
+      if (!endDate) {
+        setEndDate(allTimestamps[allTimestamps.length - 1])
+      }
     }
   }, [allTimestamps])
+
+  // Filter timestamps based on date range
+  const filteredTimestamps = allTimestamps.filter(
+    (timestamp) => timestamp >= startDate && timestamp <= endDate
+  )
 
   // Format timestamp into YYYY-MM-DD
   const formatTimestamp = (timestamp: string) => {
@@ -680,16 +695,20 @@ const Results = ({
       }
     : {}
 
-  // Modified generateSeriesData to use visibility state and performance threshold
+  // Modified generateSeriesData to use filtered timestamps
   const generateSeriesData = () => {
     if (selectedGroup === 'All') {
       return Object.entries(data)
         .filter(([groupName]) => visibleItems[groupName])
         .map(([groupName, groupData]) => {
-          // Calculate average performance for the group
-          const values = Object.values(groupData.deltas).filter(
-            (v) => v !== undefined && v !== null
-          )
+          // Calculate average performance for the group within the date range
+          const values = Object.entries(groupData.deltas)
+            .filter(
+              ([timestamp]) => timestamp >= startDate && timestamp <= endDate
+            )
+            .map(([, value]) => value)
+            .filter((v) => v !== undefined && v !== null)
+
           const avgPerformance =
             values.length > 0
               ? values.reduce((a, b) => a + b, 0) / values.length
@@ -699,7 +718,7 @@ const Results = ({
           if (avgPerformance >= performanceThreshold) {
             return {
               name: groupName,
-              data: allTimestamps.map((timestamp) => {
+              data: filteredTimestamps.map((timestamp) => {
                 const value = groupData.deltas[timestamp]
                 return value !== undefined ? value : null
               }),
@@ -717,9 +736,13 @@ const Results = ({
 
       // Add average line if visible
       if (visibleItems[`${selectedGroup} (Average)`]) {
-        const values = Object.values(groupData.deltas).filter(
-          (v) => v !== undefined && v !== null
-        )
+        const values = Object.entries(groupData.deltas)
+          .filter(
+            ([timestamp]) => timestamp >= startDate && timestamp <= endDate
+          )
+          .map(([, value]) => value)
+          .filter((v) => v !== undefined && v !== null)
+
         const avgPerformance =
           values.length > 0
             ? values.reduce((a, b) => a + b, 0) / values.length
@@ -728,7 +751,7 @@ const Results = ({
         if (avgPerformance >= performanceThreshold) {
           series.push({
             name: `${selectedGroup} (Average)`,
-            data: allTimestamps.map((timestamp) => {
+            data: filteredTimestamps.map((timestamp) => {
               const value = groupData.deltas[timestamp]
               return value !== undefined ? value : null
             }),
@@ -743,10 +766,14 @@ const Results = ({
       Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
         const itemName = groupData.item_names[itemId]
         if (visibleItems[itemName]) {
-          // Calculate average performance for the item
+          // Calculate average performance for the item within the date range
           const values = itemData.weekly_data
+            .filter(
+              (d) => d.t.toString() >= startDate && d.t.toString() <= endDate
+            )
             .map((d) => d.delta)
             .filter((v) => v !== undefined && v !== null)
+
           const avgPerformance =
             values.length > 0
               ? values.reduce((a, b) => a + b, 0) / values.length
@@ -755,7 +782,7 @@ const Results = ({
           if (avgPerformance >= performanceThreshold) {
             series.push({
               name: itemName,
-              data: allTimestamps.map((timestamp) => {
+              data: filteredTimestamps.map((timestamp) => {
                 const weekData = itemData.weekly_data.find(
                   (d) => d.t.toString() === timestamp
                 )
@@ -801,7 +828,7 @@ const Results = ({
       style: { color: styles?.color }
     },
     xAxis: {
-      categories: allTimestamps.map(formatTimestamp),
+      categories: filteredTimestamps.map(formatTimestamp),
       labels: {
         style: { color: styles?.color },
         rotation: -45,
@@ -1001,7 +1028,7 @@ const Results = ({
       <Title title={pageTitle} />
       <ContentContainer>
         <div className="space-y-4">
-          {/* Search Again Link */}
+          {/* Search Again Link and Performance Control */}
           <div className="flex justify-between items-center">
             <a
               href="/wow/weekly-price-group-delta"
@@ -1009,6 +1036,69 @@ const Results = ({
               ← Search Again
             </a>
             {renderPerformanceControl()}
+          </div>
+
+          {/* Date Range Controls */}
+          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Start Date
+                </label>
+                <select
+                  value={startDate}
+                  onChange={(e) => {
+                    const newStart = e.target.value
+                    setStartDate(newStart)
+                    // Adjust end date if it's before new start date
+                    if (endDate < newStart) {
+                      setEndDate(newStart)
+                    }
+                  }}
+                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                  {allTimestamps.map((timestamp) => (
+                    <option key={timestamp} value={timestamp}>
+                      {formatTimestamp(timestamp)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  End Date
+                </label>
+                <select
+                  value={endDate}
+                  onChange={(e) => {
+                    const newEnd = e.target.value
+                    setEndDate(newEnd)
+                    // Adjust start date if it's after new end date
+                    if (startDate > newEnd) {
+                      setStartDate(newEnd)
+                    }
+                  }}
+                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                  {allTimestamps.map((timestamp) => (
+                    <option key={timestamp} value={timestamp}>
+                      {formatTimestamp(timestamp)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Reset Range
+                </label>
+                <button
+                  onClick={() => {
+                    setStartDate(allTimestamps[0])
+                    setEndDate(allTimestamps[allTimestamps.length - 1])
+                  }}
+                  className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                  Reset to Full Range
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* Group selector */}
@@ -1158,7 +1248,7 @@ const Results = ({
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                     className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-                    {allTimestamps.map((timestamp) => (
+                    {filteredTimestamps.map((timestamp) => (
                       <option key={timestamp} value={timestamp}>
                         {formatTimestamp(timestamp)}
                       </option>
@@ -1243,9 +1333,9 @@ const Results = ({
                 codeString={JSON.stringify(
                   {
                     region: wowRegion,
-                    start_year: Number.parseInt(allTimestamps[0].slice(0, 4)),
-                    start_month: Number.parseInt(allTimestamps[0].slice(4, 6)),
-                    start_day: Number.parseInt(allTimestamps[0].slice(6, 8)),
+                    start_year: Number.parseInt(startDate.slice(0, 4)),
+                    start_month: Number.parseInt(startDate.slice(4, 6)),
+                    start_day: Number.parseInt(startDate.slice(6, 8)),
                     price_groups: Object.entries(data).map(
                       ([name, groupData]) => ({
                         name,
