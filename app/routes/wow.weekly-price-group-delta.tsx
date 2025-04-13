@@ -954,9 +954,6 @@ const Results = ({
     },
     { columnId: 'itemName', header: 'Item Name' },
     // { columnId: 'itemID', header: 'Item ID' },
-    { columnId: 'marketshare', header: 'Marketshare' },
-    { columnId: 'historicPrice', header: 'TSM Avg Price' },
-    { columnId: 'salesPerDay', header: 'TSM Sales' },
     {
       columnId: 'price',
       header: `Price (${formatTimestamp(selectedDate)})`,
@@ -1002,7 +999,10 @@ const Results = ({
           </div>
         )
       }
-    }
+    },
+    { columnId: 'marketshare', header: 'Marketshare' },
+    { columnId: 'historicPrice', header: 'TSM Avg Price' },
+    { columnId: 'salesPerDay', header: 'TSM Sales' },
   ]
 
   // Add performance threshold control
