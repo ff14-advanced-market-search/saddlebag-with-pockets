@@ -18,6 +18,7 @@ export const getWowheadLink =
 
     (title: string) =>
     ({ row }: { row: { itemID: number } }) => {
+      if (!row.itemID) return null
       const itemID = row.itemID
       if (typeof itemID !== 'number') return null
 

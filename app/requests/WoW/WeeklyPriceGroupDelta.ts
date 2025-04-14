@@ -55,6 +55,9 @@ const WeeklyPriceGroupDelta = async (
     body: JSON.stringify(props)
   })
 
+  if (!response.ok) {
+    throw new Error(`Server responded with status ${response.status}`)
+  }
   return response
 }
 
