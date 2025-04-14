@@ -1164,9 +1164,8 @@ const Results = ({
                       }}
                       className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
                       <option value="auto">Auto</option>
-                      <option value={-200}>-200%</option>
-                      <option value={-150}>-150%</option>
-                      <option value={-100}>-100%</option>
+                      <option value={-95}>-95%</option>
+                      <option value={-85}>-85%</option>
                       <option value={-75}>-75%</option>
                       <option value={-50}>-50%</option>
                       <option value={-25}>-25%</option>
