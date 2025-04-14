@@ -63,10 +63,10 @@ const CategorySelectionPopup = ({
     // }
 
     onAdd({
-      item_class: Number.parseInt(itemClass.toString(), -1),
-      item_subclass: Number.parseInt(itemSubClass.toString(), -1),
-      expansion_number: Number.parseInt(expansion, -1),
-      min_quality: Number.parseInt(quality, -1)
+      item_class: itemClass,
+      item_subclass: itemSubClass,
+      expansion_number: parseInt(expansion),
+      min_quality: parseInt(quality)
     })
     onClose()
   }
