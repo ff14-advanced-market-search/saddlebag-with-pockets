@@ -352,27 +352,6 @@ const Index = () => {
   const [startDay, setStartDay] = useState(1)
   const [showImport, setShowImport] = useState(false)
   const [showErrorPopup, setShowErrorPopup] = useState(false)
-  const [selectedDate, setSelectedDate] = useState<string>('')
-  const [startDate, setStartDate] = useState<string>('')
-  const [endDate, setEndDate] = useState<string>('')
-  const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
-  const [minYAxis, setMinYAxis] = useState<number | null>(null) // Default min y-axis value (null = auto)
-  const [maxYAxis, setMaxYAxis] = useState<number | null>(null) // Default max y-axis value (null = auto)
-  const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
-  const [showPriceQuantityCharts, setShowPriceQuantityCharts] = useState(false)
-  const [selectedItemForChart, setSelectedItemForChart] = useState<
-    string | null
-  >(null)
-  const [visibilityFilter, setVisibilityFilter] = useState('')
-  // State for delta filtering
-  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] =
-    useState(false)
-  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>(
-    'any'
-  )
-  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>(
-    'any'
-  )
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -644,7 +623,7 @@ const Results = ({
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
-  const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
+  const [performanceThreshold,] = useState(-100) // Default to show all
   const [minYAxis, setMinYAxis] = useState<number | null>(null) // Default min y-axis value (null = auto)
   const [maxYAxis, setMaxYAxis] = useState<number | null>(null) // Default max y-axis value (null = auto)
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
@@ -673,16 +652,17 @@ const Results = ({
 
   // Initialize selected dates to full range
   useEffect(() => {
-    if (allTimestamps.length > 0) {
-      if (!selectedDate) {
-        setSelectedDate(allTimestamps[allTimestamps.length - 1])
-      }
-      if (!startDate) {
-        setStartDate(allTimestamps[0])
-      }
-      if (!endDate) {
-        setEndDate(allTimestamps[allTimestamps.length - 1])
-      }
+    if (allTimestamps.length <= 0) {
+      return;
+    }
+    if (!selectedDate) {
+      setSelectedDate(allTimestamps[allTimestamps.length - 1])
+    }
+    if (!startDate) {
+      setStartDate(allTimestamps[0])
+    }
+    if (!endDate) {
+      setEndDate(allTimestamps[allTimestamps.length - 1])
     }
   }, [allTimestamps])
 
@@ -709,20 +689,20 @@ const Results = ({
         newVisibleItems[groupName] = true
       })
       setVisibleItems(newVisibleItems)
-    } else {
-      // For specific group view, show average and conditionally show items
-      const newVisibleItems: Record<string, boolean> = {
-        [`${selectedGroup} (Average)`]: true
-      }
-      const groupData = data[selectedGroup]
-      const itemCount = Object.keys(groupData.item_data).length
-      const defaultVisibility = itemCount <= 50
-
-      Object.keys(groupData.item_data).forEach((itemId) => {
-        newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
-      })
-      setVisibleItems(newVisibleItems)
+      return;
     }
+    // For specific group view, show average and conditionally show items
+    const newVisibleItems: Record<string, boolean> = {
+      [`${selectedGroup} (Average)`]: true
+    }
+    const groupData = data[selectedGroup]
+    const itemCount = Object.keys(groupData.item_data).length
+    const defaultVisibility = itemCount <= 50
+
+    Object.keys(groupData.item_data).forEach((itemId) => {
+      newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
+    })
+    setVisibleItems(newVisibleItems)
   }, [selectedGroup, data])
 
   // Apply delta filtering to visibleItems
@@ -804,7 +784,7 @@ const Results = ({
               ([timestamp]) => timestamp >= startDate && timestamp <= endDate
             )
             .map(([, value]) => value)
-            .filter((v) => v !== undefined && v !== null)
+            .filter((v) => v != null)
 
           const avgPerformance =
             values.length > 0
@@ -827,76 +807,76 @@ const Results = ({
         .filter(
           (series): series is NonNullable<typeof series> => series !== undefined
         )
-    } else {
-      const groupData = data[selectedGroup]
-      const series = []
-
-      // Add average line if visible
-      if (visibleItems[`${selectedGroup} (Average)`]) {
-        const values = Object.entries(groupData.deltas)
-          .filter(
-            ([timestamp]) => timestamp >= startDate && timestamp <= endDate
-          )
-          .map(([, value]) => value)
-          .filter((v) => v !== undefined && v !== null)
-
-        const avgPerformance =
-          values.length > 0
-            ? values.reduce((a, b) => a + b, 0) / values.length
-            : 0
-
-        if (avgPerformance >= performanceThreshold) {
-          series.push({
-            name: `${selectedGroup} (Average)`,
-            data: filteredTimestamps.map((timestamp) => {
-              const value = groupData.deltas[timestamp]
-              return value !== undefined ? value : null
-            }),
-            type: 'line' as const,
-            lineWidth: 5,
-            zIndex: 2
-          })
-        }
-      }
-
-      // Add individual items if visible and above threshold
-      Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
-        const itemName = groupData.item_names[itemId]
-        if (visibleItems[itemName]) {
-          // Calculate average performance for the item within the date range
-          const values = itemData.weekly_data
-            .filter(
-              (d) => d.t.toString() >= startDate && d.t.toString() <= endDate
-            )
-            .map((d) => d.delta)
-            .filter((v) => v !== undefined && v !== null)
-
-          const avgPerformance =
-            values.length > 0
-              ? values.reduce((a, b) => a + b, 0) / values.length
-              : 0
-
-          if (avgPerformance >= performanceThreshold) {
-            series.push({
-              name: itemName,
-              data: filteredTimestamps.map((timestamp) => {
-                const weekData = itemData.weekly_data.find(
-                  (d) => d.t.toString() === timestamp
-                )
-                return weekData ? weekData.delta : null
-              }),
-              type: 'line' as const,
-              lineWidth: 1,
-              dashStyle: 'LongDash',
-              opacity: 0.7,
-              zIndex: 1
-            })
-          }
-        }
-      })
-
-      return series
     }
+    const groupData = data[selectedGroup]
+    const series = []
+
+    // Add average line if visible
+    if (visibleItems[`${selectedGroup} (Average)`]) {
+      const values = Object.entries(groupData.deltas)
+        .filter(
+          ([timestamp]) => timestamp >= startDate && timestamp <= endDate
+        )
+        .map(([, value]) => value)
+        .filter((v) => v != null)
+
+      const avgPerformance =
+        values.length > 0
+          ? values.reduce((a, b) => a + b, 0) / values.length
+          : 0
+
+      if (avgPerformance >= performanceThreshold) {
+        series.push({
+          name: `${selectedGroup} (Average)`,
+          data: filteredTimestamps.map((timestamp) => {
+            const value = groupData.deltas[timestamp]
+            return value !== undefined ? value : null
+          }),
+          type: 'line' as const,
+          lineWidth: 5,
+          zIndex: 2
+        })
+      }
+    }
+
+    // Add individual items if visible and above threshold
+    Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
+      const itemName = groupData.item_names[itemId]
+      if (!visibleItems[itemName]) {
+        return;
+      }
+      // Calculate average performance for the item within the date range
+      const values = itemData.weekly_data
+      .filter(
+        (d) => d.t.toString() >= startDate && d.t.toString() <= endDate
+      )
+      .map((d) => d.delta)
+      .filter((v) => v != null)
+
+      const avgPerformance =
+      values.length > 0
+        ? values.reduce((a, b) => a + b, 0) / values.length
+        : 0
+
+      if (avgPerformance >= performanceThreshold) {
+        series.push({
+          name: itemName,
+          data: filteredTimestamps.map((timestamp) => {
+            const weekData = itemData.weekly_data.find(
+              (d) => d.t.toString() === timestamp
+            )
+            return weekData ? weekData.delta : null
+          }),
+          type: 'line' as const,
+          lineWidth: 1,
+          dashStyle: 'LongDash',
+          opacity: 0.7,
+          zIndex: 1
+        })
+      }
+    })
+
+    return series
   }, [
     data,
     selectedGroup,
@@ -930,7 +910,7 @@ const Results = ({
       labels: {
         style: { color: styles?.color },
         rotation: -45,
-        formatter: function () {
+        formatter() {
           return this.value as string
         }
       },
@@ -951,12 +931,12 @@ const Results = ({
       useHTML: true,
       headerFormat: '<b>{point.key}</b><br/>',
       // Custom formatter to sort points by value
-      formatter: function () {
+      formatter() {
         if (!this.points) return ''
 
         // Sort points by value (delta) in descending order
         const sortedPoints = this.points
-          .filter((point) => point.y !== null && point.y !== undefined)
+          .filter((point) => point.y != null)
           .sort((a, b) => (b.y || 0) - (a.y || 0))
 
         let s = `<b>${this.x}</b><br/>`
@@ -987,7 +967,7 @@ const Results = ({
           radius: 3
         },
         events: {
-          legendItemClick: function () {
+          legendItemClick() {
             if (selectedGroup !== 'All') {
               return false // Prevent toggling visibility
             }
@@ -1004,11 +984,11 @@ const Results = ({
       align: 'right',
       verticalAlign: 'middle',
       maxHeight:
-        selectedGroup !== 'All'
-          ? Math.floor(
+        selectedGroup === 'All'
+          ? 300
+          : Math.floor(
               Object.keys(data[selectedGroup].item_data).length * 30 + 200
-            )
-          : 300,
+            ),
       itemMarginTop: 4,
       itemMarginBottom: 4,
       symbolRadius: 2,
@@ -1077,7 +1057,6 @@ const Results = ({
       header: 'Price V Quantity',
       accessor: ({ row }) => {
         if (!groupData) return null
-        const itemName = groupData.item_names[row.itemID]
         return (
           <button
             onClick={() => setSelectedItemForChart(row.itemID.toString())}
@@ -1290,7 +1269,7 @@ const Results = ({
                   </div>
                 </div>
 
-                <div className="mx-4 border-t border-gray-300 dark:border-gray-600 my-2"></div>
+                <div className="mx-4 border-t border-gray-300 dark:border-gray-600 my-2" />
 
                 <h4 className="font-medium px-4 pb-2">Show/Hide Items</h4>
                 <div className="px-4 flex space-x-2 mb-2">
