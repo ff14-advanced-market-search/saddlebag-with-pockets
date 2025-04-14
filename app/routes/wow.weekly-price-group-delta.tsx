@@ -6,7 +6,7 @@ import type {
   LinksFunction
 } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -352,6 +352,18 @@ const Index = () => {
   const [startDay, setStartDay] = useState(1)
   const [showImport, setShowImport] = useState(false)
   const [showErrorPopup, setShowErrorPopup] = useState(false)
+  const [selectedDate, setSelectedDate] = useState<string>('')
+  const [startDate, setStartDate] = useState<string>('')
+  const [endDate, setEndDate] = useState<string>('')
+  const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
+  const [minYAxis, setMinYAxis] = useState<number | null>(null) // Default min y-axis value (null = auto)
+  const [maxYAxis, setMaxYAxis] = useState<number | null>(null) // Default max y-axis value (null = auto)
+  const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
+  const [showPriceQuantityCharts, setShowPriceQuantityCharts] = useState(false)
+  const [selectedItemForChart, setSelectedItemForChart] = useState<
+    string | null
+  >(null)
+  const [visibilityFilter, setVisibilityFilter] = useState('')
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -624,12 +636,15 @@ const Results = ({
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
   const [performanceThreshold, setPerformanceThreshold] = useState(-100) // Default to show all
+  const [minYAxis, setMinYAxis] = useState<number | null>(null) // Default min y-axis value (null = auto)
+  const [maxYAxis, setMaxYAxis] = useState<number | null>(null) // Default max y-axis value (null = auto)
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
   const [showPriceQuantityCharts, setShowPriceQuantityCharts] = useState(false)
   const [selectedItemForChart, setSelectedItemForChart] = useState<
     string | null
   >(null)
+  const [visibilityFilter, setVisibilityFilter] = useState('')
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -683,7 +698,7 @@ const Results = ({
       }
       const groupData = data[selectedGroup]
       Object.keys(groupData.item_data).forEach((itemId) => {
-        newVisibleItems[groupData.item_names[itemId]] = true
+        newVisibleItems[groupData.item_names[itemId]] = false
       })
       setVisibleItems(newVisibleItems)
     }
@@ -697,8 +712,7 @@ const Results = ({
       }
     : {}
 
-  // Modified generateSeriesData to use filtered timestamps
-  const generateSeriesData = () => {
+  const seriesData = useMemo(() => {
     if (selectedGroup === 'All') {
       return Object.entries(data)
         .filter(([groupName]) => visibleItems[groupName])
@@ -802,7 +816,7 @@ const Results = ({
 
       return series
     }
-  }
+  }, [data, selectedGroup, visibleItems, startDate, endDate, filteredTimestamps, performanceThreshold]);
 
   // Modified chart options
   const deltaChartOptions: Options = {
@@ -813,14 +827,7 @@ const Results = ({
         fontFamily:
           '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       },
-      // Add height based on number of series when viewing a specific group
-      height:
-        selectedGroup !== 'All'
-          ? Math.max(
-              600,
-              Object.keys(data[selectedGroup].item_data).length * 30 + 400
-            )
-          : 600
+      height:600
     },
     title: {
       text:
@@ -846,8 +853,9 @@ const Results = ({
         style: { color: styles?.color }
       },
       labels: { style: { color: styles?.color } },
-      min: -100,
-      softMin: -100
+      min: minYAxis !== null ? minYAxis : undefined,
+      max: maxYAxis !== null ? maxYAxis : undefined,
+      softMin: minYAxis !== null ? minYAxis : undefined
     },
     tooltip: {
       shared: true,
@@ -899,7 +907,7 @@ const Results = ({
         }
       }
     },
-    series: generateSeriesData(),
+    series: seriesData,
     legend: {
       itemStyle: { color: styles?.color },
       itemHoverStyle: { color: styles?.hoverColor },
@@ -1153,23 +1161,113 @@ const Results = ({
               </div>
 
               {/* Visibility Controls */}
-              <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
-                <h4 className="font-medium p-4 pb-2">Show/Hide Items</h4>
-                <div
-                  className="flex-1 overflow-auto p-4 pt-2"
-                  style={{
-                    maxHeight:
-                      selectedGroup !== 'All'
-                        ? Math.max(
-                            600,
-                            Object.keys(data[selectedGroup].item_data).length *
-                              30 +
-                              400
-                          )
-                        : 600
-                  }}>
+              <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded" style={{ height: "600px" }}>
+                {/* Controls that stay visible */}
+                <div className="px-4 mb-2 pt-4">
+                  <div className="flex items-center mb-2">
+                    <label htmlFor="minYAxis" className="text-xs font-medium w-16">Min Price %:</label>
+                    <select
+                      id="minYAxis"
+                      value={minYAxis === null ? "auto" : minYAxis}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setMinYAxis(val === "auto" ? null : Number(val));
+                      }}
+                      className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                      <option value="auto">Auto</option>
+                      <option value={-200}>-200%</option>
+                      <option value={-150}>-150%</option>
+                      <option value={-100}>-100%</option>
+                      <option value={-75}>-75%</option>
+                      <option value={-50}>-50%</option>
+                      <option value={-25}>-25%</option>
+                      <option value={0}>0%</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center">
+                    <label htmlFor="maxYAxis" className="text-xs font-medium w-16">Max Price %:</label>
+                    <select
+                      id="maxYAxis"
+                      value={maxYAxis === null ? "auto" : maxYAxis}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setMaxYAxis(val === "auto" ? null : Number(val));
+                      }}
+                      className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                      <option value="auto">Auto</option>
+                      <option value={25}>25%</option>
+                      <option value={50}>50%</option>
+                      <option value={100}>100%</option>
+                      <option value={200}>200%</option>
+                      <option value={500}>500%</option>
+                      <option value={1000}>1000%</option>
+                      <option value={1500}>1500%</option>
+                      <option value={2000}>2000%</option>
+                      <option value={3000}>3000%</option>
+                      <option value={4000}>4000%</option>
+                      <option value={5000}>5000%</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="mx-4 border-t border-gray-300 dark:border-gray-600 my-2"></div>
+
+                <h4 className="font-medium px-4 pb-2">Show/Hide Items</h4>
+                <div className="px-4 flex space-x-2 mb-2">
+                  <button
+                    onClick={() => {
+                      const allVisible = { ...visibleItems };
+                      Object.keys(allVisible).forEach(key => {
+                        allVisible[key] = true;
+                      });
+                      setVisibleItems(allVisible);
+                    }}
+                    className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded flex-1">
+                    Select All
+                  </button>
+                  <button
+                    onClick={() => {
+                      const allHidden = { ...visibleItems };
+                      Object.keys(allHidden).forEach(key => {
+                        allHidden[key] = false;
+                      });
+                      setVisibleItems(allHidden);
+                    }}
+                    className="text-xs bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded flex-1">
+                    Unselect All
+                  </button>
+                </div>
+
+                <div className="px-4 mb-2">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search items..."
+                      value={visibilityFilter}
+                      onChange={(e) => setVisibilityFilter(e.target.value)}
+                      className="w-full p-2 text-xs border rounded dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    {visibilityFilter && (
+                      <button
+                        onClick={() => setVisibilityFilter('')}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                        aria-label="Clear search">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Scrollable item list with flex-grow to fill remaining space */}
+                <div className="overflow-auto px-4 pb-4 flex-grow">
                   <div className="space-y-2">
-                    {Object.entries(visibleItems).map(([name, isVisible]) => (
+                    {Object.entries(visibleItems)
+                      .filter(([name]) =>
+                        name.toLowerCase().includes(visibilityFilter.toLowerCase())
+                      )
+                      .map(([name, isVisible]) => (
                       <label
                         key={name}
                         className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
