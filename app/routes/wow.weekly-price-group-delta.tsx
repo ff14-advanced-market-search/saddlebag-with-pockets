@@ -1378,7 +1378,10 @@ const Results = ({
 
               <div className="hidden md:block">
                 <FullTable
-                  data={Object.values(groupData.item_data)}
+                  data={Object.values(groupData.item_data).filter(item => {
+                    const data = getDataForTimestamp(item, selectedDate)
+                    return data !== undefined
+                  })}
                   columnList={columnList}
                   globalFilter={globalFilter}
                   sortingOrder={[]}
@@ -1386,7 +1389,10 @@ const Results = ({
               </div>
               <div className="md:hidden">
                 <MobileTable
-                  data={Object.values(groupData.item_data)}
+                  data={Object.values(groupData.item_data).filter(item => {
+                    const data = getDataForTimestamp(item, selectedDate)
+                    return data !== undefined
+                  })}
                   columnList={columnList}
                   sortingOrder={[{ id: 'itemName', desc: false }]}
                   title="Item Details"
@@ -1398,14 +1404,19 @@ const Results = ({
               {/* Export buttons */}
               <div className="flex gap-2 mt-4">
                 <CSVButton
-                  data={Object.values(groupData.item_data).map((item) => {
-                    const data = getDataForTimestamp(item, selectedDate)
-                    return {
-                      ...item,
-                      price: data?.p || 0,
-                      delta: data?.delta || 0
-                    }
-                  })}
+                  data={Object.values(groupData.item_data)
+                    .filter(item => {
+                      const data = getDataForTimestamp(item, selectedDate)
+                      return data !== undefined
+                    })
+                    .map((item) => {
+                      const data = getDataForTimestamp(item, selectedDate)
+                      return {
+                        ...item,
+                        price: data?.p || 0,
+                        delta: data?.delta || 0
+                      }
+                    })}
                   columns={[
                     { title: 'Item Name', value: 'itemName' },
                     { title: 'Item ID', value: 'itemID' },
@@ -1422,7 +1433,12 @@ const Results = ({
                     selectedDate
                   )}.csv`}
                 />
-                <JSONButton data={Object.values(groupData.item_data)} />
+                <JSONButton 
+                  data={Object.values(groupData.item_data).filter(item => {
+                    const data = getDataForTimestamp(item, selectedDate)
+                    return data !== undefined
+                  })} 
+                />
               </div>
             </div>
           )}
