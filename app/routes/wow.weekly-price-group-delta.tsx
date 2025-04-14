@@ -1358,7 +1358,7 @@ const Results = ({
                         className="form-checkbox h-4 w-4 text-blue-500"
                       />
                       <span className="text-xs font-medium">
-                        Filter by Peak Price Delta % (Date Range)
+                        Filter by Price Change %
                       </span>
                     </label>
                     {isPeakDeltaFilterEnabled && (
