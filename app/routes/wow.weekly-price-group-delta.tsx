@@ -981,7 +981,8 @@ const Results = ({
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? data.p.toLocaleString() : 'N/A'}</span>
-      }
+      },
+      sortUndefined: 'last'
     },
     {
       columnId: 'delta',
@@ -990,7 +991,8 @@ const Results = ({
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? `${data.delta.toFixed(2)}%` : 'N/A'}</span>
-      }
+      },
+      sortUndefined: 'last'
     },
     {
       columnId: 'priceQuantity',

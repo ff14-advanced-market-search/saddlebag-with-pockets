@@ -8,4 +8,5 @@ export type ColumnList<Type> = {
     row: Type
     getValue: Getter<unknown>
   }) => JSX.Element | null
+  sortUndefined?: false | 'first' | 'last' | undefined
 }

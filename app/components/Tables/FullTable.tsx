@@ -45,6 +45,7 @@ export type ColumnList<Type> = {
     row: Type
     getValue: Getter<unknown>
   }) => JSX.Element | null
+  sortUndefined?: false | 'first' | 'last' | undefined
 }
 
 /**
@@ -95,13 +96,16 @@ function FullTable<Type>({
   const columnHelper = createColumnHelper<Type>()
 
   const parseToLocaleString = (value: any) => {
+    if (value === undefined || value === null) {
+      return 'N/A';
+    }
     if (typeof value === 'number') {
       return value.toLocaleString()
     }
     if (typeof value === 'string' && !isNaN(parseFloat(value))) {
       return parseFloat(value).toLocaleString()
     }
-    return value ?? ''
+    return String(value);
   }
 
   const columns = columnList.map((col) => {
@@ -116,7 +120,9 @@ function FullTable<Type>({
                   getValue: props.getValue
                 })
               : parseToLocaleString(props.getValue()),
-          enableSorting: true
+          enableSorting: true,
+          // @ts-ignore - Type definition expects 1/-1, but implementation/docs use 'last'/'first'
+          sortUndefined: col.sortUndefined ?? undefined
         })
       : columnHelper.accessor(col.columnId as any, {
           header: col.header,
@@ -127,7 +133,9 @@ function FullTable<Type>({
                   getValue: props.getValue
                 })
               : parseToLocaleString(props.getValue()),
-          enableSorting: true
+          enableSorting: true,
+          // @ts-ignore - Type definition expects 1/-1, but implementation/docs use 'last'/'first'
+          sortUndefined: col.sortUndefined ?? undefined
         })
 
     return columnDef
