@@ -26,7 +26,7 @@ export const expansionOptions: ExpansionOption[] = [
 export const getExpansionName = (expansionNumber: number): string => {
   if (expansionNumber === -1) return 'All'
   const expansion = expansionOptions.find(
-    (exp) => parseInt(exp.value) === expansionNumber
+    (exp) => Number.parseInt(exp.value, -1) === expansionNumber
   )
   return expansion?.label ?? `Unknown Expansion (${expansionNumber})`
 }

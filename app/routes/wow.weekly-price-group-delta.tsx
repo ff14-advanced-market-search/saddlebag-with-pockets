@@ -623,7 +623,7 @@ const Results = ({
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
-  const [performanceThreshold,] = useState(-100) // Default to show all
+  const [performanceThreshold] = useState(-100) // Default to show all
   const [minYAxis, setMinYAxis] = useState<number | null>(null) // Default min y-axis value (null = auto)
   const [maxYAxis, setMaxYAxis] = useState<number | null>(null) // Default max y-axis value (null = auto)
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
@@ -653,7 +653,7 @@ const Results = ({
   // Initialize selected dates to full range
   useEffect(() => {
     if (allTimestamps.length <= 0) {
-      return;
+      return
     }
     if (!selectedDate) {
       setSelectedDate(allTimestamps[allTimestamps.length - 1])
@@ -689,7 +689,7 @@ const Results = ({
         newVisibleItems[groupName] = true
       })
       setVisibleItems(newVisibleItems)
-      return;
+      return
     }
     // For specific group view, show average and conditionally show items
     const newVisibleItems: Record<string, boolean> = {
@@ -814,9 +814,7 @@ const Results = ({
     // Add average line if visible
     if (visibleItems[`${selectedGroup} (Average)`]) {
       const values = Object.entries(groupData.deltas)
-        .filter(
-          ([timestamp]) => timestamp >= startDate && timestamp <= endDate
-        )
+        .filter(([timestamp]) => timestamp >= startDate && timestamp <= endDate)
         .map(([, value]) => value)
         .filter((v) => v != null)
 
@@ -843,20 +841,18 @@ const Results = ({
     Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
       const itemName = groupData.item_names[itemId]
       if (!visibleItems[itemName]) {
-        return;
+        return
       }
       // Calculate average performance for the item within the date range
       const values = itemData.weekly_data
-      .filter(
-        (d) => d.t.toString() >= startDate && d.t.toString() <= endDate
-      )
-      .map((d) => d.delta)
-      .filter((v) => v != null)
+        .filter((d) => d.t.toString() >= startDate && d.t.toString() <= endDate)
+        .map((d) => d.delta)
+        .filter((v) => v != null)
 
       const avgPerformance =
-      values.length > 0
-        ? values.reduce((a, b) => a + b, 0) / values.length
-        : 0
+        values.length > 0
+          ? values.reduce((a, b) => a + b, 0) / values.length
+          : 0
 
       if (avgPerformance >= performanceThreshold) {
         series.push({
@@ -1059,6 +1055,7 @@ const Results = ({
         if (!groupData) return null
         return (
           <button
+            type="button"
             onClick={() => setSelectedItemForChart(row.itemID.toString())}
             className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm">
             Price V Quantity
@@ -1166,6 +1163,7 @@ const Results = ({
           {/* Group selector */}
           <div className="flex flex-wrap gap-2">
             <button
+              type="button"
               onClick={() => setSelectedGroup('All')}
               className={`p-2 rounded ${
                 selectedGroup === 'All'
@@ -1177,6 +1175,7 @@ const Results = ({
             {Object.keys(data).map((group) => (
               <button
                 key={group}
+                type="button"
                 onClick={() => setSelectedGroup(group)}
                 className={`p-2 rounded ${
                   selectedGroup === group
@@ -1258,7 +1257,6 @@ const Results = ({
                       }}
                       className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
                       <option value="auto">Auto</option>
-                      <option value={-100}>-100%</option>
                       <option value={-95}>-95%</option>
                       <option value={-85}>-85%</option>
                       <option value={-75}>-75%</option>
@@ -1274,6 +1272,7 @@ const Results = ({
                 <h4 className="font-medium px-4 pb-2">Show/Hide Items</h4>
                 <div className="px-4 flex space-x-2 mb-2">
                   <button
+                    type="button"
                     onClick={() => {
                       if (!showItemDetails || !groupData) return
                       const allVisible: Record<string, boolean> = {}
@@ -1291,6 +1290,7 @@ const Results = ({
                     Select All
                   </button>
                   <button
+                    type="button"
                     onClick={() => {
                       if (!showItemDetails || !groupData) return
                       const allHidden: Record<string, boolean> = {}
@@ -1460,6 +1460,7 @@ const Results = ({
           {showItemDetails && groupData && (
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
               <button
+                type="button"
                 onClick={() =>
                   setShowPriceQuantityCharts(!showPriceQuantityCharts)
                 }

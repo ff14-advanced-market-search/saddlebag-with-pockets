@@ -63,21 +63,22 @@ const CategorySelectionPopup = ({
     // }
 
     onAdd({
-      item_class: itemClass,
-      item_subclass: itemSubClass,
-      expansion_number: parseInt(expansion),
-      min_quality: parseInt(quality)
+      item_class: Number.parseInt(itemClass.toString(), -1),
+      item_subclass: Number.parseInt(itemSubClass.toString(), -1),
+      expansion_number: Number.parseInt(expansion, -1),
+      min_quality: Number.parseInt(quality, -1)
     })
     onClose()
   }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl w-full mx-4">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium">Add Category</h3>
           <button
             onClick={onClose}
+            type="button"
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
             ✕
           </button>

@@ -49,7 +49,7 @@ const PriceGroupForm = ({
     setCurrentItemName(value)
     const itemId = getItemIDByName(value.trim(), wowItems)
     if (itemId) {
-      const newIds = [...new Set([...itemIds, parseInt(itemId)])]
+      const newIds = [...new Set([...itemIds, Number.parseInt(itemId)])]
       setItemIds(newIds)
       onChange({
         name,
