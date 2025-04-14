@@ -364,6 +364,10 @@ const Index = () => {
     string | null
   >(null)
   const [visibilityFilter, setVisibilityFilter] = useState('')
+  // State for delta filtering
+  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] = useState(false)
+  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>('any')
+  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>('any')
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -645,6 +649,10 @@ const Results = ({
     string | null
   >(null)
   const [visibilityFilter, setVisibilityFilter] = useState('')
+  // State for delta filtering
+  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] = useState(false)
+  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>('any')
+  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>('any')
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -706,6 +714,64 @@ const Results = ({
       setVisibleItems(newVisibleItems)
     }
   }, [selectedGroup, data])
+
+  // Apply delta filtering to visibleItems
+  useEffect(() => {
+    if (!isPeakDeltaFilterEnabled || !selectedGroup || !data[selectedGroup]) {
+      // If filter is disabled or no group selected, don't apply filter logic here
+      // Visibility is handled by 'Select All'/'Unselect All' or initial state
+      return
+    }
+
+    setVisibleItems((prevVisibleItems) => {
+      const newVisibleItems = { ...prevVisibleItems }
+      Object.entries(data[selectedGroup].item_data).forEach(([itemId, itemData]) => {
+        const itemName = data[selectedGroup].item_names[itemId]
+
+        // Get all deltas for the item within the current date range
+        const deltasInRange = itemData.weekly_data
+          .filter(
+            (d) =>
+              d.t.toString() >= startDate &&
+              d.t.toString() <= endDate &&
+              d.delta !== null &&
+              d.delta !== undefined
+          )
+          .map((d) => d.delta)
+
+        let shouldBeVisible = true // Assume visible unless a delta fails the check
+
+        if (deltasInRange.length === 0) {
+          // If no data in range, hide if filtering
+          shouldBeVisible = false
+        } else {
+          // Check against filters: hide if *any* delta is outside the bounds
+          for (const delta of deltasInRange) {
+            const minFail =
+              minPeakDeltaFilter !== 'any' && delta < minPeakDeltaFilter
+            const maxFail =
+              maxPeakDeltaFilter !== 'any' && delta > maxPeakDeltaFilter
+
+            if (minFail || maxFail) {
+              shouldBeVisible = false
+              break // No need to check further deltas for this item
+            }
+          }
+        }
+
+        newVisibleItems[itemName] = shouldBeVisible
+      })
+      return newVisibleItems
+    })
+  }, [
+    isPeakDeltaFilterEnabled,
+    minPeakDeltaFilter,
+    maxPeakDeltaFilter,
+    selectedGroup,
+    data,
+    startDate,
+    endDate
+  ])
 
   const styles = darkMode
     ? {
@@ -1154,6 +1220,7 @@ const Results = ({
                 style={{ height: '600px' }}>
                 {/* Controls that stay visible */}
                 <div className="px-4 mb-2 pt-4">
+                  <h4 className="font-medium text-sm mb-2">Chart Y-Axis Range:</h4>
                   <div className="flex items-center mb-2">
                     <label
                       htmlFor="minYAxis"
@@ -1169,6 +1236,7 @@ const Results = ({
                       }}
                       className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
                       <option value="auto">Auto</option>
+                      <option value={-100}>-100%</option>
                       <option value={-95}>-95%</option>
                       <option value={-85}>-85%</option>
                       <option value={-75}>-75%</option>
@@ -1213,22 +1281,34 @@ const Results = ({
                 <div className="px-4 flex space-x-2 mb-2">
                   <button
                     onClick={() => {
-                      const allVisible = { ...visibleItems }
-                      Object.keys(allVisible).forEach((key) => {
-                        allVisible[key] = true
+                      if (!showItemDetails || !groupData) return
+                      const allVisible: Record<string, boolean> = {}
+                      Object.keys(groupData.item_names).forEach((itemId) => {
+                        allVisible[groupData.item_names[itemId]] = true
                       })
+                      // Add average line for specific group view
+                      if (selectedGroup !== 'All') {
+                        allVisible[`${selectedGroup} (Average)`] = true
+                      }
                       setVisibleItems(allVisible)
+                      setIsPeakDeltaFilterEnabled(false) // Disable filter
                     }}
                     className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded flex-1">
                     Select All
                   </button>
                   <button
                     onClick={() => {
-                      const allHidden = { ...visibleItems }
-                      Object.keys(allHidden).forEach((key) => {
-                        allHidden[key] = false
+                      if (!showItemDetails || !groupData) return
+                      const allHidden: Record<string, boolean> = {}
+                      Object.keys(groupData.item_names).forEach((itemId) => {
+                        allHidden[groupData.item_names[itemId]] = false
                       })
+                       // Keep average line for specific group view, but hide items
+                       if (selectedGroup !== 'All') {
+                        allHidden[`${selectedGroup} (Average)`] = true // Keep average line visible
+                       }
                       setVisibleItems(allHidden)
+                      setIsPeakDeltaFilterEnabled(false) // Disable filter
                     }}
                     className="text-xs bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded flex-1">
                     Unselect All
@@ -1264,6 +1344,91 @@ const Results = ({
                     )}
                   </div>
                 </div>
+
+                {/* Delta Filter Controls - Only show when a specific group is selected */}
+                {showItemDetails && (
+                  <div className="px-4 mb-2 space-y-2 border-t border-b border-gray-300 dark:border-gray-600 py-2">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={isPeakDeltaFilterEnabled}
+                        onChange={(e) =>
+                          setIsPeakDeltaFilterEnabled(e.target.checked)
+                        }
+                        className="form-checkbox h-4 w-4 text-blue-500"
+                      />
+                      <span className="text-xs font-medium">
+                        Filter by Peak Price Delta % (Date Range)
+                      </span>
+                    </label>
+                    {isPeakDeltaFilterEnabled && (
+                      <div className="space-y-1 pl-5">
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="minPeakDeltaFilter"
+                            className="text-xs w-10">
+                            Min:
+                          </label>
+                          <select
+                            id="minPeakDeltaFilter"
+                            value={minPeakDeltaFilter}
+                            onChange={(e) => {
+                              const val = e.target.value
+                              setMinPeakDeltaFilter(
+                                val === 'any' ? 'any' : Number(val)
+                              )
+                            }}
+                            className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                            <option value="any">Any</option>
+                            <option value={-100}>-100%</option>
+                            <option value={-75}>-75%</option>
+                            <option value={-50}>-50%</option>
+                            <option value={-25}>-25%</option>
+                            <option value={0}>0%</option>
+                            <option value={25}>25%</option>
+                            <option value={50}>50%</option>
+                            <option value={100}>100%</option>
+                            <option value={200}>200%</option>
+                            <option value={500}>500%</option>
+                          </select>
+                        </div>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="maxPeakDeltaFilter"
+                            className="text-xs w-10">
+                            Max:
+                          </label>
+                          <select
+                            id="maxPeakDeltaFilter"
+                            value={maxPeakDeltaFilter}
+                            onChange={(e) => {
+                              const val = e.target.value
+                              setMaxPeakDeltaFilter(
+                                val === 'any' ? 'any' : Number(val)
+                              )
+                            }}
+                            className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                            <option value="any">Any</option>
+                            <option value={-50}>-50%</option>
+                            <option value={-25}>-25%</option>
+                            <option value={0}>0%</option>
+                            <option value={25}>25%</option>
+                            <option value={50}>50%</option>
+                            <option value={100}>100%</option>
+                            <option value={200}>200%</option>
+                            <option value={500}>500%</option>
+                            <option value={1000}>1000%</option>
+                            <option value={1500}>1500%</option>
+                            <option value={2000}>2000%</option>
+                            <option value={3000}>3000%</option>
+                            <option value={4000}>4000%</option>
+                            <option value={5000}>5000%</option>
+                          </select>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Scrollable item list with flex-grow to fill remaining space */}
                 <div className="overflow-auto px-4 pb-4 flex-grow">
