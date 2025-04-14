@@ -35,8 +35,9 @@
     "@remix-run/serve": "^1.7.0",
     "@remix-validated-form/with-zod": "^2.0.1",
     "@tanstack/match-sorter-utils": "^8.1.1",
-    "@tanstack/react-table": "^8.5.11",
+    "@tanstack/react-table": "^8.16.0",
     "axios": "^1.6.4",
+    "caniuse-lite": "^1.0.30001713",
     "date-fns": "^2.29.3",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
@@ -72,7 +73,7 @@
     "typescript": "^4.7.4",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.33.0",
-    "wrangler": "^3.28.1"
+    "wrangler": "4"
   },
   "prettier": "prettier-config-standard"
 }
