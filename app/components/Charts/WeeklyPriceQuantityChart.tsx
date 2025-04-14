@@ -1,4 +1,4 @@
-import type { Options } from 'highcharts'
+import type { Options, TooltipFormatterContextObject } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
@@ -16,6 +16,35 @@ const formatTimestamp = (timestamp: number) => {
   const month = dateStr.slice(4, 6)
   const day = dateStr.slice(6, 8)
   return `${year}-${month}-${day}`
+}
+
+// Format tooltip content with proper error handling
+const formatTooltip = (
+  points: TooltipFormatterContextObject[],
+  itemName: string,
+  weeklyData: Array<WeeklyDataPoint>
+): string => {
+  if (!points?.length || !weeklyData?.length) return ''
+
+  try {
+    const point = points[0]
+    const index = point.point.index
+    if (index === undefined || index < 0 || index >= weeklyData.length) {
+      return ''
+    }
+
+    const data = weeklyData[index]
+    return `<div style="min-width: 150px;">
+      <b>${itemName}</b><br/>
+      <span style="color: #666;">Date:</span> ${formatTimestamp(data.t)}<br/>
+      <span style="color: #666;">Price:</span> ${data.p.toLocaleString()}<br/>
+      <span style="color: #666;">Quantity:</span> ${data.q.toLocaleString()}<br/>
+      <span style="color: #666;">Delta:</span> ${data.delta.toFixed(2)}%
+    </div>`
+  } catch (error) {
+    console.error('Error formatting tooltip:', error)
+    return ''
+  }
 }
 
 /**
@@ -42,7 +71,10 @@ export default function WeeklyPriceQuantityChart({
     chart: {
       type: 'line',
       backgroundColor: styles?.backgroundColor,
-      height: 400
+      height: 400,
+      style: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+      }
     },
     title: {
       text: `${itemName} Price & Quantity`,
@@ -91,34 +123,33 @@ export default function WeeklyPriceQuantityChart({
     },
     tooltip: {
       shared: true,
+      useHTML: true,
       backgroundColor: darkMode ? '#1f2937' : '#ffffff',
       style: {
         color: darkMode ? '#ffffff' : '#000000'
       },
-      formatter: function () {
-        if (!this.points) return ''
-        const point = this.points[0]
-        const data = weeklyData[point.point.index]
-        return `<b>${itemName}</b><br/>
-                Date: ${formatTimestamp(data.t)}<br/>
-                Price: ${data.p.toLocaleString()}<br/>
-                Quantity: ${data.q.toLocaleString()}<br/>
-                Delta: ${data.delta.toFixed(2)}%`
-      }
+      formatter: function (this: { points?: TooltipFormatterContextObject[] }) {
+        return formatTooltip(this.points || [], itemName, weeklyData)
+      },
+      padding: 8,
+      shadow: true,
+      borderWidth: 1,
+      borderColor: darkMode ? '#374151' : '#e5e7eb'
     },
     series: [
       {
         name: 'Minimum Price',
         type: 'area',
         data: weeklyData.map((point) => point.p),
-        color: '#dae4ff',
+        color: darkMode ? '#93c5fd' : '#dae4ff', // Lighter blue in dark mode
+        fillOpacity: 0.3,
         yAxis: 0
       },
       {
         name: 'Total Quantity',
         type: 'line',
         data: weeklyData.map((point) => point.q),
-        color: '#fbb7b2',
+        color: darkMode ? '#fca5a5' : '#fbb7b2', // Lighter red in dark mode
         yAxis: 1
       }
     ],
