@@ -692,13 +692,16 @@ const Results = ({
       })
       setVisibleItems(newVisibleItems)
     } else {
-      // For specific group view, show average and all items
+      // For specific group view, show average and conditionally show items
       const newVisibleItems: Record<string, boolean> = {
         [`${selectedGroup} (Average)`]: true
       }
       const groupData = data[selectedGroup]
+      const itemCount = Object.keys(groupData.item_data).length
+      const defaultVisibility = itemCount <= 50
+
       Object.keys(groupData.item_data).forEach((itemId) => {
-        newVisibleItems[groupData.item_names[itemId]] = false
+        newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
       })
       setVisibleItems(newVisibleItems)
     }
