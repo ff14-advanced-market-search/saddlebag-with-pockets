@@ -40,7 +40,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 export type ColumnList<Type> = {
   columnId: string
   header: string
-  dataAccessor?: (originalRow: Type) => string | number | null | undefined;
+  dataAccessor?: (originalRow: Type) => string | number | null | undefined
   accessor?: (props: {
     row: Type
     getValue: Getter<unknown>
@@ -107,24 +107,30 @@ function FullTable<Type>({
   const columns = columnList.map((col) => {
     const columnDef = col.dataAccessor
       ? columnHelper.accessor(col.dataAccessor, {
-        id: col.columnId,
-        header: col.header,
-        cell: (props) =>
-          col.accessor
-            ? col.accessor({ row: props.row.original, getValue: props.getValue })
-            : parseToLocaleString(props.getValue()),
-        enableSorting: true,
-      })
+          id: col.columnId,
+          header: col.header,
+          cell: (props) =>
+            col.accessor
+              ? col.accessor({
+                  row: props.row.original,
+                  getValue: props.getValue
+                })
+              : parseToLocaleString(props.getValue()),
+          enableSorting: true
+        })
       : columnHelper.accessor(col.columnId as any, {
-        header: col.header,
-        cell: (props) =>
-          col.accessor
-            ? col.accessor({ row: props.row.original, getValue: props.getValue })
-            : parseToLocaleString(props.getValue()),
-        enableSorting: true,
-      });
+          header: col.header,
+          cell: (props) =>
+            col.accessor
+              ? col.accessor({
+                  row: props.row.original,
+                  getValue: props.getValue
+                })
+              : parseToLocaleString(props.getValue()),
+          enableSorting: true
+        })
 
-    return columnDef;
+    return columnDef
   })
 
   const table = useReactTable({

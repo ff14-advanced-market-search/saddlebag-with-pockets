@@ -816,7 +816,15 @@ const Results = ({
 
       return series
     }
-  }, [data, selectedGroup, visibleItems, startDate, endDate, filteredTimestamps, performanceThreshold]);
+  }, [
+    data,
+    selectedGroup,
+    visibleItems,
+    startDate,
+    endDate,
+    filteredTimestamps,
+    performanceThreshold
+  ])
 
   // Modified chart options
   const deltaChartOptions: Options = {
@@ -827,7 +835,7 @@ const Results = ({
         fontFamily:
           '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       },
-      height:600
+      height: 600
     },
     title: {
       text:
@@ -1013,32 +1021,8 @@ const Results = ({
     },
     { columnId: 'marketshare', header: 'Marketshare' },
     { columnId: 'historicPrice', header: 'TSM Avg Price' },
-    { columnId: 'salesPerDay', header: 'TSM Sales' },
+    { columnId: 'salesPerDay', header: 'TSM Sales' }
   ]
-
-  // Add performance threshold control
-  const renderPerformanceControl = () => (
-    <div className="mb-4 flex items-center gap-2">
-      <label htmlFor="performanceThreshold" className="text-sm font-medium">
-        Hide items below
-      </label>
-      <select
-        id="performanceThreshold"
-        value={performanceThreshold}
-        onChange={(e) =>
-          setPerformanceThreshold(Number.parseInt(e.target.value))
-        }
-        className="ml-2 p-1 rounded border dark:bg-gray-700 dark:border-gray-600">
-        <option value={-100}>Show All</option>
-        <option value={-50}>-50%</option>
-        <option value={-25}>-25%</option>
-        <option value={0}>0%</option>
-        <option value={25}>+25%</option>
-        <option value={50}>+50%</option>
-      </select>
-      <span className="text-sm text-gray-500">performance</span>
-    </div>
-  )
 
   return (
     <PageWrapper>
@@ -1052,7 +1036,6 @@ const Results = ({
               className="text-blue-500 hover:text-blue-600 font-medium">
               ← Search Again
             </a>
-            {renderPerformanceControl()}
           </div>
 
           {/* Date Range Controls */}
@@ -1161,17 +1144,23 @@ const Results = ({
               </div>
 
               {/* Visibility Controls */}
-              <div className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded" style={{ height: "600px" }}>
+              <div
+                className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded"
+                style={{ height: '600px' }}>
                 {/* Controls that stay visible */}
                 <div className="px-4 mb-2 pt-4">
                   <div className="flex items-center mb-2">
-                    <label htmlFor="minYAxis" className="text-xs font-medium w-16">Min Price %:</label>
+                    <label
+                      htmlFor="minYAxis"
+                      className="text-xs font-medium w-16">
+                      Min Price %:
+                    </label>
                     <select
                       id="minYAxis"
-                      value={minYAxis === null ? "auto" : minYAxis}
+                      value={minYAxis === null ? 'auto' : minYAxis}
                       onChange={(e) => {
-                        const val = e.target.value;
-                        setMinYAxis(val === "auto" ? null : Number(val));
+                        const val = e.target.value
+                        setMinYAxis(val === 'auto' ? null : Number(val))
                       }}
                       className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
                       <option value="auto">Auto</option>
@@ -1185,13 +1174,17 @@ const Results = ({
                     </select>
                   </div>
                   <div className="flex items-center">
-                    <label htmlFor="maxYAxis" className="text-xs font-medium w-16">Max Price %:</label>
+                    <label
+                      htmlFor="maxYAxis"
+                      className="text-xs font-medium w-16">
+                      Max Price %:
+                    </label>
                     <select
                       id="maxYAxis"
-                      value={maxYAxis === null ? "auto" : maxYAxis}
+                      value={maxYAxis === null ? 'auto' : maxYAxis}
                       onChange={(e) => {
-                        const val = e.target.value;
-                        setMaxYAxis(val === "auto" ? null : Number(val));
+                        const val = e.target.value
+                        setMaxYAxis(val === 'auto' ? null : Number(val))
                       }}
                       className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
                       <option value="auto">Auto</option>
@@ -1216,22 +1209,22 @@ const Results = ({
                 <div className="px-4 flex space-x-2 mb-2">
                   <button
                     onClick={() => {
-                      const allVisible = { ...visibleItems };
-                      Object.keys(allVisible).forEach(key => {
-                        allVisible[key] = true;
-                      });
-                      setVisibleItems(allVisible);
+                      const allVisible = { ...visibleItems }
+                      Object.keys(allVisible).forEach((key) => {
+                        allVisible[key] = true
+                      })
+                      setVisibleItems(allVisible)
                     }}
                     className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded flex-1">
                     Select All
                   </button>
                   <button
                     onClick={() => {
-                      const allHidden = { ...visibleItems };
-                      Object.keys(allHidden).forEach(key => {
-                        allHidden[key] = false;
-                      });
-                      setVisibleItems(allHidden);
+                      const allHidden = { ...visibleItems }
+                      Object.keys(allHidden).forEach((key) => {
+                        allHidden[key] = false
+                      })
+                      setVisibleItems(allHidden)
                     }}
                     className="text-xs bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded flex-1">
                     Unselect All
@@ -1252,8 +1245,16 @@ const Results = ({
                         onClick={() => setVisibilityFilter('')}
                         className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                         aria-label="Clear search">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          viewBox="0 0 20 20"
+                          fill="currentColor">
+                          <path
+                            fillRule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </button>
                     )}
@@ -1265,28 +1266,30 @@ const Results = ({
                   <div className="space-y-2">
                     {Object.entries(visibleItems)
                       .filter(([name]) =>
-                        name.toLowerCase().includes(visibilityFilter.toLowerCase())
+                        name
+                          .toLowerCase()
+                          .includes(visibilityFilter.toLowerCase())
                       )
                       .map(([name, isVisible]) => (
-                      <label
-                        key={name}
-                        className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
-                        <input
-                          type="checkbox"
-                          checked={isVisible}
-                          onChange={() => {
-                            setVisibleItems((prev) => ({
-                              ...prev,
-                              [name]: !prev[name]
-                            }))
-                          }}
-                          className="form-checkbox h-4 w-4 text-blue-500"
-                        />
-                        <span className="text-sm" title={name}>
-                          {name}
-                        </span>
-                      </label>
-                    ))}
+                        <label
+                          key={name}
+                          className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+                          <input
+                            type="checkbox"
+                            checked={isVisible}
+                            onChange={() => {
+                              setVisibleItems((prev) => ({
+                                ...prev,
+                                [name]: !prev[name]
+                              }))
+                            }}
+                            className="form-checkbox h-4 w-4 text-blue-500"
+                          />
+                          <span className="text-sm" title={name}>
+                            {name}
+                          </span>
+                        </label>
+                      ))}
                   </div>
                 </div>
               </div>
