@@ -958,6 +958,7 @@ const Results = ({
     {
       columnId: 'price',
       header: `Price (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.p,
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? data.p.toLocaleString() : 'N/A'}</span>
@@ -966,6 +967,7 @@ const Results = ({
     {
       columnId: 'delta',
       header: `Delta % (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.delta,
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
         return <span>{data ? `${data.delta.toFixed(2)}%` : 'N/A'}</span>
