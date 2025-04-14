@@ -97,7 +97,7 @@ function FullTable<Type>({
 
   const parseToLocaleString = (value: any) => {
     if (value === undefined || value === null) {
-      return 'N/A';
+      return 'N/A'
     }
     if (typeof value === 'number') {
       return value.toLocaleString()
@@ -105,7 +105,7 @@ function FullTable<Type>({
     if (typeof value === 'string' && !isNaN(parseFloat(value))) {
       return parseFloat(value).toLocaleString()
     }
-    return String(value);
+    return String(value)
   }
 
   const columns = columnList.map((col) => {

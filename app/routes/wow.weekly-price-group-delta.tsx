@@ -365,9 +365,14 @@ const Index = () => {
   >(null)
   const [visibilityFilter, setVisibilityFilter] = useState('')
   // State for delta filtering
-  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] = useState(false)
-  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>('any')
-  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>('any')
+  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] =
+    useState(false)
+  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>(
+    'any'
+  )
+  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>(
+    'any'
+  )
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -650,9 +655,14 @@ const Results = ({
   >(null)
   const [visibilityFilter, setVisibilityFilter] = useState('')
   // State for delta filtering
-  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] = useState(false)
-  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>('any')
-  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>('any')
+  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] =
+    useState(false)
+  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>(
+    'any'
+  )
+  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>(
+    'any'
+  )
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -725,42 +735,44 @@ const Results = ({
 
     setVisibleItems((prevVisibleItems) => {
       const newVisibleItems = { ...prevVisibleItems }
-      Object.entries(data[selectedGroup].item_data).forEach(([itemId, itemData]) => {
-        const itemName = data[selectedGroup].item_names[itemId]
+      Object.entries(data[selectedGroup].item_data).forEach(
+        ([itemId, itemData]) => {
+          const itemName = data[selectedGroup].item_names[itemId]
 
-        // Get all deltas for the item within the current date range
-        const deltasInRange = itemData.weekly_data
-          .filter(
-            (d) =>
-              d.t.toString() >= startDate &&
-              d.t.toString() <= endDate &&
-              d.delta !== null &&
-              d.delta !== undefined
-          )
-          .map((d) => d.delta)
+          // Get all deltas for the item within the current date range
+          const deltasInRange = itemData.weekly_data
+            .filter(
+              (d) =>
+                d.t.toString() >= startDate &&
+                d.t.toString() <= endDate &&
+                d.delta !== null &&
+                d.delta !== undefined
+            )
+            .map((d) => d.delta)
 
-        let shouldBeVisible = true // Assume visible unless a delta fails the check
+          let shouldBeVisible = true // Assume visible unless a delta fails the check
 
-        if (deltasInRange.length === 0) {
-          // If no data in range, hide if filtering
-          shouldBeVisible = false
-        } else {
-          // Check against filters: hide if *any* delta is outside the bounds
-          for (const delta of deltasInRange) {
-            const minFail =
-              minPeakDeltaFilter !== 'any' && delta < minPeakDeltaFilter
-            const maxFail =
-              maxPeakDeltaFilter !== 'any' && delta > maxPeakDeltaFilter
+          if (deltasInRange.length === 0) {
+            // If no data in range, hide if filtering
+            shouldBeVisible = false
+          } else {
+            // Check against filters: hide if *any* delta is outside the bounds
+            for (const delta of deltasInRange) {
+              const minFail =
+                minPeakDeltaFilter !== 'any' && delta < minPeakDeltaFilter
+              const maxFail =
+                maxPeakDeltaFilter !== 'any' && delta > maxPeakDeltaFilter
 
-            if (minFail || maxFail) {
-              shouldBeVisible = false
-              break // No need to check further deltas for this item
+              if (minFail || maxFail) {
+                shouldBeVisible = false
+                break // No need to check further deltas for this item
+              }
             }
           }
-        }
 
-        newVisibleItems[itemName] = shouldBeVisible
-      })
+          newVisibleItems[itemName] = shouldBeVisible
+        }
+      )
       return newVisibleItems
     })
   }, [
@@ -1220,31 +1232,10 @@ const Results = ({
                 style={{ height: '600px' }}>
                 {/* Controls that stay visible */}
                 <div className="px-4 mb-2 pt-4">
-                  <h4 className="font-medium text-sm mb-2">Chart Y-Axis Range:</h4>
-                  <div className="flex items-center mb-2">
-                    <label
-                      htmlFor="minYAxis"
-                      className="text-xs font-medium w-16">
-                      Min Price %:
-                    </label>
-                    <select
-                      id="minYAxis"
-                      value={minYAxis === null ? 'auto' : minYAxis}
-                      onChange={(e) => {
-                        const val = e.target.value
-                        setMinYAxis(val === 'auto' ? null : Number(val))
-                      }}
-                      className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
-                      <option value="auto">Auto</option>
-                      <option value={-100}>-100%</option>
-                      <option value={-95}>-95%</option>
-                      <option value={-85}>-85%</option>
-                      <option value={-75}>-75%</option>
-                      <option value={-50}>-50%</option>
-                      <option value={-25}>-25%</option>
-                      <option value={0}>0%</option>
-                    </select>
-                  </div>
+                  <h4 className="font-medium text-sm mb-2">
+                    Chart Y-Axis Range:
+                  </h4>
+
                   <div className="flex items-center">
                     <label
                       htmlFor="maxYAxis"
@@ -1271,6 +1262,30 @@ const Results = ({
                       <option value={3000}>3000%</option>
                       <option value={4000}>4000%</option>
                       <option value={5000}>5000%</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center mb-2">
+                    <label
+                      htmlFor="minYAxis"
+                      className="text-xs font-medium w-16">
+                      Min Price %:
+                    </label>
+                    <select
+                      id="minYAxis"
+                      value={minYAxis === null ? 'auto' : minYAxis}
+                      onChange={(e) => {
+                        const val = e.target.value
+                        setMinYAxis(val === 'auto' ? null : Number(val))
+                      }}
+                      className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                      <option value="auto">Auto</option>
+                      <option value={-100}>-100%</option>
+                      <option value={-95}>-95%</option>
+                      <option value={-85}>-85%</option>
+                      <option value={-75}>-75%</option>
+                      <option value={-50}>-50%</option>
+                      <option value={-25}>-25%</option>
+                      <option value={0}>0%</option>
                     </select>
                   </div>
                 </div>
@@ -1303,10 +1318,10 @@ const Results = ({
                       Object.keys(groupData.item_names).forEach((itemId) => {
                         allHidden[groupData.item_names[itemId]] = false
                       })
-                       // Keep average line for specific group view, but hide items
-                       if (selectedGroup !== 'All') {
+                      // Keep average line for specific group view, but hide items
+                      if (selectedGroup !== 'All') {
                         allHidden[`${selectedGroup} (Average)`] = true // Keep average line visible
-                       }
+                      }
                       setVisibleItems(allHidden)
                       setIsPeakDeltaFilterEnabled(false) // Disable filter
                     }}
@@ -1365,35 +1380,6 @@ const Results = ({
                       <div className="space-y-1 pl-5">
                         <div className="flex items-center">
                           <label
-                            htmlFor="minPeakDeltaFilter"
-                            className="text-xs w-10">
-                            Min:
-                          </label>
-                          <select
-                            id="minPeakDeltaFilter"
-                            value={minPeakDeltaFilter}
-                            onChange={(e) => {
-                              const val = e.target.value
-                              setMinPeakDeltaFilter(
-                                val === 'any' ? 'any' : Number(val)
-                              )
-                            }}
-                            className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
-                            <option value="any">Any</option>
-                            <option value={-100}>-100%</option>
-                            <option value={-75}>-75%</option>
-                            <option value={-50}>-50%</option>
-                            <option value={-25}>-25%</option>
-                            <option value={0}>0%</option>
-                            <option value={25}>25%</option>
-                            <option value={50}>50%</option>
-                            <option value={100}>100%</option>
-                            <option value={200}>200%</option>
-                            <option value={500}>500%</option>
-                          </select>
-                        </div>
-                        <div className="flex items-center">
-                          <label
                             htmlFor="maxPeakDeltaFilter"
                             className="text-xs w-10">
                             Max:
@@ -1423,6 +1409,32 @@ const Results = ({
                             <option value={3000}>3000%</option>
                             <option value={4000}>4000%</option>
                             <option value={5000}>5000%</option>
+                          </select>
+                        </div>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="minPeakDeltaFilter"
+                            className="text-xs w-10">
+                            Min:
+                          </label>
+                          <select
+                            id="minPeakDeltaFilter"
+                            value={minPeakDeltaFilter}
+                            onChange={(e) => {
+                              const val = e.target.value
+                              setMinPeakDeltaFilter(
+                                val === 'any' ? 'any' : Number(val)
+                              )
+                            }}
+                            className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                            <option value="any">Any</option>
+                            <option value={-100}>-100%</option>
+                            <option value={-95}>-95%</option>
+                            <option value={-85}>-85%</option>
+                            <option value={-75}>-75%</option>
+                            <option value={-50}>-50%</option>
+                            <option value={-25}>-25%</option>
+                            <option value={0}>0%</option>
                           </select>
                         </div>
                       </div>
