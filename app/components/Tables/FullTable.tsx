@@ -102,8 +102,8 @@ function FullTable<Type>({
     if (typeof value === 'number') {
       return value.toLocaleString()
     }
-    if (typeof value === 'string' && !isNaN(parseFloat(value))) {
-      return parseFloat(value).toLocaleString()
+    if (typeof value === 'string' && !isNaN(Number.parseFloat(value))) {
+      return Number.parseFloat(value).toLocaleString()
     }
     return String(value)
   }

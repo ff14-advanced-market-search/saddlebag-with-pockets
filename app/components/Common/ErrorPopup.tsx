@@ -1,5 +1,5 @@
 interface ErrorPopupProps {
-  error: string
+  error: string | Error | unknown
   onClose: () => void
 }
 
@@ -20,7 +20,13 @@ export default function ErrorPopup({ error, onClose }: ErrorPopupProps) {
         </div>
 
         <div className="mt-4">
-          <div className="text-gray-700 dark:text-gray-300">{error}</div>
+          <div className="text-gray-700 dark:text-gray-300">
+            {error instanceof Error
+              ? error.message
+              : typeof error === 'string'
+              ? error
+              : 'An unknown error occurred'}
+          </div>
         </div>
 
         <div className="mt-6 flex justify-end">
