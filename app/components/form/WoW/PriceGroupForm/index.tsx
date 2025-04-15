@@ -128,9 +128,9 @@ const PriceGroupForm = ({
   }
 
   return (
-    <div className="border rounded-md p-4 mb-4">
+    <div className="border rounded-md p-4 mb-4 dark:border-gray-600">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-medium">Price Group</h3>
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Price Group</h3>
         {onRemove && (
           <button
             onClick={onRemove}
@@ -163,7 +163,7 @@ const PriceGroupForm = ({
 
       {itemIds.length > 0 && (
         <div className="mt-4">
-          <h4 className="text-sm font-medium mb-2">Selected Items:</h4>
+          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Selected Items:</h4>
           <div className="space-y-2">
             {itemIds.map((id) => {
               const itemEntry = wowItemsList.find(
@@ -176,7 +176,7 @@ const PriceGroupForm = ({
                 <div
                   key={id}
                   className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <div className="flex-1 text-sm">{itemName}</div>
+                  <div className="flex-1 text-sm text-gray-900 dark:text-gray-100">{itemName}</div>
                   <button
                     type="button"
                     className="text-red-500 hover:text-red-700 text-sm"
@@ -192,7 +192,7 @@ const PriceGroupForm = ({
 
       <div className="mt-4">
         <div className="flex justify-between items-center mb-2">
-          <h4 className="text-sm font-medium">Categories</h4>
+          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">Categories</h4>
           <button
             type="button"
             onClick={() => setShowCategoryPopup(true)}
@@ -212,7 +212,7 @@ const PriceGroupForm = ({
                 <div
                   key={index}
                   className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <div className="flex-1 text-sm">
+                  <div className="flex-1 text-sm text-gray-900 dark:text-gray-100">
                     <div>
                       Class: {className}, Subclass: {subclassName}
                     </div>
