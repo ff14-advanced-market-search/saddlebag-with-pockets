@@ -1218,10 +1218,12 @@ const Results = ({
             <button
               type="button"
               onClick={() => setSelectedGroup('All')}
-              className={`p-2 rounded ${
+              className={`p-2 rounded transition-colors duration-200 ${
                 selectedGroup === 'All'
-                  ? 'bg-blue-500 text-white'
-                  : darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'
+                  ? 'bg-blue-500 text-white hover:bg-blue-600'
+                  : darkMode
+                  ? 'bg-slate-800 text-gray-100 hover:bg-slate-700'
+                  : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
               }`}>
               All Groups
             </button>
@@ -1230,10 +1232,12 @@ const Results = ({
                 key={group}
                 type="button"
                 onClick={() => setSelectedGroup(group)}
-                className={`p-2 rounded ${
+                className={`p-2 rounded transition-colors duration-200 ${
                   selectedGroup === group
-                    ? 'bg-blue-500 text-white'
-                    : darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'
+                    ? 'bg-blue-500 text-white hover:bg-blue-600'
+                    : darkMode
+                    ? 'bg-slate-800 text-gray-100 hover:bg-slate-700'
+                    : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
                 }`}>
                 {group}
               </button>
@@ -1599,7 +1603,12 @@ const Results = ({
 
           {/* Request Data Section */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mt-4">
-            <h3 className={`text-lg font-medium mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Request Data</h3>
+            <h3
+              className={`text-lg font-medium mb-4 ${
+                darkMode ? 'text-gray-300' : 'text-gray-900'
+              }`}>
+              Request Data
+            </h3>
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg">
               <CodeBlock
                 title="Request data used for this analysis"
