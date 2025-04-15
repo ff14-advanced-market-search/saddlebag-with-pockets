@@ -65,8 +65,8 @@ const CategorySelectionPopup = ({
     onAdd({
       item_class: itemClass,
       item_subclass: itemSubClass,
-      expansion_number: parseInt(expansion),
-      min_quality: parseInt(quality)
+      expansion_number: Number(expansion),
+      min_quality: Number(quality)
     })
     onClose()
   }
@@ -87,21 +87,21 @@ const CategorySelectionPopup = ({
         </div>
 
         <div className="space-y-4">
-          <div className="text-gray-700 dark:text-gray-300">
+          <div className="text-gray-900 dark:text-gray-100">
             <ExpansionSelect
               defaultValue={expansion}
               onChange={handleExpansionChange}
             />
           </div>
 
-          <div className="text-gray-700 dark:text-gray-300">
+          <div className="text-gray-900 dark:text-gray-100">
             <CommodityQualitySelect
               defaultValue={quality}
               onChange={handleQualityChange}
             />
           </div>
 
-          <div className="text-gray-700 dark:text-gray-300">
+          <div className="text-gray-900 dark:text-gray-100">
             <ItemClassSelect
               itemClass={itemClass}
               itemSubClass={itemSubClass}
