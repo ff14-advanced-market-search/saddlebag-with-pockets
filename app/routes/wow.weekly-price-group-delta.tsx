@@ -1221,7 +1221,7 @@ const Results = ({
               className={`p-2 rounded ${
                 selectedGroup === 'All'
                   ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  : darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'
               }`}>
               All Groups
             </button>
@@ -1233,7 +1233,7 @@ const Results = ({
                 className={`p-2 rounded ${
                   selectedGroup === group
                     ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    : darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'
                 }`}>
                 {group}
               </button>
@@ -1599,7 +1599,7 @@ const Results = ({
 
           {/* Request Data Section */}
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mt-4">
-            <h3 className="text-lg font-medium mb-4">Request Data</h3>
+            <h3 className={`text-lg font-medium mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Request Data</h3>
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg">
               <CodeBlock
                 title="Request data used for this analysis"
