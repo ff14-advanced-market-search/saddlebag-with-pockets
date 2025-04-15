@@ -359,6 +359,20 @@ const Index = () => {
   const [startDay, setStartDay] = useState(1)
   const [showImport, setShowImport] = useState(false)
   const [showErrorPopup, setShowErrorPopup] = useState(false)
+  const [pendingMinPeakDeltaFilter, setPendingMinPeakDeltaFilter] = useState<
+    number | 'any'
+  >('any')
+  const [pendingMaxPeakDeltaFilter, setPendingMaxPeakDeltaFilter] = useState<
+    number | 'any'
+  >('any')
+  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] =
+    useState(false)
+  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>(
+    'any'
+  )
+  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>(
+    'any'
+  )
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -637,6 +651,12 @@ const Results = ({
   const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>(
     'any'
   )
+  const [pendingMinPeakDeltaFilter, setPendingMinPeakDeltaFilter] = useState<
+    number | 'any'
+  >('any')
+  const [pendingMaxPeakDeltaFilter, setPendingMaxPeakDeltaFilter] = useState<
+    number | 'any'
+  >('any')
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -699,66 +719,6 @@ const Results = ({
     })
     setVisibleItems(newVisibleItems)
   }, [selectedGroup, data])
-
-  // Apply delta filtering to visibleItems
-  useEffect(() => {
-    if (!isPeakDeltaFilterEnabled || !selectedGroup || !data[selectedGroup]) {
-      // If filter is disabled or no group selected, don't apply filter logic here
-      // Visibility is handled by 'Select All'/'Unselect All' or initial state
-      return
-    }
-
-    setVisibleItems((prevVisibleItems) => {
-      const newVisibleItems = { ...prevVisibleItems }
-      Object.entries(data[selectedGroup].item_data).forEach(
-        ([itemId, itemData]) => {
-          const itemName = data[selectedGroup].item_names[itemId]
-
-          // Get all deltas for the item within the current date range
-          const deltasInRange = itemData.weekly_data
-            .filter(
-              (d) =>
-                d.t.toString() >= startDate &&
-                d.t.toString() <= endDate &&
-                d.delta !== null &&
-                d.delta !== undefined
-            )
-            .map((d) => d.delta)
-
-          let shouldBeVisible = true // Assume visible unless a delta fails the check
-
-          if (deltasInRange.length === 0) {
-            // If no data in range, hide if filtering
-            shouldBeVisible = false
-          } else {
-            // Check against filters: hide if *any* delta is outside the bounds
-            for (const delta of deltasInRange) {
-              const minFail =
-                minPeakDeltaFilter !== 'any' && delta < minPeakDeltaFilter
-              const maxFail =
-                maxPeakDeltaFilter !== 'any' && delta > maxPeakDeltaFilter
-
-              if (minFail || maxFail) {
-                shouldBeVisible = false
-                break // No need to check further deltas for this item
-              }
-            }
-          }
-
-          newVisibleItems[itemName] = shouldBeVisible
-        }
-      )
-      return newVisibleItems
-    })
-  }, [
-    isPeakDeltaFilterEnabled,
-    minPeakDeltaFilter,
-    maxPeakDeltaFilter,
-    selectedGroup,
-    data,
-    startDate,
-    endDate
-  ])
 
   const styles = darkMode
     ? {
@@ -1368,10 +1328,10 @@ const Results = ({
                           </label>
                           <select
                             id="maxPeakDeltaFilter"
-                            value={maxPeakDeltaFilter}
+                            value={pendingMaxPeakDeltaFilter}
                             onChange={(e) => {
                               const val = e.target.value
-                              setMaxPeakDeltaFilter(
+                              setPendingMaxPeakDeltaFilter(
                                 val === 'any' ? 'any' : Number(val)
                               )
                             }}
@@ -1401,10 +1361,10 @@ const Results = ({
                           </label>
                           <select
                             id="minPeakDeltaFilter"
-                            value={minPeakDeltaFilter}
+                            value={pendingMinPeakDeltaFilter}
                             onChange={(e) => {
                               const val = e.target.value
-                              setMinPeakDeltaFilter(
+                              setPendingMinPeakDeltaFilter(
                                 val === 'any' ? 'any' : Number(val)
                               )
                             }}
@@ -1419,6 +1379,63 @@ const Results = ({
                             <option value={0}>0%</option>
                           </select>
                         </div>
+                        <button
+                          onClick={() => {
+                            if (!selectedGroup || !data[selectedGroup]) return
+
+                            // Start with all items unselected except the average
+                            const newVisibleItems: Record<string, boolean> = {
+                              [`${selectedGroup} (Average)`]: true
+                            }
+
+                            // Only select items that match the filter criteria
+                            Object.entries(
+                              data[selectedGroup].item_data
+                            ).forEach(([itemId, itemData]) => {
+                              const itemName =
+                                data[selectedGroup].item_names[itemId]
+
+                              // Get all deltas for the item within the current date range
+                              const deltasInRange = itemData.weekly_data
+                                .filter(
+                                  (d) =>
+                                    d.t.toString() >= startDate &&
+                                    d.t.toString() <= endDate &&
+                                    d.delta !== null &&
+                                    d.delta !== undefined
+                                )
+                                .map((d) => d.delta)
+
+                              let shouldBeVisible = deltasInRange.length > 0
+
+                              // Check against filters
+                              if (shouldBeVisible) {
+                                for (const delta of deltasInRange) {
+                                  const minFail =
+                                    pendingMinPeakDeltaFilter !== 'any' &&
+                                    delta < pendingMinPeakDeltaFilter
+                                  const maxFail =
+                                    pendingMaxPeakDeltaFilter !== 'any' &&
+                                    delta > pendingMaxPeakDeltaFilter
+
+                                  if (minFail || maxFail) {
+                                    shouldBeVisible = false
+                                    break
+                                  }
+                                }
+                              }
+
+                              newVisibleItems[itemName] = shouldBeVisible
+                            })
+
+                            // Update the actual filter values and visible items
+                            setMinPeakDeltaFilter(pendingMinPeakDeltaFilter)
+                            setMaxPeakDeltaFilter(pendingMaxPeakDeltaFilter)
+                            setVisibleItems(newVisibleItems)
+                          }}
+                          className="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-1 px-2 rounded transition-colors">
+                          Apply Filter
+                        </button>
                       </div>
                     )}
                   </div>
