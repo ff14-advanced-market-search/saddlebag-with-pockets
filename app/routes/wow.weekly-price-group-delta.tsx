@@ -290,9 +290,12 @@ const ImportPopup = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl w-full mx-4">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium">Import Configuration</h3>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+            Import Configuration
+          </h3>
           <button
             onClick={onClose}
+            type="button"
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
             ✕
           </button>
@@ -302,12 +305,12 @@ const ImportPopup = ({
           <div>
             <label
               htmlFor="jsonConfig"
-              className="block text-sm font-medium mb-2">
+              className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
               Paste your JSON configuration:
             </label>
             <textarea
               id="jsonConfig"
-              className="w-full h-64 p-2 border rounded font-mono text-sm dark:bg-gray-700 dark:border-gray-600"
+              className="w-full h-64 p-2 border rounded font-mono text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
               value={jsonInput}
               onChange={(e) => {
                 setJsonInput(e.target.value)
@@ -317,19 +320,23 @@ const ImportPopup = ({
             />
           </div>
 
-          {error && <div className="text-red-500 text-sm">{error}</div>}
+          {error && (
+            <div className="text-red-500 dark:text-red-400 text-sm">
+              {error}
+            </div>
+          )}
 
           <div className="flex justify-end space-x-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-200">
               Cancel
             </button>
             <button
               type="button"
               onClick={handleImport}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700">
               Import
             </button>
           </div>
@@ -517,13 +524,15 @@ const Index = () => {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Price Groups</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+              Price Groups
+            </h3>
             <div className="flex justify-center my-8">
               <button
                 type="submit"
                 onClick={onSubmit}
                 disabled={transition.state === 'submitting'}
-                className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse">
+                className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse disabled:opacity-50 disabled:cursor-not-allowed">
                 {transition.state === 'submitting'
                   ? 'Searching...'
                   : 'Search Price Groups'}
@@ -553,13 +562,9 @@ const Index = () => {
             ))}
             <button
               type="button"
-              className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ${
-                priceGroups.length >= MAX_PRICE_GROUPS
-                  ? 'opacity-50 cursor-not-allowed'
-                  : ''
-              }`}
               onClick={handleAddPriceGroup}
-              disabled={priceGroups.length >= MAX_PRICE_GROUPS}>
+              disabled={priceGroups.length >= MAX_PRICE_GROUPS}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
               Add Price Group
             </button>
           </div>
@@ -571,31 +576,21 @@ const Index = () => {
           />
 
           <div className="mt-8">
-            <h3 className="text-lg font-medium mb-4">Request Data Preview</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+              Request Data Preview
+            </h3>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
               <CodeBlock
                 title="Input for weekly price group delta"
                 buttonTitle="Copy"
                 codeString={JSON.stringify(requestData, null, 2)}
                 onClick={() => alert('Copied to clipboard!')}>
-                <p className="italic text-sm text-blue-900 dark:text-gray-100 py-2">
+                <p className="italic text-sm text-gray-700 dark:text-gray-300 py-2">
                   This is the data that will be sent to the API when you submit
                   the form.
                 </p>
               </CodeBlock>
             </div>
-          </div>
-
-          <div className="flex justify-center my-8">
-            <button
-              type="submit"
-              onClick={onSubmit}
-              disabled={transition.state === 'submitting'}
-              className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse">
-              {transition.state === 'submitting'
-                ? 'Searching...'
-                : 'Search Price Groups'}
-            </button>
           </div>
         </form>
       </SmallFormContainer>
@@ -767,11 +762,21 @@ const Results = ({
 
   const styles = darkMode
     ? {
-        backgroundColor: '#334155',
-        color: 'white',
-        hoverColor: '#f8f8f8'
+        backgroundColor: '#1e293b', // slate-800
+        color: '#f3f4f6', // gray-100
+        hoverColor: '#f8f8f8',
+        gridLineColor: '#334155', // slate-700
+        labelColor: '#94a3b8', // slate-400
+        borderColor: '#475569' // slate-600
       }
-    : {}
+    : {
+        backgroundColor: '#ffffff',
+        color: '#1f2937', // gray-800
+        hoverColor: '#4b5563', // gray-600
+        gridLineColor: '#e2e8f0', // slate-200
+        labelColor: '#64748b', // slate-500
+        borderColor: '#e2e8f0' // slate-200
+      }
 
   const seriesData = useMemo(() => {
     if (selectedGroup === 'All') {
@@ -887,40 +892,53 @@ const Results = ({
   const deltaChartOptions: Options = {
     chart: {
       type: 'line',
-      backgroundColor: styles?.backgroundColor,
+      backgroundColor: styles.backgroundColor,
       style: {
         fontFamily:
-          '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       },
-      height: 600
+      height: 600,
+      spacingBottom: 20,
+      spacingTop: 20,
+      spacingLeft: 20,
+      spacingRight: 20
     },
     title: {
       text:
         selectedGroup === 'All'
           ? 'All Groups - Weekly Price Deltas'
           : `${selectedGroup} - Weekly Price Deltas`,
-      style: { color: styles?.color }
+      style: { color: styles.color, fontSize: '18px' }
     },
     xAxis: {
       categories: filteredTimestamps.map(formatTimestamp),
       labels: {
-        style: { color: styles?.color },
+        style: { color: styles.labelColor },
         rotation: -45,
         formatter() {
           return this.value as string
         }
       },
-      title: { text: 'Week', style: { color: styles?.color } }
+      title: { text: 'Week', style: { color: styles.color } },
+      lineColor: styles.borderColor,
+      gridLineColor: styles.gridLineColor,
+      tickColor: styles.borderColor
     },
     yAxis: {
       title: {
         text: 'Price Change %',
-        style: { color: styles?.color }
+        style: { color: styles.color }
       },
-      labels: { style: { color: styles?.color } },
+      labels: {
+        style: { color: styles.labelColor },
+        format: '{value}%'
+      },
       min: minYAxis !== null ? minYAxis : undefined,
       max: maxYAxis !== null ? maxYAxis : undefined,
-      softMin: minYAxis !== null ? minYAxis : undefined
+      softMin: minYAxis !== null ? minYAxis : undefined,
+      gridLineColor: styles.gridLineColor,
+      lineColor: styles.borderColor,
+      tickColor: styles.borderColor
     },
     tooltip: {
       shared: true,
@@ -935,32 +953,47 @@ const Results = ({
           .filter((point) => point.y != null)
           .sort((a, b) => (b.y || 0) - (a.y || 0))
 
-        let s = `<b>${this.x}</b><br/>`
+        let s = `<div style="min-width: 150px; color: ${styles.color}; font-size: 12px;">
+          <b style="font-size: 14px;">${this.x}</b><br/>`
 
         // Add each point's data
         sortedPoints.forEach((point) => {
-          s += `<span style="color:${point.color}">●</span> ${
-            point.series.name
-          }: <b>${point.y?.toFixed(2)}%</b><br/>`
+          s += `<div style="display: flex; justify-content: space-between; margin: 4px 0;">
+            <span style="color:${point.color}">●</span>
+            <span style="margin-left: 4px; flex-grow: 1;">${
+              point.series.name
+            }:</span>
+            <b style="margin-left: 8px;">${point.y?.toFixed(2)}%</b>
+          </div>`
         })
 
+        s += '</div>'
         return s
       },
       backgroundColor: darkMode ? '#1f2937' : '#ffffff',
       style: {
-        color: darkMode ? '#ffffff' : '#000000'
+        color: styles.color
       },
-      padding: 8,
-      // Ensure tooltip doesn't get cut off at screen edges
-      followPointer: true,
-      outside: true
+      padding: 12,
+      shadow: true,
+      borderWidth: 1,
+      borderColor: styles.borderColor,
+      borderRadius: 8
     },
     plotOptions: {
       series: {
         connectNulls: true,
         marker: {
           enabled: true,
-          radius: 3
+          radius: 3,
+          lineWidth: 1,
+          lineColor: styles.borderColor
+        },
+        states: {
+          hover: {
+            brightness: darkMode ? 0.3 : -0.2,
+            lineWidthPlus: 0
+          }
         },
         events: {
           legendItemClick() {
@@ -972,10 +1005,19 @@ const Results = ({
         }
       }
     },
-    series: seriesData,
+    series: seriesData.map((series) => ({
+      ...series,
+      lineWidth: series.name.includes('Average') ? 3 : 1.5,
+      opacity: series.name.includes('Average') ? 1 : 0.8,
+      states: {
+        hover: {
+          lineWidth: series.name.includes('Average') ? 3 : 1.5
+        }
+      }
+    })),
     legend: {
-      itemStyle: { color: styles?.color },
-      itemHoverStyle: { color: styles?.hoverColor },
+      itemStyle: { color: styles.color },
+      itemHoverStyle: { color: styles.hoverColor },
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
@@ -987,9 +1029,22 @@ const Results = ({
             ),
       itemMarginTop: 4,
       itemMarginBottom: 4,
+      padding: 12,
+      backgroundColor: styles.backgroundColor,
+      borderWidth: 1,
+      borderColor: styles.borderColor,
+      borderRadius: 4,
+      shadow: false,
       symbolRadius: 2,
       symbolHeight: 8,
-      symbolWidth: 8
+      symbolWidth: 8,
+      useHTML: true,
+      labelFormatter: function () {
+        return `<span style="display: flex; align-items: center;">
+          <span style="color: ${this.color};">●</span>
+          <span style="margin-left: 4px;">${this.name}</span>
+        </span>`
+      }
     },
     credits: { enabled: false }
   }
@@ -1101,7 +1156,7 @@ const Results = ({
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                   Start Date
                 </label>
                 <select
@@ -1109,12 +1164,11 @@ const Results = ({
                   onChange={(e) => {
                     const newStart = e.target.value
                     setStartDate(newStart)
-                    // Adjust end date if it's before new start date
                     if (endDate < newStart) {
                       setEndDate(newStart)
                     }
                   }}
-                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                  className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                   {allTimestamps.map((timestamp) => (
                     <option key={timestamp} value={timestamp}>
                       {formatTimestamp(timestamp)}
@@ -1123,7 +1177,7 @@ const Results = ({
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                   End Date
                 </label>
                 <select
@@ -1131,12 +1185,11 @@ const Results = ({
                   onChange={(e) => {
                     const newEnd = e.target.value
                     setEndDate(newEnd)
-                    // Adjust start date if it's after new end date
                     if (startDate > newEnd) {
                       setStartDate(newEnd)
                     }
                   }}
-                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                  className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                   {allTimestamps.map((timestamp) => (
                     <option key={timestamp} value={timestamp}>
                       {formatTimestamp(timestamp)}
@@ -1145,7 +1198,7 @@ const Results = ({
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                   Reset Range
                 </label>
                 <button
@@ -1210,14 +1263,14 @@ const Results = ({
                 style={{ height: '600px' }}>
                 {/* Controls that stay visible */}
                 <div className="px-4 mb-2 pt-4">
-                  <h4 className="font-medium text-sm mb-2">
+                  <h4 className="font-medium text-sm mb-2 text-gray-900 dark:text-gray-100">
                     Chart Y-Axis Range:
                   </h4>
 
                   <div className="flex items-center">
                     <label
                       htmlFor="maxYAxis"
-                      className="text-xs font-medium w-16">
+                      className="text-xs font-medium w-16 text-gray-900 dark:text-gray-100">
                       Max Price %:
                     </label>
                     <select
@@ -1227,7 +1280,7 @@ const Results = ({
                         const val = e.target.value
                         setMaxYAxis(val === 'auto' ? null : Number(val))
                       }}
-                      className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                      className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
                       <option value="auto">Auto</option>
                       <option value={25}>25%</option>
                       <option value={50}>50%</option>
@@ -1245,7 +1298,7 @@ const Results = ({
                   <div className="flex items-center mb-2">
                     <label
                       htmlFor="minYAxis"
-                      className="text-xs font-medium w-16">
+                      className="text-xs font-medium w-16 text-gray-900 dark:text-gray-100">
                       Min Price %:
                     </label>
                     <select
@@ -1255,7 +1308,7 @@ const Results = ({
                         const val = e.target.value
                         setMinYAxis(val === 'auto' ? null : Number(val))
                       }}
-                      className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                      className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
                       <option value="auto">Auto</option>
                       <option value={-95}>-95%</option>
                       <option value={-85}>-85%</option>
@@ -1269,45 +1322,9 @@ const Results = ({
 
                 <div className="mx-4 border-t border-gray-300 dark:border-gray-600 my-2" />
 
-                <h4 className="font-medium px-4 pb-2">Show/Hide Items</h4>
-                <div className="px-4 flex space-x-2 mb-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!showItemDetails || !groupData) return
-                      const allVisible: Record<string, boolean> = {}
-                      Object.keys(groupData.item_names).forEach((itemId) => {
-                        allVisible[groupData.item_names[itemId]] = true
-                      })
-                      // Add average line for specific group view
-                      if (selectedGroup !== 'All') {
-                        allVisible[`${selectedGroup} (Average)`] = true
-                      }
-                      setVisibleItems(allVisible)
-                      setIsPeakDeltaFilterEnabled(false) // Disable filter
-                    }}
-                    className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded flex-1">
-                    Select All
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!showItemDetails || !groupData) return
-                      const allHidden: Record<string, boolean> = {}
-                      Object.keys(groupData.item_names).forEach((itemId) => {
-                        allHidden[groupData.item_names[itemId]] = false
-                      })
-                      // Keep average line for specific group view, but hide items
-                      if (selectedGroup !== 'All') {
-                        allHidden[`${selectedGroup} (Average)`] = true // Keep average line visible
-                      }
-                      setVisibleItems(allHidden)
-                      setIsPeakDeltaFilterEnabled(false) // Disable filter
-                    }}
-                    className="text-xs bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded flex-1">
-                    Unselect All
-                  </button>
-                </div>
+                <h4 className="font-medium px-4 pb-2 text-gray-900 dark:text-gray-100">
+                  Show/Hide Items
+                </h4>
 
                 <div className="px-4 mb-2">
                   <div className="relative">
@@ -1316,30 +1333,12 @@ const Results = ({
                       placeholder="Search items..."
                       value={visibilityFilter}
                       onChange={(e) => setVisibilityFilter(e.target.value)}
-                      className="w-full p-2 text-xs border rounded dark:bg-gray-700 dark:border-gray-600"
+                      className="w-full p-2 text-xs border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400"
                     />
-                    {visibilityFilter && (
-                      <button
-                        onClick={() => setVisibilityFilter('')}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                        aria-label="Clear search">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          viewBox="0 0 20 20"
-                          fill="currentColor">
-                          <path
-                            fillRule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                    )}
                   </div>
                 </div>
 
-                {/* Delta Filter Controls - Only show when a specific group is selected */}
+                {/* Delta Filter Controls */}
                 {showItemDetails && (
                   <div className="px-4 mb-2 space-y-2 border-t border-b border-gray-300 dark:border-gray-600 py-2">
                     <label className="flex items-center space-x-2 cursor-pointer">
@@ -1351,7 +1350,7 @@ const Results = ({
                         }
                         className="form-checkbox h-4 w-4 text-blue-500"
                       />
-                      <span className="text-xs font-medium">
+                      <span className="text-xs font-medium text-gray-900 dark:text-gray-100">
                         Filter by Price Change %
                       </span>
                     </label>
@@ -1360,7 +1359,7 @@ const Results = ({
                         <div className="flex items-center">
                           <label
                             htmlFor="maxPeakDeltaFilter"
-                            className="text-xs w-10">
+                            className="text-xs w-10 text-gray-900 dark:text-gray-100">
                             Max:
                           </label>
                           <select
@@ -1372,7 +1371,7 @@ const Results = ({
                                 val === 'any' ? 'any' : Number(val)
                               )
                             }}
-                            className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                            className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
                             <option value="any">Any</option>
                             <option value={-50}>-50%</option>
                             <option value={-25}>-25%</option>
@@ -1393,7 +1392,7 @@ const Results = ({
                         <div className="flex items-center">
                           <label
                             htmlFor="minPeakDeltaFilter"
-                            className="text-xs w-10">
+                            className="text-xs w-10 text-gray-900 dark:text-gray-100">
                             Min:
                           </label>
                           <select
@@ -1405,7 +1404,7 @@ const Results = ({
                                 val === 'any' ? 'any' : Number(val)
                               )
                             }}
-                            className="text-xs p-1 rounded border dark:bg-gray-700 dark:border-gray-600 flex-1">
+                            className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
                             <option value="any">Any</option>
                             <option value={-100}>-100%</option>
                             <option value={-95}>-95%</option>
@@ -1421,7 +1420,7 @@ const Results = ({
                   </div>
                 )}
 
-                {/* Scrollable item list with flex-grow to fill remaining space */}
+                {/* Scrollable item list */}
                 <div className="overflow-auto px-4 pb-4 flex-grow">
                   <div className="space-y-2">
                     {Object.entries(visibleItems)
@@ -1445,7 +1444,9 @@ const Results = ({
                             }}
                             className="form-checkbox h-4 w-4 text-blue-500"
                           />
-                          <span className="text-sm" title={name}>
+                          <span
+                            className="text-sm text-gray-900 dark:text-gray-100"
+                            title={name}>
                             {name}
                           </span>
                         </label>
@@ -1513,7 +1514,9 @@ const Results = ({
           {showItemDetails && groupData && (
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
               <div className="flex flex-wrap gap-4 items-center mb-4">
-                <h3 className="text-lg font-medium">Item Details</h3>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                  Item Details
+                </h3>
                 <div className="flex-1 min-w-[200px]">
                   <select
                     value={selectedDate}
@@ -1621,7 +1624,7 @@ const Results = ({
                   2
                 )}
                 onClick={() => alert('Copied to clipboard!')}>
-                <p className="italic text-sm text-blue-900 dark:text-gray-100 py-2">
+                <p className="italic text-sm text-gray-700 dark:text-gray-300 py-2">
                   You can copy this data to recreate the same analysis later.
                 </p>
               </CodeBlock>
