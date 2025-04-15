@@ -22,7 +22,7 @@ const formatTimestamp = (timestamp: number) => {
 const formatTooltip = (
   points: TooltipFormatterContextObject[],
   itemName: string,
-  weeklyData: Array<WeeklyDataPoint>,
+  weeklyData: WeeklyDataPoint[],
   isDarkMode: boolean
 ): string => {
   if (!points?.length || !weeklyData?.length) return ''
@@ -63,7 +63,7 @@ export default function WeeklyPriceQuantityChart({
   darkMode,
   itemName
 }: {
-  weeklyData: Array<WeeklyDataPoint>
+  weeklyData: WeeklyDataPoint[]
   darkMode: boolean
   itemName: string
 }) {
