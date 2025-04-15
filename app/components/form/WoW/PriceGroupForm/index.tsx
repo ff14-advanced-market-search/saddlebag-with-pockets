@@ -218,7 +218,7 @@ const PriceGroupForm = ({
               )
               return (
                 <div
-                  key={index}
+                  key={`${cat.item_class}-${cat.item_subclass}-${cat.expansion_number}-${cat.min_quality}`}
                   className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded">
                   <div className="flex-1 text-sm text-gray-900 dark:text-gray-100">
                     <div>
