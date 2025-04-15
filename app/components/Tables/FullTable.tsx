@@ -49,30 +49,28 @@ export type ColumnList<Type> = {
 }
 
 /**
- * Renders a table with customizable columns and global filtering.
+ * Displays a sortable and filterable table with customizable columns and global search.
+ *
  * @example
- * FullTable({
- *   data: [{ name: "Alice", age: 30 }],
- *   sortingOrder: [{ id: "name", desc: false }],
- *   columnList: [{ columnId: "name", header: "Name" }],
- *   order: ["name", "age"],
- *   globalFilter: "a",
- *   setGlobalFilter: setFilter
- * })
- * returns a table view based on the provided data and configuration.
- * @param {Object} config - Configuration object for the FullTable component.
- * @param {Array<Type>} config.data - Array of data objects to display in the table.
- * @param {Array<{ id: keyof Type; desc: boolean }>} config.sortingOrder - Defines the sorting order of columns.
- * @param {Array<ColumnList<Type>>} config.columnList - Array defining the column configurations.
- * @param {Array<string>} [config.order] - Optional column order.
- * @param {string} [config.globalFilter] - Optional global filter applied to all columns.
- * @param {React.Dispatch<React.SetStateAction<string>>} [config.setGlobalFilter] - State updater for globalFilter.
- * @returns {JSX.Element} A table component with sorting and filtering functionalities.
- * @description
- *   - Use `setGlobalFilter` to update the global search term.
- *   - `parseToLocaleString` converts numbers to locale strings for display.
- *   - Supports client-side sorting and filtering.
- *   - Changes the window scroll position to top on initialization.
+ * <FullTable
+ *   data={[{ name: "Alice", age: 30 }]}
+ *   sortingOrder={[{ id: "name", desc: false }]}
+ *   columnList={[{ columnId: "name", header: "Name" }]}
+ *   order={["name", "age"]}
+ *   globalFilter="a"
+ *   setGlobalFilter={setFilter}
+ * />
+ *
+ * @param data - The array of data objects to display in the table.
+ * @param sortingOrder - Initial sorting configuration for columns.
+ * @param columnList - List of column definitions, including headers, accessors, and sorting options.
+ * @param order - Optional array specifying the order of columns.
+ * @param globalFilter - Optional global filter string applied to all columns.
+ * @param setGlobalFilter - Optional state setter for updating the global filter.
+ * @returns The rendered table component with sorting and filtering capabilities.
+ *
+ * @remark
+ * Values that are `null` or `undefined` are displayed as "N/A". Numeric values are formatted using locale strings.
  */
 function FullTable<Type>({
   data,
