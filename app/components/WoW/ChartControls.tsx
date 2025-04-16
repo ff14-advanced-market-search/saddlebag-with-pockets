@@ -6,8 +6,8 @@ interface ChartControlsProps {
   darkMode: boolean
 }
 
-const DEFAULT_MAX_PRESETS = [25, 50, 100, 200, 500, 1000, 2000, 5000]
-const DEFAULT_MIN_PRESETS = [-95, -75, -50, -25, 0]
+const DEFAULT_MAX_PRESETS = [5000, 2000, 1000, 500, 200, 100, 50, 25]
+const DEFAULT_MIN_PRESETS = [0, -25, -50, -75, -95]
 
 export default function ChartControls({
   minYAxis,
