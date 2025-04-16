@@ -43,6 +43,10 @@ import VisibleItemsList from '~/components/WoW/VisibleItemsList'
 import ChartControls from '~/components/WoW/ChartControls'
 import DateRangeControls from '~/components/WoW/DateRangeControls'
 import ItemDetailsTable from '~/components/WoW/ItemDetailsTable'
+import GroupSelector from '~/components/WoW/GroupSelector'
+import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
+import PriceQuantityAnalysis from '~/components/WoW/PriceQuantityAnalysis'
+import RequestDataSection from '~/components/WoW/RequestDataSection'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -1113,162 +1117,44 @@ const Results = ({
           />
 
           {/* Group selector */}
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => setSelectedGroup('All')}
-              className={`p-2 rounded transition-colors duration-200 ${
-                selectedGroup === 'All'
-                  ? 'bg-blue-500 text-white hover:bg-blue-600'
-                  : darkMode
-                  ? 'bg-slate-800 text-gray-100 hover:bg-slate-700'
-                  : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-              }`}>
-              All Groups
-            </button>
-            {Object.keys(data).map((group) => (
-              <button
-                key={group}
-                type="button"
-                onClick={() => setSelectedGroup(group)}
-                className={`p-2 rounded transition-colors duration-200 ${
-                  selectedGroup === group
-                    ? 'bg-blue-500 text-white hover:bg-blue-600'
-                    : darkMode
-                    ? 'bg-slate-800 text-gray-100 hover:bg-slate-700'
-                    : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-                }`}>
-                {group}
-              </button>
-            ))}
-          </div>
+          <GroupSelector
+            selectedGroup={selectedGroup}
+            groups={Object.keys(data)}
+            onGroupSelect={setSelectedGroup}
+            darkMode={darkMode}
+          />
 
           {/* Chart and Controls Container */}
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Chart */}
-              <div className="flex-grow min-w-0">
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={{
-                    ...deltaChartOptions,
-                    legend: {
-                      ...deltaChartOptions.legend,
-                      enabled: false
-                    }
-                  }}
-                />
-              </div>
+          <DeltaChartContainer
+            data={data}
+            selectedGroup={selectedGroup}
+            startDate={startDate}
+            endDate={endDate}
+            darkMode={darkMode}
+            minYAxis={minYAxis}
+            maxYAxis={maxYAxis}
+            onMinYAxisChange={setMinYAxis}
+            onMaxYAxisChange={setMaxYAxis}
+            visibleItems={visibleItems}
+            visibilityFilter={visibilityFilter}
+            onVisibleItemsChange={setVisibleItems}
+            onVisibilityFilterChange={setVisibilityFilter}
+            filteredTimestamps={filteredTimestamps}
+            formatTimestamp={formatTimestamp}
+          />
 
-              {/* Visibility Controls */}
-              <div
-                className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded"
-                style={{ height: '600px' }}>
-                {/* Chart Controls */}
-                <ChartControls
-                  minYAxis={minYAxis}
-                  maxYAxis={maxYAxis}
-                  onMinYAxisChange={setMinYAxis}
-                  onMaxYAxisChange={setMaxYAxis}
-                  darkMode={darkMode}
-                />
-
-                <div className="mx-4 border-t border-gray-300 dark:border-gray-600 my-2" />
-
-                <h4 className="font-medium px-4 pb-2 text-gray-900 dark:text-gray-100">
-                  Show/Hide Items
-                </h4>
-
-                <div className="px-4 mb-2">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="Search items..."
-                      value={visibilityFilter}
-                      onChange={(e) => setVisibilityFilter(e.target.value)}
-                      className="w-full p-2 text-xs border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400"
-                    />
-                  </div>
-                </div>
-
-                {/* Delta Filter Controls */}
-                <DeltaFilterControls
-                  selectedGroup={selectedGroup}
-                  startDate={startDate}
-                  endDate={endDate}
-                  data={data}
-                  onApplyFilter={setVisibleItems}
-                />
-
-                {/* Visible Items List */}
-                <VisibleItemsList
-                  visibleItems={visibleItems}
-                  visibilityFilter={visibilityFilter}
-                  onVisibilityChange={(name, isVisible) => {
-                    setVisibleItems((prev) => ({
-                      ...prev,
-                      [name]: isVisible
-                    }))
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Price vs Quantity Analysis Button */}
+          {/* Price vs Quantity Analysis */}
           {showItemDetails && groupData && (
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
-              <button
-                type="button"
-                onClick={() =>
-                  setShowPriceQuantityCharts(!showPriceQuantityCharts)
-                }
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  role="img"
-                  aria-label="Chart analysis icon">
-                  <title>Chart analysis</title>
-                  <path
-                    fillRule="evenodd"
-                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {showPriceQuantityCharts ? 'Hide' : 'Show'} Price vs Quantity
-                Analysis
-              </button>
-            </div>
+            <PriceQuantityAnalysis
+              showPriceQuantityCharts={showPriceQuantityCharts}
+              setShowPriceQuantityCharts={setShowPriceQuantityCharts}
+              groupData={groupData}
+              visibleItems={visibleItems}
+              darkMode={darkMode}
+            />
           )}
 
-          {/* Price vs Quantity Charts */}
-          {showItemDetails && showPriceQuantityCharts && groupData && (
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
-              <div className="grid grid-cols-1 gap-4">
-                {Object.entries(groupData.item_data)
-                  .filter(([itemId]) => {
-                    const itemName = groupData.item_names[itemId]
-                    return visibleItems[itemName]
-                  })
-                  .map(([itemId, itemData]) => (
-                    <div
-                      key={itemId}
-                      className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                      <WeeklyPriceQuantityChart
-                        weeklyData={itemData.weekly_data}
-                        darkMode={darkMode}
-                        itemName={groupData.item_names[itemId]}
-                      />
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
-
-          {/* Item details table - only shown when a specific group is selected */}
+          {/* Item details table */}
           {showItemDetails && groupData && (
             <ItemDetailsTable
               data={Object.values(groupData.item_data)}
@@ -1293,43 +1179,12 @@ const Results = ({
           )}
 
           {/* Request Data Section */}
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mt-4">
-            <h3
-              className={`text-lg font-medium mb-4 ${
-                darkMode ? 'text-gray-300' : 'text-gray-900'
-              }`}>
-              Request Data
-            </h3>
-            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <CodeBlock
-                title="Request data used for this analysis"
-                buttonTitle="Copy"
-                codeString={JSON.stringify(
-                  {
-                    region: wowRegion,
-                    start_year: Number.parseInt(startDate.slice(0, 4)),
-                    start_month: Number.parseInt(startDate.slice(4, 6)),
-                    start_day: Number.parseInt(startDate.slice(6, 8)),
-                    price_groups: Object.entries(data).map(
-                      ([name, groupData]) => ({
-                        name,
-                        item_ids: Object.keys(groupData.item_data).map(
-                          (id: string) => Number.parseInt(id)
-                        ),
-                        categories: []
-                      })
-                    )
-                  },
-                  null,
-                  2
-                )}
-                onClick={() => alert('Copied to clipboard!')}>
-                <p className="italic text-sm text-gray-700 dark:text-gray-300 py-2">
-                  You can copy this data to recreate the same analysis later.
-                </p>
-              </CodeBlock>
-            </div>
-          </div>
+          <RequestDataSection
+            data={data}
+            wowRegion={wowRegion}
+            startDate={startDate}
+            darkMode={darkMode}
+          />
         </div>
       </ContentContainer>
     </PageWrapper>
