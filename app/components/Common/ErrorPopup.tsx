@@ -3,6 +3,14 @@ interface ErrorPopupProps {
   onClose: () => void
 }
 
+/**
+ * Displays a modal popup with an error message and options to close the dialog.
+ *
+ * Shows the provided error message or a default message if the error is unknown. The popup overlays the entire viewport and supports both light and dark themes.
+ *
+ * @param error - The error to display, which can be a string, an Error object, or any unknown value.
+ * @param onClose - Callback invoked when the popup is closed.
+ */
 export default function ErrorPopup({ error, onClose }: ErrorPopupProps) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

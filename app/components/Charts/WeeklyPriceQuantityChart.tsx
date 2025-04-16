@@ -56,7 +56,13 @@ const formatTooltip = (
 }
 
 /**
- * Renders a line chart showing price and quantity over time.
+ * Displays a dual-axis line chart of weekly minimum price and total quantity for a given item, with dark mode support.
+ *
+ * @param weeklyData - Array of weekly data points containing price, quantity, timestamp, and price change percentage.
+ * @param darkMode - Whether to render the chart in dark mode.
+ * @param itemName - Name of the item to display in the chart title and tooltips.
+ *
+ * @returns A React component rendering the configured Highcharts chart.
  */
 export default function WeeklyPriceQuantityChart({
   weeklyData,

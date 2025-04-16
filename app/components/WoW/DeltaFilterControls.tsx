@@ -18,6 +18,13 @@ const DEFAULT_MIN_PRESETS = [
 
 type FilterMode = 'exclusive' | 'inclusive'
 
+/**
+ * Renders UI controls for filtering items in a selected group by their weekly price change percentages within a specified date range.
+ *
+ * Users can enable or disable the filter, choose between exclusive and inclusive filter modes, and set minimum and maximum percentage thresholds. When the filter is applied, only items matching the selected criteria remain visible, and the updated visibility map is sent to the parent via the provided callback.
+ *
+ * @remark Returns null if no valid group is selected or if the group is "All".
+ */
 export default function DeltaFilterControls({
   selectedGroup,
   startDate,

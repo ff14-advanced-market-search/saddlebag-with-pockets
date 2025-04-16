@@ -4,6 +4,11 @@ interface VisibleItemsListProps {
   onVisibilityChange: (name: string, isVisible: boolean) => void
 }
 
+/**
+ * Displays a scrollable, filterable list of items with checkboxes to toggle their visibility.
+ *
+ * Filters items by name using the provided {@link visibilityFilter} (case-insensitive). If no items match, a message is shown. Toggling a checkbox calls {@link onVisibilityChange} with the item's name and new visibility state.
+ */
 export default function VisibleItemsList({
   visibleItems,
   visibilityFilter,

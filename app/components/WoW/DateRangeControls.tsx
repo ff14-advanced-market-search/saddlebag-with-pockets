@@ -7,6 +7,18 @@ interface DateRangeControlsProps {
   formatTimestamp: (timestamp: string) => string
 }
 
+/**
+ * Renders UI controls for selecting and managing a date range from a list of timestamps.
+ *
+ * Provides dropdown selectors for start and end dates, ensuring the selected range is always valid by automatically adjusting the opposing date if an invalid range is chosen. Includes a button to reset the range to the earliest and latest available timestamps.
+ *
+ * @param startDate - The currently selected start date.
+ * @param endDate - The currently selected end date.
+ * @param allTimestamps - Array of all available timestamp strings for selection.
+ * @param onStartDateChange - Callback invoked with the new start date when changed.
+ * @param onEndDateChange - Callback invoked with the new end date when changed.
+ * @param formatTimestamp - Function to format a timestamp string for display in the dropdowns.
+ */
 export default function DateRangeControls({
   startDate,
   endDate,

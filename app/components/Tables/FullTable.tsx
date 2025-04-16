@@ -73,6 +73,11 @@ export type ColumnList<Type> = {
  *   - `parseToLocaleString` converts numbers to locale strings for display.
  *   - Supports client-side sorting and filtering.
  *   - Changes the window scroll position to top on initialization.
+ *
+ * @remark
+ * - The table scrolls to the top of the window on mount.
+ * - Columns can use custom data accessors and cell renderers.
+ * - Values that are `null` or `undefined` are displayed as 'N/A'.
  */
 function FullTable<Type>({
   data,

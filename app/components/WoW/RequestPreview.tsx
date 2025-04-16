@@ -9,6 +9,17 @@ interface RequestPreviewProps {
   priceGroups: PriceGroup[]
 }
 
+/**
+ * Displays a formatted preview of the API request data based on the provided region, date, and price groups.
+ *
+ * Renders a code block showing the JSON payload that will be sent to the API upon form submission, along with a copy-to-clipboard button and explanatory text.
+ *
+ * @param region - The selected region for the request.
+ * @param startYear - The starting year for the request data.
+ * @param startMonth - The starting month for the request data.
+ * @param startDay - The starting day for the request data.
+ * @param priceGroups - An array of price group objects to include in the request.
+ */
 export default function RequestPreview({
   region,
   startYear,

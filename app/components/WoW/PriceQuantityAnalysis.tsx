@@ -9,6 +9,11 @@ interface PriceQuantityAnalysisProps {
   darkMode: boolean
 }
 
+/**
+ * Renders a toggleable section displaying price versus quantity analysis charts for selected items.
+ *
+ * Displays a button to show or hide the analysis charts. When enabled, renders a grid of `WeeklyPriceQuantityChart` components for each item marked as visible in {@link visibleItems}, using data from {@link groupData}. Adapts styling for light and dark modes.
+ */
 export default function PriceQuantityAnalysis({
   showPriceQuantityCharts,
   setShowPriceQuantityCharts,

@@ -5,6 +5,11 @@ interface GroupSelectorProps {
   darkMode: boolean
 }
 
+/**
+ * Renders a group selection UI with buttons for each group and an "All Groups" option.
+ *
+ * Displays a message if no groups are available. Button styles and text adapt to the selected group and dark mode setting. Invokes {@link onGroupSelect} with the chosen group name when a button is clicked.
+ */
 export default function GroupSelector({
   selectedGroup,
   groups,

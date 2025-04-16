@@ -8,6 +8,11 @@ interface RequestDataSectionProps {
   darkMode: boolean
 }
 
+/**
+ * Displays a styled section containing the request data used for an analysis, formatted as a copyable JSON code block.
+ *
+ * Renders the region, parsed start date, and grouped item data from the provided props, allowing users to copy the data for later use.
+ */
 export default function RequestDataSection({
   data,
   wowRegion,

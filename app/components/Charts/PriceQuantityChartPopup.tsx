@@ -12,6 +12,14 @@ interface PriceQuantityChartPopupProps {
   itemName: string
 }
 
+/**
+ * Displays a modal popup with a price and quantity analysis chart for a specified item.
+ *
+ * Renders a centered overlay containing a header and a `WeeklyPriceQuantityChart` based on the provided data and theme.
+ *
+ * @param weeklyData - Array of weekly price and quantity data points to visualize.
+ * @param itemName - Name of the item being analyzed.
+ */
 export default function PriceQuantityChartPopup({
   onClose,
   weeklyData,

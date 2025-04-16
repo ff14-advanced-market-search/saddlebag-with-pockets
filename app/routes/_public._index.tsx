@@ -46,6 +46,11 @@ const recommendedQueries = [
   }
 ]
 
+/**
+ * Renders the Saddlebag Exchange homepage, showcasing MMO market data tools and features for Final Fantasy XIV and World of Warcraft.
+ *
+ * The page includes a hero section, featured tools, detailed descriptions for each game's offerings, a call to action, a footer, and hidden SEO content to improve discoverability.
+ */
 export default function Index() {
   return (
     <>

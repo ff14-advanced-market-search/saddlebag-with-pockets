@@ -36,6 +36,19 @@ const validatePriceGroup = (group: PriceGroup): string | null => {
   return null
 }
 
+/**
+ * Renders a section for managing and validating a list of price groups, allowing users to add, edit, remove, and submit groups with enforced constraints.
+ *
+ * Displays a list of editable price group forms, enforces a maximum of 10 groups, and validates each group’s name and contents before submission. Provides error feedback via the {@link onError} callback and disables submission during processing.
+ *
+ * @param priceGroups - The current list of price groups to display and edit.
+ * @param onPriceGroupsChange - Callback invoked when the list of price groups is modified.
+ * @param onError - Callback invoked with an error message when validation fails, or `undefined` to clear errors.
+ * @param isSubmitting - Indicates whether a submission is currently in progress.
+ *
+ * @remark
+ * Enforces a maximum of 10 price groups. Each group must have a non-empty, valid name and at least one item or category. Submission is blocked if validation fails.
+ */
 export default function PriceGroupsSection({
   priceGroups,
   onPriceGroupsChange,

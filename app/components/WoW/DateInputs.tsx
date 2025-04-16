@@ -10,6 +10,18 @@ interface DateInputsProps {
   onError?: (error: string | undefined) => void
 }
 
+/**
+ * Renders three numeric input fields for selecting a year, month, and day, each with labeled controls and value constraints.
+ *
+ * Calls the provided change handlers with the new numeric value when the user updates any input.
+ *
+ * @param startYear - The current value for the year input.
+ * @param startMonth - The current value for the month input.
+ * @param startDay - The current value for the day input.
+ * @param onYearChange - Callback invoked with the new year value when the year input changes.
+ * @param onMonthChange - Callback invoked with the new month value when the month input changes.
+ * @param onDayChange - Callback invoked with the new day value when the day input changes.
+ */
 export default function DateInputs({
   startYear,
   startMonth,
