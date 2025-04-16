@@ -105,6 +105,40 @@ export default function DeltaFilterControls({
     onApplyFilter(newVisibleItems)
   }
 
+  const handleMaxChange = (val: string) => {
+    const newMax = val === '' || val === 'any' ? null : Number(val)
+    if (filterMode === 'exclusive') {
+      // For exclusive mode, maintain min/max relationship
+      if (
+        newMax === null ||
+        pendingMinPeakDeltaFilter === null ||
+        newMax > pendingMinPeakDeltaFilter
+      ) {
+        setPendingMaxPeakDeltaFilter(newMax)
+      }
+    } else {
+      // For inclusive mode, allow any value
+      setPendingMaxPeakDeltaFilter(newMax)
+    }
+  }
+
+  const handleMinChange = (val: string) => {
+    const newMin = val === '' || val === 'any' ? null : Number(val)
+    if (filterMode === 'exclusive') {
+      // For exclusive mode, maintain min/max relationship
+      if (
+        newMin === null ||
+        pendingMaxPeakDeltaFilter === null ||
+        newMin < pendingMaxPeakDeltaFilter
+      ) {
+        setPendingMinPeakDeltaFilter(newMin)
+      }
+    } else {
+      // For inclusive mode, allow any value
+      setPendingMinPeakDeltaFilter(newMin)
+    }
+  }
+
   return (
     <div className="px-4 mb-2 space-y-2 border-t border-b border-gray-300 dark:border-gray-600 py-2">
       <div className="flex items-center justify-between">
@@ -122,7 +156,11 @@ export default function DeltaFilterControls({
         {isPeakDeltaFilterEnabled && (
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => setFilterMode('exclusive')}
+              onClick={() => {
+                setFilterMode('exclusive')
+                setPendingMinPeakDeltaFilter(null)
+                setPendingMaxPeakDeltaFilter(null)
+              }}
               className={`text-xs px-2 py-1 rounded ${
                 filterMode === 'exclusive'
                   ? 'bg-blue-500 text-white'
@@ -131,7 +169,11 @@ export default function DeltaFilterControls({
               Exclude Outside
             </button>
             <button
-              onClick={() => setFilterMode('inclusive')}
+              onClick={() => {
+                setFilterMode('inclusive')
+                setPendingMinPeakDeltaFilter(null)
+                setPendingMaxPeakDeltaFilter(null)
+              }}
               className={`text-xs px-2 py-1 rounded ${
                 filterMode === 'inclusive'
                   ? 'bg-blue-500 text-white'
@@ -155,33 +197,13 @@ export default function DeltaFilterControls({
                 type="number"
                 id="maxPeakDeltaFilter"
                 value={pendingMaxPeakDeltaFilter ?? ''}
-                onChange={(e) => {
-                  const val = e.target.value
-                  const newMax = val === '' ? null : Number(val)
-                  if (
-                    newMax === null ||
-                    pendingMinPeakDeltaFilter === null ||
-                    newMax > pendingMinPeakDeltaFilter
-                  ) {
-                    setPendingMaxPeakDeltaFilter(newMax)
-                  }
-                }}
+                onChange={(e) => handleMaxChange(e.target.value)}
                 placeholder="Any"
                 className="flex-1 text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
               />
               <select
                 value=""
-                onChange={(e) => {
-                  const val = e.target.value
-                  const newMax = val === 'any' ? null : Number(val)
-                  if (
-                    newMax === null ||
-                    pendingMinPeakDeltaFilter === null ||
-                    newMax > pendingMinPeakDeltaFilter
-                  ) {
-                    setPendingMaxPeakDeltaFilter(newMax)
-                  }
-                }}
+                onChange={(e) => handleMaxChange(e.target.value)}
                 className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                 <option value="">Presets</option>
                 <option value="any">Any</option>
@@ -204,33 +226,13 @@ export default function DeltaFilterControls({
                 type="number"
                 id="minPeakDeltaFilter"
                 value={pendingMinPeakDeltaFilter ?? ''}
-                onChange={(e) => {
-                  const val = e.target.value
-                  const newMin = val === '' ? null : Number(val)
-                  if (
-                    newMin === null ||
-                    pendingMaxPeakDeltaFilter === null ||
-                    newMin < pendingMaxPeakDeltaFilter
-                  ) {
-                    setPendingMinPeakDeltaFilter(newMin)
-                  }
-                }}
+                onChange={(e) => handleMinChange(e.target.value)}
                 placeholder="Any"
                 className="flex-1 text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
               />
               <select
                 value=""
-                onChange={(e) => {
-                  const val = e.target.value
-                  const newMin = val === 'any' ? null : Number(val)
-                  if (
-                    newMin === null ||
-                    pendingMaxPeakDeltaFilter === null ||
-                    newMin < pendingMaxPeakDeltaFilter
-                  ) {
-                    setPendingMinPeakDeltaFilter(newMin)
-                  }
-                }}
+                onChange={(e) => handleMinChange(e.target.value)}
                 className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                 <option value="">Presets</option>
                 <option value="any">Any</option>
@@ -244,8 +246,8 @@ export default function DeltaFilterControls({
           </div>
           <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             {filterMode === 'exclusive'
-              ? 'Excludes items that go outside the range at any point'
-              : 'Shows items that fall within the range at least once'}
+              ? 'Excludes items that go outside the range at any point. EX: Min to -50% and max to 150% will only show items that stay inbetween those values.'
+              : 'Shows items that fall within the range at least once. EX: Min to 1000% shows items that go over 1000% at least once. Max to -50% shows items that go under -50% at least once.'}
           </div>
           <button
             onClick={handleApplyFilter}
