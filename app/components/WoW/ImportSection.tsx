@@ -118,6 +118,13 @@ const validateImportData = (
   }
 }
 
+/**
+ * Renders a modal interface for importing and validating a JSON configuration, then passes the parsed data to the provided import handler.
+ *
+ * Displays a button to open the import modal. When open, users can paste a JSON configuration, which is validated before being imported. Validation errors are shown inline. On successful import, the modal closes and the input is reset.
+ *
+ * @param onImport - Callback invoked with the validated import data when import succeeds.
+ */
 export default function ImportSection({ onImport }: ImportSectionProps) {
   const [showImport, setShowImport] = useState(false)
   const [jsonInput, setJsonInput] = useState('')

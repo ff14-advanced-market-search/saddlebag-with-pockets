@@ -21,6 +21,20 @@ interface ItemDetailsTableProps {
   ) => { p?: number; delta?: number } | undefined
 }
 
+/**
+ * Displays a responsive, filterable, and exportable table of item details with date selection.
+ *
+ * Renders item data in a table format with options to filter by search term, select a date, and export the displayed data as CSV or JSON. The table adapts for desktop and mobile screens and includes dynamic columns for price and delta based on the selected date.
+ *
+ * @param data - Array of item data objects to display.
+ * @param columnList - Configuration for table columns.
+ * @param selectedDate - Currently selected date string for filtering and export.
+ * @param formatTimestamp - Function to format timestamp strings for display.
+ * @param selectedGroup - Name of the currently selected group, used in export filenames.
+ * @param setSelectedDate - Callback to update the selected date.
+ * @param filteredTimestamps - List of available timestamps for selection.
+ * @param getDataForTimestamp - Function to retrieve price and delta for a given item and timestamp.
+ */
 export default function ItemDetailsTable({
   data,
   columnList,

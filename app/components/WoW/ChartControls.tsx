@@ -9,6 +9,11 @@ interface ChartControlsProps {
 const DEFAULT_MAX_PRESETS = [5000, 2000, 1000, 500, 200, 100, 50, 25]
 const DEFAULT_MIN_PRESETS = [0, -25, -50, -75, -95]
 
+/**
+ * Renders controls for adjusting the minimum and maximum Y-axis percentage range of a chart.
+ *
+ * Provides numeric input fields and preset dropdowns for both min and max Y-axis values, allowing users to set or clear values. Enforces that the minimum is always less than the maximum when both are set. Supports an "Auto" mode for each value and adapts styling for dark mode.
+ */
 export default function ChartControls({
   minYAxis,
   maxYAxis,

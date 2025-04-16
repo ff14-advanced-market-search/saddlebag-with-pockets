@@ -22,6 +22,11 @@ interface ChartContainerProps {
   onVisibilityFilterChange: (filter: string) => void
 }
 
+/**
+ * Renders a chart interface with controls for adjusting Y-axis bounds, filtering data, and managing item visibility.
+ *
+ * Displays a chart alongside a control panel that allows users to set Y-axis minimum and maximum values, filter items by name or group, and toggle the visibility of individual items. All state is managed externally via props and callbacks.
+ */
 export default function ChartContainer({
   chartOptions,
   darkMode,

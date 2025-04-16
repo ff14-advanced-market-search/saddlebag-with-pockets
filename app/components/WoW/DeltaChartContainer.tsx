@@ -21,6 +21,24 @@ interface DeltaChartContainerProps {
   formatTimestamp: (timestamp: string) => string
 }
 
+/**
+ * Renders a line chart visualizing weekly price delta data by group or item, with configurable appearance and filtering.
+ *
+ * Displays price change percentages over time for selected groups or items, supporting dark mode, Y-axis bounds, visibility controls, and custom timestamp formatting. Only visible and sufficiently performing groups/items are included in the chart.
+ *
+ * @param data - Weekly price delta data grouped by categories and items.
+ * @param selectedGroup - The group to display, or "All" for all groups.
+ * @param startDate - Start of the date range filter (inclusive).
+ * @param endDate - End of the date range filter (inclusive).
+ * @param darkMode - Whether to use dark theme styling.
+ * @param minYAxis - Minimum Y-axis value, or null for automatic scaling.
+ * @param maxYAxis - Maximum Y-axis value, or null for automatic scaling.
+ * @param visibleItems - Record of which groups or items are visible in the chart.
+ * @param visibilityFilter - Filter string for visible items.
+ * @param filteredTimestamps - Array of timestamps to display on the X-axis.
+ * @param formatTimestamp - Function to format timestamps for display on the X-axis.
+ * @returns A React element rendering the configured line chart.
+ */
 export default function DeltaChartContainer({
   data,
   selectedGroup,
