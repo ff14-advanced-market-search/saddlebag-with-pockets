@@ -14,7 +14,6 @@ import type { WoWLoaderData } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
 import type { ColumnList } from '~/components/types'
-import type { Options } from 'highcharts'
 import PriceGroupForm from '~/components/form/WoW/PriceGroupForm'
 import type {
   WeeklyPriceGroupDeltaResponse,
@@ -613,7 +612,6 @@ const Results = ({
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
-  const [performanceThreshold] = useState(-100) // Default to show all
   const [minYAxis, setMinYAxis] = useState<number | null>(null)
   const [maxYAxis, setMaxYAxis] = useState<number | null>(null)
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
@@ -685,134 +683,6 @@ const Results = ({
     })
     setVisibleItems(newVisibleItems)
   }, [selectedGroup, data])
-
-  const styles = darkMode
-    ? {
-        backgroundColor: '#1e293b', // slate-800
-        color: '#f3f4f6', // gray-100
-        hoverColor: '#f8f8f8',
-        gridLineColor: '#334155', // slate-700
-        labelColor: '#94a3b8', // slate-400
-        borderColor: '#475569' // slate-600
-      }
-    : {
-        backgroundColor: '#ffffff',
-        color: '#1f2937', // gray-800
-        hoverColor: '#4b5563', // gray-600
-        gridLineColor: '#e2e8f0', // slate-200
-        labelColor: '#64748b', // slate-500
-        borderColor: '#e2e8f0' // slate-200
-      }
-
-  const seriesData = useMemo(() => {
-    if (selectedGroup === 'All') {
-      return Object.entries(data)
-        .filter(([groupName]) => visibleItems[groupName])
-        .map(([groupName, groupData]) => {
-          // Calculate average performance for the group within the date range
-          const values = Object.entries(groupData.deltas)
-            .filter(
-              ([timestamp]) => timestamp >= startDate && timestamp <= endDate
-            )
-            .map(([, value]) => value)
-            .filter((v) => v != null)
-
-          const avgPerformance =
-            values.length > 0
-              ? values.reduce((a, b) => a + b, 0) / values.length
-              : 0
-
-          // Only include if above threshold
-          if (avgPerformance >= performanceThreshold) {
-            return {
-              name: groupName,
-              data: filteredTimestamps.map((timestamp) => {
-                const value = groupData.deltas[timestamp]
-                return value !== undefined ? value : null
-              }),
-              type: 'line' as const
-            }
-          }
-          return undefined
-        })
-        .filter(
-          (series): series is NonNullable<typeof series> => series !== undefined
-        )
-    }
-    const groupData = data[selectedGroup]
-    const series = []
-
-    // Add average line if visible
-    if (visibleItems[`${selectedGroup} (Average)`]) {
-      const values = Object.entries(groupData.deltas)
-        .filter(([timestamp]) => timestamp >= startDate && timestamp <= endDate)
-        .map(([, value]) => value)
-        .filter((v) => v != null)
-
-      const avgPerformance =
-        values.length > 0
-          ? values.reduce((a, b) => a + b, 0) / values.length
-          : 0
-
-      if (avgPerformance >= performanceThreshold) {
-        series.push({
-          name: `${selectedGroup} (Average)`,
-          data: filteredTimestamps.map((timestamp) => {
-            const value = groupData.deltas[timestamp]
-            return value !== undefined ? value : null
-          }),
-          type: 'line' as const,
-          lineWidth: 5,
-          zIndex: 2
-        })
-      }
-    }
-
-    // Add individual items if visible and above threshold
-    Object.entries(groupData.item_data).forEach(([itemId, itemData]) => {
-      const itemName = groupData.item_names[itemId]
-      if (!visibleItems[itemName]) {
-        return
-      }
-      // Calculate average performance for the item within the date range
-      const values = itemData.weekly_data
-        .filter((d) => d.t.toString() >= startDate && d.t.toString() <= endDate)
-        .map((d) => d.delta)
-        .filter((v) => v != null)
-
-      const avgPerformance =
-        values.length > 0
-          ? values.reduce((a, b) => a + b, 0) / values.length
-          : 0
-
-      if (avgPerformance >= performanceThreshold) {
-        series.push({
-          name: itemName,
-          data: filteredTimestamps.map((timestamp) => {
-            const weekData = itemData.weekly_data.find(
-              (d) => d.t.toString() === timestamp
-            )
-            return weekData ? weekData.delta : null
-          }),
-          type: 'line' as const,
-          lineWidth: 1,
-          dashStyle: 'LongDash',
-          opacity: 0.7,
-          zIndex: 1
-        })
-      }
-    })
-
-    return series
-  }, [
-    data,
-    selectedGroup,
-    visibleItems,
-    startDate,
-    endDate,
-    filteredTimestamps,
-    performanceThreshold
-  ])
 
   // Only show item details if a specific group is selected
   const showItemDetails = selectedGroup !== 'All'
