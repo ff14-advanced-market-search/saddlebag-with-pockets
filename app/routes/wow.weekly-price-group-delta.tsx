@@ -182,6 +182,10 @@ const Index = () => {
             onYearChange={setStartYear}
             onMonthChange={setStartMonth}
             onDayChange={setStartDay}
+            onError={(err) => {
+              setError(err)
+              setShowErrorPopup(!!err)
+            }}
           />
 
           <PriceGroupsSection
