@@ -34,7 +34,9 @@ export default function RequestPreview({
           title="Input for weekly price group delta"
           buttonTitle="Copy"
           codeString={JSON.stringify(requestData, null, 2)}
-          onClick={() => alert('Copied to clipboard!')}>
+          onClick={() => {
+            alert('Copied to clipboard!')
+          }}>
           <p className="italic text-sm text-gray-700 dark:text-gray-300 py-2">
             This is the data that will be sent to the API when you submit the
             form.

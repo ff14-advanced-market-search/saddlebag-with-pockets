@@ -43,7 +43,9 @@ export default function RequestDataSection({
             null,
             2
           )}
-          onClick={() => alert('Copied to clipboard!')}>
+          onClick={() => {
+            alert('Copied to clipboard!')
+          }}>
           <p className="italic text-sm text-gray-700 dark:text-gray-300 py-2">
             You can copy this data to recreate the same analysis later.
           </p>
