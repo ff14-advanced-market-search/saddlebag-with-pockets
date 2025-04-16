@@ -8,22 +8,13 @@ import type {
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useState, useEffect, useMemo } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
-import NoResults from '~/components/Common/NoResults'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
-import FullTable from '~/components/Tables/FullTable'
-import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import type { ColumnList } from '~/components/types'
-import DebouncedInput from '~/components/Common/DebouncedInput'
-import CSVButton from '~/components/utilities/CSVButton'
-import JSONButton from '~/components/utilities/JSONButton'
 import type { Options } from 'highcharts'
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import PriceGroupForm from '~/components/form/WoW/PriceGroupForm'
 import type {
   WeeklyPriceGroupDeltaResponse,
@@ -34,13 +25,9 @@ import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
 import CodeBlock from '~/components/Common/CodeBlock'
 import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
-import WeeklyPriceQuantityChart from '~/components/Charts/WeeklyPriceQuantityChart'
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 import ErrorPopup from '~/components/Common/ErrorPopup'
 import { getWowheadLink } from '~/components/utilities/getWowheadLink'
-import DeltaFilterControls from '~/components/WoW/DeltaFilterControls'
-import VisibleItemsList from '~/components/WoW/VisibleItemsList'
-import ChartControls from '~/components/WoW/ChartControls'
 import DateRangeControls from '~/components/WoW/DateRangeControls'
 import ItemDetailsTable from '~/components/WoW/ItemDetailsTable'
 import GroupSelector from '~/components/WoW/GroupSelector'
@@ -368,20 +355,6 @@ const Index = () => {
   const [startDay, setStartDay] = useState(1)
   const [showImport, setShowImport] = useState(false)
   const [showErrorPopup, setShowErrorPopup] = useState(false)
-  const [pendingMinPeakDeltaFilter, setPendingMinPeakDeltaFilter] = useState<
-    number | 'any'
-  >('any')
-  const [pendingMaxPeakDeltaFilter, setPendingMaxPeakDeltaFilter] = useState<
-    number | 'any'
-  >('any')
-  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] =
-    useState(false)
-  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>(
-    'any'
-  )
-  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>(
-    'any'
-  )
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -637,7 +610,6 @@ const Results = ({
   darkMode: boolean
 }) => {
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
-  const [globalFilter, setGlobalFilter] = useState('')
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
@@ -841,167 +813,6 @@ const Results = ({
     filteredTimestamps,
     performanceThreshold
   ])
-
-  // Modified chart options
-  const deltaChartOptions: Options = {
-    chart: {
-      type: 'line',
-      backgroundColor: styles.backgroundColor,
-      style: {
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
-      },
-      height: 600,
-      spacingBottom: 20,
-      spacingTop: 20,
-      spacingLeft: 20,
-      spacingRight: 20
-    },
-    title: {
-      text:
-        selectedGroup === 'All'
-          ? 'All Groups - Weekly Price Deltas'
-          : `${selectedGroup} - Weekly Price Deltas`,
-      style: { color: styles.color, fontSize: '18px' }
-    },
-    xAxis: {
-      categories: filteredTimestamps.map(formatTimestamp),
-      labels: {
-        style: { color: styles.labelColor },
-        rotation: -45,
-        formatter() {
-          return this.value as string
-        }
-      },
-      title: { text: 'Week', style: { color: styles.color } },
-      lineColor: styles.borderColor,
-      gridLineColor: styles.gridLineColor,
-      tickColor: styles.borderColor
-    },
-    yAxis: {
-      title: {
-        text: 'Price Change %',
-        style: { color: styles.color }
-      },
-      labels: {
-        style: { color: styles.labelColor },
-        format: '{value}%'
-      },
-      min: minYAxis !== null ? minYAxis : undefined,
-      max: maxYAxis !== null ? maxYAxis : undefined,
-      softMin: minYAxis !== null ? minYAxis : undefined,
-      gridLineColor: styles.gridLineColor,
-      lineColor: styles.borderColor,
-      tickColor: styles.borderColor
-    },
-    tooltip: {
-      shared: true,
-      useHTML: true,
-      headerFormat: '<b>{point.key}</b><br/>',
-      // Custom formatter to sort points by value
-      formatter() {
-        if (!this.points) return ''
-
-        // Sort points by value (delta) in descending order
-        const sortedPoints = this.points
-          .filter((point) => point.y != null)
-          .sort((a, b) => (b.y || 0) - (a.y || 0))
-
-        let s = `<div style="min-width: 150px; color: ${styles.color}; font-size: 12px;">
-          <b style="font-size: 14px;">${this.x}</b><br/>`
-
-        // Add each point's data
-        sortedPoints.forEach((point) => {
-          s += `<div style="display: flex; justify-content: space-between; margin: 4px 0;">
-            <span style="color:${point.color}">●</span>
-            <span style="margin-left: 4px; flex-grow: 1;">${
-              point.series.name
-            }:</span>
-            <b style="margin-left: 8px;">${point.y?.toFixed(2)}%</b>
-          </div>`
-        })
-
-        s += '</div>'
-        return s
-      },
-      backgroundColor: darkMode ? '#1f2937' : '#ffffff',
-      style: {
-        color: styles.color
-      },
-      padding: 12,
-      shadow: true,
-      borderWidth: 1,
-      borderColor: styles.borderColor,
-      borderRadius: 8
-    },
-    plotOptions: {
-      series: {
-        connectNulls: true,
-        marker: {
-          enabled: true,
-          radius: 3,
-          lineWidth: 1,
-          lineColor: styles.borderColor
-        },
-        states: {
-          hover: {
-            brightness: darkMode ? 0.3 : -0.2,
-            lineWidthPlus: 0
-          }
-        },
-        events: {
-          legendItemClick() {
-            if (selectedGroup !== 'All') {
-              return false // Prevent toggling visibility
-            }
-            return true // Allow toggling for All Groups view
-          }
-        }
-      }
-    },
-    series: seriesData.map((series) => ({
-      ...series,
-      lineWidth: series.name.includes('Average') ? 3 : 1.5,
-      opacity: series.name.includes('Average') ? 1 : 0.8,
-      states: {
-        hover: {
-          lineWidth: series.name.includes('Average') ? 3 : 1.5
-        }
-      }
-    })),
-    legend: {
-      itemStyle: { color: styles.color },
-      itemHoverStyle: { color: styles.hoverColor },
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle',
-      maxHeight:
-        selectedGroup === 'All'
-          ? 300
-          : Math.floor(
-              Object.keys(data[selectedGroup].item_data).length * 30 + 200
-            ),
-      itemMarginTop: 4,
-      itemMarginBottom: 4,
-      padding: 12,
-      backgroundColor: styles.backgroundColor,
-      borderWidth: 1,
-      borderColor: styles.borderColor,
-      borderRadius: 4,
-      shadow: false,
-      symbolRadius: 2,
-      symbolHeight: 8,
-      symbolWidth: 8,
-      useHTML: true,
-      labelFormatter: function () {
-        return `<span style="display: flex; align-items: center;">
-          <span style="color: ${this.color};">●</span>
-          <span style="margin-left: 4px;">${this.name}</span>
-        </span>`
-      }
-    },
-    credits: { enabled: false }
-  }
 
   // Only show item details if a specific group is selected
   const showItemDetails = selectedGroup !== 'All'
