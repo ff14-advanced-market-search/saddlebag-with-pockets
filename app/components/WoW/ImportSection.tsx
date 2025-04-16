@@ -13,7 +13,9 @@ interface ImportSectionProps {
   onImport: (data: ImportData) => void
 }
 
-const validateImportData = (data: any): { valid: boolean; error?: string } => {
+const validateImportData = (
+  data: string | ImportData
+): { valid: boolean; error?: string } => {
   try {
     // Parse if string
     const jsonData = typeof data === 'string' ? JSON.parse(data) : data
@@ -29,7 +31,7 @@ const validateImportData = (data: any): { valid: boolean; error?: string } => {
     ) {
       return {
         valid: false,
-        error: 'Start year must be a number between 2020 and 2090'
+        error: `Start year must be a number between 2020 and 2090, got ${jsonData.start_year}`
       }
     }
     if (
@@ -39,7 +41,7 @@ const validateImportData = (data: any): { valid: boolean; error?: string } => {
     ) {
       return {
         valid: false,
-        error: 'Start month must be a number between 1 and 12'
+        error: `Start month must be a number between 1 and 12, got ${jsonData.start_month}`
       }
     }
     if (
@@ -49,7 +51,7 @@ const validateImportData = (data: any): { valid: boolean; error?: string } => {
     ) {
       return {
         valid: false,
-        error: 'Start day must be a number between 1 and 31'
+        error: `Start day must be a number between 1 and 31, got ${jsonData.start_day}`
       }
     }
     if (!Array.isArray(jsonData.price_groups)) {
@@ -57,33 +59,55 @@ const validateImportData = (data: any): { valid: boolean; error?: string } => {
     }
 
     // Validate each price group
-    for (const group of jsonData.price_groups) {
+    for (let i = 0; i < jsonData.price_groups.length; i++) {
+      const group = jsonData.price_groups[i]
       if (typeof group.name !== 'string') {
         return {
           valid: false,
-          error: 'Each price group must have a name string'
+          error: `Price group at index ${i} must have a name string`
         }
       }
       if (!Array.isArray(group.item_ids)) {
-        return { valid: false, error: 'item_ids must be an array' }
+        return {
+          valid: false,
+          error: `Item IDs in price group "${group.name}" (index ${i}) must be an array`
+        }
       }
       if (!Array.isArray(group.categories)) {
-        return { valid: false, error: 'categories must be an array' }
+        return {
+          valid: false,
+          error: `Categories in price group "${group.name}" (index ${i}) must be an array`
+        }
       }
 
       // Validate each category
-      for (const category of group.categories) {
+      for (let j = 0; j < group.categories.length; j++) {
+        const category = group.categories[j]
+        const categoryContext = `category at index ${j} of group "${group.name}" (group index ${i})`
+
         if (typeof category.item_class !== 'number') {
-          return { valid: false, error: 'item_class must be a number' }
+          return {
+            valid: false,
+            error: `item_class in ${categoryContext} must be a number`
+          }
         }
         if (typeof category.item_subclass !== 'number') {
-          return { valid: false, error: 'item_subclass must be a number' }
+          return {
+            valid: false,
+            error: `item_subclass in ${categoryContext} must be a number`
+          }
         }
         if (typeof category.expansion_number !== 'number') {
-          return { valid: false, error: 'expansion_number must be a number' }
+          return {
+            valid: false,
+            error: `expansion_number in ${categoryContext} must be a number`
+          }
         }
         if (typeof category.min_quality !== 'number') {
-          return { valid: false, error: 'min_quality must be a number' }
+          return {
+            valid: false,
+            error: `min_quality in ${categoryContext} must be a number`
+          }
         }
       }
     }
