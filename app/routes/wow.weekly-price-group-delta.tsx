@@ -42,6 +42,7 @@ import DeltaFilterControls from '~/components/WoW/DeltaFilterControls'
 import VisibleItemsList from '~/components/WoW/VisibleItemsList'
 import ChartControls from '~/components/WoW/ChartControls'
 import DateRangeControls from '~/components/WoW/DateRangeControls'
+import ItemDetailsTable from '~/components/WoW/ItemDetailsTable'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -1269,79 +1270,16 @@ const Results = ({
 
           {/* Item details table - only shown when a specific group is selected */}
           {showItemDetails && groupData && (
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-              <div className="flex flex-wrap gap-4 items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                  Item Details
-                </h3>
-                <div className="flex-1 min-w-[200px]">
-                  <select
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-                    {filteredTimestamps.map((timestamp) => (
-                      <option key={timestamp} value={timestamp}>
-                        {formatTimestamp(timestamp)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <DebouncedInput
-                  onDebouncedChange={setGlobalFilter}
-                  className="p-2 border rounded min-w-[200px]"
-                  placeholder="Search items..."
-                />
-              </div>
-
-              <div className="hidden md:block">
-                <FullTable
-                  data={Object.values(groupData.item_data)}
-                  columnList={columnList}
-                  globalFilter={globalFilter}
-                  sortingOrder={[]}
-                />
-              </div>
-              <div className="md:hidden">
-                <MobileTable
-                  data={Object.values(groupData.item_data)}
-                  columnList={columnList}
-                  sortingOrder={[{ id: 'itemName', desc: false }]}
-                  title="Item Details"
-                  rowLabels={[]}
-                  columnSelectOptions={[]}
-                />
-              </div>
-
-              {/* Export buttons */}
-              <div className="flex gap-2 mt-4">
-                <CSVButton
-                  data={Object.values(groupData.item_data).map((item) => {
-                    const data = getDataForTimestamp(item, selectedDate)
-                    return {
-                      ...item,
-                      price: data?.p || 0,
-                      delta: data?.delta || 0
-                    }
-                  })}
-                  columns={[
-                    { title: 'Item Name', value: 'itemName' },
-                    { title: 'Item ID', value: 'itemID' },
-                    {
-                      title: `Price (${formatTimestamp(selectedDate)})`,
-                      value: 'price'
-                    },
-                    {
-                      title: `Delta % (${formatTimestamp(selectedDate)})`,
-                      value: 'delta'
-                    }
-                  ]}
-                  filename={`${selectedGroup}_items_${formatTimestamp(
-                    selectedDate
-                  )}.csv`}
-                />
-                <JSONButton data={Object.values(groupData.item_data)} />
-              </div>
-            </div>
+            <ItemDetailsTable
+              data={Object.values(groupData.item_data)}
+              columnList={columnList}
+              selectedDate={selectedDate}
+              formatTimestamp={formatTimestamp}
+              selectedGroup={selectedGroup}
+              setSelectedDate={setSelectedDate}
+              filteredTimestamps={filteredTimestamps}
+              getDataForTimestamp={getDataForTimestamp}
+            />
           )}
 
           {/* Price vs Quantity Chart Popup */}
