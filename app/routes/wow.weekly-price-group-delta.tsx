@@ -38,6 +38,10 @@ import WeeklyPriceQuantityChart from '~/components/Charts/WeeklyPriceQuantityCha
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 import ErrorPopup from '~/components/Common/ErrorPopup'
 import { getWowheadLink } from '~/components/utilities/getWowheadLink'
+import DeltaFilterControls from '~/components/WoW/DeltaFilterControls'
+import VisibleItemsList from '~/components/WoW/VisibleItemsList'
+import ChartControls from '~/components/WoW/ChartControls'
+import DateRangeControls from '~/components/WoW/DateRangeControls'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -633,8 +637,8 @@ const Results = ({
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
   const [performanceThreshold] = useState(-100) // Default to show all
-  const [minYAxis, setMinYAxis] = useState<number | null>(null) // Default min y-axis value (null = auto)
-  const [maxYAxis, setMaxYAxis] = useState<number | null>(null) // Default max y-axis value (null = auto)
+  const [minYAxis, setMinYAxis] = useState<number | null>(null)
+  const [maxYAxis, setMaxYAxis] = useState<number | null>(null)
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
   const [showPriceQuantityCharts, setShowPriceQuantityCharts] = useState(false)
@@ -642,21 +646,6 @@ const Results = ({
     string | null
   >(null)
   const [visibilityFilter, setVisibilityFilter] = useState('')
-  // State for delta filtering
-  const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] =
-    useState(false)
-  const [minPeakDeltaFilter, setMinPeakDeltaFilter] = useState<number | 'any'>(
-    'any'
-  )
-  const [maxPeakDeltaFilter, setMaxPeakDeltaFilter] = useState<number | 'any'>(
-    'any'
-  )
-  const [pendingMinPeakDeltaFilter, setPendingMinPeakDeltaFilter] = useState<
-    number | 'any'
-  >('any')
-  const [pendingMaxPeakDeltaFilter, setPendingMaxPeakDeltaFilter] = useState<
-    number | 'any'
-  >('any')
 
   // Get all unique timestamps across all groups
   const allTimestamps = Array.from(
@@ -1103,7 +1092,7 @@ const Results = ({
       <Title title={pageTitle} />
       <ContentContainer>
         <div className="space-y-4">
-          {/* Search Again Link and Performance Control */}
+          {/* Search Again Link */}
           <div className="flex justify-between items-center">
             <a
               href="/wow/weekly-price-group-delta"
@@ -1113,65 +1102,14 @@ const Results = ({
           </div>
 
           {/* Date Range Controls */}
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
-                  Start Date
-                </label>
-                <select
-                  value={startDate}
-                  onChange={(e) => {
-                    const newStart = e.target.value
-                    setStartDate(newStart)
-                    if (endDate < newStart) {
-                      setEndDate(newStart)
-                    }
-                  }}
-                  className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
-                  {allTimestamps.map((timestamp) => (
-                    <option key={timestamp} value={timestamp}>
-                      {formatTimestamp(timestamp)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
-                  End Date
-                </label>
-                <select
-                  value={endDate}
-                  onChange={(e) => {
-                    const newEnd = e.target.value
-                    setEndDate(newEnd)
-                    if (startDate > newEnd) {
-                      setStartDate(newEnd)
-                    }
-                  }}
-                  className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
-                  {allTimestamps.map((timestamp) => (
-                    <option key={timestamp} value={timestamp}>
-                      {formatTimestamp(timestamp)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
-                  Reset Range
-                </label>
-                <button
-                  onClick={() => {
-                    setStartDate(allTimestamps[0])
-                    setEndDate(allTimestamps[allTimestamps.length - 1])
-                  }}
-                  className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-                  Reset to Full Range
-                </button>
-              </div>
-            </div>
-          </div>
+          <DateRangeControls
+            startDate={startDate}
+            endDate={endDate}
+            allTimestamps={allTimestamps}
+            onStartDateChange={setStartDate}
+            onEndDateChange={setEndDate}
+            formatTimestamp={formatTimestamp}
+          />
 
           {/* Group selector */}
           <div className="flex flex-wrap gap-2">
@@ -1225,64 +1163,14 @@ const Results = ({
               <div
                 className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded"
                 style={{ height: '600px' }}>
-                {/* Controls that stay visible */}
-                <div className="px-4 mb-2 pt-4">
-                  <h4 className="font-medium text-sm mb-2 text-gray-900 dark:text-gray-100">
-                    Chart Y-Axis Range:
-                  </h4>
-
-                  <div className="flex items-center">
-                    <label
-                      htmlFor="maxYAxis"
-                      className="text-xs font-medium w-16 text-gray-900 dark:text-gray-100">
-                      Max Price %:
-                    </label>
-                    <select
-                      id="maxYAxis"
-                      value={maxYAxis === null ? 'auto' : maxYAxis}
-                      onChange={(e) => {
-                        const val = e.target.value
-                        setMaxYAxis(val === 'auto' ? null : Number(val))
-                      }}
-                      className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
-                      <option value="auto">Auto</option>
-                      <option value={25}>25%</option>
-                      <option value={50}>50%</option>
-                      <option value={100}>100%</option>
-                      <option value={200}>200%</option>
-                      <option value={500}>500%</option>
-                      <option value={1000}>1000%</option>
-                      <option value={1500}>1500%</option>
-                      <option value={2000}>2000%</option>
-                      <option value={3000}>3000%</option>
-                      <option value={4000}>4000%</option>
-                      <option value={5000}>5000%</option>
-                    </select>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <label
-                      htmlFor="minYAxis"
-                      className="text-xs font-medium w-16 text-gray-900 dark:text-gray-100">
-                      Min Price %:
-                    </label>
-                    <select
-                      id="minYAxis"
-                      value={minYAxis === null ? 'auto' : minYAxis}
-                      onChange={(e) => {
-                        const val = e.target.value
-                        setMinYAxis(val === 'auto' ? null : Number(val))
-                      }}
-                      className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
-                      <option value="auto">Auto</option>
-                      <option value={-95}>-95%</option>
-                      <option value={-85}>-85%</option>
-                      <option value={-75}>-75%</option>
-                      <option value={-50}>-50%</option>
-                      <option value={-25}>-25%</option>
-                      <option value={0}>0%</option>
-                    </select>
-                  </div>
-                </div>
+                {/* Chart Controls */}
+                <ChartControls
+                  minYAxis={minYAxis}
+                  maxYAxis={maxYAxis}
+                  onMinYAxisChange={setMinYAxis}
+                  onMaxYAxisChange={setMaxYAxis}
+                  darkMode={darkMode}
+                />
 
                 <div className="mx-4 border-t border-gray-300 dark:border-gray-600 my-2" />
 
@@ -1303,177 +1191,25 @@ const Results = ({
                 </div>
 
                 {/* Delta Filter Controls */}
-                {showItemDetails && (
-                  <div className="px-4 mb-2 space-y-2 border-t border-b border-gray-300 dark:border-gray-600 py-2">
-                    <label className="flex items-center space-x-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={isPeakDeltaFilterEnabled}
-                        onChange={(e) =>
-                          setIsPeakDeltaFilterEnabled(e.target.checked)
-                        }
-                        className="form-checkbox h-4 w-4 text-blue-500"
-                      />
-                      <span className="text-xs font-medium text-gray-900 dark:text-gray-100">
-                        Filter by Price Change %
-                      </span>
-                    </label>
-                    {isPeakDeltaFilterEnabled && (
-                      <div className="space-y-1 pl-5">
-                        <div className="flex items-center">
-                          <label
-                            htmlFor="maxPeakDeltaFilter"
-                            className="text-xs w-10 text-gray-900 dark:text-gray-100">
-                            Max:
-                          </label>
-                          <select
-                            id="maxPeakDeltaFilter"
-                            value={pendingMaxPeakDeltaFilter}
-                            onChange={(e) => {
-                              const val = e.target.value
-                              setPendingMaxPeakDeltaFilter(
-                                val === 'any' ? 'any' : Number(val)
-                              )
-                            }}
-                            className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
-                            <option value="any">Any</option>
-                            <option value={-50}>-50%</option>
-                            <option value={-25}>-25%</option>
-                            <option value={0}>0%</option>
-                            <option value={25}>25%</option>
-                            <option value={50}>50%</option>
-                            <option value={100}>100%</option>
-                            <option value={200}>200%</option>
-                            <option value={500}>500%</option>
-                            <option value={1000}>1000%</option>
-                            <option value={1500}>1500%</option>
-                            <option value={2000}>2000%</option>
-                            <option value={3000}>3000%</option>
-                            <option value={4000}>4000%</option>
-                            <option value={5000}>5000%</option>
-                          </select>
-                        </div>
-                        <div className="flex items-center">
-                          <label
-                            htmlFor="minPeakDeltaFilter"
-                            className="text-xs w-10 text-gray-900 dark:text-gray-100">
-                            Min:
-                          </label>
-                          <select
-                            id="minPeakDeltaFilter"
-                            value={pendingMinPeakDeltaFilter}
-                            onChange={(e) => {
-                              const val = e.target.value
-                              setPendingMinPeakDeltaFilter(
-                                val === 'any' ? 'any' : Number(val)
-                              )
-                            }}
-                            className="text-xs p-1 rounded border text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 flex-1">
-                            <option value="any">Any</option>
-                            <option value={-100}>-100%</option>
-                            <option value={-95}>-95%</option>
-                            <option value={-85}>-85%</option>
-                            <option value={-75}>-75%</option>
-                            <option value={-50}>-50%</option>
-                            <option value={-25}>-25%</option>
-                            <option value={0}>0%</option>
-                          </select>
-                        </div>
-                        <button
-                          onClick={() => {
-                            if (!selectedGroup || !data[selectedGroup]) return
+                <DeltaFilterControls
+                  selectedGroup={selectedGroup}
+                  startDate={startDate}
+                  endDate={endDate}
+                  data={data}
+                  onApplyFilter={setVisibleItems}
+                />
 
-                            // Start with all items unselected except the average
-                            const newVisibleItems: Record<string, boolean> = {
-                              [`${selectedGroup} (Average)`]: true
-                            }
-
-                            // Only select items that match the filter criteria
-                            Object.entries(
-                              data[selectedGroup].item_data
-                            ).forEach(([itemId, itemData]) => {
-                              const itemName =
-                                data[selectedGroup].item_names[itemId]
-
-                              // Get all deltas for the item within the current date range
-                              const deltasInRange = itemData.weekly_data
-                                .filter(
-                                  (d) =>
-                                    d.t.toString() >= startDate &&
-                                    d.t.toString() <= endDate &&
-                                    d.delta !== null &&
-                                    d.delta !== undefined
-                                )
-                                .map((d) => d.delta)
-
-                              let shouldBeVisible = deltasInRange.length > 0
-
-                              // Check against filters
-                              if (shouldBeVisible) {
-                                for (const delta of deltasInRange) {
-                                  const minFail =
-                                    pendingMinPeakDeltaFilter !== 'any' &&
-                                    delta < pendingMinPeakDeltaFilter
-                                  const maxFail =
-                                    pendingMaxPeakDeltaFilter !== 'any' &&
-                                    delta > pendingMaxPeakDeltaFilter
-
-                                  if (minFail || maxFail) {
-                                    shouldBeVisible = false
-                                    break
-                                  }
-                                }
-                              }
-
-                              newVisibleItems[itemName] = shouldBeVisible
-                            })
-
-                            // Update the actual filter values and visible items
-                            setMinPeakDeltaFilter(pendingMinPeakDeltaFilter)
-                            setMaxPeakDeltaFilter(pendingMaxPeakDeltaFilter)
-                            setVisibleItems(newVisibleItems)
-                          }}
-                          className="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-1 px-2 rounded transition-colors">
-                          Apply Filter
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Scrollable item list */}
-                <div className="overflow-auto px-4 pb-4 flex-grow">
-                  <div className="space-y-2">
-                    {Object.entries(visibleItems)
-                      .filter(([name]) =>
-                        name
-                          .toLowerCase()
-                          .includes(visibilityFilter.toLowerCase())
-                      )
-                      .map(([name, isVisible]) => (
-                        <label
-                          key={name}
-                          className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
-                          <input
-                            type="checkbox"
-                            checked={isVisible}
-                            onChange={() => {
-                              setVisibleItems((prev) => ({
-                                ...prev,
-                                [name]: !prev[name]
-                              }))
-                            }}
-                            className="form-checkbox h-4 w-4 text-blue-500"
-                          />
-                          <span
-                            className="text-sm text-gray-900 dark:text-gray-100"
-                            title={name}>
-                            {name}
-                          </span>
-                        </label>
-                      ))}
-                  </div>
-                </div>
+                {/* Visible Items List */}
+                <VisibleItemsList
+                  visibleItems={visibleItems}
+                  visibilityFilter={visibilityFilter}
+                  onVisibilityChange={(name, isVisible) => {
+                    setVisibleItems((prev) => ({
+                      ...prev,
+                      [name]: isVisible
+                    }))
+                  }}
+                />
               </div>
             </div>
           </div>
