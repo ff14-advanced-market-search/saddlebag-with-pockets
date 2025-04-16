@@ -12,6 +12,13 @@ export default function VisibleItemsList({
   return (
     <div className="overflow-auto px-4 pb-4 flex-grow">
       <div className="space-y-2">
+        {Object.entries(visibleItems).filter(([name]) =>
+          name.toLowerCase().includes(visibilityFilter.toLowerCase())
+        ).length === 0 && (
+          <p className="text-sm text-gray-500 dark:text-gray-400 p-2">
+            No items match your filter criteria
+          </p>
+        )}
         {Object.entries(visibleItems)
           .filter(([name]) =>
             name.toLowerCase().includes(visibilityFilter.toLowerCase())
