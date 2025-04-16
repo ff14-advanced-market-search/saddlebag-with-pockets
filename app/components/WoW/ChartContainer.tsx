@@ -45,6 +45,7 @@ export default function ChartContainer({
 
         <div
           className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded"
+          // CONSIDER: The container style has an inline style { height: '600px' }. Switching to a Tailwind utility class (e.g., h-[600px]) could improve consistency and maintainability
           style={{ height: '600px' }}>
           <ChartControls
             minYAxis={minYAxis}
@@ -66,7 +67,9 @@ export default function ChartContainer({
                 type="text"
                 placeholder="Search items..."
                 value={visibilityFilter}
-                onChange={(e) => onVisibilityFilterChange(e.target.value)}
+                onChange={(e) => {
+                  onVisibilityFilterChange(e.target.value)
+                }}
                 className="w-full p-2 text-xs border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
