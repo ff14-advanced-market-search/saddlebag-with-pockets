@@ -19,7 +19,7 @@ export default function ChartControls({
   return (
     <div className="px-4 mb-2">
       <h4 className="font-medium text-sm mb-2 text-gray-900 dark:text-gray-100">
-        Chart Y-Axis Range:
+        Zoom in Y-Axis Range:
       </h4>
 
       <div className="flex items-center mb-2">
