@@ -39,6 +39,7 @@ export default function GroupSelector({
           key={group}
           type="button"
           onClick={() => onGroupSelect(group)}
+          aria-current={selectedGroup === group ? 'true' : 'false'}
           className={getButtonClass(selectedGroup === group)}>
           {group}
         </button>
