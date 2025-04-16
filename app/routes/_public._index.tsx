@@ -162,11 +162,20 @@ export default function Index() {
                     , and more!
                   </li>
                   <li>
-                    Unlock the best deals with our{' '}
+                    Unlock the best reselling deals with our{' '}
                     <a
                       href="https://saddlebagexchange.com/queries/recommended"
                       className="text-purple-600 underline">
                       Cross-Server Reselling Tool
+                    </a>
+                    .
+                  </li>
+                  <li>
+                    Discover the best deals in your whole region with our{' '}
+                    <a
+                      href="https://saddlebagexchange.com/ffxiv/best-deals"
+                      className="text-purple-600 underline">
+                      Best Deals Search
                     </a>
                     .
                   </li>
@@ -206,21 +215,6 @@ export default function Index() {
                   For World of Warcraft Adventurers
                 </h3>
                 <ul className="list-disc list-inside text-blue-700 dark:text-blue-300 space-y-2">
-                  <li>
-                    Get real-time WoW AH Discord{' '}
-                    <a
-                      href="https://saddlebagexchange.com/wow/price-alert"
-                      className="text-blue-600 underline">
-                      Price Alerts
-                    </a>
-                    ,{' '}
-                    <a
-                      href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
-                      className="text-blue-600 underline">
-                      Undercut Alerts
-                    </a>
-                    , and more!
-                  </li>
                   <li>
                     Discover ultra-cheap deals with our{' '}
                     <a
@@ -262,6 +256,32 @@ export default function Index() {
                       Export Search
                     </a>{' '}
                     tools.
+                  </li>
+                  <li>
+                    Discover long-term trends with our{' '}
+                    <a
+                      href="https://saddlebagexchange.com/wow/weekly-price-group-delta"
+                      className="text-blue-600 underline">
+                      Weekly Price Group Delta
+                    </a>
+                    , and see the price and quantity changes for each item in
+                    each price group over years of data. Great for investing for
+                    patch and raid cycles!
+                  </li>
+                  <li>
+                    Get real-time WoW AH Discord{' '}
+                    <a
+                      href="https://saddlebagexchange.com/wow/price-alert"
+                      className="text-blue-600 underline">
+                      Price Alerts
+                    </a>
+                    ,{' '}
+                    <a
+                      href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
+                      className="text-blue-600 underline">
+                      Undercut Alerts
+                    </a>
+                    , and more!
                   </li>
                 </ul>
               </div>
