@@ -132,6 +132,26 @@ const recommendedQueries = [
     href: '/wow/shortage-predictor'
   },
   {
+    name: 'Out of Stock',
+    description: 'Find items that are out of stock on any realm!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/out-of-stock'
+  },
+  {
+    name: 'Big Goblin Tracker',
+    description:
+      'Find items controlled by big goblins who are oligopolists, these skyrocket in price whenever the big goblin takes a WoW break or lets their auctions expire.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/quantity-manipulation'
+  },
+  {
+    name: 'Weekly Price Group Delta',
+    description:
+      'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/weekly-price-group-delta'
+  },
+  {
     name: 'Local Realm Shortage Finder',
     description:
       'Searches for items on your local server / realm that you can flip and take over the market!',
@@ -151,19 +171,6 @@ const recommendedQueries = [
     Icon: DocumentSearchIcon,
     href: 'https://zygorguides.com/ref/indopan/',
     external: true
-  },
-  {
-    name: 'Out of Stock',
-    description: 'Find items that are out of stock on any realm!',
-    Icon: DocumentSearchIcon,
-    href: '/wow/out-of-stock'
-  },
-  {
-    name: 'Big Goblin Tracker',
-    description:
-      'Find items controlled by big goblins who are oligopolists, these skyrocket in price whenever the big goblin takes a WoW break or lets their auctions expire.',
-    Icon: DocumentSearchIcon,
-    href: '/wow/quantity-manipulation'
   }
 ]
 

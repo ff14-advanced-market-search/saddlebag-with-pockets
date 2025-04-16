@@ -34,6 +34,7 @@ export const loader: LoaderFunction = () => {
   Allow: /wow/shortages/commodities
   Allow: /wow/shortages/single
   Allow: /wow/pet-marketshare
+  Allow: /wow/weekly-price-group-delta
   Allow: /ffxiv/scrip-exchange
   Allow: /ffxiv/extended-history
   Allow: /ffxiv/best-deals/recommended

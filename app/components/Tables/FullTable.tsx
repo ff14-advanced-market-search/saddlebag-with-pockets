@@ -40,10 +40,12 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 export type ColumnList<Type> = {
   columnId: string
   header: string
+  dataAccessor?: (originalRow: Type) => string | number | null | undefined
   accessor?: (props: {
     row: Type
     getValue: Getter<unknown>
   }) => JSX.Element | null
+  sortUndefined?: false | 'first' | 'last' | undefined
 }
 
 /**
@@ -71,6 +73,11 @@ export type ColumnList<Type> = {
  *   - `parseToLocaleString` converts numbers to locale strings for display.
  *   - Supports client-side sorting and filtering.
  *   - Changes the window scroll position to top on initialization.
+ *
+ * @remark
+ * - The table scrolls to the top of the window on mount.
+ * - Columns can use custom data accessors and cell renderers.
+ * - Values that are `null` or `undefined` are displayed as 'N/A'.
  */
 function FullTable<Type>({
   data,
@@ -94,28 +101,49 @@ function FullTable<Type>({
   const columnHelper = createColumnHelper<Type>()
 
   const parseToLocaleString = (value: any) => {
+    if (value === undefined || value === null) {
+      return 'N/A'
+    }
     if (typeof value === 'number') {
       return value.toLocaleString()
     }
-    if (typeof value === 'string' && !isNaN(parseFloat(value))) {
-      return parseFloat(value).toLocaleString()
+    if (typeof value === 'string' && !isNaN(Number.parseFloat(value))) {
+      return Number.parseFloat(value).toLocaleString()
     }
-
-    return value
+    return String(value)
   }
 
   const columns = columnList.map((col) => {
-    // @ts-ignore
-    return columnHelper.accessor(col.columnId, {
-      header: col.header,
-      cell: (props) =>
-        col.accessor
-          ? col.accessor({
-              row: props.row.original,
-              getValue: () => parseToLocaleString(props.getValue())
-            })
-          : parseToLocaleString(props.getValue())
-    })
+    const columnDef = col.dataAccessor
+      ? columnHelper.accessor(col.dataAccessor, {
+          id: col.columnId,
+          header: col.header,
+          cell: (props) =>
+            col.accessor
+              ? col.accessor({
+                  row: props.row.original,
+                  getValue: props.getValue
+                })
+              : parseToLocaleString(props.getValue()),
+          enableSorting: true,
+          // @ts-ignore - Type definition expects 1/-1, but implementation/docs use 'last'/'first'
+          sortUndefined: col.sortUndefined ?? undefined
+        })
+      : columnHelper.accessor(col.columnId as any, {
+          header: col.header,
+          cell: (props) =>
+            col.accessor
+              ? col.accessor({
+                  row: props.row.original,
+                  getValue: props.getValue
+                })
+              : parseToLocaleString(props.getValue()),
+          enableSorting: true,
+          // @ts-ignore - Type definition expects 1/-1, but implementation/docs use 'last'/'first'
+          sortUndefined: col.sortUndefined ?? undefined
+        })
+
+    return columnDef
   })
 
   const table = useReactTable({
