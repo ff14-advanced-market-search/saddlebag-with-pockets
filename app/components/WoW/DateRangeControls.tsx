@@ -19,10 +19,13 @@ export default function DateRangeControls({
     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
+          <label
+            htmlFor="startDate"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
             Start Date
           </label>
           <select
+            id="startDate"
             value={startDate}
             onChange={(e) => {
               const newStart = e.target.value
@@ -40,10 +43,13 @@ export default function DateRangeControls({
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
+          <label
+            htmlFor="endDate"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
             End Date
           </label>
           <select
+            id="endDate"
             value={endDate}
             onChange={(e) => {
               const newEnd = e.target.value
@@ -61,10 +67,14 @@ export default function DateRangeControls({
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
+          <label
+            htmlFor="resetRange"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
             Reset Range
           </label>
           <button
+            id="resetRange"
+            type="button"
             onClick={() => {
               onStartDateChange(allTimestamps[0])
               onEndDateChange(allTimestamps[allTimestamps.length - 1])
