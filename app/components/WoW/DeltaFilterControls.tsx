@@ -9,8 +9,14 @@ interface DeltaFilterControlsProps {
   onApplyFilter: (newVisibleItems: Record<string, boolean>) => void
 }
 
-const DEFAULT_MAX_PRESETS = [25, 50, 100, 200, 500, 1000, 2000, 5000]
-const DEFAULT_MIN_PRESETS = [-100, -95, -85, -75, -50, -25, 0]
+const DEFAULT_MAX_PRESETS = [
+  -100, -95, -85, -75, -50, -25, 0, 25, 50, 100, 200, 500, 1000, 2000, 5000
+]
+const DEFAULT_MIN_PRESETS = [
+  -100, -95, -85, -75, -50, -25, 0, 25, 50, 100, 200, 500, 1000, 2000, 5000
+]
+
+type FilterMode = 'exclusive' | 'inclusive'
 
 export default function DeltaFilterControls({
   selectedGroup,
@@ -21,6 +27,7 @@ export default function DeltaFilterControls({
 }: DeltaFilterControlsProps) {
   const [isPeakDeltaFilterEnabled, setIsPeakDeltaFilterEnabled] =
     useState(false)
+  const [filterMode, setFilterMode] = useState<FilterMode>('exclusive')
   const [pendingMinPeakDeltaFilter, setPendingMinPeakDeltaFilter] = useState<
     number | null
   >(null)
@@ -56,19 +63,37 @@ export default function DeltaFilterControls({
 
         let shouldBeVisible = deltasInRange.length > 0
 
-        // Check against filters
         if (shouldBeVisible) {
-          for (const delta of deltasInRange) {
-            const minFail =
-              pendingMinPeakDeltaFilter !== null &&
-              delta < pendingMinPeakDeltaFilter
-            const maxFail =
-              pendingMaxPeakDeltaFilter !== null &&
-              delta > pendingMaxPeakDeltaFilter
+          if (filterMode === 'exclusive') {
+            // Exclusive mode: Hide items that go outside the range
+            for (const delta of deltasInRange) {
+              const minFail =
+                pendingMinPeakDeltaFilter !== null &&
+                delta < pendingMinPeakDeltaFilter
+              const maxFail =
+                pendingMaxPeakDeltaFilter !== null &&
+                delta > pendingMaxPeakDeltaFilter
 
-            if (minFail || maxFail) {
-              shouldBeVisible = false
-              break
+              if (minFail || maxFail) {
+                shouldBeVisible = false
+                break
+              }
+            }
+          } else {
+            // Inclusive mode: Show items that have at least one value in range
+            shouldBeVisible = false // Start with false and set to true if we find a matching value
+            for (const delta of deltasInRange) {
+              const minPass =
+                pendingMinPeakDeltaFilter === null ||
+                delta >= pendingMinPeakDeltaFilter
+              const maxPass =
+                pendingMaxPeakDeltaFilter === null ||
+                delta <= pendingMaxPeakDeltaFilter
+
+              if (minPass && maxPass) {
+                shouldBeVisible = true
+                break
+              }
             }
           }
         }
@@ -82,17 +107,41 @@ export default function DeltaFilterControls({
 
   return (
     <div className="px-4 mb-2 space-y-2 border-t border-b border-gray-300 dark:border-gray-600 py-2">
-      <label className="flex items-center space-x-2 cursor-pointer">
-        <input
-          type="checkbox"
-          checked={isPeakDeltaFilterEnabled}
-          onChange={(e) => setIsPeakDeltaFilterEnabled(e.target.checked)}
-          className="form-checkbox h-4 w-4 text-blue-500"
-        />
-        <span className="text-xs font-medium text-gray-900 dark:text-gray-100">
-          Exclude Items by Price Change %
-        </span>
-      </label>
+      <div className="flex items-center justify-between">
+        <label className="flex items-center space-x-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={isPeakDeltaFilterEnabled}
+            onChange={(e) => setIsPeakDeltaFilterEnabled(e.target.checked)}
+            className="form-checkbox h-4 w-4 text-blue-500"
+          />
+          <span className="text-xs font-medium text-gray-900 dark:text-gray-100">
+            Filter Items by Price Change %
+          </span>
+        </label>
+        {isPeakDeltaFilterEnabled && (
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setFilterMode('exclusive')}
+              className={`text-xs px-2 py-1 rounded ${
+                filterMode === 'exclusive'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
+              }`}>
+              Exclude Outside
+            </button>
+            <button
+              onClick={() => setFilterMode('inclusive')}
+              className={`text-xs px-2 py-1 rounded ${
+                filterMode === 'inclusive'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
+              }`}>
+              Include Inside
+            </button>
+          </div>
+        )}
+      </div>
       {isPeakDeltaFilterEnabled && (
         <div className="space-y-1 pl-5">
           <div className="flex items-center">
@@ -192,6 +241,11 @@ export default function DeltaFilterControls({
                 ))}
               </select>
             </div>
+          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            {filterMode === 'exclusive'
+              ? 'Excludes items that go outside the range at any point'
+              : 'Shows items that fall within the range at least once'}
           </div>
           <button
             onClick={handleApplyFilter}
