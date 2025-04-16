@@ -164,6 +164,13 @@ const recommendedQueries = [
       'Find items controlled by big goblins who are oligopolists, these skyrocket in price whenever the big goblin takes a WoW break or lets their auctions expire.',
     Icon: DocumentSearchIcon,
     href: '/wow/quantity-manipulation'
+  },
+  {
+    name: 'Weekly Price Group Delta',
+    description:
+      'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/weekly-price-group-delta'
   }
 ]
 
