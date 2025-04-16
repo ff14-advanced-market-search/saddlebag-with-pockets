@@ -49,15 +49,30 @@ export type ColumnList<Type> = {
 }
 
 /**
- * Displays a sortable, filterable, and customizable data table with support for global and column-specific filtering.
- *
- * @param data - The array of data objects to display in the table.
- * @param sortingOrder - Initial sorting configuration for columns.
- * @param columnList - Configuration for each column, including header, accessor, and sorting behavior.
- * @param order - Optional array specifying the order of columns.
- * @param globalFilter - Optional string to filter all table data.
- * @param setGlobalFilter - Optional state setter for updating the global filter.
- * @returns A React table component with interactive sorting and filtering features.
+ * Renders a table with customizable columns and global filtering.
+ * @example
+ * FullTable({
+ *   data: [{ name: "Alice", age: 30 }],
+ *   sortingOrder: [{ id: "name", desc: false }],
+ *   columnList: [{ columnId: "name", header: "Name" }],
+ *   order: ["name", "age"],
+ *   globalFilter: "a",
+ *   setGlobalFilter: setFilter
+ * })
+ * returns a table view based on the provided data and configuration.
+ * @param {Object} config - Configuration object for the FullTable component.
+ * @param {Array<Type>} config.data - Array of data objects to display in the table.
+ * @param {Array<{ id: keyof Type; desc: boolean }>} config.sortingOrder - Defines the sorting order of columns.
+ * @param {Array<ColumnList<Type>>} config.columnList - Array defining the column configurations.
+ * @param {Array<string>} [config.order] - Optional column order.
+ * @param {string} [config.globalFilter] - Optional global filter applied to all columns.
+ * @param {React.Dispatch<React.SetStateAction<string>>} [config.setGlobalFilter] - State updater for globalFilter.
+ * @returns {JSX.Element} A table component with sorting and filtering functionalities.
+ * @description
+ *   - Use `setGlobalFilter` to update the global search term.
+ *   - `parseToLocaleString` converts numbers to locale strings for display.
+ *   - Supports client-side sorting and filtering.
+ *   - Changes the window scroll position to top on initialization.
  *
  * @remark
  * - The table scrolls to the top of the window on mount.
