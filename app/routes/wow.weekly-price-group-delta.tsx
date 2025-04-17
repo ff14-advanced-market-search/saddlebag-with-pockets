@@ -42,7 +42,7 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Weekly Price Group Delta Analysis',
     description:
-      'Analyze weekly price changes for groups of WoW items and categories'
+      'WoW New Raid Investment Analysis! View weekly price changes for investment opportunities!'
   }
 }
 

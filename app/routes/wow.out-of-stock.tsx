@@ -22,6 +22,24 @@ import type { MetaFunction, LinksFunction } from '@remix-run/node'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW Out of Stock Items',
+    description:
+      'Sell without Competition! Search for items that are out of stock across various WoWrealms.'
+  }
+}
+
+export const links: LinksFunction = () => [
+  {
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/wow/out-of-stock'
+  }
+]
+
 const PAGE_URL = '/wow/out-of-stock'
 
 const defaultFormValues = {
