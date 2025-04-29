@@ -23,7 +23,7 @@ import RequestDataSection from '~/components/WoW/RequestDataSection'
 import DateInputs from '~/components/WoW/DateInputs'
 import ImportSection from '~/components/WoW/ImportSection'
 import PriceGroupsSection from '~/components/FFXIV/PriceGroupsSection'
-import RequestPreview from '~/components/WoW/RequestPreview'
+import RequestPreview from '~/components/FFXIV/RequestPreview'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ErrorPopup from '~/components/Common/ErrorPopup'
@@ -36,6 +36,7 @@ import type {
   GroupData
 } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
+import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -201,13 +202,19 @@ const Index = () => {
         <form method="post" className="space-y-4 mb-4">
           <ImportSection onImport={handleImport} />
 
-          <DateInputs
+          <DateRangeInputs
             startYear={startYear}
             startMonth={startMonth}
             startDay={startDay}
-            onYearChange={setStartYear}
-            onMonthChange={setStartMonth}
-            onDayChange={setStartDay}
+            endYear={endYear}
+            endMonth={endMonth}
+            endDay={endDay}
+            onStartYearChange={setStartYear}
+            onStartMonthChange={setStartMonth}
+            onStartDayChange={setStartDay}
+            onEndYearChange={setEndYear}
+            onEndMonthChange={setEndMonth}
+            onEndDayChange={setEndDay}
             onError={(err) => {
               setError(err)
               setShowErrorPopup(!!err)
@@ -282,6 +289,15 @@ const Index = () => {
             name="priceGroups"
             value={JSON.stringify(priceGroups)}
           />
+
+          <div className="mt-4">
+            <button
+              type="submit"
+              disabled={transition.state === 'submitting'}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50">
+              {transition.state === 'submitting' ? 'Searching...' : 'Search'}
+            </button>
+          </div>
 
           <RequestPreview
             region={region}

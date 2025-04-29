@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import type { ColumnList } from '~/components/types'
 import type { ItemData } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
+import { type Getter, type Row } from '@tanstack/table-core'
 
 interface ItemDetailsTableProps {
   data: ItemData[]
@@ -22,6 +23,16 @@ interface ItemDetailsTableProps {
       }
     | undefined
 }
+
+type ItemDataValue =
+  | string
+  | number
+  | {
+      p: number
+      q: number
+      t: number
+      delta: number
+    }[]
 
 export default function ItemDetailsTable({
   data,
@@ -65,6 +76,27 @@ export default function ItemDetailsTable({
     return 0
   })
 
+  const columns = useMemo(
+    () =>
+      columnList.map((column) => ({
+        id: column.columnId,
+        header: column.header,
+        accessorFn: column.dataAccessor,
+        cell: (props: { row: Row<ItemData>; getValue: Getter<any> }) => {
+          const value = props.getValue()
+          if (column.cell) {
+            return column.cell({
+              row: props.row.original,
+              getValue: () => value
+            })
+          }
+          return value
+        },
+        sortUndefined: column.sortUndefined
+      })),
+    [columnList]
+  )
+
   return (
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
       <div className="px-4 py-5 sm:p-6">
@@ -90,13 +122,13 @@ export default function ItemDetailsTable({
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-900">
               <tr>
-                {columnList.map((column) => (
+                {columns.map((column) => (
                   <th
-                    key={column.columnId}
-                    onClick={() => handleSort(column.columnId)}
+                    key={column.id}
+                    onClick={() => handleSort(column.id)}
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-700 dark:hover:text-gray-200">
                     {column.header}
-                    {sortColumn === column.columnId && (
+                    {sortColumn === column.id && (
                       <span className="ml-2">
                         {sortDirection === 'asc' ? '↑' : '↓'}
                       </span>
@@ -108,19 +140,19 @@ export default function ItemDetailsTable({
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {sortedData.map((row, index) => (
                 <tr key={index}>
-                  {columnList.map((column) => {
-                    const getValue = () =>
-                      row[column.columnId as keyof ItemData]
-                    return (
-                      <td
-                        key={column.columnId}
-                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                        {column.accessor
-                          ? column.accessor({ row, getValue })
-                          : (getValue() ?? '').toString()}
-                      </td>
-                    )
-                  })}
+                  {columns.map((column) => (
+                    <td
+                      key={column.id}
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                      {column.accessor
+                        ? column.accessor({
+                            row,
+                            getValue: () =>
+                              row[column.id as keyof ItemData] as ItemDataValue
+                          })
+                        : String(row[column.id as keyof ItemData] ?? '')}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
