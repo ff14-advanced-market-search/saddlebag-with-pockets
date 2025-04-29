@@ -162,7 +162,7 @@ const Index = () => {
   const [startYear, setStartYear] = useState(2025)
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
-  const [endYear, setEndYear] = useState(2026)
+  const [endYear, setEndYear] = useState(2036)
   const [endMonth, setEndMonth] = useState(1)
   const [endDay, setEndDay] = useState(1)
   const [hqOnly, setHqOnly] = useState(false)

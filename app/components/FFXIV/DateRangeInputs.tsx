@@ -32,8 +32,11 @@ export default function DateRangeInputs({
   onError
 }: DateRangeInputsProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div className="space-y-4">
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+          Start Date
+        </h4>
         <DateInputs
           startYear={startYear}
           startMonth={startMonth}
@@ -45,7 +48,10 @@ export default function DateRangeInputs({
         />
       </div>
 
-      <div className="space-y-4">
+      <div>
+        <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+          End Date
+        </h4>
         <DateInputs
           startYear={endYear}
           startMonth={endMonth}
