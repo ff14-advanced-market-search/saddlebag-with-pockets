@@ -1,10 +1,7 @@
 import { address, UserAgent } from '../client/config'
+import type { ImportData } from './types'
 
-export interface PriceGroup {
-  name: string
-  item_ids: number[]
-  categories: number[]
-}
+type PriceGroup = NonNullable<ImportData['price_groups']>[number]
 
 export interface WeeklyPriceGroupDeltaProps {
   region: string

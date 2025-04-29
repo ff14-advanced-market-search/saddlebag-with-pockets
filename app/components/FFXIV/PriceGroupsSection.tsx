@@ -4,7 +4,9 @@ import DebouncedSelectInput from '../Common/DebouncedSelectInput'
 import { ffxivItems, ffxivItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import ItemsFilter from '../form/ffxiv/ItemsFilter'
-import type { PriceGroup } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
+import type { ImportData } from '~/requests/FFXIV/types'
+
+type PriceGroup = NonNullable<ImportData['price_groups']>[number]
 
 interface PriceGroupsSectionProps {
   priceGroups: PriceGroup[]
