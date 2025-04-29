@@ -26,7 +26,7 @@ import type { DataCentersList } from '~/utils/locations/DataCenters'
 const getRegionFromDataCenter = (dataCenter: string): string => {
   // Check each region in the DataCenters map
   for (const [region, dataCenters] of DataCenters.entries()) {
-    const dataCenterNames = dataCenters.map(dc => dc.name)
+    const dataCenterNames = dataCenters.map((dc) => dc.name)
     if (dataCenterNames.includes(dataCenter)) {
       switch (region as keyof DataCentersList) {
         case 'NA':
@@ -214,7 +214,9 @@ const Index = () => {
                   onChange={(e) => setHqOnly(e.target.checked)}
                   className="form-checkbox h-4 w-4 text-blue-600"
                 />
-                <span className="text-gray-700 dark:text-gray-200">HQ Only</span>
+                <span className="text-gray-700 dark:text-gray-200">
+                  HQ Only
+                </span>
               </label>
             </div>
 
