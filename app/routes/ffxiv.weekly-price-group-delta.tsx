@@ -150,7 +150,7 @@ const Index = () => {
   const [endDay, setEndDay] = useState(1)
   const [hqOnly, setHqOnly] = useState(false)
   const [priceSetting, setPriceSetting] = useState('median')
-  const [quantitySetting, setQuantitySetting] = useState('total')
+  const [quantitySetting, setQuantitySetting] = useState('quantitySold')
   const [showErrorPopup, setShowErrorPopup] = useState(false)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${world.name} (${region})`
@@ -203,6 +203,10 @@ const Index = () => {
               setShowErrorPopup(!!err)
             }}
           />
+
+          <input type="hidden" name="endYear" value={endYear} />
+          <input type="hidden" name="endMonth" value={endMonth} />
+          <input type="hidden" name="endDay" value={endDay} />
 
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
