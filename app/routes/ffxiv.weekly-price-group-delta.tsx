@@ -19,6 +19,31 @@ import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
 import ImportSection from '~/components/FFXIV/ImportSection'
 import PriceGroupsSection from '~/components/FFXIV/PriceGroupsSection'
 import RequestPreview from '~/components/FFXIV/RequestPreview'
+import DataCenters from '~/utils/locations/DataCenters'
+import type { DataCentersList } from '~/utils/locations/DataCenters'
+
+// Map data centers to their regions
+const getRegionFromDataCenter = (dataCenter: string): string => {
+  // Check each region in the DataCenters map
+  for (const [region, dataCenters] of DataCenters.entries()) {
+    const dataCenterNames = dataCenters.map(dc => dc.name)
+    if (dataCenterNames.includes(dataCenter)) {
+      switch (region as keyof DataCentersList) {
+        case 'NA':
+          return 'North-America'
+        case 'EU':
+          return 'Europe'
+        case 'JP':
+          return 'Japan'
+        case 'OCE':
+          return 'Oceania'
+        default:
+          return 'North-America' // Default to NA if unknown
+      }
+    }
+  }
+  return 'North-America' // Default to NA if not found
+}
 
 export const meta: MetaFunction = () => {
   return {
@@ -39,13 +64,15 @@ export const links: LinksFunction = () => [
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getFFXIVSessionData } = await getUserSessionData(request)
-  const { world, region } = getFFXIVSessionData()
+  const { world, region: dataCenter } = getFFXIVSessionData()
 
-  if (!region || !world) {
+  if (!dataCenter || !world) {
     throw new Error(
       'Please configure your FFXIV settings in the user settings page'
     )
   }
+
+  const region = getRegionFromDataCenter(dataCenter)
 
   return json<FFXIVLoaderData>({
     world,
@@ -55,13 +82,15 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { getFFXIVSessionData } = await getUserSessionData(request)
-  const { region } = getFFXIVSessionData()
+  const { region: dataCenter } = getFFXIVSessionData()
 
-  if (!region) {
+  if (!dataCenter) {
     return json({
       exception: 'Region is required. Please configure it in your settings.'
     })
   }
+
+  const region = getRegionFromDataCenter(dataCenter)
 
   const formData = await request.formData()
   const startYear = Number.parseInt(formData.get('startYear') as string)
