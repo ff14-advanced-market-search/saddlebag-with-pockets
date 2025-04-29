@@ -9,7 +9,7 @@ import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useState, useEffect } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { FFXIVLoaderData } from '~/requests/FFXIV/types'
+import type { FFXIVLoaderData, ImportData } from '~/requests/FFXIV/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getUserSessionData } from '~/sessions'
 import type { ColumnList } from '~/components/types'
@@ -22,52 +22,20 @@ import PriceQuantityAnalysis from '~/components/WoW/PriceQuantityAnalysis'
 import RequestDataSection from '~/components/WoW/RequestDataSection'
 import DateInputs from '~/components/WoW/DateInputs'
 import ImportSection from '~/components/WoW/ImportSection'
-import PriceGroupsSection from '~/components/WoW/PriceGroupsSection'
+import PriceGroupsSection from '~/components/FFXIV/PriceGroupsSection'
 import RequestPreview from '~/components/WoW/RequestPreview'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ErrorPopup from '~/components/Common/ErrorPopup'
 import WeeklyPriceGroupDelta from '~/requests/FFXIV/WeeklyPriceGroupDelta'
-
-export interface PriceGroup {
-  name: string
-  item_ids: number[]
-  categories: number[]
-}
-
-export interface WeeklyPriceGroupDeltaProps {
-  region: string
-  start_year: number
-  start_month: number
-  start_day: number
-  end_year: number
-  end_month: number
-  end_day: number
-  hq_only: boolean
-  price_setting: string
-  quantity_setting: string
-  price_groups: PriceGroup[]
-}
-
-export interface ItemData {
-  itemName: string
-  weekly_data: Array<{
-    p: number // price
-    q: number // quantity
-    t: number // timestamp
-    delta: number // price change %
-  }>
-}
-
-export interface GroupData {
-  deltas: Record<string, number>
-  item_names: Record<string, string>
-  item_data: Record<string, ItemData>
-}
-
-export interface WeeklyPriceGroupDeltaResponse {
-  [groupName: string]: GroupData
-}
+import type {
+  PriceGroup,
+  WeeklyPriceGroupDeltaProps,
+  WeeklyPriceGroupDeltaResponse,
+  ItemData,
+  GroupData
+} from '~/requests/FFXIV/WeeklyPriceGroupDelta'
+import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -209,6 +177,19 @@ const Index = () => {
     )
   }
 
+  const handleImport = (data: ImportData) => {
+    if (data.start_year) setStartYear(data.start_year)
+    if (data.start_month) setStartMonth(data.start_month)
+    if (data.start_day) setStartDay(data.start_day)
+    if (data.end_year) setEndYear(data.end_year)
+    if (data.end_month) setEndMonth(data.end_month)
+    if (data.end_day) setEndDay(data.end_day)
+    if (data.hq_only !== undefined) setHqOnly(data.hq_only)
+    if (data.price_setting) setPriceSetting(data.price_setting)
+    if (data.quantity_setting) setQuantitySetting(data.quantity_setting)
+    if (data.price_groups) setPriceGroups(data.price_groups)
+  }
+
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -218,21 +199,7 @@ const Index = () => {
         error={undefined}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4 mb-4">
-          <ImportSection
-            onImport={(data) => {
-              if (data.start_year) setStartYear(data.start_year)
-              if (data.start_month) setStartMonth(data.start_month)
-              if (data.start_day) setStartDay(data.start_day)
-              if (data.end_year) setEndYear(data.end_year)
-              if (data.end_month) setEndMonth(data.end_month)
-              if (data.end_day) setEndDay(data.end_day)
-              if (data.hq_only !== undefined) setHqOnly(data.hq_only)
-              if (data.price_setting) setPriceSetting(data.price_setting)
-              if (data.quantity_setting)
-                setQuantitySetting(data.quantity_setting)
-              if (data.price_groups) setPriceGroups(data.price_groups)
-            }}
-          />
+          <ImportSection onImport={handleImport} />
 
           <DateInputs
             startYear={startYear}
@@ -272,8 +239,12 @@ const Index = () => {
                 value={priceSetting}
                 onChange={(e) => setPriceSetting(e.target.value)}
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                <option value="median" className="dark:bg-gray-700">Median</option>
-                <option value="mean" className="dark:bg-gray-700">Mean</option>
+                <option value="median" className="dark:bg-gray-700">
+                  Median
+                </option>
+                <option value="mean" className="dark:bg-gray-700">
+                  Mean
+                </option>
               </select>
             </div>
 
@@ -286,8 +257,12 @@ const Index = () => {
                 value={quantitySetting}
                 onChange={(e) => setQuantitySetting(e.target.value)}
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                <option value="quantitySold" className="dark:bg-gray-700">Quantity Sold</option>
-                <option value="salesAmount" className="dark:bg-gray-700">Sales Amount</option>
+                <option value="quantitySold" className="dark:bg-gray-700">
+                  Quantity Sold
+                </option>
+                <option value="salesAmount" className="dark:bg-gray-700">
+                  Sales Amount
+                </option>
               </select>
             </div>
           </div>
