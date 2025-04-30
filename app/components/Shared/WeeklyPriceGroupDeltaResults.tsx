@@ -127,7 +127,7 @@ export default function WeeklyPriceGroupDeltaResults({
       }
     },
     { columnId: 'itemName', header: 'Item Name' },
-    { columnId: 'itemID', header: 'Item ID' },
+    // { columnId: 'itemID', header: 'Item ID' },
     {
       columnId: 'price',
       header: `Price (${formatTimestamp(selectedDate)})`,

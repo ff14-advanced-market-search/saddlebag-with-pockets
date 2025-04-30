@@ -104,7 +104,7 @@ export default function ItemDetailsTable({
           })}
           columns={[
             { title: 'Item Name', value: 'itemName' },
-            { title: 'Item ID', value: 'itemID' },
+            // { title: 'Item ID', value: 'itemID' },
             {
               title: `Price (${formatTimestamp(selectedDate)})`,
               value: 'price'
