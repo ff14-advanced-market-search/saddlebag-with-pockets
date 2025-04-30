@@ -21,6 +21,10 @@ import PriceGroupsSection from '~/components/FFXIV/PriceGroupsSection'
 import RequestPreview from '~/components/FFXIV/RequestPreview'
 import DataCenters from '~/utils/locations/DataCenters'
 import type { DataCentersList } from '~/utils/locations/DataCenters'
+import WeeklyPriceGroupDeltaResults from '~/components/Shared/WeeklyPriceGroupDeltaResults'
+
+// Define action data type
+type ActionData = { exception: string } | { data: WeeklyPriceGroupDeltaResponse }
 
 // Map data centers to their regions
 const getRegionFromDataCenter = (dataCenter: string): string => {
@@ -85,7 +89,7 @@ export const action: ActionFunction = async ({ request }) => {
   const { region: dataCenter } = getFFXIVSessionData()
 
   if (!dataCenter) {
-    return json({
+    return json<ActionData>({
       exception: 'Region is required. Please configure it in your settings.'
     })
   }
@@ -124,9 +128,9 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     const data = await response.json()
-    return json(data)
+    return json<ActionData>({ data })
   } catch (error) {
-    return json({
+    return json<ActionData>({
       exception:
         error instanceof Error ? error.message : 'An unknown error occurred'
     })
@@ -137,11 +141,11 @@ const Index = () => {
   const { world, region } = useLoaderData<FFXIVLoaderData>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
-  const actionData = useActionData<WeeklyPriceGroupDeltaResponse>()
+  const actionData = useActionData<ActionData>()
   const [priceGroups, setPriceGroups] = useState<
     NonNullable<ImportData['price_groups']>
   >([])
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [formError, setFormError] = useState<string | undefined>(undefined)
   const [startYear, setStartYear] = useState(2025)
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
@@ -168,9 +172,18 @@ const Index = () => {
     if (data.price_groups) setPriceGroups(data.price_groups)
   }
 
+  // Show error from action data
+  const actionError = actionData && 'exception' in actionData ? actionData.exception : undefined
+
+  // Show results if we have data and no errors
   if (actionData && 'data' in actionData) {
     return (
-      <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />
+      <WeeklyPriceGroupDeltaResults
+        data={actionData.data}
+        pageTitle={pageTitle}
+        darkMode={darkmode}
+        backUrl="/ffxiv/weekly-price-group-delta"
+      />
     )
   }
 
@@ -180,7 +193,7 @@ const Index = () => {
         hideSubmitButton={true}
         title={pageTitle}
         loading={transition.state === 'submitting'}
-        error={undefined}
+        error={actionError}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4 mb-4">
           <ImportSection onImport={handleImport} />
@@ -199,7 +212,7 @@ const Index = () => {
             onEndMonthChange={setEndMonth}
             onEndDayChange={setEndDay}
             onError={(err) => {
-              setError(err)
+              setFormError(err)
               setShowErrorPopup(!!err)
             }}
           />
@@ -259,7 +272,7 @@ const Index = () => {
             priceGroups={priceGroups}
             onPriceGroupsChange={setPriceGroups}
             onError={(err) => {
-              setError(err)
+              setFormError(err)
               setShowErrorPopup(!!err)
             }}
             isSubmitting={transition.state === 'submitting'}
@@ -296,40 +309,9 @@ const Index = () => {
         </form>
       </SmallFormContainer>
 
-      {error && showErrorPopup && (
-        <ErrorPopup error={error} onClose={() => setShowErrorPopup(false)} />
+      {formError && showErrorPopup && (
+        <ErrorPopup error={formError} onClose={() => setShowErrorPopup(false)} />
       )}
-    </PageWrapper>
-  )
-}
-
-const Results = ({
-  data,
-  pageTitle,
-  darkMode
-}: {
-  data: WeeklyPriceGroupDeltaResponse
-  pageTitle: string
-  darkMode: boolean
-}) => {
-  return (
-    <PageWrapper>
-      <Title title={pageTitle} />
-      <ContentContainer>
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <a
-              href="/ffxiv/weekly-price-group-delta"
-              className="text-blue-500 hover:text-blue-600 font-medium">
-              ← Search Again
-            </a>
-          </div>
-          {/* Add your results display components here */}
-          <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-auto">
-            {JSON.stringify(data, null, 2)}
-          </pre>
-        </div>
-      </ContentContainer>
     </PageWrapper>
   )
 }

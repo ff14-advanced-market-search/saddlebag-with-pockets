@@ -4,6 +4,9 @@ export type ColumnList<Type> = {
   columnId: string
   header: string
   dataAccessor?: (originalRow: Type) => string | number | null | undefined
-  cell?: (props: { row: Type; getValue: Getter<any> }) => JSX.Element | null
+  accessor?: (props: {
+    row: Type
+    getValue: Getter<unknown>
+  }) => JSX.Element | null
   sortUndefined?: false | 'first' | 'last' | undefined
 }
