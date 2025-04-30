@@ -6,7 +6,7 @@ export type ColumnList<Type> = {
   dataAccessor?: (originalRow: Type) => string | number | null | undefined
   accessor?: (props: {
     row: Type
-    getValue: Getter<unknown>
+    getValue: () => ReturnType<NonNullable<ColumnList<Type>['dataAccessor']>>
   }) => JSX.Element | null
   sortUndefined?: false | 'first' | 'last' | undefined
 }
