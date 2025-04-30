@@ -20,9 +20,6 @@ export interface WeeklyPriceGroupDeltaProps {
 export interface ItemData {
   itemID: number
   itemName: string
-  historicPrice: number
-  salesPerDay: number
-  marketshare: number
   weekly_data: Array<{
     p: number // price
     q: number // quantity

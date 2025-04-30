@@ -24,7 +24,9 @@ import type { DataCentersList } from '~/utils/locations/DataCenters'
 import WeeklyPriceGroupDeltaResults from '~/components/Shared/WeeklyPriceGroupDeltaResults'
 
 // Define action data type
-type ActionData = { exception: string } | { data: WeeklyPriceGroupDeltaResponse }
+type ActionData =
+  | { exception: string }
+  | { data: WeeklyPriceGroupDeltaResponse }
 
 // Map data centers to their regions
 const getRegionFromDataCenter = (dataCenter: string): string => {
@@ -173,7 +175,8 @@ const Index = () => {
   }
 
   // Show error from action data
-  const actionError = actionData && 'exception' in actionData ? actionData.exception : undefined
+  const actionError =
+    actionData && 'exception' in actionData ? actionData.exception : undefined
 
   // Show results if we have data and no errors
   if (actionData && 'data' in actionData) {
@@ -310,7 +313,10 @@ const Index = () => {
       </SmallFormContainer>
 
       {formError && showErrorPopup && (
-        <ErrorPopup error={formError} onClose={() => setShowErrorPopup(false)} />
+        <ErrorPopup
+          error={formError}
+          onClose={() => setShowErrorPopup(false)}
+        />
       )}
     </PageWrapper>
   )

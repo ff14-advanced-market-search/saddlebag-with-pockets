@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
-import type { WeeklyPriceGroupDeltaResponse, ItemData } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
+import type {
+  WeeklyPriceGroupDeltaResponse,
+  ItemData
+} from '~/requests/FFXIV/WeeklyPriceGroupDelta'
 import { PageWrapper, ContentContainer, Title } from '~/components/Common'
 import type { ColumnList } from '~/components/types'
 import ItemDetailsTable from '~/components/FFXIV/ItemDetailsTable'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
 import DateRangeControls from '~/components/FFXIV/DateRangeControls'
+import GroupSelector from '../WoW/GroupSelector'
 
 interface ResultsProps {
   data: WeeklyPriceGroupDeltaResponse
@@ -123,6 +127,7 @@ export default function WeeklyPriceGroupDeltaResults({
       }
     },
     { columnId: 'itemName', header: 'Item Name' },
+    { columnId: 'itemID', header: 'Item ID' },
     {
       columnId: 'price',
       header: `Price (${formatTimestamp(selectedDate)})`,
@@ -134,18 +139,36 @@ export default function WeeklyPriceGroupDeltaResults({
       sortUndefined: 'last'
     },
     {
+      columnId: 'quantity',
+      header: `Quantity (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.q,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.q.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
       columnId: 'delta',
       header: `Delta % (${formatTimestamp(selectedDate)})`,
       dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.delta,
       accessor: ({ row }) => {
         const data = getDataForTimestamp(row, selectedDate)
-        return <span>{data ? `${data.delta.toFixed(2)}%` : 'N/A'}</span>
+        return (
+          <span
+            className={
+              data && data.delta > 0
+                ? 'text-green-500'
+                : data && data.delta < 0
+                ? 'text-red-500'
+                : ''
+            }>
+            {data ? `${data.delta.toFixed(2)}%` : 'N/A'}
+          </span>
+        )
       },
       sortUndefined: 'last'
-    },
-    { columnId: 'marketshare', header: 'Marketshare' },
-    { columnId: 'historicPrice', header: 'Historic Price' },
-    { columnId: 'salesPerDay', header: 'Sales Per Day' }
+    }
   ]
 
   return (
@@ -173,20 +196,12 @@ export default function WeeklyPriceGroupDeltaResults({
           />
 
           {/* Group selector */}
-          <div className="bg-gray-800 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-gray-100 mb-4">Select Group</h3>
-            <select
-              value={selectedGroup}
-              onChange={(e) => setSelectedGroup(e.target.value)}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-              <option value="All">All Groups</option>
-              {Object.keys(data).map((group) => (
-                <option key={group} value={group}>
-                  {group}
-                </option>
-              ))}
-            </select>
-          </div>
+          <GroupSelector
+            selectedGroup={selectedGroup}
+            groups={Object.keys(data)}
+            onGroupSelect={setSelectedGroup}
+            darkMode={darkMode}
+          />
 
           {/* Chart Container */}
           <DeltaChartContainer
@@ -224,4 +239,4 @@ export default function WeeklyPriceGroupDeltaResults({
       </ContentContainer>
     </PageWrapper>
   )
-} 
+}
