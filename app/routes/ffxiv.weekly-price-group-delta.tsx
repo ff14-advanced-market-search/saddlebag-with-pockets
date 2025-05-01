@@ -12,7 +12,10 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { FFXIVLoaderData, ImportData } from '~/requests/FFXIV/types'
 import { getUserSessionData } from '~/sessions'
 import WeeklyPriceGroupDelta from '~/requests/FFXIV/WeeklyPriceGroupDelta'
-import type { WeeklyPriceGroupDeltaResponse, ItemData } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
+import type {
+  WeeklyPriceGroupDeltaResponse,
+  ItemData
+} from '~/requests/FFXIV/WeeklyPriceGroupDelta'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import ErrorPopup from '~/components/Common/ErrorPopup'
 import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
@@ -176,7 +179,9 @@ const Index = () => {
   const [maxYAxis, setMaxYAxis] = useState<number | null>(null)
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
   const [visibilityFilter, setVisibilityFilter] = useState('')
-  const [selectedItemForChart, setSelectedItemForChart] = useState<string | null>(null)
+  const [selectedItemForChart, setSelectedItemForChart] = useState<
+    string | null
+  >(null)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${world.name} (${region})`
 
@@ -343,8 +348,8 @@ const Index = () => {
                 data && data.delta > 0
                   ? 'text-green-500'
                   : data && data.delta < 0
-                    ? 'text-red-500'
-                    : ''
+                  ? 'text-red-500'
+                  : ''
               }>
               {data ? `${data.delta.toFixed(2)}%` : 'N/A'}
             </span>
@@ -358,7 +363,9 @@ const Index = () => {
         accessor: ({ row }) => {
           return (
             <div className="flex space-x-2">
-              <UniversalisBadgedLink link={`https://universalis.app/market/${row.itemID}`} />
+              <UniversalisBadgedLink
+                link={`https://universalis.app/market/${row.itemID}`}
+              />
               <span className="text-gray-400">|</span>
               <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
             </div>
@@ -436,7 +443,9 @@ const Index = () => {
             {selectedItemForChart && groupData && (
               <PriceQuantityChartPopup
                 onClose={() => setSelectedItemForChart(null)}
-                weeklyData={groupData.item_data[selectedItemForChart].weekly_data}
+                weeklyData={
+                  groupData.item_data[selectedItemForChart].weekly_data
+                }
                 darkMode={darkmode}
                 itemName={groupData.item_names[selectedItemForChart]}
               />
