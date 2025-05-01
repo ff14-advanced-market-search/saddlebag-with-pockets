@@ -27,6 +27,7 @@ import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
 import DateRangeControls from '~/components/WoW/DateRangeControls'
 import GroupSelector from '~/components/WoW/GroupSelector'
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
+import RequestDataSection from '~/components/FFXIV/RequestDataSection'
 
 // Define action data type
 type ActionData =
@@ -425,6 +426,18 @@ const Index = () => {
                 itemName={groupData.item_names[selectedItemForChart]}
               />
             )}
+
+            {/* Request Data Section */}
+            <RequestDataSection
+              data={actionData.data}
+              region={region}
+              startDate={startDate}
+              endDate={endDate}
+              darkmode={darkmode}
+              hqOnly={hqOnly}
+              priceSetting={priceSetting}
+              quantitySetting={quantitySetting}
+            />
           </div>
         </ContentContainer>
       </PageWrapper>
