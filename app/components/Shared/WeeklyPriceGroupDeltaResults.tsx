@@ -8,7 +8,7 @@ import type { ColumnList } from '~/components/types'
 import ItemDetailsTable from '~/components/FFXIV/ItemDetailsTable'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
 import DateRangeControls from '~/components/FFXIV/DateRangeControls'
-import GroupSelector from '../WoW/GroupSelector'
+import GroupSelector from '~/components/WoW/GroupSelector'
 
 interface ResultsProps {
   data: WeeklyPriceGroupDeltaResponse
