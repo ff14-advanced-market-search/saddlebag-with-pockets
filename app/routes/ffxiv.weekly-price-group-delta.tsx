@@ -159,7 +159,7 @@ const Index = () => {
     NonNullable<ImportData['price_groups']>
   >([])
   const [formError, setFormError] = useState<string | undefined>(undefined)
-  const [startYear, setStartYear] = useState(2025)
+  const [startYear, setStartYear] = useState(2023)
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
   const [endYear, setEndYear] = useState(2025)
