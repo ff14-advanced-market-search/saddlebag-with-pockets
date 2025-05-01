@@ -10,7 +10,7 @@
     "build": "run-s \"build:css\" \"build:remix\"",
     "build:css": "yarn run generate:css --minify",
     "build:remix": "remix build",
-    "dev": "yarn run setup:css && remix build && run-p \"dev:*\"",
+    "dev": "yarn run generate:css && remix build && run-p \"dev:*\"",
     "dev:css": "yarn run generate:css --watch",
     "dev:remix": "remix watch",
     "dev:wrangler": "wrangler pages dev ./public",
