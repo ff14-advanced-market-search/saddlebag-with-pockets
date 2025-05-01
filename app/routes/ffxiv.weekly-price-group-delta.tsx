@@ -28,6 +28,8 @@ import DateRangeControls from '~/components/WoW/DateRangeControls'
 import GroupSelector from '~/components/WoW/GroupSelector'
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 import RequestDataSection from '~/components/FFXIV/RequestDataSection'
+import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
+import ItemDataLink from '~/components/utilities/ItemDataLink'
 
 // Define action data type
 type ActionData =
@@ -295,6 +297,21 @@ const Index = () => {
       },
       { columnId: 'itemName', header: 'Item Name' },
       {
+        columnId: 'priceQuantity',
+        header: 'Price V Quantity',
+        accessor: ({ row }) => {
+          if (!groupData) return null
+          return (
+            <button
+              type="button"
+              onClick={() => setSelectedItemForChart(row.itemID.toString())}
+              className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm">
+              Price V Quantity
+            </button>
+          )
+        }
+      },
+      {
         columnId: 'price',
         header: `Price (${formatTimestamp(selectedDate)})`,
         dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.p,
@@ -336,20 +353,18 @@ const Index = () => {
         sortUndefined: 'last'
       },
       {
-        columnId: 'priceQuantity',
-        header: 'Price V Quantity',
+        columnId: 'links',
+        header: 'Links',
         accessor: ({ row }) => {
-          if (!groupData) return null
           return (
-            <button
-              type="button"
-              onClick={() => setSelectedItemForChart(row.itemID.toString())}
-              className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm">
-              Price V Quantity
-            </button>
+            <div className="flex space-x-2">
+              <UniversalisBadgedLink link={`https://universalis.app/market/${row.itemID}`} />
+              <span className="text-gray-400">|</span>
+              <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
+            </div>
           )
         }
-      }
+      },
     ]
 
     return (
