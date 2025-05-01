@@ -26,6 +26,7 @@ import ItemDetailsTable from '~/components/FFXIV/ItemDetailsTable'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
 import DateRangeControls from '~/components/WoW/DateRangeControls'
 import GroupSelector from '~/components/WoW/GroupSelector'
+import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 
 // Define action data type
 type ActionData =
@@ -172,6 +173,7 @@ const Index = () => {
   const [maxYAxis, setMaxYAxis] = useState<number | null>(null)
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
   const [visibilityFilter, setVisibilityFilter] = useState('')
+  const [selectedItemForChart, setSelectedItemForChart] = useState<string | null>(null)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${world.name} (${region})`
 
@@ -331,6 +333,21 @@ const Index = () => {
           )
         },
         sortUndefined: 'last'
+      },
+      {
+        columnId: 'priceQuantity',
+        header: 'Price V Quantity',
+        accessor: ({ row }) => {
+          if (!groupData) return null
+          return (
+            <button
+              type="button"
+              onClick={() => setSelectedItemForChart(row.itemID.toString())}
+              className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm">
+              Price V Quantity
+            </button>
+          )
+        }
       }
     ]
 
@@ -396,6 +413,16 @@ const Index = () => {
                 setSelectedDate={setSelectedDate}
                 filteredTimestamps={filteredTimestamps}
                 getDataForTimestamp={getDataForTimestamp}
+              />
+            )}
+
+            {/* Price vs Quantity Chart Popup */}
+            {selectedItemForChart && groupData && (
+              <PriceQuantityChartPopup
+                onClose={() => setSelectedItemForChart(null)}
+                weeklyData={groupData.item_data[selectedItemForChart].weekly_data}
+                darkMode={darkmode}
+                itemName={groupData.item_names[selectedItemForChart]}
               />
             )}
           </div>
