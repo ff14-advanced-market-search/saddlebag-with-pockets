@@ -300,7 +300,21 @@ const Index = () => {
           )
         }
       },
-      { columnId: 'itemName', header: 'Item Name' },
+      {
+        columnId: 'itemName',
+        header: 'Item Name',
+        accessor: ({ row }) => {
+          if (!groupData) return null
+          const itemName = groupData.item_names[row.itemID]
+          return (
+            <div
+              className="max-w-[200px] whitespace-normal break-words"
+              title={itemName}>
+              {itemName}
+            </div>
+          )
+        }
+      },
       {
         columnId: 'priceQuantity',
         header: 'Price V Quantity',
@@ -313,6 +327,21 @@ const Index = () => {
               className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm">
               Price V Quantity
             </button>
+          )
+        }
+      },
+      {
+        columnId: 'links',
+        header: 'Links',
+        accessor: ({ row }) => {
+          return (
+            <div className="flex space-x-2">
+              <UniversalisBadgedLink
+                link={`https://universalis.app/market/${row.itemID}`}
+              />
+              <span className="text-gray-400">|</span>
+              <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
+            </div>
           )
         }
       },
@@ -356,21 +385,6 @@ const Index = () => {
           )
         },
         sortUndefined: 'last'
-      },
-      {
-        columnId: 'links',
-        header: 'Links',
-        accessor: ({ row }) => {
-          return (
-            <div className="flex space-x-2">
-              <UniversalisBadgedLink
-                link={`https://universalis.app/market/${row.itemID}`}
-              />
-              <span className="text-gray-400">|</span>
-              <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
-            </div>
-          )
-        }
       }
     ]
 
