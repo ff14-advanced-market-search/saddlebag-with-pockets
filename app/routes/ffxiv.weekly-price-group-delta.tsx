@@ -24,7 +24,7 @@ import type { DataCentersList } from '~/utils/locations/DataCenters'
 import type { ColumnList } from '~/components/types'
 import ItemDetailsTable from '~/components/FFXIV/ItemDetailsTable'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
-import DateRangeControls from '~/components/FFXIV/DateRangeControls'
+import DateRangeControls from '~/components/WoW/DateRangeControls'
 import GroupSelector from '~/components/WoW/GroupSelector'
 
 // Define action data type
