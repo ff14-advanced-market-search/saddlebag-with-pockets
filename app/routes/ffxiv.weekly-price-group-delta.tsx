@@ -364,7 +364,7 @@ const Index = () => {
             </div>
           )
         }
-      },
+      }
     ]
 
     return (

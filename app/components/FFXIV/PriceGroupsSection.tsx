@@ -287,6 +287,16 @@ export default function PriceGroupsSection({
           </div>
         </div>
       ))}
+
+      {/* Submit Button */}
+      <div className="flex justify-center my-8">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+          {isSubmitting ? 'Searching...' : 'Search Price Groups'}
+        </button>
+      </div>
     </div>
   )
 }
