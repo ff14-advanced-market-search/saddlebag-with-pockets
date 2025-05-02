@@ -96,8 +96,14 @@ export const action: ActionFunction = async ({ request }) => {
     })
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ message: `Server responded with ${response}` }))
-      throw new Error(errorData.message || errorData.exception || `Server responded with ${response}`)
+      const errorData = await response
+        .json()
+        .catch(() => ({ message: `Server responded with ${response}` }))
+      throw new Error(
+        errorData.message ||
+          errorData.exception ||
+          `Server responded with ${response}`
+      )
     }
 
     const data = await response.json()
@@ -610,7 +616,10 @@ const Index = () => {
       </SmallFormContainer>
 
       {formError && showErrorPopup && (
-        <ErrorPopup error={formError} onClose={() => setShowErrorPopup(false)} />
+        <ErrorPopup
+          error={formError}
+          onClose={() => setShowErrorPopup(false)}
+        />
       )}
     </PageWrapper>
   )
