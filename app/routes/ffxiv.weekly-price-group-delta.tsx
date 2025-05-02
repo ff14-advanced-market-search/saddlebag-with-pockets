@@ -55,7 +55,7 @@ export const links: LinksFunction = () => [
 
 export const loader: LoaderFunction = async ({ request }) => {
   return json<FFXIVLoaderData>({
-    region: 'North-America'
+    region: 'NA'
   })
 }
 
@@ -502,7 +502,7 @@ const Index = () => {
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
                   className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                  <option value="North-America">North America</option>
+                  <option value="NA">North America</option>
                   <option value="Europe">Europe</option>
                   <option value="Japan">Japan</option>
                   <option value="Oceania">Oceania</option>
