@@ -96,10 +96,19 @@ export const action: ActionFunction = async ({ request }) => {
     })
 
     if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`)
+      const errorData = await response.json().catch(() => ({ message: `Server responded with ${response}` }))
+      throw new Error(errorData.message || errorData.exception || `Server responded with ${response}`)
     }
 
     const data = await response.json()
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid response format from server')
+    }
+
+    if ('exception' in data) {
+      return json<ActionData>({ exception: data.exception })
+    }
+
     return json<ActionData>({ data })
   } catch (error) {
     return json<ActionData>({
@@ -172,6 +181,13 @@ const Index = () => {
   // Show error from action data
   const actionError =
     actionData && 'exception' in actionData ? actionData.exception : undefined
+
+  useEffect(() => {
+    if (actionError) {
+      setFormError(actionError)
+      setShowErrorPopup(true)
+    }
+  }, [actionError])
 
   // Show results if we have data and no errors
   if (actionData && 'data' in actionData) {
@@ -459,7 +475,7 @@ const Index = () => {
         hideSubmitButton={true}
         title={pageTitle}
         loading={transition.state === 'submitting'}
-        error={actionError}
+        error={undefined}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4 mb-4">
           <ImportSection onImport={handleImport} />
@@ -594,10 +610,7 @@ const Index = () => {
       </SmallFormContainer>
 
       {formError && showErrorPopup && (
-        <ErrorPopup
-          error={formError}
-          onClose={() => setShowErrorPopup(false)}
-        />
+        <ErrorPopup error={formError} onClose={() => setShowErrorPopup(false)} />
       )}
     </PageWrapper>
   )
