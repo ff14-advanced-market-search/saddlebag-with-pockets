@@ -1,7 +1,4 @@
 export interface FFXIVLoaderData {
-  world: {
-    name: string
-  }
   region: string
 }
 

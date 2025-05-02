@@ -10,13 +10,12 @@ import { useState, useEffect } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { FFXIVLoaderData, ImportData } from '~/requests/FFXIV/types'
-import { getUserSessionData } from '~/sessions'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 import WeeklyPriceGroupDelta from '~/requests/FFXIV/WeeklyPriceGroupDelta'
 import type {
   WeeklyPriceGroupDeltaResponse,
   ItemData
 } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 import ErrorPopup from '~/components/Common/ErrorPopup'
 import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
 import ImportSection from '~/components/FFXIV/ImportSection'
@@ -80,36 +79,21 @@ export const links: LinksFunction = () => [
 ]
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { getFFXIVSessionData } = await getUserSessionData(request)
-  const { world, region: dataCenter } = getFFXIVSessionData()
-
-  if (!dataCenter || !world) {
-    throw new Error(
-      'Please configure your FFXIV settings in the user settings page'
-    )
-  }
-
-  const region = getRegionFromDataCenter(dataCenter)
-
   return json<FFXIVLoaderData>({
-    world,
-    region
+    region: 'North-America'
   })
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const { getFFXIVSessionData } = await getUserSessionData(request)
-  const { region: dataCenter } = getFFXIVSessionData()
+  const formData = await request.formData()
+  const region = formData.get('region') as string
 
-  if (!dataCenter) {
+  if (!region) {
     return json<ActionData>({
-      exception: 'Region is required. Please configure it in your settings.'
+      exception: 'Region is required.'
     })
   }
 
-  const region = getRegionFromDataCenter(dataCenter)
-
-  const formData = await request.formData()
   const startYear = Number.parseInt(formData.get('startYear') as string)
   const startMonth = Number.parseInt(formData.get('startMonth') as string)
   const startDay = Number.parseInt(formData.get('startDay') as string)
@@ -151,7 +135,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const Index = () => {
-  const { world, region } = useLoaderData<FFXIVLoaderData>()
+  const { region: defaultRegion } = useLoaderData<FFXIVLoaderData>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
   const actionData = useActionData<ActionData>()
@@ -169,6 +153,7 @@ const Index = () => {
   const [priceSetting, setPriceSetting] = useState('median')
   const [quantitySetting, setQuantitySetting] = useState('quantitySold')
   const [showErrorPopup, setShowErrorPopup] = useState(false)
+  const [region, setRegion] = useState(defaultRegion)
 
   // Results state
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
@@ -183,7 +168,7 @@ const Index = () => {
     string | null
   >(null)
 
-  const pageTitle = `Weekly Price Group Delta Analysis - ${world.name} (${region})`
+  const pageTitle = `Weekly Price Group Delta Analysis - ${region}`
 
   const handleImport = (data: ImportData) => {
     if (data.start_year) setStartYear(data.start_year)
@@ -530,6 +515,24 @@ const Index = () => {
                   HQ Only
                 </span>
               </label>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+                  Region
+                </label>
+                <select
+                  name="region"
+                  value={region}
+                  onChange={(e) => setRegion(e.target.value)}
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  <option value="North-America">North America</option>
+                  <option value="Europe">Europe</option>
+                  <option value="Japan">Japan</option>
+                  <option value="Oceania">Oceania</option>
+                </select>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
