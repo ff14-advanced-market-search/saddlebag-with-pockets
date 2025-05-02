@@ -36,6 +36,7 @@ export default function ItemDetailsTable({
 }: ItemDetailsTableProps) {
   const [sortColumn, setSortColumn] = useState<string>('itemName')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const handleSort = (columnId: string) => {
     if (sortColumn === columnId) {
@@ -46,25 +47,40 @@ export default function ItemDetailsTable({
     }
   }
 
-  const sortedData = [...data].sort((a, b) => {
-    const column = columnList.find((col) => col.columnId === sortColumn)
-    if (!column) return 0
+  // Filter and sort data
+  const filteredAndSortedData = useMemo(() => {
+    let filtered = [...data]
 
-    let aValue: any = column.dataAccessor
-      ? column.dataAccessor(a)
-      : a[column.columnId as keyof ItemData]
-    let bValue: any = column.dataAccessor
-      ? column.dataAccessor(b)
-      : b[column.columnId as keyof ItemData]
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      filtered = filtered.filter((item) => {
+        const itemName = item.itemName.toLowerCase()
+        return itemName.includes(query)
+      })
+    }
 
-    if (aValue === undefined && bValue === undefined) return 0
-    if (aValue === undefined) return column.sortUndefined === 'first' ? -1 : 1
-    if (bValue === undefined) return column.sortUndefined === 'first' ? 1 : -1
+    // Apply sorting
+    return filtered.sort((a, b) => {
+      const column = columnList.find((col) => col.columnId === sortColumn)
+      if (!column) return 0
 
-    if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
-    if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
-    return 0
-  })
+      let aValue: any = column.dataAccessor
+        ? column.dataAccessor(a)
+        : a[column.columnId as keyof ItemData]
+      let bValue: any = column.dataAccessor
+        ? column.dataAccessor(b)
+        : b[column.columnId as keyof ItemData]
+
+      if (aValue === undefined && bValue === undefined) return 0
+      if (aValue === undefined) return column.sortUndefined === 'first' ? -1 : 1
+      if (bValue === undefined) return column.sortUndefined === 'first' ? 1 : -1
+
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
+      return 0
+    })
+  }, [data, searchQuery, sortColumn, sortDirection, columnList])
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
@@ -73,19 +89,28 @@ export default function ItemDetailsTable({
           <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
             {selectedGroup} Details
           </h3>
-          <select
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            {filteredTimestamps.map((timestamp) => (
-              <option
-                key={timestamp}
-                value={timestamp}
-                className="dark:bg-gray-700">
-                {formatTimestamp(timestamp)}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center gap-4">
+            <select
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              {filteredTimestamps.map((timestamp) => (
+                <option
+                  key={timestamp}
+                  value={timestamp}
+                  className="dark:bg-gray-700">
+                  {formatTimestamp(timestamp)}
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search items..."
+              className="px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            />
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -107,7 +132,7 @@ export default function ItemDetailsTable({
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-              {sortedData.map((row, index) => (
+              {filteredAndSortedData.map((row, index) => (
                 <tr key={index}>
                   {columnList.map((column) => (
                     <td
