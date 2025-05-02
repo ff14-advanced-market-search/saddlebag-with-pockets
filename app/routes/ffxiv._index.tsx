@@ -56,6 +56,13 @@ const ffxivPages = [
     Icon: PencilAltIcon
   },
   {
+    name: 'Weekly Price Group Delta',
+    href: '/ffxiv/weekly-price-group-delta',
+    description:
+      'View weekly price changes for investment opportunities!',
+    Icon: ChartSquareBarIcon
+  },
+  {
     name: 'Discord Undercut and Sale Alerts Generator',
     description:
       'Undercut Alerts will notify you via discord direct message when you are undercut. Sale Alerts will notify you via discord direct message when you have a sale.',
