@@ -21,8 +21,6 @@ import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
 import ImportSection from '~/components/FFXIV/ImportSection'
 import PriceGroupsSection from '~/components/FFXIV/PriceGroupsSection'
 import RequestPreview from '~/components/FFXIV/RequestPreview'
-import DataCenters from '~/utils/locations/DataCenters'
-import type { DataCentersList } from '~/utils/locations/DataCenters'
 import type { ColumnList } from '~/components/types'
 import ItemDetailsTable from '~/components/FFXIV/ItemDetailsTable'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
@@ -37,29 +35,6 @@ import ItemDataLink from '~/components/utilities/ItemDataLink'
 type ActionData =
   | { exception: string }
   | { data: WeeklyPriceGroupDeltaResponse }
-
-// Map data centers to their regions
-const getRegionFromDataCenter = (dataCenter: string): string => {
-  // Check each region in the DataCenters map
-  for (const [region, dataCenters] of DataCenters.entries()) {
-    const dataCenterNames = dataCenters.map((dc) => dc.name)
-    if (dataCenterNames.includes(dataCenter)) {
-      switch (region as keyof DataCentersList) {
-        case 'NA':
-          return 'North-America'
-        case 'EU':
-          return 'Europe'
-        case 'JP':
-          return 'Japan'
-        case 'OCE':
-          return 'Oceania'
-        default:
-          return 'North-America' // Default to NA if unknown
-      }
-    }
-  }
-  return 'North-America' // Default to NA if not found
-}
 
 export const meta: MetaFunction = () => {
   return {
