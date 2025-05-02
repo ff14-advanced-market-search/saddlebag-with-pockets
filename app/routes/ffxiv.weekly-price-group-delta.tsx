@@ -156,6 +156,17 @@ const Index = () => {
     if (data.price_setting) setPriceSetting(data.price_setting)
     if (data.quantity_setting) setQuantitySetting(data.quantity_setting)
     if (data.price_groups) setPriceGroups(data.price_groups)
+    if (data.region) {
+      // Map the region codes to match the select options
+      const regionMap: Record<string, string> = {
+        'Oceania': 'Oceania',
+        'North America': 'NA',
+        'NA': 'NA',
+        'Europe': 'Europe',
+        'Japan': 'Japan'
+      }
+      setRegion(regionMap[data.region] || data.region)
+    }
   }
 
   // Show error from action data

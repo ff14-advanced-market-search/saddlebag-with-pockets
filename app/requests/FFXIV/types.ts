@@ -3,6 +3,7 @@ export interface FFXIVLoaderData {
 }
 
 export interface ImportData {
+  region?: string
   start_year?: number
   start_month?: number
   start_day?: number
