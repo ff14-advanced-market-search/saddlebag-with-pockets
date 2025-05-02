@@ -13,8 +13,15 @@ const validateImportData = (
     const jsonData = typeof data === 'string' ? JSON.parse(data) : data
 
     // Check required fields and types
-    if (typeof jsonData.region !== 'string') {
-      return { valid: false, error: 'Region must be a string' }
+    if (
+      typeof jsonData.region !== 'string' ||
+      !['NA', 'Europe', 'Japan', 'Oceania'].includes(jsonData.region)
+    ) {
+      return {
+        valid: false,
+        error:
+          'Region must be a string and one of NA, Europe, Japan, or Oceania'
+      }
     }
     if (
       typeof jsonData.start_year !== 'number' ||

@@ -159,11 +159,11 @@ const Index = () => {
     if (data.region) {
       // Map the region codes to match the select options
       const regionMap: Record<string, string> = {
-        'Oceania': 'Oceania',
+        Oceania: 'Oceania',
         'North America': 'NA',
-        'NA': 'NA',
-        'Europe': 'Europe',
-        'Japan': 'Japan'
+        NA: 'NA',
+        Europe: 'Europe',
+        Japan: 'Japan'
       }
       setRegion(regionMap[data.region] || data.region)
     }

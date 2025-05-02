@@ -32,8 +32,8 @@ export default function ErrorPopup({ error, onClose }: ErrorPopupProps) {
             {error instanceof Error
               ? error.message
               : typeof error === 'string'
-                ? error
-                : 'An unknown error occurred'}
+              ? error
+              : 'An unknown error occurred'}
           </div>
         </div>
 

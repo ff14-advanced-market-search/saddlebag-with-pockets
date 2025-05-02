@@ -58,8 +58,7 @@ const ffxivPages = [
   {
     name: 'Weekly Price Group Delta',
     href: '/ffxiv/weekly-price-group-delta',
-    description:
-      'View weekly price changes for investment opportunities!',
+    description: 'View weekly price changes for investment opportunities!',
     Icon: ChartSquareBarIcon
   },
   {
