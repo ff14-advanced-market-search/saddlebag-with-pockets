@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import type { ColumnList } from '~/components/types'
 import type { ItemData } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
 import type { Row, Getter } from '@tanstack/table-core'
+import CSVButton from '~/components/utilities/CSVButton'
+import JSONButton from '~/components/utilities/JSONButton'
 
 interface ItemDetailsTableProps {
   data: ItemData[]
@@ -90,6 +92,49 @@ export default function ItemDetailsTable({
             {selectedGroup} Details
           </h3>
           <div className="flex items-center gap-4">
+            {/* Export buttons */}
+            <CSVButton
+              data={filteredAndSortedData.map((item) => {
+                const itemData = getDataForTimestamp(item, selectedDate)
+                return {
+                  itemName: item.itemName,
+                  itemID: item.itemID,
+                  price: itemData?.p || 0,
+                  quantity: itemData?.q || 0,
+                  delta: itemData?.delta || 0,
+                  historicPrice: item.historicPrice,
+                  salesPerDay: item.salesPerDay,
+                  marketshare: item.marketshare
+                }
+              })}
+              columns={[
+                { title: 'Item Name', value: 'itemName' },
+                { title: 'Item ID', value: 'itemID' },
+                {
+                  title: `Price (${formatTimestamp(selectedDate)})`,
+                  value: 'price'
+                },
+                {
+                  title: `Quantity (${formatTimestamp(selectedDate)})`,
+                  value: 'quantity'
+                },
+                {
+                  title: `Delta % (${formatTimestamp(selectedDate)})`,
+                  value: 'delta'
+                }
+              ]}
+              filename={`${selectedGroup}_items_${formatTimestamp(
+                selectedDate
+              )}.csv`}
+            />
+            <JSONButton data={filteredAndSortedData} />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search items..."
+              className="px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            />
             <select
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
@@ -103,13 +148,6 @@ export default function ItemDetailsTable({
                 </option>
               ))}
             </select>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search items..."
-              className="px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            />
           </div>
         </div>
         <div className="overflow-x-auto">
