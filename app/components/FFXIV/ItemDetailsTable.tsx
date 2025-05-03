@@ -88,11 +88,10 @@ export default function ItemDetailsTable({
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
       <div className="px-4 py-5 sm:p-6">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {selectedGroup} Details
-          </h3>
           <div className="flex items-center gap-4">
-            {/* Export buttons */}
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+              {selectedGroup} Details
+            </h3>
             <CSVButton
               data={filteredAndSortedData.map((item) => {
                 const itemData = getDataForTimestamp(item, selectedDate)
@@ -128,6 +127,8 @@ export default function ItemDetailsTable({
               )}.csv`}
             />
             <JSONButton data={filteredAndSortedData} />
+          </div>
+          <div className="flex items-center gap-4">
             <input
               type="text"
               value={searchQuery}
