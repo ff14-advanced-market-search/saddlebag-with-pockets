@@ -53,6 +53,40 @@ export default function ItemDetailsTable({
         <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
           Item Details
         </h3>
+        {/* Export buttons */}
+        <div className="flex gap-2 mt-4">
+          <CSVButton
+            data={data.map((item) => {
+              const itemData = getDataForTimestamp(item, selectedDate)
+              return {
+                ...item,
+                price: itemData?.p || 0,
+                delta: itemData?.delta || 0
+              }
+            })}
+            columns={[
+              { title: 'Item Name', value: 'itemName' },
+              { title: 'Item ID', value: 'itemID' },
+              {
+                title: `Price (${formatTimestamp(selectedDate)})`,
+                value: 'price'
+              },
+              {
+                title: `Delta % (${formatTimestamp(selectedDate)})`,
+                value: 'delta'
+              }
+            ]}
+            filename={`${selectedGroup}_items_${formatTimestamp(
+              selectedDate
+            )}.csv`}
+          />
+          <JSONButton data={data} />
+        </div>
+        <DebouncedInput
+          onDebouncedChange={setGlobalFilter}
+          className="p-2 border rounded min-w-[200px]"
+          placeholder="Search items..."
+        />
         <div className="flex-1 min-w-[200px]">
           <select
             value={selectedDate}
@@ -65,11 +99,6 @@ export default function ItemDetailsTable({
             ))}
           </select>
         </div>
-        <DebouncedInput
-          onDebouncedChange={setGlobalFilter}
-          className="p-2 border rounded min-w-[200px]"
-          placeholder="Search items..."
-        />
       </div>
 
       <div className="hidden md:block">
@@ -89,36 +118,6 @@ export default function ItemDetailsTable({
           rowLabels={[]}
           columnSelectOptions={[]}
         />
-      </div>
-
-      {/* Export buttons */}
-      <div className="flex gap-2 mt-4">
-        <CSVButton
-          data={data.map((item) => {
-            const itemData = getDataForTimestamp(item, selectedDate)
-            return {
-              ...item,
-              price: itemData?.p || 0,
-              delta: itemData?.delta || 0
-            }
-          })}
-          columns={[
-            { title: 'Item Name', value: 'itemName' },
-            // { title: 'Item ID', value: 'itemID' },
-            {
-              title: `Price (${formatTimestamp(selectedDate)})`,
-              value: 'price'
-            },
-            {
-              title: `Delta % (${formatTimestamp(selectedDate)})`,
-              value: 'delta'
-            }
-          ]}
-          filename={`${selectedGroup}_items_${formatTimestamp(
-            selectedDate
-          )}.csv`}
-        />
-        <JSONButton data={data} />
       </div>
     </div>
   )
