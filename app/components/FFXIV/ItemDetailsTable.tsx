@@ -21,6 +21,7 @@ interface ItemDetailsTableProps {
         p: number
         q: number
         t: number
+        mrk: number
         delta: number
       }
     | undefined
@@ -100,10 +101,8 @@ export default function ItemDetailsTable({
                   itemID: item.itemID,
                   price: itemData?.p || 0,
                   quantity: itemData?.q || 0,
-                  delta: itemData?.delta || 0,
-                  historicPrice: item.historicPrice,
-                  salesPerDay: item.salesPerDay,
-                  marketshare: item.marketshare
+                  marketshare: itemData?.mrk || 0,
+                  delta: itemData?.delta || 0
                 }
               })}
               columns={[

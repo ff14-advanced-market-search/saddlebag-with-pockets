@@ -339,26 +339,6 @@ const Index = () => {
         }
       },
       {
-        columnId: 'price',
-        header: `Price (${formatTimestamp(selectedDate)})`,
-        dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.p,
-        accessor: ({ row }) => {
-          const data = getDataForTimestamp(row, selectedDate)
-          return <span>{data ? data.p.toLocaleString() : 'N/A'}</span>
-        },
-        sortUndefined: 'last'
-      },
-      {
-        columnId: 'quantity',
-        header: `Quantity (${formatTimestamp(selectedDate)})`,
-        dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.q,
-        accessor: ({ row }) => {
-          const data = getDataForTimestamp(row, selectedDate)
-          return <span>{data ? data.q.toLocaleString() : 'N/A'}</span>
-        },
-        sortUndefined: 'last'
-      },
-      {
         columnId: 'delta',
         header: `Delta % (${formatTimestamp(selectedDate)})`,
         dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.delta,
@@ -376,6 +356,36 @@ const Index = () => {
               {data ? `${data.delta.toFixed(2)}%` : 'N/A'}
             </span>
           )
+        },
+        sortUndefined: 'last'
+      },
+      {
+        columnId: 'marketshare',
+        header: `Market Share (${formatTimestamp(selectedDate)})`,
+        dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.mrk,
+        accessor: ({ row }) => {
+          const data = getDataForTimestamp(row, selectedDate)
+          return <span>{data ? data.mrk.toLocaleString() : 'N/A'}</span>
+        },
+        sortUndefined: 'last'
+      },
+      {
+        columnId: 'price',
+        header: `Price (${formatTimestamp(selectedDate)})`,
+        dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.p,
+        accessor: ({ row }) => {
+          const data = getDataForTimestamp(row, selectedDate)
+          return <span>{data ? data.p.toLocaleString() : 'N/A'}</span>
+        },
+        sortUndefined: 'last'
+      },
+      {
+        columnId: 'quantity',
+        header: `Quantity (${formatTimestamp(selectedDate)})`,
+        dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.q,
+        accessor: ({ row }) => {
+          const data = getDataForTimestamp(row, selectedDate)
+          return <span>{data ? data.q.toLocaleString() : 'N/A'}</span>
         },
         sortUndefined: 'last'
       }

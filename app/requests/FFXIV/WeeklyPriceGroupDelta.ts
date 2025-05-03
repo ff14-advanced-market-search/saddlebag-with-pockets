@@ -28,6 +28,7 @@ export interface ItemData {
     p: number // price
     q: number // quantity
     t: number // timestamp
+    mrk: number // market share
     delta: number // price change %
   }>
 }
