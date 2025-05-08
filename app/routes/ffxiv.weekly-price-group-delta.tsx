@@ -525,6 +525,7 @@ const Index = () => {
                 <input
                   type="checkbox"
                   name="hq_only"
+                  value="true"
                   checked={hqOnly}
                   onChange={(e) => setHqOnly(e.target.checked)}
                   className="form-checkbox h-4 w-4 text-blue-600"
