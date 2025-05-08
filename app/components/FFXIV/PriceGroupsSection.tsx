@@ -191,10 +191,13 @@ export default function PriceGroupsSection({
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+              <label
+                htmlFor="new-group-categories"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                 Categories
               </label>
               <ItemsFilter
+                formName="new-group-categories"
                 defaultFilters={selectedCategories}
                 onChange={(newCategories) =>
                   setSelectedCategories(newCategories)
