@@ -31,6 +31,43 @@ export default function DateRangeInputs({
   onEndDayChange,
   onError
 }: DateRangeInputsProps) {
+  // Validate that end date is after start date
+  const validateDateRange = () => {
+    if (
+      !startYear ||
+      !startMonth ||
+      !startDay ||
+      !endYear ||
+      !endMonth ||
+      !endDay
+    ) {
+      return
+    }
+
+    const startDate = new Date(startYear, startMonth - 1, startDay)
+    const endDate = new Date(endYear, endMonth - 1, endDay)
+
+    if (endDate < startDate) {
+      onError('End date must be after start date')
+    } else {
+      onError(undefined)
+    }
+  }
+
+  const handleStartDateChange = (year: number, month: number, day: number) => {
+    if (year !== startYear) onStartYearChange(year)
+    if (month !== startMonth) onStartMonthChange(month)
+    if (day !== startDay) onStartDayChange(day)
+    validateDateRange()
+  }
+
+  const handleEndDateChange = (year: number, month: number, day: number) => {
+    if (year !== endYear) onEndYearChange(year)
+    if (month !== endMonth) onEndMonthChange(month)
+    if (day !== endDay) onEndDayChange(day)
+    validateDateRange()
+  }
+
   return (
     <div className="space-y-4">
       <div>
@@ -41,9 +78,15 @@ export default function DateRangeInputs({
           startYear={startYear}
           startMonth={startMonth}
           startDay={startDay}
-          onYearChange={onStartYearChange}
-          onMonthChange={onStartMonthChange}
-          onDayChange={onStartDayChange}
+          onYearChange={(year) =>
+            handleStartDateChange(year, startMonth, startDay)
+          }
+          onMonthChange={(month) =>
+            handleStartDateChange(startYear, month, startDay)
+          }
+          onDayChange={(day) =>
+            handleStartDateChange(startYear, startMonth, day)
+          }
           onError={onError}
         />
       </div>
@@ -56,9 +99,9 @@ export default function DateRangeInputs({
           startYear={endYear}
           startMonth={endMonth}
           startDay={endDay}
-          onYearChange={onEndYearChange}
-          onMonthChange={onEndMonthChange}
-          onDayChange={onEndDayChange}
+          onYearChange={(year) => handleEndDateChange(year, endMonth, endDay)}
+          onMonthChange={(month) => handleEndDateChange(endYear, month, endDay)}
+          onDayChange={(day) => handleEndDateChange(endYear, endMonth, day)}
           onError={onError}
         />
       </div>

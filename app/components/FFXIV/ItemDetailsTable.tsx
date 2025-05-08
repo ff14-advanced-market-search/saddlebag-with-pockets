@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react'
 import type { ColumnList } from '~/components/types'
 import type { ItemData } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
-import type { Row, Getter } from '@tanstack/table-core'
 import CSVButton from '~/components/utilities/CSVButton'
 import JSONButton from '~/components/utilities/JSONButton'
 
