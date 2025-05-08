@@ -38,6 +38,7 @@ export const loader: LoaderFunction = () => {
   Allow: /ffxiv/scrip-exchange
   Allow: /ffxiv/extended-history
   Allow: /ffxiv/best-deals/recommended
+  Allow: /ffxiv/weekly-price-group-delta
 
   Disallow: /nogooglebot/
   Disallow: /build/
