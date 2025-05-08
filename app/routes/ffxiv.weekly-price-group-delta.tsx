@@ -53,7 +53,7 @@ export const links: LinksFunction = () => [
   }
 ]
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = () => {
   return json<FFXIVLoaderData>({
     region: 'NA'
   })
