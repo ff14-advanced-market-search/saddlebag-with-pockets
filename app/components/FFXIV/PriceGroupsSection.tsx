@@ -155,7 +155,7 @@ export default function PriceGroupsSection({
                 label="Item"
                 selectOptions={ffxivItemsList}
                 onSelect={(value) => handleItemSelect(value)}
-                displayValue={currentItemNames['new'] || ''}
+                displayValue={currentItemNames.new || ''}
               />
             </div>
 
