@@ -118,6 +118,10 @@ export default function ItemDetailsTable({
                 {
                   title: `Delta % (${formatTimestamp(selectedDate)})`,
                   value: 'delta'
+                },
+                {
+                  title: `Marketshare (${formatTimestamp(selectedDate)})`,
+                  value: 'marketshare'
                 }
               ]}
               filename={`${selectedGroup}_items_${formatTimestamp(
