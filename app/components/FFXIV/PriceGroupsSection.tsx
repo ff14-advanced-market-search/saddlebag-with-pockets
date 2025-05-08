@@ -25,7 +25,9 @@ export default function PriceGroupsSection({
 }: PriceGroupsSectionProps) {
   const [showAddGroup, setShowAddGroup] = useState(false)
   const [groupName, setGroupName] = useState('')
-  const [currentItemName, setCurrentItemName] = useState('')
+  const [currentItemNames, setCurrentItemNames] = useState<
+    Record<string, string>
+  >({})
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
   const [selectedItems, setSelectedItems] = useState<number[]>([])
 
@@ -46,12 +48,11 @@ export default function PriceGroupsSection({
     setGroupName('')
     setSelectedCategories([])
     setSelectedItems([])
-    setCurrentItemName('')
+    setCurrentItemNames({})
     setShowAddGroup(false)
   }
 
   const handleItemSelect = (value: string, groupIndex?: number) => {
-    setCurrentItemName(value)
     const itemId = getItemIDByName(value.trim(), ffxivItems)
     if (itemId) {
       const numericItemId = Number.parseInt(itemId)
@@ -62,11 +63,15 @@ export default function PriceGroupsSection({
           newGroups[groupIndex].item_ids.push(numericItemId)
           onPriceGroupsChange(newGroups)
         }
+        // Clear the input for this group
+        setCurrentItemNames((prev) => ({ ...prev, [groupIndex]: '' }))
       } else {
         // Adding to new group being created
         if (!selectedItems.includes(numericItemId)) {
           setSelectedItems([...selectedItems, numericItemId])
         }
+        // Clear the input for new group
+        setCurrentItemNames((prev) => ({ ...prev, new: '' }))
       }
     }
   }
@@ -74,6 +79,11 @@ export default function PriceGroupsSection({
   const handleRemoveGroup = (index: number) => {
     const newGroups = priceGroups.filter((_, i) => i !== index)
     onPriceGroupsChange(newGroups)
+    // Remove the input value for this group
+    setCurrentItemNames((prev) => {
+      const { [index]: _, ...rest } = prev
+      return rest
+    })
   }
 
   const handleRemoveItem = (groupIndex: number, itemId: number) => {
@@ -145,7 +155,7 @@ export default function PriceGroupsSection({
                 label="Item"
                 selectOptions={ffxivItemsList}
                 onSelect={(value) => handleItemSelect(value)}
-                displayValue={currentItemName}
+                displayValue={currentItemNames['new'] || ''}
               />
             </div>
 
@@ -206,7 +216,7 @@ export default function PriceGroupsSection({
                   setGroupName('')
                   setSelectedCategories([])
                   setSelectedItems([])
-                  setCurrentItemName('')
+                  setCurrentItemNames({})
                 }}
                 className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
                 Cancel
@@ -246,7 +256,7 @@ export default function PriceGroupsSection({
                 label="Item"
                 selectOptions={ffxivItemsList}
                 onSelect={(value) => handleItemSelect(value, groupIndex)}
-                displayValue={currentItemName}
+                displayValue={currentItemNames[groupIndex] || ''}
               />
             </div>
 
