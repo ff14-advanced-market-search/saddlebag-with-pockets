@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import DateInputs from '../WoW/DateInputs'
 
 interface DateRangeInputsProps {
@@ -31,8 +32,8 @@ export default function DateRangeInputs({
   onEndDayChange,
   onError
 }: DateRangeInputsProps) {
-  // Validate that end date is after start date
-  const validateDateRange = () => {
+  // Validate date range whenever any date part changes
+  useEffect(() => {
     if (
       !startYear ||
       !startMonth ||
@@ -52,20 +53,18 @@ export default function DateRangeInputs({
     } else {
       onError(undefined)
     }
-  }
+  }, [startYear, startMonth, startDay, endYear, endMonth, endDay, onError])
 
   const handleStartDateChange = (year: number, month: number, day: number) => {
     if (year !== startYear) onStartYearChange(year)
     if (month !== startMonth) onStartMonthChange(month)
     if (day !== startDay) onStartDayChange(day)
-    validateDateRange()
   }
 
   const handleEndDateChange = (year: number, month: number, day: number) => {
     if (year !== endYear) onEndYearChange(year)
     if (month !== endMonth) onEndMonthChange(month)
     if (day !== endDay) onEndDayChange(day)
-    validateDateRange()
   }
 
   return (
