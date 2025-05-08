@@ -232,7 +232,7 @@ export default function PriceGroupsSection({
       {/* Existing Groups */}
       {priceGroups.map((group, groupIndex) => (
         <div
-          key={groupIndex}
+          key={`${group.name}-${groupIndex}`}
           className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow">
           <div className="flex justify-between items-center mb-4">
             <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">
