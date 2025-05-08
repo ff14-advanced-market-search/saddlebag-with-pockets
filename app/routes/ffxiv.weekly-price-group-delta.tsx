@@ -538,10 +538,13 @@ const Index = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+                <label
+                  htmlFor="regionSelect"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                   Region
                 </label>
                 <select
+                  id="regionSelect"
                   name="region"
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
@@ -556,10 +559,13 @@ const Index = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+                <label
+                  htmlFor="priceSettingSelect"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                   Price Setting
                 </label>
                 <select
+                  id="priceSettingSelect"
                   name="price_setting"
                   value={priceSetting}
                   onChange={(e) => setPriceSetting(e.target.value)}
@@ -570,10 +576,13 @@ const Index = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+                <label
+                  htmlFor="quantitySettingSelect"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                   Quantity Setting
                 </label>
                 <select
+                  id="quantitySettingSelect"
                   name="quantity_setting"
                   value={quantitySetting}
                   onChange={(e) => setQuantitySetting(e.target.value)}
