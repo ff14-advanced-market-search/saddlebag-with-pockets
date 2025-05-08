@@ -150,6 +150,7 @@ interface ItemClassSelectProps {
   itemClass?: number
   itemSubClass?: number
   onChange?: (itemClassValue: number, itemSubClassValue: number) => void
+  itemClassesOverride?: typeof itemClasses
 }
 
 /**
@@ -173,12 +174,14 @@ interface ItemClassSelectProps {
 export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
   itemClass,
   itemSubClass,
-  onChange
+  onChange,
+  itemClassesOverride
 }) => {
   const [selectedItemClass, setSelectedItemClass] = useState(itemClass)
   const [selectedItemSubClass, setSelectedItemSubClass] = useState(itemSubClass)
 
-  const subClassItems = itemClasses.find(
+  const classesToUse = itemClassesOverride || itemClasses
+  const subClassItems = classesToUse.find(
     (item) => item.value === selectedItemClass
   )?.subClasses
 
@@ -199,7 +202,7 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
           onChange?.(newItemClassValue, -1) // Notify parent component with new values
         }}>
         <option value={-1}>All</option>
-        {itemClasses.map(({ name, value }) => (
+        {classesToUse.map(({ name, value }) => (
           <option key={name + value} value={value}>
             {name}
           </option>
@@ -216,7 +219,7 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
         onChange={(event) => {
           const newItemSubClassValue = parseInt(event.target.value, 10)
           setSelectedItemSubClass(newItemSubClassValue)
-          onChange?.(selectedItemClass ?? -1, newItemSubClassValue) // Provide a default value for selectedItemClass
+          onChange?.(selectedItemClass ?? -1, newItemSubClassValue)
         }}>
         <option value={-1}>All</option>
         {subClassItems?.map(({ name, value }) => (
