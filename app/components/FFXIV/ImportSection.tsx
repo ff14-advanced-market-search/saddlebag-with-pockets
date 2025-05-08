@@ -86,14 +86,43 @@ const validateImportData = (
     if (typeof jsonData.hq_only !== 'boolean') {
       return { valid: false, error: 'hq_only must be a boolean' }
     }
-    if (typeof jsonData.price_setting !== 'string') {
-      return { valid: false, error: 'price_setting must be a string' }
+    if (jsonData.price_setting && typeof jsonData.price_setting !== 'string') {
+      return { valid: false, error: 'Price setting must be a string' }
     }
-    if (typeof jsonData.quantity_setting !== 'string') {
-      return { valid: false, error: 'quantity_setting must be a string' }
+    if (
+      jsonData.quantity_setting &&
+      typeof jsonData.quantity_setting !== 'string'
+    ) {
+      return { valid: false, error: 'Quantity setting must be a string' }
     }
     if (!Array.isArray(jsonData.price_groups)) {
       return { valid: false, error: 'price_groups must be an array' }
+    }
+
+    const allowedPriceSettings = ['median', 'average']
+    const allowedQuantitySettings = ['quantitySold', 'salesAmount']
+
+    if (
+      jsonData.price_setting &&
+      !allowedPriceSettings.includes(jsonData.price_setting)
+    ) {
+      return {
+        valid: false,
+        error: `Price setting must be one of: ${allowedPriceSettings.join(
+          ', '
+        )}`
+      }
+    }
+    if (
+      jsonData.quantity_setting &&
+      !allowedQuantitySettings.includes(jsonData.quantity_setting)
+    ) {
+      return {
+        valid: false,
+        error: `Quantity setting must be one of: ${allowedQuantitySettings.join(
+          ', '
+        )}`
+      }
     }
 
     // Validate each price group
