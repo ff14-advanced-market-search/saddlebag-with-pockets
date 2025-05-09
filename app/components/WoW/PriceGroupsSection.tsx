@@ -33,13 +33,19 @@ const validatePriceGroup = (group: PriceGroup): string | null => {
     return `Price group "${group.name}" must have at least one item or category`
   }
 
+  // Validate that all item IDs are positive integers
+  const invalidItemIds = group.item_ids.filter(id => !Number.isInteger(id) || id <= 0)
+  if (invalidItemIds.length > 0) {
+    return `Price group "${group.name}" contains invalid item IDs. All item IDs must be positive integers.`
+  }
+
   return null
 }
 
 /**
  * Renders a section for managing and validating a list of price groups, allowing users to add, edit, remove, and submit groups with enforced constraints.
  *
- * Displays a list of editable price group forms, enforces a maximum of 10 groups, and validates each group’s name and contents before submission. Provides error feedback via the {@link onError} callback and disables submission during processing.
+ * Displays a list of editable price group forms, enforces a maximum of 10 groups, and validates each group's name and contents before submission. Provides error feedback via the {@link onError} callback and disables submission during processing.
  *
  * @param priceGroups - The current list of price groups to display and edit.
  * @param onPriceGroupsChange - Callback invoked when the list of price groups is modified.
