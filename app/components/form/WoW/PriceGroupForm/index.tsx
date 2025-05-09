@@ -15,6 +15,7 @@ export interface PriceGroup {
     item_subclass: number
     expansion_number: number
     min_quality: number
+    commodity_type?: string
   }>
 }
 

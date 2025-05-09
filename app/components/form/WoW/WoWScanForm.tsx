@@ -9,6 +9,7 @@ import RegionAndServerSelect from './RegionAndServerSelect'
 import { itemClasses } from '~/utils/WoWFilers/itemClasses'
 import { itemQuality } from '~/utils/WoWFilers/itemQuality'
 import { expansionOptions } from '~/utils/WoWFilers/expansions'
+import { subclassRestrictions } from '~/utils/WoWFilers/commodityClasses'
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -150,6 +151,7 @@ interface ItemClassSelectProps {
   itemClass?: number
   itemSubClass?: number
   onChange?: (itemClassValue: number, itemSubClassValue: number) => void
+  itemClassesOverride?: typeof itemClasses
 }
 
 /**
@@ -173,14 +175,36 @@ interface ItemClassSelectProps {
 export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
   itemClass,
   itemSubClass,
-  onChange
+  onChange,
+  itemClassesOverride
 }) => {
   const [selectedItemClass, setSelectedItemClass] = useState(itemClass)
   const [selectedItemSubClass, setSelectedItemSubClass] = useState(itemSubClass)
 
-  const subClassItems = itemClasses.find(
+  const classesToUse = itemClassesOverride || itemClasses
+
+  const selectedItemClassDef = classesToUse.find(
     (item) => item.value === selectedItemClass
-  )?.subClasses
+  )
+  const selectedItemClassName = selectedItemClassDef?.name
+
+  let currentSubClassItems = selectedItemClassDef?.subClasses
+
+  // Only apply subclass restrictions if itemClassesOverride is provided (i.e., we are in the commodity-only context)
+  if (
+    itemClassesOverride &&
+    selectedItemClassName &&
+    subclassRestrictions[selectedItemClassName]
+  ) {
+    const allowedSubclassNames = subclassRestrictions[selectedItemClassName]
+    if (allowedSubclassNames && allowedSubclassNames.length > 0) {
+      currentSubClassItems = currentSubClassItems?.filter((sub) =>
+        allowedSubclassNames.includes(sub.name)
+      )
+    } else if (allowedSubclassNames) {
+      currentSubClassItems = []
+    }
+  }
 
   return (
     <div className="mt-2 flex-col mb-0.5">
@@ -199,7 +223,7 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
           onChange?.(newItemClassValue, -1) // Notify parent component with new values
         }}>
         <option value={-1}>All</option>
-        {itemClasses.map(({ name, value }) => (
+        {classesToUse.map(({ name, value }) => (
           <option key={name + value} value={value}>
             {name}
           </option>
@@ -216,10 +240,11 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
         onChange={(event) => {
           const newItemSubClassValue = parseInt(event.target.value, 10)
           setSelectedItemSubClass(newItemSubClassValue)
-          onChange?.(selectedItemClass ?? -1, newItemSubClassValue) // Provide a default value for selectedItemClass
+          onChange?.(selectedItemClass ?? -1, newItemSubClassValue)
         }}>
         <option value={-1}>All</option>
-        {subClassItems?.map(({ name, value }) => (
+        {/* Use the potentially filtered currentSubClassItems here */}
+        {currentSubClassItems?.map(({ name, value }) => (
           <option key={name + value} value={value}>
             {name}
           </option>

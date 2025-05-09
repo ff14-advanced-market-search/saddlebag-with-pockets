@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { ExpansionSelect } from '../WoWScanForm'
 import CommodityQualitySelect from '../CommodityQualitySelect'
 import { ItemClassSelect } from '../WoWScanForm'
+import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 
 interface Category {
   item_class: number
   item_subclass: number
   expansion_number: number
   min_quality: number
+  commodity_type?: string
 }
 
 interface CategorySelectionPopupProps {
@@ -45,23 +47,10 @@ const CategorySelectionPopup = ({
   }
 
   const handleAdd = () => {
-    // Check if item category is "All"
     if (itemClass === -1) {
       setError('Please select an item category')
       return
     }
-
-    // // Check if at least one other field has been changed from default
-    // const isAllDefault =
-    //   expansion === '-1' &&
-    //   quality === '0' &&
-    //   itemSubClass === -1
-
-    // if (isAllDefault) {
-    //   setError('Please change at least one additional option (expansion, quality, or subcategory)')
-    //   return
-    // }
-
     onAdd({
       item_class: itemClass,
       item_subclass: itemSubClass,
@@ -106,6 +95,7 @@ const CategorySelectionPopup = ({
               itemClass={itemClass}
               itemSubClass={itemSubClass}
               onChange={handleCategoryChange}
+              itemClassesOverride={getCommodityItemClasses()}
             />
           </div>
 
