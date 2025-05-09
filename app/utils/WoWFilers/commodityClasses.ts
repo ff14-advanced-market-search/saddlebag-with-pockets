@@ -11,6 +11,11 @@ export const commodityClassNames = [
   'Glyph'
 ] as const
 
+/**
+ * Returns item classes whose names match predefined commodity class names.
+ *
+ * @returns An array of item classes corresponding to commodity categories.
+ */
 export function getCommodityItemClasses() {
   return itemClasses.filter((cls) =>
     commodityClassNames.includes(cls.name as any)
