@@ -35,6 +35,7 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 
 const PAGE_URL = '/wow/quantity-manipulation'
 
@@ -369,6 +370,7 @@ const Index = () => {
               handleFormChange('itemClass', itemClassValue.toString())
               handleFormChange('itemSubClass', itemSubClassValue.toString())
             }}
+            itemClassesOverride={getCommodityItemClasses()}
           />
           <RegionAndServerSelect
             serverSelectFormName="homeRealmName"

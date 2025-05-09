@@ -9,6 +9,7 @@ import RegionAndServerSelect from './RegionAndServerSelect'
 import { itemClasses } from '~/utils/WoWFilers/itemClasses'
 import { itemQuality } from '~/utils/WoWFilers/itemQuality'
 import { expansionOptions } from '~/utils/WoWFilers/expansions'
+import { subclassRestrictions } from '~/utils/WoWFilers/commodityClasses'
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -151,12 +152,6 @@ interface ItemClassSelectProps {
   itemSubClass?: number
   onChange?: (itemClassValue: number, itemSubClassValue: number) => void
   itemClassesOverride?: typeof itemClasses
-}
-
-// Define restrictions for subcategories based on the parent item class name
-const subclassRestrictions: Record<string, string[]> = {
-  Recipe: ['Book'],
-  Miscellaneous: ['Junk', 'Reagent', 'Holiday', 'Other']
 }
 
 /**

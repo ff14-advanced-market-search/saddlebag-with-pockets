@@ -3,6 +3,7 @@ import { ExpansionSelect } from '../WoWScanForm'
 import CommodityQualitySelect from '../CommodityQualitySelect'
 import { ItemClassSelect } from '../WoWScanForm'
 import { itemClasses } from '~/utils/WoWFilers/itemClasses'
+import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 
 interface Category {
   item_class: number
@@ -16,17 +17,6 @@ interface CategorySelectionPopupProps {
   onClose: () => void
   onAdd: (category: Category) => void
 }
-
-const commodityClassNames = [
-  'Consumable',
-  'Gem',
-  'Tradegoods',
-  'Item Enhancement',
-  'Recipe',
-  'Quest Item', // this is a commodity
-  'Miscellaneous', // this is a commodity
-  'Glyph'
-]
 
 const CategorySelectionPopup = ({
   onClose,
@@ -106,9 +96,7 @@ const CategorySelectionPopup = ({
               itemClass={itemClass}
               itemSubClass={itemSubClass}
               onChange={handleCategoryChange}
-              itemClassesOverride={itemClasses.filter((cls) =>
-                commodityClassNames.includes(cls.name)
-              )}
+              itemClassesOverride={getCommodityItemClasses()}
             />
           </div>
 
