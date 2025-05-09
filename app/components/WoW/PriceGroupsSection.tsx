@@ -34,7 +34,9 @@ const validatePriceGroup = (group: PriceGroup): string | null => {
   }
 
   // Validate that all item IDs are positive integers
-  const invalidItemIds = group.item_ids.filter(id => !Number.isInteger(id) || id <= 0)
+  const invalidItemIds = group.item_ids.filter(
+    (id) => !Number.isInteger(id) || id <= 0
+  )
   if (invalidItemIds.length > 0) {
     return `Price group "${group.name}" contains invalid item IDs. All item IDs must be positive integers.`
   }
