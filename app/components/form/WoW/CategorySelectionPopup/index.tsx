@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { ExpansionSelect } from '../WoWScanForm'
 import CommodityQualitySelect from '../CommodityQualitySelect'
 import { ItemClassSelect } from '../WoWScanForm'
-import { itemClasses } from '~/utils/WoWFilers/itemClasses'
 import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 
 interface Category {
