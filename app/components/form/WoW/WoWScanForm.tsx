@@ -153,6 +153,12 @@ interface ItemClassSelectProps {
   itemClassesOverride?: typeof itemClasses
 }
 
+// Define restrictions for subcategories based on the parent item class name
+const subclassRestrictions: Record<string, string[]> = {
+  Recipe: ['Book'],
+  Miscellaneous: ['Junk', 'Reagent', 'Holiday', 'Other']
+}
+
 /**
  * Renders a form for selecting item classes and subclasses with onchange handlers.
  * @example
@@ -181,9 +187,29 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
   const [selectedItemSubClass, setSelectedItemSubClass] = useState(itemSubClass)
 
   const classesToUse = itemClassesOverride || itemClasses
-  const subClassItems = classesToUse.find(
+
+  const selectedItemClassDef = classesToUse.find(
     (item) => item.value === selectedItemClass
-  )?.subClasses
+  )
+  const selectedItemClassName = selectedItemClassDef?.name
+
+  let currentSubClassItems = selectedItemClassDef?.subClasses
+
+  // Only apply subclass restrictions if itemClassesOverride is provided (i.e., we are in the commodity-only context)
+  if (
+    itemClassesOverride &&
+    selectedItemClassName &&
+    subclassRestrictions[selectedItemClassName]
+  ) {
+    const allowedSubclassNames = subclassRestrictions[selectedItemClassName]
+    if (allowedSubclassNames && allowedSubclassNames.length > 0) {
+      currentSubClassItems = currentSubClassItems?.filter((sub) =>
+        allowedSubclassNames.includes(sub.name)
+      )
+    } else if (allowedSubclassNames) {
+      currentSubClassItems = []
+    }
+  }
 
   return (
     <div className="mt-2 flex-col mb-0.5">
@@ -222,7 +248,8 @@ export const ItemClassSelect: React.FC<ItemClassSelectProps> = ({
           onChange?.(selectedItemClass ?? -1, newItemSubClassValue)
         }}>
         <option value={-1}>All</option>
-        {subClassItems?.map(({ name, value }) => (
+        {/* Use the potentially filtered currentSubClassItems here */}
+        {currentSubClassItems?.map(({ name, value }) => (
           <option key={name + value} value={value}>
             {name}
           </option>
