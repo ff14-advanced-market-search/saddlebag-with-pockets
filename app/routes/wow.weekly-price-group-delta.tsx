@@ -127,6 +127,9 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     const data = await response.json()
+    if ('exception' in data) {
+      return json({ exception: data.exception })
+    }
     return json(data)
   } catch (error) {
     return json({
@@ -136,12 +139,20 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
+type ActionResponse = WeeklyPriceGroupDeltaResponse | { exception: string }
+
+const isErrorResponse = (
+  data: ActionResponse
+): data is { exception: string } => {
+  return 'exception' in data
+}
+
 // Main component
 const Index = () => {
   const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
-  const actionData = useActionData<WeeklyPriceGroupDeltaResponse>()
+  const actionData = useActionData<ActionResponse>()
   const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([])
   const [error, setError] = useState<string | undefined>(undefined)
   const [startYear, setStartYear] = useState(2025)
@@ -151,7 +162,18 @@ const Index = () => {
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
 
-  if (actionData) {
+  // Show error from action data
+  useEffect(() => {
+    if (actionData && isErrorResponse(actionData)) {
+      setError(actionData.exception)
+      setShowErrorPopup(true)
+    } else {
+      setError(undefined)
+      setShowErrorPopup(false)
+    }
+  }, [actionData])
+
+  if (actionData && !isErrorResponse(actionData)) {
     return (
       <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />
     )
@@ -163,7 +185,7 @@ const Index = () => {
         hideSubmitButton={true}
         title={pageTitle}
         loading={transition.state === 'submitting'}
-        error={undefined}
+        error={error}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4 mb-4">
           <ImportSection
