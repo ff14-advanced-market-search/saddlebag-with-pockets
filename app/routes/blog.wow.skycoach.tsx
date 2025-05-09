@@ -1,4 +1,4 @@
-import { MetaFunction, LinksFunction } from '@remix-run/node'
+import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
 export const meta: MetaFunction = () => ({

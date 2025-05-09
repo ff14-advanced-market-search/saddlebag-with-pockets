@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper, Title } from '~/components/Common'

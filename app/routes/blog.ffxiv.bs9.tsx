@@ -1,4 +1,4 @@
-import type { MetaFunction, LinksFunction } from '@remix-run/node'
+import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {

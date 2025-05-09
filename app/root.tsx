@@ -306,16 +306,31 @@ function App() {
     const timer = setTimeout(() => {
       window.requestAnimationFrame(() => {
         // Load Google Tag Manager
-        ;(function (w, d, s, l, i) {
+        {
+          const w = window as Window & { dataLayer?: any[] }
+          const d = document
+          const i = 'GTM-WH4KFG5'
+          const l = 'dataLayer'
+          const s = 'script'
           w[l] = w[l] || []
           w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
-          let f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != 'dataLayer' ? '&l=' + l : ''
+          const f = d.getElementsByTagName(s)[0] as HTMLScriptElement
+          const j = d.createElement(s) as HTMLScriptElement
+          const dl = l == 'dataLayer' ? '' : `&l=${l}`
           j.async = true
-          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
-          f.parentNode?.insertBefore(j, f)
-        })(window, document, 'script', 'dataLayer', 'GTM-WH4KFG5')
+          j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`
+          if (f?.parentNode) {
+            try {
+              f.parentNode.insertBefore(j, f)
+            } catch (e) {
+              // Fallback to append if insertBefore fails
+              document.body.appendChild(j)
+            }
+          } else {
+            // Fallback if target element not found
+            document.body.appendChild(j)
+          }
+        }
 
         // Load Next Millennium script
         const nextMilleniumScript = document.createElement('script')
@@ -369,7 +384,8 @@ function App() {
               src="https://www.googletagmanager.com/ns.html?id=GTM-WH4KFG5"
               height="0"
               width="0"
-              className={`hidden invisible`}></iframe>
+              className={`hidden invisible`}
+            />
           </noscript>
           <Sidebar data={data}>
             <Outlet />

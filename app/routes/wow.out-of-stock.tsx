@@ -1,4 +1,9 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
@@ -18,7 +23,6 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
-import type { MetaFunction, LinksFunction } from '@remix-run/node'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 
