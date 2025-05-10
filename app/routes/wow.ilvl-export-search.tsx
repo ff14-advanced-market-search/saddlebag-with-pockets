@@ -15,7 +15,6 @@ import type {
 import IlvlExportSearch from '~/requests/WoW/IlvlExportSearch'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
-import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import {
   useActionData,
   useNavigation,
