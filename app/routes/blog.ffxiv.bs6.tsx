@@ -1,19 +1,18 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Mastering Gold Making in the WoW Auction House',
+    title: 'FFXIV Marketboard Guide: Avoiding Pitfalls',
     description:
-      'Discover advanced strategies to become a master of gold making in World of Warcraft by leveraging the power of the Auction House.',
-    customHeading:
-      'Unleash the Power of the Auction House: Mastering Gold Making in WoW'
+      'Learn how to avoid common mistakes and pitfalls on the FFXIV Marketboard.',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs6' }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs6' }
-]
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

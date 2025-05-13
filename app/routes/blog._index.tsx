@@ -1,20 +1,17 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
-
+import type { MetaFunction } from '@remix-run/cloudflare'
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange Blogs, posts and random stuff',
-    description: 'Saddlebag Exchange best blogs and guides are all on github'
+    description: 'Saddlebag Exchange best blogs and guides are all on github',
+    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/blog' }]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog' }
-]
 
 const recommendedQueries = [
   {

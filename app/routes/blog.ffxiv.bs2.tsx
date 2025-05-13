@@ -1,19 +1,18 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV & WoW Gil Strategies 2',
+    title: 'FFXIV Marketboard Guide: Mastering Undercutting',
     description:
-      'Explore advanced strategies for maximizing Gil in Final Fantasy XIV and gold in World of Warcraft.',
-    customHeading:
-      'Mastering Gil and Gold: Advanced Strategies from Saddlebag Exchange'
+      'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts.',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs2' }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs2' }
-]
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
