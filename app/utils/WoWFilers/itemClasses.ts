@@ -12,7 +12,8 @@ export const itemClasses = [
       { name: 'Bandage', value: 6 },
       { name: 'Other', value: 7 },
       { name: 'Other 2', value: 8 },
-      { name: 'Vantus Rune', value: 9 }
+      { name: 'Vantus Rune', value: 9 },
+      { name: 'Toys', value: 199 }
     ]
   },
   {
