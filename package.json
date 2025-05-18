@@ -19,7 +19,7 @@
     "prettier:check": "prettier --check app",
     "test": "vitest",
     "prepare": "husky install",
-    "write-items": "yarn run write-ffxiv-items && prettier --write app/utils/items/ffxivItems.ts && yarn run write-wow-items && prettier --write app/utils/items/wowItems.ts",
+    "write-items": "yarn run write-ffxiv-items && prettier --write app/utils/items/ffxivItems.ts && yarn run write-wow-items && prettier --write app/utils/items/wowItems.ts && yarn run prettier",
     "write-ffxiv-items": "node ./scripts/write-ffxiv-items.js && prettier --write app/utils/items/ffxivItems.ts",
     "write-wow-items": "node ./scripts/write-wow-items.js && prettier --write app/utils/items/wowItems.ts"
   },
