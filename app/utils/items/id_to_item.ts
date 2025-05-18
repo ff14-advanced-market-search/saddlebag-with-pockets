@@ -19,4 +19,6 @@ export const parseItemsForDataListSelect = ([value, label]: [
 export const ffxivItemsList = ffxivItems.map(parseItemsForDataListSelect)
 export const wowItemsList = wowItems.map(parseItemsForDataListSelect)
 export const wowPetItemsList = wowPetsItems.map(parseItemsForDataListSelect)
-export const wowStackableItemList = wowStackableItems.map(parseItemsForDataListSelect)
+export const wowStackableItemList = wowStackableItems.map(
+  parseItemsForDataListSelect
+)
