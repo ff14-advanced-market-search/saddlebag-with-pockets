@@ -136,7 +136,9 @@ const saveItemList = async (items, type) => {
     process.exit(1)
   }
 
-  const mapName = `wow${type.charAt(0).toUpperCase() + type.slice(1)}ItemsMap`
+  const mapName = type === 'regular' 
+    ? 'wowItemsMap'
+    : `wow${type.charAt(0).toUpperCase() + type.slice(1)}ItemsMap`
 
   return new Promise((resolve, reject) => {
     writeFile(

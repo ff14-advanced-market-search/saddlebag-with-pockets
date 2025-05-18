@@ -1,4 +1,4 @@
-export const wowRegularItemsMap: Record<string, string> = {
+export const wowItemsMap: Record<string, string> = {
   '25': 'Worn Shortsword',
   '35': 'Bent Staff',
   '36': 'Worn Mace',
