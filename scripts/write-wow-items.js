@@ -3,7 +3,11 @@ const { writeFile } = require('fs')
 
 const ITEMS_ADDRESS = 'http://api.saddlebagexchange.com/api/wow/itemnames'
 
-const FILE_PATH = './app/utils/items/wowItems.ts'
+const FILE_PATHS = {
+  regular: './app/utils/items/wowItems.ts',
+  stackable: './app/utils/items/wowStackableItems.ts',
+  pets: './app/utils/items/wowPetItems.ts'
+}
 
 const INVALID_STRINGS = [
   ';',
@@ -73,14 +77,20 @@ const validateItem = (id, itemName) => {
  *   - Logs the error message and terminates the process in case of any request failure.
  *   - Operates asynchronously using 'await' in an async function.
  */
-const getItems = async () => {
+const getItems = async (type = 'regular') => {
   try {
-    console.log('Fetching items from:', ITEMS_ADDRESS)
+    console.log(`Fetching ${type} items from:`, ITEMS_ADDRESS)
+
+    const data = {
+      regular: {},
+      stackable: { stackable: true },
+      pets: { pets: true }
+    }[type]
 
     const itemNameResponse = await axios({
       method: 'post',
       url: ITEMS_ADDRESS,
-      data: {}
+      data
     })
 
     return itemNameResponse.data
@@ -96,14 +106,15 @@ const getItems = async () => {
  * sync({ item1: 'value1', item2: 'value2' })
  * No# of items successfully written: 2
  * @param {Object} items - Collection of items with unique identifiers.
- * @returns {void} No value is returned when execution completes.
+ * @param {string} type - The type of items being processed ('regular', 'stackable', or 'pets')
+ * @returns {Promise} A promise that resolves when the file is written.
  * @description
  *   - Writes to FILE_PATH defined in the script.
  *   - Expects each item to be validated using validateItem function.
  *   - Exits the process with error if no items are valid for writing.
  *   - Asynchronously writes JSON to a file using writeFile.
  */
-const saveItemList = async (items) => {
+const saveItemList = async (items, type) => {
   console.log('Writing file...')
 
   const result = {}
@@ -115,36 +126,47 @@ const saveItemList = async (items) => {
     }
   })
 
-  console.log('Writing file:', FILE_PATH)
+  const filePath = FILE_PATHS[type]
+  console.log('Writing file:', filePath)
 
   const numberOfItems = Object.keys(result).length
 
   if (numberOfItems === 0) {
     console.error('ERROR:', 'No items to write')
-
     process.exit(1)
   }
 
-  writeFile(
-    FILE_PATH,
-    'export const wowItemsMap: Record<string, string> = ' +
-      JSON.stringify(result, null, 2),
-    function (err) {
-      if (err) {
-        console.error('ERROR:', err.message)
+  const mapName = type === 'regular' 
+    ? 'wowItemsMap'
+    : `wow${type.charAt(0).toUpperCase() + type.slice(1)}ItemsMap`
 
-        process.exit(1)
+  return new Promise((resolve, reject) => {
+    writeFile(
+      filePath,
+      `export const ${mapName}: Record<string, string> = ` +
+        JSON.stringify(result, null, 2),
+      function (err) {
+        if (err) {
+          console.error('ERROR:', err.message)
+          reject(err)
+          process.exit(1)
+        }
+        console.log(`NO# of ${type} items successfully written:`, numberOfItems)
+        resolve()
       }
-      console.log('NO# of items successfully written:', numberOfItems)
-      process.exit(0)
-    }
-  )
+    )
+  })
 }
 
-getItems()
-  .then(saveItemList)
-  .catch((error) => {
-    console.error('Error writing items list:', error.message)
-
-    process.exit(1)
-  })
+// Fetch and save all types of items
+Promise.all([
+  getItems('regular').then(items => saveItemList(items, 'regular')),
+  getItems('pets').then(items => saveItemList(items, 'pets')),
+  getItems('stackable').then(items => saveItemList(items, 'stackable'))
+]).then(() => {
+  console.log('All items have been written successfully')
+  process.exit(0)
+}).catch((error) => {
+  console.error('Error writing items list:', error.message)
+  process.exit(1)
+})

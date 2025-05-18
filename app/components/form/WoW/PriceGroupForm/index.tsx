@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { InputWithLabel } from '../../InputWithLabel'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
+import {
+  wowStackableItemList,
+  wowStackableItems
+} from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import CategorySelectionPopup from '../CategorySelectionPopup'
 import { itemClasses } from '~/utils/WoWFilers/itemClasses'
@@ -48,7 +51,7 @@ const PriceGroupForm = ({
 
   const handleItemSelect = (value: string) => {
     setCurrentItemName(value)
-    const itemId = getItemIDByName(value.trim(), wowItems)
+    const itemId = getItemIDByName(value.trim(), wowStackableItems)
     if (itemId) {
       const newIds = [...new Set([...itemIds, Number.parseInt(itemId)])]
       setItemIds(newIds)
@@ -155,10 +158,10 @@ const PriceGroupForm = ({
 
       <div className="mt-4">
         <DebouncedSelectInput
-          title="Add item by name"
+          title="Add item by name (stackable commodity items only)"
           label="Item"
           id="item-select"
-          selectOptions={wowItemsList}
+          selectOptions={wowStackableItemList}
           onSelect={handleItemSelect}
           displayValue={currentItemName}
         />
@@ -171,7 +174,7 @@ const PriceGroupForm = ({
           </h4>
           <div className="space-y-2">
             {itemIds.map((id) => {
-              const itemEntry = wowItemsList.find(
+              const itemEntry = wowStackableItemList.find(
                 (item) => item.value === id.toString()
               )
               const itemName = itemEntry
