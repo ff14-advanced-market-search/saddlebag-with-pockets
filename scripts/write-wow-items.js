@@ -107,7 +107,7 @@ const getItems = async (type = 'regular') => {
  * No# of items successfully written: 2
  * @param {Object} items - Collection of items with unique identifiers.
  * @param {string} type - The type of items being processed ('regular', 'stackable', or 'pets')
- * @returns {void} No value is returned when execution completes.
+ * @returns {Promise} A promise that resolves when the file is written.
  * @description
  *   - Writes to FILE_PATH defined in the script.
  *   - Expects each item to be validated using validateItem function.
@@ -138,25 +138,29 @@ const saveItemList = async (items, type) => {
 
   const mapName = `wow${type.charAt(0).toUpperCase() + type.slice(1)}ItemsMap`
 
-  writeFile(
-    filePath,
-    `export const ${mapName}: Record<string, string> = ` +
-      JSON.stringify(result, null, 2),
-    function (err) {
-      if (err) {
-        console.error('ERROR:', err.message)
-        process.exit(1)
+  return new Promise((resolve, reject) => {
+    writeFile(
+      filePath,
+      `export const ${mapName}: Record<string, string> = ` +
+        JSON.stringify(result, null, 2),
+      function (err) {
+        if (err) {
+          console.error('ERROR:', err.message)
+          reject(err)
+          process.exit(1)
+        }
+        console.log(`NO# of ${type} items successfully written:`, numberOfItems)
+        resolve()
       }
-      console.log(`NO# of ${type} items successfully written:`, numberOfItems)
-    }
-  )
+    )
+  })
 }
 
 // Fetch and save all types of items
 Promise.all([
   getItems('regular').then(items => saveItemList(items, 'regular')),
-  getItems('pets').then(items => saveItemList(items, 'pets'))
-  getItems('stackable').then(items => saveItemList(items, 'stackable')),
+  getItems('pets').then(items => saveItemList(items, 'pets')),
+  getItems('stackable').then(items => saveItemList(items, 'stackable'))
 ]).then(() => {
   console.log('All items have been written successfully')
   process.exit(0)
