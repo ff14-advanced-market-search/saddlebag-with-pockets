@@ -158,7 +158,7 @@ const PriceGroupForm = ({
 
       <div className="mt-4">
         <DebouncedSelectInput
-          title="Add item by name"
+          title="Add item by name (stackable commodity items only)"
           label="Item"
           id="item-select"
           selectOptions={wowStackableItemList}
