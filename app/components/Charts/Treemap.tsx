@@ -1,6 +1,7 @@
 import Highcharts from 'highcharts'
 import addHighchartsTreemap from 'highcharts/modules/treemap'
 import HighchartsReact from 'highcharts-react-official'
+import { useEffect, useRef } from 'react'
 
 export interface TreemapNode {
   id: string | number
@@ -37,7 +38,20 @@ const TreemapChart = ({
   darkMode: boolean
   backgroundColor?: string
 }) => {
-  addHighchartsTreemap(Highcharts)
+  const chartRef = useRef<{ chart: Highcharts.Chart }>(null)
+
+  useEffect(() => {
+    addHighchartsTreemap(Highcharts)
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      // Cleanup chart when component unmounts
+      if (chartRef.current?.chart) {
+        chartRef.current.chart.destroy()
+      }
+    }
+  }, [])
 
   const styles = darkMode
     ? {
@@ -85,7 +99,14 @@ const TreemapChart = ({
     }
   }
 
-  return <HighchartsReact highcharts={Highcharts} options={options} immutable />
+  return (
+    <HighchartsReact
+      ref={chartRef}
+      highcharts={Highcharts}
+      options={options}
+      immutable
+    />
+  )
 }
 
 export default TreemapChart

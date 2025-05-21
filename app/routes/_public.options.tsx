@@ -5,7 +5,12 @@ import {
   useLoaderData,
   useNavigation
 } from '@remix-run/react'
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction
+} from '@remix-run/cloudflare'
 import { json, redirect } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import {

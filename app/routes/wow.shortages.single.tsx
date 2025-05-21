@@ -10,7 +10,12 @@ import {
   WoWShortageFormFields
 } from './wow.shortages.commodities'
 import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoW/WoWSingleItemShortage'
 import WoWSingleItemShortage from '~/requests/WoW/WoWSingleItemShortage'

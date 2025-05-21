@@ -1,21 +1,18 @@
-import type { MetaFunction, LinksFunction } from '@remix-run/node'
+import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Exploring Markets for Gil Making in Final Fantasy XIV',
+    title: 'FFXIV Marketboard Guide: Seasonal Events',
     description:
-      'Discover lucrative opportunities and strategies for Gil making.',
-    customHeading:
-      'Unveiling Lucrative Markets: Specialized Gil Making in Final Fantasy XIV'
+      'Learn how to take advantage of seasonal events on the FFXIV Marketboard.',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs9' }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs9' }
-]
 
 const BlogPost = () => {
   return (

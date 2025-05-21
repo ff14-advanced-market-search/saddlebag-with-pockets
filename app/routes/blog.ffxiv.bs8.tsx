@@ -1,19 +1,18 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Advanced Tactics for Goldmaking in World of Warcraft',
+    title: 'FFXIV Marketboard Guide: Patch Impact',
     description:
-      'Explore advanced strategies and tactics to maximize your goldmaking potential in World of Warcraft.',
-    customHeading:
-      'Unlocking Advanced Tactics: Maximize Goldmaking in World of Warcraft'
+      'Understand how game patches impact the FFXIV Marketboard and trading strategies.',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs8' }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs8' }
-]
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

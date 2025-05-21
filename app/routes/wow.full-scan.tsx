@@ -1,5 +1,10 @@
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WoWScanResponseWithPayload } from '~/requests/WoW/WOWScan'
 import WOWScanRequest from '~/requests/WoW/WOWScan'

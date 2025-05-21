@@ -1,20 +1,22 @@
 import Banner from '~/components/Common/Banner'
+import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Diversification in Gil Making and Gold Making',
-    description: ' Risk Management in Gil Making and Gold Making',
-    customHeading:
-      'Optimize Your Strategy: Diversification and Risk Management in Gil and Gold Making'
+    title: 'FFXIV Marketboard Guide: Third-Party Tools',
+    description:
+      'Explore third-party tools that can help you on the FFXIV Marketboard.',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/bs10'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs10' }
-]
 
 const howtocrossservertradeinffxiv = () => {
   return (

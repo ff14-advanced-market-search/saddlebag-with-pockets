@@ -1,4 +1,5 @@
 import Banner from '~/components/Common/Banner'
+import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare'
 import { Link } from '@remix-run/react'
 
 // Overwrite default meta in the root.tsx
@@ -10,8 +11,12 @@ export const meta: MetaFunction = () => {
       'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
     description:
       'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts. Master the Marketboard with real-time notifications.',
-    customHeading:
-      'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange'
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/undercut'
+      }
+    ]
   }
 }
 

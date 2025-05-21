@@ -1,18 +1,18 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Unlocking MMORPG Economies: Strategies for WoW & FFXIV',
+    title: 'FFXIV Marketboard Guide: Advanced Strategies',
     description:
-      'Discover effective strategies for unlocking the potential of MMORPG economies in World of Warcraft and Final Fantasy XIV.',
-    customHeading: 'Maximizing MMORPG Economies: Strategies for WoW & FFXIV'
+      'Learn advanced strategies for maximizing your FFXIV gil earnings on the Marketboard.',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs3' }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs3' }
-]
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (
