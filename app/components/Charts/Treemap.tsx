@@ -46,26 +46,16 @@ const TreemapChart = ({
   backgroundColor?: string
 }) => {
   const chartRef = useRef<{ chart: Highcharts.Chart }>(null)
-  const [isModuleInitialized, setIsModuleInitialized] = useState(false)
+  const [isModuleInitialized] = useState(true)
 
   useEffect(() => {
-    // Ensure the module is initialized
-    if (!isModuleInitialized) {
-      try {
-        addHighchartsTreemap(Highcharts)
-        setIsModuleInitialized(true)
-      } catch (error) {
-        console.error('Failed to initialize Highcharts treemap module:', error)
-      }
-    }
-
     return () => {
       // Cleanup chart when component unmounts
       if (chartRef.current?.chart) {
         chartRef.current.chart.destroy()
       }
     }
-  }, [isModuleInitialized])
+  }, [])
 
   const styles = darkMode
     ? {
