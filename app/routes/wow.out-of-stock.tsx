@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
@@ -33,16 +32,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Out of Stock Items',
     description:
-      'Sell without Competition! Search for items that are out of stock across various WoWrealms.'
+      'Sell without Competition! Search for items that are out of stock across various WoW Realms.',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/out-of-stock'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/out-of-stock'
-  }
-]
 
 const PAGE_URL = '/wow/out-of-stock'
 
