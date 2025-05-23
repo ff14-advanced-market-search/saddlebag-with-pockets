@@ -7,7 +7,10 @@ import { useEffect, useRef, useState } from 'react'
 try {
   addHighchartsTreemap(Highcharts)
 } catch (error) {
-  console.error('Failed to initialize Highcharts treemap module:', error)
+  console.error(
+    'Failed to initialize Highcharts treemap module:',
+    error instanceof Error ? error.message : String(error)
+  )
 }
 
 export interface TreemapNode {
