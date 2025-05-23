@@ -32,15 +32,18 @@ type ItemPageData =
   | { exception: string; itemName: string }
 
 export const meta: MetaFunction = ({ data }) => {
+  const itemName = 'itemName' in data ? data.itemName : 'Unknown Item'
+  const itemId = 'itemId' in data ? data.itemId : '4745'
+
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: data.itemName,
-    description: `${data.itemName}: FFXIV Market Data`,
+    title: itemName,
+    description: `${itemName}: FFXIV Market Data`,
     links: [
       {
         rel: 'canonical',
-        href: `https://saddlebagexchange.com/queries/item-data/${data.itemId}`
+        href: `https://saddlebagexchange.com/queries/item-data/${itemId}`
       }
     ]
   }
