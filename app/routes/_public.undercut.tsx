@@ -25,13 +25,15 @@ export const meta: MetaFunction = () => {
     description:
       'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.',
     viewport: 'width=device-width,initial-scale=1',
-    charSet: 'utf-8'
+    charSet: 'utf-8',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/undercut'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/undercut' }
-]
 
 interface TrackedItem {
   id: string
