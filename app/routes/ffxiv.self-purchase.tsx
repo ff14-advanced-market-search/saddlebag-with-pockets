@@ -2,8 +2,7 @@ import { useState } from 'react'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
@@ -30,16 +29,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV marketboard purchase history',
-    description: 'Look up your FFXIV purchase history on the ffxiv marketboard'
+    description: 'Look up your FFXIV purchase history on the ffxiv marketboard',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/ffxiv/self-purchase'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/self-purchase'
-  }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)

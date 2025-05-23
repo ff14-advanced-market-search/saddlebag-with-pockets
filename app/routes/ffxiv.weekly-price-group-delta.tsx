@@ -2,8 +2,7 @@ import { json } from '@remix-run/cloudflare'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useState, useEffect } from 'react'
@@ -42,16 +41,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV Weekly Price Group Delta Analysis',
     description:
-      'FFXIV Price Group Analysis! View weekly price changes for investment opportunities!'
+      'FFXIV Price Group Analysis! View weekly price changes for investment opportunities!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/ffxiv/weekly-price-group-delta'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/weekly-price-group-delta'
-  }
-]
 
 export const loader: LoaderFunction = () => {
   return json<FFXIVLoaderData>({

@@ -38,12 +38,13 @@ export const meta: MetaFunction = ({ data }) => {
     title: data.itemName,
     description: `${data.itemName}: FFXIV Market Data`,
     links: [
-      { rel: 'canonical', href: `https://saddlebagexchange.com/queries/item-data/${data.itemId}` }
+      {
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/queries/item-data/${data.itemId}`
+      }
     ]
   }
 }
-
-
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId

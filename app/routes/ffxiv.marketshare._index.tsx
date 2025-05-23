@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
@@ -36,13 +35,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV marketshare gil making overview',
     description:
-      'Find what items make the most gil in FFXIV, sell the most in FFXIV, sell the fastest in in FFXIV and have the best market gaps!'
+      'Find what items make the most gil in FFXIV, sell the most in FFXIV, sell the fastest in in FFXIV and have the best market gaps!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/ffxiv/marketshare'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/marketshare' }
-]
 
 type MarketshareActionResult =
   | {}

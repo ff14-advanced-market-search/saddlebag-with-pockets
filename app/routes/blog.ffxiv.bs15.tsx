@@ -1,3 +1,5 @@
+import { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -7,13 +9,15 @@ export const meta: MetaFunction = () => {
     description:
       'Explore the profound influence of social dynamics on MMO economies and virtual communities.',
     customHeading:
-      'Understanding the Role of Social Dynamics in Shaping MMO Economies'
+      'Understanding the Role of Social Dynamics in Shaping MMO Economies',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/bs15'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs15' }
-]
 
 const howtocrossservertradeinffxiv = () => {
   return (

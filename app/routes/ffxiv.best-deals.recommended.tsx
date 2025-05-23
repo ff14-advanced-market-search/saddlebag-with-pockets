@@ -1,4 +1,4 @@
-import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -9,16 +9,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV Best Deals Recommendations',
-    description: 'FFXIV Amazing Market Board Deals'
+    description: 'FFXIV Amazing Market Board Deals',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/ffxiv/best-deals/recommended'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/best-deals/recommended'
-  }
-]
 
 const searchParams = {
   ultraCheapDealsHQ:

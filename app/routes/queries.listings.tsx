@@ -1,5 +1,5 @@
 import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import GetListingRequest from '~/requests/FFXIV/GetListing'
 import type {
   GetListingProps,
@@ -24,13 +24,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: ffxiv listings analysis',
-    description: 'Saddlebag Exchange: ffxiv listings analysis'
+    description: 'Saddlebag Exchange: ffxiv listings analysis',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/queries/listings'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/queries/listings' }
-]
 
 const validateInput = ({
   itemId,

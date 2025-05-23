@@ -1,6 +1,6 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
-import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -9,24 +9,14 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'World of Warcraft Auction House Prices and Gold making tools!',
     description:
-      'Tools and Addons to make gold on the World of Warcraft Auction House Auctionhouse'
+      'Tools and Addons to make gold on the World of Warcraft Auction House Auctionhouse',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/wow' }
+    ]
   }
 }
 
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow' }
-]
-
 const recommendedQueries = [
-  // {
-  //   name: 'Alpha Build Cross Server Trade Tools',
-  //   description:
-  //     'Check out the latest and greatest Alpha versions of our server to server trade tools just in time for 10.1.5 cross realm trading!',
-  //   Icon: DocumentSearchIcon,
-  //   href: 'https://temp.saddlebagexchange.com/',
-  //   external: true
-  // },
   {
     name: 'Best Deals',
     description:

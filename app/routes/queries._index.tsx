@@ -4,9 +4,8 @@ import {
   PencilAltIcon
 } from '@heroicons/react/outline'
 import { ExclamationCircleIcon } from '@heroicons/react/solid'
-import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
-import TileLink from '~/components/Common/TileLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -14,13 +13,10 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV Market Board Tools',
-    description: 'Saddlebag Exchange: FFXIV MarketBoard Tools'
+    description: 'Saddlebag Exchange: FFXIV MarketBoard Tools',
+    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/queries' }]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/queries' }
-]
 
 const ffxivPages = [
   {

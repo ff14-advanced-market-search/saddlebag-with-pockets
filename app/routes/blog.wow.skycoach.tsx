@@ -8,15 +8,14 @@ export const meta: MetaFunction = () => ({
     'How to Best Prepare and Properly Complete Mythic+ Dungeons in World of Warcraft',
   description:
     'Learn how to prepare and properly complete Mythic+ dungeons in World of Warcraft, where you can get the best weapons and gear.',
-  customHeading: 'Guide to Mythic+ Dungeons and Best Gear in WoW'
+  customHeading: 'Guide to Mythic+ Dungeons and Best Gear in WoW',
+  links: [
+    {
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/wow/skycoach'
+    }
+  ]
 })
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/blog/wow/skycoach'
-  }
-]
 
 const MythicPlusGuide = () => {
   return (

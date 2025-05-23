@@ -1,3 +1,5 @@
+import { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -7,13 +9,15 @@ export const meta: MetaFunction = () => {
     description:
       'Discover innovative methods to generate revenue in MMO economies beyond traditional means.',
     customHeading:
-      'Unlocking Revenue Opportunities: Exploring Alternative Streams in MMO Economies'
+      'Unlocking Revenue Opportunities: Exploring Alternative Streams in MMO Economies',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/bs13'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs13' }
-]
 
 const howtocrossservertradeinffxiv = () => {
   return (

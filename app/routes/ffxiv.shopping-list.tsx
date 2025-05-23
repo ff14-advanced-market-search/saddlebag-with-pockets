@@ -1,5 +1,5 @@
 import { TrashIcon } from '@heroicons/react/solid'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useNavigation } from '@remix-run/react'
 import { useCallback, useState } from 'react'
@@ -31,16 +31,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV shopping list, bulk craft',
     description:
-      'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients'
+      'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
-  }
-]
 
 const FORM_DEFAULTS = {
   craft_amount: 5,

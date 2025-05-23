@@ -1,3 +1,5 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -5,13 +7,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Unveiling the Future: Innovation in MMO Economies',
     description:
-      'Explore key trends and opportunities in MMO economies, its impact on virtual markets.'
+      'Explore key trends and opportunities in MMO economies, its impact on virtual markets.',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/bs12'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs12' }
-]
 
 const howtocrossservertradeinffxiv = () => {
   return (

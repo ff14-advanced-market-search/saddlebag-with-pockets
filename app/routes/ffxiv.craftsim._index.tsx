@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
@@ -78,13 +77,12 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV crafting profit simulation',
     description:
-      'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!'
+      'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/craftsim' }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/craftsim' }
-]
 
 const PAGE_URL = '/ffxiv/craftsim'
 
