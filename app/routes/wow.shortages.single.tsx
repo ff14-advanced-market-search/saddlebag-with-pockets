@@ -13,8 +13,7 @@ import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoW/WoWSingleItemShortage'
