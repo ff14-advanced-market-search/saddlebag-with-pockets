@@ -2,8 +2,7 @@ import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WoWScanResponseWithPayload } from '~/requests/WoW/WOWScan'
@@ -29,14 +28,12 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW server transfer trade search',
     description:
-      'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit'
+      'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/full-scan' }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/full-scan' }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

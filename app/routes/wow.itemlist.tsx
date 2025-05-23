@@ -1,17 +1,17 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { wowItemsMap } from '~/utils/items/wowItems'
 
-export const meta = () => {
+export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: Marketable Items WoW',
-    description: 'A list of all marketable items on Saddlebag Exchange for WoW'
+    description: 'A list of all marketable items on Saddlebag Exchange for WoW',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/itemlist' }
+    ]
   }
 }
-
-export const links = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/itemlist' }
-]
 
 export default function Index() {
   // Generate simple anchor links for WoW items

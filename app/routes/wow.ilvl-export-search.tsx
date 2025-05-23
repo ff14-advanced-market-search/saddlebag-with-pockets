@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
@@ -41,6 +40,23 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Saddlebag Exchange: WoW BOE Item Level Export Search',
+    description:
+      'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/ilvl-export-search'
+      }
+    ]
+  }
+}
 
 const PAGE_URL = '/wow/ilvl-export-search'
 
@@ -595,22 +611,4 @@ const mobileColumnList: Array<ColumnList<ExportItem>> = [
     )
   },
   { columnId: 'realmPopulationType', header: 'Population Type' }
-]
-
-// Overwrite default meta in the root.tsx
-export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW BOE Item Level Export Search',
-    description:
-      'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!'
-  }
-}
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/ilvl-export-search'
-  }
 ]

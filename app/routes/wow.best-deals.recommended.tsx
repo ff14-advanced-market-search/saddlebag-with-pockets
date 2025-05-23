@@ -1,4 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -8,17 +9,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Best Deals Recommendations',
-    description: 'Saddlebag Exchange: WoW Amazing Auction House Deals'
+    description: 'Saddlebag Exchange: WoW Amazing Auction House Deals',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
-  }
-]
 
 // Updated searchParams with WoW best deals endpoints
 const searchParams = {

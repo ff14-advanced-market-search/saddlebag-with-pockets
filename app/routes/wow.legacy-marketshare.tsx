@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
@@ -110,17 +109,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Legacy most gold',
     description:
-      'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
+      'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
-  }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

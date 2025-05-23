@@ -10,9 +10,7 @@ export const meta: MetaFunction = () => {
     title: 'World of Warcraft Auction House Prices and Gold making tools!',
     description:
       'Tools and Addons to make gold on the World of Warcraft Auction House Auctionhouse',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/wow' }
-    ]
+    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/wow' }]
   }
 }
 

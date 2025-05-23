@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
@@ -76,13 +75,12 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Auctionhouse Best Deals',
     description:
-      'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!'
+      'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/best-deals' }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/best-deals' }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams

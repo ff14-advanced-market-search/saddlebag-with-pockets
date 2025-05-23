@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
@@ -31,7 +31,7 @@ const makeTimeString = ({
   return format(newDate, formatString)
 }
 
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
+export const meta: MetaFunction = ({ data }) => {
   if ('exception' in data) {
     return {
       charset: 'utf-8',
@@ -43,19 +43,17 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
     return {
       charset: 'utf-8',
       viewport: 'width=device-width,initial-scale=1',
-      title: data.data.itemName, // Adjust according to your needs
-      description: `TSM (Trade Skill Master) statistics for ${data.data.itemName}` // Adjust this too
+      title: data.data.itemName,
+      description: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`,
+      links: [
+        {
+          rel: 'canonical',
+          href: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
+        }
+      ]
     }
   }
 }
-
-// // THIS ISNT WORKING!!!
-// export const links: LinksFunction = async ({ params, request }) => {
-//   const itemId = request.params.itemId;
-//   return [
-//     { rel: 'canonical', href: `https://saddlebagexchange.com/wow/item-data/${itemId}` }
-//   ];
-// }
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId
