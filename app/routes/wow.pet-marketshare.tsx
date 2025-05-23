@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { PageWrapper } from '~/components/Common'
@@ -27,17 +26,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Battle Pets Most Gold',
     description:
-      'Find what battle pets make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
+      'Find what battle pets make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/pet-marketshare'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/pet-marketshare'
-  }
-]
 
 const inputMap: Record<string, string> = {
   region: 'Region',

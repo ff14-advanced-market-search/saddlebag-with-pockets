@@ -1,4 +1,4 @@
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import { PageWrapper } from '~/components/Common'
@@ -24,17 +24,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: region wide undercut search',
-    description: 'Look up your wow undercuts across all realms at once!'
+    description: 'Look up your wow undercuts across all realms at once!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/region-undercut'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/region-undercut'
-  }
-]
 
 const petAuction = z.object({
   petID: z.number(),
