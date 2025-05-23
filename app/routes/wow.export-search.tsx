@@ -1,8 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useEffect, useState } from 'react'
@@ -80,14 +79,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: Export Search',
     description:
-      'Find the best realm to sell any item on! Wow realm population data.'
+      'Find the best realm to sell any item on! Wow realm population data.',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/export-search'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/export-search' }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams

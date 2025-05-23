@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import Banner from '~/components/Common/Banner'
@@ -27,31 +27,27 @@ type ItemPageData =
       history?: HistoryResponse | {}
       listing?: ListingResponseType | {}
       itemName: string
+      itemDescription?: string
     }
-  | { exception: string }
+  | { exception: string; itemName: string }
 
-// Overwrite default meta in the root.tsx
-// Change your MetaFunction arguments
-type MetaArgs = {
-  context: any
-  data: ItemPageData
-}
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
+export const meta: MetaFunction = ({ data }) => {
+  const itemName = 'itemName' in data ? data.itemName : 'Unknown Item'
+  const itemId = 'itemId' in data ? data.itemId : '4745'
+
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: data.itemName,
-    description: `${data.itemName}: FFXIV Market data`
+    title: itemName,
+    description: `${itemName}: FFXIV Market Data`,
+    links: [
+      {
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/queries/item-data/${itemId}`
+      }
+    ]
   }
 }
-
-// // THIS ISNT WORKING!!!
-// export const links: LinksFunction = ({ request }) => {
-//   const itemId = request.params.itemId;
-//   return [
-//     { rel: 'canonical', href: `https://saddlebagexchange.com/queries/item-data/${itemId}` }
-//   ];
-// }
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const itemId = params.itemId
@@ -161,7 +157,7 @@ const ItemPage = () => {
             whiteSpace: 'nowrap',
             border: '0'
           }}
-          dangerouslySetInnerHTML={{ __html: data.itemDescription }}
+          dangerouslySetInnerHTML={{ __html: data.itemDescription || '' }}
         />
         <Section>
           <div className="flex flex-wrap gap-2">

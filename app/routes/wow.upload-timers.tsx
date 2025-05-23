@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { PageWrapper } from '~/components/Common'
 import type {
   UploadTimersResponse,
@@ -18,14 +18,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW Realm Status',
     description:
-      'WoW: see what time blizzard updates the auctionhouse api data, this is the time when saddlebag exchange and azeroth auction assassin will update with the latest data!'
+      'WoW: see what time blizzard updates the auctionhouse api data, this is the time when saddlebag exchange and azeroth auction assassin will update with the latest data!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/upload-timers'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/upload-timers' }
-]
 
 export const loader: LoaderFunction = async () => {
   return UploadTimers()

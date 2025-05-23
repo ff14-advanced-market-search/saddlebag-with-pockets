@@ -1,4 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -8,16 +9,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'FFXIV market overview recommendations',
-    description: 'FFXIV market overview recommendations'
+    description: 'FFXIV market overview recommendations',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
-  }
-]
 
 const searchParams = {
   marketView:

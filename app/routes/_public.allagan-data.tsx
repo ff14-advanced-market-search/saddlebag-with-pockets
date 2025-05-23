@@ -1,4 +1,4 @@
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useActionData, useNavigation } from '@remix-run/react'
 import type { ReactNode } from 'react'
@@ -25,13 +25,15 @@ export const meta: MetaFunction = () => {
     title: 'FFXIV Allagan Tools Data Import',
     description:
       'Input your Allagan Tools generated data here, and we will turn it into useful stuff!',
-    customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page'
+    customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/allagan-data'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/allagan-data' }
-]
 
 const objectHasProperties = (object: Object) => {
   return Object.keys(object).length > 0

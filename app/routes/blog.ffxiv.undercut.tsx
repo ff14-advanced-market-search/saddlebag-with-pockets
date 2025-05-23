@@ -1,5 +1,5 @@
 import Banner from '~/components/Common/Banner'
-import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { Link } from '@remix-run/react'
 
 // Overwrite default meta in the root.tsx
@@ -19,13 +19,6 @@ export const meta: MetaFunction = () => {
     ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/blog/ffxiv/undercut'
-  }
-]
 
 const FFXIVUndercuttingGuide = () => {
   return (

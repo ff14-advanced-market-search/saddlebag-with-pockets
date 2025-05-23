@@ -1,11 +1,7 @@
 import { useLoaderData } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type {
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction
-} from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getSession } from '~/sessions'
 import { validateWorldAndDataCenter } from '~/utils/locations'
@@ -27,13 +23,15 @@ export const meta: MetaFunction = () => {
     description:
       'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts',
     customHeading:
-      'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
+      'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/price-sniper'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/price-sniper' }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))

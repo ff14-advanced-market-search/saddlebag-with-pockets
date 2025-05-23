@@ -1,3 +1,5 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -7,13 +9,15 @@ export const meta: MetaFunction = () => {
     description:
       'Explore the impact of economic policies on MMO economies through a comprehensive analysis.',
     customHeading:
-      'Navigating Economic Landscapes: The Impact of Policies on MMO Economies'
+      'Navigating Economic Landscapes: The Impact of Policies on MMO Economies',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/bs14'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs14' }
-]
 
 const howtocrossservertradeinffxiv = () => {
   return (

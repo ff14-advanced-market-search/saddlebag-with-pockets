@@ -1,5 +1,5 @@
 import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import GetHistoryRequest from '~/requests/FFXIV/GetHistory'
 import type {
@@ -25,16 +25,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: ffxiv history analysis',
-    description: 'Saddlebag Exchange: ffxiv history analysis'
+    description: 'Saddlebag Exchange: ffxiv history analysis',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/queries/item-history'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/queries/item-history'
-  }
-]
 
 const validateInput = ({
   itemId,

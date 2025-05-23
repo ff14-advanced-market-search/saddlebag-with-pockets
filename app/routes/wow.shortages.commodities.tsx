@@ -2,8 +2,7 @@ import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
@@ -165,17 +164,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW commodity shortages',
     description:
-      'Find wow commodity auctionhouse items that can be flipped for a profit'
+      'Find wow commodity auctionhouse items that can be flipped for a profit',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/shortages/commodities'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/shortages/commodities'
-  }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

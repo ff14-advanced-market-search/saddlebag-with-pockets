@@ -11,8 +11,7 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
@@ -145,13 +144,6 @@ export const meta: MetaFunction = () => {
     ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/quantity-manipulation'
-  }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

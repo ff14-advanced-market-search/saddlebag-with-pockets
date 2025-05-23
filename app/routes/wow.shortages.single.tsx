@@ -13,8 +13,7 @@ import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoW/WoWSingleItemShortage'
@@ -69,17 +68,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: WoW realm shortages',
     description:
-      'Find wow local realm auctionhouse items that can be flipped for a profit'
+      'Find wow local realm auctionhouse items that can be flipped for a profit',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/wow/shortages/single'
+      }
+    ]
   }
 }
-
-// Overwrite default links in the root.tsx
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/wow/shortages/single'
-  }
-]
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)

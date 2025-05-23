@@ -2,8 +2,7 @@ import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
@@ -61,13 +60,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV reselling trade search',
     description:
-      'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!'
+      'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/queries/full-scan'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/queries/full-scan' }
-]
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()

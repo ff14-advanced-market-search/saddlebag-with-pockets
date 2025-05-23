@@ -1,3 +1,5 @@
+import { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -7,16 +9,15 @@ export const meta: MetaFunction = () => {
     description:
       'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange : FFXIV Mods',
     customHeading:
-      'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange : FFXIV Mods'
+      'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange : FFXIV Mods',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/howtoresell'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/blog/ffxiv/howtoresell'
-  }
-]
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

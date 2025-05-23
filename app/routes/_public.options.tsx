@@ -8,8 +8,7 @@ import {
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
-  LinksFunction
+  MetaFunction
 } from '@remix-run/cloudflare'
 import { json, redirect } from '@remix-run/cloudflare'
 import { z } from 'zod'
@@ -51,13 +50,15 @@ export const meta: MetaFunction = () => {
     description:
       'Set your FFXIV datacenter and server / Set your wow realm and region',
     customHeading:
-      'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange'
+      'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/options'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/options' }
-]
 
 export const validator = z.object({
   data_center: z.string().min(1),

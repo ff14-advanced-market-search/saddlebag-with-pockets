@@ -1,14 +1,13 @@
 import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
 import { getUserSessionData } from '~/sessions'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
-import { PageWrapper, TitleH2 } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
 import { useDispatch } from 'react-redux'
-import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
 import {
@@ -25,16 +24,15 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV Scrip Exchange',
-    description: 'Saddlebag Exchange: FFXIV scrip exchange details'
+    description: 'Saddlebag Exchange: FFXIV scrip exchange details',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/ffxiv/scrip-exchange'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/ffxiv/scrip-exchange'
-  }
-]
 
 const validateInput = ({
   home_server,

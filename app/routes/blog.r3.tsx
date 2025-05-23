@@ -1,3 +1,5 @@
+import { MetaFunction } from '@remix-run/cloudflare'
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -7,13 +9,10 @@ export const meta: MetaFunction = () => {
     description:
       'Explore effective strategies for trading using commodity shortage futures to maximize profits as a crafter.',
     customHeading:
-      'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter'
+      'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter',
+    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/blog/r3' }]
   }
 }
-
-export const links: LinksFunction = () => [
-  { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/r3' }
-]
 
 const HowtoCrossServerTradeinFFXIV = () => {
   return (

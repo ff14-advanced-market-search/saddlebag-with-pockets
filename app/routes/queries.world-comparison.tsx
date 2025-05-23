@@ -1,7 +1,11 @@
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { ActionFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import ItemServerComparison from '~/requests/FFXIV/ItemServerComparison'
 import type { ItemServerComparisonList } from '~/requests/FFXIV/ItemServerComparison'
@@ -40,16 +44,15 @@ export const meta: MetaFunction = () => {
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: ffxiv export search',
     description:
-      'Explore and compare FFXIV item prices across different servers with Saddlebag Exchange.'
+      'Explore and compare FFXIV item prices across different servers with Saddlebag Exchange.',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/queries/world-comparison'
+      }
+    ]
   }
 }
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/queries/world-comparison'
-  }
-]
 
 // Define default form values
 const defaultFormValues = {
