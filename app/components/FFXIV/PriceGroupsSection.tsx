@@ -5,6 +5,7 @@ import { ffxivItems, ffxivItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import ItemsFilter from '../form/ffxiv/ItemsFilter'
 import type { ImportData } from '~/requests/FFXIV/types'
+import ErrorPopup from '../Common/ErrorPopup'
 
 type PriceGroup = NonNullable<ImportData['price_groups']>[number]
 
@@ -30,9 +31,13 @@ export default function PriceGroupsSection({
   >({})
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
   const [selectedItems, setSelectedItems] = useState<number[]>([])
+  const [localError, setLocalError] = useState<string | undefined>(undefined)
+  const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
 
   const handleAddGroup = () => {
     if (!groupName) {
+      setLocalError('Group name is required')
+      setShowLocalErrorPopup(true)
       onError('Group name is required')
       return
     }
@@ -50,6 +55,9 @@ export default function PriceGroupsSection({
     setSelectedItems([])
     setCurrentItemNames({})
     setShowAddGroup(false)
+    setLocalError(undefined)
+    setShowLocalErrorPopup(false)
+    onError(undefined)
   }
 
   const handleItemSelect = (value: string, groupIndex?: number) => {
@@ -100,6 +108,14 @@ export default function PriceGroupsSection({
 
   return (
     <div className="space-y-4">
+      {/* Error Popup for local validation errors */}
+      {localError && showLocalErrorPopup && (
+        <ErrorPopup
+          error={localError}
+          onClose={() => setShowLocalErrorPopup(false)}
+        />
+      )}
+
       {/* Submit Button or Empty State */}
       {priceGroups.length > 0 ? (
         <div className="flex justify-center my-8">
