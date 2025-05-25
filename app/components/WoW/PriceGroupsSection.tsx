@@ -1,5 +1,7 @@
 import type { PriceGroup } from '~/requests/WoW/WeeklyPriceGroupDelta'
 import PriceGroupForm from '~/components/form/WoW/PriceGroupForm'
+import { useState } from 'react'
+import ErrorPopup from '~/components/Common/ErrorPopup'
 
 interface PriceGroupsSectionProps {
   priceGroups: PriceGroup[]
@@ -63,6 +65,9 @@ export default function PriceGroupsSection({
   onError,
   isSubmitting
 }: PriceGroupsSectionProps) {
+  const [validationError, setValidationError] = useState<string | undefined>(undefined)
+  const [showErrorPopup, setShowErrorPopup] = useState(false)
+
   const handleAddPriceGroup = () => {
     if (priceGroups.length >= MAX_PRICE_GROUPS) {
       onError('Maximum of 10 price groups allowed')
@@ -88,6 +93,8 @@ export default function PriceGroupsSection({
     // Check if there are any price groups
     if (priceGroups.length === 0) {
       e.preventDefault()
+      setValidationError('Please add at least one price group')
+      setShowErrorPopup(true)
       onError('Please add at least one price group')
       return
     }
@@ -97,16 +104,28 @@ export default function PriceGroupsSection({
       const validationError = validatePriceGroup(group)
       if (validationError) {
         e.preventDefault()
+        setValidationError(validationError)
+        setShowErrorPopup(true)
         onError(validationError)
         return
       }
     }
 
+    setValidationError(undefined)
+    setShowErrorPopup(false)
     onError(undefined)
   }
 
   return (
     <div className="space-y-4">
+      {/* Error Popup for validation errors */}
+      {validationError && showErrorPopup && (
+        <ErrorPopup
+          error={validationError}
+          onClose={() => setShowErrorPopup(false)}
+        />
+      )}
+
       <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
         Price Groups
       </h3>
