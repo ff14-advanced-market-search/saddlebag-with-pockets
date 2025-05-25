@@ -27,7 +27,7 @@ import GroupSelector from '~/components/WoW/GroupSelector'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
 import PriceQuantityAnalysis from '~/components/WoW/PriceQuantityAnalysis'
 import RequestDataSection from '~/components/WoW/RequestDataSection'
-import DateInputs from '~/components/WoW/DateInputs'
+import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
 import ImportSection from '~/components/WoW/ImportSection'
 import PriceGroupsSection from '~/components/WoW/PriceGroupsSection'
 import RequestPreview from '~/components/WoW/RequestPreview'
@@ -109,6 +109,9 @@ export const action: ActionFunction = async ({ request }) => {
   const startYear = Number.parseInt(formData.get('startYear') as string)
   const startMonth = Number.parseInt(formData.get('startMonth') as string)
   const startDay = Number.parseInt(formData.get('startDay') as string)
+  const endYear = Number.parseInt(formData.get('endYear') as string)
+  const endMonth = Number.parseInt(formData.get('endMonth') as string)
+  const endDay = Number.parseInt(formData.get('endDay') as string)
   const priceGroups = JSON.parse(
     formData.get('priceGroups') as string
   ) as PriceGroup[]
@@ -119,6 +122,9 @@ export const action: ActionFunction = async ({ request }) => {
       start_year: startYear,
       start_month: startMonth,
       start_day: startDay,
+      end_year: endYear,
+      end_month: endMonth,
+      end_day: endDay,
       price_groups: priceGroups
     })
 
@@ -158,6 +164,9 @@ const Index = () => {
   const [startYear, setStartYear] = useState(2025)
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
+  const [endYear, setEndYear] = useState(new Date().getFullYear())
+  const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1)
+  const [endDay, setEndDay] = useState(new Date().getDate())
   const [showErrorPopup, setShowErrorPopup] = useState(false)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
@@ -193,22 +202,35 @@ const Index = () => {
               if (data.start_year) setStartYear(data.start_year)
               if (data.start_month) setStartMonth(data.start_month)
               if (data.start_day) setStartDay(data.start_day)
+              if (data.end_year) setEndYear(data.end_year)
+              if (data.end_month) setEndMonth(data.end_month)
+              if (data.end_day) setEndDay(data.end_day)
               if (data.price_groups) setPriceGroups(data.price_groups)
             }}
           />
 
-          <DateInputs
+          <DateRangeInputs
             startYear={startYear}
             startMonth={startMonth}
             startDay={startDay}
-            onYearChange={setStartYear}
-            onMonthChange={setStartMonth}
-            onDayChange={setStartDay}
+            endYear={endYear}
+            endMonth={endMonth}
+            endDay={endDay}
+            onStartYearChange={setStartYear}
+            onStartMonthChange={setStartMonth}
+            onStartDayChange={setStartDay}
+            onEndYearChange={setEndYear}
+            onEndMonthChange={setEndMonth}
+            onEndDayChange={setEndDay}
             onError={(err) => {
               setError(err)
               setShowErrorPopup(!!err)
             }}
           />
+
+          <input type="hidden" name="endYear" value={endYear} />
+          <input type="hidden" name="endMonth" value={endMonth} />
+          <input type="hidden" name="endDay" value={endDay} />
 
           <PriceGroupsSection
             priceGroups={priceGroups}
@@ -231,6 +253,9 @@ const Index = () => {
             startYear={startYear}
             startMonth={startMonth}
             startDay={startDay}
+            endYear={endYear}
+            endMonth={endMonth}
+            endDay={endDay}
             priceGroups={priceGroups}
           />
         </form>
@@ -510,6 +535,7 @@ const Results = ({
             data={data}
             wowRegion={wowRegion}
             startDate={startDate}
+            endDate={endDate}
             darkMode={darkMode}
           />
         </div>

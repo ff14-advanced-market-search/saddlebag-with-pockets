@@ -5,6 +5,7 @@ interface RequestDataSectionProps {
   data: WeeklyPriceGroupDeltaResponse
   wowRegion: string
   startDate: string
+  endDate: string
   darkMode: boolean
 }
 
@@ -17,8 +18,26 @@ export default function RequestDataSection({
   data,
   wowRegion,
   startDate,
+  endDate,
   darkMode
 }: RequestDataSectionProps) {
+  const requestData = {
+    region: wowRegion,
+    start_year: Number.parseInt(startDate.slice(0, 4)),
+    start_month: Number.parseInt(startDate.slice(4, 6)),
+    start_day: Number.parseInt(startDate.slice(6, 8)),
+    end_year: Number.parseInt(endDate.slice(0, 4)),
+    end_month: Number.parseInt(endDate.slice(4, 6)),
+    end_day: Number.parseInt(endDate.slice(6, 8)),
+    price_groups: Object.entries(data).map(([name, groupData]) => ({
+      name,
+      item_ids: Object.keys(groupData.item_data).map((id: string) =>
+        Number.parseInt(id)
+      ),
+      categories: []
+    }))
+  }
+
   return (
     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mt-4">
       <h3
@@ -31,23 +50,7 @@ export default function RequestDataSection({
         <CodeBlock
           title="Request data used for this analysis"
           buttonTitle="Copy"
-          codeString={JSON.stringify(
-            {
-              region: wowRegion,
-              start_year: Number.parseInt(startDate.slice(0, 4)),
-              start_month: Number.parseInt(startDate.slice(4, 6)),
-              start_day: Number.parseInt(startDate.slice(6, 8)),
-              price_groups: Object.entries(data).map(([name, groupData]) => ({
-                name,
-                item_ids: Object.keys(groupData.item_data).map((id: string) =>
-                  Number.parseInt(id)
-                ),
-                categories: []
-              }))
-            },
-            null,
-            2
-          )}
+          codeString={JSON.stringify(requestData, null, 2)}
           onClick={() => {
             alert('Copied to clipboard!')
           }}>

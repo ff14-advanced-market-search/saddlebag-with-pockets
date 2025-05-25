@@ -6,6 +6,9 @@ interface RequestPreviewProps {
   startYear: number
   startMonth: number
   startDay: number
+  endYear: number
+  endMonth: number
+  endDay: number
   priceGroups: PriceGroup[]
 }
 
@@ -18,6 +21,9 @@ interface RequestPreviewProps {
  * @param startYear - The starting year for the request data.
  * @param startMonth - The starting month for the request data.
  * @param startDay - The starting day for the request data.
+ * @param endYear - The ending year for the request data.
+ * @param endMonth - The ending month for the request data.
+ * @param endDay - The ending day for the request data.
  * @param priceGroups - An array of price group objects to include in the request.
  */
 export default function RequestPreview({
@@ -25,6 +31,9 @@ export default function RequestPreview({
   startYear,
   startMonth,
   startDay,
+  endYear,
+  endMonth,
+  endDay,
   priceGroups
 }: RequestPreviewProps) {
   const requestData = {
@@ -32,6 +41,9 @@ export default function RequestPreview({
     start_year: startYear,
     start_month: startMonth,
     start_day: startDay,
+    end_year: endYear,
+    end_month: endMonth,
+    end_day: endDay,
     price_groups: priceGroups
   }
 
