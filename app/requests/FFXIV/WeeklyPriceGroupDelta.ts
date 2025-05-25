@@ -47,7 +47,7 @@ const WeeklyPriceGroupDelta = async (
   props: WeeklyPriceGroupDeltaProps
 ): Promise<Response> => {
   const response = await fetch(
-    `${address}/api/ffxiv/weekly-price-group-deltaa`,
+    `${address}/api/ffxiv/weekly-price-group-delta`,
     {
       method: 'POST',
       headers: {
