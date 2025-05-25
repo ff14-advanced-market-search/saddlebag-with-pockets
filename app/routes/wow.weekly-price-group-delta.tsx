@@ -160,7 +160,7 @@ const Index = () => {
   const transition = useNavigation()
   const actionData = useActionData<ActionResponse>()
   const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([])
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [formError, setFormError] = useState<string | undefined>(undefined)
   const [showErrorPopup, setShowErrorPopup] = useState(false)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
   const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
@@ -176,10 +176,10 @@ const Index = () => {
   // Show error from action data
   useEffect(() => {
     if (actionData && isErrorResponse(actionData)) {
-      setError(actionData.exception)
+      setFormError(actionData.exception)
       setShowErrorPopup(true)
     } else {
-      setError(undefined)
+      setFormError(undefined)
       setShowErrorPopup(false)
     }
   }, [actionData])
@@ -187,7 +187,7 @@ const Index = () => {
   // Clear errors when form is submitted
   useEffect(() => {
     if (transition.state === 'submitting') {
-      setError(undefined)
+      setFormError(undefined)
       setShowErrorPopup(false)
       setLocalError(undefined)
       setShowLocalErrorPopup(false)
@@ -206,7 +206,7 @@ const Index = () => {
         hideSubmitButton={true}
         title={pageTitle}
         loading={transition.state === 'submitting'}
-        error={error}
+        error={formError}
         onClick={(e) => e.preventDefault()}>
         <form
           method="post"
@@ -238,8 +238,8 @@ const Index = () => {
             onEndMonthChange={setEndMonth}
             onEndDayChange={setEndDay}
             onError={(err) => {
-              setError(err)
-              setShowErrorPopup(!!err)
+              setLocalError(err)
+              setShowLocalErrorPopup(!!err)
             }}
           />
 
@@ -277,9 +277,10 @@ const Index = () => {
       </SmallFormContainer>
 
       {/* Error Popup for server errors */}
-      {error && showErrorPopup && (
-        <ErrorPopup error={error} onClose={() => setShowErrorPopup(false)} />
+      {formError && showErrorPopup && (
+        <ErrorPopup error={formError} onClose={() => setShowErrorPopup(false)} />
       )}
+
       {/* Error Popup for local validation errors */}
       {localError && showLocalErrorPopup && (
         <ErrorPopup
