@@ -42,6 +42,13 @@ export default function PriceGroupsSection({
       return
     }
 
+    if (selectedItems.length === 0 && selectedCategories.length === 0) {
+      setLocalError('Please add at least one item or category to the group')
+      setShowLocalErrorPopup(true)
+      onError('Please add at least one item or category to the group')
+      return
+    }
+
     onPriceGroupsChange([
       ...priceGroups,
       {
