@@ -131,15 +131,32 @@ export default function PriceGroupsSection({
       <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
         Price Groups
       </h3>
-      <div className="flex justify-center my-8">
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          disabled={isSubmitting}
-          className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
-          {isSubmitting ? 'Searching...' : 'Search Price Groups'}
-        </button>
-      </div>
+
+      {/* Submit Button or Empty State */}
+      {priceGroups.length > 0 ? (
+        <div className="flex justify-center my-8">
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 pulse disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+            {isSubmitting ? 'Searching...' : 'Search Price Groups'}
+          </button>
+        </div>
+      ) : (
+        <div className="text-center my-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
+            No price groups added yet. Add a price group to begin your analysis.
+          </p>
+          <button
+            type="button"
+            onClick={handleAddPriceGroup}
+            className="text-blue-500 hover:text-blue-600 font-medium">
+            Add your first price group →
+          </button>
+        </div>
+      )}
+
       {priceGroups.map((group, index) => (
         <PriceGroupForm
           key={index}
