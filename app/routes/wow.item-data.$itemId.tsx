@@ -112,59 +112,77 @@ export default function Index() {
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Minimum Price"
-              diffAmount={listing.minPrice.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Historic Price"
-              diffAmount={listing.historicPrice.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
+            {listing.minPrice !== -1 && (
+              <Differences
+                diffTitle="Minimum Price"
+                diffAmount={listing.minPrice.toLocaleString()}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
+            {listing.historicPrice !== -1 && (
+              <Differences
+                diffTitle="Historic Price"
+                diffAmount={listing.historicPrice.toLocaleString()}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
           </div>
           <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Current Market Value"
-              diffAmount={listing.currentMarketValue.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Historic Market Value"
-              diffAmount={listing.historicMarketValue.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
+            {listing.currentMarketValue !== -1 && (
+              <Differences
+                diffTitle="Current Market Value"
+                diffAmount={listing.currentMarketValue.toLocaleString()}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
+            {listing.historicMarketValue !== -1 && (
+              <Differences
+                diffTitle="Historic Market Value"
+                diffAmount={listing.historicMarketValue.toLocaleString()}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
           </div>
           <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Sales Per Day"
-              diffAmount={listing.salesPerDay.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Percent Change"
-              diffAmount={listing.percentChange.toLocaleString() + '%'}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
+            {listing.salesPerDay !== -1 && (
+              <Differences
+                diffTitle="Sales Per Day"
+                diffAmount={listing.salesPerDay.toLocaleString()}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
+            {listing.percentChange !== -1 && (
+              <Differences
+                diffTitle="Percent Change"
+                diffAmount={listing.percentChange.toLocaleString() + '%'}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
           </div>
           <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Current Quantity"
-              diffAmount={listing.currentQuantity.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Average Quantity"
-              diffAmount={listing.avgQuantity.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Avg v Current Quantity"
-              diffAmount={
-                listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
-              }
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
+            {listing.currentQuantity !== 1 && (
+              <Differences
+                diffTitle="Current Quantity"
+                diffAmount={listing.currentQuantity.toLocaleString()}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
+            {listing.avgQuantity !== -1 && (
+              <Differences
+                diffTitle="Average Quantity"
+                diffAmount={listing.avgQuantity.toLocaleString()}
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
+            {listing.currentVsAvgQuantityPercent !== 100 && (
+              <Differences
+                diffTitle="Avg v Current Quantity"
+                diffAmount={
+                  listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
+                }
+                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+              />
+            )}
           </div>
         </div>
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
@@ -226,14 +244,21 @@ export default function Index() {
             />
           </ContentContainer>
         )}
-        <SmallTable
-          title={`${listing.itemName} : Auctionhouse Listings`}
-          sortingOrder={[{ desc: false, id: 'price' }]}
-          columnList={columnList}
-          mobileColumnList={mobileColumnList}
-          columnSelectOptions={['price', 'quantity']}
-          data={listing.listingData}
-        />
+        {/* Auctionhouse Listings Table or Out of Stock */}
+        {listing.listingData.length === 0 ? (
+          <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
+            Out of Stock on Selected Realm
+          </div>
+        ) : (
+          <SmallTable
+            title={`${listing.itemName} : Auctionhouse Listings`}
+            sortingOrder={[{ desc: false, id: 'price' }]}
+            columnList={columnList}
+            mobileColumnList={mobileColumnList}
+            columnSelectOptions={['price', 'quantity']}
+            data={listing.listingData}
+          />
+        )}
       </PageWrapper>
     )
   }
