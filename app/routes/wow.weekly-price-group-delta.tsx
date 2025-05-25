@@ -278,7 +278,10 @@ const Index = () => {
 
       {/* Error Popup for server errors */}
       {formError && showErrorPopup && (
-        <ErrorPopup error={formError} onClose={() => setShowErrorPopup(false)} />
+        <ErrorPopup
+          error={formError}
+          onClose={() => setShowErrorPopup(false)}
+        />
       )}
 
       {/* Error Popup for local validation errors */}

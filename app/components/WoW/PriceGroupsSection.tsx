@@ -65,7 +65,9 @@ export default function PriceGroupsSection({
   onError,
   isSubmitting
 }: PriceGroupsSectionProps) {
-  const [validationError, setValidationError] = useState<string | undefined>(undefined)
+  const [validationError, setValidationError] = useState<string | undefined>(
+    undefined
+  )
   const [showErrorPopup, setShowErrorPopup] = useState(false)
 
   const handleAddPriceGroup = () => {
