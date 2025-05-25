@@ -184,6 +184,16 @@ const Index = () => {
     }
   }, [actionData])
 
+  // Clear errors when form is submitted
+  useEffect(() => {
+    if (transition.state === 'submitting') {
+      setError(undefined)
+      setShowErrorPopup(false)
+      setLocalError(undefined)
+      setShowLocalErrorPopup(false)
+    }
+  }, [transition.state])
+
   if (actionData && !isErrorResponse(actionData)) {
     return (
       <Results data={actionData} pageTitle={pageTitle} darkMode={darkmode} />

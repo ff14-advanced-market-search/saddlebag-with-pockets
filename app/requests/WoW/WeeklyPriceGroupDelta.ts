@@ -50,7 +50,7 @@ export interface WeeklyPriceGroupDeltaResponse {
 const WeeklyPriceGroupDelta = async (
   props: WeeklyPriceGroupDeltaProps
 ): Promise<Response> => {
-  const response = await fetch(`${address}/api/wow/weekly-price-group-delta`, {
+  const response = await fetch(`${address}/api/wow/weekly-price-group-deltaa`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -60,7 +60,10 @@ const WeeklyPriceGroupDelta = async (
   })
 
   if (!response.ok) {
-    throw new Error(`Server responded with status ${response.status}`)
+    const errorText = await response.text()
+    throw new Error(
+      `Server responded with status ${response.status}: ${errorText}`
+    )
   }
   return response
 }
