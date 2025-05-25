@@ -161,13 +161,15 @@ const Index = () => {
   const actionData = useActionData<ActionResponse>()
   const [priceGroups, setPriceGroups] = useState<PriceGroup[]>([])
   const [error, setError] = useState<string | undefined>(undefined)
+  const [showErrorPopup, setShowErrorPopup] = useState(false)
+  const [localError, setLocalError] = useState<string | undefined>(undefined)
+  const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
   const [startYear, setStartYear] = useState(2025)
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
   const [endYear, setEndYear] = useState(new Date().getFullYear())
   const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1)
   const [endDay, setEndDay] = useState(new Date().getDate())
-  const [showErrorPopup, setShowErrorPopup] = useState(false)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
 
@@ -196,7 +198,10 @@ const Index = () => {
         loading={transition.state === 'submitting'}
         error={error}
         onClick={(e) => e.preventDefault()}>
-        <form method="post" className="space-y-4 mb-4">
+        <form
+          method="post"
+          className="space-y-4 mb-4"
+          onSubmit={(e) => e.preventDefault()}>
           <ImportSection
             onImport={(data) => {
               if (data.start_year) setStartYear(data.start_year)
@@ -236,8 +241,8 @@ const Index = () => {
             priceGroups={priceGroups}
             onPriceGroupsChange={setPriceGroups}
             onError={(err) => {
-              setError(err)
-              setShowErrorPopup(!!err)
+              setLocalError(err)
+              setShowLocalErrorPopup(!!err)
             }}
             isSubmitting={transition.state === 'submitting'}
           />
@@ -261,9 +266,16 @@ const Index = () => {
         </form>
       </SmallFormContainer>
 
-      {/* Error Popup */}
+      {/* Error Popup for server errors */}
       {error && showErrorPopup && (
         <ErrorPopup error={error} onClose={() => setShowErrorPopup(false)} />
+      )}
+      {/* Error Popup for local validation errors */}
+      {localError && showLocalErrorPopup && (
+        <ErrorPopup
+          error={localError}
+          onClose={() => setShowLocalErrorPopup(false)}
+        />
       )}
     </PageWrapper>
   )
