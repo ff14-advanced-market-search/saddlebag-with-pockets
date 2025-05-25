@@ -60,7 +60,10 @@ const WeeklyPriceGroupDelta = async (
   })
 
   if (!response.ok) {
-    throw new Error(`Server responded with status ${response.status}`)
+    const errorText = await response.text()
+    throw new Error(
+      `Server responded with status ${response.status}: ${errorText}`
+    )
   }
   return response
 }

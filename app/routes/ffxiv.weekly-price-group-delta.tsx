@@ -131,6 +131,9 @@ const Index = () => {
     NonNullable<ImportData['price_groups']>
   >([])
   const [formError, setFormError] = useState<string | undefined>(undefined)
+  const [showErrorPopup, setShowErrorPopup] = useState(false)
+  const [localError, setLocalError] = useState<string | undefined>(undefined)
+  const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
   const [startYear, setStartYear] = useState(2023)
   const [startMonth, setStartMonth] = useState(1)
   const [startDay, setStartDay] = useState(1)
@@ -140,7 +143,6 @@ const Index = () => {
   const [hqOnly, setHqOnly] = useState(false)
   const [priceSetting, setPriceSetting] = useState('median')
   const [quantitySetting, setQuantitySetting] = useState('quantitySold')
-  const [showErrorPopup, setShowErrorPopup] = useState(false)
   const [region, setRegion] = useState(defaultRegion)
 
   // Results state
@@ -190,8 +192,21 @@ const Index = () => {
     if (actionError) {
       setFormError(actionError)
       setShowErrorPopup(true)
+    } else {
+      setFormError(undefined)
+      setShowErrorPopup(false)
     }
   }, [actionError])
+
+  // Clear errors when form is submitted
+  useEffect(() => {
+    if (transition.state === 'submitting') {
+      setFormError(undefined)
+      setShowErrorPopup(false)
+      setLocalError(undefined)
+      setShowLocalErrorPopup(false)
+    }
+  }, [transition.state])
 
   // Show results if we have data and no errors
   if (actionData && 'data' in actionData) {
@@ -489,7 +504,7 @@ const Index = () => {
         hideSubmitButton={true}
         title={pageTitle}
         loading={transition.state === 'submitting'}
-        error={undefined}
+        error={formError}
         onClick={(e) => e.preventDefault()}>
         <form method="post" className="space-y-4 mb-4">
           <ImportSection onImport={handleImport} />
@@ -508,8 +523,8 @@ const Index = () => {
             onEndMonthChange={setEndMonth}
             onEndDayChange={setEndDay}
             onError={(err) => {
-              setFormError(err)
-              setShowErrorPopup(!!err)
+              setLocalError(err)
+              setShowLocalErrorPopup(!!err)
             }}
           />
 
@@ -596,8 +611,8 @@ const Index = () => {
             priceGroups={priceGroups}
             onPriceGroupsChange={setPriceGroups}
             onError={(err) => {
-              setFormError(err)
-              setShowErrorPopup(!!err)
+              setLocalError(err)
+              setShowLocalErrorPopup(!!err)
             }}
             isSubmitting={transition.state === 'submitting'}
           />
@@ -633,10 +648,19 @@ const Index = () => {
         </form>
       </SmallFormContainer>
 
+      {/* Error Popup for server errors */}
       {formError && showErrorPopup && (
         <ErrorPopup
           error={formError}
           onClose={() => setShowErrorPopup(false)}
+        />
+      )}
+
+      {/* Error Popup for local validation errors */}
+      {localError && showLocalErrorPopup && (
+        <ErrorPopup
+          error={localError}
+          onClose={() => setShowLocalErrorPopup(false)}
         />
       )}
     </PageWrapper>
