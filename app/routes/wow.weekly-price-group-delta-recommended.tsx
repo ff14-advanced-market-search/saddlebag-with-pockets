@@ -1,10 +1,5 @@
-import { useState } from 'react'
 import { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
-import TileLink from '~/components/Common/TileLink'
-import type { WeeklyPriceGroupDeltaResponse, PriceGroup } from '~/requests/WoW/WeeklyPriceGroupDelta'
-import Results from './wow.weekly-price-group-delta'
-import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
 
 export const meta: MetaFunction = () => {
   return {
@@ -221,45 +216,30 @@ const recommendedConfigs = [
 ]
 
 export default function RecommendedWeeklyPriceGroupDelta() {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [results, setResults] = useState<WeeklyPriceGroupDeltaResponse | null>(null)
-  const [pageTitle, setPageTitle] = useState<string>('')
-  const [darkMode, setDarkMode] = useState<boolean>(false)
+  const handleRunAnalysis = (rec: typeof recommendedConfigs[0]) => {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/wow/weekly-price-group-delta';
 
-  const handleRunAnalysis = async (rec: typeof recommendedConfigs[0]) => {
-    setLoading(true)
-    setError(null)
-    setResults(null)
-    setPageTitle(rec.name)
-    try {
-      const response = await WeeklyPriceGroupDelta({
-        region: rec.config.region,
-        start_year: rec.config.start_year,
-        start_month: rec.config.start_month,
-        start_day: rec.config.start_day,
-        end_year: rec.config.end_year,
-        end_month: rec.config.end_month,
-        end_day: rec.config.end_day,
-        price_groups: rec.config.price_groups,
-      })
-      const data = await response.json()
-      if (data.exception) {
-        setError(data.exception)
-      } else {
-        setResults(data)
-      }
-    } catch (e: any) {
-      setError(e.message || 'Unknown error')
-    } finally {
-      setLoading(false)
-    }
-  }
+    const addField = (name: string, value: string) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    };
 
-  if (results) {
-    // @ts-ignore: Results is a default export with props in the main file
-    return <Results data={results} pageTitle={pageTitle} darkMode={darkMode} />
-  }
+    addField('startYear', rec.config.start_year.toString());
+    addField('startMonth', rec.config.start_month.toString());
+    addField('startDay', rec.config.start_day.toString());
+    addField('endYear', rec.config.end_year.toString());
+    addField('endMonth', rec.config.end_month.toString());
+    addField('endDay', rec.config.end_day.toString());
+    addField('priceGroups', JSON.stringify(rec.config.price_groups));
+
+    document.body.appendChild(form);
+    form.submit();
+  };
 
   return (
     <>
@@ -281,15 +261,12 @@ export default function RecommendedWeeklyPriceGroupDelta() {
                   key={rec.name}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded shadow text-left"
                   onClick={() => handleRunAnalysis(rec)}
-                  disabled={loading}
                 >
                   <div className="font-semibold text-lg mb-1">{rec.name}</div>
                   <div className="text-sm text-blue-100">{rec.description}</div>
                 </button>
               ))}
             </div>
-            {loading && <div className="text-blue-600 font-bold">Loading...</div>}
-            {error && <div className="text-red-600 font-bold">{error}</div>}
           </div>
         </div>
       </main>
