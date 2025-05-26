@@ -1,14 +1,14 @@
-const tier11_1 = {
-  name: 'TWW Tier 11.1 Complete Analysis',
+const tier11_0 = {
+  name: 'TWW Tier 11.0 Complete Analysis',
   description:
-    'Comprehensive price tracking for all TWW crafting and consumable items.',
+    'Comprehensive price tracking for all major TWW tradegoods for the 11.0 TWW Expansion release and first raid.',
   config: {
     region: 'NA',
-    start_year: 2025,
+    start_year: 2024,
     start_month: 1,
     start_day: 1,
-    end_year: 2025,
-    end_month: 5,
+    end_year: 2024,
+    end_month: 12,
     end_day: 1,
     price_groups: [
       {
@@ -81,4 +81,4 @@ const tier11_1 = {
     ]
   }
 }
-export default tier11_1
+export default tier11_0

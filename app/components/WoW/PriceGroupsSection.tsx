@@ -10,7 +10,7 @@ interface PriceGroupsSectionProps {
   isSubmitting: boolean
 }
 
-const MAX_PRICE_GROUPS = 10
+const MAX_PRICE_GROUPS = 49
 const MAX_NAME_LENGTH = 64
 const VALID_NAME_REGEX = /^[a-zA-Z0-9\s'.,\-_]*$/
 
