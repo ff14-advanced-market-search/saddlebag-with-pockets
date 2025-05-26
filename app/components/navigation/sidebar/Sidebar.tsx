@@ -363,7 +363,7 @@ const navGroups: Array<{
       },
       {
         name: 'Weekly Price Group Delta',
-        href: 'wow/weekly-price-group-delta',
+        href: 'wow/weekly-price-group-delta-recommended',
         icon: ChartSquareBarIcon
       }
     ]

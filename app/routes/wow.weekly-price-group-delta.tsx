@@ -476,11 +476,16 @@ const Results = ({
       <ContentContainer>
         <div className="space-y-4">
           {/* Search Again Link */}
-          <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-4">
             <a
               href="/wow/weekly-price-group-delta"
               className="text-blue-500 hover:text-blue-600 font-medium">
               ← Search Again
+            </a>
+            <a
+              href="/wow/weekly-price-group-delta-recommended"
+              className="text-blue-500 hover:text-blue-600 font-medium">
+              ← See Recommended Searches
             </a>
           </div>
 

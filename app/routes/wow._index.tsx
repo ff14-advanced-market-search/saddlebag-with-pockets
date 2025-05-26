@@ -137,7 +137,7 @@ const recommendedQueries = [
     description:
       'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
     Icon: DocumentSearchIcon,
-    href: '/wow/weekly-price-group-delta'
+    href: '/wow/weekly-price-group-delta-recommended'
   },
   {
     name: 'Local Realm Shortage Finder',
