@@ -5,13 +5,15 @@ import raidConsumables from './raidConsumables'
 import craftingMaterials from './craftingMaterials'
 import complete from './complete'
 import tier11_1 from './tier-11-1'
-import engMountTWW from './engMountTww'
-
+import engMountTWW from './engMountTwwParts'
+import engMountTwwOre from './engMountTwwOre'
 
 const recommendedConfigs = [
   tier11_1, // Tier 11.1 Complete Analysis
-  complete, // test
   engMountTWW, // Increases from TWW mount using old parts
+  engMountTwwOre, // Increases from TWW mount using old parts
+
+  complete, // test
   enchants,
   alchemy,
   gems,
