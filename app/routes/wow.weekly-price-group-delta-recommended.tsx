@@ -4,6 +4,7 @@ import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 import type { WeeklyPriceGroupDeltaResponse, PriceGroup } from '~/requests/WoW/WeeklyPriceGroupDelta'
 import Results from './wow.weekly-price-group-delta'
+import WeeklyPriceGroupDelta from '~/requests/WoW/WeeklyPriceGroupDelta'
 
 export const meta: MetaFunction = () => {
   return {
@@ -232,18 +233,15 @@ export default function RecommendedWeeklyPriceGroupDelta() {
     setResults(null)
     setPageTitle(rec.name)
     try {
-      const response = await fetch('/wow/weekly-price-group-delta', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          startYear: rec.config.start_year.toString(),
-          startMonth: rec.config.start_month.toString(),
-          startDay: rec.config.start_day.toString(),
-          endYear: rec.config.end_year.toString(),
-          endMonth: rec.config.end_month.toString(),
-          endDay: rec.config.end_day.toString(),
-          priceGroups: JSON.stringify(rec.config.price_groups),
-        }).toString(),
+      const response = await WeeklyPriceGroupDelta({
+        region: rec.config.region,
+        start_year: rec.config.start_year,
+        start_month: rec.config.start_month,
+        start_day: rec.config.start_day,
+        end_year: rec.config.end_year,
+        end_month: rec.config.end_month,
+        end_day: rec.config.end_day,
+        price_groups: rec.config.price_groups,
       })
       const data = await response.json()
       if (data.exception) {
