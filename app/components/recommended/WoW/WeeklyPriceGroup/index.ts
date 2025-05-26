@@ -15,7 +15,7 @@ const recommendedConfigs = [
   engMountTWW, // Increases from TWW mount using old parts
   engMountTwwOre, // Increases from TWW mount using old parts
   dragonflight1, // Dragonflight Market
-  furnishingComponents, // Midnight Expanse Furnishing Components
+  furnishingComponents // Midnight Expanse Furnishing Components
 
   // complete, // test
   // enchants,
