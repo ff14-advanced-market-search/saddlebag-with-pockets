@@ -93,7 +93,7 @@ const HowToCrossServerTradeInWoW = () => {
                   Legacy Marketshare
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="https://temp.saddlebagexchange.com/megaitemnames"
                   target="_blank"
@@ -101,7 +101,7 @@ const HowToCrossServerTradeInWoW = () => {
                   className="text-blue-500 hover:underline">
                   Mega Item Names
                 </a>
-              </li>
+              </li> */}
             </ul>
           </li>
 
