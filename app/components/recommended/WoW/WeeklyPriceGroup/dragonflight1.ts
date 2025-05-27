@@ -1,6 +1,7 @@
 const dragonflight1 = {
   name: 'Dragonflight Market',
-  description: 'Limited dragonflight data 2023 - 2024',
+  description:
+    'Limited dragonflight data 2023 - 2024, we started collecting data Jan 2023 and are missing the start of the expansion.',
   config: {
     region: 'NA',
     start_year: 2023,

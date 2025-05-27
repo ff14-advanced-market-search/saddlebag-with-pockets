@@ -1,5 +1,5 @@
 const tier11_1 = {
-  name: 'TWW Tier 11.1 Complete Analysis',
+  name: 'TWW Tier 11.1 Trade Goods',
   description:
     'Comprehensive price tracking for all major TWW tradegoods for the 11.1 Undermine Raid release.',
   config: {

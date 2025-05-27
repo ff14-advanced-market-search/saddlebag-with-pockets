@@ -212,9 +212,11 @@ const Index = () => {
         <div className="flex justify-between items-center mb-4">
           <button
             type="button"
-            onClick={() => (window.location.href = '/wow/weekly-price-group-delta-recommended')}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
-          >
+            onClick={() =>
+              (window.location.href =
+                '/wow/weekly-price-group-delta-recommended')
+            }
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
             ← See Recommended Searches
           </button>
           <ImportSection
@@ -488,16 +490,19 @@ const Results = ({
           <div className="flex gap-2 mb-2">
             <button
               type="button"
-              onClick={() => (window.location.href = '/wow/weekly-price-group-delta')}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
-            >
+              onClick={() =>
+                (window.location.href = '/wow/weekly-price-group-delta')
+              }
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← Search Again
             </button>
             <button
               type="button"
-              onClick={() => (window.location.href = '/wow/weekly-price-group-delta-recommended')}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
-            >
+              onClick={() =>
+                (window.location.href =
+                  '/wow/weekly-price-group-delta-recommended')
+              }
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← See Recommended Searches
             </button>
           </div>

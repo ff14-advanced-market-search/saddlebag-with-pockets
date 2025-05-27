@@ -1,5 +1,5 @@
 const tier11_0 = {
-  name: 'TWW Tier 11.0 Complete Analysis',
+  name: 'TWW Tier 11.0 Trade Goods',
   description:
     'Comprehensive price tracking for all major TWW tradegoods for the 11.0 TWW Expansion release and first raid.',
   config: {
