@@ -46,7 +46,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           Which will be perfect now that you can instantly move gold to whatever
           realm potential snipes are in!
         </p>
-        <p>
+        {/* <p>
           <a href="https://temp.saddlebagexchange.com/">
             Going further we just finished developing a whole set of pet
             arbitrage trading tools for more efficient trading of pets across
@@ -54,7 +54,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </a>{' '}
           These same tools can also support all non-commodities after the patch
           drops!
-        </p>
+        </p> */}
         <p>
           I feel the <strong>Region Wide Undercut Check</strong> is going to be
           especially useful for managing many alts!
@@ -67,7 +67,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
         <ul>
           <li>
             An{' '}
-            <a href="https://temp.saddlebagexchange.com/petmarketshare">
+            <a href="https://saddlebagexchange.com/pet-marketshare">
               &quot;Estimated Pet Marketshare&quot;
             </a>{' '}
             that lets you view all TSM sale rates in one page, to find fast
@@ -84,7 +84,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             A{' '}
-            <a href="https://temp.saddlebagexchange.com/petshoppinglist">
+            <a href="https://saddlebagexchange.com/shopping-list">
               &quot;Shopping List Search&quot;
             </a>{' '}
             search for finding which servers have the best deals for buying
@@ -93,7 +93,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             An{' '}
-            <a href="https://temp.saddlebagexchange.com/petexport">
+            <a href="https://saddlebagexchange.com/export">
               &quot;Export Search&quot;
             </a>{' '}
             to finding the best servers to sell items on by highest ah price and
@@ -103,7 +103,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             An{' '}
-            <a href="https://temp.saddlebagexchange.com/petexport">
+            <a href="https://saddlebagexchange.com/export">
               &quot;Import Search&quot;
             </a>{' '}
             for finding the best items to buy on other servers and sell on your
@@ -114,7 +114,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             A{' '}
-            <a href="https://temp.saddlebagexchange.com/regionundercut">
+            <a href="https://saddlebagexchange.com/region-undercut">
               <strong>Region Wide Undercut Check</strong>
             </a>{' '}
             made with our own{' '}
@@ -128,8 +128,8 @@ const HowtoCrossServerTradeinFFXIV = () => {
           </li>
           <li>
             This one looks for the best discounts anywhere{' '}
-            <a href="https://temp.saddlebagexchange.com/bestdeals">
-              https://temp.saddlebagexchange.com/bestdeals
+            <a href="https://saddlebagexchange.com/best-deals">
+              https://saddlebagexchange.com/best-deals
             </a>
           </li>
         </ul>
