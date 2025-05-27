@@ -12,7 +12,7 @@ const engMountTWW = {
     end_day: 1,
     price_groups: [
       {
-        name: 'classic parts',
+        name: 'classic materials',
         item_ids: [],
         categories: [
           {
@@ -20,133 +20,7 @@ const engMountTWW = {
             item_subclass: 1,
             expansion_number: 1,
             min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'burning crusade parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 2,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'wrath of the lich king parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 3,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'cataclysm parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 4,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'mists of pandaria parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 5,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'warlords of draenor parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 6,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'legion parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 7,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'battle for azeroth parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 8,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'shadowlands parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 9,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'dragonflight parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 10,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'TWW parts',
-        item_ids: [],
-        categories: [
-          {
-            item_class: 7,
-            item_subclass: 1,
-            expansion_number: 10,
-            min_quality: 0
-          }
-        ]
-      },
-      {
-        name: 'classic ore',
-        item_ids: [],
-        categories: [
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -156,9 +30,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'burning crusade ore',
+        name: 'burning crusade materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 2,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -168,9 +48,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'wrath of the lich king ore',
+        name: 'wrath of the lich king materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 3,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -180,9 +66,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'cataclysm ore',
+        name: 'cataclysm materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 4,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -192,9 +84,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'mists of pandaria ore',
+        name: 'mists of pandaria materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 5,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -204,9 +102,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'warlords of draenor ore',
+        name: 'warlords of draenor materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 6,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -216,9 +120,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'legion ore',
+        name: 'legion materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 7,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -228,9 +138,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'battle for azeroth ore',
+        name: 'battle for azeroth materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 8,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -240,9 +156,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'shadowlands ore',
+        name: 'shadowlands materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 9,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -252,9 +174,15 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'dragonflight ore',
+        name: 'dragonflight materials',
         item_ids: [],
         categories: [
+          {
+            item_class: 7,
+            item_subclass: 1,
+            expansion_number: 10,
+            min_quality: 0
+          },
           {
             item_class: 7,
             item_subclass: 7,
@@ -264,13 +192,19 @@ const engMountTWW = {
         ]
       },
       {
-        name: 'TWW ore',
+        name: 'TWW materials',
         item_ids: [],
         categories: [
           {
             item_class: 7,
+            item_subclass: 1,
+            expansion_number: 11,
+            min_quality: 0
+          },
+          {
+            item_class: 7,
             item_subclass: 7,
-            expansion_number: 10,
+            expansion_number: 11,
             min_quality: 0
           }
         ]
