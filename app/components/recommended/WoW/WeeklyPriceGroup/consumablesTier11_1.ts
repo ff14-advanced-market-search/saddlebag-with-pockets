@@ -38,7 +38,7 @@ const alchemy = {
         categories: []
       },
       {
-        name: 'enhancements',
+        name: 'enchants and item enhancements',
         item_ids: [
           219907, 219908, 219910, 219911, 222890, 222892, 222893, 222896,
           223650, 223653, 223656, 223659, 223661, 223662, 223665, 223673,
