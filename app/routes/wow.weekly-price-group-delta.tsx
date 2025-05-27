@@ -202,6 +202,16 @@ const Index = () => {
 
   return (
     <PageWrapper>
+      {/* Navigation Buttons at Top Left */}
+      <div className="flex gap-2 mb-2">
+        <button
+          type="button"
+          onClick={() => (window.location.href = '/wow/weekly-price-group-delta-recommended')}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
+        >
+          ← See Recommended Searches
+        </button>
+      </div>
       <SmallFormContainer
         hideSubmitButton={true}
         title={pageTitle}
@@ -476,17 +486,21 @@ const Results = ({
       <ContentContainer>
         <div className="space-y-4">
           {/* Search Again Link */}
-          <div className="flex items-center space-x-4">
-            <a
-              href="/wow/weekly-price-group-delta"
-              className="text-blue-500 hover:text-blue-600 font-medium">
+          <div className="flex gap-2 mb-2">
+            <button
+              type="button"
+              onClick={() => (window.location.href = '/wow/weekly-price-group-delta')}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
+            >
               ← Search Again
-            </a>
-            <a
-              href="/wow/weekly-price-group-delta-recommended"
-              className="text-blue-500 hover:text-blue-600 font-medium">
+            </button>
+            <button
+              type="button"
+              onClick={() => (window.location.href = '/wow/weekly-price-group-delta-recommended')}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
+            >
               ← See Recommended Searches
-            </a>
+            </button>
           </div>
 
           {/* Date Range Controls */}
