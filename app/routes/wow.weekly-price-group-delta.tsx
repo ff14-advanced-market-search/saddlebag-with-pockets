@@ -384,7 +384,8 @@ const Results = ({
     }
     const groupData = data[selectedGroup]
     const itemCount = Object.keys(groupData.item_data).length
-    const defaultVisibility = itemCount <= 50
+    // Automatically hide items if there are more than 75 so chart is not too cluttered
+    const defaultVisibility = itemCount <= 75
 
     Object.keys(groupData.item_data).forEach((itemId) => {
       newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
