@@ -202,26 +202,21 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      {/* Navigation Buttons at Top Left */}
-      <div className="flex gap-2 mb-2">
-        <button
-          type="button"
-          onClick={() => (window.location.href = '/wow/weekly-price-group-delta-recommended')}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
-        >
-          ← See Recommended Searches
-        </button>
-      </div>
       <SmallFormContainer
         hideSubmitButton={true}
         title={pageTitle}
         loading={transition.state === 'submitting'}
         error={formError}
         onClick={(e) => e.preventDefault()}>
-        <form
-          method="post"
-          className="space-y-4 mb-4"
-          onSubmit={(e) => e.preventDefault()}>
+        {/* Row with See Recommended Searches and Import Configuration */}
+        <div className="flex justify-between items-center mb-4">
+          <button
+            type="button"
+            onClick={() => (window.location.href = '/wow/weekly-price-group-delta-recommended')}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2"
+          >
+            ← See Recommended Searches
+          </button>
           <ImportSection
             onImport={(data) => {
               if (data.start_year) setStartYear(data.start_year)
@@ -233,7 +228,11 @@ const Index = () => {
               if (data.price_groups) setPriceGroups(data.price_groups)
             }}
           />
-
+        </div>
+        <form
+          method="post"
+          className="space-y-4 mb-4"
+          onSubmit={(e) => e.preventDefault()}>
           <DateRangeInputs
             startYear={startYear}
             startMonth={startMonth}
