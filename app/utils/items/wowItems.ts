@@ -10662,6 +10662,7 @@ export const wowItemsMap: Record<string, string> = {
   '32199': 'Flashing Crimson Spinel',
   '32200': 'Solid Empyrean Sapphire',
   '32201': 'Sparkling Empyrean Sapphire',
+  '32202': 'Sparkling Empyrean Sapphire',
   '32203': 'Stormy Empyrean Sapphire',
   '32204': 'Brilliant Crimson Spinel',
   '32205': 'Smooth Lionseye',
