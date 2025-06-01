@@ -1,7 +1,7 @@
 const alchemy = {
-  name: 'TWW Raid Consumables 11.1',
+  name: 'TWW Raid Consumables 11.1 Consumables',
   description:
-    'Comprehensive price tracking for all major TWW consumables for the 11.1 Undermine Raid release.',
+    'Comprehensive price tracking for all major TWW consumables for the 11.1 Undermine Raid release. Food, flasks, potions, gems, enchants, etc.',
   config: {
     region: 'NA',
     start_year: 2025,

@@ -4,10 +4,10 @@ const dragonflight1 = {
   config: {
     region: 'NA',
     start_year: 2023,
-    start_month: 3,
+    start_month: 10,
     start_day: 1,
-    end_year: 2023,
-    end_month: 8,
+    end_year: 2024,
+    end_month: 2,
     end_day: 1,
     price_groups: [
       {
