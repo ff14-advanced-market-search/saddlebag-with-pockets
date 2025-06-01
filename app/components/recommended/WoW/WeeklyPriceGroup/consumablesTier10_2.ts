@@ -1,4 +1,4 @@
-const dragonflight1 = {
+const consumablesTier10_2 = {
   name: 'Dragonflight Tier 10.2 Consumables',
   description:
     'Dragonflight Tier 10.2 Analysis on consumables: food, flasks, potions, gems, enchants, etc.',
@@ -73,4 +73,4 @@ const dragonflight1 = {
     ]
   }
 }
-export default dragonflight1
+export default consumablesTier10_2

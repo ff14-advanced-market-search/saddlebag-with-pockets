@@ -1,4 +1,4 @@
-const dragonflight1 = {
+const tier10_1 = {
   name: 'Dragonflight Tier 10.0.7 and 10.1 Trade Goods',
   description: 'Dragonflight Tier 10.0.7 and 10.1 Raw Trade Goods Analysis.',
   config: {
@@ -98,4 +98,4 @@ const dragonflight1 = {
     ]
   }
 }
-export default dragonflight1
+export default tier10_1
