@@ -13,7 +13,7 @@ const recommendedConfigs = [
   engMountTWW, // Increases from TWW mount using old parts
   dragonflight1, // Dragonflight Market
   tier10_1, // Tier 10.1 Complete Analysis
-  furnishingComponents, // Midnight Expanse Furnishing Components
+  furnishingComponents // Midnight Expanse Furnishing Components
 ]
 
 export default recommendedConfigs

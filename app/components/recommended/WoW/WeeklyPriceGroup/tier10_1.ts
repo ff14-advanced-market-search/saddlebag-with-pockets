@@ -1,7 +1,6 @@
 const dragonflight1 = {
   name: 'Dragonflight Tier 10.0.7 and 10.1',
-  description:
-    'Dragonflight Tier 10.0.7 and 10.1 Trade Goods Analysis.',
+  description: 'Dragonflight Tier 10.0.7 and 10.1 Trade Goods Analysis.',
   config: {
     region: 'NA',
     start_year: 2023,
