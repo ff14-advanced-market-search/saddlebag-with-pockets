@@ -1,6 +1,7 @@
 const dragonflight1 = {
   name: 'Dragonflight Tier 10.2 Consumables',
-  description: 'Dragonflight Tier 10.2 Analysis on consumables: food, flasks, potions, gems, enchants, etc.',
+  description:
+    'Dragonflight Tier 10.2 Analysis on consumables: food, flasks, potions, gems, enchants, etc.',
   config: {
     region: 'NA',
     start_year: 2023,

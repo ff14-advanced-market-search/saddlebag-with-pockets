@@ -21,7 +21,7 @@ const recommendedConfigs = [
   consumablesTier10_2, // Consumables Tier 10.2 Complete Analysis
   tier10_1, // Tier 10.1 Complete Analysis
   consumablesTier10_1, // Consumables Tier 10.1 Complete Analysis
-  dragonflight1, // Dragonflight Market
+  dragonflight1 // Dragonflight Market
 ]
 
 export default recommendedConfigs
