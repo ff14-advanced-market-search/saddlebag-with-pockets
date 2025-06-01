@@ -208,10 +208,17 @@ const Index = () => {
         loading={transition.state === 'submitting'}
         error={formError}
         onClick={(e) => e.preventDefault()}>
-        <form
-          method="post"
-          className="space-y-4 mb-4"
-          onSubmit={(e) => e.preventDefault()}>
+        {/* Row with See Recommended Searches and Import Configuration */}
+        <div className="flex justify-between items-center mb-4">
+          <button
+            type="button"
+            onClick={() =>
+              (window.location.href =
+                '/wow/weekly-price-group-delta-recommended')
+            }
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+            ← See Recommended Searches
+          </button>
           <ImportSection
             onImport={(data) => {
               if (data.start_year) setStartYear(data.start_year)
@@ -223,7 +230,11 @@ const Index = () => {
               if (data.price_groups) setPriceGroups(data.price_groups)
             }}
           />
-
+        </div>
+        <form
+          method="post"
+          className="space-y-4 mb-4"
+          onSubmit={(e) => e.preventDefault()}>
           <DateRangeInputs
             startYear={startYear}
             startMonth={startMonth}
@@ -373,7 +384,8 @@ const Results = ({
     }
     const groupData = data[selectedGroup]
     const itemCount = Object.keys(groupData.item_data).length
-    const defaultVisibility = itemCount <= 50
+    // Automatically hide items if there are more than 75 so chart is not too cluttered
+    const defaultVisibility = itemCount <= 75
 
     Object.keys(groupData.item_data).forEach((itemId) => {
       newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
@@ -476,12 +488,24 @@ const Results = ({
       <ContentContainer>
         <div className="space-y-4">
           {/* Search Again Link */}
-          <div className="flex justify-between items-center">
-            <a
-              href="/wow/weekly-price-group-delta"
-              className="text-blue-500 hover:text-blue-600 font-medium">
+          <div className="flex gap-2 mb-2">
+            <button
+              type="button"
+              onClick={() =>
+                (window.location.href = '/wow/weekly-price-group-delta')
+              }
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← Search Again
-            </a>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                (window.location.href =
+                  '/wow/weekly-price-group-delta-recommended')
+              }
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+              ← See Recommended Searches
+            </button>
           </div>
 
           {/* Date Range Controls */}

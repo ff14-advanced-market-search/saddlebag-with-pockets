@@ -10,7 +10,7 @@ interface PriceGroupsSectionProps {
   isSubmitting: boolean
 }
 
-const MAX_PRICE_GROUPS = 10
+const MAX_PRICE_GROUPS = 49
 const MAX_NAME_LENGTH = 64
 const VALID_NAME_REGEX = /^[a-zA-Z0-9\s'.,\-_]*$/
 
@@ -49,7 +49,7 @@ const validatePriceGroup = (group: PriceGroup): string | null => {
 /**
  * Renders a section for managing and validating a list of price groups, allowing users to add, edit, remove, and submit groups with enforced constraints.
  *
- * Displays a list of editable price group forms, enforces a maximum of 10 groups, and validates each group's name and contents before submission. Provides error feedback via the {@link onError} callback and disables submission during processing.
+ * Displays a list of editable price group forms, enforces a maximum of MAX_PRICE_GROUPS groups, and validates each group's name and contents before submission. Provides error feedback via the {@link onError} callback and disables submission during processing.
  *
  * @param priceGroups - The current list of price groups to display and edit.
  * @param onPriceGroupsChange - Callback invoked when the list of price groups is modified.
@@ -57,7 +57,7 @@ const validatePriceGroup = (group: PriceGroup): string | null => {
  * @param isSubmitting - Indicates whether a submission is currently in progress.
  *
  * @remark
- * Enforces a maximum of 10 price groups. Each group must have a non-empty, valid name and at least one item or category. Submission is blocked if validation fails.
+ * Enforces a maximum of MAX_PRICE_GROUPS price groups. Each group must have a non-empty, valid name and at least one item or category. Submission is blocked if validation fails.
  */
 export default function PriceGroupsSection({
   priceGroups,
@@ -72,7 +72,7 @@ export default function PriceGroupsSection({
 
   const handleAddPriceGroup = () => {
     if (priceGroups.length >= MAX_PRICE_GROUPS) {
-      onError('Maximum of 10 price groups allowed')
+      onError(`Maximum of ${MAX_PRICE_GROUPS} price groups allowed`)
       return
     }
 

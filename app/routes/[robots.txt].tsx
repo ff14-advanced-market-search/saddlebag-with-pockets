@@ -56,6 +56,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/ilvl-shopping-list
   Disallow: /wow/ilvl-export-search
   Disallow: /wow/quantity-manipulation
+  Disallow: /wow/weekly-price-group-delta-recommended
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `
