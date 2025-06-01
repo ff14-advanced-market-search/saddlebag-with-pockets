@@ -1,11 +1,11 @@
 const furnishingComponents = {
-  name: 'Midnight Expanse Furnishing Components',
+  name: 'Whooraas Midnight Expanse Furnishing Components',
   description:
     'Monitor price changes for old materials with potential to be used in furnishing in the Midnight Expanse.',
   config: {
     region: 'NA',
     start_year: 2025,
-    start_month: 4,
+    start_month: 5,
     start_day: 1,
     end_year: 2026,
     end_month: 12,
