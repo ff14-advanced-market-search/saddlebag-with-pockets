@@ -4,6 +4,7 @@ import engMountTWW from './engMountTwwParts'
 import dragonflight1 from './dragonflight1'
 import furnishingComponents from './furnishingComponents'
 import consumablesTier11_1 from './consumablesTier11_1'
+import tier10_1 from './tier10_1'
 
 const recommendedConfigs = [
   tier11_1, // Tier 11.1 Complete Analysis
@@ -11,7 +12,8 @@ const recommendedConfigs = [
   consumablesTier11_1, // Consumables Tier 11.1 Complete Analysis
   engMountTWW, // Increases from TWW mount using old parts
   dragonflight1, // Dragonflight Market
-  furnishingComponents // Midnight Expanse Furnishing Components
+  tier10_1, // Tier 10.1 Complete Analysis
+  furnishingComponents, // Midnight Expanse Furnishing Components
 ]
 
 export default recommendedConfigs
