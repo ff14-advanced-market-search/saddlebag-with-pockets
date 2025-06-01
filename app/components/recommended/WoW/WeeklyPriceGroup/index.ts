@@ -17,11 +17,11 @@ const recommendedConfigs = [
   consumablesTier11_0, // Consumables Tier 11.0 Complete Analysis
   engMountTWW, // Increases from TWW mount using old parts
   furnishingComponents, // Midnight Expanse Furnishing Components
-  dragonflight1, // Dragonflight Market
   tier10_1, // Tier 10.1 Complete Analysis
   consumablesTier10_1, // Consumables Tier 10.1 Complete Analysis
   tier10_2, // Tier 10.2 Complete Analysis
   consumablesTier10_2, // Consumables Tier 10.2 Complete Analysis
+  dragonflight1, // Dragonflight Market
 ]
 
 export default recommendedConfigs
