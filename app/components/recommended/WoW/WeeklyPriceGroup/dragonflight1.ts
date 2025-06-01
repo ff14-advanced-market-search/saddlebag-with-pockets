@@ -74,7 +74,7 @@ const dragonflight1 = {
         categories: []
       },
       {
-        name: 'Enchanting ',
+        name: 'Enchanting',
         item_ids: [194123, 194124, 200113],
         categories: []
       },

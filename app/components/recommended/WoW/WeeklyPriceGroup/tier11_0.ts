@@ -64,7 +64,7 @@ const tier11_0 = {
         categories: []
       },
       {
-        name: 'Enchanting ',
+        name: 'Enchanting',
         item_ids: [219947, 219948, 219950, 219951, 219954, 219955],
         categories: []
       },
