@@ -70,7 +70,7 @@ export default function RecommendedWeeklyPriceGroupDelta() {
                   stackable commodities from{' '}
                   <span className="font-semibold">August 2024</span> onward.
                   Dragonflight stackable commodities from{' '}
-                  <span className="font-semibold">2023</span> onward.
+                  <span className="font-semibold">January 2023</span> onward.
                 </span>
                 <a
                   href="https://youtu.be/3wbwoDQ8Flk?si=8XzPhRRivnmdAInl"
