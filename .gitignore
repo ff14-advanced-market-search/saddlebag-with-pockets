@@ -13,6 +13,8 @@ node_modules
 /build
 /public/build
 
+.eslintcache
+
 # Secrets
 .env
 .idea

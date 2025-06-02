@@ -75,5 +75,9 @@
     "vitest": "^0.33.0",
     "wrangler": "4"
   },
-  "prettier": "prettier-config-standard"
+  "prettier": "prettier-config-standard",
+  "lint-staged": {
+    "*.{ts,tsx,js}": "eslint --cache --fix",
+    "*.{ts,tsx,js,css,md}": "prettier --write"
+  }
 }
