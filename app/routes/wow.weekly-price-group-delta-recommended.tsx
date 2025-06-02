@@ -54,6 +54,33 @@ export default function RecommendedWeeklyPriceGroupDelta() {
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
               Recommended Weekly Price Group Delta Configurations
             </h1>
+            <div className="text-center my-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl shadow">
+              <p className="text-lg text-gray-700 dark:text-gray-200 font-medium mb-3">
+                Analyze World of Warcraft auction house data for multiple
+                stackable commodities at once. Visualize price trends, market
+                shifts, and economic patterns to inform your long-term
+                investments and patch cycle strategies—all in one place.
+              </p>
+              <div className="flex flex-col items-center gap-2">
+                <span className="inline-block text-base text-gray-600 dark:text-gray-300 font-semibold">
+                  <span className="mr-1" role="img" aria-label="database">
+                    📊
+                  </span>
+                  <span className="font-bold">Data Availability:</span> All
+                  stackable commodities from{' '}
+                  <span className="font-semibold">August 2024</span> onward.
+                  Dragonflight stackable commodities from{' '}
+                  <span className="font-semibold">2023</span> onward.
+                </span>
+                <a
+                  href="https://youtu.be/3wbwoDQ8Flk?si=8XzPhRRivnmdAInl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold shadow transition-colors duration-150">
+                  📺 Watch the Video Guide
+                </a>
+              </div>
+            </div>
             <div className="text-center my-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <p className="text-gray-600 dark:text-gray-300 mb-2">
                 Want to create your own custom analysis? Head over to our{' '}
