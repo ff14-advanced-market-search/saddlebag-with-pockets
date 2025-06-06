@@ -5,7 +5,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { FFXIVLoaderData, ImportData } from '~/requests/FFXIV/types'
@@ -33,7 +33,22 @@ import ItemDataLink from '~/components/utilities/ItemDataLink'
 // Define action data type
 type ActionData =
   | { exception: string }
-  | { data: WeeklyPriceGroupDeltaResponse }
+  | {
+      data: WeeklyPriceGroupDeltaResponse
+      request: {
+        region: string
+        start_year: number
+        start_month: number
+        start_day: number
+        end_year: number
+        end_month: number
+        end_day: number
+        hq_only: boolean
+        price_setting: string
+        quantity_setting: string
+        price_groups: any
+      }
+    }
 
 export const meta: MetaFunction = () => {
   return {
@@ -113,7 +128,22 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>({ exception: data.exception })
     }
 
-    return json<ActionData>({ data })
+    return json({
+      data,
+      request: {
+        region,
+        start_year: startYear,
+        start_month: startMonth,
+        start_day: startDay,
+        end_year: endYear,
+        end_month: endMonth,
+        end_day: endDay,
+        hq_only: hqOnly,
+        price_setting: priceSetting,
+        quantity_setting: quantitySetting,
+        price_groups: priceGroups
+      }
+    })
   } catch (error) {
     return json<ActionData>({
       exception:
@@ -157,6 +187,18 @@ const Index = () => {
   const [selectedItemForChart, setSelectedItemForChart] = useState<
     string | null
   >(null)
+
+  // allTimestamps is derived from actionData using useMemo
+  const allTimestamps = useMemo(() => {
+    if (!(actionData && 'data' in actionData)) return []
+    return Array.from(
+      new Set(
+        Object.values(actionData.data).flatMap((groupData) =>
+          Object.keys(groupData.deltas)
+        )
+      )
+    ).sort()
+  }, [actionData])
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${region}`
 
@@ -208,34 +250,50 @@ const Index = () => {
     }
   }, [transition.state])
 
+  // Initialize selected dates to full range
+  useEffect(() => {
+    if (allTimestamps.length <= 0) {
+      return
+    }
+    if (!selectedDate) {
+      setSelectedDate(allTimestamps[allTimestamps.length - 1])
+    }
+    if (!startDate) {
+      setStartDate(allTimestamps[0])
+    }
+    if (!endDate) {
+      setEndDate(allTimestamps[allTimestamps.length - 1])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allTimestamps, selectedDate, startDate, endDate])
+
+  // Update visibleItems when selectedGroup or actionData changes
+  useEffect(() => {
+    if (!(actionData && 'data' in actionData)) return
+    if (selectedGroup === 'All') {
+      const newVisibleItems: Record<string, boolean> = {}
+      Object.keys(actionData.data).forEach((groupName) => {
+        newVisibleItems[groupName] = true
+      })
+      setVisibleItems(newVisibleItems)
+      return
+    }
+    const newVisibleItems: Record<string, boolean> = {
+      [`${selectedGroup} (Average)`]: true
+    }
+    const groupData = actionData.data[selectedGroup]
+    if (!groupData) return
+    const itemCount = Object.keys(groupData.item_data).length
+    const defaultVisibility = itemCount <= 50
+    Object.keys(groupData.item_data).forEach((itemId) => {
+      newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
+    })
+    setVisibleItems(newVisibleItems)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData, selectedGroup])
+
   // Show results if we have data and no errors
   if (actionData && 'data' in actionData) {
-    // Get all unique timestamps across all groups
-    const allTimestamps = Array.from(
-      new Set(
-        Object.values(actionData.data).flatMap((groupData) =>
-          Object.keys(groupData.deltas)
-        )
-      )
-    ).sort()
-
-    // Initialize selected dates to full range
-    useEffect(() => {
-      if (allTimestamps.length <= 0) {
-        return
-      }
-      if (!selectedDate) {
-        setSelectedDate(allTimestamps[allTimestamps.length - 1])
-      }
-      if (!startDate) {
-        setStartDate(allTimestamps[0])
-      }
-      if (!endDate) {
-        setEndDate(allTimestamps[allTimestamps.length - 1])
-      }
-    }, [allTimestamps])
-
-    // Filter timestamps based on date range
     const filteredTimestamps = allTimestamps.filter(
       (timestamp) => timestamp >= startDate && timestamp <= endDate
     )
@@ -248,31 +306,6 @@ const Index = () => {
       const day = dateStr.slice(6, 8)
       return `${year}-${month}-${day}`
     }
-
-    // Initialize visible items when group changes
-    useEffect(() => {
-      if (selectedGroup === 'All') {
-        // For 'All' view, show all groups
-        const newVisibleItems: Record<string, boolean> = {}
-        Object.keys(actionData.data).forEach((groupName) => {
-          newVisibleItems[groupName] = true
-        })
-        setVisibleItems(newVisibleItems)
-        return
-      }
-      // For specific group view, show average and conditionally show items
-      const newVisibleItems: Record<string, boolean> = {
-        [`${selectedGroup} (Average)`]: true
-      }
-      const groupData = actionData.data[selectedGroup]
-      const itemCount = Object.keys(groupData.item_data).length
-      const defaultVisibility = itemCount <= 50
-
-      Object.keys(groupData.item_data).forEach((itemId) => {
-        newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
-      })
-      setVisibleItems(newVisibleItems)
-    }, [selectedGroup, actionData.data])
 
     // Only show item details if a specific group is selected
     const showItemDetails = selectedGroup !== 'All'
@@ -484,13 +517,15 @@ const Index = () => {
             {/* Request Data Section */}
             <RequestDataSection
               data={actionData.data}
-              region={region}
+              region={actionData.request?.region ?? region}
               startDate={startDate}
               endDate={endDate}
               darkmode={darkmode}
-              hqOnly={hqOnly}
-              priceSetting={priceSetting}
-              quantitySetting={quantitySetting}
+              hqOnly={actionData.request?.hq_only ?? hqOnly}
+              priceSetting={actionData.request?.price_setting ?? priceSetting}
+              quantitySetting={
+                actionData.request?.quantity_setting ?? quantitySetting
+              }
             />
           </div>
         </ContentContainer>
