@@ -5,7 +5,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { FFXIVLoaderData, ImportData } from '~/requests/FFXIV/types'
@@ -188,8 +188,17 @@ const Index = () => {
     string | null
   >(null)
 
-  // Add this state at the top of the component
-  const [allTimestamps, setAllTimestamps] = useState<string[]>([])
+  // allTimestamps is derived from actionData using useMemo
+  const allTimestamps = useMemo(() => {
+    if (!(actionData && 'data' in actionData)) return []
+    return Array.from(
+      new Set(
+        Object.values(actionData.data).flatMap((groupData) =>
+          Object.keys(groupData.deltas)
+        )
+      )
+    ).sort()
+  }, [actionData])
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${region}`
 
@@ -240,19 +249,6 @@ const Index = () => {
       setShowLocalErrorPopup(false)
     }
   }, [transition.state])
-
-  // Update allTimestamps when actionData changes
-  useEffect(() => {
-    if (!(actionData && 'data' in actionData)) return
-    const timestamps = Array.from(
-      new Set(
-        Object.values(actionData.data).flatMap((groupData) =>
-          Object.keys(groupData.deltas)
-        )
-      )
-    ).sort()
-    setAllTimestamps(timestamps)
-  }, [actionData])
 
   // Initialize selected dates to full range
   useEffect(() => {
