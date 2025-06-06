@@ -33,7 +33,22 @@ import ItemDataLink from '~/components/utilities/ItemDataLink'
 // Define action data type
 type ActionData =
   | { exception: string }
-  | { data: WeeklyPriceGroupDeltaResponse }
+  | {
+      data: WeeklyPriceGroupDeltaResponse
+      request: {
+        region: string
+        start_year: number
+        start_month: number
+        start_day: number
+        end_year: number
+        end_month: number
+        end_day: number
+        hq_only: boolean
+        price_setting: string
+        quantity_setting: string
+        price_groups: any
+      }
+    }
 
 export const meta: MetaFunction = () => {
   return {
@@ -113,7 +128,22 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>({ exception: data.exception })
     }
 
-    return json<ActionData>({ data })
+    return json({
+      data,
+      request: {
+        region,
+        start_year: startYear,
+        start_month: startMonth,
+        start_day: startDay,
+        end_year: endYear,
+        end_month: endMonth,
+        end_day: endDay,
+        hq_only: hqOnly,
+        price_setting: priceSetting,
+        quantity_setting: quantitySetting,
+        price_groups: priceGroups
+      }
+    })
   } catch (error) {
     return json<ActionData>({
       exception:
@@ -157,6 +187,9 @@ const Index = () => {
   const [selectedItemForChart, setSelectedItemForChart] = useState<
     string | null
   >(null)
+
+  // Add this state at the top of the component
+  const [allTimestamps, setAllTimestamps] = useState<string[]>([])
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${region}`
 
@@ -208,34 +241,63 @@ const Index = () => {
     }
   }, [transition.state])
 
-  // Show results if we have data and no errors
-  if (actionData && 'data' in actionData) {
-    // Get all unique timestamps across all groups
-    const allTimestamps = Array.from(
+  // Update allTimestamps when actionData changes
+  useEffect(() => {
+    if (!(actionData && 'data' in actionData)) return
+    const timestamps = Array.from(
       new Set(
         Object.values(actionData.data).flatMap((groupData) =>
           Object.keys(groupData.deltas)
         )
       )
     ).sort()
+    setAllTimestamps(timestamps)
+  }, [actionData])
 
-    // Initialize selected dates to full range
-    useEffect(() => {
-      if (allTimestamps.length <= 0) {
-        return
-      }
-      if (!selectedDate) {
-        setSelectedDate(allTimestamps[allTimestamps.length - 1])
-      }
-      if (!startDate) {
-        setStartDate(allTimestamps[0])
-      }
-      if (!endDate) {
-        setEndDate(allTimestamps[allTimestamps.length - 1])
-      }
-    }, [allTimestamps])
+  // Initialize selected dates to full range
+  useEffect(() => {
+    if (allTimestamps.length <= 0) {
+      return
+    }
+    if (!selectedDate) {
+      setSelectedDate(allTimestamps[allTimestamps.length - 1])
+    }
+    if (!startDate) {
+      setStartDate(allTimestamps[0])
+    }
+    if (!endDate) {
+      setEndDate(allTimestamps[allTimestamps.length - 1])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allTimestamps, selectedDate, startDate, endDate])
 
-    // Filter timestamps based on date range
+  // Update visibleItems when selectedGroup or actionData changes
+  useEffect(() => {
+    if (!(actionData && 'data' in actionData)) return
+    if (selectedGroup === 'All') {
+      const newVisibleItems: Record<string, boolean> = {}
+      Object.keys(actionData.data).forEach((groupName) => {
+        newVisibleItems[groupName] = true
+      })
+      setVisibleItems(newVisibleItems)
+      return
+    }
+    const newVisibleItems: Record<string, boolean> = {
+      [`${selectedGroup} (Average)`]: true
+    }
+    const groupData = actionData.data[selectedGroup]
+    if (!groupData) return
+    const itemCount = Object.keys(groupData.item_data).length
+    const defaultVisibility = itemCount <= 50
+    Object.keys(groupData.item_data).forEach((itemId) => {
+      newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
+    })
+    setVisibleItems(newVisibleItems)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData, selectedGroup])
+
+  // Show results if we have data and no errors
+  if (actionData && 'data' in actionData) {
     const filteredTimestamps = allTimestamps.filter(
       (timestamp) => timestamp >= startDate && timestamp <= endDate
     )
@@ -248,31 +310,6 @@ const Index = () => {
       const day = dateStr.slice(6, 8)
       return `${year}-${month}-${day}`
     }
-
-    // Initialize visible items when group changes
-    useEffect(() => {
-      if (selectedGroup === 'All') {
-        // For 'All' view, show all groups
-        const newVisibleItems: Record<string, boolean> = {}
-        Object.keys(actionData.data).forEach((groupName) => {
-          newVisibleItems[groupName] = true
-        })
-        setVisibleItems(newVisibleItems)
-        return
-      }
-      // For specific group view, show average and conditionally show items
-      const newVisibleItems: Record<string, boolean> = {
-        [`${selectedGroup} (Average)`]: true
-      }
-      const groupData = actionData.data[selectedGroup]
-      const itemCount = Object.keys(groupData.item_data).length
-      const defaultVisibility = itemCount <= 50
-
-      Object.keys(groupData.item_data).forEach((itemId) => {
-        newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
-      })
-      setVisibleItems(newVisibleItems)
-    }, [selectedGroup, actionData.data])
 
     // Only show item details if a specific group is selected
     const showItemDetails = selectedGroup !== 'All'
@@ -484,13 +521,15 @@ const Index = () => {
             {/* Request Data Section */}
             <RequestDataSection
               data={actionData.data}
-              region={region}
+              region={actionData.request?.region ?? region}
               startDate={startDate}
               endDate={endDate}
               darkmode={darkmode}
-              hqOnly={hqOnly}
-              priceSetting={priceSetting}
-              quantitySetting={quantitySetting}
+              hqOnly={actionData.request?.hq_only ?? hqOnly}
+              priceSetting={actionData.request?.price_setting ?? priceSetting}
+              quantitySetting={
+                actionData.request?.quantity_setting ?? quantitySetting
+              }
             />
           </div>
         </ContentContainer>
