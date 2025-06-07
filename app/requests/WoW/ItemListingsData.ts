@@ -30,6 +30,8 @@ interface ItemListing {
   priceTimeData: Array<number>
   quantityTimeData: Array<number>
   state: WoWMarketState
+  link: string
+  blog: string
 }
 
 export interface ItemListingResponse {
