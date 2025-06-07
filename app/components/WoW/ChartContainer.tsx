@@ -49,9 +49,7 @@ export default function ChartContainer({
         <DeltaChart chartOptions={chartOptions} darkMode={darkMode} />
 
         <div
-          className="md:w-72 flex flex-col bg-gray-50 dark:bg-gray-700 rounded"
-          // CONSIDER: The container style has an inline style { height: '600px' }. Switching to a Tailwind utility class (e.g., h-[600px]) could improve consistency and maintainability
-          style={{ height: '600px' }}>
+          className="md:w-72 h-[600px] flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
           <ChartControls
             minYAxis={minYAxis}
             maxYAxis={maxYAxis}
