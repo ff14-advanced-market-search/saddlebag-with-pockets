@@ -9,7 +9,7 @@ import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions'
 import type { Options, PointOptionsObject } from 'highcharts'
 import Highcharts from 'highcharts'
-import React, { Suspense, lazy, useMemo, useState, useEffect } from 'react'
+import { Suspense, useMemo, useState, useEffect } from 'react'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -116,6 +116,7 @@ export default function Index() {
       <PageWrapper>
         <Banner />
         <Title title={listing.itemName} />
+        <p style={{ fontSize: '1px' }}>{listing.blog}</p>
         {isLoading ? (
           <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
             {[...Array(4)].map((_, i) => (
