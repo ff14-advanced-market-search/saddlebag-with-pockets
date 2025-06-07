@@ -134,7 +134,6 @@ const ItemPage = () => {
   return (
     <PageWrapper>
       <>
-        <Banner />
         <Section>
           <>
             <Title title={data.itemName} />
@@ -143,6 +142,7 @@ const ItemPage = () => {
             )}
           </>
         </Section>
+        <Banner />
         <div
           className="sr-only" // Screen reader only class
           aria-hidden={false}

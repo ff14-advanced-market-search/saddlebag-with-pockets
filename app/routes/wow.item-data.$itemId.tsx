@@ -107,8 +107,8 @@ export default function Index() {
     )
     return (
       <PageWrapper>
-        <Banner />
         <Title title={listing.itemName} />
+        <Banner />
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
