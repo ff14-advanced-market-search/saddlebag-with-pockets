@@ -9,12 +9,14 @@ import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions'
 import type { Options, PointOptionsObject } from 'highcharts'
 import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
+import React, { Suspense, lazy, useMemo, useState, useEffect } from 'react'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CustomButton from '~/components/utilities/CustomButton'
 import Banner from '~/components/Common/Banner'
+import Skeleton from '~/components/Common/Skeleton'
+import HighchartsReact from 'highcharts-react-official'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -80,6 +82,11 @@ type ResponseType = ItemListingResponse | { exception: string }
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [])
 
   const error = result && 'exception' in result ? result.exception : undefined
 
@@ -109,143 +116,147 @@ export default function Index() {
       <PageWrapper>
         <Banner />
         <Title title={listing.itemName} />
-        <p style={{ fontSize: '1px' }}>{listing.blog}</p>
-        <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
-          <div className="flex flex-col max-w-full">
-            {listing.minPrice !== -1 && (
-              <Differences
-                diffTitle="Minimum Price"
-                diffAmount={listing.minPrice.toLocaleString()}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
-            {listing.historicPrice !== -1 && (
-              <Differences
-                diffTitle="Historic Price"
-                diffAmount={listing.historicPrice.toLocaleString()}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
+        {isLoading ? (
+          <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
+            {[...Array(4)].map((_, i) => (
+              <div className="flex flex-col max-w-full" key={i}>
+                <Skeleton height={32} width="120px" className="mb-2" />
+                <Skeleton height={24} width="80px" />
+              </div>
+            ))}
           </div>
-          <div className="flex flex-col max-w-full">
-            {listing.currentMarketValue !== -1 && (
-              <Differences
-                diffTitle="Current Market Value"
-                diffAmount={listing.currentMarketValue.toLocaleString()}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
-            {listing.historicMarketValue !== -1 && (
-              <Differences
-                diffTitle="Historic Market Value"
-                diffAmount={listing.historicMarketValue.toLocaleString()}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
+        ) : (
+          <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
+            <div className="flex flex-col max-w-full">
+              {listing.minPrice !== -1 && (
+                <Differences
+                  diffTitle="Minimum Price"
+                  diffAmount={listing.minPrice.toLocaleString()}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+              {listing.historicPrice !== -1 && (
+                <Differences
+                  diffTitle="Historic Price"
+                  diffAmount={listing.historicPrice.toLocaleString()}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+            </div>
+            <div className="flex flex-col max-w-full">
+              {listing.currentMarketValue !== -1 && (
+                <Differences
+                  diffTitle="Current Market Value"
+                  diffAmount={listing.currentMarketValue.toLocaleString()}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+              {listing.historicMarketValue !== -1 && (
+                <Differences
+                  diffTitle="Historic Market Value"
+                  diffAmount={listing.historicMarketValue.toLocaleString()}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+            </div>
+            <div className="flex flex-col max-w-full">
+              {listing.salesPerDay !== -1 && (
+                <Differences
+                  diffTitle="Sales Per Day"
+                  diffAmount={listing.salesPerDay.toLocaleString()}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+              {listing.percentChange !== -1 && (
+                <Differences
+                  diffTitle="Percent Change"
+                  diffAmount={listing.percentChange.toLocaleString() + '%'}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+            </div>
+            <div className="flex flex-col max-w-full">
+              {listing.currentQuantity !== 1 && (
+                <Differences
+                  diffTitle="Current Quantity"
+                  diffAmount={listing.currentQuantity.toLocaleString()}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+              {listing.avgQuantity !== -1 && (
+                <Differences
+                  diffTitle="Average Quantity"
+                  diffAmount={listing.avgQuantity.toLocaleString()}
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+              {listing.currentVsAvgQuantityPercent !== 100 && (
+                <Differences
+                  diffTitle="Avg v Current Quantity"
+                  diffAmount={
+                    listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
+                  }
+                  className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                />
+              )}
+            </div>
           </div>
-          <div className="flex flex-col max-w-full">
-            {listing.salesPerDay !== -1 && (
-              <Differences
-                diffTitle="Sales Per Day"
-                diffAmount={listing.salesPerDay.toLocaleString()}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
-            {listing.percentChange !== -1 && (
-              <Differences
-                diffTitle="Percent Change"
-                diffAmount={listing.percentChange.toLocaleString() + '%'}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
-          </div>
-          <div className="flex flex-col max-w-full">
-            {listing.currentQuantity !== 1 && (
-              <Differences
-                diffTitle="Current Quantity"
-                diffAmount={listing.currentQuantity.toLocaleString()}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
-            {listing.avgQuantity !== -1 && (
-              <Differences
-                diffTitle="Average Quantity"
-                diffAmount={listing.avgQuantity.toLocaleString()}
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
-            {listing.currentVsAvgQuantityPercent !== 100 && (
-              <Differences
-                diffTitle="Avg v Current Quantity"
-                diffAmount={
-                  listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
-                }
-                className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-              />
-            )}
-          </div>
-        </div>
+        )}
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-wrap gap-2">
             <CustomButton
               link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
-              // link={`https://saddlebagexchange.com/wow/export-search`} // remove custom id as it might be slowing down the crawl
               buttonText="Best Place to Sell!"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://saddlebagexchange.com/wow/`}
               buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
-              rel="noopener noreferrer nofollow" // not working need to fix
-            />
-            <CustomButton
-              link={`${listing.link}`}
-              buttonText="View on Undermine Exchange"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
           </div>
         </div>
-        {listing.priceTimeData.length > 0 && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Price Over Time"
-              darkMode={darkmode}
-              data={listing.priceTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: listing.priceTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-        {listing.quantityTimeData.length > 0 && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Quantity Over Time"
-              darkMode={darkmode}
-              data={listing.quantityTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: listing.quantityTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-        {/* Auctionhouse Listings Table or Out of Stock */}
-        {listing.listingData.length === 0 ? (
+        <Suspense fallback={<Skeleton height={300} className="my-4" />}>
+          {listing.priceTimeData.length > 0 && (
+            <ContentContainer>
+              <GenericLineChart
+                chartTitle="Price Over Time"
+                darkMode={darkmode}
+                data={listing.priceTimeData}
+                dataIterator={(val, ind) => [
+                  makeTimeString({
+                    date: now,
+                    hoursToDeduct: listing.priceTimeData.length - ind
+                  }),
+                  val
+                ]}
+                xCategories={xCategories}
+              />
+            </ContentContainer>
+          )}
+          {listing.quantityTimeData.length > 0 && (
+            <ContentContainer>
+              <GenericLineChart
+                chartTitle="Quantity Over Time"
+                darkMode={darkmode}
+                data={listing.quantityTimeData}
+                dataIterator={(val, ind) => [
+                  makeTimeString({
+                    date: now,
+                    hoursToDeduct: listing.quantityTimeData.length - ind
+                  }),
+                  val
+                ]}
+                xCategories={xCategories}
+              />
+            </ContentContainer>
+          )}
+        </Suspense>
+        {isLoading ? (
+          <Skeleton height={200} className="my-8" />
+        ) : listing.listingData.length === 0 ? (
           <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
             Out of Stock on Selected Realm
           </div>
@@ -292,71 +303,86 @@ const GenericLineChart = ({
         hoverColor: '#f8f8f8'
       }
     : {}
-  const options: Options = {
-    chart: {
-      type: 'line',
-      backgroundColor: styles?.backgroundColor
-    },
-    legend: {
-      itemStyle: { color: styles?.color },
-      align: 'center',
-      itemHoverStyle: { color: styles?.hoverColor }
-    },
-    title: {
-      text: chartTitle,
-      style: { color: styles?.color }
-    },
-    yAxis: {
-      title: {
-        text: yTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
+  const options = useMemo<Options>(
+    () => ({
+      chart: {
+        type: 'line',
+        backgroundColor: styles?.backgroundColor
       },
-      labels: {
-        style: { color: styles?.color },
+      legend: {
+        itemStyle: { color: styles?.color },
         align: 'center',
-        format: yLabelFormat
+        itemHoverStyle: { color: styles?.hoverColor }
       },
-      lineColor: styles?.color
-    },
-    xAxis: {
       title: {
-        text: xTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
+        text: chartTitle,
+        style: { color: styles?.color }
+      },
+      yAxis: {
+        title: {
+          text: yTitle,
+          style: {
+            color: styles?.color,
+            textAlign: 'center'
+          }
+        },
+        labels: {
+          style: { color: styles?.color },
+          align: 'center',
+          format: yLabelFormat
+        },
+        lineColor: styles?.color
+      },
+      xAxis: {
+        title: {
+          text: xTitle,
+          style: {
+            color: styles?.color,
+            textAlign: 'center'
+          }
+        },
+        categories: xCategories,
+        labels: {
+          style: { color: styles?.color },
+          align: 'right',
+          format: xLabelFormat
+        },
+        lineColor: styles?.color
+      },
+      series: [
+        {
+          data: dataIterator
+            ? data.map<PointOptionsObject>(dataIterator)
+            : data,
+          name: chartTitle,
+          type: 'line'
         }
-      },
-      categories: xCategories,
-      labels: {
-        style: { color: styles?.color },
-        align: 'right',
-        format: xLabelFormat
-      },
-      lineColor: styles?.color
-    },
-    series: [
-      {
-        data: dataIterator ? data.map<PointOptionsObject>(dataIterator) : data,
-        name: chartTitle,
-        type: 'line'
+      ],
+      credits: {
+        enabled: false
       }
-    ],
-    credits: {
-      enabled: false
-    }
-  }
+    }),
+    [
+      darkMode,
+      data,
+      chartTitle,
+      xTitle,
+      yTitle,
+      xLabelFormat,
+      yLabelFormat,
+      dataIterator,
+      xCategories
+    ]
+  )
   return <HighchartsReact highcharts={Highcharts} options={options} />
 }
 
-const columnList: Array<ColumnList<ListItem>> = [
+const columnList: any[] = [
   { columnId: 'price', header: 'Price' },
   { columnId: 'quantity', header: 'Quantity' }
 ]
 
-const mobileColumnList: Array<ColumnList<ListItem>> = [
+const mobileColumnList: any[] = [
   { columnId: 'price', header: 'Price' },
   { columnId: 'quantity', header: 'Quantity' }
 ]
