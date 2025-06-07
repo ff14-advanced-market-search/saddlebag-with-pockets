@@ -1,5 +1,5 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useNavigation } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
@@ -9,7 +9,7 @@ import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions'
 import type { Options, PointOptionsObject } from 'highcharts'
 import Highcharts from 'highcharts'
-import { Suspense, useMemo, useState, useEffect } from 'react'
+import { Suspense, useMemo } from 'react'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -82,11 +82,8 @@ type ResponseType = ItemListingResponse | { exception: string }
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    setIsLoading(false)
-  }, [])
+  const navigation = useNavigation()
+  const isLoading = navigation.state === 'loading'
 
   const error = result && 'exception' in result ? result.exception : undefined
 
