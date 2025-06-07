@@ -22,7 +22,7 @@ export const Title = ({
 }) => (
   <h1
     className={classNames(
-      `text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100`,
+      `text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100 font-display`,
       className
     )}>
     {title}
