@@ -1,9 +1,38 @@
+import React, { Component, ErrorInfo, ReactNode } from 'react'
 import type { Options } from 'highcharts'
 import DeltaChart from './DeltaChart'
 import ChartControls from './ChartControls'
 import DeltaFilterControls from './DeltaFilterControls'
 import VisibleItemsList from './VisibleItemsList'
 import type { WeeklyPriceGroupDeltaResponse } from '~/requests/WoW/WeeklyPriceGroupDelta'
+
+class ChartErrorBoundary extends Component<
+  { children: ReactNode; fallback?: ReactNode },
+  { hasError: boolean }
+> {
+  public state = { hasError: false }
+
+  public static getDerivedStateFromError(_: Error) {
+    return { hasError: true }
+  }
+
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Chart rendering error:', error, errorInfo)
+  }
+
+  public render() {
+    if (this.state.hasError) {
+      return this.props.fallback ?? (
+        <div className="h-64 bg-red-50 dark:bg-red-900/20 rounded flex items-center justify-center">
+          <span className="text-red-600 dark:text-red-400">
+            Chart failed to load. Please refresh the page.
+          </span>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 interface ChartContainerProps {
   chartOptions: Options
@@ -46,10 +75,11 @@ export default function ChartContainer({
   return (
     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
       <div className="flex flex-col md:flex-row gap-4">
-        <DeltaChart chartOptions={chartOptions} darkMode={darkMode} />
+        <ChartErrorBoundary>
+          <DeltaChart chartOptions={chartOptions} darkMode={darkMode} />
+        </ChartErrorBoundary>
 
-        <div
-          className="md:w-72 h-[600px] flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
+        <div className="md:w-72 h-[600px] flex flex-col bg-gray-50 dark:bg-gray-700 rounded">
           <ChartControls
             minYAxis={minYAxis}
             maxYAxis={maxYAxis}

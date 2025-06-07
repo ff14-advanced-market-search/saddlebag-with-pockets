@@ -16,7 +16,7 @@ import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CustomButton from '~/components/utilities/CustomButton'
 import Banner from '~/components/Common/Banner'
-import { useState, useEffect, useMemo, memo, Suspense } from 'react'
+import React, { Component, ErrorInfo, ReactNode, useState, useEffect, useMemo, memo, Suspense } from 'react'
 import { Transition } from '@headlessui/react'
 
 // Loading skeleton component
@@ -36,20 +36,40 @@ const LoadingSkeleton = () => (
 )
 
 // Chart error boundary to catch rendering issues
-const ChartErrorBoundary = ({ children, fallback }) => {
-  try {
-    return <>{children}</>
-  } catch (err) {
-    console.error('Chart rendering error:', err)
-    return (
-      fallback || (
+interface ChartErrorBoundaryProps {
+  children: ReactNode
+  fallback?: ReactNode
+}
+
+interface ChartErrorBoundaryState {
+  hasError: boolean
+}
+
+class ChartErrorBoundary extends Component<ChartErrorBoundaryProps, ChartErrorBoundaryState> {
+  constructor(props: ChartErrorBoundaryProps) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(_: Error): ChartErrorBoundaryState {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    console.error('Chart rendering error:', error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || (
         <div className="h-64 bg-red-50 dark:bg-red-900/20 rounded flex items-center justify-center">
           <span className="text-red-600 dark:text-red-400">
             Chart failed to load. Please refresh the page.
           </span>
         </div>
       )
-    )
+    }
+    return this.props.children
   }
 }
 
