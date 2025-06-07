@@ -16,6 +16,16 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CustomButton from '~/components/utilities/CustomButton'
 import Banner from '~/components/Common/Banner'
 
+type ColumnList<T> = {
+  columnId: keyof T
+  header: string
+}
+
+type ListItem = {
+  price: number
+  quantity: number
+}
+
 export const ErrorBoundary = () => <ErrorBounds />
 
 const makeTimeString = ({
@@ -189,24 +199,19 @@ export default function Index() {
           <div className="flex flex-wrap gap-2">
             <CustomButton
               link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
-              // link={`https://saddlebagexchange.com/wow/export-search`} // remove custom id as it might be slowing down the crawl
               buttonText="Best Place to Sell!"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://saddlebagexchange.com/wow/`}
               buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
               link={`${listing.link}`}
               buttonText="View on Undermine Exchange"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
           </div>
         </div>
