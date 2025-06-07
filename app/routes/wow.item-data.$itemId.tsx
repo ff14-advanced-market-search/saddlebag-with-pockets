@@ -170,7 +170,7 @@ export default function Index() {
               {listing.percentChange !== -1 && (
                 <Differences
                   diffTitle="Percent Change"
-                  diffAmount={listing.percentChange.toLocaleString() + '%'}
+                  diffAmount={`${listing.percentChange.toLocaleString()}%`}
                   className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
                 />
               )}
@@ -193,9 +193,7 @@ export default function Index() {
               {listing.currentVsAvgQuantityPercent !== 100 && (
                 <Differences
                   diffTitle="Avg v Current Quantity"
-                  diffAmount={
-                    listing.currentVsAvgQuantityPercent.toLocaleString() + '%'
-                  }
+                  diffAmount={`${listing.currentVsAvgQuantityPercent.toLocaleString()}%`}
                   className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
                 />
               )}
@@ -215,6 +213,10 @@ export default function Index() {
             <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
+            />
+            <CustomButton
+              link={`${listing.link}`}
+              buttonText="View on Undermine Exchange"
             />
           </div>
         </div>
