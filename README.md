@@ -10,7 +10,7 @@ _Frontend for Aetheryte API_
 
 - Node `20.3.0`
 
-```
+```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 nvm install 20
 nvm use 20
