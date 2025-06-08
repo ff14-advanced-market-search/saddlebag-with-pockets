@@ -1704,14 +1704,22 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
 
-"@remix-run/cloudflare-pages@^1.7.0":
-  version "1.17.1"
-  resolved "https://registry.npmjs.org/@remix-run/cloudflare-pages/-/cloudflare-pages-1.17.1.tgz"
-  integrity sha512-Wmr52fiZLE3s6tG1k6vkdD3JwfImk5xb9VS7VZFR6Qzl8i5A7QaSrp0RNtvPragIpWQQxyDDc5HzRj8vAJ1YcQ==
+"@remix-run/cloudflare-pages@^2.16.8":
+  version "2.16.8"
+  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare-pages/-/cloudflare-pages-2.16.8.tgz#68ca93028b2b8979ef6195d988457bd8f9683e92"
+  integrity sha512-g7REYhAjeTZ7GvlPaMKrDl/lSXrWJOMxQ+tcIMKj0aeT4MBK6vpiqyv84TsOLMrhHYjoqjD393rd8tEESKy/9A==
   dependencies:
-    "@remix-run/cloudflare" "1.17.1"
+    "@remix-run/cloudflare" "2.16.8"
 
-"@remix-run/cloudflare@1.17.1", "@remix-run/cloudflare@^1.7.0":
+"@remix-run/cloudflare@2.16.8":
+  version "2.16.8"
+  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare/-/cloudflare-2.16.8.tgz#28643eaacc41160617838562d549ce1e8f98d7d8"
+  integrity sha512-3KBsnmHcZHqUpuVGeYtUVfyGrfHXtV5JOZu8ig6WGeQB2sVMY5zEUNt+tJX2kXaPNswuQjVNk2b+/d6WUbKDOg==
+  dependencies:
+    "@cloudflare/kv-asset-handler" "^0.1.3"
+    "@remix-run/server-runtime" "2.16.8"
+
+"@remix-run/cloudflare@^1.7.0":
   version "1.17.1"
   resolved "https://registry.npmjs.org/@remix-run/cloudflare/-/cloudflare-1.17.1.tgz"
   integrity sha512-zPubGaHVh4eMhgsAtvYJb/krHcNTqPjP251EsOtE4KXXucCTyQZjUzq9gOf+w21+dPnjQyW8p7LBMp8PuQehzw==
@@ -1845,6 +1853,11 @@
     "@remix-run/router" "1.6.3"
     react-router-dom "6.13.0"
 
+"@remix-run/router@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.23.0.tgz#35390d0e7779626c026b11376da6789eb8389242"
+  integrity sha512-O3rHJzAQKamUz1fvE0Qaw0xSFqsA/yafi2iqeE0pvdFtCO1viYx8QL6f3Ln/aCCTLxs68SLf0KPM9eSeM8yBnA==
+
 "@remix-run/router@1.6.3":
   version "1.6.3"
   resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.6.3.tgz"
@@ -1888,6 +1901,19 @@
     cookie "^0.4.1"
     set-cookie-parser "^2.4.8"
     source-map "^0.7.3"
+
+"@remix-run/server-runtime@2.16.8":
+  version "2.16.8"
+  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-2.16.8.tgz#79fe6274a37a5f5e18db6cb867b127b364a957da"
+  integrity sha512-ZwWOam4GAQTx10t+wK09YuYctd2Koz5Xy/klDgUN3lmTXmwbV0tZU0baiXEqZXrvyD+WDZ4b0ADDW9Df3+dpzA==
+  dependencies:
+    "@remix-run/router" "1.23.0"
+    "@types/cookie" "^0.6.0"
+    "@web3-storage/multipart-parser" "^1.0.0"
+    cookie "^0.7.2"
+    set-cookie-parser "^2.4.8"
+    source-map "^0.7.3"
+    turbo-stream "2.4.1"
 
 "@remix-run/web-blob@^3.0.3", "@remix-run/web-blob@^3.0.4":
   version "3.0.4"
@@ -2130,6 +2156,11 @@
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.4.1.tgz#bfd02c1f2224567676c1545199f87c3a861d878d"
   integrity sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==
+
+"@types/cookie@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.6.0.tgz#eac397f28bf1d6ae0ae081363eca2f425bedf0d5"
+  integrity sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==
 
 "@types/debug@^4.0.0":
   version "4.1.8"
@@ -3260,7 +3291,7 @@ cookie@^0.4.1:
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.4.2.tgz"
   integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
 
-cookie@^0.7.1:
+cookie@^0.7.1, cookie@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.7.2.tgz#556369c472a2ba910f2979891b526b3436237ed7"
   integrity sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==
@@ -8279,6 +8310,11 @@ tsutils@^3.21.0:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
+
+turbo-stream@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/turbo-stream/-/turbo-stream-2.4.1.tgz#c1a64397724084c09b0f6ea4a2c528d3f67931f9"
+  integrity sha512-v8kOJXpG3WoTN/+at8vK7erSzo6nW6CIaeOvNOkHQVDajfz1ZVeSxCbc6tOH4hrGZW7VUCV0TOXd8CPzYnYkrw==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
