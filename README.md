@@ -12,6 +12,14 @@ _Frontend for Aetheryte API_
 
 ## [Documentation](docs/INDEX.md)
 
+## Upgrades
+
+To upgrade packages run
+
+```
+yarn upgrade --latest
+```
+
 ## Getting Started
 
 Install the dependencies:
@@ -86,6 +94,7 @@ docker-compose up
 
 > NOTE: any changes to the `Dockerfile` or dependencies will require you to rebuild the images.
  -->
+
 ## Deployment
 
 Commit to `master`. Auto deploys to CloudFlare.
