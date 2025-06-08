@@ -10,6 +10,12 @@ _Frontend for Aetheryte API_
 
 - Node `20.3.0`
 
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install 20
+nvm use 20
+```
+
 ## [Documentation](docs/INDEX.md)
 
 ## Getting Started
@@ -86,6 +92,7 @@ docker-compose up
 
 > NOTE: any changes to the `Dockerfile` or dependencies will require you to rebuild the images.
  -->
+
 ## Deployment
 
 Commit to `master`. Auto deploys to CloudFlare.
