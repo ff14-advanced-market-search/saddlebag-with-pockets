@@ -1,4 +1,4 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from 'react-router'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
@@ -8,12 +8,8 @@ import {
 } from '~/components/form/WoW/WoWScanForm'
 import type { WoWServerData } from '~/requests/WoW/types'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction
-} from '@remix-run/cloudflare'
-import { json } from '@remix-run/cloudflare'
+import type { ActionFunction, LoaderFunction, MetaFunction } from 'react-router'
+import { json } from 'react-router'
 import { z } from 'zod'
 import type {
   ShortagePredictorProps,

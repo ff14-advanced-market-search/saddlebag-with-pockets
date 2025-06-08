@@ -7,8 +7,7 @@ import type { GetDeepProp } from '~/utils/ts'
 import type { WorldsList } from '~/utils/locations/Worlds'
 import { SelectDataCenter } from '~/components/form/select/SelectWorld/SelectDataCenter'
 import { SelectWorld } from '~/components/form/select/SelectWorld/SelectWorld'
-import type { SessionData } from '@remix-run/cloudflare'
-import type { RouterState } from '@remix-run/router'
+import type { SessionData, RouterState } from 'react-router'
 
 type SelectWorldProps = PropsWithoutRef<{
   navigation: RouterState['navigation']
