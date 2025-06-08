@@ -2,8 +2,8 @@ import type {
   ActionFunction,
   LoaderFunction,
   MetaFunction
-} from '@remix-run/cloudflare'
-import { redirect, json } from '@remix-run/cloudflare'
+} from '@react-router/cloudflare'
+import { redirect, json } from '@react-router/cloudflare'
 import styles from './tailwind.css'
 import overrides from './base.css'
 import {
@@ -15,7 +15,7 @@ import {
   ScrollRestoration,
   useLoaderData,
   useSubmit
-} from '@remix-run/react'
+} from 'react-router'
 import Sidebar from '~/components/navigation/sidebar'
 import {
   getUserSessionData,
