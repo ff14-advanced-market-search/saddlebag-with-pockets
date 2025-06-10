@@ -62,7 +62,7 @@
     "@testing-library/dom": "^8.13.0",
     "@testing-library/react": "^13.4.0",
     "@types/node": "^18.7.1",
-    "@types/react": "^18.0.20",
+    "@types/react": "^19.1.7",
     "@types/react-dom": "^17.0.17",
     "eslint": "^8.20.0",
     "husky": "^8.0.0",
