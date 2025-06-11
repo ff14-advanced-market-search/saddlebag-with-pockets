@@ -57,7 +57,7 @@ const ItemListingsData: (
    *   - Designed specifically for World of Warcraft item listings data retrieval.
    */
 ) => Promise<Response> = async ({ homeRealmId, region, itemID }) => {
-  return fetch(`${address}/api/wow/listings`, {
+  return fetch(`${address}/api/wow/v2/listings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
