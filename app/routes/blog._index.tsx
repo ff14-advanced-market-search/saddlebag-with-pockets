@@ -206,28 +206,25 @@ const recommendedQueries = [
     href: '/blog/ffxiv/bs15'
   },
   {
-    name: 'Chatgpt bs ffxiv post 16',
-    description: 'Chatgpt bs ffxiv post 16',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs15'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 17',
-    description: 'Chatgpt bs ffxiv post 17',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs15'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 16',
-    description: 'Chatgpt bs ffxiv post 16',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs15'
-  },
-  {
-    name: 'Our first wow cross realm update',
-    description: 'Launch of cross realm trading tools',
+    name: 'FFXIV Market Mastery',
+    description:
+      'Advanced market timing, psychological warfare, competitive intelligence, and future trends in FFXIV trading',
     Icon: DocumentSearchIcon,
-    href: '/blog/wow/crossrealm1'
+    href: '/blog/ffxiv/market-mastery'
+  },
+  {
+    name: 'WoW Market Domination',
+    description:
+      'Server economics, guild trading empires, auction house mastery, and cross-realm strategies for WoW',
+    Icon: DocumentSearchIcon,
+    href: '/blog/wow/market-domination'
+  },
+  {
+    name: 'The Future of MMO Economies',
+    description:
+      'Blockchain integration, AI-driven markets, virtual reality economics, and regulatory frameworks',
+    Icon: DocumentSearchIcon,
+    href: '/blog/mmo/future-economies'
   }
 ]
 

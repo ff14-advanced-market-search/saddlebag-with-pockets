@@ -367,6 +367,21 @@ export const loader: LoaderFunction = async () => {
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/market-mastery</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/market-domination</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/mmo/future-economies</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>https://saddlebagexchange.com/ffxiv/scrip-exchange</loc>
   <lastmod>2024-07-07T00:27:48+00:00</lastmod>
   <priority>0.80</priority>
