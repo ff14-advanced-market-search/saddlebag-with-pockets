@@ -10,6 +10,12 @@ _Frontend for Aetheryte API_
 
 - Node `20.3.0`
 
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install 20
+nvm use 20
+```
+
 ## [Documentation](docs/INDEX.md)
 
 ## Getting Started
@@ -86,6 +92,7 @@ docker-compose up
 
 > NOTE: any changes to the `Dockerfile` or dependencies will require you to rebuild the images.
  -->
+
 ## Deployment
 
 Commit to `master`. Auto deploys to CloudFlare.
@@ -99,3 +106,11 @@ For those interested, we're using the following in the front-end architecture:
 - [Remix Run](https://remix.run/)
 - [Cloudflare Pages](https://pages.cloudflare.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
+
+## Package upgrades
+
+Can always upgrade some packages easily without breaking anything. These are handled with:
+
+```
+./low-impact-package-upgrade.sh
+```
