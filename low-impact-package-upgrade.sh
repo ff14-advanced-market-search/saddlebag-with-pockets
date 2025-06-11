@@ -7,6 +7,7 @@ yarn upgrade @tanstack/match-sorter-utils@latest
 yarn upgrade @tanstack/react-table@latest
 yarn upgrade axios@latest
 yarn upgrade caniuse-lite@latest
+yarn upgrade update-browserslist-db@latest
 yarn upgrade highcharts-react-official@latest
 yarn upgrade react-dnd-scrolling@latest
 yarn upgrade zod@latest
