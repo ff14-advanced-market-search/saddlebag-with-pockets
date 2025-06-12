@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import type { ColumnList } from '~/components/types'
 import type { ItemData } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
 import CSVButton from '~/components/utilities/CSVButton'
-import JSONButton from '~/components/utilities/JSONButton'
+import JSONDownloadButton from '~/components/utilities/JSONDownloadButton'
 
 interface ItemDetailsTableProps {
   data: ItemData[]
@@ -128,7 +128,10 @@ export default function ItemDetailsTable({
                 selectedDate
               )}.csv`}
             />
-            <JSONButton data={filteredAndSortedData} />
+            <JSONDownloadButton
+              data={filteredAndSortedData}
+              filename={`${selectedGroup}_items.json`}
+            />
           </div>
           <div className="flex items-center gap-4">
             <input
