@@ -5,7 +5,7 @@ import FullTable from '~/components/Tables/FullTable'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import CSVButton from '~/components/utilities/CSVButton'
-import JSONButton from '~/components/utilities/JSONButton'
+import JSONDownloadButton from '~/components/utilities/JSONDownloadButton'
 
 interface ItemDetailsTableProps {
   data: ItemData[]
@@ -80,7 +80,10 @@ export default function ItemDetailsTable({
               selectedDate
             )}.csv`}
           />
-          <JSONButton data={data} />
+          <JSONDownloadButton
+            data={data}
+            filename={`${selectedGroup}_items.json`}
+          />
         </div>
         <DebouncedInput
           onDebouncedChange={setGlobalFilter}
