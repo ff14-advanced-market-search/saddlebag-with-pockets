@@ -36,7 +36,7 @@ const recommendedQueries = [
   },
   {
     name: 'How to Cross Server Trade in FFXIV',
-    description: 'Watch a youtube video on how to tade between servers',
+    description: 'Watch a youtube video on how to trade between servers',
     Icon: DocumentSearchIcon,
     href: '/blog/r1'
   },
@@ -59,100 +59,172 @@ const recommendedQueries = [
     href: '/blog/r3'
   },
   {
-    name: 'Chatgpt bs ffxiv post 1',
-    description: 'Chatgpt bs ffxiv post 1',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs1'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 2',
-    description: 'Chatgpt bs ffxiv post 2',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs2'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 3',
-    description: 'Chatgpt bs ffxiv post 3',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs3'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 4',
-    description: 'Chatgpt bs ffxiv post 4',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs4'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 5',
-    description: 'Chatgpt bs ffxiv post 5',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs5'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 6',
-    description: 'Chatgpt bs ffxiv post 6',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs6'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 7',
-    description: 'Chatgpt bs ffxiv post 7',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs7'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 8',
-    description: 'Chatgpt bs ffxiv post 8',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs8'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 9',
-    description: 'Chatgpt bs ffxiv post 9',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs9'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 10',
-    description: 'Chatgpt bs ffxiv post 10',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs10'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 11',
-    description: 'Chatgpt bs ffxiv post 11',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs11'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 12',
-    description: 'Chatgpt bs ffxiv post 12',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs12'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 13',
-    description: 'Chatgpt bs ffxiv post 13',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs13'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 14',
-    description: 'Chatgpt bs ffxiv post 14',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs14'
-  },
-  {
-    name: 'Chatgpt bs ffxiv post 15',
-    description: 'Chatgpt bs ffxiv post 15',
-    Icon: 'DocumentSearchIcon',
-    href: '/blog/ffxiv/bs15'
-  },
-  {
     name: 'Our first wow cross realm update',
     description: 'Launch of cross realm trading tools',
     Icon: DocumentSearchIcon,
     href: '/blog/wow/crossrealm1'
+  },
+  {
+    name: 'Advanced MMO Trading Strategies',
+    description:
+      'Master market timing, cross-server arbitrage, portfolio diversification, and advanced market analysis techniques for maximum profits.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs16'
+  },
+  {
+    name: 'MMO Economy Psychology',
+    description:
+      'Understanding player behavior, market manipulation ethics, community dynamics, and future trends in virtual economies.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs17'
+  },
+  {
+    name: 'Advanced World of Warcraft Trading Strategies',
+    description:
+      'Master commodity markets, cross-realm arbitrage, profession-based trading empires, and advanced market analysis tools for WoW.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/wow/advanced-strategies'
+  },
+  {
+    name: 'Advanced FFXIV Crafting Strategies',
+    description:
+      'Expert crafting rotations, market timing, supply chain management, and premium market positioning for FFXIV crafters.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/advanced-crafting'
+  },
+  {
+    name: 'MMO Economic Theory',
+    description:
+      'Fundamental economic principles, market structures, behavioral economics, and macroeconomic analysis in virtual worlds.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/mmo/economics-theory'
+  },
+  {
+    name: 'Trading Automation and Tools',
+    description:
+      'Data collection systems, automated trading strategies, analytics, decision support, and responsible automation practices.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/trading/automation-tools'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 1',
+    description: 'Comprehensive FFXIV trading strategies and market analysis',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs1'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 2',
+    description:
+      'Advanced FFXIV marketboard techniques and profit optimization',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs2'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 3',
+    description: 'Expert-level FFXIV trading tactics and market mastery',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs3'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 4',
+    description: 'Professional FFXIV trading methods and economic analysis',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs4'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 5',
+    description: 'Dual-game trading strategies for FFXIV and WoW markets',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs5'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 6',
+    description:
+      'Multi-tier trading strategies from core to master-level techniques',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs6'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 7',
+    description:
+      'Comprehensive trading guide with advanced strategy breakdowns',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs7'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 8',
+    description:
+      'Economic principles, sustainable practices, and innovative approaches',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs8'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 9',
+    description:
+      'Seasonal events, third-party tools, and data analysis techniques',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs9'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 10',
+    description:
+      'Third-party tools, cross-server trading, and market intelligence',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs10'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 11',
+    description:
+      'Data analysis, market trends, and statistical trading methods',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs11'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 12',
+    description: 'Innovation in MMO economies and future market trends',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs12'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 13',
+    description:
+      'Alternative revenue streams and innovative trading approaches',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs13'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 14',
+    description: 'Economic policies and their impact on MMO market dynamics',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs14'
+  },
+  {
+    name: 'FFXIV Trading Strategies Post 15',
+    description:
+      'Social dynamics, player-driven markets, virtual wealth psychology, and regulatory landscapes',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/bs15'
+  },
+  {
+    name: 'FFXIV Market Mastery',
+    description:
+      'Advanced market timing, psychological warfare, competitive intelligence, and future trends in FFXIV trading',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/market-mastery'
+  },
+  {
+    name: 'WoW Market Domination',
+    description:
+      'Server economics, guild trading empires, auction house mastery, and cross-realm strategies for WoW',
+    Icon: DocumentSearchIcon,
+    href: '/blog/wow/market-domination'
+  },
+  {
+    name: 'The Future of MMO Economies',
+    description:
+      'Blockchain integration, AI-driven markets, virtual reality economics, and regulatory frameworks',
+    Icon: DocumentSearchIcon,
+    href: '/blog/mmo/future-economies'
   }
 ]
 

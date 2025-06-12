@@ -1,4 +1,4 @@
-import { LoaderFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction } from '@remix-run/cloudflare'
 import { ffxivItemsMap } from '~/utils/items/ffxivItems'
 import { wowItemsMap } from '~/utils/items/wowItems'
 
@@ -329,6 +329,56 @@ export const loader: LoaderFunction = async () => {
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/bs15</loc>
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/bs16</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/bs17</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/advanced-strategies</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/advanced-crafting</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/mmo/economics-theory</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/trading/automation-tools</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/skycoach</loc>
+  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/market-mastery</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/market-domination</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/mmo/future-economies</loc>
+  <lastmod>${currentDate}</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
