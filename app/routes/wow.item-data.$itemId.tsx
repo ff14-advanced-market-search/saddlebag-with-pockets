@@ -108,8 +108,8 @@ export default function Index() {
     return (
       <PageWrapper>
         <Title title={listing.itemName} />
-        <Banner />
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>
+        <Banner />
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
             {listing.minPrice !== -1 && (

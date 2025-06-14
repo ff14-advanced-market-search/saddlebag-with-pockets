@@ -36,6 +36,7 @@ export interface ServerDistribution {
 }
 
 export interface HistoryResponse {
+  itemID: number
   average_ppu: number
   median_ppu: number
   average_quantity_sold_per_day: number

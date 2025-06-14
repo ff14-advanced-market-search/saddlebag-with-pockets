@@ -142,23 +142,8 @@ const ItemPage = () => {
             )}
           </>
         </Section>
+        <p style={{ fontSize: '1px' }}>{data.itemDescription}</p>
         <Banner />
-        <div
-          className="sr-only" // Screen reader only class
-          aria-hidden={false}
-          style={{
-            position: 'absolute',
-            width: '1px',
-            height: '1px',
-            padding: '0',
-            margin: '-1px',
-            overflow: 'hidden',
-            clip: 'rect(0, 0, 0, 0)',
-            whiteSpace: 'nowrap',
-            border: '0'
-          }}
-          dangerouslySetInnerHTML={{ __html: data.itemDescription || '' }}
-        />
         <Section>
           <div className="flex flex-wrap gap-2">
             <CustomButton
