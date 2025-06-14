@@ -31,11 +31,11 @@ const recommendedQueries = [
     external: true
   },
   {
-    name: 'Price Sniper and Price Spike Alerts',
+    name: 'Weekly Price Group Delta',
     description:
-      'Alerts you when prices for items go above or below a price you pick! For one server and region wide commodities.',
+      'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
     Icon: DocumentSearchIcon,
-    href: '/wow/price-alert'
+    href: '/wow/weekly-price-group-delta-recommended'
   },
   {
     name: 'Upload Timers',
@@ -133,13 +133,6 @@ const recommendedQueries = [
     href: '/wow/quantity-manipulation'
   },
   {
-    name: 'Weekly Price Group Delta',
-    description:
-      'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
-    Icon: DocumentSearchIcon,
-    href: '/wow/weekly-price-group-delta-recommended'
-  },
-  {
     name: 'Local Realm Shortage Finder',
     description:
       'Searches for items on your local server / realm that you can flip and take over the market!',
@@ -152,6 +145,13 @@ const recommendedQueries = [
       'Searches for region wide commodities that you can flip and take over the market!',
     Icon: DocumentSearchIcon,
     href: '/wow/shortages/commodities'
+  },
+  {
+    name: 'Price Sniper and Price Spike Alerts',
+    description:
+      'Alerts you when prices for items go above or below a price you pick! For one server and region wide commodities.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/price-alert'
   },
   {
     name: 'Zygor Guides',
