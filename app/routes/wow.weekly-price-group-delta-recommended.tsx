@@ -1,4 +1,4 @@
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import recommendedConfigs from '~/components/recommended/WoW/WeeklyPriceGroup'
 
@@ -72,13 +72,22 @@ export default function RecommendedWeeklyPriceGroupDelta() {
                   Dragonflight stackable commodities from{' '}
                   <span className="font-semibold">January 2023</span> onward.
                 </span>
-                <a
-                  href="https://youtu.be/3wbwoDQ8Flk?si=8XzPhRRivnmdAInl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold shadow transition-colors duration-150">
-                  📺 Watch the Video Guide
-                </a>
+                <div className="flex flex-row justify-start gap-4">
+                  <a
+                    href="https://youtu.be/3wbwoDQ8Flk?si=8XzPhRRivnmdAInl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold shadow transition-colors duration-150">
+                    📺 Watch the Video Guide
+                  </a>
+                  <a
+                    href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-Use-Price-Group-Deltas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold shadow transition-colors duration-150">
+                    📚 Read the Written Wiki
+                  </a>
+                </div>
               </div>
             </div>
             <div className="text-center my-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
