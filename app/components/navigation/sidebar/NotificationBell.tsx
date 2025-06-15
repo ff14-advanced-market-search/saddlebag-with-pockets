@@ -1,10 +1,73 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BellIcon, ChartSquareBarIcon } from '@heroicons/react/outline'
-import { Link } from '@remix-run/react'
+import { Link, useLocation } from '@remix-run/react'
+
+interface Notification {
+  id: string
+  title: string
+  description: string
+  link: string
+  icon: typeof ChartSquareBarIcon
+  showOn: (pathname: string) => boolean
+}
+
+const notifications: Notification[] = [
+  {
+    id: 'wow-weekly-price-delta',
+    title: 'Try WoW Weekly Price Delta!',
+    description:
+      'Discover price trends and 11.2 investment opportunities across different realms with our new Weekly Price Delta feature.',
+    link: '/wow/weekly-price-group-delta-recommended',
+    icon: ChartSquareBarIcon,
+    showOn: (pathname) => pathname.startsWith('/wow')
+  },
+  {
+    id: 'ffxiv-weekly-price-delta',
+    title: 'Try FFXIV Weekly Price Delta!',
+    description:
+      'Check out the new FFXIV Weekly Price Delta for market trends and investment opportunities for the next patch cycle.',
+    link: '/ffxiv/weekly-price-group-delta',
+    icon: ChartSquareBarIcon,
+    showOn: (pathname) =>
+      pathname.startsWith('/ffxiv') || pathname.startsWith('/queries')
+  }
+]
+
+const STORAGE_KEY = 'viewedNotificationsV2'
 
 export const NotificationBell = () => {
-  const [hasNotification, setHasNotification] = useState(true)
+  const location = useLocation()
+  const pathname = location.pathname
+  const [viewed, setViewed] = useState<string[]>([])
+  const [visibleNotifications, setVisibleNotifications] = useState<
+    Notification[]
+  >([])
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      try {
+        setViewed(JSON.parse(stored))
+      } catch {
+        setViewed([])
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    setVisibleNotifications(notifications.filter((n) => n.showOn(pathname)))
+  }, [pathname])
+
+  const hasUnviewed = visibleNotifications.some((n) => !viewed.includes(n.id))
+
+  const handleClick = (id: string) => {
+    if (!viewed.includes(id)) {
+      const updated = [...viewed, id]
+      setViewed(updated)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    }
+  }
 
   return (
     <Menu as="div" className="relative">
@@ -17,7 +80,7 @@ export const NotificationBell = () => {
             className="h-6 w-6 hover:text-blue-500 dark:hover:text-gray-100"
             aria-hidden="true"
           />
-          {hasNotification && (
+          {hasUnviewed && (
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full" />
           )}
         </div>
@@ -31,28 +94,28 @@ export const NotificationBell = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95">
         <Menu.Items className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <Menu.Item>
-            {({ active }) => (
-              <Link
-                to="/wow/weekly-price-group-delta-recommended"
-                className={`${
-                  active ? 'bg-gray-100 dark:bg-slate-800' : ''
-                } block px-4 py-3 text-sm text-gray-700 dark:text-gray-200`}
-                onClick={() => setHasNotification(false)}>
-                <div className="flex items-start">
-                  <ChartSquareBarIcon className="h-5 w-5 text-blue-500 mr-3 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Try WoW Weekly Price Delta!</p>
-                    <p className="text-gray-500 dark:text-gray-400 mt-1">
-                      Discover price trends and opportunities across different
-                      realms with our new Weekly Price Delta feature. See full
-                      11.2 investment guides in our discord!
-                    </p>
+          {visibleNotifications.map((notification) => (
+            <Menu.Item key={notification.id}>
+              {({ active }) => (
+                <Link
+                  to={notification.link}
+                  className={`${
+                    active ? 'bg-gray-100 dark:bg-slate-800' : ''
+                  } block px-4 py-3 text-sm text-gray-700 dark:text-gray-200`}
+                  onClick={() => handleClick(notification.id)}>
+                  <div className="flex items-start">
+                    <notification.icon className="h-5 w-5 text-blue-500 mr-3 mt-0.5" />
+                    <div>
+                      <p className="font-medium">{notification.title}</p>
+                      <p className="text-gray-500 dark:text-gray-400 mt-1">
+                        {notification.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            )}
-          </Menu.Item>
+                </Link>
+              )}
+            </Menu.Item>
+          ))}
         </Menu.Items>
       </Transition>
     </Menu>
