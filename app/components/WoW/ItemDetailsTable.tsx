@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { ColumnList } from '~/components/types'
 import type { ItemData } from '~/requests/WoW/WeeklyPriceGroupDelta'
 import FullTable from '~/components/Tables/FullTable'
-import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
+import MobileDeltaTable from '~/components/WoWResults/FullScan/MobileDeltaTable'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import CSVButton from '~/components/utilities/CSVButton'
 import JSONDownloadButton from '~/components/utilities/JSONDownloadButton'
@@ -113,13 +113,12 @@ export default function ItemDetailsTable({
         />
       </div>
       <div className="md:hidden">
-        <MobileTable
+        <MobileDeltaTable
           data={data}
           columnList={columnList}
           sortingOrder={[{ id: 'itemName', desc: false }]}
           title="Item Details"
-          rowLabels={[]}
-          columnSelectOptions={[]}
+          columnSelectOptions={columnList.map((col) => col.columnId)}
         />
       </div>
     </div>
