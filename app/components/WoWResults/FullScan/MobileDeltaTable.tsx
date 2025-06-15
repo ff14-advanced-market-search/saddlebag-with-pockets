@@ -140,19 +140,18 @@ const MobileDeltaTable = ({
               {columnList.map((col) => (
                 <th
                   key={col.columnId}
-                  onClick={() => handleSort(col.columnId)}
-                  onKeyDown={(e) => handleKeyDown(e, col.columnId)}
-                  tabIndex={0}
-                  role="button"
-                  aria-sort={
-                    col.columnId === columnSort
-                      ? desc
-                        ? 'descending'
-                        : 'ascending'
-                      : undefined
-                  }
-                  className={`py-2 px-3 sticky bg-gray-50 top-0 text-center cursor-pointer text-gray-900 dark:text-gray-100 dark:bg-gray-600`}>
-                  <div className="flex justify-center items-center p-2">
+                  className={`py-2 px-3 sticky bg-gray-50 top-0 text-center text-gray-900 dark:text-gray-100 dark:bg-gray-600`}>
+                  <button
+                    onClick={() => handleSort(col.columnId)}
+                    onKeyDown={(e) => handleKeyDown(e, col.columnId)}
+                    className="w-full h-full flex justify-center items-center p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                    aria-sort={
+                      col.columnId === columnSort
+                        ? desc
+                          ? 'descending'
+                          : 'ascending'
+                        : undefined
+                    }>
                     {col.header}
                     {col.columnId === columnSort && (
                       <span className="ml-1">
@@ -163,7 +162,7 @@ const MobileDeltaTable = ({
                         )}
                       </span>
                     )}
-                  </div>
+                  </button>
                 </th>
               ))}
             </tr>
