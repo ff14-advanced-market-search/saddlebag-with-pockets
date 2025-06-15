@@ -12,6 +12,12 @@ import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CustomButton from '~/components/utilities/CustomButton'
 import Banner from '~/components/Common/Banner'
+import { Suspense, lazy } from 'react'
+
+// Lazy load the chart component
+const GenericLineChart = lazy(
+  () => import('~/components/Charts/GenericLineChart')
+)
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -95,6 +101,13 @@ export default function Index() {
   const listing = 'data' in result ? result.data : undefined
 
   if (listing) {
+    const now = new Date()
+    const xCategories = listing.priceTimeData.map((_, hoursToDeduct, arr) =>
+      makeTimeString({
+        date: now,
+        hoursToDeduct: arr.length - hoursToDeduct
+      })
+    )
     return (
       <PageWrapper>
         <Title title={listing.itemName} />
@@ -195,6 +208,53 @@ export default function Index() {
             />
           </div>
         </div>
+
+        {/* Lazy loaded charts */}
+        {listing.priceTimeData.length > 0 && (
+          <ContentContainer>
+            <Suspense
+              fallback={
+                <div className="h-64 animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg" />
+              }>
+              <GenericLineChart
+                chartTitle="Price Over Time"
+                darkMode={darkmode}
+                data={listing.priceTimeData}
+                dataIterator={(val, ind) => [
+                  makeTimeString({
+                    date: now,
+                    hoursToDeduct: listing.priceTimeData.length - ind
+                  }),
+                  val
+                ]}
+                xCategories={xCategories}
+              />
+            </Suspense>
+          </ContentContainer>
+        )}
+        {listing.quantityTimeData.length > 0 && (
+          <ContentContainer>
+            <Suspense
+              fallback={
+                <div className="h-64 animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg" />
+              }>
+              <GenericLineChart
+                chartTitle="Quantity Over Time"
+                darkMode={darkmode}
+                data={listing.quantityTimeData}
+                dataIterator={(val, ind) => [
+                  makeTimeString({
+                    date: now,
+                    hoursToDeduct: listing.quantityTimeData.length - ind
+                  }),
+                  val
+                ]}
+                xCategories={xCategories}
+              />
+            </Suspense>
+          </ContentContainer>
+        )}
+
         {/* Auctionhouse Listings Table or Out of Stock */}
         {listing.listingData.length === 0 ? (
           <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
@@ -213,6 +273,16 @@ export default function Index() {
       </PageWrapper>
     )
   }
+}
+
+type ColumnList<T> = {
+  columnId: keyof T
+  header: string
+}
+
+type ListItem = {
+  price: number
+  quantity: number
 }
 
 const columnList: Array<ColumnList<ListItem>> = [
