@@ -2,7 +2,6 @@ import type { FC, PropsWithChildren } from 'react'
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
-  BellIcon,
   ChartSquareBarIcon,
   ClockIcon,
   CogIcon,
@@ -43,6 +42,7 @@ import {
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
+import { NotificationBell } from './NotificationBell'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -566,6 +566,7 @@ const ButtonAccordian = ({
  */
 export const Sidebar: FC<Props> = ({ children, data }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [hasNotification, setHasNotification] = useState(true)
   const matches = useMatches()
 
   const lastMatch = matches[matches.length - 1]?.pathname
@@ -860,15 +861,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
               </NavLink>
             </div>
             <div className="ml-4 flex items-center md:ml-6">
-              <button
-                type="button"
-                className="bg-white dark:bg-slate-900 p-1 dark:hover:bg-slate-800 rounded-full text-gray-400 dark:text-gray-200 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                <span className="sr-only">View notifications</span>
-                <BellIcon
-                  className="h-6 w-6 hover:text-blue-500 dark:hover:text-gray-100"
-                  aria-hidden="true"
-                />
-              </button>
+              <NotificationBell />
 
               {/* Profile dropdown */}
               <Menu as="div" className="ml-3 relative">
@@ -895,7 +888,15 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                       className={`text-gray-700 dark:text-gray-200 text-sm py-2 px-4`}>
                       <strong>Welcome to Saddlebag!</strong> We're super
                       freaking hyped to see where this journey together goes.
-                      Hoping you make it big! Join our Discord for spicy news!
+                      Hoping you make it big!{' '}
+                      <a
+                        href="https://discord.com/servers/saddlebag-exchange-973380473281724476"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: 'blue' }}>
+                        Join our Discord
+                      </a>{' '}
+                      for spicy news!
                     </p>
                     {/*{userNavigation.map((item) => (<Menu.Item key={item.name}>
                                         {({active}) => (<a
