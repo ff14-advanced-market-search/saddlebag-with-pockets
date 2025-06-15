@@ -10,8 +10,11 @@ const parseToLocaleString = (value: any) => {
   if (typeof value === 'number') {
     return value.toLocaleString()
   }
-  if (typeof value === 'string' && !isNaN(parseFloat(value))) {
-    return parseFloat(value).toLocaleString()
+  if (typeof value === 'string') {
+    const parsedValue = Number.parseFloat(value)
+    if (!Number.isNaN(parsedValue)) {
+      return parsedValue.toLocaleString()
+    }
   }
   return value
 }
@@ -41,6 +44,22 @@ const MobileDeltaTable = ({
   const [columnSort, setColumnSort] = useState<string>(sortingOrder[0]?.id)
   const [desc, setDesc] = useState<boolean>(sortingOrder[0]?.desc ?? true)
   const [globalFilter, setGlobalFilter] = useState('')
+
+  const handleSort = (columnId: string) => {
+    if (columnId === columnSort) {
+      setDesc((state) => !state)
+    } else {
+      setColumnSort(columnId)
+      setDesc(true)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent, columnId: string) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleSort(columnId)
+    }
+  }
 
   // Filtered and sorted data
   const filteredData = useMemo(() => {
@@ -119,13 +138,17 @@ const MobileDeltaTable = ({
               {columnList.map((col) => (
                 <th
                   key={col.columnId}
-                  onClick={() => {
-                    if (col.columnId === columnSort) setDesc((state) => !state)
-                    else {
-                      setColumnSort(col.columnId)
-                      setDesc(true)
-                    }
-                  }}
+                  onClick={() => handleSort(col.columnId)}
+                  onKeyDown={(e) => handleKeyDown(e, col.columnId)}
+                  tabIndex={0}
+                  role="button"
+                  aria-sort={
+                    col.columnId === columnSort
+                      ? desc
+                        ? 'descending'
+                        : 'ascending'
+                      : undefined
+                  }
                   className={`py-2 px-3 sticky bg-gray-50 top-0 text-center cursor-pointer text-gray-900 dark:text-gray-100 dark:bg-gray-600`}>
                   <div className="flex justify-center items-center p-2">
                     {col.header}
@@ -148,7 +171,9 @@ const MobileDeltaTable = ({
               <tr
                 key={`${rowIndex}-row`}
                 className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                onClick={() => setModal({ title, data: row })}>
+                onClick={() => {
+                  setModal({ title, data: row })
+                }}>
                 {columnList.map((col, i) => (
                   <td
                     key={`cell-${rowIndex}-${i}`}
