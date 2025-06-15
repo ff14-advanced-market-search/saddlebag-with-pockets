@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import type { ColumnList } from '~/components/types'
 import type { ItemData } from '~/requests/WoW/WeeklyPriceGroupDelta'
-import type {
-  ColumnList as FullTableColumnList
-} from '~/components/Tables/FullTable';
+import type { ColumnList as FullTableColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import MobileDeltaTable from '~/components/WoWResults/FullScan/MobileDeltaTable'
 import DebouncedInput from '~/components/Common/DebouncedInput'
