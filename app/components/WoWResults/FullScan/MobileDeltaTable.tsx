@@ -41,7 +41,9 @@ const MobileDeltaTable = ({
   const [modal, setModal] = useState<{ title?: string; data: DataType } | null>(
     null
   )
-  const [columnSort, setColumnSort] = useState<string>(sortingOrder[0]?.id)
+  const [columnSort, setColumnSort] = useState<string>(
+    sortingOrder[0]?.id || columnList[0]?.columnId || ''
+  )
   const [desc, setDesc] = useState<boolean>(sortingOrder[0]?.desc ?? true)
   const [globalFilter, setGlobalFilter] = useState('')
 
