@@ -124,11 +124,11 @@ const MobileDeltaTable = ({
           onChange={(e) => {
             setColumnSort(e.target.value)
           }}>
-          {columnSelectOptions.map((option, index) => {
+          {columnSelectOptions.map((option) => {
             const col = columnList.find(({ columnId }) => columnId === option)
             if (!col) return null
             return (
-              <option key={col.columnId + index} value={col.columnId}>
+              <option key={col.columnId} value={col.columnId}>
                 {col.header}
               </option>
             )
@@ -146,7 +146,9 @@ const MobileDeltaTable = ({
                   <button
                     type="button"
                     onClick={() => handleSort(col.columnId)}
-                    onKeyDown={(e) => handleKeyDown(e, col.columnId)}
+                    onKeyDown={(e) => {
+                      handleKeyDown(e, col.columnId)
+                    }}
                     className="w-full h-full flex justify-center items-center p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
                     aria-sort={
                       col.columnId === columnSort
