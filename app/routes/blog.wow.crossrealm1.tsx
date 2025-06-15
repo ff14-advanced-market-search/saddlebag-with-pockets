@@ -114,7 +114,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
                 <p className="mb-3">
                   An{' '}
                   <a
-                    href="https://saddlebagexchange.com/pet-marketshare"
+                    href="https://saddlebagexchange.com/wow/pet-marketshare"
                     className="text-blue-600 hover:text-blue-800 underline">
                     "Estimated Pet Marketshare"
                   </a>{' '}
@@ -143,7 +143,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
                 <p>
                   A{' '}
                   <a
-                    href="https://saddlebagexchange.com/shopping-list"
+                    href="https://saddlebagexchange.com/wow/shopping-list"
                     className="text-blue-600 hover:text-blue-800 underline">
                     "Shopping List Search"
                   </a>{' '}
@@ -160,7 +160,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
                 <p>
                   An{' '}
                   <a
-                    href="https://saddlebagexchange.com/export"
+                    href="https://saddlebagexchange.com/wow/export"
                     className="text-blue-600 hover:text-blue-800 underline">
                     "Export Search"
                   </a>{' '}
@@ -182,7 +182,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
                 <p>
                   An{' '}
                   <a
-                    href="https://saddlebagexchange.com/export"
+                    href="https://saddlebagexchange.com/wow/export"
                     className="text-blue-600 hover:text-blue-800 underline">
                     "Import Search"
                   </a>{' '}
@@ -201,7 +201,7 @@ const HowtoCrossServerTradeinFFXIV = () => {
                 <p>
                   A{' '}
                   <a
-                    href="https://saddlebagexchange.com/region-undercut"
+                    href="https://saddlebagexchange.com/wow/region-undercut"
                     className="text-blue-600 hover:text-blue-800 underline">
                     <strong>Region Wide Undercut Check</strong>
                   </a>{' '}
@@ -225,9 +225,9 @@ const HowtoCrossServerTradeinFFXIV = () => {
                 <p>
                   This one looks for the best discounts anywhere{' '}
                   <a
-                    href="https://saddlebagexchange.com/best-deals"
+                    href="https://saddlebagexchange.com/wow/best-deals"
                     className="text-blue-600 hover:text-blue-800 underline">
-                    https://saddlebagexchange.com/best-deals
+                    https://saddlebagexchange.com/wow/best-deals
                   </a>
                 </p>
               </div>
