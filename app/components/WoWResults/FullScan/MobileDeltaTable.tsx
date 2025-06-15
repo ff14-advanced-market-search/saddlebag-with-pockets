@@ -57,9 +57,10 @@ const MobileDeltaTable = ({
 
   const sortedData = useMemo(() => {
     if (!columnSort) return filteredData
+    const col = columnList.find((c) => c.columnId === columnSort)
     return [...filteredData].sort((a, b) => {
-      const aValue = a[columnSort]
-      const bValue = b[columnSort]
+      const aValue = col?.dataAccessor ? col.dataAccessor(a) : a[columnSort]
+      const bValue = col?.dataAccessor ? col.dataAccessor(b) : b[columnSort]
       if (typeof aValue === 'number' && typeof bValue === 'number') {
         return desc ? bValue - aValue : aValue - bValue
       }
@@ -70,7 +71,7 @@ const MobileDeltaTable = ({
       }
       return 0
     })
-  }, [filteredData, columnSort, desc])
+  }, [filteredData, columnSort, desc, columnList])
 
   return (
     <div className="flex flex-col sm:hidden mt-4 bg-white dark:bg-slate-700 sm:rounded-md shadow w-full mb-24">
