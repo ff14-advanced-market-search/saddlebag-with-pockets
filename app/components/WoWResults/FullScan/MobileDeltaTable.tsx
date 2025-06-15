@@ -142,6 +142,7 @@ const MobileDeltaTable = ({
                   key={col.columnId}
                   className={`py-2 px-3 sticky bg-gray-50 top-0 text-center text-gray-900 dark:text-gray-100 dark:bg-gray-600`}>
                   <button
+                    type="button"
                     onClick={() => handleSort(col.columnId)}
                     onKeyDown={(e) => handleKeyDown(e, col.columnId)}
                     className="w-full h-full flex justify-center items-center p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
