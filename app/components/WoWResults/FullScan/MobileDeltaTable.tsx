@@ -6,7 +6,9 @@ import Modal from '~/components/form/Modal'
 import type { ColumnList } from '~/components/types'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 
-const parseToLocaleString = (value: any) => {
+const parseToLocaleString = <T extends number | string>(
+  value: T
+): string | T => {
   if (typeof value === 'number') {
     return value.toLocaleString()
   }
