@@ -7,9 +7,6 @@ import type { ItemListingResponse } from '~/requests/WoW/ItemListingsData'
 import ItemListingsData from '~/requests/WoW/ItemListingsData'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions'
-import type { Options, PointOptionsObject } from 'highcharts'
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -98,13 +95,6 @@ export default function Index() {
   const listing = 'data' in result ? result.data : undefined
 
   if (listing) {
-    const now = new Date()
-    const xCategories = listing.priceTimeData.map((_, hoursToDeduct, arr) =>
-      makeTimeString({
-        date: now,
-        hoursToDeduct: arr.length - hoursToDeduct
-      })
-    )
     return (
       <PageWrapper>
         <Title title={listing.itemName} />
@@ -189,61 +179,22 @@ export default function Index() {
           <div className="flex flex-wrap gap-2">
             <CustomButton
               link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
-              // link={`https://saddlebagexchange.com/wow/export-search`} // remove custom id as it might be slowing down the crawl
               buttonText="Best Place to Sell!"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://saddlebagexchange.com/wow/`}
               buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
               link={`${listing.link}`}
               buttonText="View on Undermine Exchange"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
           </div>
         </div>
-        {listing.priceTimeData.length > 0 && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Price Over Time"
-              darkMode={darkmode}
-              data={listing.priceTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: listing.priceTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-        {listing.quantityTimeData.length > 0 && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Quantity Over Time"
-              darkMode={darkmode}
-              data={listing.quantityTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: listing.quantityTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
         {/* Auctionhouse Listings Table or Out of Stock */}
         {listing.listingData.length === 0 ? (
           <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
@@ -262,93 +213,6 @@ export default function Index() {
       </PageWrapper>
     )
   }
-}
-
-const GenericLineChart = ({
-  darkMode,
-  data,
-  chartTitle,
-  xTitle,
-  yTitle,
-  xLabelFormat,
-  yLabelFormat,
-  dataIterator,
-  xCategories
-}: {
-  darkMode: boolean
-  data: Array<number>
-  chartTitle?: string
-  xTitle?: string
-  yTitle?: string
-  xLabelFormat?: string
-  yLabelFormat?: string
-  dataIterator?: (value: number, index: number) => PointOptionsObject
-  xCategories?: Array<string>
-}) => {
-  const styles = darkMode
-    ? {
-        backgroundColor: '#334155',
-        color: 'white',
-        hoverColor: '#f8f8f8'
-      }
-    : {}
-  const options: Options = {
-    chart: {
-      type: 'line',
-      backgroundColor: styles?.backgroundColor
-    },
-    legend: {
-      itemStyle: { color: styles?.color },
-      align: 'center',
-      itemHoverStyle: { color: styles?.hoverColor }
-    },
-    title: {
-      text: chartTitle,
-      style: { color: styles?.color }
-    },
-    yAxis: {
-      title: {
-        text: yTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      labels: {
-        style: { color: styles?.color },
-        align: 'center',
-        format: yLabelFormat
-      },
-      lineColor: styles?.color
-    },
-    xAxis: {
-      title: {
-        text: xTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      categories: xCategories,
-      labels: {
-        style: { color: styles?.color },
-        align: 'right',
-        format: xLabelFormat
-      },
-      lineColor: styles?.color
-    },
-    series: [
-      {
-        data: dataIterator ? data.map<PointOptionsObject>(dataIterator) : data,
-        name: chartTitle,
-        type: 'line'
-      }
-    ],
-    credits: {
-      enabled: false
-    }
-  }
-  return <HighchartsReact highcharts={Highcharts} options={options} />
 }
 
 const columnList: Array<ColumnList<ListItem>> = [
