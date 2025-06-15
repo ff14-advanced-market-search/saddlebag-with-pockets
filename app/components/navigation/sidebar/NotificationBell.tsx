@@ -51,6 +51,8 @@ export const NotificationBell = () => {
         setViewed(JSON.parse(stored))
       } catch {
         setViewed([])
+        // Remove corrupted entry so subsequent mounts don't keep failing
+        localStorage.removeItem(STORAGE_KEY)
       }
     }
   }, [])
@@ -94,28 +96,34 @@ export const NotificationBell = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95">
         <Menu.Items className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg py-1 bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
-          {visibleNotifications.map((notification) => (
-            <Menu.Item key={notification.id}>
-              {({ active }) => (
-                <Link
-                  to={notification.link}
-                  className={`${
-                    active ? 'bg-gray-100 dark:bg-slate-800' : ''
-                  } block px-4 py-3 text-sm text-gray-700 dark:text-gray-200`}
-                  onClick={() => handleClick(notification.id)}>
-                  <div className="flex items-start">
-                    <notification.icon className="h-5 w-5 text-blue-500 mr-3 mt-0.5" />
-                    <div>
-                      <p className="font-medium">{notification.title}</p>
-                      <p className="text-gray-500 dark:text-gray-400 mt-1">
-                        {notification.description}
-                      </p>
+          {visibleNotifications.length === 0 ? (
+            <div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+              No notifications at this time
+            </div>
+          ) : (
+            visibleNotifications.map((notification) => (
+              <Menu.Item key={notification.id}>
+                {({ active }) => (
+                  <Link
+                    to={notification.link}
+                    className={`${
+                      active ? 'bg-gray-100 dark:bg-slate-800' : ''
+                    } block px-4 py-3 text-sm text-gray-700 dark:text-gray-200`}
+                    onClick={() => handleClick(notification.id)}>
+                    <div className="flex items-start">
+                      <notification.icon className="h-5 w-5 text-blue-500 mr-3 mt-0.5" />
+                      <div>
+                        <p className="font-medium">{notification.title}</p>
+                        <p className="text-gray-500 dark:text-gray-400 mt-1">
+                          {notification.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              )}
-            </Menu.Item>
-          ))}
+                  </Link>
+                )}
+              </Menu.Item>
+            ))
+          )}
         </Menu.Items>
       </Transition>
     </Menu>

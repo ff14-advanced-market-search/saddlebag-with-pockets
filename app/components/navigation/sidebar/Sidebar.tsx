@@ -566,7 +566,6 @@ const ButtonAccordian = ({
  */
 export const Sidebar: FC<Props> = ({ children, data }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [hasNotification, setHasNotification] = useState(true)
   const matches = useMatches()
 
   const lastMatch = matches[matches.length - 1]?.pathname
@@ -893,7 +892,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                         href="https://discord.com/servers/saddlebag-exchange-973380473281724476"
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ color: 'blue' }}>
+                        className="text-blue-500 hover:underline">
                         Join our Discord
                       </a>{' '}
                       for spicy news!
