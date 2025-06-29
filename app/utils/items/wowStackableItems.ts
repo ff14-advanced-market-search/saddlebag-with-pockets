@@ -1608,6 +1608,7 @@ export const wowStackableItemsMap: Record<string, string> = {
   '24506': 'Elemental Sliver',
   '24507': 'Elemental Shard',
   '24508': 'Elemental Fragment',
+  '24509': 'Primordial Element',
   '24510': 'Primordial Core',
   '24511': 'Primordial Essence',
   '24516': 'Damaged Rock Flayer Talon',
