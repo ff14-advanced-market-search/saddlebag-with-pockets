@@ -7,14 +7,201 @@ import type { ItemListingResponse } from '~/requests/WoW/ItemListingsData'
 import ItemListingsData from '~/requests/WoW/ItemListingsData'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions'
-import type { Options, PointOptionsObject } from 'highcharts'
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CustomButton from '~/components/utilities/CustomButton'
 import Banner from '~/components/Common/Banner'
+import { useState } from 'react'
+import type { ColumnList } from '~/components/types'
+
+// Lazy load Highcharts component
+const LazyCharts = ({
+  listing,
+  darkmode,
+  now
+}: {
+  listing: any
+  darkmode: boolean
+  now: Date
+}) => {
+  const [chartsLoaded, setChartsLoaded] = useState(false)
+
+  const loadCharts = () => {
+    setChartsLoaded(true)
+  }
+
+  const makeTimeString = ({
+    date,
+    hoursToDeduct,
+    formatString = 'dd/MM h aaaa'
+  }: {
+    date: Date
+    hoursToDeduct: number
+    formatString?: string
+  }) => {
+    const newDate = subHours(date, hoursToDeduct)
+    return format(newDate, formatString)
+  }
+
+  const xCategories = listing.priceTimeData.map(
+    (_: any, hoursToDeduct: number, arr: any[]) =>
+      makeTimeString({
+        date: now,
+        hoursToDeduct: arr.length - hoursToDeduct
+      })
+  )
+
+  if (!chartsLoaded) {
+    // Only show button if there's chart data to display
+    if (
+      listing.priceTimeData.length > 0 &&
+      listing.quantityTimeData.length > 0
+    ) {
+      return (
+        <div className="text-center my-8">
+          <button
+            onClick={loadCharts}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Load Charts
+          </button>
+        </div>
+      )
+    }
+    // If no chart data, don't show anything
+    return null
+  }
+
+  // Only import Highcharts when charts are requested
+  const Highcharts = require('highcharts')
+  const HighchartsReact = require('highcharts-react-official').default
+
+  const GenericLineChart = ({
+    darkMode,
+    data,
+    chartTitle,
+    xTitle,
+    yTitle,
+    xLabelFormat,
+    yLabelFormat,
+    dataIterator,
+    xCategories
+  }: {
+    darkMode: boolean
+    data: Array<number>
+    chartTitle?: string
+    xTitle?: string
+    yTitle?: string
+    xLabelFormat?: string
+    yLabelFormat?: string
+    dataIterator?: (value: number, index: number) => any
+    xCategories?: Array<string>
+  }) => {
+    const styles = darkMode
+      ? {
+          backgroundColor: '#334155',
+          color: 'white',
+          hoverColor: '#f8f8f8'
+        }
+      : {}
+    const options: any = {
+      chart: {
+        type: 'line',
+        backgroundColor: styles?.backgroundColor
+      },
+      legend: {
+        itemStyle: { color: styles?.color },
+        align: 'center',
+        itemHoverStyle: { color: styles?.hoverColor }
+      },
+      title: {
+        text: chartTitle,
+        style: { color: styles?.color }
+      },
+      yAxis: {
+        title: {
+          text: yTitle,
+          style: {
+            color: styles?.color,
+            textAlign: 'center'
+          }
+        },
+        labels: {
+          style: { color: styles?.color },
+          align: 'center',
+          format: yLabelFormat
+        },
+        lineColor: styles?.color
+      },
+      xAxis: {
+        title: {
+          text: xTitle,
+          style: {
+            color: styles?.color,
+            textAlign: 'center'
+          }
+        },
+        categories: xCategories,
+        labels: {
+          style: { color: styles?.color },
+          align: 'right',
+          format: xLabelFormat
+        },
+        lineColor: styles?.color
+      },
+      series: [
+        {
+          data: dataIterator ? data.map(dataIterator) : data,
+          name: chartTitle,
+          type: 'line'
+        }
+      ],
+      credits: {
+        enabled: false
+      }
+    }
+    return <HighchartsReact highcharts={Highcharts} options={options} />
+  }
+
+  return (
+    <>
+      {listing.priceTimeData.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="Price Over Time"
+            darkMode={darkmode}
+            data={listing.priceTimeData}
+            dataIterator={(val: number, ind: number) => [
+              makeTimeString({
+                date: now,
+                hoursToDeduct: listing.priceTimeData.length - ind
+              }),
+              val
+            ]}
+            xCategories={xCategories}
+          />
+        </ContentContainer>
+      )}
+      {listing.quantityTimeData.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="Quantity Over Time"
+            darkMode={darkmode}
+            data={listing.quantityTimeData}
+            dataIterator={(val: number, ind: number) => [
+              makeTimeString({
+                date: now,
+                hoursToDeduct: listing.quantityTimeData.length - ind
+              }),
+              val
+            ]}
+            xCategories={xCategories}
+          />
+        </ContentContainer>
+      )}
+    </>
+  )
+}
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -99,12 +286,6 @@ export default function Index() {
 
   if (listing) {
     const now = new Date()
-    const xCategories = listing.priceTimeData.map((_, hoursToDeduct, arr) =>
-      makeTimeString({
-        date: now,
-        hoursToDeduct: arr.length - hoursToDeduct
-      })
-    )
     return (
       <PageWrapper>
         <Title title={listing.itemName} />
@@ -189,61 +370,26 @@ export default function Index() {
           <div className="flex flex-wrap gap-2">
             <CustomButton
               link={`https://saddlebagexchange.com/wow/export-search?itemId=${listing.itemID}&minPrice=1`}
-              // link={`https://saddlebagexchange.com/wow/export-search`} // remove custom id as it might be slowing down the crawl
               buttonText="Best Place to Sell!"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://saddlebagexchange.com/wow/`}
               buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://www.wowhead.com/item=${listing.itemID}`}
               buttonText="View on WoWHead"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
             <CustomButton
               link={`${listing.link}`}
               buttonText="View on Undermine Exchange"
-              rel="noopener noreferrer nofollow" // not working need to fix
             />
           </div>
         </div>
-        {listing.priceTimeData.length > 0 && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Price Over Time"
-              darkMode={darkmode}
-              data={listing.priceTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: listing.priceTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
-        {listing.quantityTimeData.length > 0 && (
-          <ContentContainer>
-            <GenericLineChart
-              chartTitle="Quantity Over Time"
-              darkMode={darkmode}
-              data={listing.quantityTimeData}
-              dataIterator={(val, ind) => [
-                makeTimeString({
-                  date: now,
-                  hoursToDeduct: listing.quantityTimeData.length - ind
-                }),
-                val
-              ]}
-              xCategories={xCategories}
-            />
-          </ContentContainer>
-        )}
+
+        {/* Lazy loaded charts */}
+        <LazyCharts listing={listing} darkmode={darkmode} now={now} />
+
         {/* Auctionhouse Listings Table or Out of Stock */}
         {listing.listingData.length === 0 ? (
           <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
@@ -264,91 +410,10 @@ export default function Index() {
   }
 }
 
-const GenericLineChart = ({
-  darkMode,
-  data,
-  chartTitle,
-  xTitle,
-  yTitle,
-  xLabelFormat,
-  yLabelFormat,
-  dataIterator,
-  xCategories
-}: {
-  darkMode: boolean
-  data: Array<number>
-  chartTitle?: string
-  xTitle?: string
-  yTitle?: string
-  xLabelFormat?: string
-  yLabelFormat?: string
-  dataIterator?: (value: number, index: number) => PointOptionsObject
-  xCategories?: Array<string>
-}) => {
-  const styles = darkMode
-    ? {
-        backgroundColor: '#334155',
-        color: 'white',
-        hoverColor: '#f8f8f8'
-      }
-    : {}
-  const options: Options = {
-    chart: {
-      type: 'line',
-      backgroundColor: styles?.backgroundColor
-    },
-    legend: {
-      itemStyle: { color: styles?.color },
-      align: 'center',
-      itemHoverStyle: { color: styles?.hoverColor }
-    },
-    title: {
-      text: chartTitle,
-      style: { color: styles?.color }
-    },
-    yAxis: {
-      title: {
-        text: yTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      labels: {
-        style: { color: styles?.color },
-        align: 'center',
-        format: yLabelFormat
-      },
-      lineColor: styles?.color
-    },
-    xAxis: {
-      title: {
-        text: xTitle,
-        style: {
-          color: styles?.color,
-          textAlign: 'center'
-        }
-      },
-      categories: xCategories,
-      labels: {
-        style: { color: styles?.color },
-        align: 'right',
-        format: xLabelFormat
-      },
-      lineColor: styles?.color
-    },
-    series: [
-      {
-        data: dataIterator ? data.map<PointOptionsObject>(dataIterator) : data,
-        name: chartTitle,
-        type: 'line'
-      }
-    ],
-    credits: {
-      enabled: false
-    }
-  }
-  return <HighchartsReact highcharts={Highcharts} options={options} />
+// Define the ListItem type for the table
+type ListItem = {
+  price: number
+  quantity: number
 }
 
 const columnList: Array<ColumnList<ListItem>> = [
