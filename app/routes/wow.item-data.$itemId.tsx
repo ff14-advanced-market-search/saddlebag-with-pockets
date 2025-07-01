@@ -12,7 +12,7 @@ import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CustomButton from '~/components/utilities/CustomButton'
 import Banner from '~/components/Common/Banner'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { ColumnList } from '~/components/types'
 
 // Lazy load Highcharts component
@@ -26,10 +26,27 @@ const LazyCharts = ({
   now: Date
 }) => {
   const [chartsLoaded, setChartsLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Check if device is mobile on component mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768) // 768px is typical mobile breakpoint
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const loadCharts = () => {
     setChartsLoaded(true)
   }
+
+  // Auto-load charts on desktop, require button click on mobile
+  const shouldShowButton = isMobile && !chartsLoaded
+  const shouldLoadCharts = !isMobile || chartsLoaded
 
   const makeTimeString = ({
     date,
@@ -52,7 +69,7 @@ const LazyCharts = ({
       })
   )
 
-  if (!chartsLoaded) {
+  if (shouldShowButton) {
     // Only show button if there's chart data to display
     if (
       listing.priceTimeData.length > 0 &&
@@ -69,6 +86,10 @@ const LazyCharts = ({
       )
     }
     // If no chart data, don't show anything
+    return null
+  }
+
+  if (!shouldLoadCharts) {
     return null
   }
 
