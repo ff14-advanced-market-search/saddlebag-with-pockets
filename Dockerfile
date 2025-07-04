@@ -14,3 +14,6 @@ RUN set -eux \
 COPY . .
 
 CMD ["yarn", "run", "dev"]
+
+test
+foobar
