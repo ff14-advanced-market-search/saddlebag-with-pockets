@@ -2,6 +2,8 @@ import type { PriceGroup } from '~/requests/WoW/WeeklyPriceGroupDelta'
 import PriceGroupForm from '~/components/form/WoW/PriceGroupForm'
 import { useState } from 'react'
 import ErrorPopup from '~/components/Common/ErrorPopup'
+import { wowStackableItems } from '~/utils/items/id_to_item'
+import { getItemIDByName } from '~/utils/items'
 
 interface PriceGroupsSectionProps {
   priceGroups: PriceGroup[]
@@ -69,6 +71,9 @@ export default function PriceGroupsSection({
     undefined
   )
   const [showErrorPopup, setShowErrorPopup] = useState(false)
+  const [currentItemNames, setCurrentItemNames] = useState<
+    Record<number, string>
+  >({})
 
   const handleAddPriceGroup = () => {
     if (priceGroups.length >= MAX_PRICE_GROUPS) {
@@ -84,6 +89,50 @@ export default function PriceGroupsSection({
         categories: []
       }
     ])
+  }
+
+  const handleItemSelect = (value: string, groupIndex: number) => {
+    const itemId = getItemIDByName(value.trim(), wowStackableItems)
+    if (itemId) {
+      const numericItemId = Number.parseInt(itemId)
+      const newGroups = [...priceGroups]
+      if (!newGroups[groupIndex].item_ids.includes(numericItemId)) {
+        newGroups[groupIndex].item_ids.push(numericItemId)
+        onPriceGroupsChange(newGroups)
+      }
+      setCurrentItemNames((prev) => ({ ...prev, [groupIndex]: '' }))
+    }
+  }
+
+  const handleRemoveItem = (groupIndex: number, itemId: number) => {
+    const newGroups = [...priceGroups]
+    newGroups[groupIndex].item_ids = newGroups[groupIndex].item_ids.filter(
+      (id) => id !== itemId
+    )
+    onPriceGroupsChange(newGroups)
+  }
+
+  const handleRemoveGroup = (index: number) => {
+    const newGroups = priceGroups.filter((_, i) => i !== index)
+    onPriceGroupsChange(newGroups)
+    setCurrentItemNames((prev) => {
+      const { [index]: _, ...rest } = prev
+      return rest
+    })
+  }
+
+  const handleGroupNameChange = (index: number, newName: string) => {
+    const newGroups = [...priceGroups]
+    newGroups[index].name = newName
+    onPriceGroupsChange(newGroups)
+    onError(undefined)
+  }
+
+  const handleCategoriesChange = (index: number, newCategories: any) => {
+    const newGroups = [...priceGroups]
+    newGroups[index].categories = newCategories
+    onPriceGroupsChange(newGroups)
+    onError(undefined)
   }
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -160,21 +209,20 @@ export default function PriceGroupsSection({
       {priceGroups.map((group, index) => (
         <PriceGroupForm
           key={index}
-          defaultValue={group}
-          onChange={(updatedGroup) => {
-            const newGroups = [...priceGroups]
-            newGroups[index] = updatedGroup
-            onPriceGroupsChange(newGroups)
-            onError(undefined)
-          }}
-          onRemove={
-            priceGroups.length > 1
-              ? () => {
-                  onPriceGroupsChange(priceGroups.filter((_, i) => i !== index))
-                  onError(undefined)
-                }
-              : undefined
+          group={group}
+          groupIndex={index}
+          currentItemName={currentItemNames[index] || ''}
+          onGroupNameChange={(newName) => handleGroupNameChange(index, newName)}
+          onItemSelect={(value) => handleItemSelect(value, index)}
+          onItemInputChange={(value) =>
+            setCurrentItemNames((prev) => ({ ...prev, [index]: value }))
           }
+          onRemoveItem={(itemId) => handleRemoveItem(index, itemId)}
+          onCategoriesChange={(newCategories) =>
+            handleCategoriesChange(index, newCategories)
+          }
+          onRemoveGroup={() => handleRemoveGroup(index)}
+          canRemove={priceGroups.length > 1}
         />
       ))}
       <button
