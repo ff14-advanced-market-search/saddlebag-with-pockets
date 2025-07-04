@@ -23,76 +23,31 @@ export interface PriceGroup {
 }
 
 interface PriceGroupFormProps {
-  defaultValue?: PriceGroup
-  onChange: (group: PriceGroup) => void
-  onRemove?: () => void
+  group: PriceGroup
+  groupIndex: number
+  currentItemName: string
+  onGroupNameChange: (newName: string) => void
+  onItemSelect: (value: string) => void
+  onItemInputChange: (value: string) => void
+  onRemoveItem: (itemId: number) => void
+  onCategoriesChange: (newCategories: PriceGroup['categories']) => void
+  onRemoveGroup: () => void
+  canRemove: boolean
 }
 
 const PriceGroupForm = ({
-  defaultValue,
-  onChange,
-  onRemove
+  group,
+  groupIndex,
+  currentItemName,
+  onGroupNameChange,
+  onItemSelect,
+  onItemInputChange,
+  onRemoveItem,
+  onCategoriesChange,
+  onRemoveGroup,
+  canRemove
 }: PriceGroupFormProps) => {
-  const [name, setName] = useState(defaultValue?.name || '')
-  const [itemIds, setItemIds] = useState<number[]>(defaultValue?.item_ids || [])
-  const [categories, setCategories] = useState(defaultValue?.categories || [])
-  const [currentItemName, setCurrentItemName] = useState('')
   const [showCategoryPopup, setShowCategoryPopup] = useState(false)
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newName = e.target.value
-    setName(newName)
-    onChange({
-      name: newName,
-      item_ids: itemIds,
-      categories
-    })
-  }
-
-  const handleItemSelect = (value: string) => {
-    setCurrentItemName(value)
-    const itemId = getItemIDByName(value.trim(), wowStackableItems)
-    if (itemId) {
-      const newIds = [...new Set([...itemIds, Number.parseInt(itemId)])]
-      setItemIds(newIds)
-      onChange({
-        name,
-        item_ids: newIds,
-        categories
-      })
-    }
-  }
-
-  const removeItem = (idToRemove: number) => {
-    const newIds = itemIds.filter((id) => id !== idToRemove)
-    setItemIds(newIds)
-    onChange({
-      name,
-      item_ids: newIds,
-      categories
-    })
-  }
-
-  const handleAddCategory = (newCategory: PriceGroup['categories'][0]) => {
-    // Check if this category already exists
-    const exists = categories.some(
-      (cat) =>
-        cat.item_class === newCategory.item_class &&
-        cat.item_subclass === newCategory.item_subclass &&
-        cat.expansion_number === newCategory.expansion_number &&
-        cat.min_quality === newCategory.min_quality
-    )
-
-    if (!exists) {
-      const updatedCategories = [...categories, newCategory]
-      setCategories(updatedCategories)
-      onChange({
-        name,
-        item_ids: itemIds,
-        categories: updatedCategories
-      })
-    }
-  }
 
   const getQualityDisplay = (quality: number): string => {
     switch (quality) {
@@ -137,9 +92,9 @@ const PriceGroupForm = ({
         <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
           Price Group
         </h3>
-        {onRemove && (
+        {canRemove && (
           <button
-            onClick={onRemove}
+            onClick={onRemoveGroup}
             className="text-red-500 hover:text-red-700"
             type="button">
             Remove
@@ -151,8 +106,8 @@ const PriceGroupForm = ({
         labelTitle="Group Name"
         name="groupName"
         type="text"
-        value={name}
-        onChange={handleNameChange}
+        value={group.name}
+        onChange={(e) => onGroupNameChange(e.target.value)}
         placeholder="e.g., Test IDs"
       />
 
@@ -160,20 +115,20 @@ const PriceGroupForm = ({
         <DebouncedSelectInput
           title="Add item by name (stackable commodity items only)"
           label="Item"
-          id="item-select"
+          id={`item-select-${groupIndex}`}
           selectOptions={wowStackableItemList}
-          onSelect={handleItemSelect}
+          onSelect={onItemSelect}
           displayValue={currentItemName}
         />
       </div>
 
-      {itemIds.length > 0 && (
+      {group.item_ids.length > 0 && (
         <div className="mt-4">
           <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
             Selected Items:
           </h4>
           <div className="space-y-2">
-            {itemIds.map((id) => {
+            {group.item_ids.map((id) => {
               const itemEntry = wowStackableItemList.find(
                 (item) => item.value === id.toString()
               )
@@ -190,7 +145,7 @@ const PriceGroupForm = ({
                   <button
                     type="button"
                     className="text-red-500 hover:text-red-700 text-sm"
-                    onClick={() => removeItem(id)}>
+                    onClick={() => onRemoveItem(id)}>
                     Remove
                   </button>
                 </div>
@@ -213,9 +168,9 @@ const PriceGroupForm = ({
           </button>
         </div>
 
-        {categories.length > 0 && (
+        {group.categories.length > 0 && (
           <div className="space-y-2">
-            {categories.map((cat, index) => {
+            {group.categories.map((cat, index) => {
               const { className, subclassName } = getClassAndSubclassNames(
                 cat.item_class,
                 cat.item_subclass
@@ -235,17 +190,12 @@ const PriceGroupForm = ({
                   </div>
                   <button
                     type="button"
-                    className="text-red-500 hover:text-red-700"
+                    className="text-red-500 hover:text-red-700 text-sm"
                     onClick={() => {
-                      const updatedCategories = categories.filter(
+                      const updatedCategories = group.categories.filter(
                         (_, i) => i !== index
                       )
-                      setCategories(updatedCategories)
-                      onChange({
-                        name,
-                        item_ids: itemIds,
-                        categories: updatedCategories
-                      })
+                      onCategoriesChange(updatedCategories)
                     }}>
                     Remove
                   </button>
@@ -259,7 +209,10 @@ const PriceGroupForm = ({
       {showCategoryPopup && (
         <CategorySelectionPopup
           onClose={() => setShowCategoryPopup(false)}
-          onAdd={handleAddCategory}
+          onAdd={(newCategory) => {
+            onCategoriesChange([...group.categories, newCategory])
+            setShowCategoryPopup(false)
+          }}
         />
       )}
     </div>
