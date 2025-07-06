@@ -10,6 +10,9 @@ export const FF14_WORLD = 'world'
 export const WOW_REGION = 'wow_region'
 export const WOW_REALM_ID = 'wow_realm_id'
 export const WOW_REALM_NAME = 'wow_realm_name'
+export const DISCORD_ID = 'discord_id'
+export const DISCORD_USERNAME = 'discord_username'
+export const DISCORD_AVATAR = 'discord_avatar'
 
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
