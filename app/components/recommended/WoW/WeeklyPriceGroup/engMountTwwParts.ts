@@ -7,7 +7,7 @@ const engMountTWW = {
     start_year: 2024,
     start_month: 8,
     start_day: 1,
-    end_year: 2025,
+    end_year: 2024,
     end_month: 11,
     end_day: 1,
     price_groups: [
