@@ -2,7 +2,7 @@ import type { LoaderFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const url = new URL(request.url)
   const code = url.searchParams.get('code')
   const error = url.searchParams.get('error')
@@ -15,8 +15,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     return redirect('/options?error=no_auth_code')
   }
 
-  const clientId = process.env.DISCORD_CLIENT_ID
-  const clientSecret = process.env.DISCORD_CLIENT_SECRET
+  const clientId = String(context.DISCORD_CLIENT_ID)
+  const clientSecret = String(context.DISCORD_CLIENT_SECRET)
   const redirectUri = `${url.protocol}//${url.host}/discord-callback`
 
   if (!clientId || !clientSecret) {
@@ -53,11 +53,16 @@ export const loader: LoaderFunction = async ({ request }) => {
       }
     })
 
+    console.log('[discord-callback] userResponse status:', userResponse.status)
+    const userText = await userResponse.clone().text()
+    console.log('[discord-callback] userResponse body:', userText)
+
     if (!userResponse.ok) {
       throw new Error('Failed to get user data from Discord')
     }
 
     const userData = await userResponse.json()
+    console.log('[discord-callback] userData:', userData)
 
     // Store user data in session
     const session = await getSession(request.headers.get('Cookie'))
@@ -71,7 +76,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       }
     })
   } catch (error) {
-    console.error('Discord OAuth error:', error)
+    console.error('[discord-callback] Discord OAuth error:', error)
     return redirect('/options?error=discord_auth_failed')
   }
 }

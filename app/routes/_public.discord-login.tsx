@@ -1,12 +1,12 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const url = new URL(request.url)
   const redirectUri = `${url.protocol}//${url.host}/discord-callback`
 
   // Discord OAuth configuration
-  const clientId = process.env.DISCORD_CLIENT_ID
+  const clientId = String(context.DISCORD_CLIENT_ID)
   const scope = 'identify'
 
   if (!clientId) {
