@@ -122,7 +122,8 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
       <p className="italic text-sm text-grey-500 px-3 dark:text-gray-300">
         This table shows the sale history for the last 7 days in your region by
         stack size. Including which stack size is most popular by number of
-        purchases and total quantity sold.
+        purchases (inddividual times people click on the buy button) and total
+        quantity sold (total of all quantity sold from all purchases).
       </p>
       <div className="overflow-x-auto my-2">
         <div className="inline-block min-w-full align-middle">
@@ -212,7 +213,7 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
                   { value: 'percent_of_sales', title: '% of Sales' },
                   {
                     value: 'percent_of_total_quantity_sold',
-                    title: '% of Total Sold'
+                    title: '% of Total Quantity Sold'
                   },
                   { value: 'stack_size', title: 'Stack Size' },
                   {
