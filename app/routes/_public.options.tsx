@@ -196,10 +196,24 @@ export default function Options() {
   const dispatch = useDispatch()
   const { darkmode } = useTypedSelector((state) => state.user)
 
-  // Get URL parameters for success/error messages
-  const url = new URL(typeof window !== 'undefined' ? window.location.href : '')
-  const success = url.searchParams.get('success')
-  const error = url.searchParams.get('error')
+  // Defensive: Only construct URL if window and location are defined
+  let success = null
+  let error = null
+  if (
+    typeof window !== 'undefined' &&
+    window.location &&
+    window.location.href
+  ) {
+    try {
+      const url = new URL(window.location.href)
+      success = url.searchParams.get('success')
+      error = url.searchParams.get('error')
+    } catch (e) {
+      // If URL construction fails, leave success/error as null
+      success = null
+      error = null
+    }
+  }
 
   const [ffxivWorld, setFfxivWorld] = useState<{
     data_center: string
@@ -308,6 +322,59 @@ export default function Options() {
           </div>
         </div>
         <OptionSection
+          title="Discord Account"
+          description="Connect your Discord account to access premium features and receive notifications."
+          hideHRule={true}>
+          {data.discordId ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                {data.discordAvatar && (
+                  <img
+                    src={`https://cdn.discordapp.com/avatars/${data.discordId}/${data.discordAvatar}.png`}
+                    alt="Discord Avatar"
+                    className="w-10 h-10 rounded-full"
+                  />
+                )}
+                <div>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    Connected as {data.discordUsername}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-300">
+                    Discord ID: {data.discordId}
+                  </p>
+                </div>
+              </div>
+              <RemixForm method="post" action="/discord-disconnect">
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-600 dark:text-gray-200 dark:border-gray-500 dark:hover:bg-slate-500">
+                  Disconnect
+                </button>
+              </RemixForm>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <DiscordIcon className="w-8 h-8 text-[#5865F2]" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    Not connected to Discord
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-300">
+                    Connect your Discord account to access premium features
+                  </p>
+                </div>
+              </div>
+              <a
+                href="/discord-login"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
+                <DiscordIcon className="w-4 h-4 mr-2" />
+                Connect Discord
+              </a>
+            </div>
+          )}
+        </OptionSection>
+        <OptionSection
           title="FFXIV World Selection"
           description="The selected server will change what marketplace your queries are run against.">
           <SelectDCandWorld
@@ -375,59 +442,6 @@ export default function Options() {
               </Switch>
             )}
           </Switch.Group>
-        </OptionSection>
-        <OptionSection
-          title="Discord Account"
-          description="Connect your Discord account to access premium features and receive notifications."
-          hideHRule={true}>
-          {data.discordId ? (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                {data.discordAvatar && (
-                  <img
-                    src={`https://cdn.discordapp.com/avatars/${data.discordId}/${data.discordAvatar}.png`}
-                    alt="Discord Avatar"
-                    className="w-10 h-10 rounded-full"
-                  />
-                )}
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Connected as {data.discordUsername}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-300">
-                    Discord ID: {data.discordId}
-                  </p>
-                </div>
-              </div>
-              <RemixForm method="post" action="/discord-disconnect">
-                <button
-                  type="submit"
-                  className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-600 dark:text-gray-200 dark:border-gray-500 dark:hover:bg-slate-500">
-                  Disconnect
-                </button>
-              </RemixForm>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <DiscordIcon className="w-8 h-8 text-[#5865F2]" />
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Not connected to Discord
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-300">
-                    Connect your Discord account to access premium features
-                  </p>
-                </div>
-              </div>
-              <a
-                href="/discord-login"
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
-                <DiscordIcon className="w-4 h-4 mr-2" />
-                Connect Discord
-              </a>
-            </div>
-          )}
         </OptionSection>
       </Form>
     </PageWrapper>
