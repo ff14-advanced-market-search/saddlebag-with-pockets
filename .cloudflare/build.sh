@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Echo all env vars for debugging (optional, remove if you don't want secrets in logs)
+# Echo all env vars for debugging
 echo "DISCORD_CLIENT_ID: $DISCORD_CLIENT_ID"
 echo "DISCORD_CLIENT_SECRET: $DISCORD_CLIENT_SECRET"
 echo "NODE_VERSION: $NODE_VERSION"
