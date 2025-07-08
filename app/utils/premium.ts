@@ -4,7 +4,7 @@ export const GUILD_ID = '973380473281724476'
 export const DISCORD_SERVER_URL =
   'https://discord.com/servers/saddlebag-exchange-973380473281724476'
 
-export const PREMIUM_ROLE_IDS = [
+export const PREMIUM_ROLE_IDS: readonly string[] = [
   '982062454433546291', // TEAM_ROLE_ID
   '982028821186371624', // PATREON_ROLE_ID
   '1043787711741431888', // FANCY_ROLE_ID
@@ -13,7 +13,7 @@ export const PREMIUM_ROLE_IDS = [
   '1210537409884848159', // DISCORD_FANCY_ROLE_ID
   '1211135581619490956', // DISCORD_SUPER_ROLE_ID
   '1211140468205944852' // DISCORD_ELITE_ROLE_ID
-]
+] as const
 
 export function getHasPremium(roles: string[] | undefined | null): boolean {
   if (!Array.isArray(roles)) return false

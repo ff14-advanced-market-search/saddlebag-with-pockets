@@ -190,7 +190,7 @@ const Index = () => {
           </SmallFormContainer>
         </PremiumPaywall>
       </div>
-      {listings && listings.listings && listings.listings.length > 0 && (
+      {listings?.listings?.length > 0 && (
         <>
           {resultTitle && <TitleH2 title={resultTitle} />}
           <Results data={listings} />

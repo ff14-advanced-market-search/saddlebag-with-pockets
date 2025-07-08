@@ -335,24 +335,26 @@ const IlvlShoppingListComponent = () => {
             onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
           />
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium dark:text-gray-200">
-              Desired Stats
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {AVAILABLE_STATS.map((stat) => (
-                <label key={stat} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    name="desiredStats"
-                    value={stat}
-                    checked={selectedStats.includes(stat)}
-                    onChange={() => handleStatToggle(stat)}
-                    className="form-checkbox h-4 w-4"
-                  />
-                  <span className="text-sm dark:text-gray-200">{stat}</span>
-                </label>
-              ))}
-            </div>
+            <fieldset className="flex flex-col gap-2">
+              <legend className="text-sm font-medium dark:text-gray-200">
+                Desired Stats
+              </legend>
+              <div className="flex flex-wrap gap-2">
+                {AVAILABLE_STATS.map((stat) => (
+                  <label key={stat} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="desiredStats"
+                      value={stat}
+                      checked={selectedStats.includes(stat)}
+                      onChange={() => handleStatToggle(stat)}
+                      className="form-checkbox h-4 w-4"
+                    />
+                    <span className="text-sm dark:text-gray-200">{stat}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
             Note: If the search button does not appear after you select your

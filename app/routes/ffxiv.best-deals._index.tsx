@@ -113,24 +113,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const cookie = request.headers.get('Cookie') || ''
 
-  // Debug logging
-  console.log('=== DISCORD SESSION DEBUG ===')
-  console.log('Cookie string:', cookie)
-  console.log('Session object:', session)
-
-  // Get Discord data directly from session
+  // Get Discord data from session
   const discordId = session.get('discord_id')
-  console.log('Discord ID from session:', discordId)
-
   const discordRoles = session.get('discord_roles') || []
-  console.log('Discord roles:', discordRoles)
-
   const isLoggedIn = !!discordId
-  console.log('Is logged in:', isLoggedIn)
-
   const hasPremium = getHasPremium(discordRoles)
-  console.log('Has premium:', hasPremium)
-  console.log('=== END DEBUG ===')
 
   const params = new URL(request.url).searchParams
 

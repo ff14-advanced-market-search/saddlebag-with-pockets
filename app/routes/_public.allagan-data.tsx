@@ -125,7 +125,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 }
 
-type ActionResponse = AllaganResults | { exception: string } | {}
+type ActionResponse = AllaganResults | { exception: string } | Record<string, never>
 
 const Index = () => {
   const transition = useNavigation()

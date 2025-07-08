@@ -40,6 +40,7 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
                 You must be logged in with Discord to use this feature.
               </p>
               <button
+                type="button"
                 onClick={onLogin}
                 className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
                 <DiscordIcon className="w-6 h-6 mr-2" />
@@ -57,6 +58,7 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
                 subscribers.
               </p>
               <button
+                type="button"
                 onClick={onSubscribe}
                 className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
                 <DiscordIcon className="w-6 h-6 mr-2" />
