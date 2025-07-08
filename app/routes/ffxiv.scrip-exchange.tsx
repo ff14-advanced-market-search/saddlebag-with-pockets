@@ -1,8 +1,13 @@
-import { useActionData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useNavigation,
+  useLoaderData,
+  useNavigate
+} from '@remix-run/react'
 import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -10,13 +15,18 @@ import { PageWrapper } from '~/components/Common'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
-import {
-  ScripExchangeRequest,
+import type {
   ScripExchangeResults
+} from '~/requests/FFXIV/scrip-exchange';
+import {
+  ScripExchangeRequest
 } from '~/requests/FFXIV/scrip-exchange'
-import { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
+import type { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import type { LoaderFunction } from '@remix-run/node'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -99,9 +109,28 @@ type ActionResponse =
   | { exception: string }
   | {}
 
+export const loader: LoaderFunction = async ({ request }) => {
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
+  return json({
+    isLoggedIn,
+    hasPremium
+  })
+}
+
 const FFXIVScripExchange = () => {
   const transition = useNavigation()
   const actionData = useActionData<ActionResponse>()
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+  }>()
+  const navigate = useNavigate()
   const [formState, setFormState] = useState<{ color: string }>({
     color: 'Orange Gatherers'
   })
@@ -144,10 +173,24 @@ const FFXIVScripExchange = () => {
     setFormState({ color: value })
   }
 
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
   return (
     <PageWrapper>
-      <>
-        <div className="py-3">
+      <div className="py-3">
+        <PremiumPaywall
+          show={showPaywall}
+          isLoggedIn={!!loaderData.isLoggedIn}
+          hasPremium={!!loaderData.hasPremium}
+          onLogin={handleLogin}
+          onSubscribe={handleSubscribe}>
           <SmallFormContainer
             title="Currency Conversion"
             onClick={onSubmit}
@@ -173,20 +216,20 @@ const FFXIVScripExchange = () => {
               />
             </>
           </SmallFormContainer>
-        </div>
-        {error === 'No results found' && (
-          <NoResults href={`/ffxiv-scrip-exchange`} />
-        )}
-        {data && (
-          <SmallTable
-            data={data}
-            columnList={columnList}
-            mobileColumnList={mobileColumnList}
-            columnSelectOptions={['itemName']}
-            sortingOrder={[{ id: 'valuePerScrip', desc: true }]}
-          />
-        )}
-      </>
+        </PremiumPaywall>
+      </div>
+      {error === 'No results found' && (
+        <NoResults href={`/ffxiv-scrip-exchange`} />
+      )}
+      {data && (
+        <SmallTable
+          data={data}
+          columnList={columnList}
+          mobileColumnList={mobileColumnList}
+          columnSelectOptions={['itemName']}
+          sortingOrder={[{ id: 'valuePerScrip', desc: true }]}
+        />
+      )}
     </PageWrapper>
   )
 }

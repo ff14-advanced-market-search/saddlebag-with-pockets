@@ -33,11 +33,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  PREMIUM_ROLE_IDS,
-  getHasPremium,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 const PAGE_URL = '/ffxiv/best-deals'
 
