@@ -5,7 +5,12 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import DateCell from '~/components/FFXIVResults/FullScan/DateCell'
@@ -20,8 +25,10 @@ import ItemDataLink from '~/components/utilities/ItemDataLink'
 import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
 import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import DebouncedInput from '~/components/Common/DebouncedInput'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -41,10 +48,18 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
+  // Get Discord session info
+  const rawSession = await getSession(request.headers.get('Cookie'))
+  const discordId = rawSession.get('discord_id')
+  const discordRoles = rawSession.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
 
   return json({
     world: session.getWorld(),
-    data_center: session.getDataCenter()
+    data_center: session.getDataCenter(),
+    isLoggedIn,
+    hasPremium
   })
 }
 
@@ -70,9 +85,15 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Index() {
   const transition = useNavigation()
-  const loaderData = useLoaderData<{ server: string; dataCenter: string }>()
+  const loaderData = useLoaderData<{
+    server: string
+    dataCenter: string
+    isLoggedIn: boolean
+    hasPremium: boolean
+  }>()
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
+  const navigate = useNavigate()
 
   const error =
     results && 'exception' in results ? results.exception : undefined
@@ -87,27 +108,46 @@ export default function Index() {
     }
   }
 
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Self Purchase Items"
-        error={error}
-        loading={loading}
-        onClick={(e) => {
-          if (loading) {
-            e.preventDefault()
-          }
-        }}>
-        <div className="py-2">
-          <SelectDCandWorld navigation={transition} sessionData={loaderData} />
-        </div>
-        <InputWithLabel
-          type="text"
-          name="playerName"
-          labelTitle="Player Name"
-          toolTip="The name of your player"
-        />
-      </SmallFormContainer>
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!loaderData.isLoggedIn}
+        hasPremium={!!loaderData.hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <SmallFormContainer
+          title="Self Purchase Items"
+          error={error}
+          loading={loading}
+          onClick={(e) => {
+            if (loading) {
+              e.preventDefault()
+            }
+          }}>
+          <div className="py-2">
+            <SelectDCandWorld
+              navigation={transition}
+              sessionData={loaderData}
+            />
+          </div>
+          <InputWithLabel
+            type="text"
+            name="playerName"
+            labelTitle="Player Name"
+            toolTip="The name of your player"
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }
