@@ -353,8 +353,9 @@ export default function Options() {
                         DISCORD_FANCY_ROLE_ID: '1210537409884848159',
                         DISCORD_SUPER_ROLE_ID: '1211135581619490956',
                         DISCORD_ELITE_ROLE_ID: '1211140468205944852'
-                      }
-                      const roleIcons = {
+                      } as const
+                      type RoleKey = keyof typeof SPECIAL_ROLES
+                      const roleIcons: Record<RoleKey, string> = {
                         TEAM_ROLE_ID: '🛡️',
                         PATREON_ROLE_ID: '🧡',
                         FANCY_ROLE_ID: '✨',
@@ -363,10 +364,24 @@ export default function Options() {
                         DISCORD_SUPER_ROLE_ID: '🏆',
                         DISCORD_ELITE_ROLE_ID: '👑'
                       }
-                      return Object.entries(SPECIAL_ROLES)
+                      const roleNames: Record<RoleKey, string> = {
+                        TEAM_ROLE_ID: 'Team',
+                        PATREON_ROLE_ID: 'Patreon',
+                        FANCY_ROLE_ID: 'Fancy',
+                        SUPER_ROLE_ID: 'Super',
+                        DISCORD_FANCY_ROLE_ID: 'Discord Fancy',
+                        DISCORD_SUPER_ROLE_ID: 'Discord Super',
+                        DISCORD_ELITE_ROLE_ID: 'Discord Elite'
+                      }
+                      return (
+                        Object.entries(SPECIAL_ROLES) as [RoleKey, string][]
+                      )
                         .filter(([key, id]) => data.discordRoles.includes(id))
                         .map(([key]) => (
-                          <span key={key} title={key} className="text-lg">
+                          <span
+                            key={key}
+                            title={roleNames[key]}
+                            className="text-lg">
                             {roleIcons[key] || '🔑'}
                           </span>
                         ))
