@@ -25,9 +25,11 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
       <div className="pointer-events-none filter blur-sm select-none opacity-60">
         {children}
       </div>
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black bg-opacity-70">
-        <div className="mt-24" />
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-8 flex flex-col items-center max-w-md w-full">
+      <div
+        className="absolute top-0 left-0 w-full h-full z-20 flex flex-col items-center justify-center bg-black bg-opacity-60"
+        style={{ pointerEvents: 'auto' }}>
+        <div className="mt-8 sm:mt-16 md:mt-24" />
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 sm:p-8 flex flex-col items-center max-w-md w-full mx-2">
           {!isLoggedIn ? (
             <>
               <DiscordIcon className="w-16 h-16 text-[#5865F2] mb-4" />
