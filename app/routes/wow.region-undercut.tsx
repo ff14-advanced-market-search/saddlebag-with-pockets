@@ -1,4 +1,8 @@
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  MetaFunction,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import { PageWrapper } from '~/components/Common'

@@ -111,7 +111,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   // Get Discord session info - use getSession directly
   const session = await getSession(request.headers.get('Cookie'))
-  const cookie = request.headers.get('Cookie') || ''
 
   // Get Discord data from session
   const discordId = session.get('discord_id')

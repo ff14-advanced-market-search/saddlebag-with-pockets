@@ -43,17 +43,24 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { getWoWSessionData } = await getUserSessionData(request)
-  const { server, region } = getWoWSessionData()
-
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-
-  return json({ wowRealm: server, wowRegion: region, isLoggedIn, hasPremium })
+  try {
+    const { getWoWSessionData } = await getUserSessionData(request)
+    const { server, region } = getWoWSessionData()
+    const session = await getSession(request.headers.get('Cookie'))
+    const discordId = session?.get('discord_id')
+    const discordRoles = session?.get('discord_roles') || []
+    const isLoggedIn = !!discordId
+    const hasPremium = getHasPremium(discordRoles)
+    return json({ wowRealm: server, wowRegion: region, isLoggedIn, hasPremium })
+  } catch (err) {
+    // Fallback to safe defaults if session retrieval fails
+    return json({
+      wowRealm: null,
+      wowRegion: null,
+      isLoggedIn: false,
+      hasPremium: false
+    })
+  }
 }
 
 export const action: ActionFunction = async ({ request }) => {

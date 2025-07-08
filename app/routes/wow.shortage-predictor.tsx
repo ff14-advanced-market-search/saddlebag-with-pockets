@@ -293,9 +293,9 @@ const Index = () => {
               min={0}
               step={0.01}
               toolTip="Find items that on average sell for this amount of gold or more."
-              onChange={(e) =>
+              onChange={(e) => {
                 handleFormChange('desiredAvgPrice', e.target.value)
-              }
+              }}
             />
             <InputWithLabel
               defaultValue={loaderData.desiredSalesPerDay}
