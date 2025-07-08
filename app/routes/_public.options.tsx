@@ -239,7 +239,8 @@ export default function Options() {
       {(success || error) && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
           {(success === 'discord_connected' ||
-            success === 'discord_disconnected') && (
+            success === 'discord_disconnected' ||
+            success === 'discord_roles_refreshed') && (
             <div className="rounded-md bg-green-50 p-4 border border-green-200 dark:bg-green-900 dark:border-green-700">
               <div className="flex">
                 <div className="flex-shrink-0">
@@ -252,7 +253,9 @@ export default function Options() {
                   <p className="text-sm font-medium text-green-800 dark:text-green-200">
                     {success === 'discord_connected'
                       ? 'Successfully connected to Discord!'
-                      : 'Successfully disconnected from Discord!'}
+                      : success === 'discord_disconnected'
+                      ? 'Successfully disconnected from Discord!'
+                      : 'Successfully refreshed Discord roles!'}
                   </p>
                 </div>
               </div>
@@ -276,6 +279,29 @@ export default function Options() {
                 <div className="ml-3">
                   <p className="text-sm font-medium text-red-800 dark:text-red-200">
                     Failed to connect to Discord. Please try again.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+          {error === 'discord_roles_refresh_failed' && (
+            <div className="rounded-md bg-red-50 p-4 border border-red-200 dark:bg-red-900 dark:border-red-700">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-5 w-5 text-red-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                    Failed to refresh Discord roles. Please try again.
                   </p>
                 </div>
               </div>
@@ -343,13 +369,15 @@ export default function Options() {
                   <p className="text-xs text-gray-500 dark:text-gray-300">
                     Discord ID: {data.discordId}
                   </p>
-                  <div className="flex space-x-2 mt-1">
+                  <div className="flex space-x-2 mt-1 text-xs text-gray-500 dark:text-gray-300">
+                    Roles:{' '}
                     {(() => {
                       const SPECIAL_ROLES = {
                         TEAM_ROLE_ID: '982062454433546291',
                         PATREON_ROLE_ID: '982028821186371624',
                         FANCY_ROLE_ID: '1043787711741431888',
                         SUPER_ROLE_ID: '1043787958412640296',
+                        ELITE_ROLE_ID: '1209734479581552731',
                         DISCORD_FANCY_ROLE_ID: '1210537409884848159',
                         DISCORD_SUPER_ROLE_ID: '1211135581619490956',
                         DISCORD_ELITE_ROLE_ID: '1211140468205944852'
@@ -359,16 +387,18 @@ export default function Options() {
                         TEAM_ROLE_ID: '🛡️',
                         PATREON_ROLE_ID: '🧡',
                         FANCY_ROLE_ID: '✨',
-                        SUPER_ROLE_ID: '💎',
+                        SUPER_ROLE_ID: '👑',
+                        ELITE_ROLE_ID: '💎',
                         DISCORD_FANCY_ROLE_ID: '🌟',
-                        DISCORD_SUPER_ROLE_ID: '🏆',
-                        DISCORD_ELITE_ROLE_ID: '👑'
+                        DISCORD_SUPER_ROLE_ID: '👑',
+                        DISCORD_ELITE_ROLE_ID: '💎'
                       }
                       const roleNames: Record<RoleKey, string> = {
                         TEAM_ROLE_ID: 'Team',
                         PATREON_ROLE_ID: 'Patreon',
                         FANCY_ROLE_ID: 'Fancy',
                         SUPER_ROLE_ID: 'Super',
+                        ELITE_ROLE_ID: 'Elite',
                         DISCORD_FANCY_ROLE_ID: 'Discord Fancy',
                         DISCORD_SUPER_ROLE_ID: 'Discord Super',
                         DISCORD_ELITE_ROLE_ID: 'Discord Elite'
@@ -389,7 +419,23 @@ export default function Options() {
                   </div>
                 </div>
               </div>
-              <RemixForm method="post" action="/discord-disconnect">
+              <RemixForm
+                method="post"
+                action="/refresh-discord-roles"
+                className="ml-2">
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-3 py-2 border border-blue-300 rounded-md shadow-sm text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-blue-200 dark:border-blue-500 dark:hover:bg-slate-600"
+                  disabled={transition.state === 'submitting'}>
+                  {transition.state === 'submitting'
+                    ? 'Refreshing...'
+                    : 'Refresh Roles'}
+                </button>
+              </RemixForm>
+              <RemixForm
+                method="post"
+                action="/discord-disconnect"
+                className="flex space-x-2">
                 <button
                   type="submit"
                   className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-600 dark:text-gray-200 dark:border-gray-500 dark:hover:bg-slate-500">
