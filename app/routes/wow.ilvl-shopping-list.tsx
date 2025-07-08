@@ -20,7 +20,8 @@ import {
   useActionData,
   useNavigation,
   useSearchParams,
-  useLoaderData
+  useLoaderData,
+  useNavigate
 } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
@@ -39,6 +40,9 @@ import {
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -117,6 +121,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
   const params = url.searchParams
 
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
   const itemID = params.get('itemId')
   const maxPurchasePrice = params.get('maxPurchasePrice') || '10000000'
   const desiredMinIlvl = params.get('desiredMinIlvl') || '610'
@@ -143,7 +154,9 @@ export const loader: LoaderFunction = async ({ request }) => {
         exception: parseZodErrorsToDisplayString(
           validatedFormData.error,
           inputMap
-        )
+        ),
+        isLoggedIn,
+        hasPremium
       })
     }
 
@@ -159,11 +172,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     return json({
       ...(await result.json()),
       sortby: 'price',
-      formValues: { ...validatedFormData.data, desiredStats }
+      formValues: { ...validatedFormData.data, desiredStats },
+      isLoggedIn,
+      hasPremium
     })
   }
 
-  return json({})
+  return json({ isLoggedIn, hasPremium })
 }
 
 type LoaderResponseType =
@@ -186,7 +201,9 @@ type ActionResponseType =
 
 const IlvlShoppingListComponent = () => {
   const actionData = useActionData<ActionResponseType>()
-  const loaderData = useLoaderData<LoaderResponseType>()
+  const loaderData = useLoaderData<
+    LoaderResponseType & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
   const [searchParams] = useSearchParams()
   const result = actionData ?? loaderData
   const transition = useNavigation()
@@ -195,11 +212,21 @@ const IlvlShoppingListComponent = () => {
   const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('610')
   const [itemID, setItemID] = useState<string>('')
   const [selectedStats, setSelectedStats] = useState<ItemStat[]>([])
+  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
 
   const error =
     result && 'exception' in result ? (result.exception as string) : undefined
+
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
 
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')
@@ -250,83 +277,90 @@ const IlvlShoppingListComponent = () => {
   }
 
   const renderForm = () => (
-    <SmallFormContainer
-      title="Item Level Shopping List"
-      description={`
-        Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
-        Supports the following items:
-        - Undermine Merc's Dog Tags
-        - Psychopath's Ravemantle 
-        - Vatwork Janitor's Wasteband
-        - Mechgineer's Blowtorch Cover
-        - Firebug's Anklegear
-        - Loyalist's Holdout Hood
-        - Midnight Lounge Cummerbund
-        - Bootleg Wrynn Shoulderplates
-        - Globlin-Fused Greatbelt
-      `}
-      onClick={handleSubmit}
-      error={error}
-      loading={isSubmitting}
-      disabled={!itemID}
-      action={getActionUrl(PAGE_URL, {
-        itemId: itemID,
-        maxPurchasePrice,
-        desiredMinIlvl,
-        desiredStats: selectedStats
-      })}>
-      <div className="pt-3 flex flex-col gap-4">
-        <DebouncedSelectInput
-          title={'Item to search for'}
-          label="Item"
-          id="export-item-select"
-          selectOptions={wowItemsList}
-          onSelect={handleSelect}
-          displayValue={itemName}
-        />
-        <input hidden name="itemID" value={itemID} />
-        <InputWithLabel
-          labelTitle="Maximum Purchase Price"
-          name="maxPurchasePrice"
-          type="number"
-          value={maxPurchasePrice}
-          min={0}
-          onChange={(e) => setMaxPurchasePrice(e.currentTarget.value)}
-        />
-        <InputWithLabel
-          labelTitle="Minimum Item Level"
-          name="desiredMinIlvl"
-          type="number"
-          value={desiredMinIlvl}
-          min={0}
-          onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
-        />
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium dark:text-gray-200">
-            Desired Stats
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {AVAILABLE_STATS.map((stat) => (
-              <label key={stat} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="desiredStats"
-                  value={stat}
-                  checked={selectedStats.includes(stat)}
-                  onChange={() => handleStatToggle(stat)}
-                  className="form-checkbox h-4 w-4"
-                />
-                <span className="text-sm dark:text-gray-200">{stat}</span>
-              </label>
-            ))}
+    <PremiumPaywall
+      show={showPaywall}
+      isLoggedIn={!!loaderData.isLoggedIn}
+      hasPremium={!!loaderData.hasPremium}
+      onLogin={handleLogin}
+      onSubscribe={handleSubscribe}>
+      <SmallFormContainer
+        title="Item Level Shopping List"
+        description={`
+          Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
+          Supports the following items:
+          - Undermine Merc's Dog Tags
+          - Psychopath's Ravemantle 
+          - Vatwork Janitor's Wasteband
+          - Mechgineer's Blowtorch Cover
+          - Firebug's Anklegear
+          - Loyalist's Holdout Hood
+          - Midnight Lounge Cummerbund
+          - Bootleg Wrynn Shoulderplates
+          - Globlin-Fused Greatbelt
+        `}
+        onClick={handleSubmit}
+        error={error}
+        loading={isSubmitting}
+        disabled={!itemID}
+        action={getActionUrl(PAGE_URL, {
+          itemId: itemID,
+          maxPurchasePrice,
+          desiredMinIlvl,
+          desiredStats: selectedStats
+        })}>
+        <div className="pt-3 flex flex-col gap-4">
+          <DebouncedSelectInput
+            title={'Item to search for'}
+            label="Item"
+            id="export-item-select"
+            selectOptions={wowItemsList}
+            onSelect={handleSelect}
+            displayValue={itemName}
+          />
+          <input hidden name="itemID" value={itemID} />
+          <InputWithLabel
+            labelTitle="Maximum Purchase Price"
+            name="maxPurchasePrice"
+            type="number"
+            value={maxPurchasePrice}
+            min={0}
+            onChange={(e) => setMaxPurchasePrice(e.currentTarget.value)}
+          />
+          <InputWithLabel
+            labelTitle="Minimum Item Level"
+            name="desiredMinIlvl"
+            type="number"
+            value={desiredMinIlvl}
+            min={0}
+            onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
+          />
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium dark:text-gray-200">
+              Desired Stats
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {AVAILABLE_STATS.map((stat) => (
+                <label key={stat} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    name="desiredStats"
+                    value={stat}
+                    checked={selectedStats.includes(stat)}
+                    onChange={() => handleStatToggle(stat)}
+                    className="form-checkbox h-4 w-4"
+                  />
+                  <span className="text-sm dark:text-gray-200">{stat}</span>
+                </label>
+              ))}
+            </div>
           </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
+            Note: If the search button does not appear after you select your
+            item, try refreshing the page.
+          </p>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
-          Note: If the search button does not appear after you select your item,
-          try refreshing the page.
-        </p>
-      </div>
-    </SmallFormContainer>
+      </SmallFormContainer>
+    </PremiumPaywall>
   )
 
   const hasSearched =

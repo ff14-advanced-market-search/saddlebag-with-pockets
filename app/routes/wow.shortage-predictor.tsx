@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
@@ -34,6 +39,9 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import { getSession } from '~/sessions'
 
 const PAGE_URL = '/wow/shortage-predictor'
 
@@ -132,6 +140,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
 
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
   const params = new URL(request.url).searchParams
 
   const validateFormData = z.object({
@@ -184,18 +199,23 @@ export const loader: LoaderFunction = async ({ request }) => {
   const validInput = validateFormData.safeParse(input)
   if (validInput.success) {
     const responseData = {
-      ...validInput.data
+      ...validInput.data,
+      isLoggedIn,
+      hasPremium
     }
     return json(responseData)
   }
 
-  return json(defaultFormValues)
+  return json({ ...defaultFormValues, isLoggedIn, hasPremium })
 }
 
 const Index = () => {
   const transition = useNavigation()
+  const navigate = useNavigate()
 
-  const loaderData = useLoaderData<typeof defaultFormValues>()
+  const loaderData = useLoaderData<
+    typeof defaultFormValues & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
     ...loaderData
   })
@@ -211,9 +231,9 @@ const Index = () => {
 
   const handleFormChange = (
     name: keyof typeof defaultFormValues,
-    value: string
+    value: string | boolean | number[]
   ) => {
-    handleSearchParamChange(name, value)
+    handleSearchParamChange(name, value.toString())
     setSearchParams((prev) => ({ ...prev, [name]: value }))
   }
 
@@ -226,112 +246,130 @@ const Index = () => {
       return <Results results={results} pageTitle={pageTitle} />
     }
   }
+
   const error =
     results && 'exception' in results ? results.exception : undefined
+
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title={pageTitle}
-        description={pageDescription}
-        onClick={onSubmit}
-        error={error}
-        loading={loading}
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
-            <SubmitButton
-              title="Share this search!"
-              onClick={handleCopyButton}
-              type="button"
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!loaderData.isLoggedIn}
+        hasPremium={!!loaderData.hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <SmallFormContainer
+          title={pageTitle}
+          description={pageDescription}
+          onClick={onSubmit}
+          error={error}
+          loading={loading}
+          action={getActionUrl(PAGE_URL, searchParams)}>
+          <div className="pt-2">
+            <div className="flex justify-end mb-2">
+              <SubmitButton
+                title="Share this search!"
+                onClick={handleCopyButton}
+                type="button"
+              />
+            </div>
+          </div>
+          <div className="pt-2 md:pt-4">
+            <InputWithLabel
+              defaultValue={loaderData.desiredAvgPrice}
+              labelTitle={inputMap.desiredAvgPrice}
+              type="number"
+              inputTag="Gold"
+              name="desiredAvgPrice"
+              min={0}
+              step={0.01}
+              toolTip="Find items that on average sell for this amount of gold or more."
+              onChange={(e) =>
+                handleFormChange('desiredAvgPrice', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.desiredSalesPerDay}
+              labelTitle={inputMap.desiredSalesPerDay}
+              type="number"
+              inputTag="Sales"
+              name="desiredSalesPerDay"
+              min={0}
+              toolTip="Finds items that have this many sales per day."
+              onChange={(e) =>
+                handleFormChange('desiredSalesPerDay', e.target.value)
+              }
+            />
+            <ItemQualitySelect
+              defaultValue={loaderData.itemQuality}
+              onChange={(value) => handleFormChange('itemQuality', value)}
+            />
+            <ExpansionSelect
+              defaultValue={loaderData.expansionNumber}
+              onChange={(value) => handleFormChange('expansionNumber', value)}
+            />
+            <ItemClassSelect
+              itemClass={parseInt(loaderData.itemClass)}
+              itemSubClass={parseInt(loaderData.itemSubClass)}
+              onChange={(itemClassValue, itemSubClassValue) => {
+                handleFormChange('itemClass', itemClassValue.toString())
+                handleFormChange('itemSubClass', itemSubClassValue.toString())
+              }}
+              itemClassesOverride={getCommodityItemClasses()}
+            />
+            <RegionAndServerSelect
+              serverSelectFormName="homeRealmName"
+              region={loaderData.region as WoWServerRegion}
+              defaultRealm={
+                {
+                  id: parseInt(loaderData.homeRealmName.split('---')[0], 10),
+                  name: loaderData.homeRealmName.split('---')[1]
+                } as WoWServerData
+              }
+              regionOnChange={(region) => handleFormChange('region', region)}
+              onServerSelectChange={(realm) =>
+                handleFormChange(
+                  'homeRealmName',
+                  realm ? `${realm.id}---${realm.name}` : ''
+                )
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.desiredPriceVsAvgPercent}
+              type="number"
+              labelTitle={inputMap.desiredPriceVsAvgPercent}
+              inputTag="%"
+              name="desiredPriceVsAvgPercent"
+              min={0}
+              toolTip="What is the maximum price spike to look for? 120% is to only find item that are at most 20% above the average price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher."
+              onChange={(e) =>
+                handleFormChange('desiredPriceVsAvgPercent', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.desiredQuantityVsAvgPercent}
+              type="number"
+              labelTitle={inputMap.desiredQuantityVsAvgPercent}
+              inputTag="%"
+              name="desiredQuantityVsAvgPercent"
+              min={0}
+              toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
+              onChange={(e) =>
+                handleFormChange('desiredQuantityVsAvgPercent', e.target.value)
+              }
             />
           </div>
-        </div>
-        <div className="pt-2 md:pt-4">
-          <InputWithLabel
-            defaultValue={loaderData.desiredAvgPrice}
-            labelTitle={inputMap.desiredAvgPrice}
-            type="number"
-            inputTag="Gold"
-            name="desiredAvgPrice"
-            min={0}
-            step={0.01}
-            toolTip="Find items that on average sell for this amount of gold or more."
-            onChange={(e) =>
-              handleFormChange('desiredAvgPrice', e.target.value)
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.desiredSalesPerDay}
-            labelTitle={inputMap.desiredSalesPerDay}
-            type="number"
-            inputTag="Sales"
-            name="desiredSalesPerDay"
-            min={0}
-            toolTip="Finds items that have this many sales per day."
-            onChange={(e) =>
-              handleFormChange('desiredSalesPerDay', e.target.value)
-            }
-          />
-          <ItemQualitySelect
-            defaultValue={loaderData.itemQuality}
-            onChange={(value) => handleFormChange('itemQuality', value)}
-          />
-          <ExpansionSelect
-            defaultValue={loaderData.expansionNumber}
-            onChange={(value) => handleFormChange('expansionNumber', value)}
-          />
-          <ItemClassSelect
-            itemClass={parseInt(loaderData.itemClass)}
-            itemSubClass={parseInt(loaderData.itemSubClass)}
-            onChange={(itemClassValue, itemSubClassValue) => {
-              handleFormChange('itemClass', itemClassValue.toString())
-              handleFormChange('itemSubClass', itemSubClassValue.toString())
-            }}
-            itemClassesOverride={getCommodityItemClasses()}
-          />
-          <RegionAndServerSelect
-            serverSelectFormName="homeRealmName"
-            region={loaderData.region as WoWServerRegion}
-            defaultRealm={
-              {
-                id: parseInt(loaderData.homeRealmName.split('---')[0], 10),
-                name: loaderData.homeRealmName.split('---')[1]
-              } as WoWServerData
-            }
-            regionOnChange={(region) => handleFormChange('region', region)}
-            onServerSelectChange={(realm) =>
-              handleFormChange(
-                'homeRealmName',
-                realm ? `${realm.id}---${realm.name}` : ''
-              )
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.desiredPriceVsAvgPercent}
-            type="number"
-            labelTitle={inputMap.desiredPriceVsAvgPercent}
-            inputTag="%"
-            name="desiredPriceVsAvgPercent"
-            min={0}
-            toolTip="What is the maximum price spike to look for? 120% is to only find item that are at most 20% above the average price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher."
-            onChange={(e) =>
-              handleFormChange('desiredPriceVsAvgPercent', e.target.value)
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.desiredQuantityVsAvgPercent}
-            type="number"
-            labelTitle={inputMap.desiredQuantityVsAvgPercent}
-            inputTag="%"
-            name="desiredQuantityVsAvgPercent"
-            min={0}
-            toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
-            onChange={(e) =>
-              handleFormChange('desiredQuantityVsAvgPercent', e.target.value)
-            }
-          />
-        </div>
-      </SmallFormContainer>
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

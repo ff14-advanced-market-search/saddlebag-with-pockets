@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
@@ -18,9 +23,11 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import { useState } from 'react'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 export const validateShortageData = (
   formData: FormData
@@ -177,13 +184,24 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
-  return json({ wowRealm: server, wowRegion: region })
+
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
+  return json({ wowRealm: server, wowRegion: region, isLoggedIn, hasPremium })
 }
 
 const Index = () => {
   const transition = useNavigation()
   const results = useActionData<WowShortageResult>()
-  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const { wowRealm, wowRegion, isLoggedIn, hasPremium } = useLoaderData<
+    WoWLoaderData & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
+  const navigate = useNavigate()
 
   const [serverName, setServerName] = useState<string>(wowRealm.name)
 
@@ -191,6 +209,15 @@ const Index = () => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
+  }
+
+  // Paywall logic
+  const showPaywall = !isLoggedIn || !hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
   }
 
   if (results) {
@@ -211,26 +238,33 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Commodity Shortage finder"
-        onClick={onSubmit}
-        loading={transition.state === 'submitting'}
-        disabled={transition.state === 'submitting'}
-        error={
-          results && 'exception' in results ? results.exception : undefined
-        }>
-        <WoWShortageFormFields />
-        <RegionAndServerSelect
-          region={wowRegion}
-          serverSelectFormName="homeRealmId"
-          defaultRealm={wowRealm}
-          serverSelectTitle="Home Server"
-          onServerSelectChange={(selectValue) => {
-            if (selectValue) setServerName(selectValue.name)
-          }}
-          serverSelectTooltip="Select your home world server, type to begin selection."
-        />
-      </SmallFormContainer>
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!isLoggedIn}
+        hasPremium={!!hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <SmallFormContainer
+          title="Commodity Shortage finder"
+          onClick={onSubmit}
+          loading={transition.state === 'submitting'}
+          disabled={transition.state === 'submitting'}
+          error={
+            results && 'exception' in results ? results.exception : undefined
+          }>
+          <WoWShortageFormFields />
+          <RegionAndServerSelect
+            region={wowRegion}
+            serverSelectFormName="homeRealmId"
+            defaultRealm={wowRealm}
+            serverSelectTitle="Home Server"
+            onServerSelectChange={(selectValue) => {
+              if (selectValue) setServerName(selectValue.name)
+            }}
+            serverSelectTooltip="Select your home world server, type to begin selection."
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }
