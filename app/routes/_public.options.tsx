@@ -184,7 +184,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     wowRegion: region,
     discordId: session.get('discord_id'),
     discordUsername: session.get('discord_username'),
-    discordAvatar: session.get('discord_avatar')
+    discordAvatar: session.get('discord_avatar'),
+    discordRoles: session.get('discord_roles') || []
   })
 }
 
@@ -342,6 +343,35 @@ export default function Options() {
                   <p className="text-xs text-gray-500 dark:text-gray-300">
                     Discord ID: {data.discordId}
                   </p>
+                  <div className="flex space-x-2 mt-1">
+                    {(() => {
+                      const SPECIAL_ROLES = {
+                        TEAM_ROLE_ID: '982062454433546291',
+                        PATREON_ROLE_ID: '982028821186371624',
+                        FANCY_ROLE_ID: '1043787711741431888',
+                        SUPER_ROLE_ID: '1043787958412640296',
+                        DISCORD_FANCY_ROLE_ID: '1210537409884848159',
+                        DISCORD_SUPER_ROLE_ID: '1211135581619490956',
+                        DISCORD_ELITE_ROLE_ID: '1211140468205944852'
+                      }
+                      const roleIcons = {
+                        TEAM_ROLE_ID: '🛡️',
+                        PATREON_ROLE_ID: '🧡',
+                        FANCY_ROLE_ID: '✨',
+                        SUPER_ROLE_ID: '💎',
+                        DISCORD_FANCY_ROLE_ID: '🌟',
+                        DISCORD_SUPER_ROLE_ID: '🏆',
+                        DISCORD_ELITE_ROLE_ID: '👑'
+                      }
+                      return Object.entries(SPECIAL_ROLES)
+                        .filter(([key, id]) => data.discordRoles.includes(id))
+                        .map(([key]) => (
+                          <span key={key} title={key} className="text-lg">
+                            {roleIcons[key] || '🔑'}
+                          </span>
+                        ))
+                    })()}
+                  </div>
                 </div>
               </div>
               <RemixForm method="post" action="/discord-disconnect">

@@ -70,6 +70,24 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     session.set('discord_username', userData.username)
     session.set('discord_avatar', userData.avatar)
 
+    // Fetch user roles from the guild using the bot token
+    const GUILD_ID = '973380473281724476' // Saddlebag Exchange
+    const botToken = context.DISCORD_BOT_TOKEN
+    let discordRoles = []
+    if (botToken && userData.id) {
+      const memberResp = await fetch(
+        `https://discord.com/api/v10/guilds/${GUILD_ID}/members/${userData.id}`,
+        {
+          headers: { Authorization: `Bot ${botToken}` }
+        }
+      )
+      if (memberResp.ok) {
+        const memberData = await memberResp.json()
+        discordRoles = Array.isArray(memberData.roles) ? memberData.roles : []
+      }
+    }
+    session.set('discord_roles', discordRoles)
+
     return redirect('/options?success=discord_connected', {
       headers: {
         'Set-Cookie': await commitSession(session)
