@@ -42,6 +42,13 @@ import { PageWrapper } from '~/components/Common'
 import { setCookie } from '~/utils/cookies'
 import Banner from '~/components/Common/Banner'
 import DiscordIcon from '~/icons/DiscordIcon'
+import {
+  GUILD_ID,
+  PREMIUM_ROLE_IDS,
+  DISCORD_SERVER_URL,
+  getHasPremium,
+  PREMIUM_ROLE_INFO
+} from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -371,51 +378,17 @@ export default function Options() {
                   </p>
                   <div className="flex space-x-2 mt-1 text-xs text-gray-500 dark:text-gray-300">
                     Roles:{' '}
-                    {(() => {
-                      const SPECIAL_ROLES = {
-                        TEAM_ROLE_ID: '982062454433546291',
-                        PATREON_ROLE_ID: '982028821186371624',
-                        FANCY_ROLE_ID: '1043787711741431888',
-                        SUPER_ROLE_ID: '1043787958412640296',
-                        ELITE_ROLE_ID: '1209734479581552731',
-                        DISCORD_FANCY_ROLE_ID: '1210537409884848159',
-                        DISCORD_SUPER_ROLE_ID: '1211135581619490956',
-                        DISCORD_ELITE_ROLE_ID: '1211140468205944852'
-                      } as const
-                      type RoleKey = keyof typeof SPECIAL_ROLES
-                      const roleIcons: Record<RoleKey, string> = {
-                        TEAM_ROLE_ID: '🛡️',
-                        PATREON_ROLE_ID: '🧡',
-                        FANCY_ROLE_ID: '✨',
-                        SUPER_ROLE_ID: '👑',
-                        ELITE_ROLE_ID: '💎',
-                        DISCORD_FANCY_ROLE_ID: '🌟',
-                        DISCORD_SUPER_ROLE_ID: '👑',
-                        DISCORD_ELITE_ROLE_ID: '💎'
-                      }
-                      const roleNames: Record<RoleKey, string> = {
-                        TEAM_ROLE_ID: 'Team',
-                        PATREON_ROLE_ID: 'Patreon',
-                        FANCY_ROLE_ID: 'Fancy',
-                        SUPER_ROLE_ID: 'Super',
-                        ELITE_ROLE_ID: 'Elite',
-                        DISCORD_FANCY_ROLE_ID: 'Discord Fancy',
-                        DISCORD_SUPER_ROLE_ID: 'Discord Super',
-                        DISCORD_ELITE_ROLE_ID: 'Discord Elite'
-                      }
-                      return (
-                        Object.entries(SPECIAL_ROLES) as [RoleKey, string][]
-                      )
-                        .filter(([key, id]) => data.discordRoles.includes(id))
-                        .map(([key]) => (
+                    {Array.isArray(data.discordRoles) &&
+                      data.discordRoles
+                        .filter((roleId: string) => PREMIUM_ROLE_INFO[roleId])
+                        .map((roleId: string) => (
                           <span
-                            key={key}
-                            title={roleNames[key]}
+                            key={roleId}
+                            title={PREMIUM_ROLE_INFO[roleId].name}
                             className="text-lg">
-                            {roleIcons[key] || '🔑'}
+                            {PREMIUM_ROLE_INFO[roleId].icon}
                           </span>
-                        ))
-                    })()}
+                        ))}
                   </div>
                 </div>
               </div>
