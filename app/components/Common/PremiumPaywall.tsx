@@ -25,7 +25,8 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
       <div className="pointer-events-none filter blur-sm select-none opacity-60">
         {children}
       </div>
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-70">
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black bg-opacity-70">
+        <div className="mt-24" />
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-8 flex flex-col items-center max-w-md w-full">
           {!isLoggedIn ? (
             <>

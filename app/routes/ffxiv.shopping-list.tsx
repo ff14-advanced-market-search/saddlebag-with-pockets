@@ -1,7 +1,16 @@
 import { TrashIcon } from '@heroicons/react/solid'
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
@@ -20,9 +29,11 @@ import type {
   ShoppingListItem
 } from '~/requests/FFXIV/shopping-list'
 import GetShoppingList from '~/requests/FFXIV/shopping-list'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -92,9 +103,28 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
+  return json({
+    isLoggedIn,
+    hasPremium
+  })
+}
+
 export default function Index() {
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+  }>()
   const navigation = useNavigation()
   const actionData = useActionData<ActionDataResponse>()
+  const navigate = useNavigate()
   const error =
     actionData && 'exception' in actionData ? actionData.exception : undefined
   const loading = navigation.state === 'submitting'
@@ -105,9 +135,26 @@ export default function Index() {
     (!results && actionData && !Object.keys(actionData).length) ||
     (results && results.data.length === 0)
 
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
   return (
     <PageWrapper>
-      <ShoppingListForm error={error} loading={loading} />
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!loaderData.isLoggedIn}
+        hasPremium={!!loaderData.hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <ShoppingListForm error={error} loading={loading} />
+      </PremiumPaywall>
       {noResults && <NoResults />}
       {results && <Results {...results} />}
     </PageWrapper>
@@ -148,7 +195,8 @@ const columnList: Array<ColumnList<ShoppingListItem>> = [
     columnId: 'hq',
     header: 'High Quality',
     accessor: ({ getValue }) => {
-      return <p>{getValue() === true ? 'Yes' : ''}</p>
+      const value = getValue()
+      return <p>{value === true ? 'Yes' : ''}</p>
     }
   }
 ]
@@ -188,7 +236,7 @@ const Row = ({
 
             // Handle empty input
             if (value === '') {
-              updateRow({ ...form, craft_amount: null })
+              updateRow({ ...form, craft_amount: undefined })
               return
             }
 
