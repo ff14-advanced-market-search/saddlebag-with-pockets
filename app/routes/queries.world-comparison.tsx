@@ -412,13 +412,13 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
             type="button"
           />
         </div>
-        <div className="flex w-full overflow-x-scroll gap-3 p-4">
+        <div className="flex flex-col gap-6 p-4">
           {results.data.map((item) => {
             const sortedServers = item.export_servers.sort(getSortedTables)
             return (
               <div
                 key={item.item_id}
-                className="min-w-max rounded-md shadow-md p-3 dark:bg-slate-600">
+                className="max-w-2xl w-full mx-auto rounded-md shadow-md p-3 dark:bg-slate-600">
                 <Title title={getItemNameById(item.item_id) as string} />
                 <div>
                   <table className="table-auto border-separate border-spacing-2 dark:text-gray-200">

@@ -15,12 +15,8 @@ import { PageWrapper } from '~/components/Common'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
-import type {
-  ScripExchangeResults
-} from '~/requests/FFXIV/scrip-exchange';
-import {
-  ScripExchangeRequest
-} from '~/requests/FFXIV/scrip-exchange'
+import type { ScripExchangeResults } from '~/requests/FFXIV/scrip-exchange'
+import { ScripExchangeRequest } from '~/requests/FFXIV/scrip-exchange'
 import type { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
