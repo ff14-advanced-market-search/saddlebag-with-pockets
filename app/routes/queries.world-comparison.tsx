@@ -235,7 +235,9 @@ const Index = () => {
                 />
                 <ModalToggleButton
                   type="button"
-                  onClick={() => setModal('exportServers')}>
+                  onClick={() => {
+                    setModal('exportServers')
+                  }}>
                   Choose Worlds
                 </ModalToggleButton>
                 <input
@@ -246,7 +248,9 @@ const Index = () => {
                 <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
                   {serversLength > 3 || !serversLength
                     ? `${serversLength ? serversLength : 'No'} worlds selected`
-                    : state.exportServers.map((name) => name).join(', ')}
+                    : state.exportServers.length > 0
+                    ? state.exportServers.join(', ')
+                    : ''}
                 </p>
               </div>
 
@@ -258,16 +262,20 @@ const Index = () => {
                 />
                 <ModalToggleButton
                   type="button"
-                  onClick={() => setModal('items')}>
+                  onClick={() => {
+                    setModal('items')
+                  }}>
                   Choose Items
                 </ModalToggleButton>
                 <input name="items" hidden value={state.items} />
                 <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
                   {itemsLength > 3 || !itemsLength
                     ? `${itemsLength ? itemsLength : 'No'} items selected`
-                    : state.items
+                    : state.items.length > 0
+                    ? state.items
                         .map((id) => getItemNameById(id) || '')
-                        .join(', ')}
+                        .join(', ')
+                    : ''}
                 </p>
               </div>
               <div className="flex flex-col max-w-full relative">
@@ -287,14 +295,15 @@ const Index = () => {
                   ? 'Choose items to check price on'
                   : 'Choose worlds to compare'
               }
-              onClose={() => setModal(null)}>
+              onClose={() => {
+                setModal(null)
+              }}>
               <div className="mt-2 flex flex-col">
                 {modal === 'items' && (
-                  <>
+                  <div>
                     <ItemSelect
                       onSelectChange={(selected) => {
                         if (!selected) return
-
                         setState({
                           ...state,
                           items: [...state.items, selected.id]
@@ -307,31 +316,34 @@ const Index = () => {
                         <ItemListRow
                           key={`${id}-${index}`}
                           id={id}
-                          onDelete={() =>
+                          onDelete={() => {
                             setState({
                               ...state,
                               items: state.items.filter((item) => item !== id)
                             })
-                          }
+                          }}
                         />
                       ))}
                     </ul>
-                  </>
+                  </div>
                 )}
                 {modal === 'exportServers' && (
                   <div>
                     {Object.entries(WorldList).map(([dataCenter, worlds]) => (
-                      <div key={dataCenter}>
+                      <div key={String(dataCenter)}>
                         <p className="text mt-1 font-semibold text-gray-800">
                           {dataCenter}
                         </p>
                         {worlds.map(({ name }) => {
                           const isSelected = state.exportServers.includes(name)
-
                           return (
                             <CheckBox
-                              key={dataCenter + name + state.exportServers}
-                              labelTitle={'-- ' + name}
+                              key={
+                                String(dataCenter) +
+                                String(name) +
+                                state.exportServers.join(',')
+                              }
+                              labelTitle={`-- ${name}`}
                               id={name}
                               onChange={() => {
                                 if (isSelected) {
