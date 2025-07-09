@@ -254,6 +254,11 @@ type ActionResponse =
   | { exception: string }
   | {}
 
+/**
+ * Renders the main FFXIV crafting profit simulation page, including the premium paywall, filterable form, and results table.
+ *
+ * Displays a form for filtering and simulating crafting profitability, conditionally gated by user login and premium status. Handles form state, input changes, and navigation. Shows results or a no-results message based on server responses.
+ */
 export default function Index() {
   const loaderData = useLoaderData<
     typeof defaultFormValues & { isLoggedIn: boolean; hasPremium: boolean }

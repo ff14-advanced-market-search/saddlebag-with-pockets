@@ -83,6 +83,11 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
+/**
+ * Renders the FFXIV self-purchase history page, handling paywall access, form submission, and result display.
+ *
+ * Displays a form for entering player and world information, conditionally wrapped in a premium paywall based on user login and premium status. Shows purchase results or a no-results message after form submission.
+ */
 export default function Index() {
   const transition = useNavigation()
   const loaderData = useLoaderData<{
