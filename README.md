@@ -54,6 +54,7 @@ To enable Discord login functionality, you need to set up a Discord application:
 6. Set the following environment variables:
    - `DISCORD_CLIENT_ID`: Your Discord application client ID
    - `DISCORD_CLIENT_SECRET`: Your Discord application client secret
+   - `DISCORD_BOT_TOKEN`: Your Discord bot token for pulling role ids
 
 For production, update the redirect URI to your production domain.
 

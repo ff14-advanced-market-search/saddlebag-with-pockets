@@ -1,12 +1,21 @@
-import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import {
+  useActionData,
+  useNavigation,
+  useLoaderData,
+  useNavigate
+} from '@remix-run/react'
+import type {
+  ActionFunction,
+  MetaFunction,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import GetListingRequest from '~/requests/FFXIV/GetListing'
 import type {
   GetListingProps,
   ListingResponseType
 } from '~/requests/FFXIV/GetListing'
 import Results from '~/components/FFXIVResults/listings/Results'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import type { ItemSelected } from '~/components/form/select/ItemSelect'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { useEffect, useState } from 'react'
@@ -17,6 +26,8 @@ import { setListings } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -94,6 +105,15 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+  return json({ isLoggedIn, hasPremium })
+}
+
 const Index = () => {
   const transition = useNavigation()
   const results = useActionData<
@@ -103,6 +123,11 @@ const Index = () => {
   const [error, setError] = useState<string | undefined>()
   const dispatch = useDispatch()
   const { listings } = useTypedSelector((state) => state.queries)
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+  }>()
+  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {
@@ -134,10 +159,24 @@ const Index = () => {
     setError(undefined)
   }
 
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
   return (
     <PageWrapper>
-      <>
-        <div className="py-3">
+      <div className="py-3">
+        <PremiumPaywall
+          show={showPaywall}
+          isLoggedIn={!!loaderData.isLoggedIn}
+          hasPremium={!!loaderData.hasPremium}
+          onLogin={handleLogin}
+          onSubscribe={handleSubscribe}>
           <SmallFormContainer
             title="Get Item Listing Details"
             onClick={onSubmit}
@@ -149,14 +188,14 @@ const Index = () => {
               onTextChange={handleTextChange}
             />
           </SmallFormContainer>
-        </div>
-        {listings && listings.listings && listings.listings.length > 0 && (
-          <>
-            {resultTitle && <TitleH2 title={resultTitle} />}
-            <Results data={listings} />
-          </>
-        )}
-      </>
+        </PremiumPaywall>
+      </div>
+      {listings?.listings?.length > 0 && (
+        <>
+          {resultTitle && <TitleH2 title={resultTitle} />}
+          <Results data={listings} />
+        </>
+      )}
     </PageWrapper>
   )
 }

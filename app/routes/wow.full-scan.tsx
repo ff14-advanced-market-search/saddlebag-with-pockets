@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
@@ -16,10 +21,12 @@ import { Results } from '~/components/WoWResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { setWoWScan } from '~/redux/reducers/wowSlice'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import Banner from '~/components/Common/Banner'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -36,9 +43,24 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { getWoWSessionData } = await getUserSessionData(request)
-  const { server, region } = getWoWSessionData()
-  return json({ wowRealm: server, wowRegion: region })
+  try {
+    const { getWoWSessionData } = await getUserSessionData(request)
+    const { server, region } = getWoWSessionData()
+    const session = await getSession(request.headers.get('Cookie'))
+    const discordId = session?.get('discord_id')
+    const discordRoles = session?.get('discord_roles') || []
+    const isLoggedIn = !!discordId
+    const hasPremium = getHasPremium(discordRoles)
+    return json({ wowRealm: server, wowRegion: region, isLoggedIn, hasPremium })
+  } catch (err) {
+    // Fallback to safe defaults if session retrieval fails
+    return json({
+      wowRealm: null,
+      wowRegion: null,
+      isLoggedIn: false,
+      hasPremium: false
+    })
+  }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -68,18 +90,30 @@ export const ErrorBoundary = () => <ErrorBounds />
 
 const Index = () => {
   const transition = useNavigation()
-  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const { wowRealm, wowRegion, isLoggedIn, hasPremium } = useLoaderData<
+    WoWLoaderData & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
   const results = useActionData<
     WoWScanResponseWithPayload | { exception: string }
   >()
   const [error, setError] = useState<string | undefined>()
   const dispatch = useDispatch()
   const wowScan = useTypedSelector((state) => state.wowQueries.scan)
+  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
+  }
+
+  // Paywall logic
+  const showPaywall = !isLoggedIn || !hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
   }
 
   useEffect(() => {
@@ -100,17 +134,24 @@ const Index = () => {
     <PageWrapper>
       <>
         <Banner />
-        <WoWScanForm
-          onClick={onSubmit}
-          onChange={() => {
-            setError(undefined)
-          }}
-          loading={transition.state === 'submitting'}
-          error={error}
-          clearErrors={() => setError(undefined)}
-          defaultRegion={wowRegion}
-          defaultServer={wowRealm}
-        />
+        <PremiumPaywall
+          show={showPaywall}
+          isLoggedIn={!!isLoggedIn}
+          hasPremium={!!hasPremium}
+          onLogin={handleLogin}
+          onSubscribe={handleSubscribe}>
+          <WoWScanForm
+            onClick={onSubmit}
+            onChange={() => {
+              setError(undefined)
+            }}
+            loading={transition.state === 'submitting'}
+            error={error}
+            clearErrors={() => setError(undefined)}
+            defaultRegion={wowRegion}
+            defaultServer={wowRealm}
+          />
+        </PremiumPaywall>
         {wowScan && 'out_of_stock' in wowScan && <Results data={wowScan} />}
       </>
     </PageWrapper>

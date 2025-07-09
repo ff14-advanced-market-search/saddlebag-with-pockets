@@ -1,6 +1,15 @@
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  MetaFunction,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useNavigation,
+  useLoaderData,
+  useNavigate
+} from '@remix-run/react'
 import type { ReactNode } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
@@ -12,8 +21,10 @@ import type { ColumnList } from '~/components/types'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import Banner from '~/components/Common/Banner'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 const formName = 'allaganData'
 
@@ -99,12 +110,35 @@ export const action: ActionFunction = async ({ request }) => {
     }
   }
 }
-type ActionResponse = AllaganResults | { exception: string } | {}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
+  return json({
+    isLoggedIn,
+    hasPremium
+  })
+}
+
+type ActionResponse =
+  | AllaganResults
+  | { exception: string }
+  | Record<string, never>
 
 const Index = () => {
   const transition = useNavigation()
   const results = useActionData<ActionResponse>()
   const isLoading = transition.state === 'submitting'
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+  }>()
+  const navigate = useNavigate()
 
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -127,35 +161,51 @@ const Index = () => {
     }
   }
 
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
   return (
     <PageWrapper>
       <Banner />
-      <SmallFormContainer
-        title="Allagan Data"
-        description={
-          <>
-            <span className="dark:text-gray-200">
-              Input your Allagan generated data here, and we will turn it into
-              useful stuff!{' '}
-              <a
-                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 visited:text-purple-600 dark:visited:text-purple-400">
-                Learn more about the Allagan Tools Inventory Analysis.
-              </a>
-            </span>
-          </>
-        }
-        onClick={handleSubmit}
-        loading={isLoading}
-        error={error}>
-        <TextArea
-          formName={formName}
-          label="Allagan Data"
-          toolTip="Paste the data copied from the Allagan tool here."
-        />
-      </SmallFormContainer>
+      <ContentContainer>
+        <Title title="Allagan Data" />
+        <span className="dark:text-gray-200">
+          Input your Allagan generated data here, and we will turn it into
+          useful stuff!{' '}
+          <a
+            href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 visited:text-purple-600 dark:visited:text-purple-400">
+            Learn more about the Allagan Tools Inventory Analysis.
+          </a>
+        </span>
+      </ContentContainer>
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!loaderData.isLoggedIn}
+        hasPremium={!!loaderData.hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <SmallFormContainer
+          title="Allagan Data"
+          description={undefined}
+          onClick={handleSubmit}
+          loading={isLoading}
+          error={error}>
+          <TextArea
+            formName={formName}
+            label="Allagan Data"
+            toolTip="Paste the data copied from the Allagan tool here."
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

@@ -1,6 +1,7 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
+import { GUILD_ID } from '~/utils/premium'
 
 export const loader: LoaderFunction = async ({ request, context }) => {
   const url = new URL(request.url)
@@ -71,7 +72,6 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     session.set('discord_avatar', userData.avatar)
 
     // Fetch user roles from the guild using the bot token
-    const GUILD_ID = '973380473281724476' // Saddlebag Exchange
     const botToken = context.DISCORD_BOT_TOKEN
     let discordRoles = []
     if (botToken && userData.id) {

@@ -1,6 +1,7 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
+import { GUILD_ID } from '~/utils/premium'
 
 export const action: ActionFunction = async ({ request, context }) => {
   const session = await getSession(request.headers.get('Cookie'))
@@ -8,7 +9,6 @@ export const action: ActionFunction = async ({ request, context }) => {
   if (!discordId) {
     return redirect('/options?error=discord_roles_refresh_failed')
   }
-  const GUILD_ID = '973380473281724476'
   const botToken = context.DISCORD_BOT_TOKEN
   let discordRoles = []
   try {

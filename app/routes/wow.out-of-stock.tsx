@@ -11,7 +11,12 @@ import type { OutOfStockItem } from '~/requests/WoW/OutOfStock'
 import WoWOutOfStock from '~/requests/WoW/OutOfStock'
 import { getUserSessionData } from '~/sessions'
 import z from 'zod'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
@@ -24,6 +29,9 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -112,7 +120,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     const session = await getUserSessionData(request)
     const { region } = session.getWoWSessionData()
 
-    return json({ ...validParams.data, region })
+    // Get Discord session info
+    const discordSession = await getSession(request.headers.get('Cookie'))
+    const discordId = discordSession.get('discord_id')
+    const discordRoles = discordSession.get('discord_roles') || []
+    const isLoggedIn = !!discordId
+    const hasPremium = getHasPremium(discordRoles)
+
+    return json({ ...validParams.data, region, isLoggedIn, hasPremium })
   } catch (error) {
     return json({
       exception: 'Invalid URL format'
@@ -169,13 +184,16 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const OutOfStock = () => {
-  const loaderData = useLoaderData<typeof loader>()
+  const loaderData = useLoaderData<
+    typeof loader & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
   const result = useActionData<{
     data?: OutOfStockItem[]
     exception?: string
   }>()
   const transition = useNavigation()
   const isSubmitting = transition.state === 'submitting'
+  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useState<Record<string, string>>(
     Object.fromEntries(
       Object.entries(loaderData).map(([key, value]) => [
@@ -189,6 +207,15 @@ const OutOfStock = () => {
     )
   )
   const error = result?.exception
+
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
 
   if (result?.data?.length === 0) {
     return <NoResults href={PAGE_URL} />
@@ -211,29 +238,36 @@ const OutOfStock = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Out of Stock Items"
-        description="Find items that are not listed on the auctionhouse of super high pop realms!"
-        onClick={handleSubmit}
-        error={error}
-        loading={isSubmitting}
-        role="search"
-        aria-label="Search out of stock items"
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
-            <SubmitButton
-              title="Share this search!"
-              onClick={handleCopyButton}
-              type="button"
-            />
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!loaderData.isLoggedIn}
+        hasPremium={!!loaderData.hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <SmallFormContainer
+          title="Out of Stock Items"
+          description="Find items that are not listed on the auctionhouse of super high pop realms!"
+          onClick={handleSubmit}
+          error={error}
+          loading={isSubmitting}
+          role="search"
+          aria-label="Search out of stock items"
+          action={getActionUrl(PAGE_URL, searchParams)}>
+          <div className="pt-2">
+            <div className="flex justify-end mb-2">
+              <SubmitButton
+                title="Share this search!"
+                onClick={handleCopyButton}
+                type="button"
+              />
+            </div>
           </div>
-        </div>
-        <OutOfStockForm
-          defaultValues={searchParams}
-          onFormChange={handleFormChange}
-        />
-      </SmallFormContainer>
+          <OutOfStockForm
+            defaultValues={searchParams}
+            onFormChange={handleFormChange}
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

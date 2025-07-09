@@ -12,9 +12,14 @@ import type {
   BestDealsResponse
 } from '~/requests/FFXIV/BestDeals'
 import FFXIVBestDeals from '~/requests/FFXIV/BestDeals'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import z from 'zod'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
 import { Results } from '~/components/FFXIVResults/BestDeals/Results'
@@ -27,6 +32,8 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 const PAGE_URL = '/ffxiv/best-deals'
 
@@ -85,9 +92,31 @@ const validateInput = z.object({
   maxBuyPrice: parseStringToNumber
 })
 
+// Move LoaderDataType interface to the top level, outside of any function
+interface LoaderDataType {
+  home_server: string
+  filters: number[]
+  hq_only: boolean
+  discount: string
+  medianPrice: string
+  salesAmount: string
+  maxBuyPrice: string
+  isLoggedIn: boolean
+  hasPremium: boolean
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getAllUserSessionData } = await getUserSessionData(request)
   const { world } = getAllUserSessionData()
+
+  // Get Discord session info - use getSession directly
+  const session = await getSession(request.headers.get('Cookie'))
+
+  // Get Discord data from session
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
 
   const params = new URL(request.url).searchParams
 
@@ -110,10 +139,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validInput = validateInput.safeParse(input)
   if (validInput.success) {
-    return json(validInput.data)
+    return json({
+      ...validInput.data,
+      isLoggedIn,
+      hasPremium
+    })
   }
 
-  return json(defaultFormValues)
+  return json({
+    ...defaultFormValues,
+    isLoggedIn,
+    hasPremium
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -144,16 +181,38 @@ export const action: ActionFunction = async ({ request }) => {
 type ActionResponseType = {} | { exception: string } | BestDealsResponse
 
 const BestDeals = () => {
-  const loaderData = useLoaderData<typeof defaultFormValues>()
+  // Always type loaderData as LoaderDataType
+  const loaderData = useLoaderData<LoaderDataType>()
   const result = useActionData<ActionResponseType>()
   const transition = useNavigation()
+  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
 
+  // Only use the form fields for searchParams state, fallback to defaults if missing
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
-    ...loaderData
+    home_server: loaderData.home_server || defaultFormValues.home_server,
+    filters: loaderData.filters || defaultFormValues.filters,
+    hq_only:
+      typeof loaderData.hq_only === 'boolean'
+        ? loaderData.hq_only
+        : defaultFormValues.hq_only,
+    discount: loaderData.discount || defaultFormValues.discount,
+    medianPrice: loaderData.medianPrice || defaultFormValues.medianPrice,
+    salesAmount: loaderData.salesAmount || defaultFormValues.salesAmount,
+    maxBuyPrice: loaderData.maxBuyPrice || defaultFormValues.maxBuyPrice
   })
   const error = result && 'exception' in result ? result.exception : undefined
+
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
 
   if (result && !Object.keys(result).length) {
     return <NoResults href={PAGE_URL} />
@@ -187,72 +246,90 @@ const BestDeals = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title={pageTitle}
-        description={pageDescription}
-        onClick={handleSubmit}
-        error={error}
-        loading={isSubmitting}
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
-            <SubmitButton
-              title="Share this search!"
-              onClick={handleCopyButton}
-              type="button"
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!loaderData.isLoggedIn}
+        hasPremium={!!loaderData.hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <SmallFormContainer
+          title={pageTitle}
+          description={pageDescription}
+          onClick={handleSubmit}
+          error={error}
+          loading={isSubmitting}
+          action={getActionUrl(PAGE_URL, searchParams)}>
+          <div className="pt-2">
+            <div className="flex justify-end mb-2">
+              <SubmitButton
+                title="Share this search!"
+                onClick={handleCopyButton}
+                type="button"
+              />
+            </div>
+          </div>
+          <div className="pt-3 flex flex-col">
+            <InputWithLabel
+              labelTitle={inputMap.discount}
+              name="discount"
+              type="number"
+              defaultValue={loaderData.discount || defaultFormValues.discount}
+              min={0}
+              onChange={(e) => handleFormChange('discount', e.target.value)}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.medianPrice}
+              name="medianPrice"
+              type="number"
+              defaultValue={
+                loaderData.medianPrice || defaultFormValues.medianPrice
+              }
+              min={0}
+              onChange={(e) => handleFormChange('medianPrice', e.target.value)}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.salesAmount}
+              name="salesAmount"
+              type="number"
+              defaultValue={
+                loaderData.salesAmount || defaultFormValues.salesAmount
+              }
+              min={0}
+              onChange={(e) => handleFormChange('salesAmount', e.target.value)}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.maxBuyPrice}
+              name="maxBuyPrice"
+              type="number"
+              defaultValue={
+                loaderData.maxBuyPrice || defaultFormValues.maxBuyPrice
+              }
+              min={0}
+              onChange={(e) => handleFormChange('maxBuyPrice', e.target.value)}
+            />
+            <ItemsFilter
+              defaultFilters={loaderData.filters || defaultFormValues.filters}
+              onChange={(value) => {
+                if (value !== undefined) {
+                  handleFormChange('filters', value)
+                }
+              }}
+            />
+            <CheckBox
+              labelTitle="HQ Only"
+              id="hq-only"
+              name="hq_only"
+              defaultChecked={
+                typeof loaderData.hq_only === 'boolean'
+                  ? loaderData.hq_only
+                  : defaultFormValues.hq_only
+              }
+              onChange={(e) => handleFormChange('hq_only', e.target.checked)}
             />
           </div>
-        </div>
-        <div className="pt-3 flex flex-col">
-          <InputWithLabel
-            labelTitle={inputMap.discount}
-            name="discount"
-            type="number"
-            defaultValue={loaderData.discount}
-            min={0}
-            onChange={(e) => handleFormChange('discount', e.target.value)}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.medianPrice}
-            name="medianPrice"
-            type="number"
-            defaultValue={loaderData.medianPrice}
-            min={0}
-            onChange={(e) => handleFormChange('medianPrice', e.target.value)}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.salesAmount}
-            name="salesAmount"
-            type="number"
-            defaultValue={loaderData.salesAmount}
-            min={0}
-            onChange={(e) => handleFormChange('salesAmount', e.target.value)}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.maxBuyPrice}
-            name="maxBuyPrice"
-            type="number"
-            defaultValue={loaderData.maxBuyPrice}
-            min={0}
-            onChange={(e) => handleFormChange('maxBuyPrice', e.target.value)}
-          />
-          <ItemsFilter
-            defaultFilters={loaderData.filters}
-            onChange={(value) => {
-              if (value !== undefined) {
-                handleFormChange('filters', value)
-              }
-            }}
-          />
-          <CheckBox
-            labelTitle="HQ Only"
-            id="hq-only"
-            name="hq_only"
-            defaultChecked={loaderData.hq_only}
-            onChange={(e) => handleFormChange('hq_only', e.target.checked)}
-          />
-        </div>
-      </SmallFormContainer>
+        </SmallFormContainer>
+      </PremiumPaywall>
+      {/* Results and other content can go here, outside the paywall */}
     </PageWrapper>
   )
 }

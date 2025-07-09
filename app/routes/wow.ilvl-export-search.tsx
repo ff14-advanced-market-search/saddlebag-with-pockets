@@ -18,7 +18,8 @@ import {
   useActionData,
   useNavigation,
   useSearchParams,
-  useLoaderData
+  useLoaderData,
+  useNavigate
 } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
@@ -40,6 +41,9 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -129,6 +133,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
   const params = url.searchParams
 
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
   const itemID = params.get('itemId')
   const ilvl = params.get('ilvl') || '642'
   const populationWP = params.get('populationWP') || '3000'
@@ -152,7 +163,9 @@ export const loader: LoaderFunction = async ({ request }) => {
         exception: parseZodErrorsToDisplayString(
           validatedFormData.error,
           inputMap
-        )
+        ),
+        isLoggedIn,
+        hasPremium
       })
     }
 
@@ -173,11 +186,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     return json({
       ...(await result.json()),
       sortby: validatedFormData.data.sortBy,
-      formValues: { ...validatedFormData.data, desiredStats }
+      formValues: { ...validatedFormData.data, desiredStats },
+      isLoggedIn,
+      hasPremium
     })
   }
 
-  return json({})
+  return json({ isLoggedIn, hasPremium })
 }
 
 type LoaderResponseType =
@@ -195,16 +210,28 @@ type ActionResponseType =
 
 const IlvlExportSearchComponent = () => {
   const actionData = useActionData<ActionResponseType>()
-  const loaderData = useLoaderData<LoaderResponseType>()
+  const loaderData = useLoaderData<
+    LoaderResponseType & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
   const [searchParams, setSearchParams] = useSearchParams()
   const result = actionData ?? loaderData
   const transition = useNavigation()
   const [itemName, setItemName] = useState<string>('')
   const [itemID, setItemID] = useState<string>('')
   const [formValues, setFormValues] = useState(defaultFormValues)
+  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
   const error = result && 'exception' in result ? result.exception : undefined
+
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
 
   useEffect(() => {
     // If there's an error, reset form values but keep the error message
@@ -283,145 +310,152 @@ const IlvlExportSearchComponent = () => {
   }
 
   const renderForm = () => (
-    <SmallFormContainer
-      title="Item Level Export Search"
-      description={`
-        Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
-        Supports the following items:
-        - Undermine Merc's Dog Tags
-        - Psychopath's Ravemantle 
-        - Vatwork Janitor's Wasteband
-        - Mechgineer's Blowtorch Cover
-        - Firebug's Anklegear
-        - Loyalist's Holdout Hood
-        - Midnight Lounge Cummerbund
-        - Bootleg Wrynn Shoulderplates
-        - Globlin-Fused Greatbelt
-      `}
-      onClick={handleSubmit}
-      error={error}
-      loading={isSubmitting}
-      disabled={!itemID}
-      action={getActionUrl(PAGE_URL, {
-        itemId: itemID,
-        ilvl: formValues.ilvl.toString(),
-        populationWP: formValues.populationWP.toString(),
-        populationBlizz: formValues.populationBlizz.toString(),
-        rankingWP: formValues.rankingWP.toString(),
-        sortBy: formValues.sortBy,
-        desiredStats: formValues.desiredStats
-      })}>
-      <div className="pt-3 flex flex-col gap-4">
-        <DebouncedSelectInput
-          title={'Item to search for'}
-          label="Item"
-          id="export-item-select"
-          selectOptions={wowItemsList}
-          onSelect={handleSelect}
-          displayValue={itemName}
-        />
-        <input hidden name="itemId" value={itemID} />
-        <InputWithLabel
-          labelTitle="Minimum Item Level"
-          name="ilvl"
-          type="number"
-          value={formValues.ilvl.toString()}
-          min={0}
-          onChange={(e) =>
-            setFormValues((prev) => ({
-              ...prev,
-              ilvl: parseInt(e.target.value)
-            }))
-          }
-        />
-        <InputWithLabel
-          labelTitle="Population"
-          name="populationWP"
-          type="number"
-          value={formValues.populationWP.toString()}
-          min={1}
-          onChange={(e) =>
-            setFormValues((prev) => ({
-              ...prev,
-              populationWP: parseInt(e.target.value)
-            }))
-          }
-        />
-        <Select
-          title="Population Blizzard"
-          name="populationBlizz"
-          value={formValues.populationBlizz.toString()}
-          options={[
-            { label: 'FULL', value: '3' },
-            { label: 'HIGH', value: '2' },
-            { label: 'MEDIUM', value: '1' },
-            { label: 'LOW', value: '0' }
-          ]}
-          onChange={(e) =>
-            setFormValues((prev) => ({
-              ...prev,
-              populationBlizz: parseInt(e.target.value)
-            }))
-          }
-        />
-        <InputWithLabel
-          labelTitle="Ranking"
-          name="rankingWP"
-          type="number"
-          value={formValues.rankingWP.toString()}
-          min={1}
-          onChange={(e) =>
-            setFormValues((prev) => ({
-              ...prev,
-              rankingWP: parseInt(e.target.value)
-            }))
-          }
-        />
-        <Select
-          title="Sort Results By"
-          name="sortBy"
-          value={formValues.sortBy}
-          options={[
-            { label: 'Minimum Price', value: 'minPrice' },
-            { label: 'Item Quantity', value: 'itemQuantity' },
-            { label: 'Realm Population', value: 'realmPopulationReal' },
-            { label: 'Realm Ranking', value: 'realmRanking' }
-          ]}
-          onChange={(e) =>
-            setFormValues((prev) => ({ ...prev, sortBy: e.target.value }))
-          }
-        />
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium dark:text-gray-200">
-            Desired Stats
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {AVAILABLE_STATS.map((stat) => (
-              <label key={stat} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="desiredStats"
-                  value={stat}
-                  checked={formValues.desiredStats.includes(stat)}
-                  onChange={() => handleStatToggle(stat)}
-                  className="form-checkbox h-4 w-4"
-                />
-                <span className="text-sm dark:text-gray-200">{stat}</span>
-              </label>
-            ))}
+    <PremiumPaywall
+      show={showPaywall}
+      isLoggedIn={!!loaderData.isLoggedIn}
+      hasPremium={!!loaderData.hasPremium}
+      onLogin={handleLogin}
+      onSubscribe={handleSubscribe}>
+      <SmallFormContainer
+        title="Item Level Export Search"
+        description={`
+          Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
+          Supports the following items:
+          - Undermine Merc's Dog Tags
+          - Psychopath's Ravemantle 
+          - Vatwork Janitor's Wasteband
+          - Mechgineer's Blowtorch Cover
+          - Firebug's Anklegear
+          - Loyalist's Holdout Hood
+          - Midnight Lounge Cummerbund
+          - Bootleg Wrynn Shoulderplates
+          - Globlin-Fused Greatbelt
+        `}
+        onClick={handleSubmit}
+        error={error}
+        loading={isSubmitting}
+        disabled={!itemID}
+        action={getActionUrl(PAGE_URL, {
+          itemId: itemID,
+          ilvl: formValues.ilvl.toString(),
+          populationWP: formValues.populationWP.toString(),
+          populationBlizz: formValues.populationBlizz.toString(),
+          rankingWP: formValues.rankingWP.toString(),
+          sortBy: formValues.sortBy,
+          desiredStats: formValues.desiredStats
+        })}>
+        <div className="pt-3 flex flex-col gap-4">
+          <DebouncedSelectInput
+            title={'Item to search for'}
+            label="Item"
+            id="export-item-select"
+            selectOptions={wowItemsList}
+            onSelect={handleSelect}
+            displayValue={itemName}
+          />
+          <input hidden name="itemId" value={itemID} />
+          <InputWithLabel
+            labelTitle="Minimum Item Level"
+            name="ilvl"
+            type="number"
+            value={formValues.ilvl.toString()}
+            min={0}
+            onChange={(e) =>
+              setFormValues((prev) => ({
+                ...prev,
+                ilvl: parseInt(e.target.value)
+              }))
+            }
+          />
+          <InputWithLabel
+            labelTitle="Population"
+            name="populationWP"
+            type="number"
+            value={formValues.populationWP.toString()}
+            min={1}
+            onChange={(e) =>
+              setFormValues((prev) => ({
+                ...prev,
+                populationWP: parseInt(e.target.value)
+              }))
+            }
+          />
+          <Select
+            title="Population Blizzard"
+            name="populationBlizz"
+            value={formValues.populationBlizz.toString()}
+            options={[
+              { label: 'FULL', value: '3' },
+              { label: 'HIGH', value: '2' },
+              { label: 'MEDIUM', value: '1' },
+              { label: 'LOW', value: '0' }
+            ]}
+            onChange={(e) =>
+              setFormValues((prev) => ({
+                ...prev,
+                populationBlizz: parseInt(e.target.value)
+              }))
+            }
+          />
+          <InputWithLabel
+            labelTitle="Ranking"
+            name="rankingWP"
+            type="number"
+            value={formValues.rankingWP.toString()}
+            min={1}
+            onChange={(e) =>
+              setFormValues((prev) => ({
+                ...prev,
+                rankingWP: parseInt(e.target.value)
+              }))
+            }
+          />
+          <Select
+            title="Sort Results By"
+            name="sortBy"
+            value={formValues.sortBy}
+            options={[
+              { label: 'Minimum Price', value: 'minPrice' },
+              { label: 'Item Quantity', value: 'itemQuantity' },
+              { label: 'Realm Population', value: 'realmPopulationReal' },
+              { label: 'Realm Ranking', value: 'realmRanking' }
+            ]}
+            onChange={(e) =>
+              setFormValues((prev) => ({ ...prev, sortBy: e.target.value }))
+            }
+          />
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium dark:text-gray-200">
+              Desired Stats
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {AVAILABLE_STATS.map((stat) => (
+                <label key={stat} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    name="desiredStats"
+                    value={stat}
+                    checked={formValues.desiredStats.includes(stat)}
+                    onChange={() => handleStatToggle(stat)}
+                    className="form-checkbox h-4 w-4"
+                  />
+                  <span className="text-sm dark:text-gray-200">{stat}</span>
+                </label>
+              ))}
+            </div>
           </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
+            Note: If the search button does not appear after you select your
+            item, try refreshing the page.
+            <br />
+            <br />
+            Note: If this page reset, then no items were found. Make sure you
+            search for the exact ilvls you want and current 11.1 BOE levels 629,
+            642 or 655.
+          </p>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
-          Note: If the search button does not appear after you select your item,
-          try refreshing the page.
-          <br />
-          <br />
-          Note: If this page reset, then no items were found. Make sure you
-          search for the exact ilvls you want and current 11.1 BOE levels 629,
-          642 or 655.
-        </p>
-      </div>
-    </SmallFormContainer>
+      </SmallFormContainer>
+    </PremiumPaywall>
   )
 
   const hasSearched =

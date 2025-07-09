@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -15,7 +20,7 @@ import type {
 } from '~/requests/FFXIV/ShortagePredictor'
 import FFXIVShortagePredictor from '~/requests/FFXIV/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import { Results } from '~/components/FFXIVResults/ShortagePredictor/Results'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { useState } from 'react'
@@ -27,6 +32,8 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
 
 const PAGE_URL = '/ffxiv/shortage-predictor'
 
@@ -118,6 +125,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { getAllUserSessionData } = await getUserSessionData(request)
   const { world } = getAllUserSessionData()
 
+  // Get Discord session info
+  const session = await getSession(request.headers.get('Cookie'))
+  const discordId = session.get('discord_id')
+  const discordRoles = session.get('discord_roles') || []
+  const isLoggedIn = !!discordId
+  const hasPremium = getHasPremium(discordRoles)
+
   const params = new URL(request.url).searchParams
 
   const validateFormData = z.object({
@@ -161,22 +175,30 @@ export const loader: LoaderFunction = async ({ request }) => {
   const validInput = validateFormData.safeParse(input)
   if (validInput.success) {
     const responseData = {
-      ...validInput.data
+      ...validInput.data,
+      isLoggedIn,
+      hasPremium
     }
     return json(responseData)
   }
 
-  return json(defaultFormValues)
+  return json({
+    ...defaultFormValues,
+    isLoggedIn,
+    hasPremium
+  })
 }
 
 const Index = () => {
   const transition = useNavigation()
-
-  const loaderData = useLoaderData<typeof defaultFormValues>()
+  const loaderData = useLoaderData<
+    typeof defaultFormValues & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
     ...loaderData
   })
   const results = useActionData<ActionResponse>()
+  const navigate = useNavigate()
 
   const loading = transition.state === 'submitting'
 
@@ -207,91 +229,107 @@ const Index = () => {
   const error =
     results && 'exception' in results ? results.exception : undefined
 
+  // Paywall logic
+  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title={pageTitle}
-        description={pageDescription}
-        onClick={onSubmit}
-        error={error}
-        loading={loading}
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
-            <SubmitButton
-              title="Share this search!"
-              onClick={handleCopyButton}
-              type="button"
+      <PremiumPaywall
+        show={showPaywall}
+        isLoggedIn={!!loaderData.isLoggedIn}
+        hasPremium={!!loaderData.hasPremium}
+        onLogin={handleLogin}
+        onSubscribe={handleSubscribe}>
+        <SmallFormContainer
+          title={pageTitle}
+          description={pageDescription}
+          onClick={onSubmit}
+          error={error}
+          loading={loading}
+          action={getActionUrl(PAGE_URL, searchParams)}>
+          <div className="pt-2">
+            <div className="flex justify-end mb-2">
+              <SubmitButton
+                title="Share this search!"
+                onClick={handleCopyButton}
+                type="button"
+              />
+            </div>
+          </div>
+          <div className="pt-2 md:pt-4">
+            <InputWithLabel
+              defaultValue={loaderData.desiredMedianPrice}
+              labelTitle={inputMap.desiredMedianPrice}
+              type="number"
+              inputTag="Gil"
+              name="desiredMedianPrice"
+              min={0}
+              step={1}
+              toolTip="Find items that on average sell for this amount of gil or more."
+              onChange={(e) =>
+                handleFormChange('desiredMedianPrice', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.desiredSalesPerWeek}
+              labelTitle={inputMap.desiredSalesPerWeek}
+              type="number"
+              inputTag="Sales"
+              name="desiredSalesPerWeek"
+              min={0}
+              toolTip="Finds items that have this many sales per week."
+              onChange={(e) =>
+                handleFormChange('desiredSalesPerWeek', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.desiredPriceVsMedianPercent}
+              type="number"
+              labelTitle={inputMap.desiredPriceVsMedianPercent}
+              inputTag="%"
+              name="desiredPriceVsMedianPercent"
+              min={0}
+              toolTip="What is the maximum price spike to look for? 140% is to only find item that are at most 40% above the median price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher."
+              onChange={(e) =>
+                handleFormChange('desiredPriceVsMedianPercent', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.desiredQuantityVsAvgPercent}
+              type="number"
+              labelTitle={inputMap.desiredQuantityVsAvgPercent}
+              inputTag="%"
+              name="desiredQuantityVsAvgPercent"
+              min={0}
+              toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
+              onChange={(e) =>
+                handleFormChange('desiredQuantityVsAvgPercent', e.target.value)
+              }
+            />
+            <ItemsFilter
+              defaultFilters={loaderData.filters}
+              onChange={(value) => {
+                if (value !== undefined) {
+                  handleFormChange('filters', value)
+                }
+              }}
+            />
+            <CheckBox
+              labelTitle="HQ Only"
+              id="hq-only"
+              name="hqOnly"
+              defaultChecked={loaderData.hqOnly}
+              onChange={(e) => handleFormChange('hqOnly', e.target.checked)}
             />
           </div>
-        </div>
-        <div className="pt-2 md:pt-4">
-          <InputWithLabel
-            defaultValue={loaderData.desiredMedianPrice}
-            labelTitle={inputMap.desiredMedianPrice}
-            type="number"
-            inputTag="Gil"
-            name="desiredMedianPrice"
-            min={0}
-            step={1}
-            toolTip="Find items that on average sell for this amount of gil or more."
-            onChange={(e) =>
-              handleFormChange('desiredMedianPrice', e.target.value)
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.desiredSalesPerWeek}
-            labelTitle={inputMap.desiredSalesPerWeek}
-            type="number"
-            inputTag="Sales"
-            name="desiredSalesPerWeek"
-            min={0}
-            toolTip="Finds items that have this many sales per week."
-            onChange={(e) =>
-              handleFormChange('desiredSalesPerWeek', e.target.value)
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.desiredPriceVsMedianPercent}
-            type="number"
-            labelTitle={inputMap.desiredPriceVsMedianPercent}
-            inputTag="%"
-            name="desiredPriceVsMedianPercent"
-            min={0}
-            toolTip="What is the maximum price spike to look for? 140% is to only find item that are at most 40% above the median price, so you get there before prices increase. After prices increase too much competition will show up preventing the price from going higher."
-            onChange={(e) =>
-              handleFormChange('desiredPriceVsMedianPercent', e.target.value)
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.desiredQuantityVsAvgPercent}
-            type="number"
-            labelTitle={inputMap.desiredQuantityVsAvgPercent}
-            inputTag="%"
-            name="desiredQuantityVsAvgPercent"
-            min={0}
-            toolTip="How much of the market quantity is left? For 50% we want to find items which only have 50% of their average quantity remaining in stock."
-            onChange={(e) =>
-              handleFormChange('desiredQuantityVsAvgPercent', e.target.value)
-            }
-          />
-          <ItemsFilter
-            defaultFilters={loaderData.filters}
-            onChange={(value) => {
-              if (value !== undefined) {
-                handleFormChange('filters', value)
-              }
-            }}
-          />
-          <CheckBox
-            labelTitle="HQ Only"
-            id="hq-only"
-            name="hqOnly"
-            defaultChecked={loaderData.hqOnly}
-            onChange={(e) => handleFormChange('hqOnly', e.target.checked)}
-          />
-        </div>
-      </SmallFormContainer>
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }
