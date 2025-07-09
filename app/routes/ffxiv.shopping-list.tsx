@@ -117,6 +117,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 }
 
+/**
+ * Renders the main FFXIV shopping list page, handling premium access control, form submission, and result display.
+ *
+ * Displays a paywall if the user is not logged in or lacks premium status. Shows the shopping list form, and conditionally renders results or a no-results message based on server responses.
+ */
 export default function Index() {
   const loaderData = useLoaderData<{
     isLoggedIn: boolean

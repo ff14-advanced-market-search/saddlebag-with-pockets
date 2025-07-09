@@ -15,6 +15,12 @@ export const PREMIUM_ROLE_IDS: readonly string[] = [
   '1211140468205944852' // DISCORD_ELITE_ROLE_ID
 ] as const
 
+/**
+ * Determines whether any of the provided role IDs correspond to a premium role.
+ *
+ * @param roles - An array of role IDs to check, or `undefined`/`null`
+ * @returns `true` if at least one role ID matches a premium role; otherwise, `false`
+ */
 export function getHasPremium(roles: string[] | undefined | null): boolean {
   if (!Array.isArray(roles)) return false
   return roles.some((roleId) => PREMIUM_ROLE_IDS.includes(roleId))
