@@ -27,7 +27,11 @@ import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 export const action: ActionFunction = async ({ request }) => {
@@ -94,17 +98,30 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
-  return json({ wowRealm: server, wowRegion: region, isLoggedIn, hasPremium })
+  return json({
+    wowRealm: server,
+    wowRegion: region,
+    isLoggedIn,
+    hasPremium,
+    needsRefresh
+  })
 }
 
 const Index = () => {
   const transition = useNavigation()
-  const { wowRealm, wowRegion, isLoggedIn, hasPremium } = useLoaderData<
-    WoWLoaderData & { isLoggedIn: boolean; hasPremium: boolean }
-  >()
+  const { wowRealm, wowRegion, isLoggedIn, hasPremium, needsRefresh } =
+    useLoaderData<
+      WoWLoaderData & {
+        isLoggedIn: boolean
+        hasPremium: boolean
+        needsRefresh: boolean
+      }
+    >()
   const results = useActionData<WowShortageResult>()
   const navigate = useNavigate()
 
@@ -118,12 +135,15 @@ const Index = () => {
   }
 
   // Paywall logic
-  const showPaywall = !isLoggedIn || !hasPremium
+  const showPaywall = !isLoggedIn || !hasPremium || needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
+  }
+  const handleRefresh = () => {
+    window.location.href = '/refresh-discord-roles'
   }
 
   if (results) {
@@ -148,8 +168,10 @@ const Index = () => {
         show={showPaywall}
         isLoggedIn={!!isLoggedIn}
         hasPremium={!!hasPremium}
+        needsRefresh={needsRefresh}
         onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+        onSubscribe={handleSubscribe}
+        onRefresh={handleRefresh}>
         <SmallFormContainer
           title="Single Item Shortage finder"
           onClick={onSubmit}

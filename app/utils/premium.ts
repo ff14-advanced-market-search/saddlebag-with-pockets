@@ -27,7 +27,7 @@ export function getHasPremium(roles: string[] | undefined | null): boolean {
 }
 
 // Session timeout configuration (14 days in milliseconds)
-export const ROLES_REFRESH_TIMEOUT = 14 * 24 * 60 * 60 * 1000
+export const ROLES_REFRESH_TIMEOUT = 14 * 24 * 60 * 60 * 1000 // 10 * 1000
 
 /**
  * Checks if Discord roles need to be refreshed based on the last refresh timestamp
@@ -58,3 +58,29 @@ export const PREMIUM_ROLE_INFO: Record<string, { name: string; icon: string }> =
     '1211135581619490956': { name: 'Discord Super', icon: '👑' },
     '1211140468205944852': { name: 'Discord Elite', icon: '💎' }
   })
+
+/**
+ * Refreshes Discord roles via API call without leaving the current page
+ * @returns Promise<boolean> - true if refresh was successful, false otherwise
+ */
+export const refreshDiscordRoles = async (): Promise<boolean> => {
+  try {
+    const response = await fetch('/refresh-discord-roles', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (response.ok) {
+      // Reload the page to get updated session data
+      window.location.reload()
+      return true
+    }
+
+    return false
+  } catch (error) {
+    console.error('Failed to refresh Discord roles:', error)
+    return false
+  }
+}

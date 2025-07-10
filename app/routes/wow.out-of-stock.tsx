@@ -30,7 +30,11 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
@@ -124,10 +128,18 @@ export const loader: LoaderFunction = async ({ request }) => {
     const discordSession = await getSession(request.headers.get('Cookie'))
     const discordId = discordSession.get('discord_id')
     const discordRoles = discordSession.get('discord_roles') || []
+    const rolesRefreshedAt = discordSession.get('discord_roles_refreshed_at')
     const isLoggedIn = !!discordId
     const hasPremium = getHasPremium(discordRoles)
+    const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
-    return json({ ...validParams.data, region, isLoggedIn, hasPremium })
+    return json({
+      ...validParams.data,
+      region,
+      isLoggedIn,
+      hasPremium,
+      needsRefresh
+    })
   } catch (error) {
     return json({
       exception: 'Invalid URL format'
@@ -185,7 +197,11 @@ export const action: ActionFunction = async ({ request }) => {
 
 const OutOfStock = () => {
   const loaderData = useLoaderData<
-    typeof loader & { isLoggedIn: boolean; hasPremium: boolean }
+    typeof loader & {
+      isLoggedIn: boolean
+      hasPremium: boolean
+      needsRefresh: boolean
+    }
   >()
   const result = useActionData<{
     data?: OutOfStockItem[]
@@ -209,12 +225,16 @@ const OutOfStock = () => {
   const error = result?.exception
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
+  }
+  const handleRefresh = () => {
+    window.location.href = '/refresh-discord-roles'
   }
 
   if (result?.data?.length === 0) {
@@ -242,8 +262,10 @@ const OutOfStock = () => {
         show={showPaywall}
         isLoggedIn={loaderData.isLoggedIn}
         hasPremium={loaderData.hasPremium}
+        needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+        onSubscribe={handleSubscribe}
+        onRefresh={handleRefresh}>
         <SmallFormContainer
           title="Out of Stock Items"
           description="Find items that are not listed on the auctionhouse of super high pop realms!"

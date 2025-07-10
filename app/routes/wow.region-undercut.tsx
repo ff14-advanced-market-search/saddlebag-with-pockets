@@ -20,7 +20,11 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 import { getSession } from '~/sessions'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 
@@ -102,10 +106,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
-  return json({ isLoggedIn, hasPremium })
+  return json({ isLoggedIn, hasPremium, needsRefresh })
 }
 
 type RegionActionResponse =
@@ -151,6 +157,7 @@ const RegionUndercut = () => {
   const loaderData = useLoaderData<{
     isLoggedIn: boolean
     hasPremium: boolean
+    needsRefresh: boolean
   }>()
   const isLoading = transition.state === 'submitting'
   const navigate = useNavigate()
@@ -159,12 +166,16 @@ const RegionUndercut = () => {
     results && 'exception' in results ? results.exception : undefined
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
+  }
+  const handleRefresh = () => {
+    window.location.href = '/refresh-discord-roles'
   }
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -231,8 +242,10 @@ const RegionUndercut = () => {
         show={showPaywall}
         isLoggedIn={!!loaderData.isLoggedIn}
         hasPremium={!!loaderData.hasPremium}
+        needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+        onSubscribe={handleSubscribe}
+        onRefresh={handleRefresh}>
         <SmallFormContainer
           title="Region Undercuts"
           description={

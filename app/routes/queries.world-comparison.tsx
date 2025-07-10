@@ -35,7 +35,11 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',

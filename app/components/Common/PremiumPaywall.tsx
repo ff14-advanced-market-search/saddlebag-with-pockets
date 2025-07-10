@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DiscordIcon from '~/icons/DiscordIcon'
+import { refreshDiscordRoles } from '~/utils/premium'
 
 interface PremiumPaywallProps {
   show: boolean
@@ -22,6 +23,24 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
   onRefresh,
   children
 }) => {
+  const [isRefreshing, setIsRefreshing] = useState(false)
+
+  const handleRefresh = async () => {
+    if (isRefreshing) return
+
+    setIsRefreshing(true)
+    try {
+      await refreshDiscordRoles()
+    } catch (error) {
+      console.error('Failed to refresh roles:', error)
+      // Fallback to the original onRefresh if provided
+      if (onRefresh) {
+        onRefresh()
+      }
+    } finally {
+      setIsRefreshing(false)
+    }
+  }
   if (!show) return <>{children}</>
 
   return (
@@ -63,10 +82,11 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
               </p>
               <button
                 type="button"
-                onClick={onRefresh}
-                className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
+                onClick={handleRefresh}
+                disabled={isRefreshing}
+                className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2] disabled:opacity-50 disabled:cursor-not-allowed">
                 <DiscordIcon className="w-6 h-6 mr-2" />
-                Refresh Roles
+                {isRefreshing ? 'Refreshing...' : 'Refresh Roles'}
               </button>
             </>
           ) : !hasPremium ? (
