@@ -374,7 +374,11 @@ const IlvlShoppingListComponent = () => {
     } else if (result && 'data' in result && Array.isArray(result.data)) {
       if (result.data.length > 0) {
         return (
-          <Results {...(result as IlvlWoWListResponse & { sortby: string })} />
+          <Results
+            {...(result as IlvlWoWListResponse & { sortby: string })}
+            isLoggedIn={loaderData.isLoggedIn}
+            hasPremium={loaderData.hasPremium}
+          />
         )
       } else {
         return <NoResults href={PAGE_URL} />
@@ -392,8 +396,14 @@ export default IlvlShoppingListComponent
 const Results = ({
   data,
   sortby,
-  name
-}: IlvlWoWListResponse & { sortby: string }) => {
+  name,
+  isLoggedIn,
+  hasPremium
+}: IlvlWoWListResponse & {
+  sortby: string
+  isLoggedIn: boolean
+  hasPremium: boolean
+}) => {
   useEffect(() => {
     if (window && document) {
       window.scroll({ top: 0, behavior: 'smooth' })
@@ -402,21 +412,28 @@ const Results = ({
 
   return (
     <PageWrapper>
-      <SmallTable
-        title={'Best Deals for ' + name}
-        sortingOrder={[{ desc: false, id: sortby }]}
-        columnList={columnList}
-        mobileColumnList={mobileColumnList}
-        columnSelectOptions={[
-          'price',
-          'quantity',
-          'realmNames',
-          'ilvl',
-          'stats',
-          'link'
-        ]}
-        data={data as any}
-      />
+      <PremiumPaywall
+        show={!isLoggedIn || !hasPremium}
+        isLoggedIn={isLoggedIn}
+        hasPremium={hasPremium}
+        onLogin={() => (window.location.href = '/discord-login')}
+        onSubscribe={() => window.open(DISCORD_SERVER_URL, '_blank')}>
+        <SmallTable
+          title={`Best Deals for ${name}`}
+          sortingOrder={[{ desc: false, id: sortby }]}
+          columnList={columnList}
+          mobileColumnList={mobileColumnList}
+          columnSelectOptions={[
+            'price',
+            'quantity',
+            'realmNames',
+            'ilvl',
+            'stats',
+            'link'
+          ]}
+          data={data as any}
+        />
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

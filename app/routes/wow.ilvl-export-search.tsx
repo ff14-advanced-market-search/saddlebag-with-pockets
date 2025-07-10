@@ -471,6 +471,8 @@ const IlvlExportSearchComponent = () => {
             {...(result as IlvlExportResponse & { sortby: string })}
             ilvl={formValues.ilvl}
             desiredStats={formValues.desiredStats}
+            isLoggedIn={loaderData.isLoggedIn}
+            hasPremium={loaderData.hasPremium}
           />
         )
       } else {
@@ -491,11 +493,15 @@ const Results = ({
   sortby,
   itemInfo,
   ilvl,
-  desiredStats
+  desiredStats,
+  isLoggedIn,
+  hasPremium
 }: IlvlExportResponse & {
   sortby: string
   ilvl: number
   desiredStats: ItemStat[]
+  isLoggedIn: boolean
+  hasPremium: boolean
 }) => {
   useEffect(() => {
     if (window && document) {
@@ -505,101 +511,108 @@ const Results = ({
 
   return (
     <PageWrapper>
-      <ContentContainer>
-        <div className="flex flex-col min-w-full">
-          <div className="flex flex-col md:flex-row items-center gap-2">
-            <Title title={itemInfo.itemName} />
-            <ExternalLink link={itemInfo.link} text="Item Data" />
-            <ExternalLink
-              link={`/wow/ilvl-shopping-list?itemId=${
-                itemInfo.itemID
-              }&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${[
-                ...new Set(desiredStats)
-              ]
-                .map((stat) => encodeURIComponent(stat))
-                .join('&desiredStats=')}`}
-              text="Shopping List"
-            />
-            <ExternalLink
-              link={`/wow/ilvl-export-search`}
-              text="Search again"
-            />
-            <SubmitButton
-              title="Share this search!"
-              onClick={handleCopyButton}
-              type="button"
-            />
-          </div>
-          <div className="flex flex-col md:flex-row w-full">
-            <div className="flex flex-col md:min-w-[50%] justify-center">
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>
-                  Average Min Price: {itemInfo.avgMinPrice.toLocaleString()}
-                </span>
+      <PremiumPaywall
+        show={!isLoggedIn || !hasPremium}
+        isLoggedIn={isLoggedIn}
+        hasPremium={hasPremium}
+        onLogin={() => (window.location.href = '/discord-login')}
+        onSubscribe={() => window.open(DISCORD_SERVER_URL, '_blank')}>
+        <ContentContainer>
+          <div className="flex flex-col min-w-full">
+            <div className="flex flex-col md:flex-row items-center gap-2">
+              <Title title={itemInfo.itemName} />
+              <ExternalLink link={itemInfo.link} text="Item Data" />
+              <ExternalLink
+                link={`/wow/ilvl-shopping-list?itemId=${
+                  itemInfo.itemID
+                }&maxPurchasePrice=10000000&desiredMinIlvl=${ilvl}&desiredStats=${[
+                  ...new Set(desiredStats)
+                ]
+                  .map((stat) => encodeURIComponent(stat))
+                  .join('&desiredStats=')}`}
+                text="Shopping List"
+              />
+              <ExternalLink
+                link={`/wow/ilvl-export-search`}
+                text="Search again"
+              />
+              <SubmitButton
+                title="Share this search!"
+                onClick={handleCopyButton}
+                type="button"
+              />
+            </div>
+            <div className="flex flex-col md:flex-row w-full">
+              <div className="flex flex-col md:min-w-[50%] justify-center">
+                <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                  <span>
+                    Average Min Price: {itemInfo.avgMinPrice.toLocaleString()}
+                  </span>
+                </div>
+                <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                  <span>
+                    Median Min Price: {itemInfo.medianMinPrice.toLocaleString()}
+                  </span>
+                </div>
+                <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                  <span>Ilvl: {itemInfo.ilvl.toLocaleString()}</span>
+                </div>
               </div>
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>
-                  Median Min Price: {itemInfo.medianMinPrice.toLocaleString()}
-                </span>
-              </div>
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>Ilvl: {itemInfo.ilvl.toLocaleString()}</span>
+              <div className="flex flex-col md:min-w-[50%] justify-center">
+                <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                  <span>
+                    Average Server Quantity:{' '}
+                    {itemInfo.avgServerQuantity.toLocaleString()}
+                  </span>
+                </div>
+                <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                  <span>
+                    Total Selected Server Quantity:{' '}
+                    {itemInfo.totalSelectedServerQuantity.toLocaleString()}
+                  </span>
+                </div>
+                <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
+                  <span>
+                    Stats:{' '}
+                    {itemInfo.stats.length === 0
+                      ? 'Any'
+                      : itemInfo.stats.join(', ')}
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col md:min-w-[50%] justify-center">
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>
-                  Average Server Quantity:{' '}
-                  {itemInfo.avgServerQuantity.toLocaleString()}
-                </span>
-              </div>
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>
-                  Total Selected Server Quantity:{' '}
-                  {itemInfo.totalSelectedServerQuantity.toLocaleString()}
-                </span>
-              </div>
-              <div className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100 p-2 m-1 rounded">
-                <span>
-                  Stats:{' '}
-                  {itemInfo.stats.length === 0
-                    ? 'Any'
-                    : itemInfo.stats.join(', ')}
-                </span>
-              </div>
-            </div>
           </div>
-        </div>
-      </ContentContainer>
-      <SmallTable
-        title="Export Results"
-        description="Results for your item in different realms"
-        sortingOrder={[{ desc: true, id: sortby }]}
-        columnList={columnList}
-        mobileColumnList={mobileColumnList}
-        columnSelectOptions={[
-          'minPrice',
-          'itemQuantity',
-          'stats',
-          'realmPopulationReal',
-          'realmPopulationType',
-          'realmRanking'
-        ]}
-        data={data as any}
-        csvOptions={{
-          filename: 'saddlebag-wow-ilvl-export.csv',
-          columns: [
-            { title: 'Realm ID', value: 'connectedRealmID' },
-            { title: 'Realm Names', value: 'connectedRealmNames' },
-            { title: 'Minimum Price', value: 'minPrice' },
-            { title: 'Item Quantity', value: 'itemQuantity' },
-            { title: 'Stats', value: 'stats' },
-            { title: 'Realm Population', value: 'realmPopulationReal' },
-            { title: 'Population Type', value: 'realmPopulationType' },
-            { title: 'Realm Ranking', value: 'realmRanking' }
-          ]
-        }}
-      />
+        </ContentContainer>
+        <SmallTable
+          title="Export Results"
+          description="Results for your item in different realms"
+          sortingOrder={[{ desc: true, id: sortby }]}
+          columnList={columnList}
+          mobileColumnList={mobileColumnList}
+          columnSelectOptions={[
+            'minPrice',
+            'itemQuantity',
+            'stats',
+            'realmPopulationReal',
+            'realmPopulationType',
+            'realmRanking'
+          ]}
+          data={data as any}
+          csvOptions={{
+            filename: 'saddlebag-wow-ilvl-export.csv',
+            columns: [
+              { title: 'Realm ID', value: 'connectedRealmID' },
+              { title: 'Realm Names', value: 'connectedRealmNames' },
+              { title: 'Minimum Price', value: 'minPrice' },
+              { title: 'Item Quantity', value: 'itemQuantity' },
+              { title: 'Stats', value: 'stats' },
+              { title: 'Realm Population', value: 'realmPopulationReal' },
+              { title: 'Population Type', value: 'realmPopulationType' },
+              { title: 'Realm Ranking', value: 'realmRanking' }
+            ]
+          }}
+        />
+      </PremiumPaywall>
     </PageWrapper>
   )
 }
