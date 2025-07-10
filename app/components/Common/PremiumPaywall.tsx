@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DiscordIcon from '~/icons/DiscordIcon'
 import { refreshDiscordRoles } from '~/utils/premium'
 
@@ -24,6 +24,13 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
   children
 }) => {
   const [isRefreshing, setIsRefreshing] = useState(false)
+
+  // Automatically refresh roles when needsRefresh is true
+  useEffect(() => {
+    if (needsRefresh && !isRefreshing) {
+      handleRefresh()
+    }
+  }, [needsRefresh])
 
   const handleRefresh = async () => {
     if (isRefreshing) return
@@ -74,20 +81,15 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
             <>
               <DiscordIcon className="w-16 h-16 text-[#5865F2] mb-4" />
               <h2 className="text-2xl font-bold mb-2 text-center">
-                Session Expired
+                Refreshing Session...
               </h2>
               <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
-                Your Discord session has expired. Please refresh your roles to
-                continue.
+                Your Discord session has expired. Automatically refreshing your
+                roles...
               </p>
-              <button
-                type="button"
-                onClick={handleRefresh}
-                disabled={isRefreshing}
-                className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2] disabled:opacity-50 disabled:cursor-not-allowed">
-                <DiscordIcon className="w-6 h-6 mr-2" />
-                {isRefreshing ? 'Refreshing...' : 'Refresh Roles'}
-              </button>
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#5865F2]"></div>
+              </div>
             </>
           ) : !hasPremium ? (
             <>
