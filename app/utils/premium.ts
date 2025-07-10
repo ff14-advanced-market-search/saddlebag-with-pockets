@@ -26,8 +26,8 @@ export function getHasPremium(roles: string[] | undefined | null): boolean {
   return roles.some((roleId) => PREMIUM_ROLE_IDS.includes(roleId))
 }
 
-// Session timeout configuration (14 days in milliseconds)
-export const ROLES_REFRESH_TIMEOUT = 14 * 24 * 60 * 60 * 1000 // 10 * 1000
+// Session timeout configuration (8 days in milliseconds)
+export const ROLES_REFRESH_TIMEOUT = 8 * 24 * 60 * 60 * 1000 // 10 * 1000
 
 /**
  * Checks if Discord roles need to be refreshed based on the last refresh timestamp
