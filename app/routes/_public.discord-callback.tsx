@@ -54,16 +54,11 @@ export const loader: LoaderFunction = async ({ request, context }) => {
       }
     })
 
-    console.log('[discord-callback] userResponse status:', userResponse.status)
-    const userText = await userResponse.clone().text()
-    console.log('[discord-callback] userResponse body:', userText)
-
     if (!userResponse.ok) {
       throw new Error('Failed to get user data from Discord')
     }
 
     const userData = await userResponse.json()
-    console.log('[discord-callback] userData:', userData)
 
     // Store user data in session
     const session = await getSession(request.headers.get('Cookie'))
