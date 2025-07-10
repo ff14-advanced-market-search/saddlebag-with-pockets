@@ -28,7 +28,7 @@ export function getHasPremium(roles: string[] | undefined | null): boolean {
 
 // Optional: role ID to name/icon map for future use
 export const PREMIUM_ROLE_INFO: Record<string, { name: string; icon: string }> =
-  {
+  Object.freeze({
     '982062454433546291': { name: 'Team', icon: '🛡️' },
     '982028821186371624': { name: 'Patreon', icon: '🧡' },
     '1043787711741431888': { name: 'Fancy', icon: '✨' },
@@ -37,4 +37,4 @@ export const PREMIUM_ROLE_INFO: Record<string, { name: string; icon: string }> =
     '1210537409884848159': { name: 'Discord Fancy', icon: '🌟' },
     '1211135581619490956': { name: 'Discord Super', icon: '👑' },
     '1211140468205944852': { name: 'Discord Elite', icon: '💎' }
-  }
+  })

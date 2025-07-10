@@ -10,6 +10,9 @@ export const action: ActionFunction = async ({ request, context }) => {
     return redirect('/options?error=discord_roles_refresh_failed')
   }
   const botToken = context.DISCORD_BOT_TOKEN
+  if (!botToken) {
+    return redirect('/options?error=discord_roles_refresh_failed')
+  }
   let discordRoles = []
   try {
     if (botToken && discordId) {
