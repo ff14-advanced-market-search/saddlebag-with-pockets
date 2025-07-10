@@ -236,9 +236,6 @@ const Index = () => {
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
-  const handleRefresh = () => {
-    window.location.href = '/refresh-discord-roles'
-  }
 
   if (results) {
     if (Object.keys(results).length === 0) {
@@ -264,8 +261,7 @@ const Index = () => {
         hasPremium={!!hasPremium}
         needsRefresh={needsRefresh}
         onLogin={handleLogin}
-        onSubscribe={handleSubscribe}
-        onRefresh={handleRefresh}>
+        onSubscribe={handleSubscribe}>
         <SmallFormContainer
           title="Commodity Shortage finder"
           onClick={onSubmit}

@@ -299,9 +299,6 @@ const Index = () => {
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
-  const handleRefresh = () => {
-    window.location.href = '/refresh-discord-roles'
-  }
 
   return (
     <PageWrapper>
@@ -311,8 +308,7 @@ const Index = () => {
         hasPremium={loaderData.hasPremium}
         needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
-        onSubscribe={handleSubscribe}
-        onRefresh={handleRefresh}>
+        onSubscribe={handleSubscribe}>
         <SmallFormContainer
           title={pageTitle}
           description={pageDescription}

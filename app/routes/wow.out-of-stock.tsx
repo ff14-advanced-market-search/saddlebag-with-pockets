@@ -233,9 +233,6 @@ const OutOfStock = () => {
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
-  const handleRefresh = () => {
-    window.location.href = '/refresh-discord-roles'
-  }
 
   if (result?.data?.length === 0) {
     return <NoResults href={PAGE_URL} />
@@ -264,8 +261,7 @@ const OutOfStock = () => {
         hasPremium={loaderData.hasPremium}
         needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
-        onSubscribe={handleSubscribe}
-        onRefresh={handleRefresh}>
+        onSubscribe={handleSubscribe}>
         <SmallFormContainer
           title="Out of Stock Items"
           description="Find items that are not listed on the auctionhouse of super high pop realms!"

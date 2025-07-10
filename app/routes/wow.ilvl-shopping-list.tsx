@@ -240,9 +240,6 @@ const IlvlShoppingListComponent = () => {
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
-  const handleRefresh = () => {
-    window.location.href = '/refresh-discord-roles'
-  }
 
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')
@@ -299,8 +296,7 @@ const IlvlShoppingListComponent = () => {
       hasPremium={loaderData.hasPremium}
       needsRefresh={loaderData.needsRefresh}
       onLogin={handleLogin}
-      onSubscribe={handleSubscribe}
-      onRefresh={handleRefresh}>
+      onSubscribe={handleSubscribe}>
       <SmallFormContainer
         title="Item Level Shopping List"
         description={`

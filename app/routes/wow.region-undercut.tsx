@@ -174,9 +174,6 @@ const RegionUndercut = () => {
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
-  const handleRefresh = () => {
-    window.location.href = '/refresh-discord-roles'
-  }
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (isLoading) {
@@ -245,7 +242,7 @@ const RegionUndercut = () => {
         needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
         onSubscribe={handleSubscribe}
-        onRefresh={handleRefresh}>
+        onRefresh={() => {}}>
         <SmallFormContainer
           title="Region Undercuts"
           description={

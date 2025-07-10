@@ -245,9 +245,6 @@ const IlvlExportSearchComponent = () => {
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
-  const handleRefresh = () => {
-    window.location.href = '/refresh-discord-roles'
-  }
 
   useEffect(() => {
     // If there's an error, reset form values but keep the error message
@@ -332,8 +329,7 @@ const IlvlExportSearchComponent = () => {
       hasPremium={loaderData.hasPremium}
       needsRefresh={loaderData.needsRefresh}
       onLogin={handleLogin}
-      onSubscribe={handleSubscribe}
-      onRefresh={handleRefresh}>
+      onSubscribe={handleSubscribe}>
       <SmallFormContainer
         title="Item Level Export Search"
         description={`

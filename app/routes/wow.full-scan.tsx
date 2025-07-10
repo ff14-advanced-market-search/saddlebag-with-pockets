@@ -133,9 +133,6 @@ const Index = () => {
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
-  const handleRefresh = () => {
-    window.location.href = '/refresh-discord-roles'
-  }
 
   useEffect(() => {
     if (results && 'exception' in results) {
@@ -161,8 +158,7 @@ const Index = () => {
           hasPremium={!!hasPremium}
           needsRefresh={needsRefresh}
           onLogin={handleLogin}
-          onSubscribe={handleSubscribe}
-          onRefresh={handleRefresh}>
+          onSubscribe={handleSubscribe}>
           <WoWScanForm
             onClick={onSubmit}
             onChange={() => {
