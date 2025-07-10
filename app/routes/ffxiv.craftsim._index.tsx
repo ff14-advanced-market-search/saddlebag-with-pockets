@@ -169,8 +169,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   const hideExpertRecipesParam = params.has('hideExpertRecipes')
     ? params.get('hideExpertRecipes')
@@ -209,14 +211,16 @@ export const loader: LoaderFunction = async ({ request }) => {
     return json({
       ...validParams.data,
       isLoggedIn,
-      hasPremium
+      hasPremium,
+      needsRefresh
     })
   }
 
   return json({
     ...defaultFormValues,
     isLoggedIn,
-    hasPremium
+    hasPremium,
+    needsRefresh
   })
 }
 
@@ -260,9 +264,23 @@ type ActionResponse =
  * Displays a form for filtering and simulating crafting profitability, conditionally gated by user login and premium status. Handles form state, input changes, and navigation. Shows results or a no-results message based on server responses.
  */
 export default function Index() {
-  const loaderData = useLoaderData<
-    typeof defaultFormValues & { isLoggedIn: boolean; hasPremium: boolean }
-  >()
+  const loaderData = useLoaderData<{
+    costMetric: CostMetrics
+    revenueMetric: RevenueMetrics
+    salesPerWeek: number
+    medianSalePrice: number
+    maxMaterialCost: number
+    jobs: number[]
+    filters: number[]
+    stars: number
+    lvlLowerLimit: number
+    lvlUpperLimit: number
+    yields: number
+    hideExpertRecipes: boolean
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
   const actionData = useActionData<ActionResponse>()
   const transition = useNavigation()
   const loading = transition.state === 'submitting'
@@ -297,7 +315,8 @@ export default function Index() {
   }
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
 
   const handleLogin = () => {
     navigate('/discord-login')
@@ -312,6 +331,7 @@ export default function Index() {
         show={showPaywall}
         isLoggedIn={loaderData.isLoggedIn}
         hasPremium={loaderData.hasPremium}
+        needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
         onSubscribe={handleSubscribe}>
         <SmallFormContainer

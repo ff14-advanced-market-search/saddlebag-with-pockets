@@ -114,12 +114,15 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   return json({
     isLoggedIn,
-    hasPremium
+    hasPremium,
+    needsRefresh
   })
 }
 
@@ -129,6 +132,7 @@ const FFXIVScripExchange = () => {
   const loaderData = useLoaderData<{
     isLoggedIn: boolean
     hasPremium: boolean
+    needsRefresh: boolean
   }>()
   const navigate = useNavigate()
   const [formState, setFormState] = useState<{ color: string }>({
@@ -174,7 +178,8 @@ const FFXIVScripExchange = () => {
   }
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
@@ -189,6 +194,7 @@ const FFXIVScripExchange = () => {
           show={showPaywall}
           isLoggedIn={loaderData.isLoggedIn}
           hasPremium={loaderData.hasPremium}
+          needsRefresh={loaderData.needsRefresh}
           onLogin={handleLogin}
           onSubscribe={handleSubscribe}>
           <SmallFormContainer

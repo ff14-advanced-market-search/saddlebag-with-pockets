@@ -28,7 +28,9 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
   // Automatically refresh roles when needsRefresh is true
   useEffect(() => {
     if (needsRefresh && !isRefreshing) {
-      handleRefresh()
+      ;(async () => {
+        await handleRefresh()
+      })()
     }
   }, [needsRefresh])
 
