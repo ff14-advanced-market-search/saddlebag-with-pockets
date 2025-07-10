@@ -195,8 +195,8 @@ const Index = () => {
       <div className="py-3">
         <PremiumPaywall
           show={showPaywall}
-          isLoggedIn={!!loaderData.isLoggedIn}
-          hasPremium={!!loaderData.hasPremium}
+          isLoggedIn={loaderData.isLoggedIn}
+          hasPremium={loaderData.hasPremium}
           onLogin={handleLogin}
           onSubscribe={handleSubscribe}>
           <SmallFormContainer

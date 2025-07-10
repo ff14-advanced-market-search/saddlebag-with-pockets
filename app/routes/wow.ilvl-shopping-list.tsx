@@ -279,8 +279,8 @@ const IlvlShoppingListComponent = () => {
   const renderForm = () => (
     <PremiumPaywall
       show={showPaywall}
-      isLoggedIn={!!loaderData.isLoggedIn}
-      hasPremium={!!loaderData.hasPremium}
+      isLoggedIn={loaderData.isLoggedIn}
+      hasPremium={loaderData.hasPremium}
       onLogin={handleLogin}
       onSubscribe={handleSubscribe}>
       <SmallFormContainer

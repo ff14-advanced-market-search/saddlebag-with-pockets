@@ -167,7 +167,13 @@ const Index = () => {
     navigate('/discord-login')
   }
   const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
+    const popup = window.open(DISCORD_SERVER_URL, '_blank')
+    if (popup === null) {
+      // Popup was blocked by the browser
+      alert(
+        `Popup blocked! Please allow popups for this site to join our Discord server, or manually visit: ${DISCORD_SERVER_URL}`
+      )
+    }
   }
 
   return (
@@ -189,8 +195,8 @@ const Index = () => {
       </ContentContainer>
       <PremiumPaywall
         show={showPaywall}
-        isLoggedIn={!!loaderData.isLoggedIn}
-        hasPremium={!!loaderData.hasPremium}
+        isLoggedIn={loaderData.isLoggedIn}
+        hasPremium={loaderData.hasPremium}
         onLogin={handleLogin}
         onSubscribe={handleSubscribe}>
         <SmallFormContainer
