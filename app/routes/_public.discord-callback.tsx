@@ -82,6 +82,8 @@ export const loader: LoaderFunction = async ({ request, context }) => {
       }
     }
     session.set('discord_roles', discordRoles)
+    // Set timestamp when roles were last refreshed
+    session.set('discord_roles_refreshed_at', Date.now().toString())
 
     return redirect('/options?success=discord_connected', {
       headers: {

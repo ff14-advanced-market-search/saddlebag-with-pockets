@@ -41,7 +41,11 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
@@ -125,8 +129,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   const itemID = params.get('itemId')
   const maxPurchasePrice = params.get('maxPurchasePrice') || '10000000'
@@ -156,7 +162,8 @@ export const loader: LoaderFunction = async ({ request }) => {
           inputMap
         ),
         isLoggedIn,
-        hasPremium
+        hasPremium,
+        needsRefresh
       })
     }
 
@@ -174,11 +181,12 @@ export const loader: LoaderFunction = async ({ request }) => {
       sortby: 'price',
       formValues: { ...validatedFormData.data, desiredStats },
       isLoggedIn,
-      hasPremium
+      hasPremium,
+      needsRefresh
     })
   }
 
-  return json({ isLoggedIn, hasPremium })
+  return json({ isLoggedIn, hasPremium, needsRefresh })
 }
 
 type LoaderResponseType =
@@ -194,6 +202,12 @@ type LoaderResponseType =
       }
     })
 
+type LoaderData = {
+  isLoggedIn: boolean
+  hasPremium: boolean
+  needsRefresh: boolean
+}
+
 type ActionResponseType =
   | {}
   | { exception: string }
@@ -201,9 +215,7 @@ type ActionResponseType =
 
 const IlvlShoppingListComponent = () => {
   const actionData = useActionData<ActionResponseType>()
-  const loaderData = useLoaderData<
-    LoaderResponseType & { isLoggedIn: boolean; hasPremium: boolean }
-  >()
+  const loaderData = useLoaderData<LoaderResponseType & LoaderData>()
   const [searchParams] = useSearchParams()
   const result = actionData ?? loaderData
   const transition = useNavigation()
@@ -220,12 +232,16 @@ const IlvlShoppingListComponent = () => {
     result && 'exception' in result ? (result.exception as string) : undefined
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
+  }
+  const handleRefresh = () => {
+    window.location.href = '/refresh-discord-roles'
   }
 
   useEffect(() => {
@@ -281,8 +297,10 @@ const IlvlShoppingListComponent = () => {
       show={showPaywall}
       isLoggedIn={loaderData.isLoggedIn}
       hasPremium={loaderData.hasPremium}
+      needsRefresh={loaderData.needsRefresh}
       onLogin={handleLogin}
-      onSubscribe={handleSubscribe}>
+      onSubscribe={handleSubscribe}
+      onRefresh={handleRefresh}>
       <SmallFormContainer
         title="Item Level Shopping List"
         description={`

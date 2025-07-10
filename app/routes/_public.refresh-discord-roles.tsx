@@ -26,6 +26,8 @@ export const action: ActionFunction = async ({ request, context }) => {
         const memberData = await memberResp.json()
         discordRoles = Array.isArray(memberData.roles) ? memberData.roles : []
         session.set('discord_roles', discordRoles)
+        // Set timestamp when roles were last refreshed
+        session.set('discord_roles_refreshed_at', Date.now().toString())
         return redirect('/options?success=discord_roles_refreshed', {
           headers: {
             'Set-Cookie': await commitSession(session)

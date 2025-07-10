@@ -5,8 +5,10 @@ interface PremiumPaywallProps {
   show: boolean
   isLoggedIn: boolean
   hasPremium: boolean
+  needsRefresh?: boolean
   onLogin: () => void
   onSubscribe: () => void
+  onRefresh?: () => void
   children: React.ReactNode
 }
 
@@ -14,8 +16,10 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
   show,
   isLoggedIn,
   hasPremium,
+  needsRefresh = false,
   onLogin,
   onSubscribe,
+  onRefresh,
   children
 }) => {
   if (!show) return <>{children}</>
@@ -45,6 +49,24 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
                 className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
                 <DiscordIcon className="w-6 h-6 mr-2" />
                 Log in with Discord
+              </button>
+            </>
+          ) : needsRefresh ? (
+            <>
+              <DiscordIcon className="w-16 h-16 text-[#5865F2] mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-center">
+                Session Expired
+              </h2>
+              <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
+                Your Discord session has expired. Please refresh your roles to
+                continue.
+              </p>
+              <button
+                type="button"
+                onClick={onRefresh}
+                className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
+                <DiscordIcon className="w-6 h-6 mr-2" />
+                Refresh Roles
               </button>
             </>
           ) : !hasPremium ? (
