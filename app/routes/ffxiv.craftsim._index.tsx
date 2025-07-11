@@ -56,7 +56,11 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  DISCORD_SERVER_URL,
+  needsRolesRefresh
+} from '~/utils/premium'
 
 const CopyButton = ({ text }: { text: string }) => {
   const handleCopy = async () => {
