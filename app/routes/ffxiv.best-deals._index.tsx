@@ -33,7 +33,11 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 
 const PAGE_URL = '/ffxiv/best-deals'
 
@@ -103,6 +107,7 @@ interface LoaderDataType {
   maxBuyPrice: string
   isLoggedIn: boolean
   hasPremium: boolean
+  needsRefresh: boolean
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -115,8 +120,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   // Get Discord data from session
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   const params = new URL(request.url).searchParams
 
@@ -142,14 +149,16 @@ export const loader: LoaderFunction = async ({ request }) => {
     return json({
       ...validInput.data,
       isLoggedIn,
-      hasPremium
+      hasPremium,
+      needsRefresh
     })
   }
 
   return json({
     ...defaultFormValues,
     isLoggedIn,
-    hasPremium
+    hasPremium,
+    needsRefresh
   })
 }
 
@@ -205,7 +214,8 @@ const BestDeals = () => {
   const error = result && 'exception' in result ? result.exception : undefined
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
 
   const handleLogin = () => {
     navigate('/discord-login')
@@ -250,6 +260,7 @@ const BestDeals = () => {
         show={showPaywall}
         isLoggedIn={loaderData.isLoggedIn}
         hasPremium={loaderData.hasPremium}
+        needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
         onSubscribe={handleSubscribe}>
         <SmallFormContainer

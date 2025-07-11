@@ -24,7 +24,11 @@ import AllaganRequest from '~/requests/FFXIV/allagan'
 import { getUserSessionData, getSession } from '~/sessions'
 import Banner from '~/components/Common/Banner'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 
 const formName = 'allaganData'
 
@@ -116,12 +120,15 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   return json({
     isLoggedIn,
-    hasPremium
+    hasPremium,
+    needsRefresh
   })
 }
 
@@ -137,6 +144,7 @@ const Index = () => {
   const loaderData = useLoaderData<{
     isLoggedIn: boolean
     hasPremium: boolean
+    needsRefresh: boolean
   }>()
   const navigate = useNavigate()
 
@@ -162,7 +170,8 @@ const Index = () => {
   }
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
@@ -197,6 +206,7 @@ const Index = () => {
         show={showPaywall}
         isLoggedIn={loaderData.isLoggedIn}
         hasPremium={loaderData.hasPremium}
+        needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
         onSubscribe={handleSubscribe}>
         <SmallFormContainer

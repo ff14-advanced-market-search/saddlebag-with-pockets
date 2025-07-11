@@ -41,7 +41,11 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 const PAGE_URL = '/wow/quantity-manipulation'
@@ -161,8 +165,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   const params = new URL(request.url).searchParams
 
@@ -230,19 +236,24 @@ export const loader: LoaderFunction = async ({ request }) => {
     const responseData = {
       ...validInput.data,
       isLoggedIn,
-      hasPremium
+      hasPremium,
+      needsRefresh
     }
     return json(responseData)
   }
 
-  return json({ ...defaultFormValues, isLoggedIn, hasPremium })
+  return json({ ...defaultFormValues, isLoggedIn, hasPremium, needsRefresh })
 }
 
 const Index = () => {
   const transition = useNavigation()
 
   const loaderData = useLoaderData<
-    typeof defaultFormValues & { isLoggedIn: boolean; hasPremium: boolean }
+    typeof defaultFormValues & {
+      isLoggedIn: boolean
+      hasPremium: boolean
+      needsRefresh: boolean
+    }
   >()
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
     ...loaderData
@@ -280,7 +291,8 @@ const Index = () => {
     results && 'exception' in results ? results.exception : undefined
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
@@ -294,6 +306,7 @@ const Index = () => {
         show={showPaywall}
         isLoggedIn={loaderData.isLoggedIn}
         hasPremium={loaderData.hasPremium}
+        needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
         onSubscribe={handleSubscribe}>
         <SmallFormContainer

@@ -33,7 +33,11 @@ import { getUserSessionData, getSession } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -108,12 +112,15 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   return json({
     isLoggedIn,
-    hasPremium
+    hasPremium,
+    needsRefresh
   })
 }
 
@@ -126,6 +133,7 @@ export default function Index() {
   const loaderData = useLoaderData<{
     isLoggedIn: boolean
     hasPremium: boolean
+    needsRefresh: boolean
   }>()
   const navigation = useNavigation()
   const actionData = useActionData<ActionDataResponse>()
@@ -141,7 +149,8 @@ export default function Index() {
     (results && results.data.length === 0)
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
 
   const handleLogin = () => {
     navigate('/discord-login')
@@ -150,14 +159,20 @@ export default function Index() {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
 
+  const handleRefresh = () => {
+    window.location.reload()
+  }
+
   return (
     <PageWrapper>
       <PremiumPaywall
         show={showPaywall}
         isLoggedIn={loaderData.isLoggedIn}
         hasPremium={loaderData.hasPremium}
+        needsRefresh={loaderData.needsRefresh}
         onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+        onSubscribe={handleSubscribe}
+        onRefresh={handleRefresh}>
         <ShoppingListForm error={error} loading={loading} />
       </PremiumPaywall>
       {noResults && <NoResults />}

@@ -26,7 +26,11 @@ import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import Banner from '~/components/Common/Banner'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -49,16 +53,25 @@ export const loader: LoaderFunction = async ({ request }) => {
     const session = await getSession(request.headers.get('Cookie'))
     const discordId = session?.get('discord_id')
     const discordRoles = session?.get('discord_roles') || []
+    const rolesRefreshedAt = session?.get('discord_roles_refreshed_at')
     const isLoggedIn = !!discordId
     const hasPremium = getHasPremium(discordRoles)
-    return json({ wowRealm: server, wowRegion: region, isLoggedIn, hasPremium })
+    const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
+    return json({
+      wowRealm: server,
+      wowRegion: region,
+      isLoggedIn,
+      hasPremium,
+      needsRefresh
+    })
   } catch (err) {
     // Fallback to safe defaults if session retrieval fails
     return json({
       wowRealm: null,
       wowRegion: null,
       isLoggedIn: false,
-      hasPremium: false
+      hasPremium: false,
+      needsRefresh: false
     })
   }
 }
@@ -90,9 +103,14 @@ export const ErrorBoundary = () => <ErrorBounds />
 
 const Index = () => {
   const transition = useNavigation()
-  const { wowRealm, wowRegion, isLoggedIn, hasPremium } = useLoaderData<
-    WoWLoaderData & { isLoggedIn: boolean; hasPremium: boolean }
-  >()
+  const { wowRealm, wowRegion, isLoggedIn, hasPremium, needsRefresh } =
+    useLoaderData<
+      WoWLoaderData & {
+        isLoggedIn: boolean
+        hasPremium: boolean
+        needsRefresh: boolean
+      }
+    >()
   const results = useActionData<
     WoWScanResponseWithPayload | { exception: string }
   >()
@@ -108,7 +126,7 @@ const Index = () => {
   }
 
   // Paywall logic
-  const showPaywall = !isLoggedIn || !hasPremium
+  const showPaywall = !isLoggedIn || !hasPremium || needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
@@ -138,6 +156,7 @@ const Index = () => {
           show={showPaywall}
           isLoggedIn={!!isLoggedIn}
           hasPremium={!!hasPremium}
+          needsRefresh={needsRefresh}
           onLogin={handleLogin}
           onSubscribe={handleSubscribe}>
           <WoWScanForm

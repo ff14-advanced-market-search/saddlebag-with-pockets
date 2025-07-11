@@ -42,7 +42,11 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  needsRolesRefresh,
+  DISCORD_SERVER_URL
+} from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
@@ -137,8 +141,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordId = session.get('discord_id')
   const discordRoles = session.get('discord_roles') || []
+  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
   const isLoggedIn = !!discordId
   const hasPremium = getHasPremium(discordRoles)
+  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   const itemID = params.get('itemId')
   const ilvl = params.get('ilvl') || '642'
@@ -165,7 +171,8 @@ export const loader: LoaderFunction = async ({ request }) => {
           inputMap
         ),
         isLoggedIn,
-        hasPremium
+        hasPremium,
+        needsRefresh
       })
     }
 
@@ -188,11 +195,12 @@ export const loader: LoaderFunction = async ({ request }) => {
       sortby: validatedFormData.data.sortBy,
       formValues: { ...validatedFormData.data, desiredStats },
       isLoggedIn,
-      hasPremium
+      hasPremium,
+      needsRefresh
     })
   }
 
-  return json({ isLoggedIn, hasPremium })
+  return json({ isLoggedIn, hasPremium, needsRefresh })
 }
 
 type LoaderResponseType =
@@ -211,7 +219,11 @@ type ActionResponseType =
 const IlvlExportSearchComponent = () => {
   const actionData = useActionData<ActionResponseType>()
   const loaderData = useLoaderData<
-    LoaderResponseType & { isLoggedIn: boolean; hasPremium: boolean }
+    LoaderResponseType & {
+      isLoggedIn: boolean
+      hasPremium: boolean
+      needsRefresh: boolean
+    }
   >()
   const [searchParams, setSearchParams] = useSearchParams()
   const result = actionData ?? loaderData
@@ -225,7 +237,8 @@ const IlvlExportSearchComponent = () => {
   const error = result && 'exception' in result ? result.exception : undefined
 
   // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
+  const showPaywall =
+    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
   const handleLogin = () => {
     navigate('/discord-login')
   }
@@ -314,6 +327,7 @@ const IlvlExportSearchComponent = () => {
       show={showPaywall}
       isLoggedIn={loaderData.isLoggedIn}
       hasPremium={loaderData.hasPremium}
+      needsRefresh={loaderData.needsRefresh}
       onLogin={handleLogin}
       onSubscribe={handleSubscribe}>
       <SmallFormContainer
