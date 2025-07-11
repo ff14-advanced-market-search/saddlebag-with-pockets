@@ -218,7 +218,6 @@ const Index = () => {
         needsRefresh: boolean
       }
     >()
-  const navigate = useNavigate()
 
   const [serverName, setServerName] = useState<string>(wowRealm.name)
 
@@ -226,15 +225,6 @@ const Index = () => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
-  }
-
-  // Paywall logic
-  const showPaywall = !isLoggedIn || !hasPremium || needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
   }
 
   if (results) {
@@ -255,13 +245,7 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={!!isLoggedIn}
-        hasPremium={!!hasPremium}
-        needsRefresh={needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Commodity Shortage finder"
           onClick={onSubmit}

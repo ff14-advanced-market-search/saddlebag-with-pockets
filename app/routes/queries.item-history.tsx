@@ -181,24 +181,10 @@ const Index = () => {
     setError(undefined)
   }
 
-  // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
   return (
     <PageWrapper>
       <div className="py-3">
-        <PremiumPaywall
-          show={showPaywall}
-          isLoggedIn={loaderData.isLoggedIn}
-          hasPremium={loaderData.hasPremium}
-          onLogin={handleLogin}
-          onSubscribe={handleSubscribe}>
+        <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Find Item History"
             onClick={onSubmit}

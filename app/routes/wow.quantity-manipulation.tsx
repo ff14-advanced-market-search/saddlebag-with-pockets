@@ -302,13 +302,7 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title={pageTitle}
           description={pageDescription}

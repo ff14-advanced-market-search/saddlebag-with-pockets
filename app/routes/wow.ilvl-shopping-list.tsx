@@ -231,12 +231,6 @@ const IlvlShoppingListComponent = () => {
   const error =
     result && 'exception' in result ? (result.exception as string) : undefined
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
@@ -290,13 +284,7 @@ const IlvlShoppingListComponent = () => {
   }
 
   const renderForm = () => (
-    <PremiumPaywall
-      show={showPaywall}
-      isLoggedIn={loaderData.isLoggedIn}
-      hasPremium={loaderData.hasPremium}
-      needsRefresh={loaderData.needsRefresh}
-      onLogin={handleLogin}
-      onSubscribe={handleSubscribe}>
+    <PremiumPaywall loaderData={loaderData}>
       <SmallFormContainer
         title="Item Level Shopping List"
         description={`
@@ -427,11 +415,11 @@ const Results = ({
   return (
     <PageWrapper>
       <PremiumPaywall
-        show={!isLoggedIn || !hasPremium}
-        isLoggedIn={isLoggedIn}
-        hasPremium={hasPremium}
-        onLogin={() => (window.location.href = '/discord-login')}
-        onSubscribe={() => window.open(DISCORD_SERVER_URL, '_blank')}>
+        loaderData={{
+          isLoggedIn: isLoggedIn,
+          hasPremium: hasPremium,
+          needsRefresh: false
+        }}>
         <SmallTable
           title={`Best Deals for ${name}`}
           sortingOrder={[{ desc: false, id: sortby }]}

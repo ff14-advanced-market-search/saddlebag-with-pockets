@@ -236,12 +236,6 @@ const IlvlExportSearchComponent = () => {
   const isSubmitting = transition.state === 'submitting'
   const error = result && 'exception' in result ? result.exception : undefined
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
@@ -323,13 +317,7 @@ const IlvlExportSearchComponent = () => {
   }
 
   const renderForm = () => (
-    <PremiumPaywall
-      show={showPaywall}
-      isLoggedIn={loaderData.isLoggedIn}
-      hasPremium={loaderData.hasPremium}
-      needsRefresh={loaderData.needsRefresh}
-      onLogin={handleLogin}
-      onSubscribe={handleSubscribe}>
+    <PremiumPaywall loaderData={loaderData}>
       <SmallFormContainer
         title="Item Level Export Search"
         description={`

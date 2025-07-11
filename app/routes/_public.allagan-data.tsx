@@ -169,12 +169,6 @@ const Index = () => {
     }
   }
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
   const handleSubscribe = () => {
     const popup = window.open(DISCORD_SERVER_URL, '_blank')
     if (popup === null) {
@@ -202,13 +196,7 @@ const Index = () => {
           </a>
         </span>
       </ContentContainer>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Allagan Data"
           description={undefined}

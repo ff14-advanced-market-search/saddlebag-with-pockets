@@ -134,11 +134,6 @@ const Index = () => {
     }
   }
 
-  // Paywall logic
-  const showPaywall = !isLoggedIn || !hasPremium || needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
@@ -161,13 +156,7 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={!!isLoggedIn}
-        hasPremium={!!hasPremium}
-        needsRefresh={needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Single Item Shortage finder"
           onClick={onSubmit}

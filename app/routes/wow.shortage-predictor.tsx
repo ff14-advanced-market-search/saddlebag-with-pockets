@@ -269,25 +269,9 @@ const Index = () => {
   const error =
     results && 'exception' in results ? results.exception : undefined
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title={pageTitle}
           description={pageDescription}

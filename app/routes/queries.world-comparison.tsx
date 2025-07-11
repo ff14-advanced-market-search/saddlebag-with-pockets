@@ -204,23 +204,13 @@ const Index = () => {
   const itemsLength = state.items.length
   const serversLength = state.exportServers.length
 
-  // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Compare the minimum price of items across worlds!"
           description="Find out the minimum price of different items across multiple servers. Helps you find the best server to sell your items on, if you have alts on many servers."

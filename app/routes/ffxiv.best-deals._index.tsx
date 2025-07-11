@@ -213,17 +213,6 @@ const BestDeals = () => {
   })
   const error = result && 'exception' in result ? result.exception : undefined
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
   if (result && !Object.keys(result).length) {
     return <NoResults href={PAGE_URL} />
   }
@@ -256,13 +245,7 @@ const BestDeals = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title={pageTitle}
           description={pageDescription}

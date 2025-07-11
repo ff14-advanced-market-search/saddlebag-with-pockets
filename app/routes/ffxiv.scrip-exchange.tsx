@@ -177,12 +177,6 @@ const FFXIVScripExchange = () => {
     setFormState({ color: value })
   }
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
   const handleSubscribe = () => {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
@@ -190,13 +184,7 @@ const FFXIVScripExchange = () => {
   return (
     <PageWrapper>
       <div className="py-3">
-        <PremiumPaywall
-          show={showPaywall}
-          isLoggedIn={loaderData.isLoggedIn}
-          hasPremium={loaderData.hasPremium}
-          needsRefresh={loaderData.needsRefresh}
-          onLogin={handleLogin}
-          onSubscribe={handleSubscribe}>
+        <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Currency Conversion"
             onClick={onSubmit}

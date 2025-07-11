@@ -235,14 +235,7 @@ const RegionUndercut = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={!!loaderData.isLoggedIn}
-        hasPremium={!!loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}
-        onRefresh={() => {}}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Region Undercuts"
           description={

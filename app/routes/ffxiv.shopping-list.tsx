@@ -148,31 +148,9 @@ export default function Index() {
     (!results && actionData && !Object.keys(actionData).length) ||
     (results && results.data.length === 0)
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
-  const handleRefresh = () => {
-    window.location.reload()
-  }
-
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}
-        onRefresh={handleRefresh}>
+      <PremiumPaywall loaderData={loaderData}>
         <ShoppingListForm error={error} loading={loading} />
       </PremiumPaywall>
       {noResults && <NoResults />}

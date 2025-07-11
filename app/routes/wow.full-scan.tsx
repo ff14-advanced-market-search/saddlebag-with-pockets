@@ -125,15 +125,6 @@ const Index = () => {
     }
   }
 
-  // Paywall logic
-  const showPaywall = !isLoggedIn || !hasPremium || needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
   useEffect(() => {
     if (results && 'exception' in results) {
       setError(`Error: ${results.exception}`)
@@ -153,12 +144,11 @@ const Index = () => {
       <>
         <Banner />
         <PremiumPaywall
-          show={showPaywall}
-          isLoggedIn={!!isLoggedIn}
-          hasPremium={!!hasPremium}
-          needsRefresh={needsRefresh}
-          onLogin={handleLogin}
-          onSubscribe={handleSubscribe}>
+          loaderData={{
+            isLoggedIn: !!isLoggedIn,
+            hasPremium: !!hasPremium,
+            needsRefresh
+          }}>
           <WoWScanForm
             onClick={onSubmit}
             onChange={() => {
