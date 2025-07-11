@@ -28,7 +28,11 @@ import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData, getSession } from '~/sessions'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  DISCORD_SERVER_URL,
+  needsRolesRefresh
+} from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -56,8 +60,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   return json({
-    world: session.getWorld(),
-    data_center: session.getDataCenter(),
+    world: session.get('world'),
+    data_center: session.get('data_center'),
     isLoggedIn,
     hasPremium,
     needsRefresh
