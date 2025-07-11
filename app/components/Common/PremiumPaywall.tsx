@@ -25,15 +25,15 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
 }) => {
   const [isRefreshing, setIsRefreshing] = useState(false)
 
-  // Automatically refresh roles when needsRefresh is true
+  // Automatically refresh roles when needsRefresh is true and user is logged in
   useEffect(() => {
-    if (needsRefresh && !isRefreshing) {
+    if (isLoggedIn && needsRefresh && !isRefreshing) {
       const refreshRoles = async () => {
         await handleRefresh()
       }
       refreshRoles()
     }
-  }, [needsRefresh])
+  }, [needsRefresh, isLoggedIn])
 
   const handleRefresh = async () => {
     if (isRefreshing) return
