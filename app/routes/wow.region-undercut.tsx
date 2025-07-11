@@ -20,13 +20,8 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
-import { getSession } from '~/sessions'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const formName = 'region-undercut'
 
@@ -102,16 +97,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
-  return json({ isLoggedIn, hasPremium, needsRefresh })
+  return combineWithDiscordSession(request, {})
 }
 
 type RegionActionResponse =
@@ -160,20 +146,9 @@ const RegionUndercut = () => {
     needsRefresh: boolean
   }>()
   const isLoading = transition.state === 'submitting'
-  const navigate = useNavigate()
 
   const error =
     results && 'exception' in results ? results.exception : undefined
-
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (isLoading) {
@@ -235,14 +210,7 @@ const RegionUndercut = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={!!loaderData.isLoggedIn}
-        hasPremium={!!loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}
-        onRefresh={() => {}}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Region Undercuts"
           description={

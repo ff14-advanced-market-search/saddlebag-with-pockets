@@ -20,8 +20,7 @@ import {
   useActionData,
   useNavigation,
   useSearchParams,
-  useLoaderData,
-  useNavigate
+  useLoaderData
 } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
@@ -35,18 +34,9 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
-import {
-  getActionUrl,
-  handleCopyButton,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
-import { getSession } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -125,15 +115,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
   const params = url.searchParams
 
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
   const itemID = params.get('itemId')
   const maxPurchasePrice = params.get('maxPurchasePrice') || '10000000'
   const desiredMinIlvl = params.get('desiredMinIlvl') || '610'
@@ -156,14 +137,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     const formData = { itemID, maxPurchasePrice, desiredMinIlvl }
     const validatedFormData = validateInput.safeParse(formData)
     if (!validatedFormData.success) {
-      return json({
+      return combineWithDiscordSession(request, {
         exception: parseZodErrorsToDisplayString(
           validatedFormData.error,
           inputMap
-        ),
-        isLoggedIn,
-        hasPremium,
-        needsRefresh
+        )
       })
     }
 
@@ -176,17 +154,14 @@ export const loader: LoaderFunction = async ({ request }) => {
       desiredStats
     })
 
-    return json({
+    return combineWithDiscordSession(request, {
       ...(await result.json()),
       sortby: 'price',
-      formValues: { ...validatedFormData.data, desiredStats },
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
+      formValues: { ...validatedFormData.data, desiredStats }
     })
   }
 
-  return json({ isLoggedIn, hasPremium, needsRefresh })
+  return combineWithDiscordSession(request, {})
 }
 
 type LoaderResponseType =
@@ -224,22 +199,11 @@ const IlvlShoppingListComponent = () => {
   const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('610')
   const [itemID, setItemID] = useState<string>('')
   const [selectedStats, setSelectedStats] = useState<ItemStat[]>([])
-  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
 
   const error =
     result && 'exception' in result ? (result.exception as string) : undefined
-
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')
@@ -290,13 +254,7 @@ const IlvlShoppingListComponent = () => {
   }
 
   const renderForm = () => (
-    <PremiumPaywall
-      show={showPaywall}
-      isLoggedIn={loaderData.isLoggedIn}
-      hasPremium={loaderData.hasPremium}
-      needsRefresh={loaderData.needsRefresh}
-      onLogin={handleLogin}
-      onSubscribe={handleSubscribe}>
+    <PremiumPaywall loaderData={loaderData}>
       <SmallFormContainer
         title="Item Level Shopping List"
         description={`
@@ -427,11 +385,11 @@ const Results = ({
   return (
     <PageWrapper>
       <PremiumPaywall
-        show={!isLoggedIn || !hasPremium}
-        isLoggedIn={isLoggedIn}
-        hasPremium={hasPremium}
-        onLogin={() => (window.location.href = '/discord-login')}
-        onSubscribe={() => window.open(DISCORD_SERVER_URL, '_blank')}>
+        loaderData={{
+          isLoggedIn: isLoggedIn,
+          hasPremium: hasPremium,
+          needsRefresh: false
+        }}>
         <SmallTable
           title={`Best Deals for ${name}`}
           sortingOrder={[{ desc: false, id: sortby }]}

@@ -35,19 +35,10 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
-import {
-  getActionUrl,
-  handleCopyButton,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { getActionUrl, handleCopyButton } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
-import { getSession } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -70,13 +61,19 @@ const PAGE_URL = '/wow/ilvl-export-search'
 
 const AVAILABLE_STATS: ItemStat[] = ['Socket', 'Leech', 'Speed', 'Avoidance']
 
+type SortByValue =
+  | 'minPrice'
+  | 'itemQuantity'
+  | 'realmPopulationReal'
+  | 'realmRanking'
+
 const defaultFormValues = {
   itemId: '',
   ilvl: 610,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
-  sortBy: 'minPrice' as const,
+  sortBy: 'minPrice' as SortByValue,
   desiredStats: [] as ItemStat[]
 }
 
@@ -137,15 +134,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
   const params = url.searchParams
 
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
   const itemID = params.get('itemId')
   const ilvl = params.get('ilvl') || '642'
   const populationWP = params.get('populationWP') || '3000'
@@ -165,14 +153,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     }
     const validatedFormData = validateInput.safeParse(formData)
     if (!validatedFormData.success) {
-      return json({
+      return combineWithDiscordSession(request, {
         exception: parseZodErrorsToDisplayString(
           validatedFormData.error,
           inputMap
-        ),
-        isLoggedIn,
-        hasPremium,
-        needsRefresh
+        )
       })
     }
 
@@ -190,17 +175,14 @@ export const loader: LoaderFunction = async ({ request }) => {
       sortBy: validatedFormData.data.sortBy
     })
 
-    return json({
+    return combineWithDiscordSession(request, {
       ...(await result.json()),
       sortby: validatedFormData.data.sortBy,
-      formValues: { ...validatedFormData.data, desiredStats },
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
+      formValues: { ...validatedFormData.data, desiredStats }
     })
   }
 
-  return json({ isLoggedIn, hasPremium, needsRefresh })
+  return combineWithDiscordSession(request, {})
 }
 
 type LoaderResponseType =
@@ -231,20 +213,10 @@ const IlvlExportSearchComponent = () => {
   const [itemName, setItemName] = useState<string>('')
   const [itemID, setItemID] = useState<string>('')
   const [formValues, setFormValues] = useState(defaultFormValues)
-  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
-  const error = result && 'exception' in result ? result.exception : undefined
-
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
+  const error =
+    result && 'exception' in result ? String(result.exception) : undefined
 
   useEffect(() => {
     // If there's an error, reset form values but keep the error message
@@ -288,7 +260,7 @@ const IlvlExportSearchComponent = () => {
       populationWP: parseInt(populationWPFromUrl),
       populationBlizz: parseInt(populationBlizzFromUrl),
       rankingWP: parseInt(rankingWPFromUrl),
-      sortBy: sortByFromUrl,
+      sortBy: (sortByFromUrl as SortByValue) || 'minPrice',
       desiredStats: desiredStatsFromUrl
     })
   }, [searchParams, error])
@@ -323,13 +295,7 @@ const IlvlExportSearchComponent = () => {
   }
 
   const renderForm = () => (
-    <PremiumPaywall
-      show={showPaywall}
-      isLoggedIn={loaderData.isLoggedIn}
-      hasPremium={loaderData.hasPremium}
-      needsRefresh={loaderData.needsRefresh}
-      onLogin={handleLogin}
-      onSubscribe={handleSubscribe}>
+    <PremiumPaywall loaderData={loaderData}>
       <SmallFormContainer
         title="Item Level Export Search"
         description={`
@@ -435,7 +401,10 @@ const IlvlExportSearchComponent = () => {
               { label: 'Realm Ranking', value: 'realmRanking' }
             ]}
             onChange={(e) =>
-              setFormValues((prev) => ({ ...prev, sortBy: e.target.value }))
+              setFormValues((prev) => ({
+                ...prev,
+                sortBy: e.target.value as SortByValue
+              }))
             }
           />
           <div className="flex flex-col gap-2">
@@ -526,11 +495,7 @@ const Results = ({
   return (
     <PageWrapper>
       <PremiumPaywall
-        show={!isLoggedIn || !hasPremium}
-        isLoggedIn={isLoggedIn}
-        hasPremium={hasPremium}
-        onLogin={() => (window.location.href = '/discord-login')}
-        onSubscribe={() => window.open(DISCORD_SERVER_URL, '_blank')}>
+        loaderData={{ isLoggedIn, hasPremium, needsRefresh: false }}>
         <ContentContainer>
           <div className="flex flex-col min-w-full">
             <div className="flex flex-col md:flex-row items-center gap-2">

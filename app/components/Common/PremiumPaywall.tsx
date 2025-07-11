@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from '@remix-run/react'
 import DiscordIcon from '~/icons/DiscordIcon'
-import { refreshDiscordRoles } from '~/utils/premium'
+import { refreshDiscordRoles, DISCORD_SERVER_URL } from '~/utils/premium'
 
 interface PremiumPaywallProps {
-  show: boolean
-  isLoggedIn: boolean
-  hasPremium: boolean
-  needsRefresh?: boolean
-  onLogin: () => void
-  onSubscribe: () => void
-  onRefresh?: () => void
+  loaderData: {
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh?: boolean
+  }
   children: React.ReactNode
 }
 
 const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
-  show,
-  isLoggedIn,
-  hasPremium,
-  needsRefresh = false,
-  onLogin,
-  onSubscribe,
-  onRefresh,
+  loaderData,
   children
 }) => {
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const navigate = useNavigate()
+
+  const { isLoggedIn, hasPremium, needsRefresh = false } = loaderData
+
+  // Determine if paywall should be shown
+  const showPaywall = !isLoggedIn || !hasPremium || needsRefresh
 
   // Automatically refresh roles when needsRefresh is true and user is logged in
   useEffect(() => {
@@ -43,15 +42,22 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
       await refreshDiscordRoles()
     } catch (error) {
       console.error('Failed to refresh roles:', error)
-      // Fallback to the original onRefresh if provided
-      if (onRefresh) {
-        onRefresh()
-      }
+      // Fallback to page reload
+      window.location.reload()
     } finally {
       setIsRefreshing(false)
     }
   }
-  if (!show) return <>{children}</>
+
+  const handleLogin = () => {
+    navigate('/discord-login')
+  }
+
+  const handleSubscribe = () => {
+    window.open(DISCORD_SERVER_URL, '_blank')
+  }
+
+  if (!showPaywall) return <>{children}</>
 
   return (
     <div className="relative">
@@ -74,7 +80,7 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
               </p>
               <button
                 type="button"
-                onClick={onLogin}
+                onClick={handleLogin}
                 className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
                 <DiscordIcon className="w-6 h-6 mr-2" />
                 Log in with Discord
@@ -106,7 +112,7 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
               </p>
               <button
                 type="button"
-                onClick={onSubscribe}
+                onClick={handleSubscribe}
                 className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2] mb-6">
                 <DiscordIcon className="w-6 h-6 mr-2" />
                 Subscribe on Discord

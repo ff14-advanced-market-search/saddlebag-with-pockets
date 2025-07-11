@@ -30,12 +30,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
-import { getSession } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -116,7 +111,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
     const validParams = validateInput.safeParse(values)
     if (!validParams.success) {
-      return json({
+      return combineWithDiscordSession(request, {
         exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
       })
     }
@@ -124,24 +119,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     const session = await getUserSessionData(request)
     const { region } = session.getWoWSessionData()
 
-    // Get Discord session info
-    const discordSession = await getSession(request.headers.get('Cookie'))
-    const discordId = discordSession.get('discord_id')
-    const discordRoles = discordSession.get('discord_roles') || []
-    const rolesRefreshedAt = discordSession.get('discord_roles_refreshed_at')
-    const isLoggedIn = !!discordId
-    const hasPremium = getHasPremium(discordRoles)
-    const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
-    return json({
+    return combineWithDiscordSession(request, {
       ...validParams.data,
-      region,
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
+      region
     })
   } catch (error) {
-    return json({
+    return combineWithDiscordSession(request, {
       exception: 'Invalid URL format'
     })
   }
@@ -209,7 +192,6 @@ const OutOfStock = () => {
   }>()
   const transition = useNavigation()
   const isSubmitting = transition.state === 'submitting'
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useState<Record<string, string>>(
     Object.fromEntries(
       Object.entries(loaderData).map(([key, value]) => [
@@ -223,16 +205,6 @@ const OutOfStock = () => {
     )
   )
   const error = result?.exception
-
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   if (result?.data?.length === 0) {
     return <NoResults href={PAGE_URL} />
@@ -255,13 +227,7 @@ const OutOfStock = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Out of Stock Items"
           description="Find items that are not listed on the auctionhouse of super high pop realms!"

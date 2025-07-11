@@ -39,7 +39,8 @@ import {
   revenueMetrics
 } from '~/requests/FFXIV/crafting-list'
 import CraftingList from '~/requests/FFXIV/crafting-list'
-import { getUserSessionData, getSession } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { getUserSessionData } from '~/sessions'
 import {
   createUnionSchema,
   parseCheckboxBoolean,
@@ -56,11 +57,7 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  DISCORD_SERVER_URL,
-  needsRolesRefresh
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const CopyButton = ({ text }: { text: string }) => {
   const handleCopy = async () => {
@@ -169,15 +166,6 @@ const inputMap = {
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
   const hideExpertRecipesParam = params.has('hideExpertRecipes')
     ? params.get('hideExpertRecipes')
     : defaultFormValues.hideExpertRecipes.toString()
@@ -212,20 +200,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const validParams = validateFormInput.safeParse(values)
 
   if (validParams.success) {
-    return json({
-      ...validParams.data,
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
-    })
+    return combineWithDiscordSession(request, validParams.data)
   }
 
-  return json({
-    ...defaultFormValues,
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
-  })
+  return combineWithDiscordSession(request, defaultFormValues)
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -288,7 +266,6 @@ export default function Index() {
   const actionData = useActionData<ActionResponse>()
   const transition = useNavigation()
   const loading = transition.state === 'submitting'
-  const navigate = useNavigate()
 
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
     ...loaderData
@@ -318,26 +295,9 @@ export default function Index() {
     setSearchParams({ ...searchParams, [name]: value })
   }
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           onClick={() => {}}
           error={error}

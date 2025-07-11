@@ -33,11 +33,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const PAGE_URL = '/ffxiv/best-deals'
 
@@ -114,17 +110,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { getAllUserSessionData } = await getUserSessionData(request)
   const { world } = getAllUserSessionData()
 
-  // Get Discord session info - use getSession directly
-  const session = await getSession(request.headers.get('Cookie'))
-
-  // Get Discord data from session
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
   const params = new URL(request.url).searchParams
 
   const input = {
@@ -146,20 +131,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validInput = validateInput.safeParse(input)
   if (validInput.success) {
-    return json({
-      ...validInput.data,
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
-    })
+    return combineWithDiscordSession(request, validInput.data)
   }
 
-  return json({
-    ...defaultFormValues,
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
-  })
+  return combineWithDiscordSession(request, defaultFormValues)
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -194,7 +169,6 @@ const BestDeals = () => {
   const loaderData = useLoaderData<LoaderDataType>()
   const result = useActionData<ActionResponseType>()
   const transition = useNavigation()
-  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
 
@@ -212,17 +186,6 @@ const BestDeals = () => {
     maxBuyPrice: loaderData.maxBuyPrice || defaultFormValues.maxBuyPrice
   })
   const error = result && 'exception' in result ? result.exception : undefined
-
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   if (result && !Object.keys(result).length) {
     return <NoResults href={PAGE_URL} />
@@ -256,13 +219,7 @@ const BestDeals = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title={pageTitle}
           description={pageDescription}

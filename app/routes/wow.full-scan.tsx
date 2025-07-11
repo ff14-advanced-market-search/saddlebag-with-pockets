@@ -21,16 +21,12 @@ import { Results } from '~/components/WoWResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { setWoWScan } from '~/redux/reducers/wowSlice'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import Banner from '~/components/Common/Banner'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -50,28 +46,16 @@ export const loader: LoaderFunction = async ({ request }) => {
   try {
     const { getWoWSessionData } = await getUserSessionData(request)
     const { server, region } = getWoWSessionData()
-    const session = await getSession(request.headers.get('Cookie'))
-    const discordId = session?.get('discord_id')
-    const discordRoles = session?.get('discord_roles') || []
-    const rolesRefreshedAt = session?.get('discord_roles_refreshed_at')
-    const isLoggedIn = !!discordId
-    const hasPremium = getHasPremium(discordRoles)
-    const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-    return json({
+
+    return combineWithDiscordSession(request, {
       wowRealm: server,
-      wowRegion: region,
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
+      wowRegion: region
     })
   } catch (err) {
     // Fallback to safe defaults if session retrieval fails
-    return json({
-      wowRealm: null,
-      wowRegion: null,
-      isLoggedIn: false,
-      hasPremium: false,
-      needsRefresh: false
+    return combineWithDiscordSession(request, {
+      wowRealm: 'Thrall',
+      wowRegion: 'NA'
     })
   }
 }
@@ -117,21 +101,11 @@ const Index = () => {
   const [error, setError] = useState<string | undefined>()
   const dispatch = useDispatch()
   const wowScan = useTypedSelector((state) => state.wowQueries.scan)
-  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
-  }
-
-  // Paywall logic
-  const showPaywall = !isLoggedIn || !hasPremium || needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
   }
 
   useEffect(() => {
@@ -153,12 +127,11 @@ const Index = () => {
       <>
         <Banner />
         <PremiumPaywall
-          show={showPaywall}
-          isLoggedIn={!!isLoggedIn}
-          hasPremium={!!hasPremium}
-          needsRefresh={needsRefresh}
-          onLogin={handleLogin}
-          onSubscribe={handleSubscribe}>
+          loaderData={{
+            isLoggedIn: !!isLoggedIn,
+            hasPremium: !!hasPremium,
+            needsRefresh
+          }}>
           <WoWScanForm
             onClick={onSubmit}
             onChange={() => {

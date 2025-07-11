@@ -35,11 +35,7 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -90,24 +86,15 @@ export const loader: LoaderFunction = async ({ request }) => {
     hqOnly: params.get('hqOnly') || defaultFormValues.hqOnly
   }
 
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-
   const validParams = inputSchema.safeParse(values)
   if (!validParams.success) {
-    return json({
+    return combineWithDiscordSession(request, {
       exception: `Missing: ${validParams.error.issues
         .map(({ path }) => path.join(', '))
-        .join(', ')}`,
-      isLoggedIn,
-      hasPremium
+        .join(', ')}`
     })
   }
-  return json({ ...validParams.data, isLoggedIn, hasPremium })
+  return combineWithDiscordSession(request, validParams.data)
 }
 
 const sortByPrice =
@@ -180,7 +167,6 @@ const Index = () => {
       ? loaderData.exportServers.split(',')
       : []
   })
-  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -204,23 +190,9 @@ const Index = () => {
   const itemsLength = state.items.length
   const serversLength = state.exportServers.length
 
-  // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}>
+      <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           title="Compare the minimum price of items across worlds!"
           description="Find out the minimum price of different items across multiple servers. Helps you find the best server to sell your items on, if you have alts on many servers."

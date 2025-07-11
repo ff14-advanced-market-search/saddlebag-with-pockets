@@ -29,15 +29,11 @@ import type {
   ShoppingListItem
 } from '~/requests/FFXIV/shopping-list'
 import GetShoppingList from '~/requests/FFXIV/shopping-list'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -108,20 +104,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
-  return json({
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
-  })
+  return combineWithDiscordSession(request, {})
 }
 
 /**
@@ -137,7 +120,6 @@ export default function Index() {
   }>()
   const navigation = useNavigation()
   const actionData = useActionData<ActionDataResponse>()
-  const navigate = useNavigate()
   const error =
     actionData && 'exception' in actionData ? actionData.exception : undefined
   const loading = navigation.state === 'submitting'
@@ -148,31 +130,9 @@ export default function Index() {
     (!results && actionData && !Object.keys(actionData).length) ||
     (results && results.data.length === 0)
 
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
-  const handleRefresh = () => {
-    window.location.reload()
-  }
-
   return (
     <PageWrapper>
-      <PremiumPaywall
-        show={showPaywall}
-        isLoggedIn={loaderData.isLoggedIn}
-        hasPremium={loaderData.hasPremium}
-        needsRefresh={loaderData.needsRefresh}
-        onLogin={handleLogin}
-        onSubscribe={handleSubscribe}
-        onRefresh={handleRefresh}>
+      <PremiumPaywall loaderData={loaderData}>
         <ShoppingListForm error={error} loading={loading} />
       </PremiumPaywall>
       {noResults && <NoResults />}

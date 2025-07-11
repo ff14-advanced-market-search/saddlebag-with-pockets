@@ -28,7 +28,7 @@ import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -123,12 +123,7 @@ const parseServerError = (error: string) => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  return json({ isLoggedIn, hasPremium })
+  return combineWithDiscordSession(request, {})
 }
 
 const Index = () => {
@@ -146,7 +141,6 @@ const Index = () => {
     isLoggedIn: boolean
     hasPremium: boolean
   }>()
-  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {
@@ -181,24 +175,10 @@ const Index = () => {
     setError(undefined)
   }
 
-  // Paywall logic
-  const showPaywall = !loaderData.isLoggedIn || !loaderData.hasPremium
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
-
   return (
     <PageWrapper>
       <div className="py-3">
-        <PremiumPaywall
-          show={showPaywall}
-          isLoggedIn={loaderData.isLoggedIn}
-          hasPremium={loaderData.hasPremium}
-          onLogin={handleLogin}
-          onSubscribe={handleSubscribe}>
+        <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Find Item History"
             onClick={onSubmit}
