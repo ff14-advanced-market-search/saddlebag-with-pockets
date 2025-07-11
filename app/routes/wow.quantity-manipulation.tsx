@@ -41,11 +41,7 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 const PAGE_URL = '/wow/quantity-manipulation'
