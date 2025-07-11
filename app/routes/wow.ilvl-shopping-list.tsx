@@ -20,8 +20,7 @@ import {
   useActionData,
   useNavigation,
   useSearchParams,
-  useLoaderData,
-  useNavigate
+  useLoaderData
 } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
@@ -35,17 +34,9 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
-import {
-  getActionUrl,
-  handleCopyButton,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
@@ -224,16 +215,11 @@ const IlvlShoppingListComponent = () => {
   const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('610')
   const [itemID, setItemID] = useState<string>('')
   const [selectedStats, setSelectedStats] = useState<ItemStat[]>([])
-  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
 
   const error =
     result && 'exception' in result ? (result.exception as string) : undefined
-
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   useEffect(() => {
     const itemIdFromUrl = searchParams.get('itemId')

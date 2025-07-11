@@ -231,7 +231,6 @@ const IlvlExportSearchComponent = () => {
   const [itemName, setItemName] = useState<string>('')
   const [itemID, setItemID] = useState<string>('')
   const [formValues, setFormValues] = useState(defaultFormValues)
-  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
   const error = result && 'exception' in result ? result.exception : undefined
