@@ -27,7 +27,7 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -106,19 +106,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
-  return json({
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
-  })
+  return combineWithDiscordSession(request, {})
 }
 
 const Index = () => {

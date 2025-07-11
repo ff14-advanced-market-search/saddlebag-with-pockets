@@ -28,7 +28,7 @@ import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium } from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -123,12 +123,7 @@ const parseServerError = (error: string) => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  return json({ isLoggedIn, hasPremium })
+  return combineWithDiscordSession(request, {})
 }
 
 const Index = () => {

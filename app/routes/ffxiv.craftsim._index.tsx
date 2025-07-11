@@ -39,7 +39,8 @@ import {
   revenueMetrics
 } from '~/requests/FFXIV/crafting-list'
 import CraftingList from '~/requests/FFXIV/crafting-list'
-import { getUserSessionData, getSession } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { getUserSessionData } from '~/sessions'
 import {
   createUnionSchema,
   parseCheckboxBoolean,
@@ -165,15 +166,6 @@ const inputMap = {
 export const loader: LoaderFunction = async ({ request }) => {
   const params = new URL(request.url).searchParams
 
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
   const hideExpertRecipesParam = params.has('hideExpertRecipes')
     ? params.get('hideExpertRecipes')
     : defaultFormValues.hideExpertRecipes.toString()
@@ -208,20 +200,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const validParams = validateFormInput.safeParse(values)
 
   if (validParams.success) {
-    return json({
-      ...validParams.data,
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
-    })
+    return combineWithDiscordSession(request, validParams.data)
   }
 
-  return json({
-    ...defaultFormValues,
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
-  })
+  return combineWithDiscordSession(request, defaultFormValues)
 }
 
 export const action: ActionFunction = async ({ request }) => {

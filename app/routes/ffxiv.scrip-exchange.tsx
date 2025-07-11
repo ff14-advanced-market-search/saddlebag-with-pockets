@@ -21,8 +21,8 @@ import type { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import type { LoaderFunction } from '@remix-run/node'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -106,20 +106,7 @@ type ActionResponse =
   | {}
 
 export const loader: LoaderFunction = async ({ request }) => {
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
-  return json({
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
-  })
+  return combineWithDiscordSession(request, {})
 }
 
 const FFXIVScripExchange = () => {

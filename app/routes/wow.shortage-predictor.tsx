@@ -40,8 +40,7 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
-import { getSession } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const PAGE_URL = '/wow/shortage-predictor'
 
@@ -139,15 +138,6 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
-  // Get Discord session info
-
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
 
   const params = new URL(request.url).searchParams
 
@@ -200,16 +190,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validInput = validateFormData.safeParse(input)
   if (validInput.success) {
-    const responseData = {
-      ...validInput.data,
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
-    }
-    return json(responseData)
+    return combineWithDiscordSession(request, validInput.data)
   }
 
-  return json({ ...defaultFormValues, isLoggedIn, hasPremium, needsRefresh })
+  return combineWithDiscordSession(request, defaultFormValues)
 }
 
 const Index = () => {

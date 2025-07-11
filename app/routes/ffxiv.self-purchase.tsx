@@ -25,10 +25,10 @@ import ItemDataLink from '~/components/utilities/ItemDataLink'
 import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
 import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -47,20 +47,11 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
+  const session = await getUserSessionData(request)
 
-  return json({
-    world: session.get('world'),
-    data_center: session.get('data_center'),
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
+  return combineWithDiscordSession(request, {
+    world: session.getWorld(),
+    data_center: session.getDataCenter()
   })
 }
 

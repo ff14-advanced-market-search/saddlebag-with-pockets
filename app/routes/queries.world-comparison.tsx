@@ -35,7 +35,7 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -86,24 +86,15 @@ export const loader: LoaderFunction = async ({ request }) => {
     hqOnly: params.get('hqOnly') || defaultFormValues.hqOnly
   }
 
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-
   const validParams = inputSchema.safeParse(values)
   if (!validParams.success) {
-    return json({
+    return combineWithDiscordSession(request, {
       exception: `Missing: ${validParams.error.issues
         .map(({ path }) => path.join(', '))
-        .join(', ')}`,
-      isLoggedIn,
-      hasPremium
+        .join(', ')}`
     })
   }
-  return json({ ...validParams.data, isLoggedIn, hasPremium })
+  return combineWithDiscordSession(request, validParams.data)
 }
 
 const sortByPrice =

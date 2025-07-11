@@ -18,11 +18,11 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import { useState } from 'react'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 export const validateShortageData = (
   formData: FormData
@@ -180,21 +180,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
 
-  // Get Discord session info
-  const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
-  const isLoggedIn = !!discordId
-  const hasPremium = getHasPremium(discordRoles)
-  const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
-  return json({
+  return combineWithDiscordSession(request, {
     wowRealm: server,
-    wowRegion: region,
-    isLoggedIn,
-    hasPremium,
-    needsRefresh
+    wowRegion: region
   })
 }
 

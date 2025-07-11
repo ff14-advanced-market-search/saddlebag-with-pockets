@@ -30,8 +30,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
-import { getSession } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -112,7 +111,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
     const validParams = validateInput.safeParse(values)
     if (!validParams.success) {
-      return json({
+      return combineWithDiscordSession(request, {
         exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
       })
     }
@@ -120,24 +119,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     const session = await getUserSessionData(request)
     const { region } = session.getWoWSessionData()
 
-    // Get Discord session info
-    const discordSession = await getSession(request.headers.get('Cookie'))
-    const discordId = discordSession.get('discord_id')
-    const discordRoles = discordSession.get('discord_roles') || []
-    const rolesRefreshedAt = discordSession.get('discord_roles_refreshed_at')
-    const isLoggedIn = !!discordId
-    const hasPremium = getHasPremium(discordRoles)
-    const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
-
-    return json({
+    return combineWithDiscordSession(request, {
       ...validParams.data,
-      region,
-      isLoggedIn,
-      hasPremium,
-      needsRefresh
+      region
     })
   } catch (error) {
-    return json({
+    return combineWithDiscordSession(request, {
       exception: 'Invalid URL format'
     })
   }
