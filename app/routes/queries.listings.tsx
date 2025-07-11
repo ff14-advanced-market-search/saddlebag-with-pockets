@@ -27,7 +27,11 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import {
+  getHasPremium,
+  DISCORD_SERVER_URL,
+  needsRolesRefresh
+} from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
