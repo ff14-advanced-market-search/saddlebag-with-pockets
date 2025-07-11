@@ -35,18 +35,10 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
-import {
-  getActionUrl,
-  handleCopyButton,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { getActionUrl, handleCopyButton } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
@@ -70,13 +62,19 @@ const PAGE_URL = '/wow/ilvl-export-search'
 
 const AVAILABLE_STATS: ItemStat[] = ['Socket', 'Leech', 'Speed', 'Avoidance']
 
+type SortByValue =
+  | 'minPrice'
+  | 'itemQuantity'
+  | 'realmPopulationReal'
+  | 'realmRanking'
+
 const defaultFormValues = {
   itemId: '',
   ilvl: 610,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
-  sortBy: 'minPrice' as const,
+  sortBy: 'minPrice' as SortByValue,
   desiredStats: [] as ItemStat[]
 }
 
@@ -233,11 +231,8 @@ const IlvlExportSearchComponent = () => {
   const [formValues, setFormValues] = useState(defaultFormValues)
 
   const isSubmitting = transition.state === 'submitting'
-  const error = result && 'exception' in result ? result.exception : undefined
-
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
+  const error =
+    result && 'exception' in result ? String(result.exception) : undefined
 
   useEffect(() => {
     // If there's an error, reset form values but keep the error message
@@ -281,7 +276,7 @@ const IlvlExportSearchComponent = () => {
       populationWP: parseInt(populationWPFromUrl),
       populationBlizz: parseInt(populationBlizzFromUrl),
       rankingWP: parseInt(rankingWPFromUrl),
-      sortBy: sortByFromUrl,
+      sortBy: (sortByFromUrl as SortByValue) || 'minPrice',
       desiredStats: desiredStatsFromUrl
     })
   }, [searchParams, error])
@@ -422,7 +417,10 @@ const IlvlExportSearchComponent = () => {
               { label: 'Realm Ranking', value: 'realmRanking' }
             ]}
             onChange={(e) =>
-              setFormValues((prev) => ({ ...prev, sortBy: e.target.value }))
+              setFormValues((prev) => ({
+                ...prev,
+                sortBy: e.target.value as SortByValue
+              }))
             }
           />
           <div className="flex flex-col gap-2">
@@ -513,11 +511,7 @@ const Results = ({
   return (
     <PageWrapper>
       <PremiumPaywall
-        show={!isLoggedIn || !hasPremium}
-        isLoggedIn={isLoggedIn}
-        hasPremium={hasPremium}
-        onLogin={() => (window.location.href = '/discord-login')}
-        onSubscribe={() => window.open(DISCORD_SERVER_URL, '_blank')}>
+        loaderData={{ isLoggedIn, hasPremium, needsRefresh: false }}>
         <ContentContainer>
           <div className="flex flex-col min-w-full">
             <div className="flex flex-col md:flex-row items-center gap-2">

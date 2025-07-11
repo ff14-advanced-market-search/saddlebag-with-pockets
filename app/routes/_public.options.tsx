@@ -42,13 +42,7 @@ import { PageWrapper } from '~/components/Common'
 import { setCookie } from '~/utils/cookies'
 import Banner from '~/components/Common/Banner'
 import DiscordIcon from '~/icons/DiscordIcon'
-import {
-  GUILD_ID,
-  PREMIUM_ROLE_IDS,
-  DISCORD_SERVER_URL,
-  getHasPremium,
-  PREMIUM_ROLE_INFO
-} from '~/utils/premium'
+import { PREMIUM_ROLE_INFO } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {

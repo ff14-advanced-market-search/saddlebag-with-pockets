@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
@@ -27,11 +22,7 @@ import { getUserSessionData, getSession } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 export const validateShortageData = (
   formData: FormData
@@ -245,7 +236,7 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall loaderData={loaderData}>
+      <PremiumPaywall loaderData={{ isLoggedIn, hasPremium, needsRefresh }}>
         <SmallFormContainer
           title="Commodity Shortage finder"
           onClick={onSubmit}

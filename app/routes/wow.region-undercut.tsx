@@ -20,13 +20,9 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import { getSession } from '~/sessions'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
 const formName = 'region-undercut'
 
