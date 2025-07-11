@@ -33,11 +33,7 @@ import { getUserSessionData, getSession } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -137,7 +133,6 @@ export default function Index() {
   }>()
   const navigation = useNavigation()
   const actionData = useActionData<ActionDataResponse>()
-  const navigate = useNavigate()
   const error =
     actionData && 'exception' in actionData ? actionData.exception : undefined
   const loading = navigation.state === 'submitting'

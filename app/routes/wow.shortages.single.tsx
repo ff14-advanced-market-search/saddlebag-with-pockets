@@ -27,11 +27,7 @@ import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 export const action: ActionFunction = async ({ request }) => {
@@ -123,7 +119,6 @@ const Index = () => {
       }
     >()
   const results = useActionData<WowShortageResult>()
-  const navigate = useNavigate()
 
   const [serverName, setServerName] = useState<string | undefined>(
     wowRealm.name
@@ -132,10 +127,6 @@ const Index = () => {
     if (transition.state === 'submitting') {
       e.preventDefault()
     }
-  }
-
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
   }
 
   if (results) {
@@ -156,7 +147,7 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <PremiumPaywall loaderData={loaderData}>
+      <PremiumPaywall loaderData={{ isLoggedIn, hasPremium, needsRefresh }}>
         <SmallFormContainer
           title="Single Item Shortage finder"
           onClick={onSubmit}

@@ -33,11 +33,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const PAGE_URL = '/ffxiv/best-deals'
 
@@ -194,7 +190,6 @@ const BestDeals = () => {
   const loaderData = useLoaderData<LoaderDataType>()
   const result = useActionData<ActionResponseType>()
   const transition = useNavigation()
-  const navigate = useNavigate()
 
   const isSubmitting = transition.state === 'submitting'
 

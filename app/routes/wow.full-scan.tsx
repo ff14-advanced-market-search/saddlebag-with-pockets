@@ -26,11 +26,7 @@ import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import Banner from '~/components/Common/Banner'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -117,7 +113,6 @@ const Index = () => {
   const [error, setError] = useState<string | undefined>()
   const dispatch = useDispatch()
   const wowScan = useTypedSelector((state) => state.wowQueries.scan)
-  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {

@@ -28,7 +28,7 @@ import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, DISCORD_SERVER_URL } from '~/utils/premium'
+import { getHasPremium } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -146,7 +146,6 @@ const Index = () => {
     isLoggedIn: boolean
     hasPremium: boolean
   }>()
-  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {

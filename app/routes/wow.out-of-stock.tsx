@@ -30,11 +30,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 // Overwrite default meta in the root.tsx
@@ -209,7 +205,6 @@ const OutOfStock = () => {
   }>()
   const transition = useNavigation()
   const isSubmitting = transition.state === 'submitting'
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useState<Record<string, string>>(
     Object.fromEntries(
       Object.entries(loaderData).map(([key, value]) => [
@@ -223,10 +218,6 @@ const OutOfStock = () => {
     )
   )
   const error = result?.exception
-
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   if (result?.data?.length === 0) {
     return <NoResults href={PAGE_URL} />

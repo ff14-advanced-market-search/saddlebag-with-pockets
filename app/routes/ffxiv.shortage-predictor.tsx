@@ -33,11 +33,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  DISCORD_SERVER_URL,
-  needsRolesRefresh
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const PAGE_URL = '/ffxiv/shortage-predictor'
 
@@ -210,7 +206,6 @@ const Index = () => {
     ...loaderData
   })
   const results = useActionData<ActionResponse>()
-  const navigate = useNavigate()
 
   const loading = transition.state === 'submitting'
 

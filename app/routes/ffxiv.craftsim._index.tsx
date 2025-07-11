@@ -56,11 +56,7 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  DISCORD_SERVER_URL,
-  needsRolesRefresh
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const CopyButton = ({ text }: { text: string }) => {
   const handleCopy = async () => {
@@ -288,7 +284,6 @@ export default function Index() {
   const actionData = useActionData<ActionResponse>()
   const transition = useNavigation()
   const loading = transition.state === 'submitting'
-  const navigate = useNavigate()
 
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
     ...loaderData

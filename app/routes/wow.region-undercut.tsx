@@ -160,20 +160,9 @@ const RegionUndercut = () => {
     needsRefresh: boolean
   }>()
   const isLoading = transition.state === 'submitting'
-  const navigate = useNavigate()
 
   const error =
     results && 'exception' in results ? results.exception : undefined
-
-  // Paywall logic
-  const showPaywall =
-    !loaderData.isLoggedIn || !loaderData.hasPremium || loaderData.needsRefresh
-  const handleLogin = () => {
-    navigate('/discord-login')
-  }
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (isLoading) {

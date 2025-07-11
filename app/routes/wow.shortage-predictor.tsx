@@ -40,11 +40,7 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  DISCORD_SERVER_URL,
-  needsRolesRefresh
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import { getSession } from '~/sessions'
 
 const PAGE_URL = '/wow/shortage-predictor'
@@ -218,7 +214,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const Index = () => {
   const transition = useNavigation()
-  const navigate = useNavigate()
 
   const loaderData = useLoaderData<{
     desiredAvgPrice: string

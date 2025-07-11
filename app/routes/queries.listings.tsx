@@ -27,11 +27,7 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  DISCORD_SERVER_URL,
-  needsRolesRefresh
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -139,7 +135,6 @@ const Index = () => {
     hasPremium: boolean
     needsRefresh: boolean
   }>()
-  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {

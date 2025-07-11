@@ -21,11 +21,7 @@ import type { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 import type { LoaderFunction } from '@remix-run/node'
 
 // Overwrite default meta in the root.tsx
@@ -134,7 +130,6 @@ const FFXIVScripExchange = () => {
     hasPremium: boolean
     needsRefresh: boolean
   }>()
-  const navigate = useNavigate()
   const [formState, setFormState] = useState<{ color: string }>({
     color: 'Orange Gatherers'
   })
@@ -175,10 +170,6 @@ const FFXIVScripExchange = () => {
     }
 
     setFormState({ color: value })
-  }
-
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
   }
 
   return (

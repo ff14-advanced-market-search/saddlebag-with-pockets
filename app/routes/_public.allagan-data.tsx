@@ -24,11 +24,7 @@ import AllaganRequest from '~/requests/FFXIV/allagan'
 import { getUserSessionData, getSession } from '~/sessions'
 import Banner from '~/components/Common/Banner'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const formName = 'allaganData'
 
@@ -146,7 +142,6 @@ const Index = () => {
     hasPremium: boolean
     needsRefresh: boolean
   }>()
-  const navigate = useNavigate()
 
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -166,16 +161,6 @@ const Index = () => {
 
     if ('in_bags_report' in results) {
       return <Results results={results} />
-    }
-  }
-
-  const handleSubscribe = () => {
-    const popup = window.open(DISCORD_SERVER_URL, '_blank')
-    if (popup === null) {
-      // Popup was blocked by the browser
-      alert(
-        `Popup blocked! Please allow popups for this site to join our Discord server, or manually visit: ${DISCORD_SERVER_URL}`
-      )
     }
   }
 

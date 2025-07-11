@@ -28,11 +28,7 @@ import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData, getSession } from '~/sessions'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  DISCORD_SERVER_URL,
-  needsRolesRefresh
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -104,7 +100,6 @@ export default function Index() {
   }>()
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
-  const navigate = useNavigate()
 
   const error =
     results && 'exception' in results ? results.exception : undefined

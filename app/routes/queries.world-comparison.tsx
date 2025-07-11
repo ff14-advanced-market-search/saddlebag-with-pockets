@@ -35,11 +35,7 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import {
-  getHasPremium,
-  needsRolesRefresh,
-  DISCORD_SERVER_URL
-} from '~/utils/premium'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -180,7 +176,6 @@ const Index = () => {
       ? loaderData.exportServers.split(',')
       : []
   })
-  const navigate = useNavigate()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting') {
@@ -203,10 +198,6 @@ const Index = () => {
 
   const itemsLength = state.items.length
   const serversLength = state.exportServers.length
-
-  const handleSubscribe = () => {
-    window.open(DISCORD_SERVER_URL, '_blank')
-  }
 
   return (
     <PageWrapper>
