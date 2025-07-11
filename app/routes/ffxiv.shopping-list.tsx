@@ -159,6 +159,10 @@ export default function Index() {
     window.open(DISCORD_SERVER_URL, '_blank')
   }
 
+  const handleRefresh = () => {
+    window.location.reload()
+  }
+
   return (
     <PageWrapper>
       <PremiumPaywall
