@@ -1,9 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
-import { GUILD_ID } from '~/utils/premium'
-import { REST } from '@discordjs/rest'
-import { Routes } from 'discord-api-types/v10'
+import { GUILD_ID, fetchDiscordGuildMember } from '~/utils/premium'
 
 export const action: ActionFunction = async ({ request, context }) => {
   const session = await getSession(request.headers.get('Cookie'))
@@ -15,15 +13,15 @@ export const action: ActionFunction = async ({ request, context }) => {
   if (!botToken) {
     return redirect('/options?error=discord_roles_refresh_failed')
   }
-  let discordRoles = []
+
   try {
     if (botToken && discordId) {
-      const rest = new REST({ version: '10' }).setToken(botToken as string)
-      const member = (await rest.get(
-        Routes.guildMember(GUILD_ID, discordId)
-      )) as any
-      discordRoles = Array.isArray(member.roles) ? member.roles : []
-      session.set('discord_roles', discordRoles)
+      const memberData = await fetchDiscordGuildMember(
+        botToken as string,
+        GUILD_ID,
+        discordId
+      )
+      session.set('discord_roles', memberData.roles)
       // Set timestamp when roles were last refreshed
       session.set('discord_roles_refreshed_at', Date.now().toString())
 

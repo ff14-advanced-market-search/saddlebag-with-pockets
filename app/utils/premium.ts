@@ -1,3 +1,6 @@
+import { REST } from '@discordjs/rest'
+import { Routes } from 'discord-api-types/v10'
+
 // Centralized premium Discord constants and helpers
 
 export const GUILD_ID = '973380473281724476'
@@ -84,5 +87,84 @@ export const refreshDiscordRoles = async (): Promise<boolean> => {
   } catch (error) {
     console.error('Failed to refresh Discord roles:', error)
     return false
+  }
+}
+
+/**
+ * Fetch Discord user data using an access token
+ * @param accessToken The Discord OAuth access token
+ * @returns Promise<UserData> Discord user data
+ */
+export const fetchDiscordUserData = async (
+  accessToken: string
+): Promise<{
+  id: string
+  username: string
+  avatar: string | null
+}> => {
+  const response = await fetch('https://discord.com/api/users/@me', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch Discord user data: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+/**
+ * Exchange OAuth code for access token
+ * @param code The OAuth authorization code
+ * @param clientId Discord client ID
+ * @param clientSecret Discord client secret
+ * @param redirectUri The redirect URI used in the OAuth flow
+ * @returns Promise<{access_token: string}> Token response
+ */
+export const exchangeCodeForToken = async (
+  code: string,
+  clientId: string,
+  clientSecret: string,
+  redirectUri: string
+): Promise<{ access_token: string }> => {
+  const response = await fetch('https://discord.com/api/oauth2/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      grant_type: 'authorization_code',
+      code: code,
+      redirect_uri: redirectUri
+    })
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to exchange code for token: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+/**
+ * Fetch Discord guild member data using bot token
+ * @param botToken Discord bot token
+ * @param guildId Discord guild/server ID
+ * @param userId Discord user ID
+ * @returns Promise<{roles: string[]}> Guild member data
+ */
+export const fetchDiscordGuildMember = async (
+  botToken: string,
+  guildId: string,
+  userId: string
+): Promise<{ roles: string[] }> => {
+  const rest = new REST({ version: '10' }).setToken(botToken)
+  const member = (await rest.get(Routes.guildMember(guildId, userId))) as any
+  return {
+    roles: Array.isArray(member.roles) ? member.roles : []
   }
 }

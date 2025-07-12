@@ -1,9 +1,12 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
-import { GUILD_ID } from '~/utils/premium'
-import { REST } from '@discordjs/rest'
-import { Routes } from 'discord-api-types/v10'
+import {
+  GUILD_ID,
+  exchangeCodeForToken,
+  fetchDiscordUserData,
+  fetchDiscordGuildMember
+} from '~/utils/premium'
 
 export const loader: LoaderFunction = async ({ request, context }) => {
   const url = new URL(request.url)
@@ -27,40 +30,17 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   }
 
   try {
-    // Exchange code for access token
-    const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: redirectUri
-      })
-    })
-
-    if (!tokenResponse.ok) {
-      throw new Error('Failed to exchange code for token')
-    }
-
-    const tokenData = await tokenResponse.json()
+    // Exchange code for access token using utility function
+    const tokenData = await exchangeCodeForToken(
+      code,
+      clientId,
+      clientSecret,
+      redirectUri
+    )
     const accessToken = tokenData.access_token
 
-    // Get user data from Discord
-    const userResponse = await fetch('https://discord.com/api/users/@me', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-
-    if (!userResponse.ok) {
-      throw new Error('Failed to get user data from Discord')
-    }
-
-    const userData = await userResponse.json()
+    // Get user data from Discord using utility function
+    const userData = await fetchDiscordUserData(accessToken)
 
     // Store user data in session
     const session = await getSession(request.headers.get('Cookie'))
@@ -70,14 +50,15 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 
     // Fetch user roles from the guild using the bot token
     const botToken = context.DISCORD_BOT_TOKEN
-    let discordRoles = []
+    let discordRoles: string[] = []
     if (botToken && userData.id) {
       try {
-        const rest = new REST({ version: '10' }).setToken(botToken as string)
-        const member = (await rest.get(
-          Routes.guildMember(GUILD_ID, userData.id)
-        )) as any
-        discordRoles = Array.isArray(member.roles) ? member.roles : []
+        const memberData = await fetchDiscordGuildMember(
+          botToken as string,
+          GUILD_ID,
+          userData.id
+        )
+        discordRoles = memberData.roles
       } catch (error) {
         console.error('Failed to fetch Discord member data:', error)
         // Continue without roles if the fetch fails
