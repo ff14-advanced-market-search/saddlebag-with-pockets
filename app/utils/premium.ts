@@ -2,7 +2,6 @@ import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v10'
 
 // Centralized premium Discord constants and helpers
-
 export const GUILD_ID = '973380473281724476'
 export const DISCORD_SERVER_URL =
   'https://discord.com/servers/saddlebag-exchange-973380473281724476'
@@ -162,6 +161,8 @@ export const fetchDiscordGuildMember = async (
   guildId: string,
   userId: string
 ): Promise<{ roles: string[] }> => {
+  // Using discordjs/rest to fetch guild member data
+  // can be replaced with raw api call if needed
   const rest = new REST({ version: '10' }).setToken(botToken)
   const member = (await rest.get(Routes.guildMember(guildId, userId))) as any
   return {

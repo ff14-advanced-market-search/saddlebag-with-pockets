@@ -1,4 +1,4 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare'
+import type { ActionFunction } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
 import { GUILD_ID, fetchDiscordGuildMember } from '~/utils/premium'
