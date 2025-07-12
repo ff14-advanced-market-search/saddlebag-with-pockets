@@ -49,7 +49,7 @@ export const action: ActionFunction = async ({ request, context }) => {
     }
     return redirect('/options?error=discord_roles_refresh_failed')
   } catch (e) {
-    console.error('Failed to refresh Discord roles:', e)
+    console.error('[refresh-discord-roles] Error refreshing Discord roles:', e)
     return redirect('/options?error=discord_roles_refresh_failed')
   }
 }
