@@ -30,6 +30,7 @@ import {
   setWoWRealmData,
   toggleDarkMode
 } from '~/redux/reducers/userSlice'
+import { Form as RemixForm } from '@remix-run/react'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import React, { useState } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
@@ -40,6 +41,8 @@ import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 import { PageWrapper } from '~/components/Common'
 import { setCookie } from '~/utils/cookies'
 import Banner from '~/components/Common/Banner'
+import DiscordIcon from '~/icons/DiscordIcon'
+import { PREMIUM_ROLE_INFO } from '~/utils/premium'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -179,10 +182,21 @@ export const loader: LoaderFunction = async ({ request }) => {
     data_center,
     world,
     wowRealm: server,
-    wowRegion: region
+    wowRegion: region,
+    discordId: session.get('discord_id'),
+    discordUsername: session.get('discord_username'),
+    discordAvatar: session.get('discord_avatar'),
+    discordRoles: session.get('discord_roles') || []
   })
 }
 
+/**
+ * Renders the options page, allowing users to configure Discord integration, FFXIV world, WoW home realm, and theme preferences.
+ *
+ * Displays current connection status, premium Discord roles, and provides forms for updating user settings. Handles form submission, state management, and displays feedback banners for Discord-related actions.
+ *
+ * @returns The options page React element.
+ */
 export default function Options() {
   const data = useLoaderData()
   const transition = useNavigation()
@@ -190,6 +204,25 @@ export default function Options() {
 
   const dispatch = useDispatch()
   const { darkmode } = useTypedSelector((state) => state.user)
+
+  // Defensive: Only construct URL if window and location are defined
+  let success = null
+  let error = null
+  if (
+    typeof window !== 'undefined' &&
+    window.location &&
+    window.location.href
+  ) {
+    try {
+      const url = new URL(window.location.href)
+      success = url.searchParams.get('success')
+      error = url.searchParams.get('error')
+    } catch (e) {
+      // If URL construction fails, leave success/error as null
+      success = null
+      error = null
+    }
+  }
 
   const [ffxivWorld, setFfxivWorld] = useState<{
     data_center: string
@@ -211,6 +244,85 @@ export default function Options() {
   return (
     <PageWrapper>
       <Banner />
+      {(success || error) && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
+          {(success === 'discord_connected' ||
+            success === 'discord_disconnected' ||
+            success === 'discord_roles_refreshed') && (
+            <div className="rounded-md bg-green-50 p-4 border border-green-200 dark:bg-green-900 dark:border-green-700">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <CheckIcon
+                    className="h-5 w-5 text-green-400"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                    {success === 'discord_connected'
+                      ? 'Successfully connected to Discord!'
+                      : success === 'discord_disconnected'
+                      ? 'Successfully disconnected from Discord!'
+                      : 'Successfully refreshed Discord roles!'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+          {error === 'discord_auth_failed' && (
+            <div className="rounded-md bg-red-50 p-4 border border-red-200 dark:bg-red-900 dark:border-red-700">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-5 w-5 text-red-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    role="img">
+                    <title>Error icon</title>
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                    Failed to connect to Discord. Please try again.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+          {error === 'discord_roles_refresh_failed' && (
+            <div className="rounded-md bg-red-50 p-4 border border-red-200 dark:bg-red-900 dark:border-red-700">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-5 w-5 text-red-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    role="img">
+                    <title>Error icon</title>
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                    Failed to refresh Discord roles. Please try again.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
       <Form
         method="POST"
         onSubmit={(e) => {
@@ -251,6 +363,89 @@ export default function Options() {
           </div>
         </div>
         <OptionSection
+          title="Discord Account"
+          description="Connect your Discord account to access premium features and receive notifications."
+          hideHRule={true}>
+          {data.discordId ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                {data.discordAvatar && (
+                  <img
+                    src={`https://cdn.discordapp.com/avatars/${data.discordId}/${data.discordAvatar}.png`}
+                    alt="Discord Avatar"
+                    className="w-10 h-10 rounded-full"
+                  />
+                )}
+                <div>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    Connected as {data.discordUsername}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-300">
+                    Discord ID: {data.discordId}
+                  </p>
+                  <div className="flex space-x-2 mt-1 text-xs text-gray-500 dark:text-gray-300">
+                    Roles:{' '}
+                    {Array.isArray(data.discordRoles) &&
+                      data.discordRoles
+                        .filter((roleId: string) => PREMIUM_ROLE_INFO[roleId])
+                        .map((roleId: string) => (
+                          <span
+                            key={roleId}
+                            title={PREMIUM_ROLE_INFO[roleId].name}
+                            className="text-lg">
+                            {PREMIUM_ROLE_INFO[roleId].icon}
+                          </span>
+                        ))}
+                  </div>
+                </div>
+              </div>
+              <RemixForm
+                method="post"
+                action="/refresh-discord-roles"
+                className="ml-2">
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-3 py-2 border border-blue-300 rounded-md shadow-sm text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-blue-200 dark:border-blue-500 dark:hover:bg-slate-600"
+                  disabled={transition.state === 'submitting'}>
+                  {transition.state === 'submitting'
+                    ? 'Refreshing...'
+                    : 'Refresh Roles'}
+                </button>
+              </RemixForm>
+              <RemixForm
+                method="post"
+                action="/discord-disconnect"
+                className="flex space-x-2">
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-600 dark:text-gray-200 dark:border-gray-500 dark:hover:bg-slate-500">
+                  Disconnect
+                </button>
+              </RemixForm>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <DiscordIcon className="w-8 h-8 text-[#5865F2]" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    Not connected to Discord
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-300">
+                    Connect your Discord account to access premium features
+                  </p>
+                </div>
+              </div>
+              <a
+                href="/discord-login"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
+                <DiscordIcon className="w-4 h-4 mr-2" />
+                Connect Discord
+              </a>
+            </div>
+          )}
+        </OptionSection>
+        <OptionSection
           title="FFXIV World Selection"
           description="The selected server will change what marketplace your queries are run against.">
           <SelectDCandWorld
@@ -282,8 +477,7 @@ export default function Options() {
         </OptionSection>
         <OptionSection
           title="Theme"
-          description="Needs more sparkles.. ✨✨✨✨"
-          hideHRule={true}>
+          description="Needs more sparkles.. ✨✨✨✨">
           <Switch.Group
             as={`div`}
             className={`flex items-center justify-between`}>

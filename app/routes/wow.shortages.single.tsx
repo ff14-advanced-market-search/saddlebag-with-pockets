@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -21,6 +26,8 @@ import WoWSingleItemShortage from '~/requests/WoW/WoWSingleItemShortage'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -81,12 +88,23 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
-  return json({ wowRealm: server, wowRegion: region })
+
+  return combineWithDiscordSession(request, {
+    wowRealm: server,
+    wowRegion: region
+  })
 }
 
 const Index = () => {
   const transition = useNavigation()
-  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const { wowRealm, wowRegion, isLoggedIn, hasPremium, needsRefresh } =
+    useLoaderData<
+      WoWLoaderData & {
+        isLoggedIn: boolean
+        hasPremium: boolean
+        needsRefresh: boolean
+      }
+    >()
   const results = useActionData<WowShortageResult>()
 
   const [serverName, setServerName] = useState<string | undefined>(
@@ -116,52 +134,54 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Single Item Shortage finder"
-        onClick={onSubmit}
-        loading={transition.state === 'submitting'}
-        disabled={transition.state === 'submitting'}
-        error={
-          results && 'exception' in results ? results.exception : undefined
-        }>
-        <WoWShortageFormFields
-          desiredAvgPriceDefault={20}
-          desiredSellPriceDefault={20}
-          desiredPriceIncreaseDefault={10}
-          desiredSalesPerDayDefault={10}
-          flipRiskLimitDefault={3}
-        />
-        <RegionAndServerSelect
-          defaultRealm={wowRealm}
-          region={wowRegion}
-          serverSelectFormName="homeRealmId"
-          serverSelectTitle="Home Server"
-          onServerSelectChange={(selectValue) => {
-            if (selectValue) setServerName(selectValue.name)
-          }}
-          serverSelectTooltip="Select your home world server, type to begin selection."
-        />
-        <InputWithLabel
-          defaultValue={-1}
-          type="number"
-          labelTitle="Minimum Required Level"
-          inputTag="Level"
-          name="requiredLevel"
-          min={-1}
-          max={70}
-          toolTip="Search for the minimum required level. (-1 is for all levels)"
-        />
-        <InputWithLabel
-          defaultValue={-1}
-          type="number"
-          labelTitle="Minimum Item Level (ilvl)"
-          inputTag="Level"
-          name="iLvl"
-          min={-1}
-          max={1000}
-          toolTip="Search for the minimum item level (ilvl) that will be returned. (-1 is for all levels)"
-        />
-      </SmallFormContainer>
+      <PremiumPaywall loaderData={{ isLoggedIn, hasPremium, needsRefresh }}>
+        <SmallFormContainer
+          title="Single Item Shortage finder"
+          onClick={onSubmit}
+          loading={transition.state === 'submitting'}
+          disabled={transition.state === 'submitting'}
+          error={
+            results && 'exception' in results ? results.exception : undefined
+          }>
+          <WoWShortageFormFields
+            desiredAvgPriceDefault={20}
+            desiredSellPriceDefault={20}
+            desiredPriceIncreaseDefault={10}
+            desiredSalesPerDayDefault={10}
+            flipRiskLimitDefault={3}
+          />
+          <RegionAndServerSelect
+            defaultRealm={wowRealm}
+            region={wowRegion}
+            serverSelectFormName="homeRealmId"
+            serverSelectTitle="Home Server"
+            onServerSelectChange={(selectValue) => {
+              if (selectValue) setServerName(selectValue.name)
+            }}
+            serverSelectTooltip="Select your home world server, type to begin selection."
+          />
+          <InputWithLabel
+            defaultValue={-1}
+            type="number"
+            labelTitle="Minimum Required Level"
+            inputTag="Level"
+            name="requiredLevel"
+            min={-1}
+            max={70}
+            toolTip="Search for the minimum required level. (-1 is for all levels)"
+          />
+          <InputWithLabel
+            defaultValue={-1}
+            type="number"
+            labelTitle="Minimum Item Level (ilvl)"
+            inputTag="Level"
+            name="iLvl"
+            min={-1}
+            max={1000}
+            toolTip="Search for the minimum item level (ilvl) that will be returned. (-1 is for all levels)"
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

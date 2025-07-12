@@ -1,4 +1,8 @@
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  MetaFunction,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import { PageWrapper } from '~/components/Common'
@@ -15,6 +19,9 @@ import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { useLoaderData } from '@remix-run/react'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const formName = 'region-undercut'
 
@@ -89,6 +96,10 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  return combineWithDiscordSession(request, {})
+}
+
 type RegionActionResponse =
   | RegionUndercutResponse
   | { exception: string }
@@ -129,6 +140,11 @@ const undercutColumns: Array<{ value: keyof UndercutItems; title: string }> = [
 const RegionUndercut = () => {
   const transition = useNavigation()
   const results = useActionData<RegionActionResponse>()
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
   const isLoading = transition.state === 'submitting'
 
   const error =
@@ -194,35 +210,37 @@ const RegionUndercut = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Region Undercuts"
-        description={
-          <>
-            <span className="dark:text-gray-200">
-              See your undercuts region wide across all characters in one page
-              using our
-            </span>{' '}
-            <a
-              href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-500 hover:underline">
-              Undercut Tracker Addon.
-            </a>
-          </>
-        }
-        onClick={handleSubmit}
-        loading={isLoading}
-        disabled={isLoading}
-        error={error}>
-        <div className="p-3">
-          <TextArea
-            label="Region undercut data"
-            toolTip="Paste the data from our ingame tool here"
-            formName={formName}
-          />
-        </div>
-      </SmallFormContainer>
+      <PremiumPaywall loaderData={loaderData}>
+        <SmallFormContainer
+          title="Region Undercuts"
+          description={
+            <>
+              <span className="dark:text-gray-200">
+                See your undercuts region wide across all characters in one page
+                using our
+              </span>{' '}
+              <a
+                href="https://www.curseforge.com/wow/addons/saddlebag-exchange"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-500 hover:underline">
+                Undercut Tracker Addon.
+              </a>
+            </>
+          }
+          onClick={handleSubmit}
+          loading={isLoading}
+          disabled={isLoading}
+          error={error}>
+          <div className="p-3">
+            <TextArea
+              label="Region undercut data"
+              toolTip="Paste the data from our ingame tool here"
+              formName={formName}
+            />
+          </div>
+        </SmallFormContainer>
+      </PremiumPaywall>
       <p style={{ fontSize: '1px' }}>
         Title: Maximizing Profits with Saddlebag Exchange: The Power of
         Undercutting In the bustling world of Azeroth's economy, staying ahead

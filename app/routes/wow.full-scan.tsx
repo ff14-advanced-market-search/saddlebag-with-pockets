@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
@@ -20,6 +25,8 @@ import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import Banner from '~/components/Common/Banner'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -36,9 +43,21 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { getWoWSessionData } = await getUserSessionData(request)
-  const { server, region } = getWoWSessionData()
-  return json({ wowRealm: server, wowRegion: region })
+  try {
+    const { getWoWSessionData } = await getUserSessionData(request)
+    const { server, region } = getWoWSessionData()
+
+    return combineWithDiscordSession(request, {
+      wowRealm: server,
+      wowRegion: region
+    })
+  } catch (err) {
+    // Fallback to safe defaults if session retrieval fails
+    return combineWithDiscordSession(request, {
+      wowRealm: 'Thrall',
+      wowRegion: 'NA'
+    })
+  }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -68,7 +87,14 @@ export const ErrorBoundary = () => <ErrorBounds />
 
 const Index = () => {
   const transition = useNavigation()
-  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const { wowRealm, wowRegion, isLoggedIn, hasPremium, needsRefresh } =
+    useLoaderData<
+      WoWLoaderData & {
+        isLoggedIn: boolean
+        hasPremium: boolean
+        needsRefresh: boolean
+      }
+    >()
   const results = useActionData<
     WoWScanResponseWithPayload | { exception: string }
   >()
@@ -100,17 +126,24 @@ const Index = () => {
     <PageWrapper>
       <>
         <Banner />
-        <WoWScanForm
-          onClick={onSubmit}
-          onChange={() => {
-            setError(undefined)
-          }}
-          loading={transition.state === 'submitting'}
-          error={error}
-          clearErrors={() => setError(undefined)}
-          defaultRegion={wowRegion}
-          defaultServer={wowRealm}
-        />
+        <PremiumPaywall
+          loaderData={{
+            isLoggedIn: !!isLoggedIn,
+            hasPremium: !!hasPremium,
+            needsRefresh
+          }}>
+          <WoWScanForm
+            onClick={onSubmit}
+            onChange={() => {
+              setError(undefined)
+            }}
+            loading={transition.state === 'submitting'}
+            error={error}
+            clearErrors={() => setError(undefined)}
+            defaultRegion={wowRegion}
+            defaultServer={wowRealm}
+          />
+        </PremiumPaywall>
         {wowScan && 'out_of_stock' in wowScan && <Results data={wowScan} />}
       </>
     </PageWrapper>

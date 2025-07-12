@@ -4,7 +4,12 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import z from 'zod'
 import { useMemo, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
@@ -34,6 +39,7 @@ import {
   revenueMetrics
 } from '~/requests/FFXIV/crafting-list'
 import CraftingList from '~/requests/FFXIV/crafting-list'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 import { getUserSessionData } from '~/sessions'
 import {
   createUnionSchema,
@@ -50,6 +56,8 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const CopyButton = ({ text }: { text: string }) => {
   const handleCopy = async () => {
@@ -192,10 +200,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const validParams = validateFormInput.safeParse(values)
 
   if (validParams.success) {
-    return json(validParams.data)
+    return combineWithDiscordSession(request, validParams.data)
   }
 
-  return json(defaultFormValues)
+  return combineWithDiscordSession(request, defaultFormValues)
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -232,8 +240,29 @@ type ActionResponse =
   | { exception: string }
   | {}
 
+/**
+ * Renders the main FFXIV crafting profit simulation page, including the premium paywall, filterable form, and results table.
+ *
+ * Displays a form for filtering and simulating crafting profitability, conditionally gated by user login and premium status. Handles form state, input changes, and navigation. Shows results or a no-results message based on server responses.
+ */
 export default function Index() {
-  const loaderData = useLoaderData<typeof defaultFormValues>()
+  const loaderData = useLoaderData<{
+    costMetric: CostMetrics
+    revenueMetric: RevenueMetrics
+    salesPerWeek: number
+    medianSalePrice: number
+    maxMaterialCost: number
+    jobs: number[]
+    filters: number[]
+    stars: number
+    lvlLowerLimit: number
+    lvlUpperLimit: number
+    yields: number
+    hideExpertRecipes: boolean
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
   const actionData = useActionData<ActionResponse>()
   const transition = useNavigation()
   const loading = transition.state === 'submitting'
@@ -268,160 +297,164 @@ export default function Index() {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        onClick={() => {}}
-        error={error}
-        loading={loading}
-        title="Crafting List"
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
-            <SubmitButton
-              title="Share this search!"
-              onClick={handleCopyButton}
-              type="button"
+      <PremiumPaywall loaderData={loaderData}>
+        <SmallFormContainer
+          onClick={() => {}}
+          error={error}
+          loading={loading}
+          title="Crafting List"
+          action={getActionUrl(PAGE_URL, searchParams)}>
+          <div className="pt-2">
+            <div className="flex justify-end mb-2">
+              <SubmitButton
+                title="Share this search!"
+                onClick={handleCopyButton}
+                type="button"
+              />
+            </div>
+            <Filter
+              formName="jobs"
+              filterButtonText="Choose DoH"
+              selectedCountText="DoH"
+              defaultValue={loaderData.jobs}
+              options={dOHOptions}
+              title={inputMap.jobs}
+              onChange={(jobs) => handleFormChange('jobs', jobs.join(','))}
             />
-          </div>
-          <Filter
-            formName="jobs"
-            filterButtonText="Choose DoH"
-            selectedCountText="DoH"
-            defaultValue={loaderData.jobs}
-            options={dOHOptions}
-            title={inputMap.jobs}
-            onChange={(jobs) => handleFormChange('jobs', jobs.join(','))}
-          />
-          <ItemsFilter
-            defaultFilters={loaderData.filters}
-            onChange={(newIds) => handleFormChange('filters', newIds.join(','))}
-          />
-          <Select
-            title={inputMap.costMetric}
-            defaultValue={loaderData.costMetric}
-            options={costMetrics.map((value) => ({
-              value,
-              label: costMetricLabels[value]
-            }))}
-            name="costMetric"
-            onChange={(e) => {
-              const value = e.target.value
-              if (value !== undefined) {
-                handleFormChange('costMetric', value)
+            <ItemsFilter
+              defaultFilters={loaderData.filters}
+              onChange={(newIds) =>
+                handleFormChange('filters', newIds.join(','))
               }
-            }}
-          />
-          <Select
-            title={inputMap.revenueMetric}
-            defaultValue={loaderData.revenueMetric}
-            options={revenueMetrics.map((value) => ({
-              value,
-              label: revenueMetricLabels[value]
-            }))}
-            name="revenueMetric"
-            onChange={(e) => {
-              const value = e.target.value
-              if (value !== undefined) {
-                handleFormChange('revenueMetric', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.salesPerWeek}
-            defaultValue={loaderData.salesPerWeek}
-            name="salesPerWeek"
-            type="number"
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('salesPerWeek', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.medianSalePrice}
-            defaultValue={loaderData.medianSalePrice}
-            name="medianSalePrice"
-            type="number"
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('medianSalePrice', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.maxMaterialCost}
-            defaultValue={loaderData.maxMaterialCost}
-            name="maxMaterialCost"
-            type="number"
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('maxMaterialCost', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.stars}
-            defaultValue={loaderData.stars}
-            name="stars"
-            type="number"
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('stars', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.lvlLowerLimit}
-            defaultValue={loaderData.lvlLowerLimit}
-            name="lvlLowerLimit"
-            type="number"
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('lvlLowerLimit', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.lvlUpperLimit}
-            defaultValue={loaderData.lvlUpperLimit}
-            name="lvlUpperLimit"
-            type="number"
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('lvlUpperLimit', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            labelTitle={inputMap.yields}
-            defaultValue={loaderData.yields}
-            name="yields"
-            type="number"
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('yields', value)
-              }
-            }}
-          />
-          <div className="mt-2">
-            <CheckBox
-              labelTitle={inputMap.hideExpertRecipes}
-              defaultChecked={loaderData.hideExpertRecipes}
-              name="hideExpertRecipes"
-              onChange={(event) => {
-                const value = event.target.checked
-                handleFormChange('hideExpertRecipes', value.toString())
+            />
+            <Select
+              title={inputMap.costMetric}
+              defaultValue={loaderData.costMetric}
+              options={costMetrics.map((value) => ({
+                value,
+                label: costMetricLabels[value]
+              }))}
+              name="costMetric"
+              onChange={(e) => {
+                const value = e.target.value
+                if (value !== undefined) {
+                  handleFormChange('costMetric', value)
+                }
               }}
             />
+            <Select
+              title={inputMap.revenueMetric}
+              defaultValue={loaderData.revenueMetric}
+              options={revenueMetrics.map((value) => ({
+                value,
+                label: revenueMetricLabels[value]
+              }))}
+              name="revenueMetric"
+              onChange={(e) => {
+                const value = e.target.value
+                if (value !== undefined) {
+                  handleFormChange('revenueMetric', value)
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.salesPerWeek}
+              defaultValue={loaderData.salesPerWeek}
+              name="salesPerWeek"
+              type="number"
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('salesPerWeek', value)
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.medianSalePrice}
+              defaultValue={loaderData.medianSalePrice}
+              name="medianSalePrice"
+              type="number"
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('medianSalePrice', value)
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.maxMaterialCost}
+              defaultValue={loaderData.maxMaterialCost}
+              name="maxMaterialCost"
+              type="number"
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('maxMaterialCost', value)
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.stars}
+              defaultValue={loaderData.stars}
+              name="stars"
+              type="number"
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('stars', value)
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.lvlLowerLimit}
+              defaultValue={loaderData.lvlLowerLimit}
+              name="lvlLowerLimit"
+              type="number"
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('lvlLowerLimit', value)
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.lvlUpperLimit}
+              defaultValue={loaderData.lvlUpperLimit}
+              name="lvlUpperLimit"
+              type="number"
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('lvlUpperLimit', value)
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.yields}
+              defaultValue={loaderData.yields}
+              name="yields"
+              type="number"
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('yields', value)
+                }
+              }}
+            />
+            <div className="mt-2">
+              <CheckBox
+                labelTitle={inputMap.hideExpertRecipes}
+                defaultChecked={loaderData.hideExpertRecipes}
+                name="hideExpertRecipes"
+                onChange={(event) => {
+                  const value = event.target.checked
+                  handleFormChange('hideExpertRecipes', value.toString())
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </SmallFormContainer>
+        </SmallFormContainer>
+      </PremiumPaywall>
       {showNoResults && <NoResults href="/ffxiv/crafting-list" />}
       {flatData && (
         <Results

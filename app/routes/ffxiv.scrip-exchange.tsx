@@ -1,8 +1,13 @@
-import { useActionData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useNavigation,
+  useLoaderData,
+  useNavigate
+} from '@remix-run/react'
 import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -10,13 +15,14 @@ import { PageWrapper } from '~/components/Common'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
-import {
-  ScripExchangeRequest,
-  ScripExchangeResults
-} from '~/requests/FFXIV/scrip-exchange'
-import { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
+import type { ScripExchangeResults } from '~/requests/FFXIV/scrip-exchange'
+import { ScripExchangeRequest } from '~/requests/FFXIV/scrip-exchange'
+import type { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import type { LoaderFunction } from '@remix-run/node'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -99,9 +105,18 @@ type ActionResponse =
   | { exception: string }
   | {}
 
+export const loader: LoaderFunction = async ({ request }) => {
+  return combineWithDiscordSession(request, {})
+}
+
 const FFXIVScripExchange = () => {
   const transition = useNavigation()
   const actionData = useActionData<ActionResponse>()
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
   const [formState, setFormState] = useState<{ color: string }>({
     color: 'Orange Gatherers'
   })
@@ -146,8 +161,8 @@ const FFXIVScripExchange = () => {
 
   return (
     <PageWrapper>
-      <>
-        <div className="py-3">
+      <div className="py-3">
+        <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Currency Conversion"
             onClick={onSubmit}
@@ -173,20 +188,20 @@ const FFXIVScripExchange = () => {
               />
             </>
           </SmallFormContainer>
-        </div>
-        {error === 'No results found' && (
-          <NoResults href={`/ffxiv-scrip-exchange`} />
-        )}
-        {data && (
-          <SmallTable
-            data={data}
-            columnList={columnList}
-            mobileColumnList={mobileColumnList}
-            columnSelectOptions={['itemName']}
-            sortingOrder={[{ id: 'valuePerScrip', desc: true }]}
-          />
-        )}
-      </>
+        </PremiumPaywall>
+      </div>
+      {error === 'No results found' && (
+        <NoResults href={`/ffxiv-scrip-exchange`} />
+      )}
+      {data && (
+        <SmallTable
+          data={data}
+          columnList={columnList}
+          mobileColumnList={mobileColumnList}
+          columnSelectOptions={['itemName']}
+          sortingOrder={[{ id: 'valuePerScrip', desc: true }]}
+        />
+      )}
     </PageWrapper>
   )
 }

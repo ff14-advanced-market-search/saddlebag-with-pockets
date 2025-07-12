@@ -1,7 +1,16 @@
 import { TrashIcon } from '@heroicons/react/solid'
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
@@ -23,6 +32,8 @@ import GetShoppingList from '~/requests/FFXIV/shopping-list'
 import { getUserSessionData } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -92,7 +103,21 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  return combineWithDiscordSession(request, {})
+}
+
+/**
+ * Renders the main FFXIV shopping list page, handling premium access control, form submission, and result display.
+ *
+ * Displays a paywall if the user is not logged in or lacks premium status. Shows the shopping list form, and conditionally renders results or a no-results message based on server responses.
+ */
 export default function Index() {
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
   const navigation = useNavigation()
   const actionData = useActionData<ActionDataResponse>()
   const error =
@@ -107,7 +132,9 @@ export default function Index() {
 
   return (
     <PageWrapper>
-      <ShoppingListForm error={error} loading={loading} />
+      <PremiumPaywall loaderData={loaderData}>
+        <ShoppingListForm error={error} loading={loading} />
+      </PremiumPaywall>
       {noResults && <NoResults />}
       {results && <Results {...results} />}
     </PageWrapper>
@@ -148,7 +175,8 @@ const columnList: Array<ColumnList<ShoppingListItem>> = [
     columnId: 'hq',
     header: 'High Quality',
     accessor: ({ getValue }) => {
-      return <p>{getValue() === true ? 'Yes' : ''}</p>
+      const value = getValue()
+      return <p>{value === true ? 'Yes' : ''}</p>
     }
   }
 ]
@@ -188,7 +216,7 @@ const Row = ({
 
             // Handle empty input
             if (value === '') {
-              updateRow({ ...form, craft_amount: null })
+              updateRow({ ...form, craft_amount: undefined })
               return
             }
 

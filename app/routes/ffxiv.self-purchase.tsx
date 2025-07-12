@@ -5,7 +5,12 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import DateCell from '~/components/FFXIVResults/FullScan/DateCell'
@@ -22,6 +27,8 @@ import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
 import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions'
 import DebouncedInput from '~/components/Common/DebouncedInput'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -42,7 +49,7 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSessionData(request)
 
-  return json({
+  return combineWithDiscordSession(request, {
     world: session.getWorld(),
     data_center: session.getDataCenter()
   })
@@ -68,9 +75,20 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
+/**
+ * Renders the FFXIV self-purchase history page, handling paywall access, form submission, and result display.
+ *
+ * Displays a form for entering player and world information, conditionally wrapped in a premium paywall based on user login and premium status. Shows purchase results or a no-results message after form submission.
+ */
 export default function Index() {
   const transition = useNavigation()
-  const loaderData = useLoaderData<{ server: string; dataCenter: string }>()
+  const loaderData = useLoaderData<{
+    server: string
+    dataCenter: string
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
   const results = useActionData<SelfPurchaseResults>()
   const loading = transition.state === 'submitting'
 
@@ -89,25 +107,30 @@ export default function Index() {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Self Purchase Items"
-        error={error}
-        loading={loading}
-        onClick={(e) => {
-          if (loading) {
-            e.preventDefault()
-          }
-        }}>
-        <div className="py-2">
-          <SelectDCandWorld navigation={transition} sessionData={loaderData} />
-        </div>
-        <InputWithLabel
-          type="text"
-          name="playerName"
-          labelTitle="Player Name"
-          toolTip="The name of your player"
-        />
-      </SmallFormContainer>
+      <PremiumPaywall loaderData={loaderData}>
+        <SmallFormContainer
+          title="Self Purchase Items"
+          error={error}
+          loading={loading}
+          onClick={(e) => {
+            if (loading) {
+              e.preventDefault()
+            }
+          }}>
+          <div className="py-2">
+            <SelectDCandWorld
+              navigation={transition}
+              sessionData={loaderData}
+            />
+          </div>
+          <InputWithLabel
+            type="text"
+            name="playerName"
+            labelTitle="Player Name"
+            toolTip="The name of your player"
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

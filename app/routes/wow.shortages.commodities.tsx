@@ -21,6 +21,8 @@ import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 export const validateShortageData = (
   formData: FormData
@@ -177,13 +179,24 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
-  return json({ wowRealm: server, wowRegion: region })
+
+  return combineWithDiscordSession(request, {
+    wowRealm: server,
+    wowRegion: region
+  })
 }
 
 const Index = () => {
   const transition = useNavigation()
   const results = useActionData<WowShortageResult>()
-  const { wowRealm, wowRegion } = useLoaderData<WoWLoaderData>()
+  const { wowRealm, wowRegion, isLoggedIn, hasPremium, needsRefresh } =
+    useLoaderData<
+      WoWLoaderData & {
+        isLoggedIn: boolean
+        hasPremium: boolean
+        needsRefresh: boolean
+      }
+    >()
 
   const [serverName, setServerName] = useState<string>(wowRealm.name)
 
@@ -211,26 +224,28 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Commodity Shortage finder"
-        onClick={onSubmit}
-        loading={transition.state === 'submitting'}
-        disabled={transition.state === 'submitting'}
-        error={
-          results && 'exception' in results ? results.exception : undefined
-        }>
-        <WoWShortageFormFields />
-        <RegionAndServerSelect
-          region={wowRegion}
-          serverSelectFormName="homeRealmId"
-          defaultRealm={wowRealm}
-          serverSelectTitle="Home Server"
-          onServerSelectChange={(selectValue) => {
-            if (selectValue) setServerName(selectValue.name)
-          }}
-          serverSelectTooltip="Select your home world server, type to begin selection."
-        />
-      </SmallFormContainer>
+      <PremiumPaywall loaderData={{ isLoggedIn, hasPremium, needsRefresh }}>
+        <SmallFormContainer
+          title="Commodity Shortage finder"
+          onClick={onSubmit}
+          loading={transition.state === 'submitting'}
+          disabled={transition.state === 'submitting'}
+          error={
+            results && 'exception' in results ? results.exception : undefined
+          }>
+          <WoWShortageFormFields />
+          <RegionAndServerSelect
+            region={wowRegion}
+            serverSelectFormName="homeRealmId"
+            defaultRealm={wowRealm}
+            serverSelectTitle="Home Server"
+            onServerSelectChange={(selectValue) => {
+              if (selectValue) setServerName(selectValue.name)
+            }}
+            serverSelectTooltip="Select your home world server, type to begin selection."
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

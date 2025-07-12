@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type {
@@ -9,7 +14,7 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import ItemServerComparison from '~/requests/FFXIV/ItemServerComparison'
 import type { ItemServerComparisonList } from '~/requests/FFXIV/ItemServerComparison'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import { z } from 'zod'
 import CheckBox from '~/components/form/CheckBox'
 import { useState } from 'react'
@@ -29,6 +34,8 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -81,13 +88,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validParams = inputSchema.safeParse(values)
   if (!validParams.success) {
-    return json({
+    return combineWithDiscordSession(request, {
       exception: `Missing: ${validParams.error.issues
         .map(({ path }) => path.join(', '))
         .join(', ')}`
     })
   }
-  return json(validParams.data)
+  return combineWithDiscordSession(request, validParams.data)
 }
 
 const sortByPrice =
@@ -147,8 +154,9 @@ const Index = () => {
   const results = useActionData<
     ItemServerComparisonList | { exception: string } | {}
   >()
-  const loaderData = useLoaderData<typeof defaultFormValues>()
-
+  const loaderData = useLoaderData<
+    typeof defaultFormValues & { isLoggedIn: boolean; hasPremium: boolean }
+  >()
   const [modal, setModal] = useState<'exportServers' | 'items' | null>(null)
   const [state, setState] = useState<{
     items: string[]
@@ -184,145 +192,166 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title="Compare the minimum price of items across worlds!"
-        description="Find out the minimum price of different items across multiple servers. Helps you find the best server to sell your items on, if you have alts on many servers."
-        onClick={onSubmit}
-        loading={transition.state === 'submitting'}
-        disabled={transition.state === 'submitting'}
-        error={error}
-        action={getActionUrl('/queries/world-comparison', state)}>
-        <div className="pt-4">
-          <div className="sm:px-4 flex flex-col gap-4">
-            <div className="flex flex-col max-w-full relative">
-              <TitleTooltip
-                title="Worlds to compare with your home server"
-                toolTip="Choose worlds to see which has the best price for your selected items"
-                relative
-              />
-              <ModalToggleButton
-                type="button"
-                onClick={() => setModal('exportServers')}>
-                Choose Worlds
-              </ModalToggleButton>
-              <input name="exportServers" value={state.exportServers} hidden />
-              <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
-                {serversLength > 3 || !serversLength
-                  ? `${serversLength ? serversLength : 'No'} worlds selected`
-                  : state.exportServers.map((name) => name).join(', ')}
-              </p>
-            </div>
+      <PremiumPaywall loaderData={loaderData}>
+        <SmallFormContainer
+          title="Compare the minimum price of items across worlds!"
+          description="Find out the minimum price of different items across multiple servers. Helps you find the best server to sell your items on, if you have alts on many servers."
+          onClick={onSubmit}
+          loading={transition.state === 'submitting'}
+          disabled={transition.state === 'submitting'}
+          error={error}
+          action={getActionUrl('/queries/world-comparison', state)}>
+          <div className="pt-4">
+            <div className="sm:px-4 flex flex-col gap-4">
+              <div className="flex flex-col max-w-full relative">
+                <TitleTooltip
+                  title="Worlds to compare with your home server"
+                  toolTip="Choose worlds to see which has the best price for your selected items"
+                  relative
+                />
+                <ModalToggleButton
+                  type="button"
+                  onClick={() => {
+                    setModal('exportServers')
+                  }}>
+                  Choose Worlds
+                </ModalToggleButton>
+                <input
+                  name="exportServers"
+                  value={state.exportServers}
+                  hidden
+                />
+                <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
+                  {serversLength > 3 || !serversLength
+                    ? `${serversLength ? serversLength : 'No'} worlds selected`
+                    : state.exportServers.length > 0
+                    ? state.exportServers.join(', ')
+                    : ''}
+                </p>
+              </div>
 
-            <div className="flex flex-col max-w-full relative">
-              <TitleTooltip
-                title="Items you want to compare"
-                toolTip="Choose worlds to see which has the best price for your selected items"
-                relative
-              />
-              <ModalToggleButton
-                type="button"
-                onClick={() => setModal('items')}>
-                Choose Items
-              </ModalToggleButton>
-              <input name="items" hidden value={state.items} />
-              <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
-                {itemsLength > 3 || !itemsLength
-                  ? `${itemsLength ? itemsLength : 'No'} items selected`
-                  : state.items
-                      .map((id) => getItemNameById(id) || '')
-                      .join(', ')}
-              </p>
-            </div>
-            <div className="flex flex-col max-w-full relative">
-              <TitleTooltip
-                title="High quality items only"
-                toolTip="If selected will only return high quality items"
-                relative
-              />
-              <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
+              <div className="flex flex-col max-w-full relative">
+                <TitleTooltip
+                  title="Items you want to compare"
+                  toolTip="Choose worlds to see which has the best price for your selected items"
+                  relative
+                />
+                <ModalToggleButton
+                  type="button"
+                  onClick={() => {
+                    setModal('items')
+                  }}>
+                  Choose Items
+                </ModalToggleButton>
+                <input name="items" hidden value={state.items} />
+                <p className="mt-2 ml-1 text-sm text-gray-500 dark:text-gray-300">
+                  {itemsLength > 3 || !itemsLength
+                    ? `${itemsLength ? itemsLength : 'No'} items selected`
+                    : state.items.length > 0
+                    ? state.items
+                        .map((id) => getItemNameById(id) || '')
+                        .join(', ')
+                    : ''}
+                </p>
+              </div>
+              <div className="flex flex-col max-w-full relative">
+                <TitleTooltip
+                  title="High quality items only"
+                  toolTip="If selected will only return high quality items"
+                  relative
+                />
+                <CheckBox labelTitle="HQ Only" id="hq-only" name="hqOnly" />
+              </div>
             </div>
           </div>
-        </div>
-        {modal && (
-          <Modal
-            title={
-              modal === 'items'
-                ? 'Choose items to check price on'
-                : 'Choose worlds to compare'
-            }
-            onClose={() => setModal(null)}>
-            <div className="mt-2 flex flex-col">
-              {modal === 'items' && (
-                <>
-                  <ItemSelect
-                    onSelectChange={(selected) => {
-                      if (!selected) return
-
-                      setState({
-                        ...state,
-                        items: [...state.items, selected.id]
-                      })
-                    }}
-                    tooltip="Type in at least 2 characters to search."
-                  />
-                  <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
-                    {state.items.map((id, index) => (
-                      <ItemListRow
-                        key={`${id}-${index}`}
-                        id={id}
-                        onDelete={() =>
-                          setState({
-                            ...state,
-                            items: state.items.filter((item) => item !== id)
-                          })
-                        }
-                      />
-                    ))}
-                  </ul>
-                </>
-              )}
-              {modal === 'exportServers' && (
-                <div>
-                  {Object.entries(WorldList).map(([dataCenter, worlds]) => (
-                    <div key={dataCenter}>
-                      <p className="text mt-1 font-semibold text-gray-800">
-                        {dataCenter}
-                      </p>
-                      {worlds.map(({ name }) => {
-                        const isSelected = state.exportServers.includes(name)
-
-                        return (
-                          <CheckBox
-                            key={dataCenter + name + state.exportServers}
-                            labelTitle={'-- ' + name}
-                            id={name}
-                            onChange={() => {
-                              if (isSelected) {
-                                setState({
-                                  ...state,
-                                  exportServers: state.exportServers.filter(
-                                    (world) => world !== name
-                                  )
-                                })
-                              } else {
-                                setState({
-                                  ...state,
-                                  exportServers: [...state.exportServers, name]
-                                })
+          {modal && (
+            <Modal
+              title={
+                modal === 'items'
+                  ? 'Choose items to check price on'
+                  : 'Choose worlds to compare'
+              }
+              onClose={() => {
+                setModal(null)
+              }}>
+              <div className="mt-2 flex flex-col">
+                {modal === 'items' && (
+                  <div>
+                    <ItemSelect
+                      onSelectChange={(selected) => {
+                        if (!selected) return
+                        setState({
+                          ...state,
+                          items: [...state.items, selected.id]
+                        })
+                      }}
+                      tooltip="Type in at least 2 characters to search."
+                    />
+                    <ul className="first-child:mt-0 last-child:mb-0 mt-2 px-4">
+                      {state.items.map((id, index) => (
+                        <ItemListRow
+                          key={`${id}-${index}`}
+                          id={id}
+                          onDelete={() => {
+                            setState({
+                              ...state,
+                              items: state.items.filter((item) => item !== id)
+                            })
+                          }}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {modal === 'exportServers' && (
+                  <div>
+                    {Object.entries(WorldList).map(([dataCenter, worlds]) => (
+                      <div key={String(dataCenter)}>
+                        <p className="text mt-1 font-semibold text-gray-800">
+                          {dataCenter}
+                        </p>
+                        {worlds.map(({ name }) => {
+                          const isSelected = state.exportServers.includes(name)
+                          return (
+                            <CheckBox
+                              key={
+                                String(dataCenter) +
+                                String(name) +
+                                state.exportServers.join(',')
                               }
-                            }}
-                            checked={isSelected}
-                          />
-                        )
-                      })}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </Modal>
-        )}
-      </SmallFormContainer>
+                              labelTitle={`-- ${name}`}
+                              id={name}
+                              onChange={() => {
+                                if (isSelected) {
+                                  setState({
+                                    ...state,
+                                    exportServers: state.exportServers.filter(
+                                      (world) => world !== name
+                                    )
+                                  })
+                                } else {
+                                  setState({
+                                    ...state,
+                                    exportServers: [
+                                      ...state.exportServers,
+                                      name
+                                    ]
+                                  })
+                                }
+                              }}
+                              checked={isSelected}
+                            />
+                          )
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </Modal>
+          )}
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }
@@ -371,13 +400,13 @@ const Results = ({ results }: { results: ItemServerComparisonList }) => {
             type="button"
           />
         </div>
-        <div className="flex w-full overflow-x-scroll gap-3 p-4">
+        <div className="flex flex-col gap-6 p-4">
           {results.data.map((item) => {
             const sortedServers = item.export_servers.sort(getSortedTables)
             return (
               <div
                 key={item.item_id}
-                className="min-w-max rounded-md shadow-md p-3 dark:bg-slate-600">
+                className="max-w-2xl w-full mx-auto rounded-md shadow-md p-3 dark:bg-slate-600">
                 <Title title={getItemNameById(item.item_id) as string} />
                 <div>
                   <table className="table-auto border-separate border-spacing-2 dark:text-gray-200">

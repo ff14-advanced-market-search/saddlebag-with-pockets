@@ -34,11 +34,9 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
-import {
-  getActionUrl,
-  handleCopyButton,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -139,7 +137,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     const formData = { itemID, maxPurchasePrice, desiredMinIlvl }
     const validatedFormData = validateInput.safeParse(formData)
     if (!validatedFormData.success) {
-      return json({
+      return combineWithDiscordSession(request, {
         exception: parseZodErrorsToDisplayString(
           validatedFormData.error,
           inputMap
@@ -156,14 +154,14 @@ export const loader: LoaderFunction = async ({ request }) => {
       desiredStats
     })
 
-    return json({
+    return combineWithDiscordSession(request, {
       ...(await result.json()),
       sortby: 'price',
       formValues: { ...validatedFormData.data, desiredStats }
     })
   }
 
-  return json({})
+  return combineWithDiscordSession(request, {})
 }
 
 type LoaderResponseType =
@@ -179,6 +177,12 @@ type LoaderResponseType =
       }
     })
 
+type LoaderData = {
+  isLoggedIn: boolean
+  hasPremium: boolean
+  needsRefresh: boolean
+}
+
 type ActionResponseType =
   | {}
   | { exception: string }
@@ -186,7 +190,7 @@ type ActionResponseType =
 
 const IlvlShoppingListComponent = () => {
   const actionData = useActionData<ActionResponseType>()
-  const loaderData = useLoaderData<LoaderResponseType>()
+  const loaderData = useLoaderData<LoaderResponseType & LoaderData>()
   const [searchParams] = useSearchParams()
   const result = actionData ?? loaderData
   const transition = useNavigation()
@@ -250,83 +254,87 @@ const IlvlShoppingListComponent = () => {
   }
 
   const renderForm = () => (
-    <SmallFormContainer
-      title="Item Level Shopping List"
-      description={`
-        Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
-        Supports the following items:
-        - Undermine Merc's Dog Tags
-        - Psychopath's Ravemantle 
-        - Vatwork Janitor's Wasteband
-        - Mechgineer's Blowtorch Cover
-        - Firebug's Anklegear
-        - Loyalist's Holdout Hood
-        - Midnight Lounge Cummerbund
-        - Bootleg Wrynn Shoulderplates
-        - Globlin-Fused Greatbelt
-      `}
-      onClick={handleSubmit}
-      error={error}
-      loading={isSubmitting}
-      disabled={!itemID}
-      action={getActionUrl(PAGE_URL, {
-        itemId: itemID,
-        maxPurchasePrice,
-        desiredMinIlvl,
-        desiredStats: selectedStats
-      })}>
-      <div className="pt-3 flex flex-col gap-4">
-        <DebouncedSelectInput
-          title={'Item to search for'}
-          label="Item"
-          id="export-item-select"
-          selectOptions={wowItemsList}
-          onSelect={handleSelect}
-          displayValue={itemName}
-        />
-        <input hidden name="itemID" value={itemID} />
-        <InputWithLabel
-          labelTitle="Maximum Purchase Price"
-          name="maxPurchasePrice"
-          type="number"
-          value={maxPurchasePrice}
-          min={0}
-          onChange={(e) => setMaxPurchasePrice(e.currentTarget.value)}
-        />
-        <InputWithLabel
-          labelTitle="Minimum Item Level"
-          name="desiredMinIlvl"
-          type="number"
-          value={desiredMinIlvl}
-          min={0}
-          onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
-        />
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium dark:text-gray-200">
-            Desired Stats
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {AVAILABLE_STATS.map((stat) => (
-              <label key={stat} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="desiredStats"
-                  value={stat}
-                  checked={selectedStats.includes(stat)}
-                  onChange={() => handleStatToggle(stat)}
-                  className="form-checkbox h-4 w-4"
-                />
-                <span className="text-sm dark:text-gray-200">{stat}</span>
-              </label>
-            ))}
+    <PremiumPaywall loaderData={loaderData}>
+      <SmallFormContainer
+        title="Item Level Shopping List"
+        description={`
+          Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
+          Supports the following items:
+          - Undermine Merc's Dog Tags
+          - Psychopath's Ravemantle 
+          - Vatwork Janitor's Wasteband
+          - Mechgineer's Blowtorch Cover
+          - Firebug's Anklegear
+          - Loyalist's Holdout Hood
+          - Midnight Lounge Cummerbund
+          - Bootleg Wrynn Shoulderplates
+          - Globlin-Fused Greatbelt
+        `}
+        onClick={handleSubmit}
+        error={error}
+        loading={isSubmitting}
+        disabled={!itemID}
+        action={getActionUrl(PAGE_URL, {
+          itemId: itemID,
+          maxPurchasePrice,
+          desiredMinIlvl,
+          desiredStats: selectedStats
+        })}>
+        <div className="pt-3 flex flex-col gap-4">
+          <DebouncedSelectInput
+            title={'Item to search for'}
+            label="Item"
+            id="export-item-select"
+            selectOptions={wowItemsList}
+            onSelect={handleSelect}
+            displayValue={itemName}
+          />
+          <input hidden name="itemID" value={itemID} />
+          <InputWithLabel
+            labelTitle="Maximum Purchase Price"
+            name="maxPurchasePrice"
+            type="number"
+            value={maxPurchasePrice}
+            min={0}
+            onChange={(e) => setMaxPurchasePrice(e.currentTarget.value)}
+          />
+          <InputWithLabel
+            labelTitle="Minimum Item Level"
+            name="desiredMinIlvl"
+            type="number"
+            value={desiredMinIlvl}
+            min={0}
+            onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
+          />
+          <div className="flex flex-col gap-2">
+            <fieldset className="flex flex-col gap-2">
+              <legend className="text-sm font-medium dark:text-gray-200">
+                Desired Stats
+              </legend>
+              <div className="flex flex-wrap gap-2">
+                {AVAILABLE_STATS.map((stat) => (
+                  <label key={stat} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="desiredStats"
+                      value={stat}
+                      checked={selectedStats.includes(stat)}
+                      onChange={() => handleStatToggle(stat)}
+                      className="form-checkbox h-4 w-4"
+                    />
+                    <span className="text-sm dark:text-gray-200">{stat}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
           </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
+            Note: If the search button does not appear after you select your
+            item, try refreshing the page.
+          </p>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
-          Note: If the search button does not appear after you select your item,
-          try refreshing the page.
-        </p>
-      </div>
-    </SmallFormContainer>
+      </SmallFormContainer>
+    </PremiumPaywall>
   )
 
   const hasSearched =
@@ -338,7 +346,11 @@ const IlvlShoppingListComponent = () => {
     } else if (result && 'data' in result && Array.isArray(result.data)) {
       if (result.data.length > 0) {
         return (
-          <Results {...(result as IlvlWoWListResponse & { sortby: string })} />
+          <Results
+            {...(result as IlvlWoWListResponse & { sortby: string })}
+            isLoggedIn={loaderData.isLoggedIn}
+            hasPremium={loaderData.hasPremium}
+          />
         )
       } else {
         return <NoResults href={PAGE_URL} />
@@ -356,8 +368,14 @@ export default IlvlShoppingListComponent
 const Results = ({
   data,
   sortby,
-  name
-}: IlvlWoWListResponse & { sortby: string }) => {
+  name,
+  isLoggedIn,
+  hasPremium
+}: IlvlWoWListResponse & {
+  sortby: string
+  isLoggedIn: boolean
+  hasPremium: boolean
+}) => {
   useEffect(() => {
     if (window && document) {
       window.scroll({ top: 0, behavior: 'smooth' })
@@ -366,21 +384,28 @@ const Results = ({
 
   return (
     <PageWrapper>
-      <SmallTable
-        title={'Best Deals for ' + name}
-        sortingOrder={[{ desc: false, id: sortby }]}
-        columnList={columnList}
-        mobileColumnList={mobileColumnList}
-        columnSelectOptions={[
-          'price',
-          'quantity',
-          'realmNames',
-          'ilvl',
-          'stats',
-          'link'
-        ]}
-        data={data as any}
-      />
+      <PremiumPaywall
+        loaderData={{
+          isLoggedIn: isLoggedIn,
+          hasPremium: hasPremium,
+          needsRefresh: false
+        }}>
+        <SmallTable
+          title={`Best Deals for ${name}`}
+          sortingOrder={[{ desc: false, id: sortby }]}
+          columnList={columnList}
+          mobileColumnList={mobileColumnList}
+          columnSelectOptions={[
+            'price',
+            'quantity',
+            'realmNames',
+            'ilvl',
+            'stats',
+            'link'
+          ]}
+          data={data as any}
+        />
+      </PremiumPaywall>
     </PageWrapper>
   )
 }
