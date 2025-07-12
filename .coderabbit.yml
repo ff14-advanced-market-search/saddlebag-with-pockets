@@ -1,7 +1,0 @@
-# yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
-early_access: true
-reviews:
-  tools:
-    github-checks:
-      enabled: true
-      timeout_ms: 900000
