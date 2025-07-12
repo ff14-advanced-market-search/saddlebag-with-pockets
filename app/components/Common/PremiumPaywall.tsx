@@ -41,6 +41,7 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
     try {
       await refreshDiscordRoles()
     } catch (error) {
+      await new Promise((resolve) => setTimeout(resolve, 3000))
       console.error('Failed to refresh roles:', error)
       // Fallback to page reload
       window.location.reload()
@@ -128,7 +129,9 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
                   disabled={isRefreshing}
                   className="flex items-center px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-md text-xs font-medium shadow hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 disabled:opacity-50 disabled:cursor-not-allowed mt-1">
                   <DiscordIcon className="w-4 h-4 mr-2" />
-                  {isRefreshing ? 'Refreshing...' : 'Refresh Roles'}
+                  {isRefreshing
+                    ? 'Refreshing, wait a few seconds...'
+                    : 'Refresh Roles'}
                 </button>
               </div>
             </>

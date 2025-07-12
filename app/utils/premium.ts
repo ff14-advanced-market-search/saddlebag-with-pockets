@@ -74,6 +74,8 @@ export const refreshDiscordRoles = async (): Promise<boolean> => {
 
     if (response.ok) {
       // Reload the page to get updated session data
+      console.log('Reloading page to get updated session data')
+      await new Promise((resolve) => setTimeout(resolve, 3000))
       window.location.reload()
       return true
     }
