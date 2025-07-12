@@ -2,6 +2,8 @@ import type { LoaderFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
 import { GUILD_ID } from '~/utils/premium'
+import { REST } from '@discordjs/rest'
+import { Routes } from 'discord-api-types/v10'
 
 export const loader: LoaderFunction = async ({ request, context }) => {
   const url = new URL(request.url)
@@ -70,15 +72,15 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     const botToken = context.DISCORD_BOT_TOKEN
     let discordRoles = []
     if (botToken && userData.id) {
-      const memberResp = await fetch(
-        `https://discord.com/api/v10/guilds/${GUILD_ID}/members/${userData.id}`,
-        {
-          headers: { Authorization: `Bot ${botToken}` }
-        }
-      )
-      if (memberResp.ok) {
-        const memberData = await memberResp.json()
-        discordRoles = Array.isArray(memberData.roles) ? memberData.roles : []
+      try {
+        const rest = new REST({ version: '10' }).setToken(botToken as string)
+        const member = (await rest.get(
+          Routes.guildMember(GUILD_ID, userData.id)
+        )) as any
+        discordRoles = Array.isArray(member.roles) ? member.roles : []
+      } catch (error) {
+        console.error('Failed to fetch Discord member data:', error)
+        // Continue without roles if the fetch fails
       }
     }
     session.set('discord_roles', discordRoles)
