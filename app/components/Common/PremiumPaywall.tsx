@@ -30,23 +30,18 @@ const PaywallOverlay: React.FC<{
   onSubscribe,
   onRefresh
 }) => (
-  <div
-    className="absolute top-0 left-0 w-full h-full z-20 flex flex-col items-center justify-center bg-black bg-opacity-60"
-    style={{ pointerEvents: 'auto' }}>
-    <div className="mt-8 sm:mt-16 md:mt-24" />
-    <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 sm:p-8 flex flex-col items-center max-w-md w-full mx-2">
-      {!isLoggedIn ? (
-        <DiscordNeedsLogin onLogin={onLogin} />
-      ) : needsRefresh ? (
-        <DiscordSessionExpired />
-      ) : !hasPremium ? (
-        <DiscordNeedsToSubscribe
-          onSubscribe={onSubscribe}
-          onRefresh={onRefresh}
-          isRefreshing={isRefreshing}
-        />
-      ) : null}
-    </div>
+  <div className="flex flex-col items-center justify-center bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 sm:p-8 max-w-md w-full mx-2">
+    {!isLoggedIn ? (
+      <DiscordNeedsLogin onLogin={onLogin} />
+    ) : needsRefresh ? (
+      <DiscordSessionExpired />
+    ) : !hasPremium ? (
+      <DiscordNeedsToSubscribe
+        onSubscribe={onSubscribe}
+        onRefresh={onRefresh}
+        isRefreshing={isRefreshing}
+      />
+    ) : null}
   </div>
 )
 
@@ -170,13 +165,15 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
     window.open(DISCORD_SERVER_URL, '_blank')
   }
 
-  if (!showPaywall) return <>{children}</>
+  // If user has access, render the content directly
+  if (!showPaywall) {
+    return <>{children}</>
+  }
 
+  // If user doesn't have access, show the paywall instead of the content
   return (
-    <div className="relative">
-      <div className="pointer-events-none filter blur-sm select-none opacity-60">
-        {children}
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-[400px] py-8">
+      <div className="mt-8 sm:mt-16 md:mt-24" />
       <PaywallOverlay
         isLoggedIn={isLoggedIn}
         hasPremium={hasPremium}
