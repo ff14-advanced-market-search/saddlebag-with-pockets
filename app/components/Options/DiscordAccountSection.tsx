@@ -40,15 +40,18 @@ const DiscordAccountSection: React.FC<DiscordAccountSectionProps> = ({
               Roles:{' '}
               {Array.isArray(discordRoles) &&
                 discordRoles
-                  .filter((roleId: string) => PREMIUM_ROLE_INFO[roleId])
-                  .map((roleId: string) => (
-                    <span
-                      key={roleId}
-                      title={PREMIUM_ROLE_INFO[roleId].name}
-                      className="text-lg">
-                      {PREMIUM_ROLE_INFO[roleId].icon}
-                    </span>
-                  ))}
+                  .filter((roleId: string) => roleId in PREMIUM_ROLE_INFO)
+                  .map((roleId: string) => {
+                    const roleInfo = PREMIUM_ROLE_INFO[roleId]
+                    return (
+                      <span
+                        key={roleId}
+                        title={roleInfo.name}
+                        className="text-lg">
+                        {roleInfo.icon}
+                      </span>
+                    )
+                  })}
             </div>
           </div>
         </div>
