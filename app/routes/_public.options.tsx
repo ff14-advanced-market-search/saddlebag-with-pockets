@@ -191,11 +191,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 /**
- * Renders the options page, allowing users to configure Discord integration, FFXIV world, WoW home realm, and theme preferences.
+ * Displays the user options page for configuring Discord integration, FFXIV world, WoW home realm, and theme preferences.
  *
- * Displays current connection status, premium Discord roles, and provides forms for updating user settings. Handles form submission, state management, and displays feedback banners for Discord-related actions.
+ * Provides forms and interactive sections for updating user settings, manages local and Redux state, and shows feedback banners for status messages.
  *
- * @returns The options page React element.
+ * @returns The rendered options page React element.
  */
 export default function Options() {
   const data = useLoaderData()
