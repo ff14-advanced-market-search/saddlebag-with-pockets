@@ -8,9 +8,9 @@ import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
  */
 export const getDiscordSessionData = async (request: Request) => {
   const session = await getSession(request.headers.get('Cookie'))
-  const discordId = session.get('discord_id')
-  const discordRoles = session.get('discord_roles') || []
-  const rolesRefreshedAt = session.get('discord_roles_refreshed_at')
+  const discordId = session?.get('discord_id') || null
+  const discordRoles = session?.get('discord_roles') || []
+  const rolesRefreshedAt = session?.get('discord_roles_refreshed_at') || null
   const isLoggedIn = Boolean(discordId)
   const hasPremium = getHasPremium(discordRoles)
   const needsRefresh = needsRolesRefresh(rolesRefreshedAt)
