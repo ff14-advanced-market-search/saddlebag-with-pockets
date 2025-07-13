@@ -1,4 +1,3 @@
-import { CheckIcon } from '@heroicons/react/solid'
 import {
   Form,
   useActionData,
@@ -22,15 +21,12 @@ import {
   WOW_REALM_NAME,
   WOW_REGION
 } from '~/sessions'
-import { Switch } from '@headlessui/react'
-import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
 import {
   setFFxivWorld,
   setWoWRealmData,
   toggleDarkMode
 } from '~/redux/reducers/userSlice'
-import { Form as RemixForm } from '@remix-run/react'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import React, { useState } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
@@ -38,11 +34,15 @@ import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, Banner } from '~/components/Common'
+import {
+  DiscordAccountSection,
+  StatusBanner,
+  ThemeSection,
+  OptionsHeader
+} from '~/components/Options'
 import { setCookie } from '~/utils/cookies'
-import Banner from '~/components/Common/Banner'
-import DiscordIcon from '~/icons/DiscordIcon'
-import { PREMIUM_ROLE_INFO } from '~/utils/premium'
+import { getWindowUrlParams } from '~/utils/urlHelpers'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -205,24 +205,8 @@ export default function Options() {
   const dispatch = useDispatch()
   const { darkmode } = useTypedSelector((state) => state.user)
 
-  // Defensive: Only construct URL if window and location are defined
-  let success = null
-  let error = null
-  if (
-    typeof window !== 'undefined' &&
-    window.location &&
-    window.location.href
-  ) {
-    try {
-      const url = new URL(window.location.href)
-      success = url.searchParams.get('success')
-      error = url.searchParams.get('error')
-    } catch (e) {
-      // If URL construction fails, leave success/error as null
-      success = null
-      error = null
-    }
-  }
+  // Extract URL parameters for success/error messages
+  const { success, error } = getWindowUrlParams()
 
   const [ffxivWorld, setFfxivWorld] = useState<{
     data_center: string
@@ -241,209 +225,39 @@ export default function Options() {
     dispatch(toggleDarkMode())
   }
 
+  const handleFormSubmit = (e: React.FormEvent) => {
+    if (transition.state === 'submitting') {
+      e.preventDefault()
+      return
+    }
+    dispatch(setFFxivWorld(ffxivWorld))
+    dispatch(setWoWRealmData(wowRealm))
+  }
+
   return (
     <PageWrapper>
       <Banner />
       {(success || error) && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
-          {(success === 'discord_connected' ||
-            success === 'discord_disconnected' ||
-            success === 'discord_roles_refreshed') && (
-            <div className="rounded-md bg-green-50 p-4 border border-green-200 dark:bg-green-900 dark:border-green-700">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <CheckIcon
-                    className="h-5 w-5 text-green-400"
-                    aria-hidden="true"
-                  />
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                    {success === 'discord_connected'
-                      ? 'Successfully connected to Discord!'
-                      : success === 'discord_disconnected'
-                      ? 'Successfully disconnected from Discord!'
-                      : 'Successfully refreshed Discord roles!'}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-          {error === 'discord_auth_failed' && (
-            <div className="rounded-md bg-red-50 p-4 border border-red-200 dark:bg-red-900 dark:border-red-700">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <svg
-                    className="h-5 w-5 text-red-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                    role="img">
-                    <title>Error icon</title>
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-red-800 dark:text-red-200">
-                    Failed to connect to Discord. Please try again.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-          {error === 'discord_roles_refresh_failed' && (
-            <div className="rounded-md bg-red-50 p-4 border border-red-200 dark:bg-red-900 dark:border-red-700">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <svg
-                    className="h-5 w-5 text-red-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                    role="img">
-                    <title>Error icon</title>
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-red-800 dark:text-red-200">
-                    Failed to refresh Discord roles. Please try again.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+          <StatusBanner success={success} error={error} />
         </div>
       )}
-      <Form
-        method="POST"
-        onSubmit={(e) => {
-          if (transition.state === 'submitting') {
-            e.preventDefault()
-            return
-          }
-          dispatch(setFFxivWorld(ffxivWorld))
-          dispatch(setWoWRealmData(wowRealm))
-        }}>
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-              Options
-            </h1>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <div className="lg:flex lg:items-center lg:justify-between">
-              <div className="flex-1 min-w-0">
-                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate dark:text-gray-300">
-                  Site Configuration
-                </h2>
-              </div>
-              <div className="mt-5 flex lg:mt-0 lg:ml-4">
-                <span className="block">
-                  <button
-                    type="submit"
-                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <CheckIcon
-                      className="-ml-1 mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
-                    Save
-                  </button>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <Form method="POST" onSubmit={handleFormSubmit}>
+        <OptionsHeader
+          onSubmit={handleFormSubmit}
+          isSubmitting={transition.state === 'submitting'}
+        />
         <OptionSection
           title="Discord Account"
           description="Connect your Discord account to access premium features and receive notifications."
           hideHRule={true}>
-          {data.discordId ? (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                {data.discordAvatar && (
-                  <img
-                    src={`https://cdn.discordapp.com/avatars/${data.discordId}/${data.discordAvatar}.png`}
-                    alt="Discord Avatar"
-                    className="w-10 h-10 rounded-full"
-                  />
-                )}
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Connected as {data.discordUsername}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-300">
-                    Discord ID: {data.discordId}
-                  </p>
-                  <div className="flex space-x-2 mt-1 text-xs text-gray-500 dark:text-gray-300">
-                    Roles:{' '}
-                    {Array.isArray(data.discordRoles) &&
-                      data.discordRoles
-                        .filter((roleId: string) => PREMIUM_ROLE_INFO[roleId])
-                        .map((roleId: string) => (
-                          <span
-                            key={roleId}
-                            title={PREMIUM_ROLE_INFO[roleId].name}
-                            className="text-lg">
-                            {PREMIUM_ROLE_INFO[roleId].icon}
-                          </span>
-                        ))}
-                  </div>
-                </div>
-              </div>
-              <RemixForm
-                method="post"
-                action="/refresh-discord-roles"
-                className="ml-2">
-                <button
-                  type="submit"
-                  className="inline-flex items-center px-3 py-2 border border-blue-300 rounded-md shadow-sm text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-blue-200 dark:border-blue-500 dark:hover:bg-slate-600"
-                  disabled={transition.state === 'submitting'}>
-                  {transition.state === 'submitting'
-                    ? 'Refreshing...'
-                    : 'Refresh Roles'}
-                </button>
-              </RemixForm>
-              <RemixForm
-                method="post"
-                action="/discord-disconnect"
-                className="flex space-x-2">
-                <button
-                  type="submit"
-                  className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-slate-600 dark:text-gray-200 dark:border-gray-500 dark:hover:bg-slate-500">
-                  Disconnect
-                </button>
-              </RemixForm>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <DiscordIcon className="w-8 h-8 text-[#5865F2]" />
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Not connected to Discord
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-300">
-                    Connect your Discord account to access premium features
-                  </p>
-                </div>
-              </div>
-              <a
-                href="/discord-login"
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
-                <DiscordIcon className="w-4 h-4 mr-2" />
-                Connect Discord
-              </a>
-            </div>
-          )}
+          <DiscordAccountSection
+            discordId={data.discordId}
+            discordUsername={data.discordUsername}
+            discordAvatar={data.discordAvatar}
+            discordRoles={data.discordRoles}
+            isSubmitting={transition.state === 'submitting'}
+          />
         </OptionSection>
         <OptionSection
           title="FFXIV World Selection"
@@ -478,41 +292,10 @@ export default function Options() {
         <OptionSection
           title="Theme"
           description="Needs more sparkles.. ✨✨✨✨">
-          <Switch.Group
-            as={`div`}
-            className={`flex items-center justify-between`}>
-            <span className={`flex-grow flex flex-col`}>
-              <Switch.Label
-                as={`span`}
-                className={`txt-sm font-meidum text-gray-900 dark:text-gray-100`}
-                passive>
-                Enable Dark Mode
-              </Switch.Label>
-              <Switch.Description
-                as={`span`}
-                className={`text-sm text-gray-500 dark:text-gray-300`}>
-                I confirm, I have weak eyeballs.
-              </Switch.Description>
-            </span>
-            {typeof document !== 'undefined' && (
-              <Switch
-                key={darkmode.toString()}
-                checked={darkmode}
-                onChange={handleDarkModeToggle}
-                className={classNames(
-                  darkmode ? `bg-black` : `bg-gray-200`,
-                  `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
-                )}>
-                <span
-                  aria-hidden={true}
-                  className={classNames(
-                    darkmode ? `translate-x-5` : `translate-x-0`,
-                    `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
-                  )}
-                />
-              </Switch>
-            )}
-          </Switch.Group>
+          <ThemeSection
+            darkMode={darkmode}
+            onDarkModeToggle={handleDarkModeToggle}
+          />
         </OptionSection>
       </Form>
     </PageWrapper>
