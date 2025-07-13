@@ -76,7 +76,7 @@ const DiscordSessionExpired: React.FC = () => (
       Your Discord session has expired. Automatically refreshing your roles...
     </p>
     <div className="flex items-center justify-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#5865F2]"></div>
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#5865F2]" />
     </div>
   </>
 )

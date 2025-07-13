@@ -4,7 +4,7 @@ import { classNames } from '~/utils'
 
 interface ThemeSectionProps {
   darkMode: boolean
-  onDarkModeToggle: () => void
+  onDarkModeToggle: (next: boolean) => void
 }
 
 const ThemeSection: React.FC<ThemeSectionProps> = ({
@@ -28,7 +28,6 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
       </span>
       {typeof document !== 'undefined' && (
         <Switch
-          key={darkMode.toString()}
           checked={darkMode}
           onChange={onDarkModeToggle}
           className={classNames(

@@ -2,14 +2,10 @@ import React from 'react'
 import { CheckIcon } from '@heroicons/react/solid'
 
 interface OptionsHeaderProps {
-  onSubmit: (e: React.FormEvent) => void
   isSubmitting: boolean
 }
 
-const OptionsHeader: React.FC<OptionsHeaderProps> = ({
-  onSubmit,
-  isSubmitting
-}) => {
+const OptionsHeader: React.FC<OptionsHeaderProps> = ({ isSubmitting }) => {
   return (
     <div className="py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -28,7 +24,6 @@ const OptionsHeader: React.FC<OptionsHeaderProps> = ({
             <span className="block">
               <button
                 type="submit"
-                onClick={onSubmit}
                 disabled={isSubmitting}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
                 <CheckIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />

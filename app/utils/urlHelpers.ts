@@ -11,6 +11,7 @@ export const extractUrlParams = (url: string) => {
       error: urlObj.searchParams.get('error')
     }
   } catch (e) {
+    console.error('Failed to extract URL parameters:', e)
     return { success: null, error: null }
   }
 }
