@@ -73,7 +73,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW realm shortages',
+    title: 'Saddlebag Exchange: WoW Realm Shortages',
     description:
       'Find wow local realm auctionhouse items that can be flipped for a profit',
     links: [

@@ -164,7 +164,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW commodity shortages',
+    title: 'Saddlebag Exchange: WoW Commodity Shortages',
     description:
       'Find wow commodity auctionhouse items that can be flipped for a profit',
     links: [

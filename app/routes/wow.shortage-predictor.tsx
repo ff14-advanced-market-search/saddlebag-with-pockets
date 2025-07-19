@@ -123,7 +123,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW commodity shortage predictions',
+    title: 'Saddlebag Exchange: WoW Commodity Shortage Predictions',
     description:
       'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!',
     links: [

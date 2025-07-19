@@ -30,8 +30,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: region wide undercut search',
-    description: 'Look up your wow undercuts across all realms at once!',
+    title: 'Saddlebag Exchange: Region Wide Undercut Search',
+    description:
+      'Look up your wow undercuts across all realms at once using our Undercut Tracker Addon!',
     links: [
       {
         rel: 'canonical',

@@ -27,7 +27,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Allagan Tools Data Import',
+    title: 'Saddlebag Exchange: FFXIV Allagan Tools Data Import',
     description:
       'Input your Allagan Tools generated data here, and we will turn it into useful stuff!',
     customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page',

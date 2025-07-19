@@ -1,5 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -8,8 +8,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV market overview recommendations',
-    description: 'FFXIV market overview recommendations',
+    title: 'Saddlebag Exchange: FFXIV Market Overview Recommendations',
+    description:
+      'Discover the best FFXIV market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, best raw materials, furniture, collectibles, and more. Optimize your market strategy with data-driven insights for maximum profit.',
     links: [
       {
         rel: 'canonical',

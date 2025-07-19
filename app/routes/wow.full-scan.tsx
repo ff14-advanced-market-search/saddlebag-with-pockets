@@ -33,7 +33,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW server transfer trade search',
+    title: 'Saddlebag Exchange: WoW Server Transfer Trade Search',
     description:
       'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit',
     links: [

@@ -21,15 +21,16 @@ import {
 } from '~/utils/redirectOnPath'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV reselling recommendations',
-    description: 'Saddlebag Exchange: FFXIV reselling recommendations',
+    title: 'Saddlebag Exchange: FFXIV Reselling Recommendations',
+    description:
+      'Saddlebag Exchange: FFXIV Reselling Recommendations find the best items to buy from a vendor or another server and resell on your home server!',
     links: [
       {
         rel: 'canonical',

@@ -16,7 +16,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Realm Status',
+    title: 'Saddlebag Exchange: WoW Realm Status API Upload Timers',
     description:
       'WoW: see what time blizzard updates the auctionhouse api data, this is the time when saddlebag exchange and azeroth auction assassin will update with the latest data!',
     links: [
