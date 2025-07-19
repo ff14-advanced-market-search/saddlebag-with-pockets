@@ -12,7 +12,7 @@ import {
   useNavigate
 } from '@remix-run/react'
 import { useCallback, useState } from 'react'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, VideoGuide } from '~/components/Common'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import NoResults from '~/components/Common/NoResults'
 import TitleTooltip from '~/components/Common/TitleTooltip'
@@ -34,32 +34,6 @@ import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
-
-const VideoGuide = () => {
-  return (
-    <div className="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-      <div className="flex flex-col items-center text-center">
-        <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-4">
-          📺 Video Guide: How to Use the Shopping List Generator
-        </h3>
-        <p className="text-blue-700 dark:text-blue-300 mb-4 max-w-2xl">
-          Learn how to effectively use this tool to find the best servers to buy
-          crafting materials and plan your bulk crafting projects!
-        </p>
-        <div className="relative w-full max-w-2xl">
-          <iframe
-            className="w-full aspect-video rounded-lg shadow-lg"
-            src="https://www.youtube.com/embed/6wyHmxMr6Y8"
-            title="FFXIV Shopping List Generator Guide"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -158,7 +132,12 @@ export default function Index() {
 
   return (
     <PageWrapper>
-      <VideoGuide />
+      <VideoGuide
+        title="Video Guide: How to Use the Shopping List Generator"
+        description="Learn how to effectively use this tool to find the best servers to buy crafting materials and plan your bulk crafting projects!"
+        videoId="6wyHmxMr6Y8"
+        videoTitle="FFXIV Shopping List Generator Guide"
+      />
       <PremiumPaywall loaderData={loaderData}>
         <ShoppingListForm error={error} loading={loading} />
       </PremiumPaywall>
