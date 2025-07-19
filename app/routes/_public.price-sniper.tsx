@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV price sniper',
+    title: 'Saddlebag Exchange: FFXIV Price Sniper',
     description:
       'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts',
     customHeading:

@@ -86,7 +86,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Marketshare',
+    title: 'Saddlebag Exchange: WoW Current Content Marketshare',
     description: 'Find what current content items make the most gold in WoW!',
     links: [
       {

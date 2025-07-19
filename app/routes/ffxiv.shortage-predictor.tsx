@@ -109,7 +109,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV market shortage predictions',
+    title: 'Saddlebag Exchange: FFXIV Market Shortage Predictions',
     description:
       'Find Market Shortages and Price Spikes BEFORE they happen and be there first!',
     links: [

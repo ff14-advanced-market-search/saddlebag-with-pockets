@@ -52,7 +52,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: wow shopping list',
+    title: 'Saddlebag Exchange: WoW Shopping List',
     description:
       'See the wow listings across all realms on one page ordered by price',
     links: [

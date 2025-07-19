@@ -1,5 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -8,9 +8,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview',
+    title: 'Saddlebag Exchange: WoW Marketshare Recommendations',
     description:
-      'Learn how to efficiently trade and make gold in WoW using Saddlebag Exchanges Market Overview and Commodity Shortage Predictions. Master crafting, gathering, and flipping items for profit.',
+      'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview. Master crafting, gathering, and flipping items for profit.',
     links: [
       {
         rel: 'canonical',

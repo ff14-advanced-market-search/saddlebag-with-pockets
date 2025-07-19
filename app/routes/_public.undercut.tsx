@@ -1,11 +1,7 @@
 import { useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type {
-  LoaderFunction,
-  MetaFunction,
-  LinksFunction
-} from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useState } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -21,7 +17,7 @@ import SelectDCandWorld from '~/components/form/select/SelectWorld'
 
 export const meta: MetaFunction = () => {
   return {
-    title: 'FFXIV Discord Undercut and Sale Alerts, sell faster!',
+    title: 'Saddlebag Exchange: FFXIV Discord Undercut and Sale Alerts',
     description:
       'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.',
     viewport: 'width=device-width,initial-scale=1',
@@ -74,6 +70,16 @@ const Index = () => {
     ignore_undercuts_with_quantity_over: 9999
   })
 
+  const [modal, setModal] = useState<{
+    type: 'add_items' | 'ignore_items' | 'retainers'
+    open: boolean
+  }>({ type: 'retainers', open: false })
+
+  const [alertType, setAlertType] = useState<'all' | 'selected'>('all')
+
+  const [trackedItems, setTrackedItems] = useState<TrackedItem[]>([])
+  const [ignoredItems, setIgnoredItems] = useState<TrackedItem[]>([])
+
   if (!world) {
     return (
       <PageWrapper>
@@ -87,16 +93,6 @@ const Index = () => {
       </PageWrapper>
     )
   }
-
-  const [modal, setModal] = useState<{
-    type: 'add_items' | 'ignore_items' | 'retainers'
-    open: boolean
-  }>({ type: 'retainers', open: false })
-
-  const [alertType, setAlertType] = useState<'all' | 'selected'>('all')
-
-  const [trackedItems, setTrackedItems] = useState<TrackedItem[]>([])
-  const [ignoredItems, setIgnoredItems] = useState<TrackedItem[]>([])
 
   const jsonData = JSON.stringify(config, null, 2)
   const salesAlertJson = JSON.stringify(
@@ -151,13 +147,15 @@ const Index = () => {
                 { label: 'All items', value: 'all' },
                 { label: 'Selected items', value: 'selected' }
               ]}
-              onChange={(value: 'all' | 'selected') => {
-                setAlertType(value as 'all' | 'selected')
-                setConfig((prev) => ({
-                  ...prev,
-                  add_ids: value === 'selected' ? prev.add_ids : [],
-                  ignore_ids: value === 'all' ? prev.ignore_ids : []
-                }))
+              onChange={(value: string | number) => {
+                if (value === 'all' || value === 'selected') {
+                  setAlertType(value as 'all' | 'selected')
+                  setConfig((prev) => ({
+                    ...prev,
+                    add_ids: value === 'selected' ? prev.add_ids : [],
+                    ignore_ids: value === 'all' ? prev.ignore_ids : []
+                  }))
+                }
               }}
               defaultChecked={alertType}
             />

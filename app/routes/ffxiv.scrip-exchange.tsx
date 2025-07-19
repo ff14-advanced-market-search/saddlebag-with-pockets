@@ -30,7 +30,8 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV Scrip Exchange',
-    description: 'Saddlebag Exchange: FFXIV scrip exchange details',
+    description:
+      'Convert FFXIV currencies efficiently with our scrip exchange calculator. Compare exchange rates for Orange/Purple Crafters and Gatherers scrips, Grand Company seals, and Bicolor Gemstones. Find the best items to exchange for maximum value and optimize your currency conversion strategy.',
     links: [
       {
         rel: 'canonical',

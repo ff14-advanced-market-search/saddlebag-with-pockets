@@ -66,7 +66,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW price sniper',
+    title: 'Saddlebag Exchange: WoW Price Sniper',
     description:
       'Generate data for Saddlebag Exchange discord bot wow price sniper alerts',
     links: [

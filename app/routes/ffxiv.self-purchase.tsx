@@ -36,7 +36,8 @@ export const meta: MetaFunction = () => {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
     title: 'Saddlebag Exchange: FFXIV marketboard purchase history',
-    description: 'Look up your FFXIV purchase history on the ffxiv marketboard',
+    description:
+      'Track your FFXIV market board purchase history and analyze your buying patterns. View detailed transaction records, item prices, and purchase dates to optimize your market strategy. Monitor your spending habits and identify the best times to buy items for maximum savings.',
     links: [
       {
         rel: 'canonical',

@@ -34,8 +34,9 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: ffxiv listings analysis',
-    description: 'Saddlebag Exchange: ffxiv listings analysis',
+    title: 'Saddlebag Exchange: FFXIV Listings Analysis',
+    description:
+      'Saddlebag Exchange: FFXIV Listings Analysis for current prices, competition metrics and more!',
     links: [
       {
         rel: 'canonical',
