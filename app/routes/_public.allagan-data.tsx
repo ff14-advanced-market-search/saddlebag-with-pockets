@@ -1,6 +1,10 @@
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import type {
+  ActionFunction,
+  MetaFunction,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useActionData, useNavigation } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import type { ReactNode } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
@@ -13,7 +17,8 @@ import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
 import { getUserSessionData } from '~/sessions'
-import Banner from '~/components/Common/Banner'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const formName = 'allaganData'
 
@@ -99,20 +104,23 @@ export const action: ActionFunction = async ({ request }) => {
     }
   }
 }
-type ActionResponse = AllaganResults | { exception: string } | {}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  return combineWithDiscordSession(request, {})
+}
+
+type ActionResponse =
+  | AllaganResults
+  | { exception: string }
+  | Record<string, never>
 
 const Index = () => {
-  const transition = useNavigation()
   const results = useActionData<ActionResponse>()
-  const isLoading = transition.state === 'submitting'
-
-  const handleSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    if (isLoading) {
-      event.preventDefault()
-    }
-  }
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
 
   const error =
     results && 'exception' in results ? results.exception : undefined
@@ -129,33 +137,33 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <Banner />
-      <SmallFormContainer
-        title="Allagan Data"
-        description={
-          <>
-            <span className="dark:text-gray-200">
-              Input your Allagan generated data here, and we will turn it into
-              useful stuff!{' '}
-              <a
-                href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 visited:text-purple-600 dark:visited:text-purple-400">
-                Learn more about the Allagan Tools Inventory Analysis.
-              </a>
-            </span>
-          </>
-        }
-        onClick={handleSubmit}
-        loading={isLoading}
-        error={error}>
-        <TextArea
-          formName={formName}
-          label="Allagan Data"
-          toolTip="Paste the data copied from the Allagan tool here."
-        />
-      </SmallFormContainer>
+      <ContentContainer>
+        <Title title="Allagan Data" />
+        <span className="dark:text-gray-200">
+          Input your Allagan generated data here, and we will turn it into
+          useful stuff!{' '}
+          <a
+            href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Allagan-Tools-Inventory-Analysis"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 visited:text-purple-600 dark:visited:text-purple-400">
+            Learn more about the Allagan Tools Inventory Analysis.
+          </a>
+        </span>
+      </ContentContainer>
+      <PremiumPaywall loaderData={loaderData}>
+        <SmallFormContainer
+          title="Allagan Data"
+          description={undefined}
+          onClick={() => {}}
+          error={error}>
+          <TextArea
+            formName={formName}
+            label="Allagan Data"
+            toolTip="Paste the data copied from the Allagan tool here."
+          />
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }

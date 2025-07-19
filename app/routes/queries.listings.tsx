@@ -1,12 +1,21 @@
-import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import {
+  useActionData,
+  useNavigation,
+  useLoaderData,
+  useNavigate
+} from '@remix-run/react'
+import type {
+  ActionFunction,
+  MetaFunction,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import GetListingRequest from '~/requests/FFXIV/GetListing'
 import type {
   GetListingProps,
   ListingResponseType
 } from '~/requests/FFXIV/GetListing'
 import Results from '~/components/FFXIVResults/listings/Results'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import type { ItemSelected } from '~/components/form/select/ItemSelect'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { useEffect, useState } from 'react'
@@ -17,6 +26,8 @@ import { setListings } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -94,6 +105,10 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  return combineWithDiscordSession(request, {})
+}
+
 const Index = () => {
   const transition = useNavigation()
   const results = useActionData<
@@ -103,6 +118,11 @@ const Index = () => {
   const [error, setError] = useState<string | undefined>()
   const dispatch = useDispatch()
   const { listings } = useTypedSelector((state) => state.queries)
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+    needsRefresh: boolean
+  }>()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {
@@ -136,8 +156,8 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <>
-        <div className="py-3">
+      <div className="py-3">
+        <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Get Item Listing Details"
             onClick={onSubmit}
@@ -149,14 +169,14 @@ const Index = () => {
               onTextChange={handleTextChange}
             />
           </SmallFormContainer>
-        </div>
-        {listings && listings.listings && listings.listings.length > 0 && (
-          <>
-            {resultTitle && <TitleH2 title={resultTitle} />}
-            <Results data={listings} />
-          </>
-        )}
-      </>
+        </PremiumPaywall>
+      </div>
+      {listings?.listings?.length > 0 && (
+        <>
+          {resultTitle && <TitleH2 title={resultTitle} />}
+          <Results data={listings} />
+        </>
+      )}
     </PageWrapper>
   )
 }

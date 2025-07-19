@@ -1,5 +1,14 @@
-import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import {
+  useActionData,
+  useNavigation,
+  useLoaderData,
+  useNavigate
+} from '@remix-run/react'
+import type {
+  ActionFunction,
+  MetaFunction,
+  LoaderFunction
+} from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import GetHistoryRequest from '~/requests/FFXIV/GetHistory'
 import type {
@@ -7,7 +16,7 @@ import type {
   GetHistoryResponse
 } from '~/requests/FFXIV/GetHistory'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions'
 import ItemSelect from '~/components/Common/ItemSelect'
 import type { ItemSelected } from '~/components/Common/ItemSelect'
 import { useEffect, useState } from 'react'
@@ -18,6 +27,8 @@ import { useDispatch } from 'react-redux'
 import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -111,6 +122,10 @@ const parseServerError = (error: string) => {
   return error
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  return combineWithDiscordSession(request, {})
+}
+
 const Index = () => {
   const transition = useNavigation()
   const results = useActionData<GetHistoryResponse>()
@@ -121,6 +136,11 @@ const Index = () => {
   const { itemHistory } = useTypedSelector((state) => state.queries)
 
   const dispatch = useDispatch()
+
+  const loaderData = useLoaderData<{
+    isLoggedIn: boolean
+    hasPremium: boolean
+  }>()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (transition.state === 'submitting' || !formState) {
@@ -157,50 +177,48 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <>
-        <div className="py-3">
+      <div className="py-3">
+        <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Find Item History"
             onClick={onSubmit}
             error={error}
             loading={transition.state === 'submitting'}
             disabled={!formState}>
-            <>
-              <ItemSelect
-                onSelectChange={handleFormChange}
-                onTextChange={handleTextChange}
-              />
-              <div className="my-1 flex flex-1 px-4">
-                <select
-                  id="itemType"
-                  className="flex-1 min-w-0 block px-3 py-2 rounded-l-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-l-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400"
-                  name="itemType"
-                  defaultValue={'all'}>
-                  <option value="all">All</option>
-                  <option value="hq_only">High Quality</option>
-                  <option value="nq_only">Low Quality</option>
-                </select>
-                <label
-                  htmlFor="itemType"
-                  className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm shadow-sm dark:border-gray-400 dark:text-gray-300 dark:bg-gray-700">
-                  Item Quality
-                </label>
-              </div>
-            </>
+            <ItemSelect
+              onSelectChange={handleFormChange}
+              onTextChange={handleTextChange}
+            />
+            <div className="my-1 flex flex-1 px-4">
+              <select
+                id="itemType"
+                className="flex-1 min-w-0 block px-3 py-2 rounded-l-md focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block shadow-sm sm:text-sm border-gray-300 rounded-l-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400"
+                name="itemType"
+                defaultValue={'all'}>
+                <option value="all">All</option>
+                <option value="hq_only">High Quality</option>
+                <option value="nq_only">Low Quality</option>
+              </select>
+              <label
+                htmlFor="itemType"
+                className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm shadow-sm dark:border-gray-400 dark:text-gray-300 dark:bg-gray-700">
+                Item Quality
+              </label>
+            </div>
           </SmallFormContainer>
+        </PremiumPaywall>
+      </div>
+      {error === 'No results found' && !itemHistory && (
+        <NoResults href={`/queries/item-history`} />
+      )}
+      {resultTitle && (
+        <div className="max-w-4xl mx-auto px-4">
+          <TitleH2 title={resultTitle} />
         </div>
-        {error === 'No results found' && !itemHistory && (
-          <NoResults href={`/queries/item-history`} />
-        )}
-        {resultTitle && (
-          <div className="max-w-4xl mx-auto px-4">
-            <TitleH2 title={resultTitle} />
-          </div>
-        )}
-        {itemHistory && 'average_ppu' in itemHistory && (
-          <Results data={itemHistory} darkMode={darkmode} />
-        )}
-      </>
+      )}
+      {itemHistory && 'average_ppu' in itemHistory && (
+        <Results data={itemHistory} darkMode={darkmode} />
+      )}
     </PageWrapper>
   )
 }

@@ -1,4 +1,3 @@
-import { CheckIcon } from '@heroicons/react/solid'
 import {
   Form,
   useActionData,
@@ -22,8 +21,6 @@ import {
   WOW_REALM_NAME,
   WOW_REGION
 } from '~/sessions'
-import { Switch } from '@headlessui/react'
-import { classNames } from '~/utils'
 import { useDispatch } from 'react-redux'
 import {
   setFFxivWorld,
@@ -37,9 +34,15 @@ import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, Banner } from '~/components/Common'
+import {
+  DiscordAccountSection,
+  StatusBanner,
+  ThemeSection,
+  OptionsHeader
+} from '~/components/Options'
 import { setCookie } from '~/utils/cookies'
-import Banner from '~/components/Common/Banner'
+import { getWindowUrlParams } from '~/utils/urlHelpers'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -179,10 +182,21 @@ export const loader: LoaderFunction = async ({ request }) => {
     data_center,
     world,
     wowRealm: server,
-    wowRegion: region
+    wowRegion: region,
+    discordId: session.get('discord_id'),
+    discordUsername: session.get('discord_username'),
+    discordAvatar: session.get('discord_avatar'),
+    discordRoles: session.get('discord_roles') || []
   })
 }
 
+/**
+ * Renders the options page, allowing users to configure Discord integration, FFXIV world, WoW home realm, and theme preferences.
+ *
+ * Displays current connection status, premium Discord roles, and provides forms for updating user settings. Handles form submission, state management, and displays feedback banners for Discord-related actions.
+ *
+ * @returns The options page React element.
+ */
 export default function Options() {
   const data = useLoaderData()
   const transition = useNavigation()
@@ -190,6 +204,9 @@ export default function Options() {
 
   const dispatch = useDispatch()
   const { darkmode } = useTypedSelector((state) => state.user)
+
+  // Extract URL parameters for success/error messages
+  const { success, error } = getWindowUrlParams()
 
   const [ffxivWorld, setFfxivWorld] = useState<{
     data_center: string
@@ -208,48 +225,40 @@ export default function Options() {
     dispatch(toggleDarkMode())
   }
 
+  const handleFormSubmit = (e: React.FormEvent) => {
+    if (transition.state === 'submitting') {
+      e.preventDefault()
+      return
+    }
+    dispatch(setFFxivWorld(ffxivWorld))
+    dispatch(setWoWRealmData(wowRealm))
+  }
+
   return (
     <PageWrapper>
       <Banner />
-      <Form
-        method="POST"
-        onSubmit={(e) => {
-          if (transition.state === 'submitting') {
-            e.preventDefault()
-            return
-          }
-          dispatch(setFFxivWorld(ffxivWorld))
-          dispatch(setWoWRealmData(wowRealm))
-        }}>
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-              Options
-            </h1>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <div className="lg:flex lg:items-center lg:justify-between">
-              <div className="flex-1 min-w-0">
-                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate dark:text-gray-300">
-                  Site Configuration
-                </h2>
-              </div>
-              <div className="mt-5 flex lg:mt-0 lg:ml-4">
-                <span className="block">
-                  <button
-                    type="submit"
-                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <CheckIcon
-                      className="-ml-1 mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
-                    Save
-                  </button>
-                </span>
-              </div>
-            </div>
-          </div>
+      {(success || error) && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
+          <StatusBanner success={success} error={error} />
         </div>
+      )}
+      <Form method="POST" onSubmit={handleFormSubmit}>
+        <OptionsHeader
+          onSubmit={handleFormSubmit}
+          isSubmitting={transition.state === 'submitting'}
+        />
+        <OptionSection
+          title="Discord Account"
+          description="Connect your Discord account to access premium features and receive notifications."
+          hideHRule={true}>
+          <DiscordAccountSection
+            discordId={data.discordId}
+            discordUsername={data.discordUsername}
+            discordAvatar={data.discordAvatar}
+            discordRoles={data.discordRoles}
+            isSubmitting={transition.state === 'submitting'}
+          />
+        </OptionSection>
         <OptionSection
           title="FFXIV World Selection"
           description="The selected server will change what marketplace your queries are run against.">
@@ -282,43 +291,11 @@ export default function Options() {
         </OptionSection>
         <OptionSection
           title="Theme"
-          description="Needs more sparkles.. ✨✨✨✨"
-          hideHRule={true}>
-          <Switch.Group
-            as={`div`}
-            className={`flex items-center justify-between`}>
-            <span className={`flex-grow flex flex-col`}>
-              <Switch.Label
-                as={`span`}
-                className={`txt-sm font-meidum text-gray-900 dark:text-gray-100`}
-                passive>
-                Enable Dark Mode
-              </Switch.Label>
-              <Switch.Description
-                as={`span`}
-                className={`text-sm text-gray-500 dark:text-gray-300`}>
-                I confirm, I have weak eyeballs.
-              </Switch.Description>
-            </span>
-            {typeof document !== 'undefined' && (
-              <Switch
-                key={darkmode.toString()}
-                checked={darkmode}
-                onChange={handleDarkModeToggle}
-                className={classNames(
-                  darkmode ? `bg-black` : `bg-gray-200`,
-                  `relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
-                )}>
-                <span
-                  aria-hidden={true}
-                  className={classNames(
-                    darkmode ? `translate-x-5` : `translate-x-0`,
-                    `pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`
-                  )}
-                />
-              </Switch>
-            )}
-          </Switch.Group>
+          description="Needs more sparkles.. ✨✨✨✨">
+          <ThemeSection
+            darkMode={darkmode}
+            onDarkModeToggle={handleDarkModeToggle}
+          />
         </OptionSection>
       </Form>
     </PageWrapper>

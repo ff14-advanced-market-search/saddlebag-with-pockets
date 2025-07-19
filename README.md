@@ -9,6 +9,7 @@ _Frontend for Aetheryte API_
 ## Prerequisites
 
 - Node `20.3.0`
+- Discord Application (for OAuth functionality)
 
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -40,6 +41,22 @@ yarn dev
 
 This starts your app in development mode, rebuilding assets on file changes.
 Check your terminal for the address, the default is `http://127.0.0.1:8788`
+
+## Discord OAuth Setup
+
+To enable Discord login functionality, you need to set up a Discord application:
+
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
+2. Create a new application
+3. Go to the "OAuth2" section
+4. Add your redirect URI: `http://localhost:8788/discord-callback` (for development)
+5. Copy your Client ID and Client Secret
+6. Set the following environment variables:
+   - `DISCORD_CLIENT_ID`: Your Discord application client ID
+   - `DISCORD_CLIENT_SECRET`: Your Discord application client secret
+   - `DISCORD_BOT_TOKEN`: Your Discord bot token for pulling role ids
+
+For production, update the redirect URI to your production domain.
 
 ## FFXIV Items list
 

@@ -1,4 +1,9 @@
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useNavigate
+} from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
@@ -35,6 +40,8 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
+import PremiumPaywall from '~/components/Common/PremiumPaywall'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
 const PAGE_URL = '/wow/quantity-manipulation'
 
@@ -212,19 +219,22 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validInput = validateFormData.safeParse(input)
   if (validInput.success) {
-    const responseData = {
-      ...validInput.data
-    }
-    return json(responseData)
+    return combineWithDiscordSession(request, validInput.data)
   }
 
-  return json(defaultFormValues)
+  return combineWithDiscordSession(request, defaultFormValues)
 }
 
 const Index = () => {
   const transition = useNavigation()
 
-  const loaderData = useLoaderData<typeof defaultFormValues>()
+  const loaderData = useLoaderData<
+    typeof defaultFormValues & {
+      isLoggedIn: boolean
+      hasPremium: boolean
+      needsRefresh: boolean
+    }
+  >()
   const [searchParams, setSearchParams] = useState<typeof defaultFormValues>({
     ...loaderData
   })
@@ -261,128 +271,134 @@ const Index = () => {
 
   return (
     <PageWrapper>
-      <SmallFormContainer
-        title={pageTitle}
-        description={pageDescription}
-        onClick={onSubmit}
-        error={error}
-        loading={loading}
-        action={getActionUrl(PAGE_URL, searchParams)}>
-        <div className="pt-2">
-          <div className="flex justify-end mb-2">
-            <SubmitButton
-              title="Share this search!"
-              onClick={handleCopyButton}
-              type="button"
+      <PremiumPaywall loaderData={loaderData}>
+        <SmallFormContainer
+          title={pageTitle}
+          description={pageDescription}
+          onClick={onSubmit}
+          error={error}
+          loading={loading}
+          action={getActionUrl(PAGE_URL, searchParams)}>
+          <div className="pt-2">
+            <div className="flex justify-end mb-2">
+              <SubmitButton
+                title="Share this search!"
+                onClick={handleCopyButton}
+                type="button"
+              />
+            </div>
+          </div>
+          <div className="pt-2 md:pt-4">
+            <InputWithLabel
+              defaultValue={loaderData.historicPrice}
+              labelTitle={inputMap.historicPrice}
+              type="number"
+              inputTag="Gold"
+              name="historicPrice"
+              min={0}
+              toolTip="Find items that historically sell for this amount of gold or more."
+              onChange={(e) =>
+                handleFormChange('historicPrice', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.salesPerDay}
+              labelTitle={inputMap.salesPerDay}
+              type="number"
+              inputTag="Sales"
+              name="salesPerDay"
+              min={0}
+              step={0.01}
+              toolTip="Finds items that have this many sales per day."
+              onChange={(e) => handleFormChange('salesPerDay', e.target.value)}
+            />
+            <InputWithLabel
+              defaultValue={loaderData.minQuantityChangePercent}
+              type="number"
+              labelTitle={inputMap.minQuantityChangePercent}
+              inputTag="%"
+              name="minQuantityChangePercent"
+              min={0}
+              toolTip="The minimum percentage change in quantity to consider suspicious."
+              onChange={(e) =>
+                handleFormChange('minQuantityChangePercent', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.minQuantitySwings}
+              type="number"
+              labelTitle={inputMap.minQuantitySwings}
+              inputTag="Swings"
+              name="minQuantitySwings"
+              min={0}
+              toolTip="The minimum number of suspicious quantity changes required."
+              onChange={(e) =>
+                handleFormChange('minQuantitySwings', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.hoursToAnalyze}
+              type="number"
+              labelTitle={inputMap.hoursToAnalyze}
+              inputTag="Hours"
+              name="hoursToAnalyze"
+              min={24}
+              max={336}
+              toolTip="How many hours of history to analyze (max 336 hours / 2 weeks)."
+              onChange={(e) =>
+                handleFormChange('hoursToAnalyze', e.target.value)
+              }
+            />
+            <InputWithLabel
+              defaultValue={loaderData.minPriceMultiplier}
+              type="number"
+              labelTitle={inputMap.minPriceMultiplier}
+              inputTag="x"
+              name="minPriceMultiplier"
+              min={0}
+              step={0.01}
+              toolTip="The minimum price multiplier between highest and lowest price."
+              onChange={(e) =>
+                handleFormChange('minPriceMultiplier', e.target.value)
+              }
+            />
+            <ItemQualitySelect
+              defaultValue={loaderData.itemQuality}
+              onChange={(value) => handleFormChange('itemQuality', value)}
+            />
+            <ExpansionSelect
+              defaultValue={loaderData.expansionNumber}
+              onChange={(value) => handleFormChange('expansionNumber', value)}
+            />
+            <ItemClassSelect
+              itemClass={parseInt(loaderData.itemClass)}
+              itemSubClass={parseInt(loaderData.itemSubClass)}
+              onChange={(itemClassValue, itemSubClassValue) => {
+                handleFormChange('itemClass', itemClassValue.toString())
+                handleFormChange('itemSubClass', itemSubClassValue.toString())
+              }}
+              itemClassesOverride={getCommodityItemClasses()}
+            />
+            <RegionAndServerSelect
+              serverSelectFormName="homeRealmName"
+              region={loaderData.region as WoWServerRegion}
+              defaultRealm={
+                {
+                  id: parseInt(loaderData.homeRealmName.split('---')[0], 10),
+                  name: loaderData.homeRealmName.split('---')[1]
+                } as WoWServerData
+              }
+              regionOnChange={(region) => handleFormChange('region', region)}
+              onServerSelectChange={(realm) =>
+                handleFormChange(
+                  'homeRealmName',
+                  realm ? `${realm.id}---${realm.name}` : ''
+                )
+              }
             />
           </div>
-        </div>
-        <div className="pt-2 md:pt-4">
-          <InputWithLabel
-            defaultValue={loaderData.historicPrice}
-            labelTitle={inputMap.historicPrice}
-            type="number"
-            inputTag="Gold"
-            name="historicPrice"
-            min={0}
-            toolTip="Find items that historically sell for this amount of gold or more."
-            onChange={(e) => handleFormChange('historicPrice', e.target.value)}
-          />
-          <InputWithLabel
-            defaultValue={loaderData.salesPerDay}
-            labelTitle={inputMap.salesPerDay}
-            type="number"
-            inputTag="Sales"
-            name="salesPerDay"
-            min={0}
-            step={0.01}
-            toolTip="Finds items that have this many sales per day."
-            onChange={(e) => handleFormChange('salesPerDay', e.target.value)}
-          />
-          <InputWithLabel
-            defaultValue={loaderData.minQuantityChangePercent}
-            type="number"
-            labelTitle={inputMap.minQuantityChangePercent}
-            inputTag="%"
-            name="minQuantityChangePercent"
-            min={0}
-            toolTip="The minimum percentage change in quantity to consider suspicious."
-            onChange={(e) =>
-              handleFormChange('minQuantityChangePercent', e.target.value)
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.minQuantitySwings}
-            type="number"
-            labelTitle={inputMap.minQuantitySwings}
-            inputTag="Swings"
-            name="minQuantitySwings"
-            min={0}
-            toolTip="The minimum number of suspicious quantity changes required."
-            onChange={(e) =>
-              handleFormChange('minQuantitySwings', e.target.value)
-            }
-          />
-          <InputWithLabel
-            defaultValue={loaderData.hoursToAnalyze}
-            type="number"
-            labelTitle={inputMap.hoursToAnalyze}
-            inputTag="Hours"
-            name="hoursToAnalyze"
-            min={24}
-            max={336}
-            toolTip="How many hours of history to analyze (max 336 hours / 2 weeks)."
-            onChange={(e) => handleFormChange('hoursToAnalyze', e.target.value)}
-          />
-          <InputWithLabel
-            defaultValue={loaderData.minPriceMultiplier}
-            type="number"
-            labelTitle={inputMap.minPriceMultiplier}
-            inputTag="x"
-            name="minPriceMultiplier"
-            min={0}
-            step={0.01}
-            toolTip="The minimum price multiplier between highest and lowest price."
-            onChange={(e) =>
-              handleFormChange('minPriceMultiplier', e.target.value)
-            }
-          />
-          <ItemQualitySelect
-            defaultValue={loaderData.itemQuality}
-            onChange={(value) => handleFormChange('itemQuality', value)}
-          />
-          <ExpansionSelect
-            defaultValue={loaderData.expansionNumber}
-            onChange={(value) => handleFormChange('expansionNumber', value)}
-          />
-          <ItemClassSelect
-            itemClass={parseInt(loaderData.itemClass)}
-            itemSubClass={parseInt(loaderData.itemSubClass)}
-            onChange={(itemClassValue, itemSubClassValue) => {
-              handleFormChange('itemClass', itemClassValue.toString())
-              handleFormChange('itemSubClass', itemSubClassValue.toString())
-            }}
-            itemClassesOverride={getCommodityItemClasses()}
-          />
-          <RegionAndServerSelect
-            serverSelectFormName="homeRealmName"
-            region={loaderData.region as WoWServerRegion}
-            defaultRealm={
-              {
-                id: parseInt(loaderData.homeRealmName.split('---')[0], 10),
-                name: loaderData.homeRealmName.split('---')[1]
-              } as WoWServerData
-            }
-            regionOnChange={(region) => handleFormChange('region', region)}
-            onServerSelectChange={(realm) =>
-              handleFormChange(
-                'homeRealmName',
-                realm ? `${realm.id}---${realm.name}` : ''
-              )
-            }
-          />
-        </div>
-      </SmallFormContainer>
+        </SmallFormContainer>
+      </PremiumPaywall>
     </PageWrapper>
   )
 }
