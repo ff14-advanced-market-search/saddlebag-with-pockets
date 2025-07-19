@@ -1,6 +1,7 @@
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 
 export const NAdata: Array<WoWServerData> = [
+  { name: 'Thrall', id: 3678 },
   { name: 'Azjol-Nerub', id: 121 },
   { name: 'Muradin', id: 121 },
   { name: 'Nordrassil', id: 121 },
@@ -231,7 +232,6 @@ export const NAdata: Array<WoWServerData> = [
   { name: 'Turalyon', id: 3685 },
   { name: 'Moon Guard', id: 3675 },
   { name: 'Area 52', id: 3676 },
-  { name: 'Thrall', id: 3678 },
   { name: 'Hyjal', id: 3661 },
   { name: "Kel'Thuzad", id: 3693 },
   { name: 'Lightbringer', id: 3694 },
@@ -250,6 +250,7 @@ export const NAdata: Array<WoWServerData> = [
 ]
 
 const EUData: Array<WoWServerData> = [
+  { name: 'Thrall', id: 604 },
   { name: 'Khadgar', id: 1080 },
   { name: 'Bloodhoof', id: 1080 },
   { name: 'Dentarg', id: 1084 },
@@ -280,7 +281,6 @@ const EUData: Array<WoWServerData> = [
   { name: 'Galakrond', id: 1614 },
   { name: 'Deepholm', id: 1614 },
   { name: 'Razuvious', id: 1614 },
-  { name: 'Thrall', id: 604 },
   { name: 'Kargath', id: 604 },
   { name: 'Ambossar', id: 604 },
   { name: 'Emeriss', id: 1091 },
