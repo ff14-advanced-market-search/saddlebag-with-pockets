@@ -1,4 +1,4 @@
-import { LoaderFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction } from '@remix-run/cloudflare'
 
 export const loader: LoaderFunction = () => {
   const robotText = `
@@ -57,6 +57,12 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/ilvl-export-search
   Disallow: /wow/quantity-manipulation
   Disallow: /wow/weekly-price-group-delta-recommended
+
+  Disallow: /discord-callback
+  Disallow: /discord-disconnect
+  Disallow: /discord-login
+  Disallow: /options
+  Disallow: /refresh-discord-roles
 
   Sitemap: https://saddlebagexchange.com/sitemap.xml
   `
