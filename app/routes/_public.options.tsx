@@ -230,6 +230,7 @@ export default function Options() {
     server: WoWServerData
     region: WoWServerRegion
   }) => {
+    console.log('handleWoWRealmChange called with:', newRealm)
     dispatch(setWoWRealmData(newRealm))
     // Also save to session
     const formData = new FormData()
@@ -240,6 +241,12 @@ export default function Options() {
       'homeRealm',
       `${newRealm.server.id}---${newRealm.server.name}`
     )
+    console.log('Submitting form data:', {
+      data_center: data.data_center,
+      world: data.world,
+      region: newRealm.region,
+      homeRealm: `${newRealm.server.id}---${newRealm.server.name}`
+    })
     fetcher.submit(formData, { method: 'POST' })
   }
 
@@ -290,8 +297,8 @@ export default function Options() {
           title="WoW Home Realm Selection"
           description="Your region and home realm that will be the default on WoW queries.">
           <RegionAndServerSelect
-            region={data.wowRegion}
-            defaultRealm={data.wowRealm}
+            region={wowRealm.region}
+            defaultRealm={wowRealm.server}
             serverSelectFormName="homeRealm"
             onServerSelectChange={(newServer) => {
               if (newServer) {
@@ -299,8 +306,17 @@ export default function Options() {
               }
             }}
             regionOnChange={(newRegion) => {
+              console.log('Region changed to:', newRegion)
               if (newRegion) {
-                handleWoWRealmChange({ ...wowRealm, region: newRegion })
+                // When region changes, we need to find a valid server in the new region
+                // Try to find the same server name in the new region, or use a default
+                const { server, region } = validateServerAndRegion(
+                  newRegion,
+                  wowRealm.server.id,
+                  wowRealm.server.name
+                )
+                console.log('Validated server/region:', { server, region })
+                handleWoWRealmChange({ server, region })
               }
             }}
           />

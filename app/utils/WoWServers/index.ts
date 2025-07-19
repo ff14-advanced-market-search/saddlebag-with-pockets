@@ -569,9 +569,11 @@ export const validateServerAndRegion = (
   if (server) {
     return { server, region }
   } else {
+    // If server not found in requested region, find a default server in that region
+    const defaultServer = data[0] // Use the first server in the region
     return {
-      server: { name: 'Thrall', id: 3678 },
-      region: 'NA' as const
+      server: defaultServer,
+      region: region
     }
   }
 }
