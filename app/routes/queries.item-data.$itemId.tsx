@@ -32,8 +32,8 @@ type ItemPageData =
   | { exception: string; itemName: string }
 
 export const meta: MetaFunction = ({ data }) => {
-  const itemName = 'itemName' in data ? data.itemName : 'Unknown Item'
-  const itemId = 'itemId' in data ? data.itemId : '4745'
+  const itemName = data?.itemName || 'Unknown Item'
+  const itemId = data?.itemId || '4745'
 
   return {
     charset: 'utf-8',
@@ -125,7 +125,8 @@ const ItemPage = () => {
   const listing = data?.listing
   // itemID uses caps on ID from api response values
   // default to 4745 so we dont have dead links on pages without history data
-  const itemId = data.history?.itemID || '4745'
+  const itemId =
+    data.history && 'itemID' in data.history ? data.history.itemID : '4745'
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
