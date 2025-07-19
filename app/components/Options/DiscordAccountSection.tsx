@@ -27,6 +27,9 @@ const DiscordAccountSection: React.FC<DiscordAccountSectionProps> = ({
               src={`https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png`}
               alt="Discord Avatar"
               className="w-10 h-10 rounded-full"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none'
+              }}
             />
           )}
           <div>
