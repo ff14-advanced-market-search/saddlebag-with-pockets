@@ -1,5 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -8,8 +8,10 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV crafting profit simulation recommendations',
-    description: 'FFXIV crafting profit simulation recommendations',
+    title:
+      'Saddlebag Exchange: FFXIV Crafting Profit Simulation Recommendations',
+    description:
+      'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations',
     links: [
       {
         rel: 'canonical',
