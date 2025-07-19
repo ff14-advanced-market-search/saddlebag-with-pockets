@@ -29,6 +29,13 @@ export const RegionRadioGroup = ({
   defaultChecked?: WoWServerRegion
   title?: string
 }) => {
+  const [checkedValue, setCheckedValue] =
+    React.useState<WoWServerRegion>(defaultChecked)
+
+  // Update local state when defaultChecked prop changes
+  React.useEffect(() => {
+    setCheckedValue(defaultChecked)
+  }, [defaultChecked])
   return (
     <div className="flex flex-col flex-1 my-1">
       <Label>{title}</Label>
@@ -36,7 +43,10 @@ export const RegionRadioGroup = ({
         className="flex flex-1"
         onChange={(event: React.SyntheticEvent<EventTarget>) => {
           const value = (event.target as HTMLInputElement).value
-          if (value === 'NA' || value === 'EU') onChange(value)
+          if (value === 'NA' || value === 'EU') {
+            setCheckedValue(value)
+            onChange(value)
+          }
         }}>
         {regions.map(({ label, value }) => (
           <label
@@ -48,7 +58,7 @@ export const RegionRadioGroup = ({
               type="radio"
               value={value}
               name="region"
-              defaultChecked={defaultChecked === value}
+              checked={checkedValue === value}
               className="dark:bg-transparent dark:border-2 dark:border-gray-200 dark:focus:border-gray-100 dark:focus:border-3"
             />
             <span>{label}</span>
