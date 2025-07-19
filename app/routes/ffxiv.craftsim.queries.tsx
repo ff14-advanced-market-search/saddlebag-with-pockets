@@ -3,6 +3,32 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
+const VideoGuide = () => {
+  return (
+    <div className="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+      <div className="flex flex-col items-center text-center">
+        <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-4">
+          📺 Video Guide: How to Use the Crafting Profit Simulator
+        </h3>
+        <p className="text-blue-700 dark:text-blue-300 mb-4 max-w-2xl">
+          Learn how to effectively use this tool to find the most profitable
+          items to craft and sell on the FFXIV marketboard!
+        </p>
+        <div className="relative w-full max-w-2xl">
+          <iframe
+            className="w-full aspect-video rounded-lg shadow-lg"
+            src="https://www.youtube.com/embed/6wyHmxMr6Y8"
+            title="FFXIV Crafting Profit Simulator Guide"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -98,6 +124,7 @@ export default function Index() {
     <>
       <main className="flex-1">
         <Banner />
+        <VideoGuide />
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
