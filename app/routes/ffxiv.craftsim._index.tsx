@@ -12,7 +12,7 @@ import {
 } from '@remix-run/react'
 import z from 'zod'
 import { useMemo, useState } from 'react'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, VideoGuide } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CheckBox from '~/components/form/CheckBox'
@@ -297,6 +297,12 @@ export default function Index() {
 
   return (
     <PageWrapper>
+      <VideoGuide
+        title="Video Guide: How to Use the Crafting Profit Simulator"
+        description="Learn how to effectively use this tool to find the most profitable items to craft and sell on the FFXIV marketboard!"
+        videoId="6wyHmxMr6Y8"
+        videoTitle="FFXIV Crafting Profit Simulator Guide"
+      />
       <PremiumPaywall loaderData={loaderData}>
         <SmallFormContainer
           onClick={() => {}}

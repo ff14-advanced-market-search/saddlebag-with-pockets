@@ -11,7 +11,7 @@ import { getUserSessionData, getSession } from '~/sessions'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
-import { PageWrapper } from '~/components/Common'
+import { PageWrapper, VideoGuide } from '~/components/Common'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
@@ -163,6 +163,13 @@ const FFXIVScripExchange = () => {
   return (
     <PageWrapper>
       <div className="py-3">
+        <VideoGuide
+          title="Video Guide: How to Use the FFXIV Scrip Exchange Calculator"
+          description="Learn how to efficiently convert your FFXIV currencies and find the best items to exchange for maximum value!"
+          videoId="wQV_ToQ6-8U"
+          startTime={442}
+          videoTitle="FFXIV Scrip Exchange Calculator Guide"
+        />
         <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Currency Conversion"
