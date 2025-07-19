@@ -1,34 +1,30 @@
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useNavigation
-} from '@remix-run/react'
+import { useLoaderData, useNavigation, useFetcher } from '@remix-run/react'
 import type {
-  ActionFunction,
   LoaderFunction,
-  MetaFunction
+  MetaFunction,
+  ActionFunction
 } from '@remix-run/cloudflare'
-import { json, redirect } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { z } from 'zod'
 import {
+  getSession,
+  getUserSessionData,
   commitSession,
   DATA_CENTER,
   FF14_WORLD,
-  getSession,
-  getUserSessionData,
   WOW_REALM_ID,
   WOW_REALM_NAME,
   WOW_REGION
 } from '~/sessions'
 import { useDispatch } from 'react-redux'
+import { setCookie } from '~/utils/cookies'
 import {
   setFFxivWorld,
   setWoWRealmData,
   toggleDarkMode
 } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import React, { useState } from 'react'
+import React from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
@@ -41,7 +37,6 @@ import {
   ThemeSection,
   OptionsHeader
 } from '~/components/Options'
-import { setCookie } from '~/utils/cookies'
 import { getWindowUrlParams } from '~/utils/urlHelpers'
 
 // Overwrite default meta in the root.tsx
@@ -109,13 +104,16 @@ export const action: ActionFunction = async ({ request }) => {
     setCookie(WOW_REGION, region)
   ]
 
-  // Set the new option, yeet back to index (but save against session data within the cookie)
-  return redirect('/', {
-    headers: [
-      ['Set-Cookie', await commitSession(session)],
-      ...cookies.map((cookie) => ['Set-Cookie', cookie] as [string, string])
-    ]
-  })
+  // Save the session and cookies without redirecting
+  return json(
+    { success: true },
+    {
+      headers: [
+        ['Set-Cookie', await commitSession(session)],
+        ...cookies.map((cookie) => ['Set-Cookie', cookie] as [string, string])
+      ]
+    }
+  )
 }
 
 const OptionSection = ({
@@ -200,53 +198,65 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Options() {
   const data = useLoaderData()
   const transition = useNavigation()
-  const actionData = useActionData()
+  const fetcher = useFetcher()
 
   const dispatch = useDispatch()
-  const { darkmode } = useTypedSelector((state) => state.user)
+  const { darkmode, ffxivWorld, wowRealm } = useTypedSelector(
+    (state) => state.user
+  )
 
   // Extract URL parameters for success/error messages
   const { success, error } = getWindowUrlParams()
-
-  const [ffxivWorld, setFfxivWorld] = useState<{
-    data_center: string
-    world: string
-  }>({ data_center: data.data_center, world: data.world })
-
-  const [wowRealm, setWoWRealm] = useState<{
-    server: WoWServerData
-    region: WoWServerRegion
-  }>({
-    region: data.wowRegion,
-    server: data.wowRealm
-  })
 
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode())
   }
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    if (transition.state === 'submitting') {
-      e.preventDefault()
-      return
-    }
-    dispatch(setFFxivWorld(ffxivWorld))
-    dispatch(setWoWRealmData(wowRealm))
+  const handleFFXIVWorldChange = (newWorld: {
+    data_center: string
+    world: string
+  }) => {
+    dispatch(setFFxivWorld(newWorld))
+    // Also save to session
+    const formData = new FormData()
+    formData.append('data_center', newWorld.data_center)
+    formData.append('world', newWorld.world)
+    formData.append('region', data.wowRegion)
+    formData.append('homeRealm', `${data.wowRealm.id}---${data.wowRealm.name}`)
+    fetcher.submit(formData, { method: 'POST' })
   }
+
+  const handleWoWRealmChange = (newRealm: {
+    server: WoWServerData
+    region: WoWServerRegion
+  }) => {
+    dispatch(setWoWRealmData(newRealm))
+    // Also save to session
+    const formData = new FormData()
+    formData.append('data_center', data.data_center)
+    formData.append('world', data.world)
+    formData.append('region', newRealm.region)
+    formData.append(
+      'homeRealm',
+      `${newRealm.server.id}---${newRealm.server.name}`
+    )
+    fetcher.submit(formData, { method: 'POST' })
+  }
+
+  // Show success message when fetcher completes successfully
+  const showSaveSuccess =
+    fetcher.state === 'idle' && fetcher.data?.success ? 'settings_saved' : null
 
   return (
     <PageWrapper>
       <Banner />
-      {(success || error) && (
+      {(success || error || showSaveSuccess) && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
-          <StatusBanner success={success} error={error} />
+          <StatusBanner success={success || showSaveSuccess} error={error} />
         </div>
       )}
-      <Form method="POST" onSubmit={handleFormSubmit}>
-        <OptionsHeader
-          onSubmit={handleFormSubmit}
-          isSubmitting={transition.state === 'submitting'}
-        />
+      <div>
+        <OptionsHeader isSubmitting={fetcher.state === 'submitting'} />
         <OptionSection
           title="Discord Account"
           description="Connect your Discord account to access premium features and receive notifications."
@@ -260,14 +270,20 @@ export default function Options() {
           />
         </OptionSection>
         <OptionSection
+          title="Theme"
+          description="Needs more sparkles.. ✨✨✨✨">
+          <ThemeSection
+            darkMode={darkmode}
+            onDarkModeToggle={handleDarkModeToggle}
+          />
+        </OptionSection>
+        <OptionSection
           title="FFXIV World Selection"
           description="The selected server will change what marketplace your queries are run against.">
           <SelectDCandWorld
             navigation={transition}
             sessionData={data}
-            onChange={(newWorld) => {
-              setFfxivWorld(newWorld)
-            }}
+            onChange={handleFFXIVWorldChange}
           />
         </OptionSection>
         <OptionSection
@@ -279,25 +295,17 @@ export default function Options() {
             serverSelectFormName="homeRealm"
             onServerSelectChange={(newServer) => {
               if (newServer) {
-                setWoWRealm((state) => ({ ...state, server: newServer }))
+                handleWoWRealmChange({ ...wowRealm, server: newServer })
               }
             }}
             regionOnChange={(newRegion) => {
               if (newRegion) {
-                setWoWRealm((state) => ({ ...state, region: newRegion }))
+                handleWoWRealmChange({ ...wowRealm, region: newRegion })
               }
             }}
           />
         </OptionSection>
-        <OptionSection
-          title="Theme"
-          description="Needs more sparkles.. ✨✨✨✨">
-          <ThemeSection
-            darkMode={darkmode}
-            onDarkModeToggle={handleDarkModeToggle}
-          />
-        </OptionSection>
-      </Form>
+      </div>
     </PageWrapper>
   )
 }

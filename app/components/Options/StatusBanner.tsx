@@ -14,10 +14,12 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ success, error }) => {
     success === 'discord_disconnected' ||
     success === 'discord_roles_refreshed'
 
+  const isSettingsSuccess = success === 'settings_saved'
+
   const isDiscordError =
     error === 'discord_auth_failed' || error === 'discord_roles_refresh_failed'
 
-  if (success && isDiscordSuccess) {
+  if (success && (isDiscordSuccess || isSettingsSuccess)) {
     return (
       <div className="rounded-md bg-green-50 p-4 border border-green-200 dark:bg-green-900 dark:border-green-700">
         <div className="flex">
@@ -30,7 +32,9 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ success, error }) => {
                 ? 'Successfully connected to Discord!'
                 : success === 'discord_disconnected'
                 ? 'Successfully disconnected from Discord!'
-                : 'Successfully refreshed Discord roles!'}
+                : success === 'discord_roles_refreshed'
+                ? 'Successfully refreshed Discord roles!'
+                : 'Settings saved successfully!'}
             </p>
           </div>
         </div>
