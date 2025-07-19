@@ -201,9 +201,7 @@ export default function Options() {
   const fetcher = useFetcher()
 
   const dispatch = useDispatch()
-  const { darkmode, ffxivWorld, wowRealm } = useTypedSelector(
-    (state) => state.user
-  )
+  const { darkmode, wowRealm } = useTypedSelector((state) => state.user)
 
   // Extract URL parameters for success/error messages
   const { success, error } = getWindowUrlParams()
