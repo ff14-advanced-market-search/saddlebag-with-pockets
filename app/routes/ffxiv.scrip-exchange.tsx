@@ -24,6 +24,32 @@ import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import type { LoaderFunction } from '@remix-run/node'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
+const VideoGuide = () => {
+  return (
+    <div className="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+      <div className="flex flex-col items-center text-center">
+        <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-4">
+          📺 Video Guide: How to Use the FFXIV Scrip Exchange Calculator
+        </h3>
+        <p className="text-blue-700 dark:text-blue-300 mb-4 max-w-2xl">
+          Learn how to efficiently convert your FFXIV currencies and find the
+          best items to exchange for maximum value!
+        </p>
+        <div className="relative w-full max-w-2xl">
+          <iframe
+            className="w-full aspect-video rounded-lg shadow-lg"
+            src="https://www.youtube.com/embed/wQV_ToQ6-8U?start=442"
+            title="FFXIV Scrip Exchange Calculator Guide"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
@@ -163,6 +189,7 @@ const FFXIVScripExchange = () => {
   return (
     <PageWrapper>
       <div className="py-3">
+        <VideoGuide />
         <PremiumPaywall loaderData={loaderData}>
           <SmallFormContainer
             title="Currency Conversion"
