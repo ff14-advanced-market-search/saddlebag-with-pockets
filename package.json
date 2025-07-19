@@ -19,6 +19,8 @@
     "prettier:check": "prettier --check app",
     "test": "vitest",
     "prepare": "husky install",
+    "test-upload-sourcemaps": "datadog-ci --help",
+    "upload-sourcemaps": "datadog-ci sourcemaps upload ./public/build/assets --service=saddlebag-exchange-ui --release-version=1.0.0 --minified-path-prefix=https://saddlebagexchange.com",
     "write-items": "yarn run write-ffxiv-items && prettier --write app/utils/items/ffxivItems.ts && yarn run write-wow-items && prettier --write app/utils/items/wowItems.ts && yarn run prettier",
     "write-ffxiv-items": "node ./scripts/write-ffxiv-items.js && prettier --write app/utils/items/ffxivItems.ts",
     "write-wow-items": "node ./scripts/write-wow-items.js && prettier --write app/utils/items/wowItems.ts"
@@ -27,6 +29,7 @@
   "dependencies": {
     "@cloudflare/wrangler": "^1.21.0",
     "@datadog/browser-rum": "^6.10.1",
+    "@datadog/datadog-ci": "^3.0.0",
     "@discordjs/rest": "^2.5.1",
     "@reduxjs/toolkit": "^1.8.6",
     "@remix-run/cloudflare": "^1.7.0",
