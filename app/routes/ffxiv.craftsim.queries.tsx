@@ -2,7 +2,7 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
-import { VideoGuide } from '~/components/Common'
+import VideoGuide from '~/components/Common/VideoGuide'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {

@@ -12,7 +12,8 @@ import {
   useNavigate
 } from '@remix-run/react'
 import { useCallback, useState } from 'react'
-import { PageWrapper, VideoGuide } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
+import VideoGuide from '~/components/Common/VideoGuide'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import NoResults from '~/components/Common/NoResults'
 import TitleTooltip from '~/components/Common/TitleTooltip'

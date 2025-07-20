@@ -31,7 +31,7 @@ const VideoGuide = ({
           <iframe
             className="w-full aspect-video rounded-lg shadow-lg"
             src={embedUrl}
-            title={videoTitle || title}
+            title={videoTitle ?? title}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
