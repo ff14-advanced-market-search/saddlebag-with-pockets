@@ -60,7 +60,7 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
             setDataCenter(newDataCenter)
             const newWorld = Array.from(
               locations.WorldsOfDataCenter(newDataCenter)
-            )[0].name
+            )[0]?.name
             setWorld(newWorld)
             onChange?.({ world: newWorld, data_center: newDataCenter })
           }}

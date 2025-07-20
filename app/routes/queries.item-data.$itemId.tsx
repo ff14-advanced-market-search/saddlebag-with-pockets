@@ -31,7 +31,7 @@ type ItemPageData =
     }
   | { exception: string; itemName: string }
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const itemName = data?.itemName || 'Unknown Item'
   const itemId = data?.itemId || '4745'
 

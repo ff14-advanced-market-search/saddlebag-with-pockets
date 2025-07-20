@@ -568,12 +568,14 @@ export const validateServerAndRegion = (
 
   if (server) {
     return { server, region }
-  } else {
-    // If server not found in requested region, find a default server in that region
-    const defaultServer = data[0] // Use the first server in the region
-    return {
-      server: defaultServer,
-      region: region
-    }
+  }
+  // If server not found in requested region, find a default server in that region
+  const defaultServer = data[0] // Use the first server in the region
+  if (!defaultServer) {
+    throw new Error(`No servers found for region ${region}`)
+  }
+  return {
+    server: defaultServer,
+    region
   }
 }

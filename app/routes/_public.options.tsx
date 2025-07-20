@@ -228,7 +228,6 @@ export default function Options() {
     server: WoWServerData
     region: WoWServerRegion
   }) => {
-    console.log('handleWoWRealmChange called with:', newRealm)
     dispatch(setWoWRealmData(newRealm))
     // Also save to session
     const formData = new FormData()
@@ -239,12 +238,6 @@ export default function Options() {
       'homeRealm',
       `${newRealm.server.id}---${newRealm.server.name}`
     )
-    console.log('Submitting form data:', {
-      data_center: data.data_center,
-      world: data.world,
-      region: newRealm.region,
-      homeRealm: `${newRealm.server.id}---${newRealm.server.name}`
-    })
     fetcher.submit(formData, { method: 'POST' })
   }
 
@@ -304,7 +297,6 @@ export default function Options() {
               }
             }}
             regionOnChange={(newRegion) => {
-              console.log('Region changed to:', newRegion)
               if (newRegion) {
                 // When region changes, we need to find a valid server in the new region
                 // Try to find the same server name in the new region, or use a default
@@ -313,7 +305,6 @@ export default function Options() {
                   wowRealm.server.id,
                   wowRealm.server.name
                 )
-                console.log('Validated server/region:', { server, region })
                 handleWoWRealmChange({ server, region })
               }
             }}
