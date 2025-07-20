@@ -14,6 +14,7 @@ import type { WoWScanResponseWithPayload } from '~/requests/WoW/WOWScan'
 import WOWScanRequest from '~/requests/WoW/WOWScan'
 import NoResults from '~/components/Common/NoResults'
 import { PageWrapper } from '~/components/Common'
+import VideoGuide from '~/components/Common/VideoGuide'
 import { validateWoWScanInput } from '~/utils/validateWoWScanInput'
 import { useEffect, useState } from 'react'
 import WoWScanForm from '~/components/form/WoW/WoWScanForm'
@@ -126,6 +127,13 @@ const Index = () => {
     <PageWrapper>
       <>
         <Banner />
+        <VideoGuide
+          title="Video Guide: How to Use the WoW Server Transfer Trade Search"
+          description="Learn how to effectively use this tool to find profitable items that can be moved between servers for gold-making opportunities!"
+          videoId="85gAo9B_q7g"
+          startTime={70}
+          videoTitle="WoW Server Transfer Trade Search Guide"
+        />
         <PremiumPaywall
           loaderData={{
             isLoggedIn: !!isLoggedIn,
