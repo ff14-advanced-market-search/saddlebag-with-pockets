@@ -326,11 +326,6 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
-        name: 'Out of Stock',
-        href: '/wow/out-of-stock',
-        icon: DocumentSearchIcon
-      },
-      {
         name: 'TSM to AAA converter Addon',
         href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
         icon: DocumentSearchIcon,
@@ -345,6 +340,11 @@ const navGroups: Array<{
         name: 'Big Goblin Tracker',
         href: '/wow/quantity-manipulation',
         icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Out of Stock',
+        href: '/wow/out-of-stock',
+        icon: DocumentSearchIcon
       },
       {
         name: 'Server Transfer Trading Search',
