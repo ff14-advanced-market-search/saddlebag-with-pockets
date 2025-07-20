@@ -1,15 +1,18 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import VideoGuide from '~/components/Common/VideoGuide'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV crafting profit simulation recommendations',
-    description: 'FFXIV crafting profit simulation recommendations',
+    title:
+      'Saddlebag Exchange: FFXIV Crafting Profit Simulation Recommendations',
+    description:
+      'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations',
     links: [
       {
         rel: 'canonical',
@@ -96,6 +99,12 @@ export default function Index() {
     <>
       <main className="flex-1">
         <Banner />
+        <VideoGuide
+          title="Video Guide: How to Use the Crafting Profit Simulator"
+          description="Learn how to effectively use this tool to find the most profitable items to craft and sell on the FFXIV marketboard!"
+          videoId="6wyHmxMr6Y8"
+          videoTitle="FFXIV Crafting Profit Simulator Guide"
+        />
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">

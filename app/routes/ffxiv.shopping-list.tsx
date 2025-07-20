@@ -13,6 +13,7 @@ import {
 } from '@remix-run/react'
 import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
+import VideoGuide from '~/components/Common/VideoGuide'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import NoResults from '~/components/Common/NoResults'
 import TitleTooltip from '~/components/Common/TitleTooltip'
@@ -132,6 +133,12 @@ export default function Index() {
 
   return (
     <PageWrapper>
+      <VideoGuide
+        title="Video Guide: How to Use the Shopping List Generator"
+        description="Learn how to effectively use this tool to find the best servers to buy crafting materials and plan your bulk crafting projects!"
+        videoId="6wyHmxMr6Y8"
+        videoTitle="FFXIV Shopping List Generator Guide"
+      />
       <PremiumPaywall loaderData={loaderData}>
         <ShoppingListForm error={error} loading={loading} />
       </PremiumPaywall>

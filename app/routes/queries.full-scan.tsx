@@ -58,7 +58,7 @@ export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
     viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV reselling trade search',
+    title: 'Saddlebag Exchange: FFXIV Reselling Trade Search',
     description:
       'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!',
     links: [
