@@ -557,7 +557,7 @@ export const validateServerAndRegion = (
   region: WoWServerRegion,
   serverId: number | string | undefined,
   serverName: string | undefined
-) => {
+): { server: WoWServerData; region: WoWServerRegion } => {
   const data = region === 'EU' ? EUData : NAdata
 
   const serverIdToCompare =

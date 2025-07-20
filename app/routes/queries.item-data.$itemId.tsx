@@ -126,7 +126,9 @@ const ItemPage = () => {
   // itemID uses caps on ID from api response values
   // default to 4745 so we dont have dead links on pages without history data
   const itemId =
-    data.history && 'itemID' in data.history ? data.history.itemID : '4745'
+    data.history && 'itemID' in data.history
+      ? String(data.history.itemID)
+      : '4745'
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
@@ -150,22 +152,18 @@ const ItemPage = () => {
             <CustomButton
               link={`https://saddlebagexchange.com/queries/`}
               buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://universalis.app/market/${itemId}`}
               buttonText="View on Universalis"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://ffxivteamcraft.com/db/en/item/${itemId}`}
               buttonText="View on FFXIV Teamcraft"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://www.garlandtools.org/db/#item/${itemId}`}
               buttonText="View on Garland Tools"
-              rel="nofollow" // not working need to fix
             />
           </div>
         </Section>

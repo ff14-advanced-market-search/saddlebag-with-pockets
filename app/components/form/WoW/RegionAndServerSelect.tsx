@@ -63,7 +63,7 @@ export default function RegionAndServerSelect({
       <RegionRadioGroup
         title={regionTitle}
         defaultChecked={region}
-        onChange={(val) => {
+        onChange={(val: WoWServerRegion) => {
           regionOnChange?.(val)
         }}
       />
@@ -75,7 +75,9 @@ export default function RegionAndServerSelect({
         toolTip={serverSelectTooltip}
         title={serverSelectTitle}
         onTextChange={onServerTextChange}
-        onSelectChange={onServerSelectChange}
+        onSelectChange={(selectValue?: ServerSelected) => {
+          onServerSelectChange?.(selectValue)
+        }}
       />
     </>
   )

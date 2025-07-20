@@ -61,8 +61,8 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
             const newWorld = Array.from(
               locations.WorldsOfDataCenter(newDataCenter)
             )[0]?.name
-            setWorld(newWorld)
-            onChange?.({ world: newWorld, data_center: newDataCenter })
+            setWorld(newWorld || undefined)
+            onChange?.({ world: newWorld || '', data_center: newDataCenter })
           }}
           dataCenter={dataCenter}
         />
@@ -72,7 +72,7 @@ export const SelectDCandWorld: FC<SelectWorldProps> = ({
           World
         </legend>
         <SelectWorld
-          onSelect={(newWorld) => {
+          onSelect={(newWorld: string | undefined) => {
             setWorld(newWorld)
             if (newWorld && dataCenter) {
               onChange?.({ world: newWorld, data_center: dataCenter })

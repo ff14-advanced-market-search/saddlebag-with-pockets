@@ -34,7 +34,9 @@ export const RegionRadioGroup = ({
 
   // Update local state when defaultChecked prop changes
   React.useEffect(() => {
-    setCheckedValue(defaultChecked)
+    if (defaultChecked) {
+      setCheckedValue(defaultChecked)
+    }
   }, [defaultChecked])
   return (
     <div className="flex flex-col flex-1 my-1">
@@ -42,7 +44,8 @@ export const RegionRadioGroup = ({
       <div
         className="flex flex-1"
         onChange={(event: React.SyntheticEvent<EventTarget>) => {
-          const value = (event.target as HTMLInputElement).value
+          const target = event.target as HTMLInputElement
+          const value = target.value as WoWServerRegion
           if (value === 'NA' || value === 'EU') {
             setCheckedValue(value)
             onChange(value)
