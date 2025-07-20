@@ -1,5 +1,5 @@
 import { findWoWServersIdByName } from '~/utils/WoWServers'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 import type { WoWServerRegion } from '~/requests/WoW/WOWScan'
 
@@ -59,6 +59,13 @@ const WoWServerSelect = ({
 }) => {
   const [id, setId] = useState<string>(defaultServerId)
   const [name, setName] = useState(defaultServerName)
+
+  // Update local state when props change
+  useEffect(() => {
+    setId(defaultServerId)
+    setName(defaultServerName)
+  }, [defaultServerId, defaultServerName])
+
   const servers = findWoWServersIdByName(name, regionValue)
 
   const selectIsDisabled =
