@@ -153,30 +153,6 @@ export default function Index() {
                 </h3>
                 <ul className="list-disc list-inside text-purple-700 dark:text-purple-300 space-y-2">
                   <li>
-                    Get real-time FFXIV Discord alerts for{' '}
-                    <a
-                      href="https://saddlebagexchange.com/price-sniper"
-                      className="text-purple-600 underline">
-                      Prices
-                    </a>
-                    ,{' '}
-                    <a
-                      href="https://saddlebagexchange.com/undercut"
-                      className="text-purple-600 underline">
-                      Undercuts, Sales
-                    </a>
-                    , and more!
-                  </li>
-                  <li>
-                    Unlock the best reselling deals with our{' '}
-                    <a
-                      href="https://saddlebagexchange.com/queries/recommended"
-                      className="text-purple-600 underline">
-                      Cross-Server Reselling Tool
-                    </a>
-                    .
-                  </li>
-                  <li>
                     Discover the best deals in your whole region with our{' '}
                     <a
                       href="https://saddlebagexchange.com/ffxiv/best-deals"
@@ -212,6 +188,56 @@ export default function Index() {
                     </a>
                     .
                   </li>
+                  <li>
+                    Track market trends and invest for patch and raid cycles
+                    with our{' '}
+                    <a
+                      href="https://saddlebagexchange.com/ffxiv/weekly-price-group-delta"
+                      className="text-purple-600 underline">
+                      Weekly Price Delta Tool
+                    </a>
+                    .
+                  </li>
+                  <li>
+                    Get real-time FFXIV Discord alerts for{' '}
+                    <a
+                      href="https://saddlebagexchange.com/price-sniper"
+                      className="text-purple-600 underline">
+                      Prices
+                    </a>
+                    ,{' '}
+                    <a
+                      href="https://saddlebagexchange.com/undercut"
+                      className="text-purple-600 underline">
+                      Undercuts, Sales
+                    </a>
+                    , and more!
+                  </li>
+                  <li>
+                    Unlock the best items to buy from vendors or other servers
+                    and sell on your home server with our{' '}
+                    <a
+                      href="https://saddlebagexchange.com/queries/recommended"
+                      className="text-purple-600 underline">
+                      Cross-Server Reselling Tool
+                    </a>
+                    .
+                  </li>
+                  <li>
+                    Access exclusive{' '}
+                    <a
+                      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads"
+                      className="text-purple-600 underline">
+                      Secret Sale Leads
+                    </a>{' '}
+                    and{' '}
+                    <a
+                      href="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Experimental-Discount-Price-Sniper"
+                      className="text-purple-600 underline">
+                      Experimental Discount Price Sniper
+                    </a>{' '}
+                    alert channels for premium members!
+                  </li>
                 </ul>
               </div>
 
@@ -231,9 +257,9 @@ export default function Index() {
                     search.
                   </li>
                   <li>
-                    Experience cross-realm trading with{' '}
+                    Snipe amazing discounts and deals with our desktop app the{' '}
                     <a
-                      href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/releases/latest"
+                      href="https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md"
                       className="text-blue-600 underline">
                       Azeroth Auction Assassin
                     </a>
@@ -249,7 +275,7 @@ export default function Index() {
                     .
                   </li>
                   <li>
-                    Utilize our{' '}
+                    Experiance Cross-Realm Trading with our{' '}
                     <a
                       href="https://saddlebagexchange.com/wow/shopping-list"
                       className="text-blue-600 underline">
@@ -261,7 +287,22 @@ export default function Index() {
                       className="text-blue-600 underline">
                       Export Search
                     </a>{' '}
-                    tools.
+                    tools so you can find which realms to buy and sell items.
+                  </li>
+                  <li>
+                    Shop for the most valuable high ilvl raid BOE drops with our{' '}
+                    <a
+                      href="https://saddlebagexchange.com/wow/ilvl-shopping-list"
+                      className="text-blue-600 underline">
+                      ilvl Shopping
+                    </a>{' '}
+                    tool and easily export lists with our{' '}
+                    <a
+                      href="https://saddlebagexchange.com/wow/export-search"
+                      className="text-blue-600 underline">
+                      Export List
+                    </a>
+                    .
                   </li>
                   <li>
                     Discover long-term trends with our{' '}
@@ -270,9 +311,8 @@ export default function Index() {
                       className="text-blue-600 underline">
                       Weekly Price Group Delta
                     </a>
-                    , and see the price and quantity changes for each item in
-                    each price group over years of data. Great for investing for
-                    patch and raid cycles!
+                    , and invest in the top commodities for patch and raid
+                    cycles!
                   </li>
                   <li>
                     Get real-time WoW AH Discord{' '}
