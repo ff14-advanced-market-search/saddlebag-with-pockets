@@ -558,7 +558,9 @@ export const validateServerAndRegion = (
   serverId: number | string | undefined,
   serverName: string | undefined
 ): { server: WoWServerData; region: WoWServerRegion } => {
-  const data = region === 'EU' ? EUData : NAdata
+  // Normalize invalid regions to 'NA'
+  const normalizedRegion: WoWServerRegion = region === 'EU' ? 'EU' : 'NA'
+  const data = normalizedRegion === 'EU' ? EUData : NAdata
 
   const serverIdToCompare =
     typeof serverId === 'string' ? parseInt(serverId, 10) : serverId
@@ -567,15 +569,15 @@ export const validateServerAndRegion = (
   const server = servers.find(({ name }) => name === serverName)
 
   if (server) {
-    return { server, region }
+    return { server, region: normalizedRegion }
   }
   // If server not found in requested region, find a default server in that region
   const defaultServer = data[0] // Use the first server in the region
   if (!defaultServer) {
-    throw new Error(`No servers found for region ${region}`)
+    throw new Error(`No servers found for region ${normalizedRegion}`)
   }
   return {
     server: defaultServer,
-    region
+    region: normalizedRegion
   }
 }
