@@ -93,7 +93,8 @@ const DiscordNeedsToSubscribe: React.FC<{
       Subscribe to Premium to use this tool
     </h2>
     <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
-      This feature is available to Saddlebag Exchange Premium subscribers.
+      This feature is available to Saddlebag Exchange Premium subscribers. Join
+      the discord server to get access to a free trial.
     </p>
     <button
       type="button"
