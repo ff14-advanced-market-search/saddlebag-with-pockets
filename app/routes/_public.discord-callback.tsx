@@ -14,6 +14,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   const error = url.searchParams.get('error')
 
   if (error) {
+    console.error('[discord-callback] Discord OAuth error:', error)
     return redirect('/options?error=discord_auth_failed')
   }
 
