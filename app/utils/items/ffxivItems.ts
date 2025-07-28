@@ -16113,7 +16113,7 @@ export const ffxivItemsMap: Record<string, string> = {
   '47981': "Queen's Knight Barding",
   '47983': 'Ballroom Etiquette: Fashion Forward',
   '47985': 'Ballroom Etiquette - Bearing Insult',
-  '47987': 'Modern Aesthetics: Fulsome Forelocks',
+  '47987': 'Modern Aesthetics - Fulsome Forelocks',
   '47988': 'Cabinkeep Permit',
   '47989': 'Muttering Matamata',
   '47990': 'Riverlong Candiru',

@@ -31,9 +31,9 @@ type ItemPageData =
     }
   | { exception: string; itemName: string }
 
-export const meta: MetaFunction = ({ data }) => {
-  const itemName = 'itemName' in data ? data.itemName : 'Unknown Item'
-  const itemId = 'itemId' in data ? data.itemId : '4745'
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const itemName = data?.itemName || 'Unknown Item'
+  const itemId = data?.itemId || '4745'
 
   return {
     charset: 'utf-8',
@@ -125,7 +125,10 @@ const ItemPage = () => {
   const listing = data?.listing
   // itemID uses caps on ID from api response values
   // default to 4745 so we dont have dead links on pages without history data
-  const itemId = data.history?.itemID || '4745'
+  const itemId =
+    data.history && 'itemID' in data.history
+      ? String(data.history.itemID)
+      : '4745'
 
   const noResults =
     (!data.history || !('price_history' in data.history)) &&
@@ -149,22 +152,18 @@ const ItemPage = () => {
             <CustomButton
               link={`https://saddlebagexchange.com/queries/`}
               buttonText="View all our tools here!"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://universalis.app/market/${itemId}`}
               buttonText="View on Universalis"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://ffxivteamcraft.com/db/en/item/${itemId}`}
               buttonText="View on FFXIV Teamcraft"
-              rel="nofollow" // not working need to fix
             />
             <CustomButton
               link={`https://www.garlandtools.org/db/#item/${itemId}`}
               buttonText="View on Garland Tools"
-              rel="nofollow" // not working need to fix
             />
           </div>
         </Section>
