@@ -2002,6 +2002,9 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4792': 'Ada the Sweetest',
   '4793': 'Weechi',
   '4794': 'Mister Mans',
+  '4796': "Sa'bak's Blessed",
   '4804': 'Swiftpaw',
-  '4806': 'Spicy Mean-Ball'
+  '4806': 'Spicy Mean-Ball',
+  '4849': 'Flotsam Harvester',
+  '4852': "Lil' Daz'ti"
 }

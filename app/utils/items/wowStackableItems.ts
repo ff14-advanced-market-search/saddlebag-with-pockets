@@ -11176,5 +11176,18 @@ export const wowStackableItemsMap: Record<string, string> = {
   '237334': 'Half-Eaten Takeout',
   '237335': 'Collectible Pineappletini Mug',
   '238896': 'Macho\'s Magnificent "Fish" Tacos',
-  '239115': 'L.O.S.E.R. Ticket'
+  '239115': 'L.O.S.E.R. Ticket',
+  '245591': 'Flawed Amethyst',
+  '245592': 'Chipped Skull',
+  '245593': 'Runed Cube',
+  '245594': 'Worn Rune',
+  '245595': 'Splintered Charm',
+  '245596': 'Damaged Eburine Jewel',
+  '245597': 'Empty Antidote Bottle',
+  '245598': 'Unknown Spellbook',
+  '245599': "Rusted Adventurer's Leg",
+  '245606': 'Blank Scroll',
+  '245607': 'Dull Javelin',
+  '245608': 'Chipped Sapphire',
+  '245609': 'Flawed Skull'
 }
