@@ -27,7 +27,8 @@ const initDatadog = () => {
     trackUserInteractions: true,
     trackResources: true,
     trackLongTasks: true,
-    defaultPrivacyLevel: 'allow'
+    defaultPrivacyLevel: 'allow',
+    version: '1.0.0'
   })
 }
 
