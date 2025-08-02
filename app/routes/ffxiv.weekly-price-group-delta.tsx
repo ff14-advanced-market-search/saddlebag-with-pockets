@@ -443,12 +443,24 @@ const Index = () => {
         <ContentContainer>
           <div className="space-y-4">
             {/* Back Button */}
-            <div className="flex justify-between items-center">
-              <a
-                href="/ffxiv/weekly-price-group-delta"
-                className="text-blue-500 hover:text-blue-600 font-medium">
+            <div className="flex gap-2 mb-2">
+              <button
+                type="button"
+                onClick={() =>
+                  (window.location.href = '/ffxiv/weekly-price-group-delta')
+                }
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
                 ← Search Again
-              </a>
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  (window.location.href =
+                    '/ffxiv/weekly-price-group-delta-recommended')
+                }
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                ← See Recommended Searches
+              </button>
             </div>
 
             {/* Date Range Controls */}
@@ -541,9 +553,20 @@ const Index = () => {
         loading={transition.state === 'submitting'}
         error={formError}
         onClick={(e) => e.preventDefault()}>
-        <form method="post" className="space-y-4 mb-4">
+        {/* Row with See Recommended Searches and Import Configuration */}
+        <div className="flex justify-between items-center mb-4">
+          <button
+            type="button"
+            onClick={() =>
+              (window.location.href =
+                '/ffxiv/weekly-price-group-delta-recommended')
+            }
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+            ← See Recommended Searches
+          </button>
           <ImportSection onImport={handleImport} />
-
+        </div>
+        <form method="post" className="space-y-4 mb-4">
           <DateRangeInputs
             startYear={startYear}
             startMonth={startMonth}
