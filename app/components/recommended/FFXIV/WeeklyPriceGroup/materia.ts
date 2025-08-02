@@ -1,6 +1,6 @@
 const materia = {
-  name: 'FFXIV Materia',
-  description: 'Monitor price trends for materia used in FFXIV content.',
+  name: 'Veemonheim MMORPG Community Materia',
+  description: 'Monitor price trends for materia over multiple patch cycles.',
   config: {
     region: 'NA',
     start_year: 2022,

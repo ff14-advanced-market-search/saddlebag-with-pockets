@@ -33,12 +33,16 @@ export default function RecommendedWeeklyPriceGroupDelta() {
       form.appendChild(input)
     }
 
+    addField('region', rec.config.region)
     addField('startYear', rec.config.start_year.toString())
     addField('startMonth', rec.config.start_month.toString())
     addField('startDay', rec.config.start_day.toString())
     addField('endYear', rec.config.end_year.toString())
     addField('endMonth', rec.config.end_month.toString())
     addField('endDay', rec.config.end_day.toString())
+    addField('hq_only', rec.config.hq_only ? 'true' : 'false')
+    addField('price_setting', rec.config.price_setting)
+    addField('quantity_setting', rec.config.quantity_setting)
     addField('priceGroups', JSON.stringify(rec.config.price_groups))
 
     document.body.appendChild(form)
