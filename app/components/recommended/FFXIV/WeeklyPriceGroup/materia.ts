@@ -176,6 +176,27 @@ const materia = {
           41769, 41782
         ],
         categories: []
+      },
+      {
+        name: 'Demimateria',
+        item_ids: [
+          8142, // Clear Demimateria I-III
+          8143,
+          8144,
+          8145, // Battlecraft Demimateria I-III
+          8146,
+          8147,
+          8148, // Fieldcraft Demimateria I-III
+          8149,
+          8150,
+          8151, // Inferno / Vortex / Demimog
+          8152,
+          8154,
+          8155, // Mastercraft Demimateria
+          23181, // Kingcraft Demimateria
+          16733 // Demicrystal
+        ],
+        categories: []
       }
     ]
   }
