@@ -269,6 +269,7 @@ const IlvlShoppingListComponent = () => {
           - Feasting Fiend's Barbute
           - Bygone Wastelander's Girdle
           - Band of Boundless Hunger
+          - Devoured Magi's Cinch
         `}
         onClick={handleSubmit}
         error={error}
