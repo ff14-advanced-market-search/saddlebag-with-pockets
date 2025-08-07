@@ -34,6 +34,12 @@ const recommendedQueries = [
     href: '/blog/wow/skycoach-mop-gold'
   },
   {
+    name: 'Skycoach Delves Guide',
+    description: 'How to complete Delves in WoW Classic',
+    Icon: DocumentSearchIcon,
+    href: '/blog/wow/skycoach-delves'
+  },
+  {
     name: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
     description:
       'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts. Master the Marketboard with real-time notifications.',
