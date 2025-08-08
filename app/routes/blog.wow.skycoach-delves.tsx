@@ -74,8 +74,16 @@ const DelvesGuide = () => {
             rel="noopener noreferrer">
             playhub
           </a>
-          , or skycoach quick and easy so that you can spend more time seeing
-          just what delves have to offer.
+          , or{' '}
+          <a
+            href="https://skycoach.gg/wow-boost/gold"
+            className="text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer">
+            Skycoach
+          </a>{' '}
+          quick and easy so that you can spend more time seeing just what delves
+          have to offer.
         </p>
         <p className="text-gray-700 mt-4">
           Let's explore why Delves are such a breakthrough for the game — and
