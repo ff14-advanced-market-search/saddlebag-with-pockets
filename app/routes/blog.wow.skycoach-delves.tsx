@@ -66,8 +66,16 @@ const DelvesGuide = () => {
           If you wish to experience all of these encounters you will need better
           gear and what better way than to purchase it in the auction house!
           Don't have gold? Don't worry! You can buy wow tokens from the blizzard
-          store, quick and easy so that you can spend more time seeing just what
-          delves have to offer.
+          store,{' '}
+          <a
+            href="https://playhub.com/wow/gold"
+            className="text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer">
+            playhub
+          </a>
+          , or skycoach quick and easy so that you can spend more time seeing
+          just what delves have to offer.
         </p>
         <p className="text-gray-700 mt-4">
           Let's explore why Delves are such a breakthrough for the game — and
