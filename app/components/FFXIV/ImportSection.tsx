@@ -83,8 +83,8 @@ const validateImportData = (
         error: `End day must be a number between 1 and 31, got ${jsonData.end_day}`
       }
     }
-    if (typeof jsonData.hq_only !== 'boolean') {
-      return { valid: false, error: 'hq_only must be a boolean' }
+    if (typeof jsonData.minimum_marketshare !== 'number') {
+      return { valid: false, error: 'minimum_marketshare must be a number' }
     }
     if (jsonData.price_setting && typeof jsonData.price_setting !== 'string') {
       return { valid: false, error: 'Price setting must be a string' }
@@ -144,6 +144,12 @@ const validateImportData = (
         return {
           valid: false,
           error: `Categories in price group "${group.name}" (index ${i}) must be an array`
+        }
+      }
+      if (typeof group.hq_only !== 'boolean') {
+        return {
+          valid: false,
+          error: 'Each price group must have hq_only boolean'
         }
       }
 

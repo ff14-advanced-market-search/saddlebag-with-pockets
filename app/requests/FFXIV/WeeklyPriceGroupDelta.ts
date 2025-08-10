@@ -11,7 +11,7 @@ export interface WeeklyPriceGroupDeltaProps {
   end_year: number
   end_month: number
   end_day: number
-  hq_only: boolean
+  minimum_marketshare: number
   price_setting: string
   quantity_setting: string
   price_groups: PriceGroup[]

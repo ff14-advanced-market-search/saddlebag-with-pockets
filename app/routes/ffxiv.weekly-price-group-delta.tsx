@@ -25,7 +25,7 @@ export type SuccessActionData = {
     end_year: number
     end_month: number
     end_day: number
-    hq_only: boolean
+    minimum_marketshare: number
     price_setting: string
     quantity_setting: string
     price_groups: any
@@ -73,7 +73,8 @@ export const action: ActionFunction = async ({ request }) => {
   const endYear = Number.parseInt(formData.get('endYear') as string)
   const endMonth = Number.parseInt(formData.get('endMonth') as string)
   const endDay = Number.parseInt(formData.get('endDay') as string)
-  const hqOnly = formData.get('hq_only') === 'true'
+  const minimumMarketshare =
+    Number.parseInt(formData.get('minimum_marketshare') as string) || 10000
   const priceSetting = formData.get('price_setting') as string
   const quantitySetting = formData.get('quantity_setting') as string
   const priceGroups = JSON.parse(formData.get('priceGroups') as string)
@@ -94,7 +95,7 @@ export const action: ActionFunction = async ({ request }) => {
       end_year: endYear,
       end_month: endMonth,
       end_day: endDay,
-      hq_only: hqOnly,
+      minimum_marketshare: minimumMarketshare,
       price_setting: priceSetting,
       quantity_setting: quantitySetting,
       price_groups: priceGroups
@@ -131,7 +132,7 @@ export const action: ActionFunction = async ({ request }) => {
         end_year: endYear,
         end_month: endMonth,
         end_day: endDay,
-        hq_only: hqOnly,
+        minimum_marketshare: minimumMarketshare,
         price_setting: priceSetting,
         quantity_setting: quantitySetting,
         price_groups: priceGroups

@@ -9,7 +9,7 @@ interface RequestPreviewProps {
   endYear: number
   endMonth: number
   endDay: number
-  hqOnly: boolean
+  minimumMarketshare: number
   priceSetting: string
   quantitySetting: string
   priceGroups: PriceGroup[]
@@ -23,7 +23,7 @@ export default function RequestPreview({
   endYear,
   endMonth,
   endDay,
-  hqOnly,
+  minimumMarketshare,
   priceSetting,
   quantitySetting,
   priceGroups
@@ -36,7 +36,7 @@ export default function RequestPreview({
     end_year: endYear,
     end_month: endMonth,
     end_day: endDay,
-    hq_only: hqOnly,
+    minimum_marketshare: minimumMarketshare,
     price_setting: priceSetting,
     quantity_setting: quantitySetting,
     price_groups: priceGroups

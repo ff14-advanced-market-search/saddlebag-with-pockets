@@ -33,6 +33,7 @@ export default function PriceGroupsSection({
   >({})
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
   const [selectedItems, setSelectedItems] = useState<number[]>([])
+  const [selectedHqOnly, setSelectedHqOnly] = useState<boolean>(false)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
   const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
 
@@ -61,12 +62,14 @@ export default function PriceGroupsSection({
       {
         name: groupName,
         item_ids: selectedItems,
-        categories: selectedCategories
+        categories: selectedCategories,
+        hq_only: selectedHqOnly
       }
     ])
     setGroupName('')
     setSelectedCategories([])
     setSelectedItems([])
+    setSelectedHqOnly(false)
     setCurrentItemNames({})
     setShowAddGroup(false)
     setLocalError(undefined)
@@ -248,6 +251,21 @@ export default function PriceGroupsSection({
                 }
               />
             </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="new-group-hq-only"
+                checked={selectedHqOnly}
+                onChange={(e) => setSelectedHqOnly(e.target.checked)}
+                className="form-checkbox h-4 w-4 text-blue-600"
+              />
+              <label
+                htmlFor="new-group-hq-only"
+                className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                HQ Only
+              </label>
+            </div>
             <div className="flex gap-2">
               <button
                 type="button"
@@ -319,6 +337,25 @@ export default function PriceGroupsSection({
                   onPriceGroupsChange(newGroups)
                 }}
               />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id={`group-hq-only-${groupIndex}`}
+                checked={group.hq_only}
+                onChange={(e) => {
+                  const newGroups = [...priceGroups]
+                  newGroups[groupIndex].hq_only = e.target.checked
+                  onPriceGroupsChange(newGroups)
+                }}
+                className="form-checkbox h-4 w-4 text-blue-600"
+              />
+              <label
+                htmlFor={`group-hq-only-${groupIndex}`}
+                className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                HQ Only
+              </label>
             </div>
 
             {group.item_ids.length > 0 && (
