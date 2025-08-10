@@ -32,7 +32,7 @@ const defaultValues = {
   endYear: new Date().getFullYear(),
   endMonth: new Date().getMonth() + 1,
   endDay: new Date().getDate(),
-  hqOnly: false,
+  minimumMarketshare: 10000,
   priceSetting: 'median',
   quantitySetting: 'quantitySold',
   priceGroups: []
@@ -59,7 +59,7 @@ export const Form = ({
       endYear: actionData.request.end_year,
       endMonth: actionData.request.end_month,
       endDay: actionData.request.end_day,
-      hqOnly: actionData.request.hq_only,
+      minimumMarketshare: actionData.request.minimum_marketshare,
       priceSetting: actionData.request.price_setting,
       quantitySetting: actionData.request.quantity_setting,
       priceGroups: actionData.request.price_groups
@@ -79,7 +79,9 @@ export const Form = ({
   const [endYear, setEndYear] = useState(initialValues.endYear)
   const [endMonth, setEndMonth] = useState(initialValues.endMonth)
   const [endDay, setEndDay] = useState(initialValues.endDay)
-  const [hqOnly, setHqOnly] = useState(initialValues.hqOnly)
+  const [minimumMarketshare, setMinimumMarketshare] = useState(
+    initialValues.minimumMarketshare
+  )
   const [isAddingPriceGroup, setIsAddingPriceGroup] = useState(false)
   const [priceSetting, setPriceSetting] = useState(initialValues.priceSetting)
   const [quantitySetting, setQuantitySetting] = useState(
@@ -105,7 +107,8 @@ export const Form = ({
     if (data.end_year) setEndYear(data.end_year)
     if (data.end_month) setEndMonth(data.end_month)
     if (data.end_day) setEndDay(data.end_day)
-    if (data.hq_only !== undefined) setHqOnly(data.hq_only)
+    if (data.minimum_marketshare !== undefined)
+      setMinimumMarketshare(data.minimum_marketshare)
     if (data.price_setting) setPriceSetting(data.price_setting)
     if (data.quantity_setting) setQuantitySetting(data.quantity_setting)
     if (data.price_groups) setPriceGroups(data.price_groups)
@@ -228,20 +231,25 @@ export const Form = ({
           <input type="hidden" name="startDay" value={startDay} />
 
           <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <label className="flex items-center space-x-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="minimumMarketshareInput"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+                  Minimum Marketshare
+                </label>
                 <input
-                  type="checkbox"
-                  name="hq_only"
-                  value="true"
-                  checked={hqOnly}
-                  onChange={(e) => setHqOnly(e.target.checked)}
-                  className="form-checkbox h-4 w-4 text-blue-600"
+                  id="minimumMarketshareInput"
+                  type="number"
+                  name="minimum_marketshare"
+                  value={minimumMarketshare}
+                  onChange={(e) =>
+                    setMinimumMarketshare(Number(e.target.value))
+                  }
+                  min={0}
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
-                <span className="text-gray-700 dark:text-gray-200">
-                  HQ Only
-                </span>
-              </label>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -327,7 +335,7 @@ export const Form = ({
             endYear={endYear}
             endMonth={endMonth}
             endDay={endDay}
-            hqOnly={hqOnly}
+            minimumMarketshare={minimumMarketshare}
             priceSetting={priceSetting}
             quantitySetting={quantitySetting}
             priceGroups={priceGroups}
