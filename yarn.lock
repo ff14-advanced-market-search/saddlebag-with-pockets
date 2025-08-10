@@ -3374,6 +3374,11 @@ date-fns@^2.29.3:
   dependencies:
     "@babel/runtime" "^7.21.0"
 
+dayjs@^1.11.12:
+  version "1.11.13"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.13.tgz#92430b0139055c3ebb60150aa13e860a4b5a366c"
+  integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
+
 deasync@^0.1.0:
   version "0.1.29"
   resolved "https://registry.yarnpkg.com/deasync/-/deasync-0.1.29.tgz#8bbbf9d0b235c561b36edd440b6272f1de6c572c"
@@ -7271,6 +7276,11 @@ react-router@6.13.0:
   integrity sha512-Si6KnfEnJw7gUQkNa70dlpI1bul46FuSxX5t5WwlUBxE25DAz2BjVkwaK8Y2s242bQrZPXCpmwLPtIO5pv4tXg==
   dependencies:
     "@remix-run/router" "1.6.3"
+
+react-tailwindcss-datepicker@1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/react-tailwindcss-datepicker/-/react-tailwindcss-datepicker-1.7.3.tgz#c583501b894dbc343c22535329d358fc67a329e5"
+  integrity sha512-C0biZZg0IDvttqq3+Ey0qKMTF4QWtM2nPv9X2SL8RdQIuH+/MJRcsrKcXV0+SK45Zjy/dW5fICDKLcSB+f5ezg==
 
 react@^18.3.1:
   version "18.3.1"

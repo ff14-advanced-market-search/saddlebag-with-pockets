@@ -135,7 +135,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const params = url.searchParams
 
   const itemID = params.get('itemId')
-  const ilvl = params.get('ilvl') || '642'
+  const ilvl = params.get('ilvl') || '662'
   const populationWP = params.get('populationWP') || '3000'
   const populationBlizz = params.get('populationBlizz') || '1'
   const rankingWP = params.get('rankingWP') || '90'
@@ -301,15 +301,16 @@ const IlvlExportSearchComponent = () => {
         description={`
           Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
           Supports the following items:
-          - Undermine Merc's Dog Tags
-          - Psychopath's Ravemantle 
-          - Vatwork Janitor's Wasteband
-          - Mechgineer's Blowtorch Cover
-          - Firebug's Anklegear
-          - Loyalist's Holdout Hood
-          - Midnight Lounge Cummerbund
-          - Bootleg Wrynn Shoulderplates
-          - Globlin-Fused Greatbelt
+          - Gaze of the Untethered Doom
+          - Devoured Magi's Cinch
+          - Crystalblight Legguards
+          - Umbral Stalker's Footpads
+          - Void-Bound Hauberk
+          - Shadowguard's Rift Wrap
+          - Feasting Fiend's Barbute
+          - Bygone Wastelander's Girdle
+          - Band of Boundless Hunger
+          - Devoured Magi's Cinch
         `}
         onClick={handleSubmit}
         error={error}
