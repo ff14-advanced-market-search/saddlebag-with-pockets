@@ -9,7 +9,7 @@ const furnishings = {
     end_year: 2026,
     end_month: 5,
     end_day: 2,
-    hq_only: false,
+    minimum_marketshare: 10000,
     price_setting: 'median',
     quantity_setting: 'quantitySold',
     price_groups: [
@@ -21,7 +21,8 @@ const furnishings = {
           35561, 40630, 32226, 15974, 28975, 40620, 33283, 24512, 32221, 7979,
           7970, 30410, 21839, 32254, 7064, 29680, 27296, 22552, 6637
         ],
-        categories: []
+        categories: [],
+        hq_only: false
       }
     ]
   }
