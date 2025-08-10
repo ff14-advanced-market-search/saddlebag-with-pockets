@@ -14,6 +14,7 @@ interface PriceGroupsSectionProps {
   onPriceGroupsChange: (groups: PriceGroup[]) => void
   onError: (error: string | undefined) => void
   isSubmitting: boolean
+  setIsAddingPriceGroup: (isAdding: boolean) => void
 }
 
 const MAX_PRICE_GROUPS = 10
@@ -22,9 +23,10 @@ export default function PriceGroupsSection({
   priceGroups,
   onPriceGroupsChange,
   onError,
-  isSubmitting
+  isSubmitting,
+  setIsAddingPriceGroup
 }: PriceGroupsSectionProps) {
-  const [showAddGroup, setShowAddGroup] = useState(false)
+  const [showAddGroup, setStateShowAddGroup] = useState(false)
   const [groupName, setGroupName] = useState('')
   const [currentItemNames, setCurrentItemNames] = useState<
     Record<string, string>
@@ -33,6 +35,11 @@ export default function PriceGroupsSection({
   const [selectedItems, setSelectedItems] = useState<number[]>([])
   const [localError, setLocalError] = useState<string | undefined>(undefined)
   const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
+
+  const setShowAddGroup = (value: boolean) => {
+    setStateShowAddGroup(value)
+    setIsAddingPriceGroup(value)
+  }
 
   const handleAddGroup = () => {
     if (!groupName) {
