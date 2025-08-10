@@ -58,7 +58,7 @@ const SmallFormContainer = ({
   buttonTitle?: string
   hideSubmitButton?: boolean
   action?: string
-  formProps?: ComponentProps<typeof Form>
+  formProps?: Omit<ComponentProps<typeof Form>, 'method' | 'action'>
 }) => {
   const descriptionForDisplay = description ? (
     typeof description === 'string' ? (
@@ -70,7 +70,7 @@ const SmallFormContainer = ({
     )
   ) : undefined
   return (
-    <Form method="POST" action={action} {...formProps}>
+    <Form {...formProps} method="POST" action={action}>
       <div className="max-w-4xl mx-auto px-4">
         {title && (
           <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">

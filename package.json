@@ -51,7 +51,6 @@
     "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^18.3.1",
     "react-redux": "^8.0.4",
-    "react-select": "^5.10.2",
     "react-tailwindcss-datepicker": "1.7.3",
     "remix-validated-form": "^4.5.5",
     "update-browserslist-db": "^1.1.3",

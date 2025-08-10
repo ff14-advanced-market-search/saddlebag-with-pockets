@@ -88,12 +88,12 @@ export const Form = ({
   const [dateRange, setDateRange] = useState<DateRangeType | null>({
     startDate: new Date(
       initialValues.startYear,
-      initialValues.startMonth,
+      initialValues.startMonth - 1,
       initialValues.startDay
     ),
     endDate: new Date(
       initialValues.endYear,
-      initialValues.endMonth,
+      initialValues.endMonth - 1,
       initialValues.endDay
     )
   })
@@ -170,6 +170,7 @@ export const Form = ({
             if (isAddingPriceGroup) {
               e.preventDefault()
               e.stopPropagation()
+              return
             }
             onSubmit()
           }
@@ -323,9 +324,15 @@ export const Form = ({
           <div className="flex justify-end">
             <button
               type="submit"
-              disabled={transition.state === 'submitting'}
+              disabled={
+                transition.state === 'submitting' || priceGroups.length === 0
+              }
               className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-              {transition.state === 'submitting' ? 'Loading...' : 'Submit'}
+              {transition.state === 'submitting'
+                ? 'Loading...'
+                : priceGroups.length === 0
+                ? 'Add a price group to continue'
+                : 'Submit'}
             </button>
           </div>
         </div>
