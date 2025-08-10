@@ -83,8 +83,8 @@ const validateImportData = (
         error: `End day must be a number between 1 and 31, got ${jsonData.end_day}`
       }
     }
-    if (typeof jsonData.hq_only !== 'boolean') {
-      return { valid: false, error: 'hq_only must be a boolean' }
+    if (typeof jsonData.minimum_marketshare !== 'number') {
+      return { valid: false, error: 'minimum_marketshare must be a number' }
     }
     if (jsonData.price_setting && typeof jsonData.price_setting !== 'string') {
       return { valid: false, error: 'Price setting must be a string' }
@@ -97,6 +97,34 @@ const validateImportData = (
     }
     if (!Array.isArray(jsonData.price_groups)) {
       return { valid: false, error: 'price_groups must be an array' }
+    }
+
+    // Validate each price group
+    for (const group of jsonData.price_groups) {
+      if (typeof group.name !== 'string') {
+        return {
+          valid: false,
+          error: 'Each price group must have a name string'
+        }
+      }
+      if (!Array.isArray(group.item_ids)) {
+        return {
+          valid: false,
+          error: 'Each price group must have item_ids array'
+        }
+      }
+      if (!Array.isArray(group.categories)) {
+        return {
+          valid: false,
+          error: 'Each price group must have categories array'
+        }
+      }
+      if (typeof group.hq_only !== 'boolean') {
+        return {
+          valid: false,
+          error: 'Each price group must have hq_only boolean'
+        }
+      }
     }
 
     const allowedPriceSettings = ['median', 'average']
