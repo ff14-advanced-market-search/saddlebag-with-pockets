@@ -164,7 +164,6 @@ export const Form = ({
         title={pageTitle}
         loading={transition.state === 'submitting'}
         error={formError}
-        onClick={(e) => e.preventDefault()}
         formProps={{
           onSubmit: (e) => {
             if (isAddingPriceGroup) {
