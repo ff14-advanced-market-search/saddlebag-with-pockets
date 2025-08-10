@@ -164,6 +164,7 @@ export const Form = ({
         title={pageTitle}
         loading={transition.state === 'submitting'}
         error={formError}
+        onClick={(e) => e.preventDefault()}
         formProps={{
           onSubmit: (e) => {
             if (isAddingPriceGroup) {
@@ -175,7 +176,19 @@ export const Form = ({
           }
         }}>
         <div className="space-y-4 mb-4">
-          <ImportSection onImport={handleImport} />
+          {/* Row with Import Configuration and See Recommended Searches */}
+          <div className="flex justify-between items-center mb-4">
+            <ImportSection onImport={handleImport} />
+            <button
+              type="button"
+              onClick={() =>
+                (window.location.href =
+                  '/ffxiv/weekly-price-group-delta-recommended')
+              }
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+              ← See Recommended Searches
+            </button>
+          </div>
 
           <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
             Timeframe
