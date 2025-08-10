@@ -1,4 +1,5 @@
 import { Form } from '@remix-run/react'
+import type { ComponentProps } from 'react'
 import React from 'react'
 import { SubmitButton } from '../SubmitButton'
 
@@ -44,7 +45,8 @@ const SmallFormContainer = ({
   description,
   buttonTitle = 'Search',
   hideSubmitButton = false,
-  action
+  action,
+  formProps = {}
 }: {
   children: React.ReactNode
   title?: string
@@ -56,6 +58,7 @@ const SmallFormContainer = ({
   buttonTitle?: string
   hideSubmitButton?: boolean
   action?: string
+  formProps?: ComponentProps<typeof Form>
 }) => {
   const descriptionForDisplay = description ? (
     typeof description === 'string' ? (
@@ -67,7 +70,7 @@ const SmallFormContainer = ({
     )
   ) : undefined
   return (
-    <Form method="POST" action={action}>
+    <Form method="POST" action={action} {...formProps}>
       <div className="max-w-4xl mx-auto px-4">
         {title && (
           <h1 className="text-2xl font-semibold text-blue-900 py-2 dark:text-gray-100">

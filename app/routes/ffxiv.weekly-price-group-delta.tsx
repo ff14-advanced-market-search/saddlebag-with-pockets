@@ -4,31 +4,11 @@ import type {
   LoaderFunction,
   MetaFunction
 } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
-import { useState, useEffect, useMemo } from 'react'
-import { ContentContainer, PageWrapper, Title } from '~/components/Common'
-import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { FFXIVLoaderData, ImportData } from '~/requests/FFXIV/types'
-import { useTypedSelector } from '~/redux/useTypedSelector'
+import { useActionData, useLoaderData } from '@remix-run/react'
+import { useState } from 'react'
+import type { FFXIVLoaderData } from '~/requests/FFXIV/types'
 import WeeklyPriceGroupDelta from '~/requests/FFXIV/WeeklyPriceGroupDelta'
-import type {
-  WeeklyPriceGroupDeltaResponse,
-  ItemData
-} from '~/requests/FFXIV/WeeklyPriceGroupDelta'
-import ErrorPopup from '~/components/Common/ErrorPopup'
-import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
-import ImportSection from '~/components/FFXIV/ImportSection'
-import PriceGroupsSection from '~/components/FFXIV/PriceGroupsSection'
-import RequestPreview from '~/components/FFXIV/RequestPreview'
-import type { ColumnList } from '~/components/types'
-import ItemDetailsTable from '~/components/FFXIV/ItemDetailsTable'
-import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
-import DateRangeControls from '~/components/WoW/DateRangeControls'
-import GroupSelector from '~/components/WoW/GroupSelector'
-import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
-import RequestDataSection from '~/components/FFXIV/RequestDataSection'
-import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
-import ItemDataLink from '~/components/utilities/ItemDataLink'
+import type { WeeklyPriceGroupDeltaResponse } from '~/requests/FFXIV/WeeklyPriceGroupDelta'
 import { Results } from '~/components/FFXIVResults/WeeklyPriceDelta/Results'
 import { Form } from '~/components/FFXIVResults/WeeklyPriceDelta/Form'
 
@@ -98,6 +78,13 @@ export const action: ActionFunction = async ({ request }) => {
   const quantitySetting = formData.get('quantity_setting') as string
   const priceGroups = JSON.parse(formData.get('priceGroups') as string)
 
+  if (priceGroups.length < 1) {
+    return json<ActionData>({
+      state: 'error',
+      exception: 'You must add at least one price group'
+    })
+  }
+
   try {
     const response = await WeeklyPriceGroupDelta({
       region,
@@ -163,6 +150,7 @@ const Index = () => {
   const actionData = useActionData<ActionData>()
   const { region: defaultRegion } = useLoaderData<FFXIVLoaderData>()
   const [region, setRegion] = useState(defaultRegion)
+  const [retriggerSearch, setRetriggerSearch] = useState(false)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${region}`
 
@@ -171,21 +159,30 @@ const Index = () => {
     actionData && 'exception' in actionData ? actionData.exception : undefined
 
   // Show results if we have data and no errors
-  if (actionData && actionData.state === 'success') {
+  if (
+    actionData &&
+    actionData.state === 'success' &&
+    retriggerSearch === false
+  ) {
     return (
       <Results
         actionData={actionData as SuccessActionData}
         pageTitle={pageTitle}
         region={region}
+        backWithQuery={() => setRetriggerSearch(true)}
       />
     )
   }
+
   return (
     <Form
       pageTitle={pageTitle}
       actionError={actionError}
       region={region}
       setRegion={setRegion}
+      actionData={actionData as ActionData}
+      edit={retriggerSearch}
+      onSubmit={() => setRetriggerSearch(false)}
     />
   )
 }

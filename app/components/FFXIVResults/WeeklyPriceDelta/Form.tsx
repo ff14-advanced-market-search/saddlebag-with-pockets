@@ -1,47 +1,102 @@
-import { useLoaderData, useNavigation } from '@remix-run/react'
+import { useNavigation } from '@remix-run/react'
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
+import type { DateRangeType, DateValueType } from 'react-tailwindcss-datepicker'
+import Datepicker from 'react-tailwindcss-datepicker'
 import { PageWrapper } from '~/components/Common'
 import ErrorPopup from '~/components/Common/ErrorPopup'
-import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
 import ImportSection from '~/components/FFXIV/ImportSection'
 import PriceGroupsSection from '~/components/FFXIV/PriceGroupsSection'
 import RequestPreview from '~/components/FFXIV/RequestPreview'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import { useTypedSelector } from '~/redux/useTypedSelector'
-import type { ImportData } from '~/requests/FFXIV/types';
-import { FFXIVLoaderData } from '~/requests/FFXIV/types'
+import type { ImportData } from '~/requests/FFXIV/types'
+import type { ActionData } from '~/routes/ffxiv.weekly-price-group-delta'
+
+const startFromDate = new Date(2023, 0, 1)
+const endFromDate = new Date()
 
 type FormProps = {
   pageTitle: string
   actionError: string | undefined
   region: string
   setRegion: (region: string) => void
+  edit: boolean
+  actionData: ActionData
+  onSubmit: () => void
+}
+
+const defaultValues = {
+  startYear: 2023,
+  startMonth: 1,
+  startDay: 1,
+  endYear: new Date().getFullYear(),
+  endMonth: new Date().getMonth() + 1,
+  endDay: new Date().getDate(),
+  hqOnly: false,
+  priceSetting: 'median',
+  quantitySetting: 'quantitySold',
+  priceGroups: []
 }
 
 export const Form = ({
   pageTitle,
   actionError,
   region,
-  setRegion
+  setRegion,
+  actionData,
+  edit,
+  onSubmit
 }: FormProps) => {
   const transition = useNavigation()
+  let initialValues = defaultValues
+
+  if (edit && actionData.state === 'success') {
+    initialValues = {
+      ...defaultValues,
+      startYear: actionData.request.start_year,
+      startMonth: actionData.request.start_month,
+      startDay: actionData.request.start_day,
+      endYear: actionData.request.end_year,
+      endMonth: actionData.request.end_month,
+      endDay: actionData.request.end_day,
+      hqOnly: actionData.request.hq_only,
+      priceSetting: actionData.request.price_setting,
+      quantitySetting: actionData.request.quantity_setting,
+      priceGroups: actionData.request.price_groups
+    }
+  }
 
   const [priceGroups, setPriceGroups] = useState<
     NonNullable<ImportData['price_groups']>
-  >([])
+  >(initialValues.priceGroups)
   const [formError, setFormError] = useState<string | undefined>(undefined)
   const [showErrorPopup, setShowErrorPopup] = useState(false)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
   const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
-  const [startYear, setStartYear] = useState(2023)
-  const [startMonth, setStartMonth] = useState(1)
-  const [startDay, setStartDay] = useState(1)
-  const [endYear, setEndYear] = useState(new Date().getFullYear())
-  const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1)
-  const [endDay, setEndDay] = useState(new Date().getDate())
-  const [hqOnly, setHqOnly] = useState(false)
-  const [priceSetting, setPriceSetting] = useState('median')
-  const [quantitySetting, setQuantitySetting] = useState('quantitySold')
+  const [startYear, setStartYear] = useState(initialValues.startYear)
+  const [startMonth, setStartMonth] = useState(initialValues.startMonth)
+  const [startDay, setStartDay] = useState(initialValues.startDay)
+  const [endYear, setEndYear] = useState(initialValues.endYear)
+  const [endMonth, setEndMonth] = useState(initialValues.endMonth)
+  const [endDay, setEndDay] = useState(initialValues.endDay)
+  const [hqOnly, setHqOnly] = useState(initialValues.hqOnly)
+  const [isAddingPriceGroup, setIsAddingPriceGroup] = useState(false)
+  const [priceSetting, setPriceSetting] = useState(initialValues.priceSetting)
+  const [quantitySetting, setQuantitySetting] = useState(
+    initialValues.quantitySetting
+  )
+  const [dateRange, setDateRange] = useState<DateRangeType | null>({
+    startDate: new Date(
+      initialValues.startYear,
+      initialValues.startMonth,
+      initialValues.startDay
+    ),
+    endDate: new Date(
+      initialValues.endYear,
+      initialValues.endMonth,
+      initialValues.endDay
+    )
+  })
 
   const handleImport = (data: ImportData) => {
     if (data.start_year) setStartYear(data.start_year)
@@ -87,6 +142,21 @@ export const Form = ({
     }
   }, [transition.state])
 
+  const updateDateRange = (range: DateValueType) => {
+    setDateRange(range)
+    if (range?.startDate) {
+      setStartYear(range.startDate.getFullYear())
+      setStartMonth(range.startDate.getMonth() + 1)
+      setStartDay(range.startDate.getDate())
+    }
+
+    if (range?.endDate) {
+      setEndYear(range.endDate.getFullYear())
+      setEndMonth(range.endDate.getMonth() + 1)
+      setEndDay(range.endDate.getDate())
+    }
+  }
+
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -94,32 +164,55 @@ export const Form = ({
         title={pageTitle}
         loading={transition.state === 'submitting'}
         error={formError}
-        onClick={(e) => e.preventDefault()}>
-        <form method="post" className="space-y-4 mb-4">
+        onClick={(e) => e.preventDefault()}
+        formProps={{
+          onSubmit: (e) => {
+            if (isAddingPriceGroup) {
+              e.preventDefault()
+              e.stopPropagation()
+            }
+            onSubmit()
+          }
+        }}>
+        <div className="space-y-4 mb-4">
           <ImportSection onImport={handleImport} />
 
-          <DateRangeInputs
-            startYear={startYear}
-            startMonth={startMonth}
-            startDay={startDay}
-            endYear={endYear}
-            endMonth={endMonth}
-            endDay={endDay}
-            onStartYearChange={setStartYear}
-            onStartMonthChange={setStartMonth}
-            onStartDayChange={setStartDay}
-            onEndYearChange={setEndYear}
-            onEndMonthChange={setEndMonth}
-            onEndDayChange={setEndDay}
-            onError={(err) => {
-              setLocalError(err)
-              setShowLocalErrorPopup(!!err)
+          <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+            Timeframe
+          </h4>
+          <Datepicker
+            minDate={startFromDate}
+            maxDate={endFromDate}
+            value={dateRange}
+            onChange={updateDateRange}
+            showShortcuts
+            showFooter
+            configs={{
+              shortcuts: {
+                allTime: {
+                  text: 'All time',
+                  period: {
+                    start: startFromDate,
+                    end: endFromDate
+                  }
+                },
+                thisYear: {
+                  text: 'This year',
+                  period: {
+                    start: dayjs().startOf('year').toDate(),
+                    end: endFromDate
+                  }
+                }
+              }
             }}
           />
 
           <input type="hidden" name="endYear" value={endYear} />
           <input type="hidden" name="endMonth" value={endMonth} />
           <input type="hidden" name="endDay" value={endDay} />
+          <input type="hidden" name="startYear" value={startYear} />
+          <input type="hidden" name="startMonth" value={startMonth} />
+          <input type="hidden" name="startDay" value={startDay} />
 
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
@@ -197,6 +290,7 @@ export const Form = ({
           </div>
 
           <PriceGroupsSection
+            setIsAddingPriceGroup={setIsAddingPriceGroup}
             priceGroups={priceGroups}
             onPriceGroupsChange={setPriceGroups}
             onError={(err) => {
@@ -234,7 +328,7 @@ export const Form = ({
               {transition.state === 'submitting' ? 'Loading...' : 'Submit'}
             </button>
           </div>
-        </form>
+        </div>
       </SmallFormContainer>
 
       {/* Error Popup for server errors */}

@@ -17,9 +17,15 @@ type ResultsProps = {
   actionData: SuccessActionData
   pageTitle: string
   region: string
+  backWithQuery: () => void
 }
 
-export const Results = ({ actionData, pageTitle, region }: ResultsProps) => {
+export const Results = ({
+  actionData,
+  pageTitle,
+  region,
+  backWithQuery
+}: ResultsProps) => {
   const { darkmode } = useTypedSelector((state) => state.user)
   const [minYAxis, setMinYAxis] = useState<number | null>(null)
   const [maxYAxis, setMaxYAxis] = useState<number | null>(null)
@@ -236,12 +242,17 @@ export const Results = ({ actionData, pageTitle, region }: ResultsProps) => {
       <ContentContainer>
         <div className="space-y-4">
           {/* Back Button */}
-          <div className="flex justify-between items-center">
+          <div className="flex">
             <a
               href="/ffxiv/weekly-price-group-delta"
               className="text-blue-500 hover:text-blue-600 font-medium">
               ← Search Again
             </a>
+            <span
+              onClick={backWithQuery}
+              className="text-blue-500 hover:text-blue-600 font-medium pl-10">
+              ← Search Again with this query
+            </span>
           </div>
 
           {/* Date Range Controls */}
