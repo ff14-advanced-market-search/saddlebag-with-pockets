@@ -442,8 +442,8 @@ const IlvlExportSearchComponent = () => {
             <br />
             <br />
             Note: If this page reset, then no items were found. Make sure you
-            search for the exact ilvls you want and current 11.1 BOE levels 629,
-            642 or 655.
+            search for the exact ilvls you want and current 11.1 BOE levels 675,
+            688 or 701.
           </p>
         </div>
       </SmallFormContainer>
