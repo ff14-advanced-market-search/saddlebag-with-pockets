@@ -301,15 +301,6 @@ const IlvlExportSearchComponent = () => {
         description={`
           Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
           Supports the following items:
-          - Gaze of the Untethered Doom
-          - Devoured Magi's Cinch
-          - Crystalblight Legguards
-          - Umbral Stalker's Footpads
-          - Void-Bound Hauberk
-          - Shadowguard's Rift Wrap
-          - Feasting Fiend's Barbute
-          - Bygone Wastelander's Girdle
-          - Band of Boundless Hunger
           - Harvested Creephide Cord
           - Bone-Melted Faceplate
           - Voidhound Trainer's Boots
@@ -443,7 +434,15 @@ const IlvlExportSearchComponent = () => {
             <br />
             Note: If this page reset, then no items were found. Make sure you
             search for the exact ilvls you want and current 11.1 BOE levels 675,
-            688 or 701.
+            688 or 701. Check the{' '}
+            <a
+              href="/wow/ilvl-shopping-list"
+              className="underline text-blue-600 dark:text-blue-400"
+              target="_blank"
+              rel="noopener noreferrer">
+              ilvl shopping list
+            </a>{' '}
+            to see what ilvls are available.
           </p>
         </div>
       </SmallFormContainer>
