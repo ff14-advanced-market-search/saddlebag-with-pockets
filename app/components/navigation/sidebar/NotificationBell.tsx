@@ -27,7 +27,7 @@ const notifications: Notification[] = [
     title: 'Try FFXIV Weekly Price Delta!',
     description:
       'Check out the new FFXIV Weekly Price Delta for market trends and investment opportunities for the next patch cycle.',
-    link: '/ffxiv/weekly-price-group-delta',
+    link: '/ffxiv/weekly-price-group-delta-recommended',
     icon: ChartSquareBarIcon,
     showOn: (pathname) =>
       pathname.startsWith('/ffxiv') || pathname.startsWith('/queries')
