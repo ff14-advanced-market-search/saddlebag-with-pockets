@@ -153,7 +153,8 @@ const LazyCharts = ({
           align: 'center',
           format: yLabelFormat
         },
-        lineColor: styles?.color
+        lineColor: styles?.color,
+        min: 0
       },
       xAxis: {
         title: {
