@@ -5,6 +5,7 @@ import NoResults from '~/components/Common/NoResults'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import type { ItemListingResponse } from '~/requests/WoW/ItemListingsData'
 import ItemListingsData from '~/requests/WoW/ItemListingsData'
+import type { TSMStatsData } from '~/requests/WoW/ItemListingsData'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions'
 import { useTypedSelector } from '~/redux/useTypedSelector'
@@ -217,6 +218,42 @@ const LazyCharts = ({
               val
             ]}
             xCategories={xCategories}
+          />
+        </ContentContainer>
+      )}
+      {listing.tsmStatsData && listing.tsmStatsData.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="TSM Historic Price Over Time"
+            darkMode={darkmode}
+            data={listing.tsmStatsData.map(
+              (item: TSMStatsData) => item.historicPrice
+            )}
+            dataIterator={(val: number, ind: number) => [
+              `${listing.tsmStatsData[ind].month}/${listing.tsmStatsData[ind].day}`,
+              val
+            ]}
+            xCategories={listing.tsmStatsData.map(
+              (item: TSMStatsData) => `${item.month}/${item.day}`
+            )}
+          />
+        </ContentContainer>
+      )}
+      {listing.tsmStatsData && listing.tsmStatsData.length > 0 && (
+        <ContentContainer>
+          <GenericLineChart
+            chartTitle="TSM Sales Per Day Over Time"
+            darkMode={darkmode}
+            data={listing.tsmStatsData.map(
+              (item: TSMStatsData) => item.salesPerDay
+            )}
+            dataIterator={(val: number, ind: number) => [
+              `${listing.tsmStatsData[ind].month}/${listing.tsmStatsData[ind].day}`,
+              val
+            ]}
+            xCategories={listing.tsmStatsData.map(
+              (item: TSMStatsData) => `${item.month}/${item.day}`
+            )}
           />
         </ContentContainer>
       )}

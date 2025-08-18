@@ -13,6 +13,15 @@ interface ListingData {
   quantity: number
 }
 
+export interface TSMStatsData {
+  time: number
+  year: number
+  month: number
+  day: number
+  historicPrice: number
+  salesPerDay: number
+}
+
 interface ItemListing {
   itemID: number
   itemName: string
@@ -29,6 +38,7 @@ interface ItemListing {
   percentChange: number
   priceTimeData: Array<number>
   quantityTimeData: Array<number>
+  tsmStatsData: Array<TSMStatsData>
   state: WoWMarketState
   link: string
   blog: string
