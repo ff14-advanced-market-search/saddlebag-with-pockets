@@ -260,16 +260,15 @@ const IlvlShoppingListComponent = () => {
         description={`
           Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
           Supports the following items:
-          - Gaze of the Untethered Doom
-          - Devoured Magi's Cinch
-          - Crystalblight Legguards
-          - Umbral Stalker's Footpads
-          - Void-Bound Hauberk
-          - Shadowguard's Rift Wrap
-          - Feasting Fiend's Barbute
-          - Bygone Wastelander's Girdle
-          - Band of Boundless Hunger
-          - Devoured Magi's Cinch
+          - Harvested Creephide Cord
+          - Bone-Melted Faceplate
+          - Voidhound Trainer's Boots
+          - Veiled Manta Vest
+          - Acolyte's Infused Leggings
+          - Zadus's Liturgical Hat
+          - Jak'tull's Intruder Stompers
+          - Entropy
+          - Technomancer's Service Sandals
         `}
         onClick={handleSubmit}
         error={error}
