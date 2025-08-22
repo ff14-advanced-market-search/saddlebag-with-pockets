@@ -51,7 +51,7 @@ const LazyCharts = ({
   const makeTimeString = ({
     date,
     hoursToDeduct,
-    formatString = 'dd/MM h aaaa'
+    formatString = 'MM/dd h aaaa'
   }: {
     date: Date
     hoursToDeduct: number
@@ -229,7 +229,7 @@ export const ErrorBoundary = () => <ErrorBounds />
 const makeTimeString = ({
   date,
   hoursToDeduct,
-  formatString = 'dd/MM h aaaa'
+  formatString = 'MM/dd h aaaa'
 }: {
   date: Date
   hoursToDeduct: number
