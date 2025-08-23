@@ -12,13 +12,13 @@ import endwalker65Commodities from './65endwalkerCommodities'
 const recommendedConfigs = [
   materia,
   furnishings,
-  dawntrail70Commodities,
-  dawntrail71Commodities,
-  dawntrail72Commodities,
   dawntrail73Commodities,
-  endwalker63Commodities,
+  dawntrail72Commodities,
+  dawntrail71Commodities,
+  dawntrail70Commodities,
+  endwalker65Commodities,
   endwalker64Commodities,
-  endwalker65Commodities
+  endwalker63Commodities
 ]
 
 export default recommendedConfigs
