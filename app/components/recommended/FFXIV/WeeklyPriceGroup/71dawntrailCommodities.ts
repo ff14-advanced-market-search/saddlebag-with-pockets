@@ -10,7 +10,7 @@ const dawntrail71Commodities = {
     end_year: 2025,
     end_month: 2,
     end_day: 1,
-    minimum_marketshare: 10000000,
+    minimum_marketshare: 30000000,
     price_setting: 'median',
     quantity_setting: 'quantitySold',
     price_groups: [
@@ -47,7 +47,6 @@ const dawntrail71Commodities = {
       { name: 'Leather HQ', item_ids: [], categories: [51], hq_only: true },
 
       { name: 'Bone NQ', item_ids: [], categories: [52], hq_only: false },
-      { name: 'Bone HQ', item_ids: [], categories: [52], hq_only: true },
 
       { name: 'Reagents NQ', item_ids: [], categories: [53], hq_only: false },
       { name: 'Reagents HQ', item_ids: [], categories: [53], hq_only: true },
@@ -74,10 +73,8 @@ const dawntrail71Commodities = {
         categories: [56],
         hq_only: false
       },
-      { name: 'Furnishings HQ', item_ids: [], categories: [56], hq_only: true },
 
       { name: 'Materia NQ', item_ids: [], categories: [57], hq_only: false },
-      { name: 'Materia HQ', item_ids: [], categories: [57], hq_only: true },
 
       { name: 'Crystals NQ', item_ids: [], categories: [58], hq_only: false },
       { name: 'Crystals HQ', item_ids: [], categories: [58], hq_only: true },
@@ -94,24 +91,12 @@ const dawntrail71Commodities = {
         categories: [65],
         hq_only: false
       },
-      {
-        name: 'Exterior Fixtures HQ',
-        item_ids: [],
-        categories: [65],
-        hq_only: true
-      },
 
       {
         name: 'Interior Fixtures NQ',
         item_ids: [],
         categories: [66],
         hq_only: false
-      },
-      {
-        name: 'Interior Fixtures HQ',
-        item_ids: [],
-        categories: [66],
-        hq_only: true
       },
 
       {
@@ -120,12 +105,6 @@ const dawntrail71Commodities = {
         categories: [67],
         hq_only: false
       },
-      {
-        name: 'Outdoor Furnishings HQ',
-        item_ids: [],
-        categories: [67],
-        hq_only: true
-      },
 
       {
         name: 'Chairs and Beds NQ',
@@ -133,18 +112,10 @@ const dawntrail71Commodities = {
         categories: [68],
         hq_only: false
       },
-      {
-        name: 'Chairs and Beds HQ',
-        item_ids: [],
-        categories: [68],
-        hq_only: true
-      },
 
       { name: 'Tables NQ', item_ids: [], categories: [69], hq_only: false },
-      { name: 'Tables HQ', item_ids: [], categories: [69], hq_only: true },
 
       { name: 'Tabletop NQ', item_ids: [], categories: [70], hq_only: false },
-      { name: 'Tabletop HQ', item_ids: [], categories: [70], hq_only: true },
 
       {
         name: 'Wall-mounted NQ',
@@ -152,15 +123,8 @@ const dawntrail71Commodities = {
         categories: [71],
         hq_only: false
       },
-      {
-        name: 'Wall-mounted HQ',
-        item_ids: [],
-        categories: [71],
-        hq_only: true
-      },
 
       { name: 'Rugs NQ', item_ids: [], categories: [72], hq_only: false },
-      { name: 'Rugs HQ', item_ids: [], categories: [72], hq_only: true },
 
       {
         name: 'Seasonal Miscellany NQ',
@@ -168,27 +132,14 @@ const dawntrail71Commodities = {
         categories: [74],
         hq_only: false
       },
-      {
-        name: 'Seasonal Miscellany HQ',
-        item_ids: [],
-        categories: [74],
-        hq_only: true
-      },
 
       { name: 'Minions NQ', item_ids: [], categories: [75], hq_only: false },
-      { name: 'Minions HQ', item_ids: [], categories: [75], hq_only: true },
 
       {
         name: 'Airship Submersible Components NQ',
         item_ids: [],
         categories: [79],
         hq_only: false
-      },
-      {
-        name: 'Airship Submersible Components HQ',
-        item_ids: [],
-        categories: [79],
-        hq_only: true
       },
 
       {
@@ -197,12 +148,6 @@ const dawntrail71Commodities = {
         categories: [80],
         hq_only: false
       },
-      {
-        name: 'Orchestrion Components HQ',
-        item_ids: [],
-        categories: [80],
-        hq_only: true
-      },
 
       {
         name: 'Gardening Items NQ',
@@ -210,27 +155,14 @@ const dawntrail71Commodities = {
         categories: [81],
         hq_only: false
       },
-      {
-        name: 'Gardening Items HQ',
-        item_ids: [],
-        categories: [81],
-        hq_only: true
-      },
 
       { name: 'Paintings NQ', item_ids: [], categories: [82], hq_only: false },
-      { name: 'Paintings HQ', item_ids: [], categories: [82], hq_only: true },
 
       {
         name: 'Registrable Miscellany NQ',
         item_ids: [],
         categories: [90],
         hq_only: false
-      },
-      {
-        name: 'Registrable Miscellany HQ',
-        item_ids: [],
-        categories: [90],
-        hq_only: true
       }
     ]
   }
