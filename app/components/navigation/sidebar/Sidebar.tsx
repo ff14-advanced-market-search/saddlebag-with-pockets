@@ -175,6 +175,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'Weekly Price Group Delta',
+        href: '/ffxiv/weekly-price-group-delta-recommended',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Craftsim Search',
         href: 'ffxiv/craftsim/queries',
         icon: ChartSquareBarIcon
@@ -336,6 +341,11 @@ const navGroups: Array<{
   {
     title: 'WoW Experimental Tools',
     links: [
+      {
+        name: 'Weekly Price Group Delta',
+        href: '/wow/weekly-price-group-delta',
+        icon: ChartSquareBarIcon
+      },
       {
         name: 'Big Goblin Tracker',
         href: '/wow/quantity-manipulation',
