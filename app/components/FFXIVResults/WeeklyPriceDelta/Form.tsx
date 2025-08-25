@@ -218,6 +218,34 @@ export const Form = ({
                     start: dayjs().startOf('year').toDate(),
                     end: endFromDate
                   }
+                },
+                last30Days: {
+                  text: 'Last 30 days',
+                  period: {
+                    start: dayjs().subtract(30, 'day').toDate(),
+                    end: endFromDate
+                  }
+                },
+                last90Days: {
+                  text: 'Last 90 days',
+                  period: {
+                    start: dayjs().subtract(90, 'day').toDate(),
+                    end: endFromDate
+                  }
+                },
+                last6Months: {
+                  text: 'Last 6 months',
+                  period: {
+                    start: dayjs().subtract(6, 'month').toDate(),
+                    end: endFromDate
+                  }
+                },
+                lastYear: {
+                  text: 'Last year',
+                  period: {
+                    start: dayjs().subtract(1, 'year').toDate(),
+                    end: endFromDate
+                  }
                 }
               }
             }}
