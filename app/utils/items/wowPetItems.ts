@@ -2005,6 +2005,8 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4796': "Sa'bak's Blessed",
   '4804': 'Swiftpaw',
   '4806': 'Spicy Mean-Ball',
+  '4811': 'Hopeflutter',
+  '4812': 'Doomfeathers',
   '4813': 'Ixthal the Observling',
   '4824': 'Baby Karesh Fox - Orange',
   '4825': 'Veridian Thorntail',
