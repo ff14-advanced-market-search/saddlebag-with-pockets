@@ -492,11 +492,13 @@ const Results = ({
           <div className="flex gap-2 mb-2">
             <Link
               to="/wow/weekly-price-group-delta"
+              aria-label="Search again"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← Search Again
             </Link>
             <Link
               to="/wow/weekly-price-group-delta-recommended"
+              aria-label="See recommended searches"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← See Recommended Searches
             </Link>
