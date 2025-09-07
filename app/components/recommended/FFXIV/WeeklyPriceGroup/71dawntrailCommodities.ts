@@ -67,103 +67,13 @@ const dawntrail71Commodities = {
         hq_only: true
       },
 
-      {
-        name: 'Furnishings NQ',
-        item_ids: [],
-        categories: [56],
-        hq_only: false
-      },
-
       { name: 'Materia NQ', item_ids: [], categories: [57], hq_only: false },
 
       { name: 'Crystals NQ', item_ids: [], categories: [58], hq_only: false },
       { name: 'Crystals HQ', item_ids: [], categories: [58], hq_only: true },
 
       { name: 'Catalysts NQ', item_ids: [], categories: [59], hq_only: false },
-      { name: 'Catalysts HQ', item_ids: [], categories: [59], hq_only: true },
-
-      { name: 'Miscellany NQ', item_ids: [], categories: [60], hq_only: false },
-      { name: 'Miscellany HQ', item_ids: [], categories: [60], hq_only: true },
-
-      {
-        name: 'Exterior Fixtures NQ',
-        item_ids: [],
-        categories: [65],
-        hq_only: false
-      },
-
-      {
-        name: 'Interior Fixtures NQ',
-        item_ids: [],
-        categories: [66],
-        hq_only: false
-      },
-
-      {
-        name: 'Outdoor Furnishings NQ',
-        item_ids: [],
-        categories: [67],
-        hq_only: false
-      },
-
-      {
-        name: 'Chairs and Beds NQ',
-        item_ids: [],
-        categories: [68],
-        hq_only: false
-      },
-
-      { name: 'Tables NQ', item_ids: [], categories: [69], hq_only: false },
-
-      { name: 'Tabletop NQ', item_ids: [], categories: [70], hq_only: false },
-
-      {
-        name: 'Wall-mounted NQ',
-        item_ids: [],
-        categories: [71],
-        hq_only: false
-      },
-
-      { name: 'Rugs NQ', item_ids: [], categories: [72], hq_only: false },
-
-      {
-        name: 'Seasonal Miscellany NQ',
-        item_ids: [],
-        categories: [74],
-        hq_only: false
-      },
-
-      { name: 'Minions NQ', item_ids: [], categories: [75], hq_only: false },
-
-      {
-        name: 'Airship Submersible Components NQ',
-        item_ids: [],
-        categories: [79],
-        hq_only: false
-      },
-
-      {
-        name: 'Orchestrion Components NQ',
-        item_ids: [],
-        categories: [80],
-        hq_only: false
-      },
-
-      {
-        name: 'Gardening Items NQ',
-        item_ids: [],
-        categories: [81],
-        hq_only: false
-      },
-
-      { name: 'Paintings NQ', item_ids: [], categories: [82], hq_only: false },
-
-      {
-        name: 'Registrable Miscellany NQ',
-        item_ids: [],
-        categories: [90],
-        hq_only: false
-      }
+      { name: 'Catalysts HQ', item_ids: [], categories: [59], hq_only: true }
     ]
   }
 }
