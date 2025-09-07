@@ -260,13 +260,13 @@ export const Results = ({
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← See Recommended Searches
             </button>
-            {/* TODO: Add this back in, its bugged now */}
-            {/* <button
+            {/* TODO FIX: this search again is bugged and doesnt always trigger the search with the new values */}
+            <button
               type="button"
               onClick={backWithQuery}
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← Search Again with this query
-            </button> */}
+            </button>
           </div>
 
           {/* Date Range Controls */}
