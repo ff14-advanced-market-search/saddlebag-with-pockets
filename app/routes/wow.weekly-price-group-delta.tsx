@@ -5,7 +5,12 @@ import type {
   MetaFunction,
   LinksFunction
 } from '@remix-run/cloudflare'
-import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigation
+} from '@remix-run/react'
 import { useState, useEffect } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
@@ -210,15 +215,11 @@ const Index = () => {
         onClick={(e) => e.preventDefault()}>
         {/* Row with See Recommended Searches and Import Configuration */}
         <div className="flex justify-between items-center mb-4">
-          <button
-            type="button"
-            onClick={() =>
-              (window.location.href =
-                '/wow/weekly-price-group-delta-recommended')
-            }
+          <Link
+            to="/wow/weekly-price-group-delta-recommended"
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
             ← See Recommended Searches
-          </button>
+          </Link>
           <ImportSection
             onImport={(data) => {
               if (data.start_year) setStartYear(data.start_year)
@@ -489,23 +490,18 @@ const Results = ({
         <div className="space-y-4">
           {/* Search Again Link */}
           <div className="flex gap-2 mb-2">
-            <button
-              type="button"
-              onClick={() =>
-                (window.location.href = '/wow/weekly-price-group-delta')
-              }
+            <Link
+              to="/wow/weekly-price-group-delta"
+              aria-label="Search again"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← Search Again
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                (window.location.href =
-                  '/wow/weekly-price-group-delta-recommended')
-              }
+            </Link>
+            <Link
+              to="/wow/weekly-price-group-delta-recommended"
+              aria-label="See recommended searches"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← See Recommended Searches
-            </button>
+            </Link>
           </div>
 
           {/* Date Range Controls */}

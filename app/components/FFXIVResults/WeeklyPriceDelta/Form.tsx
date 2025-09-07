@@ -1,4 +1,4 @@
-import { useNavigation } from '@remix-run/react'
+import { Link, useNavigation } from '@remix-run/react'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import type { DateRangeType, DateValueType } from 'react-tailwindcss-datepicker'
@@ -167,6 +167,7 @@ export const Form = ({
         title={pageTitle}
         loading={transition.state === 'submitting'}
         error={formError}
+        onClick={(e) => e.preventDefault()}
         formProps={{
           onSubmit: (e) => {
             if (isAddingPriceGroup) {
@@ -178,7 +179,15 @@ export const Form = ({
           }
         }}>
         <div className="space-y-4 mb-4">
-          <ImportSection onImport={handleImport} />
+          {/* Row with See Recommended Searches and Import Configuration */}
+          <div className="flex justify-between items-center mb-4">
+            <Link
+              to="/ffxiv/weekly-price-group-delta-recommended"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
+              ← See Recommended Searches
+            </Link>
+            <ImportSection onImport={handleImport} />
+          </div>
 
           <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
             Timeframe
@@ -205,6 +214,34 @@ export const Form = ({
                     start: dayjs().startOf('year').toDate(),
                     end: endFromDate
                   }
+                },
+                last30Days: {
+                  text: 'Last 30 days',
+                  period: {
+                    start: dayjs().subtract(30, 'day').toDate(),
+                    end: endFromDate
+                  }
+                },
+                last90Days: {
+                  text: 'Last 90 days',
+                  period: {
+                    start: dayjs().subtract(90, 'day').toDate(),
+                    end: endFromDate
+                  }
+                },
+                last6Months: {
+                  text: 'Last 6 months',
+                  period: {
+                    start: dayjs().subtract(6, 'month').toDate(),
+                    end: endFromDate
+                  }
+                },
+                lastYear: {
+                  text: 'Last year',
+                  period: {
+                    start: dayjs().subtract(1, 'year').toDate(),
+                    end: endFromDate
+                  }
                 }
               }
             }}
@@ -216,6 +253,11 @@ export const Form = ({
           <input type="hidden" name="startYear" value={startYear} />
           <input type="hidden" name="startMonth" value={startMonth} />
           <input type="hidden" name="startDay" value={startDay} />
+          <input
+            type="hidden"
+            name="minimum_marketshare"
+            value={minimumMarketshare}
+          />
 
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
