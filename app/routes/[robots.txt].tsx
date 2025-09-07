@@ -47,6 +47,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /ffxiv/craftsim
   Disallow: /ffxiv/shortage-predictor
   Disallow: /ffxiv/best-deals
+  Disallow: /ffxiv/weekly-price-group-delta-recommended
   Disallow: /wow/best-deals
   Disallow: /wow/export-search
   Disallow: /wow/marketshare
