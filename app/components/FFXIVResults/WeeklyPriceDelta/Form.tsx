@@ -257,6 +257,11 @@ export const Form = ({
           <input type="hidden" name="startYear" value={startYear} />
           <input type="hidden" name="startMonth" value={startMonth} />
           <input type="hidden" name="startDay" value={startDay} />
+          <input
+            type="hidden"
+            name="minimum_marketshare"
+            value={minimumMarketshare}
+          />
 
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
