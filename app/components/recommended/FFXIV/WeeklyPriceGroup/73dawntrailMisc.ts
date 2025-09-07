@@ -1,7 +1,7 @@
 const dawntrail73Misc = {
   name: 'Dawntrail 7.3 Furniture, Collectables, Cosmetics, and Miscellaneous items',
   description:
-    'Monitor price trends for Dawntrail 7.3 commodities across all categories.',
+    'Monitor price trends for Dawntrail 7.3 furnishings, cosmetics, and miscellaneous categories.',
   config: {
     region: 'NA',
     start_year: 2025,

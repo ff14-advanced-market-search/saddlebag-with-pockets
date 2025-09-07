@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
     links: [
       {
         rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/weekly-price-group-delta/recommended'
+        href: 'https://saddlebagexchange.com/ffxiv/weekly-price-group-delta-recommended'
       }
     ]
   }
@@ -107,6 +107,7 @@ export default function RecommendedWeeklyPriceGroupDelta() {
             <div className="not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
               {recommendedConfigs.map((rec) => (
                 <button
+                  type="button"
                   key={rec.name}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded shadow text-left"
                   onClick={() => handleRunAnalysis(rec)}>
