@@ -70,8 +70,7 @@ const endwalker63Commodities = {
 
       { name: 'Crystals NQ', item_ids: [], categories: [58], hq_only: false },
 
-      { name: 'Catalysts NQ', item_ids: [], categories: [59], hq_only: false },
-      { name: 'Catalysts HQ', item_ids: [], categories: [59], hq_only: true }
+      { name: 'Catalysts NQ', item_ids: [], categories: [59], hq_only: false }
     ]
   }
 }
