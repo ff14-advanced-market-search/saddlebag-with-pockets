@@ -8,4 +8,4 @@ export {
   WOW_REALM_ID,
   WOW_REALM_NAME,
   WOW_REGION
-} from './sessions/index'
+} from './sessions/index.server'
