@@ -1,6 +1,7 @@
-const furnishings = {
-  name: 'FFXIV Furnishings',
-  description: 'Track price changes for furniture and housing items in FFXIV.',
+const furnishingsWeeklyDelta = {
+  name: 'FFXIV Furnishings - All Time',
+  description:
+    'Track price trends for housing items over multiple patch cycles.',
   config: {
     region: 'NA',
     start_year: 2022,
@@ -73,4 +74,4 @@ const furnishings = {
   }
 }
 
-export default furnishings
+export default furnishingsWeeklyDelta

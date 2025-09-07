@@ -1,6 +1,6 @@
 const materiaWeeklyDelta = {
-  name: 'Veemonheim MMORPG Community Materia',
-  description: 'Monitor price trends for materia over multiple patch cycles.',
+  name: 'Veemonheim MMORPG Community Materia - All Time',
+  description: 'Track price trends for materia over multiple patch cycles.',
   config: {
     region: 'NA',
     start_year: 2022,
