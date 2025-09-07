@@ -52,7 +52,6 @@ const dawntrail71Commodities = {
       { name: 'Reagents HQ', item_ids: [], categories: [53], hq_only: true },
 
       { name: 'Dyes NQ', item_ids: [], categories: [54], hq_only: false },
-      { name: 'Dyes HQ', item_ids: [], categories: [54], hq_only: true },
 
       {
         name: 'Weapon Parts NQ',
@@ -70,7 +69,6 @@ const dawntrail71Commodities = {
       { name: 'Materia NQ', item_ids: [], categories: [57], hq_only: false },
 
       { name: 'Crystals NQ', item_ids: [], categories: [58], hq_only: false },
-      { name: 'Crystals HQ', item_ids: [], categories: [58], hq_only: true },
 
       { name: 'Catalysts NQ', item_ids: [], categories: [59], hq_only: false },
       { name: 'Catalysts HQ', item_ids: [], categories: [59], hq_only: true }
