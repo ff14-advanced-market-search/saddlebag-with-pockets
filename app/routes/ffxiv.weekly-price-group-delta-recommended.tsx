@@ -3,6 +3,29 @@ import { Link } from '@remix-run/react'
 import Banner from '~/components/Common/Banner'
 import recommendedConfigs from '~/components/recommended/FFXIV/WeeklyPriceGroup'
 
+type RecommendedConfig = {
+  name: string
+  description: string
+  config: {
+    region: string
+    start_year: number
+    start_month: number
+    start_day: number
+    end_year: number
+    end_month: number
+    end_day: number
+    minimum_marketshare: number
+    price_setting: string
+    quantity_setting: string
+    price_groups: Array<{
+      name: string
+      item_ids: number[]
+      categories: number[]
+      hq_only: boolean
+    }>
+  }
+}
+
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
@@ -21,7 +44,7 @@ export const meta: MetaFunction = () => {
 }
 
 export default function RecommendedWeeklyPriceGroupDelta() {
-  const handleRunAnalysis = (rec: (typeof recommendedConfigs)[0]) => {
+  const handleRunAnalysis = (rec: RecommendedConfig) => {
     const form = document.createElement('form')
     form.method = 'POST'
     form.action = '/ffxiv/weekly-price-group-delta'
@@ -42,7 +65,6 @@ export default function RecommendedWeeklyPriceGroupDelta() {
     addField('endMonth', rec.config.end_month.toString())
     addField('endDay', rec.config.end_day.toString())
     addField('minimum_marketshare', rec.config.minimum_marketshare.toString())
-    addField('hq_only', rec.config.hq_only ? 'true' : 'false')
     addField('price_setting', rec.config.price_setting)
     addField('quantity_setting', rec.config.quantity_setting)
     addField('priceGroups', JSON.stringify(rec.config.price_groups))
@@ -106,7 +128,7 @@ export default function RecommendedWeeklyPriceGroupDelta() {
               </p>
             </div>
             <div className="not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {recommendedConfigs.map((rec) => (
+              {(recommendedConfigs as RecommendedConfig[]).map((rec) => (
                 <button
                   type="button"
                   key={rec.name}
