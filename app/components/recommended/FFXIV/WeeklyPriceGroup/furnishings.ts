@@ -9,21 +9,66 @@ const furnishings = {
     end_year: 2026,
     end_month: 5,
     end_day: 2,
-    minimum_marketshare: 10000,
+    minimum_marketshare: 30000000,
     price_setting: 'median',
     quantity_setting: 'quantitySold',
     price_groups: [
       {
         name: 'Furnishings',
-        item_ids: [
-          44120, 23892, 20734, 38608, 24514, 30385, 37360, 35559, 12108, 16781,
-          37369, 39409, 20310, 35571, 24511, 28639, 8831, 20735, 37359, 29682,
-          35561, 40630, 32226, 15974, 28975, 40620, 33283, 24512, 32221, 7979,
-          7970, 30410, 21839, 32254, 7064, 29680, 27296, 22552, 6637
-        ],
-        categories: [],
+        item_ids: [],
+        categories: [56],
         hq_only: false
-      }
+      },
+
+      {
+        name: 'Exterior Fixtures',
+        item_ids: [],
+        categories: [65],
+        hq_only: false
+      },
+
+      {
+        name: 'Interior Fixtures',
+        item_ids: [],
+        categories: [66],
+        hq_only: false
+      },
+
+      {
+        name: 'Outdoor Furnishings',
+        item_ids: [],
+        categories: [67],
+        hq_only: false
+      },
+
+      {
+        name: 'Chairs and Beds',
+        item_ids: [],
+        categories: [68],
+        hq_only: false
+      },
+
+      { name: 'Tables', item_ids: [], categories: [69], hq_only: false },
+
+      { name: 'Tabletop', item_ids: [], categories: [70], hq_only: false },
+
+      {
+        name: 'Wall-mounted',
+        item_ids: [],
+        categories: [71],
+        hq_only: false
+      },
+
+      { name: 'Rugs', item_ids: [], categories: [72], hq_only: false },
+
+      {
+        name: 'Gardening Items',
+        item_ids: [],
+        categories: [81],
+        hq_only: false
+      },
+
+      { name: 'Paintings', item_ids: [], categories: [82], hq_only: false }
     ]
   }
 }
