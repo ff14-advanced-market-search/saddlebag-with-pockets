@@ -40,6 +40,7 @@ export default function RecommendedWeeklyPriceGroupDelta() {
     addField('endYear', rec.config.end_year.toString())
     addField('endMonth', rec.config.end_month.toString())
     addField('endDay', rec.config.end_day.toString())
+    addField('minimum_marketshare', rec.config.minimum_marketshare.toString())
     addField('hq_only', rec.config.hq_only ? 'true' : 'false')
     addField('price_setting', rec.config.price_setting)
     addField('quantity_setting', rec.config.quantity_setting)
