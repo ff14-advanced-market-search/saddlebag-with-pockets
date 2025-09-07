@@ -1,4 +1,4 @@
-const materia = {
+const materiaWeeklyDelta = {
   name: 'Veemonheim MMORPG Community Materia',
   description: 'Monitor price trends for materia over multiple patch cycles.',
   config: {
@@ -215,6 +215,7 @@ const materia = {
           8150,
           8151, // Inferno / Vortex / Demimog
           8152,
+          8153,
           8154,
           8155, // Mastercraft Demimateria
           23181, // Kingcraft Demimateria
@@ -227,4 +228,4 @@ const materia = {
   }
 }
 
-export default materia
+export default materiaWeeklyDelta

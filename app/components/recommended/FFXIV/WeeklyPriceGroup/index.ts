@@ -1,4 +1,4 @@
-import materia from './materia'
+import materiaWeeklyDelta from './materia'
 import furnishings from './furnishings'
 import dawntrail70Commodities from './70dawntrailCommodities'
 import dawntrail70Misc from './70dawntrailMisc'
@@ -16,7 +16,7 @@ import endwalker65Commodities from './65endwalkerCommodities'
 import endwalker65Misc from './65endwalkerMisc'
 
 const recommendedConfigs = [
-  materia,
+  materiaWeeklyDelta,
   furnishings,
   dawntrail73Commodities,
   dawntrail73Misc,

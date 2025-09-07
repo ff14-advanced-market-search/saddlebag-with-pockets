@@ -1,4 +1,5 @@
 import type { MetaFunction } from '@remix-run/cloudflare'
+import { Link } from '@remix-run/react'
 import Banner from '~/components/Common/Banner'
 import recommendedConfigs from '~/components/recommended/FFXIV/WeeklyPriceGroup'
 
@@ -96,11 +97,11 @@ export default function RecommendedWeeklyPriceGroupDelta() {
             <div className="text-center my-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <p className="text-gray-600 dark:text-gray-300 mb-2">
                 Want to create your own custom analysis? Head over to our{' '}
-                <a
-                  href="/ffxiv/weekly-price-group-delta"
+                <Link
+                  to="/ffxiv/weekly-price-group-delta"
                   className="text-blue-500 hover:text-blue-600 font-medium">
                   Weekly Price Group Delta
-                </a>{' '}
+                </Link>{' '}
                 page to start your analysis from scratch.
               </p>
             </div>
