@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react'
 import { useEffect, useMemo, useState } from 'react'
 import PriceQuantityChartPopup from '~/components/Charts/PriceQuantityChartPopup'
 import { PageWrapper, Title, ContentContainer } from '~/components/Common'
@@ -243,23 +244,16 @@ export const Results = ({
         <div className="space-y-4">
           {/* Back Buttons */}
           <div className="flex gap-2 mb-2">
-            <button
-              type="button"
-              onClick={() =>
-                (window.location.href = '/ffxiv/weekly-price-group-delta')
-              }
+            <Link
+              to="/ffxiv/weekly-price-group-delta"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← Search Again
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                (window.location.href =
-                  '/ffxiv/weekly-price-group-delta-recommended')
-              }
+            </Link>
+            <Link
+              to="/ffxiv/weekly-price-group-delta-recommended"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← See Recommended Searches
-            </button>
+            </Link>
             {/* TODO FIX: this search again is bugged and doesnt always trigger the search with the new values */}
             <button
               type="button"

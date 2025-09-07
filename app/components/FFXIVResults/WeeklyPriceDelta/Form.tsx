@@ -1,4 +1,4 @@
-import { useNavigation } from '@remix-run/react'
+import { Link, useNavigation } from '@remix-run/react'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import type { DateRangeType, DateValueType } from 'react-tailwindcss-datepicker'
@@ -181,15 +181,11 @@ export const Form = ({
         <div className="space-y-4 mb-4">
           {/* Row with See Recommended Searches and Import Configuration */}
           <div className="flex justify-between items-center mb-4">
-            <button
-              type="button"
-              onClick={() =>
-                (window.location.href =
-                  '/ffxiv/weekly-price-group-delta-recommended')
-              }
+            <Link
+              to="/ffxiv/weekly-price-group-delta-recommended"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← See Recommended Searches
-            </button>
+            </Link>
             <ImportSection onImport={handleImport} />
           </div>
 
