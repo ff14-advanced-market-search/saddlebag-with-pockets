@@ -27,11 +27,13 @@ const recommendedConfigs = [
   dawntrail70Commodities,
   dawntrail70Misc,
   endwalker65Commodities,
-  endwalker65Misc,
-  endwalker64Commodities,
-  endwalker64Misc,
-  endwalker63Commodities,
-  endwalker63Misc
+  endwalker65Misc
+  // Disable all before 6.5, we have incomplete data on some regions
+  // Note: Oceania has the full data until 6.3 because it was small
+  // endwalker64Commodities,
+  // endwalker64Misc,
+  // endwalker63Commodities,
+  // endwalker63Misc
 ]
 
 export default recommendedConfigs
