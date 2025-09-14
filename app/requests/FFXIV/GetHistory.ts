@@ -91,7 +91,7 @@ GetHistoryProps) => Promise<Response> = async ({
   endDays = 0,
   itemType = 'all'
 }) => {
-  return fetch(`${address}/api/history`, {
+  return fetch(`${address}/api/ffxiv/v2/history`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
