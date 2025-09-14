@@ -30,7 +30,7 @@ const GetBlog: ({ itemId }: GetBlogProps) => Promise<Response> = async ({
 
   console.log('Request body:', requestBody)
 
-  return fetch(`${address}/api/ffxiv/blog`, {
+  return fetch(`${address}/api/ffxiv/v2/blog`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
