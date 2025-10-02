@@ -1,7 +1,7 @@
 const midnightFurnishingComponents = {
   name: 'WoW Midnight Expanse Furnishing Components',
   description:
-    'Monitor price changes for materials from all expansions that may be used in furnishing for the Midnight Expanse.',
+    'Monitor price changes for materials from all expansions that may be used in furnishing for the Midnight Expanse. Taken from alpha testing.',
   config: {
     region: 'NA',
     start_year: 2025,
