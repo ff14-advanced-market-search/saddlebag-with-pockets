@@ -29,3 +29,7 @@ userinput.py
 
 # we dont use npm we use yarn
 package-lock.json
+
+#Ignore cursor AI rules
+.cursor/rules/codacy.mdc
+.codacy/*
