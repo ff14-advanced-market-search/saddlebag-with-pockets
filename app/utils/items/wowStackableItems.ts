@@ -5297,6 +5297,7 @@ export const wowStackableItemsMap: Record<string, string> = {
   '104049': 'Charred Glyph',
   '104050': 'Charred Glyph',
   '104051': 'Charred Glyph',
+  '104053': 'Charred Glyph',
   '104055': 'Charred Glyph',
   '104056': 'Charred Glyph',
   '104099': 'Glyph of the Skeleton',
@@ -11285,5 +11286,12 @@ export const wowStackableItemsMap: Record<string, string> = {
   '248331': 'Umbral Essentia --- Quality 1',
   '248585': 'Umbral Essentia --- Quality 2',
   '248586': 'Umbral Essentia --- Quality 3',
+  '249218': 'Manaforged Instrument',
+  '249700': 'Deal: Cartel Zo',
+  '249702': 'Deal: Cartel Ba',
+  '249704': 'Deal: Cartel Om',
+  '249706': 'Gleeful Glamour - Ethereal --- Quality 1',
+  '249707': 'Gleeful Glamour - Ethereal --- Quality 2',
+  '249708': 'Gleeful Glamour - Ethereal --- Quality 3',
   '250305': 'Phase-Lost Detritus'
 }

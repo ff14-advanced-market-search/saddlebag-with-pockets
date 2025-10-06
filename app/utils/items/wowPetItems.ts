@@ -2040,5 +2040,6 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4856': 'Scruffyhorn Fel Snooter',
   '4858': 'Shadefur Brewthief',
   '4859': "Zo'ya",
-  '4860': 'Unfazed Diver'
+  '4860': 'Unfazed Diver',
+  '4907': "Lil' Coalee"
 }
