@@ -184,13 +184,55 @@ const FFXIVScripExchange = () => {
                 name="color"
                 defaultValue="Orange"
                 options={[
-                  { label: 'Orange Crafters', value: 'Orange Crafters' },
-                  { label: 'Orange Gatherers', value: 'Orange Gatherers' },
+                  // Crafting & Gathering Scrips
                   { label: 'Purple Crafters', value: 'Purple Crafters' },
                   { label: 'Purple Gatherers', value: 'Purple Gatherers' },
+                  { label: 'Orange Crafters', value: 'Orange Crafters' },
+                  { label: 'Orange Gatherers', value: 'Orange Gatherers' },
+                  // Grand Company Seals
+                  { label: 'Flame Seals', value: 'Flame Seals' },
                   { label: 'Storm Seals', value: 'Storm Seals' },
                   { label: 'Serpent Seals', value: 'Serpent Seals' },
-                  { label: 'Flame Seals', value: 'Flame Seals' },
+                  // Allagan Tomestones
+                  {
+                    label: 'Allagan Tomestone of Poetics',
+                    value: 'Allagan Tomestone of Poetics'
+                  },
+                  {
+                    label: 'Allagan Tomestone of Heliometry',
+                    value: 'Allagan Tomestone of Heliometry'
+                  },
+                  {
+                    label: 'Allagan Tomestone of Aesthetics',
+                    value: 'Allagan Tomestone of Aesthetics'
+                  },
+                  // Society Currencies (A Realm Reborn)
+                  { label: 'Ixali Oaknot', value: 'Ixali Oaknot' },
+                  { label: 'Sylphic Goldleaf', value: 'Sylphic Goldleaf' },
+                  { label: 'Titan Cobaltpiece', value: 'Titan Cobaltpiece' },
+                  { label: 'Rainbowtide Psashp', value: 'Rainbowtide Psashp' },
+                  { label: "Steel Amalj'ok", value: "Steel Amalj'ok" },
+                  // Society Currencies (Heavensward)
+                  { label: 'Black Copper Gil', value: 'Black Copper Gil' },
+                  { label: 'Vanu Whitebone', value: 'Vanu Whitebone' },
+                  { label: 'Carved Kupo Nut', value: 'Carved Kupo Nut' },
+                  // Society Currencies (Stormblood)
+                  { label: 'Kojin Sango', value: 'Kojin Sango' },
+                  { label: 'Namazu Koban', value: 'Namazu Koban' },
+                  { label: 'Ananta Dreamstaff', value: 'Ananta Dreamstaff' },
+                  // Society Currencies (Shadowbringers)
+                  { label: 'Pelu Pelplume', value: 'Pelu Pelplume' },
+                  { label: 'Fae Fancy', value: 'Fae Fancy' },
+                  { label: 'Qitari Compliment', value: 'Qitari Compliment' },
+                  { label: 'Hammered Frogment', value: 'Hammered Frogment' },
+                  // Society Currencies (Endwalker)
+                  { label: 'Arkasodara Pana', value: 'Arkasodara Pana' },
+                  { label: 'Omicron Omnitoken', value: 'Omicron Omnitoken' },
+                  { label: 'Loporrit Carat', value: 'Loporrit Carat' },
+                  // Society Currencies (Dawntrail)
+                  { label: 'Yok Huy Ward', value: 'Yok Huy Ward' },
+                  { label: 'Mamool Ja Nanook', value: 'Mamool Ja Nanook' },
+                  // Hunt & Special Currencies
                   { label: 'Bicolor Gemstone', value: 'Bicolor Gemstone' }
                 ]}
                 onChange={(e) => handleFormChange('color', e.target.value)}
