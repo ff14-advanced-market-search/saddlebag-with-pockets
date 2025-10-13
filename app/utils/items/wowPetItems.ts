@@ -800,6 +800,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '1744': 'Mist Fox Kit',
   '1749': 'Rose Taipan',
   '1750': 'Tiny Apparition',
+  '1751': 'Son of Goredome',
   '1752': 'Crispin',
   '1753': 'Bleakwater Jelly',
   '1754': 'Sewer-Pipe Jelly',
@@ -2003,6 +2004,8 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4793': 'Weechi',
   '4794': 'Mister Mans',
   '4796': "Sa'bak's Blessed",
+  '4801': 'Tidbit',
+  '4802': 'Morsel',
   '4804': 'Swiftpaw',
   '4806': 'Spicy Mean-Ball',
   '4811': 'Hopeflutter',
@@ -2040,5 +2043,14 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4856': 'Scruffyhorn Fel Snooter',
   '4858': 'Shadefur Brewthief',
   '4859': "Zo'ya",
-  '4860': 'Unfazed Diver'
+  '4860': 'Unfazed Diver',
+  '4895': "Lil' Chompers",
+  '4896': 'Slippery Saul',
+  '4897': 'Fishmonger May',
+  '4898': 'Fishstick Keith',
+  '4899': 'Festive Eve',
+  '4900': 'Bundled-Up Bob',
+  '4901': "Fledgeling Warden's Companion",
+  '4907': "Lil' Coalee",
+  '4908': "Lil' Ashlee"
 }
