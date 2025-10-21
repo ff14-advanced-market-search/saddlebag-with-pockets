@@ -12,6 +12,7 @@ import consumablesTier10_2 from './consumablesTier10_2'
 import consumablesTier11_2 from './consumablesTier11_2'
 import tier11_2 from './tier11_2'
 import midnightFurnishingComponents from './midnightFurnishingComponents'
+import midnightFurnishingComponentsCategory from './midnightFurnishingComponentsCategory'
 
 const recommendedConfigs = [
   tier11_2, // Tier 11.2 Complete Analysis
@@ -25,6 +26,7 @@ const recommendedConfigs = [
   tier10_1, // Tier 10.1 Complete Analysis
   consumablesTier10_1, // Consumables Tier 10.1 Complete Analysis
   engMountTWW, // Increases from TWW mount using old parts
+  midnightFurnishingComponentsCategory, // Midnight Expanse Furnishing Components by Category
   midnightFurnishingComponents, // Midnight Expanse Furnishing Components
   furnishingComponents, // Midnight Expanse Furnishing Components
   dragonflight1 // Dragonflight Market
