@@ -69,7 +69,7 @@ const midnightFurnishingComponents = {
         categories: []
       },
       {
-        name: 'TG-Jewelcrafting',
+        name: 'TG-Jewelcrafting-and-Gems',
         item_ids: [
           12799, 7910, 13926, 20963, 23441, 25868, 32230, 36931, 41266, 41334,
           173109, 173171, 173173, 173110, 173170, 192869, 192837, 192838,
@@ -77,7 +77,9 @@ const midnightFurnishingComponents = {
           192847, 192848, 192849, 192850, 192851, 212508, 213759, 213219,
           130183, 130182, 130175, 130176, 36925, 31079, 154120, 52190, 52193,
           129100, 213756, 130181, 192872, 192876, 192877, 192878, 192883,
-          192884, 192885, 173172, 154123
+          192884, 192885, 173172, 154123,
+          // Gems and Finished JC Items
+          136693, 115805, 115811, 173126
         ],
         categories: []
       },
@@ -117,31 +119,18 @@ const midnightFurnishingComponents = {
         categories: []
       },
       {
-        name: 'Consumable-Other',
+        name: 'Consumables-and-Enchants',
         item_ids: [
+          // Consumable-Other
           33458, 127838, 171441, 224108, 55053, 132514, 111449, 222523, 212245,
-          191384, 191385, 191386, 191363, 87872
+          191384, 191385, 191386, 191363, 87872,
+          // Consumable-Potion
+          127835, 40077, 191496,
+          // Consumable-Food-Drink
+          154886, 172049, 223971, 222731, 222705,
+          // Item Enhancement
+          82444, 54450, 194011, 194012, 194013
         ],
-        categories: []
-      },
-      {
-        name: 'Consumable-Potion',
-        item_ids: [127835, 40077, 191384, 191385, 191386, 191363, 191496],
-        categories: []
-      },
-      {
-        name: 'Consumable-Food-Drink',
-        item_ids: [154886, 172049, 223971, 222731, 222705],
-        categories: []
-      },
-      {
-        name: 'Gem',
-        item_ids: [136693, 115805, 115811, 173126],
-        categories: []
-      },
-      {
-        name: 'Item Enhancement',
-        item_ids: [82444, 54450, 194011, 194012, 194013],
         categories: []
       }
     ]
