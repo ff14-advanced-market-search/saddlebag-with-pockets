@@ -449,6 +449,46 @@ const Results = ({
       sortUndefined: 'last'
     },
     {
+      columnId: 'quantity',
+      header: `Quantity (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.q,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.q.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'tsmP',
+      header: `TSM Price (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.tsmP ?? null,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>
+            {data && data.tsmP != null ? data.tsmP.toLocaleString() : 'N/A'}
+          </span>
+        )
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'tsmQ',
+      header: `TSM Sales (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.tsmQ ?? null,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>
+            {data && data.tsmQ != null ? data.tsmQ.toLocaleString() : 'N/A'}
+          </span>
+        )
+      },
+      sortUndefined: 'last'
+    },
+    {
       columnId: 'priceQuantity',
       header: 'Price V Quantity',
       accessor: ({ row }) => {
