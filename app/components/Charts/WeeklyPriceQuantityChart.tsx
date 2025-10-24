@@ -7,6 +7,8 @@ interface WeeklyDataPoint {
   q: number // quantity
   t: number // timestamp
   delta: number // price change %
+  tsmP?: number | null // optional TSM price
+  tsmQ?: number | null // optional TSM quantity/sales
 }
 
 // Format timestamp into YYYY-MM-DD
@@ -43,8 +45,18 @@ const formatTooltip = (
       <span style="color: ${labelColor};">Date:</span> ${formatTimestamp(
       data.t
     )}<br/>
-      <span style="color: ${labelColor};">Price:</span> ${data.p.toLocaleString()}<br/>
+      <span style="color: ${labelColor};">Min Price:</span> ${data.p.toLocaleString()}<br/>
       <span style="color: ${labelColor};">Quantity:</span> ${data.q.toLocaleString()}<br/>
+      ${
+        data.tsmP != null
+          ? `<span style="color: ${labelColor};">TSM Price:</span> ${data.tsmP.toLocaleString()}<br/>`
+          : ''
+      }
+      ${
+        data.tsmQ != null
+          ? `<span style="color: ${labelColor};">TSM Sales:</span> ${data.tsmQ.toLocaleString()}<br/>`
+          : ''
+      }
       <span style="color: ${labelColor};">Delta:</span> ${data.delta.toFixed(
       2
     )}%
@@ -165,17 +177,51 @@ export default function WeeklyPriceQuantityChart({
         name: 'Minimum Price',
         type: 'area',
         data: weeklyData.map((point) => point.p),
-        color: darkMode ? '#93c5fd' : '#dae4ff', // Lighter blue in dark mode
+        color: darkMode ? '#93c5fd' : '#dae4ff',
         fillOpacity: 0.3,
-        yAxis: 0
+        yAxis: 0,
+        connectNulls: true
       },
       {
         name: 'Total Quantity',
         type: 'line',
         data: weeklyData.map((point) => point.q),
-        color: darkMode ? '#fca5a5' : '#fbb7b2', // Lighter red in dark mode
-        yAxis: 1
-      }
+        color: darkMode ? '#fca5a5' : '#fbb7b2',
+        yAxis: 1,
+        connectNulls: true
+      },
+      // Optional series: TSM Price
+      ...(weeklyData.some((p) => p.tsmP != null)
+        ? [
+            {
+              name: 'TSM Price',
+              type: 'line' as const,
+              data: weeklyData.map((point) =>
+                point.tsmP != null ? point.tsmP : null
+              ),
+              color: '#22c55e',
+              dashStyle: 'ShortDash',
+              yAxis: 0,
+              connectNulls: true
+            }
+          ]
+        : []),
+      // Optional series: TSM Sales
+      ...(weeklyData.some((p) => p.tsmQ != null)
+        ? [
+            {
+              name: 'TSM Sales',
+              type: 'line' as const,
+              data: weeklyData.map((point) =>
+                point.tsmQ != null ? point.tsmQ : null
+              ),
+              color: '#a855f7',
+              dashStyle: 'ShortDot',
+              yAxis: 1,
+              connectNulls: true
+            }
+          ]
+        : [])
     ],
     legend: {
       itemStyle: { color: styles.color },

@@ -34,6 +34,8 @@ export interface ItemData {
     q: number // quantity
     t: number // timestamp
     delta: number // price change %
+    tsmP?: number | null // TSM price (may be null)
+    tsmQ?: number | null // TSM quantity/sales (may be null)
   }>
 }
 
