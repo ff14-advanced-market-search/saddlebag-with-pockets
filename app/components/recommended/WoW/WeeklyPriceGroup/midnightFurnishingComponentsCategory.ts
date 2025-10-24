@@ -1,7 +1,7 @@
 const midnightFurnishingComponents = {
   name: 'WoW Midnight Expanse Furnishing Components by Category',
   description:
-    'Monitor price changes for materials from all categories that may be used in furnishing for the Midnight Expanse. Organized by item class-subclass. Taken from WOWDB.',
+    'Organized by item class-subclass: Monitor price changes for materials from all categories that may be used in furnishing for the Midnight Expanse. Taken from WOWDB.',
   config: {
     region: 'NA',
     start_year: 2025,

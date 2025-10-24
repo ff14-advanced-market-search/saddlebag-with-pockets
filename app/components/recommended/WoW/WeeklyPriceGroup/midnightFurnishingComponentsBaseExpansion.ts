@@ -1,7 +1,7 @@
 const midnightFurnishingComponents = {
   name: 'WoW Midnight Expanse Furnishing Base Materials by Expansion',
   description:
-    'Monitor price changes for base materials for materials for crafted recipes used to make regents of furnishing recipies for the Midnight Expanse. Taken from WOWDB.',
+    'By Expansion: Monitor price changes for base materials for materials for crafted recipes used to make regents of furnishing recipies for the Midnight Expanse. Taken from WOWDB.',
   config: {
     region: 'NA',
     start_year: 2025,
