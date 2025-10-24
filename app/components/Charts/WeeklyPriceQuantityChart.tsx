@@ -179,14 +179,16 @@ export default function WeeklyPriceQuantityChart({
         data: weeklyData.map((point) => point.p),
         color: darkMode ? '#93c5fd' : '#dae4ff',
         fillOpacity: 0.3,
-        yAxis: 0
+        yAxis: 0,
+        connectNulls: true
       },
       {
         name: 'Total Quantity',
         type: 'line',
         data: weeklyData.map((point) => point.q),
         color: darkMode ? '#fca5a5' : '#fbb7b2',
-        yAxis: 1
+        yAxis: 1,
+        connectNulls: true
       },
       // Optional series: TSM Price
       ...(weeklyData.some((p) => p.tsmP != null)
@@ -197,9 +199,10 @@ export default function WeeklyPriceQuantityChart({
               data: weeklyData.map((point) =>
                 point.tsmP != null ? point.tsmP : null
               ),
-              color: '#3b82f6',
+              color: '#22c55e',
               dashStyle: 'ShortDash',
-              yAxis: 0
+              yAxis: 0,
+              connectNulls: true
             }
           ]
         : []),
@@ -212,9 +215,10 @@ export default function WeeklyPriceQuantityChart({
               data: weeklyData.map((point) =>
                 point.tsmQ != null ? point.tsmQ : null
               ),
-              color: '#ef4444',
+              color: '#a855f7',
               dashStyle: 'ShortDot',
-              yAxis: 1
+              yAxis: 1,
+              connectNulls: true
             }
           ]
         : [])
