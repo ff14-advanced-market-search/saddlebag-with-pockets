@@ -36,7 +36,9 @@ const midnightFurnishingComponents = {
       },
       {
         name: 'MoP',
-        item_ids: [72162, 74252, 83064, 89112, 97512, 97619, 97620],
+        item_ids: [
+          72162, 74252, 83064, 89112, 97512, 97619, 97620, 74247, 76061
+        ],
         categories: []
       },
       {

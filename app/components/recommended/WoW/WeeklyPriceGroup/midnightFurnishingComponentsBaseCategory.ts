@@ -22,12 +22,12 @@ const midnightFurnishingComponents = {
       },
       {
         name: 'TG-Enchanting',
-        item_ids: [74252, 109693, 219946, 219947, 219948],
+        item_ids: [74252, 109693, 219946, 219947, 219948, 74247],
         categories: []
       },
       {
         name: 'TG-Elemental',
-        item_ids: [89112],
+        item_ids: [89112, 76061],
         categories: []
       },
       {
