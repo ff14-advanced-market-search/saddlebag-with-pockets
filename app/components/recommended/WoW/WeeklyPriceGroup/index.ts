@@ -29,8 +29,8 @@ const recommendedConfigs = [
   consumablesTier10_1, // Consumables Tier 10.1 Complete Analysis
   midnightFurnishingComponentsCategory, // Midnight Expanse Furnishing Components by Category
   midnightFurnishingComponentsExpansion, // Midnight Expanse Furnishing Components by Expansion
-  midnightFurnishingComponentsBase, // Midnight Expanse Furnishing Components by Base
   midnightFurnishingComponentsBaseCategory, // Midnight Expanse Furnishing Components by Base Category
+  midnightFurnishingComponentsBase, // Midnight Expanse Furnishing Components by Base Expansion
   furnishingComponents, // Midnight Expanse Furnishing Components
   engMountTWW, // Increases from TWW mount using old parts
   dragonflight1 // Dragonflight Market
