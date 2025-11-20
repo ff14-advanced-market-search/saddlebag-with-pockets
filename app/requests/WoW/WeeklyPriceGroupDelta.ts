@@ -21,6 +21,7 @@ export interface WeeklyPriceGroupDeltaProps {
   end_month: number
   end_day: number
   price_groups: PriceGroup[]
+  short_term?: boolean
 }
 
 export interface ItemData {
