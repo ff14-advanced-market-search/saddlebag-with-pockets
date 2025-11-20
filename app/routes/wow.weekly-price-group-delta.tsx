@@ -120,6 +120,7 @@ export const action: ActionFunction = async ({ request }) => {
   const priceGroups = JSON.parse(
     formData.get('priceGroups') as string
   ) as PriceGroup[]
+  const shortTerm = formData.get('shortTerm') === 'true'
 
   try {
     const response = await WeeklyPriceGroupDelta({
@@ -130,7 +131,8 @@ export const action: ActionFunction = async ({ request }) => {
       end_year: endYear,
       end_month: endMonth,
       end_day: endDay,
-      price_groups: priceGroups
+      price_groups: priceGroups,
+      short_term: shortTerm
     })
 
     if (!response.ok) {
@@ -175,6 +177,7 @@ const Index = () => {
   const [endYear, setEndYear] = useState(new Date().getFullYear())
   const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1)
   const [endDay, setEndDay] = useState(new Date().getDate())
+  const [shortTerm, setShortTerm] = useState(false)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
 
@@ -229,6 +232,7 @@ const Index = () => {
               if (data.end_month) setEndMonth(data.end_month)
               if (data.end_day) setEndDay(data.end_day)
               if (data.price_groups) setPriceGroups(data.price_groups)
+              if (data.short_term !== undefined) setShortTerm(data.short_term)
             }}
           />
         </div>
@@ -259,6 +263,22 @@ const Index = () => {
           <input type="hidden" name="endMonth" value={endMonth} />
           <input type="hidden" name="endDay" value={endDay} />
 
+          {/* Short Term Checkbox */}
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="shortTerm"
+              checked={shortTerm}
+              onChange={(e) => setShortTerm(e.target.checked)}
+              className="form-checkbox h-4 w-4 text-blue-500"
+            />
+            <label htmlFor="shortTerm" className="text-sm font-medium">
+              Short Term
+            </label>
+          </div>
+
+          <input type="hidden" name="shortTerm" value={shortTerm.toString()} />
+
           <PriceGroupsSection
             priceGroups={priceGroups}
             onPriceGroupsChange={setPriceGroups}
@@ -284,6 +304,7 @@ const Index = () => {
             endMonth={endMonth}
             endDay={endDay}
             priceGroups={priceGroups}
+            shortTerm={shortTerm}
           />
         </form>
       </SmallFormContainer>

@@ -10,6 +10,7 @@ interface ImportData {
   end_month?: number
   end_day?: number
   price_groups?: PriceGroup[]
+  short_term?: boolean
 }
 
 interface ImportSectionProps {

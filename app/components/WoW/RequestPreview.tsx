@@ -10,6 +10,7 @@ interface RequestPreviewProps {
   endMonth: number
   endDay: number
   priceGroups: PriceGroup[]
+  shortTerm?: boolean
 }
 
 /**
@@ -34,7 +35,8 @@ export default function RequestPreview({
   endYear,
   endMonth,
   endDay,
-  priceGroups
+  priceGroups,
+  shortTerm
 }: RequestPreviewProps) {
   const requestData = {
     region,
@@ -44,7 +46,8 @@ export default function RequestPreview({
     end_year: endYear,
     end_month: endMonth,
     end_day: endDay,
-    price_groups: priceGroups
+    price_groups: priceGroups,
+    short_term: shortTerm
   }
 
   return (
