@@ -1,4 +1,4 @@
-const defaultAddress = `http://api.saddlebagexchange.com`
+const defaultAddress = `https://docs.saddlebagexchange.com`
 // const defaultAddress = `http://localhost:8000`
 
 export const address = defaultAddress
