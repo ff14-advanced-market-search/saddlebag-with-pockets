@@ -1,7 +1,7 @@
 const axios = require('axios')
 const { writeFile } = require('fs')
 
-const ITEMS_ADDRESS = 'http://api.saddlebagexchange.com/api/wow/itemnames'
+const ITEMS_ADDRESS = 'https://api.saddlebagexchange.com/api/wow/itemnames'
 
 const FILE_PATHS = {
   regular: './app/utils/items/wowItems.ts',
@@ -25,19 +25,19 @@ const INVALID_STRINGS = [
 ]
 
 /**
-* Validates an item ID and item name and returns a sanitized item name.
-* @example
-* functionName("123", "example_item")
-* "example item"
-* @param {string} id - The ID of the item, which should be a numeric string.
-* @param {string} itemName - The name of the item, which should be a non-empty string.
-* @returns {string|undefined} Returns the sanitized item name if valid; otherwise, returns undefined.
-* @description
-*   - Returns undefined if ID or item name is null, non-string, or empty.
-*   - Returns undefined if the ID contains any non-numeric characters.
-*   - Checks against invalid strings in a global array `INVALID_STRINGS`.
-*   - Replaces non-breaking spaces in the item name with regular spaces.
-*/
+ * Validates an item ID and item name and returns a sanitized item name.
+ * @example
+ * functionName("123", "example_item")
+ * "example item"
+ * @param {string} id - The ID of the item, which should be a numeric string.
+ * @param {string} itemName - The name of the item, which should be a non-empty string.
+ * @returns {string|undefined} Returns the sanitized item name if valid; otherwise, returns undefined.
+ * @description
+ *   - Returns undefined if ID or item name is null, non-string, or empty.
+ *   - Returns undefined if the ID contains any non-numeric characters.
+ *   - Checks against invalid strings in a global array `INVALID_STRINGS`.
+ *   - Replaces non-breaking spaces in the item name with regular spaces.
+ */
 const validateItem = (id, itemName) => {
   if (id == null || itemName == null) {
     return undefined
@@ -136,9 +136,10 @@ const saveItemList = async (items, type) => {
     process.exit(1)
   }
 
-  const mapName = type === 'regular' 
-    ? 'wowItemsMap'
-    : `wow${type.charAt(0).toUpperCase() + type.slice(1)}ItemsMap`
+  const mapName =
+    type === 'regular'
+      ? 'wowItemsMap'
+      : `wow${type.charAt(0).toUpperCase() + type.slice(1)}ItemsMap`
 
   return new Promise((resolve, reject) => {
     writeFile(
@@ -160,13 +161,15 @@ const saveItemList = async (items, type) => {
 
 // Fetch and save all types of items
 Promise.all([
-  getItems('regular').then(items => saveItemList(items, 'regular')),
-  getItems('pets').then(items => saveItemList(items, 'pets')),
-  getItems('stackable').then(items => saveItemList(items, 'stackable'))
-]).then(() => {
-  console.log('All items have been written successfully')
-  process.exit(0)
-}).catch((error) => {
-  console.error('Error writing items list:', error.message)
-  process.exit(1)
-})
+  getItems('regular').then((items) => saveItemList(items, 'regular')),
+  getItems('pets').then((items) => saveItemList(items, 'pets')),
+  getItems('stackable').then((items) => saveItemList(items, 'stackable'))
+])
+  .then(() => {
+    console.log('All items have been written successfully')
+    process.exit(0)
+  })
+  .catch((error) => {
+    console.error('Error writing items list:', error.message)
+    process.exit(1)
+  })
