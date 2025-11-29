@@ -17,6 +17,12 @@ nvm install 20
 nvm use 20
 ```
 
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install 20
+nvm use 20
+```
+
 ## [Documentation](docs/INDEX.md)
 
 ## Getting Started
