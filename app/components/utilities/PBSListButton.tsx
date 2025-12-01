@@ -50,7 +50,7 @@ export default function PBSListButton<
     // Generate unique timestamp
     const timestamp = Date.now()
 
-    const itemsList = data.reduce((acc, item) => {
+    const items = data.reduce((acc, item) => {
       // Get market value based on data type
       const marketValue =
         'estimatedRegionMarketValue' in item
@@ -73,11 +73,12 @@ export default function PBSListButton<
       const pbsEntry = `"${item.itemName}";;0;0;0;0;0;0;0;${Math.round(
         discountedPrice
       )};;#;;`
-      return acc + pbsEntry
-    }, '')
+      acc.push(pbsEntry)
+      return acc
+    }, [] as string[])
 
-    // Format with list name and timestamp at the start
-    const formattedData = `Saddlebag PBS List ${timestamp}^${itemsList}`
+    // Format with list name and timestamp at the start, join items with ^
+    const formattedData = `Saddlebag PBS List ${timestamp}^${items.join('^')}`
 
     navigator.clipboard.writeText(formattedData)
     setIsOpen(false)
