@@ -47,7 +47,10 @@ export default function PBSListButton<
     const minPriceValue = parseInt(minPrice) || 0
     const discountPercent = parseInt(discount) || 0
 
-    const formattedData = data.reduce((acc, item) => {
+    // Generate unique timestamp
+    const timestamp = Date.now()
+
+    const itemsList = data.reduce((acc, item) => {
       // Get market value based on data type
       const marketValue =
         'estimatedRegionMarketValue' in item
@@ -66,12 +69,15 @@ export default function PBSListButton<
       const discountedPrice =
         Math.round(price * (discountPercent / 100) * 100) / 100
 
-      // Format as PBS entry
-      const pbsEntry = `Snipe^${item.itemName};;0;0;0;0;0;0;0;${Math.round(
+      // Format as PBS entry (without list name prefix)
+      const pbsEntry = `"${item.itemName}";;0;0;0;0;0;0;0;${Math.round(
         discountedPrice
       )};;#;;`
       return acc + pbsEntry
     }, '')
+
+    // Format with list name and timestamp at the start
+    const formattedData = `Saddlebag PBS List ${timestamp}^${itemsList}`
 
     navigator.clipboard.writeText(formattedData)
     setIsOpen(false)
