@@ -1978,6 +1978,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4708': 'Marmaduke',
   '4710': 'Pillaged Parrot',
   '4711': 'Snapdragon Pup',
+  '4717': 'Wanderer Liu',
   '4718': 'Wind-Up Wuffi',
   '4719': 'Wind-Up Woofer',
   '4723': 'Cliffreach Cub',
@@ -2036,6 +2037,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4847': 'Copper Lapbug',
   '4848': 'Cerulean Lapbug',
   '4849': 'Flotsam Harvester',
+  '4851': 'Tiny Snow Buddy',
   '4852': "Lil' Daz'ti",
   '4853': 'Rustyroot Fel Snooter',
   '4854': 'Duskytooth Fel Snooter',
@@ -2050,7 +2052,9 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4898': 'Fishstick Keith',
   '4899': 'Festive Eve',
   '4900': 'Bundled-Up Bob',
-  '4901': "Fledgeling Warden's Companion",
+  '4901': "Fledgling Warden's Companion",
+  '4903': 'Starshard Whelpling',
   '4907': "Lil' Coalee",
-  '4908': "Lil' Ashlee"
+  '4908': "Lil' Ashlee",
+  '4911': 'P.O.S.T. Assistant'
 }
