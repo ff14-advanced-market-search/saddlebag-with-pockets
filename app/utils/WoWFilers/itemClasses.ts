@@ -225,6 +225,11 @@ export const itemClasses = [
       { name: 'Inscription', value: 12 },
       { name: 'Archaeology', value: 1 }
     ]
+  },
+  {
+    name: 'Housing',
+    value: 20,
+    subClasses: [{ name: 'Decor', value: 0 }]
   }
 ]
 
