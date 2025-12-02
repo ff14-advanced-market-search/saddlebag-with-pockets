@@ -28,5 +28,6 @@ export const wowCategories = [
   { value: 15, label: 'Miscellaneous' },
   { value: 16, label: 'Glyph' },
   { value: 17, label: 'Battle Pet' },
-  { value: 19, label: 'Profession' }
+  { value: 19, label: 'Profession' },
+  { value: 20, label: 'Housing' }
 ]
