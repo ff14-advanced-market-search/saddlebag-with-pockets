@@ -229,7 +229,10 @@ export const itemClasses = [
   {
     name: 'Housing',
     value: 20,
-    subClasses: [{ name: 'Decor', value: 0 }]
+    subClasses: [
+      { name: 'Decor', value: 0 },
+      { name: 'Housing Dye', value: 1 }
+    ]
   }
 ]
 
