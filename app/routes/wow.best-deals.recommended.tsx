@@ -39,6 +39,7 @@ const searchParams = {
     '/wow/best-deals?type=legacy&itemClass=9&itemSubClass=-1&discount=50&minPrice=10000&salesPerDay=0.1',
   illusionsAndConsumables:
     '/wow/best-deals?type=df&itemClass=0&itemSubClass=-1&discount=50&minPrice=100&salesPerDay=0.1',
+// cursor add housing decor search here 
   highValueToys:
     '/wow/best-deals?type=all&itemClass=15&itemSubClass=199&discount=50&minPrice=10000&salesPerDay=.1',
   mounts:
