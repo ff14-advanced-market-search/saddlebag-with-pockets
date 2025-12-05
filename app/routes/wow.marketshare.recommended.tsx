@@ -72,7 +72,10 @@ const searchParams = {
   enchantingTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=12`,
   inscriptionTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=16`,
   optionalReagentsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=18`,
-  finishingReagentsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=19`
+  finishingReagentsTradegoods: `${BASE_URL}?itemClass=7&commodity=on&itemSubClass=19`,
+  // housing
+  housingDecor: `${BASE_URL}?itemClass=20&itemSubClass=0`,
+  housingDye: `${BASE_URL}?itemClass=20&commodity=on&itemSubClass=1`
 }
 
 // Updated recommendedQueries to reflect WoW searches
@@ -143,8 +146,18 @@ const recommendedQueries = [
     Icon: DocumentSearchIcon,
     href: searchParams.defaultCommodity
   },
-// add non commodity housing decor search here
-// add housing commodity search for dye Pigment here
+  {
+    name: 'Housing Decor',
+    description: 'Explore housing decor items that are in demand.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.housingDecor
+  },
+  {
+    name: 'Housing Dye Pigments',
+    description: 'Find housing dye pigments on the commodity market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.housingDye
+  },
   {
     name: 'Toys',
     description: 'Discover toys that can be sold for profit.',
