@@ -143,6 +143,8 @@ const recommendedQueries = [
     Icon: DocumentSearchIcon,
     href: searchParams.defaultCommodity
   },
+// add non commodity housing decor search here
+// add housing commodity search for dye Pigment here
   {
     name: 'Toys',
     description: 'Discover toys that can be sold for profit.',
