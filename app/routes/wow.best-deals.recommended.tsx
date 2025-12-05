@@ -1,5 +1,5 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline'
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -39,7 +39,10 @@ const searchParams = {
     '/wow/best-deals?type=legacy&itemClass=9&itemSubClass=-1&discount=50&minPrice=10000&salesPerDay=0.1',
   illusionsAndConsumables:
     '/wow/best-deals?type=df&itemClass=0&itemSubClass=-1&discount=50&minPrice=100&salesPerDay=0.1',
-// cursor add housing decor search here 
+  housingDecor:
+    '/wow/best-deals?type=all&itemClass=20&itemSubClass=0&discount=50&minPrice=1000&salesPerDay=0.1',
+  housingDye:
+    '/wow/best-deals?type=all&itemClass=20&itemSubClass=1&discount=50&minPrice=100&salesPerDay=0.1',
   highValueToys:
     '/wow/best-deals?type=all&itemClass=15&itemSubClass=199&discount=50&minPrice=10000&salesPerDay=.1',
   mounts:
@@ -129,6 +132,19 @@ const recommendedQueries = [
     description: 'Seek out deals on Weapon Illusions and consumable transmog.',
     Icon: DocumentSearchIcon,
     href: searchParams.illusionsAndConsumables
+  },
+  {
+    name: 'Housing Decor',
+    description:
+      'Find discounted housing decor items to furnish your player home.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.housingDecor
+  },
+  {
+    name: 'Housing Dye Pigments',
+    description: 'Discover deals on housing dye pigments for customization.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.housingDye
   },
   {
     name: 'High Value Toys',
