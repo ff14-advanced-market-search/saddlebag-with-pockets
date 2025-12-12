@@ -8,7 +8,8 @@ export const commodityClassNames = [
   'Recipe',
   'Quest Item',
   'Miscellaneous',
-  'Glyph'
+  'Glyph',
+  'Housing'
 ] as const
 
 export function getCommodityItemClasses() {
@@ -19,5 +20,6 @@ export function getCommodityItemClasses() {
 
 export const subclassRestrictions: Record<string, string[]> = {
   Recipe: ['Book'],
-  Miscellaneous: ['Junk', 'Reagent', 'Holiday', 'Other']
+  Miscellaneous: ['Junk', 'Reagent', 'Holiday', 'Other'],
+  Housing: ['Decor']
 }
