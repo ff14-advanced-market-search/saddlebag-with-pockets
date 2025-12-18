@@ -1,7 +1,7 @@
-const dawntrail73Commodities = {
-  name: 'Dawntrail 7.3 Commodities',
+const dawntrail74Commodities = {
+  name: 'Dawntrail 7.4 Commodities',
   description:
-    'Monitor price trends for Dawntrail 7.3 commodities across all categories.',
+    'Monitor price trends for Dawntrail 7.4 commodities across all categories.',
   config: {
     region: 'NA',
     start_year: 2025,
@@ -75,4 +75,4 @@ const dawntrail73Commodities = {
   }
 }
 
-export default dawntrail73Commodities
+export default dawntrail74Commodities

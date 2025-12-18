@@ -1,7 +1,7 @@
-const dawntrail73Misc = {
-  name: 'Dawntrail 7.3 Furniture, Collectables, Cosmetics, and Miscellaneous items',
+const dawntrail74Misc = {
+  name: 'Dawntrail 7.4 Furniture, Collectables, Cosmetics, and Miscellaneous items',
   description:
-    'Monitor price trends for Dawntrail 7.3 furnishings, cosmetics, and miscellaneous categories.',
+    'Monitor price trends for Dawntrail 7.4 furnishings, cosmetics, and miscellaneous categories.',
   config: {
     region: 'NA',
     start_year: 2025,
@@ -107,4 +107,4 @@ const dawntrail73Misc = {
   }
 }
 
-export default dawntrail73Misc
+export default dawntrail74Misc
