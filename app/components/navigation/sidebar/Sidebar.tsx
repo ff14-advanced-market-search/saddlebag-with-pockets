@@ -43,6 +43,7 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
 import { NotificationBell } from './NotificationBell'
+import { useTypedSelector } from '~/redux/useTypedSelector'
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -945,8 +946,11 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
  */
 const ItemSearch = () => {
   const transition = useNavigation()
+  const defaultSearchGame = useTypedSelector(
+    (state) => state.user.defaultSearchGame
+  )
   const [itemName, setItemName] = useState('')
-  const [game, setGame] = useState<'ffxiv' | 'wow'>('ffxiv')
+  const [game, setGame] = useState<'ffxiv' | 'wow'>(defaultSearchGame)
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
@@ -1012,6 +1016,13 @@ const ItemSearch = () => {
       inputRef.current.focus()
     }
   }, [isOpen])
+
+  useEffect(() => {
+    // Reset to default search game when the search opens
+    if (isOpen) {
+      setGame(defaultSearchGame)
+    }
+  }, [isOpen, defaultSearchGame])
 
   const isLoading = transition.state === 'loading'
   return (
