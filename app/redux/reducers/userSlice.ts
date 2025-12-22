@@ -17,6 +17,10 @@ import {
   getWoWRealmDataFromLocalStorage,
   setWoWRealmDataInLocalStorage
 } from '../localStorage/wowRealmHelpers'
+import {
+  getDefaultSearchGameFromLocalStorage,
+  setDefaultSearchGameInLocalStorage
+} from '../localStorage/defaultSearchGameHelpers'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 
@@ -25,13 +29,15 @@ export interface UserState {
   ffScanSortOrder: Array<string>
   ffxivWorld: { data_center: string; world: string }
   wowRealm: { server: WoWServerData; region: WoWServerRegion }
+  defaultSearchGame: 'ffxiv' | 'wow'
 }
 
 const initialState: UserState = {
   darkmode: getDarkModeFromLocalStorage(),
   ffScanSortOrder: getFFScanSortOrderInLocalStorage(),
   ffxivWorld: getFFWorldDataFromLocalStorage(),
-  wowRealm: getWoWRealmDataFromLocalStorage()
+  wowRealm: getWoWRealmDataFromLocalStorage(),
+  defaultSearchGame: getDefaultSearchGameFromLocalStorage()
 }
 
 export const userSlice = createSlice({
@@ -78,6 +84,13 @@ export const userSlice = createSlice({
       setWoWRealmDataInLocalStorage(server, region)
 
       state.wowRealm = { server, region }
+    },
+    setDefaultSearchGame: (
+      state,
+      { payload }: PayloadAction<'ffxiv' | 'wow'>
+    ) => {
+      setDefaultSearchGameInLocalStorage(payload)
+      state.defaultSearchGame = payload
     }
   }
 })
@@ -87,7 +100,8 @@ export const {
   setDarkMode,
   setFFScanOrder,
   setFFxivWorld,
-  setWoWRealmData
+  setWoWRealmData,
+  setDefaultSearchGame
 } = userSlice.actions
 
 export default userSlice.reducer

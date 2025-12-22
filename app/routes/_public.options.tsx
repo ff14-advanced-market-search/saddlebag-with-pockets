@@ -35,7 +35,8 @@ import {
   DiscordAccountSection,
   StatusBanner,
   ThemeSection,
-  OptionsHeader
+  OptionsHeader,
+  DefaultSearchGameSection
 } from '~/components/Options'
 import { getWindowUrlParams } from '~/utils/urlHelpers'
 
@@ -201,7 +202,9 @@ export default function Options() {
   const fetcher = useFetcher()
 
   const dispatch = useDispatch()
-  const { darkmode, wowRealm } = useTypedSelector((state) => state.user)
+  const { darkmode, wowRealm, defaultSearchGame } = useTypedSelector(
+    (state) => state.user
+  )
 
   // Extract URL parameters for success/error messages
   const { success, error } = getWindowUrlParams()
@@ -274,6 +277,11 @@ export default function Options() {
             darkMode={darkmode}
             onDarkModeToggle={handleDarkModeToggle}
           />
+        </OptionSection>
+        <OptionSection
+          title="Default Search Game"
+          description="Choose which game the item search defaults to when opened.">
+          <DefaultSearchGameSection defaultSearchGame={defaultSearchGame} />
         </OptionSection>
         <OptionSection
           title="FFXIV World Selection"
