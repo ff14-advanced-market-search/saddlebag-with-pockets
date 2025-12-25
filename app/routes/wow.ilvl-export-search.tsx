@@ -69,7 +69,7 @@ type SortByValue =
 
 const defaultFormValues = {
   itemId: '',
-  ilvl: 610,
+  ilvl: 670,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
