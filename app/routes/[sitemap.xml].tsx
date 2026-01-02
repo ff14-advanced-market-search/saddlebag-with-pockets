@@ -1,57 +1,13 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
-import { ffxivItemsMap } from '~/utils/items/ffxivItems'
-import { wowItemsMap } from '~/utils/items/wowItems'
-import { gw2ItemsMap } from '~/utils/items/gw2Items'
 
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)
 const toW3CDate = (date: Date): string => {
   return date.toISOString().replace(/\.\d{3}Z$/, '+00:00')
 }
 
-// Helper to get last modified date for an item
-const getItemLastMod = (
-  _id: string,
-  _type: 'ffxiv' | 'wow' | 'gw2'
-): string => {
-  // TODO: Implement actual last modified date lookup from your database
-  // For now, we'll use a more realistic approach - weekly updates
-  const now = new Date()
-  const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-  return toW3CDate(lastWeek)
-}
-
 export const loader: LoaderFunction = async () => {
   const baseURL = 'https://saddlebagexchange.com'
   const currentDate = toW3CDate(new Date())
-
-  // Get arrays of item IDs without labels
-  const ffxivItemIDs = Object.keys(ffxivItemsMap)
-  const wowItemIDs = Object.keys(wowItemsMap)
-  const gw2ItemIDs = Object.keys(gw2ItemsMap)
-
-  // Generate URLs with dynamic parameters for WoW items
-  const dynamicWoWURLs = wowItemIDs.map((id) => {
-    return {
-      url: `${baseURL}/wow/item-data/${id}`,
-      lastmod: getItemLastMod(id, 'wow')
-    }
-  })
-
-  // Generate URLs with dynamic parameters for FFXIV items
-  const dynamicFFXIVURLs = ffxivItemIDs.map((id) => {
-    return {
-      url: `${baseURL}/queries/item-data/${id}`,
-      lastmod: getItemLastMod(id, 'ffxiv')
-    }
-  })
-
-  // Generate URLs with dynamic parameters for GW2 items
-  const dynamicGW2URLs = gw2ItemIDs.map((id) => {
-    return {
-      url: `${baseURL}/gw2/item-data/${id}`,
-      lastmod: getItemLastMod(id, 'gw2')
-    }
-  })
 
   const Sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
@@ -396,40 +352,6 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-07-07T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
-<!-- Dynamic Item Pages - Prioritized for Indexing -->
-${dynamicWoWURLs
-  .map(
-    (item) => `
-<url>
-  <loc>${item.url}</loc>
-  <lastmod>${item.lastmod}</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.90</priority>
-</url>`
-  )
-  .join('\n')}
-${dynamicFFXIVURLs
-  .map(
-    (item) => `
-<url>
-  <loc>${item.url}</loc>
-  <lastmod>${item.lastmod}</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.90</priority>
-</url>`
-  )
-  .join('\n')}
-${dynamicGW2URLs
-  .map(
-    (item) => `
-<url>
-  <loc>${item.url}</loc>
-  <lastmod>${item.lastmod}</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.90</priority>
-</url>`
-  )
-  .join('\n')}
 </urlset>`
 
   return new Response(Sitemap, {
