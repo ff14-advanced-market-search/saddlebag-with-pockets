@@ -342,6 +342,18 @@ const navGroups: Array<{
     ]
   },
   {
+    title: 'Guild Wars 2',
+    openMatch: '/gw2/',
+    links: [
+      {
+        name: 'Guides and Tutorials',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#gw2-general-guides',
+        icon: DocumentSearchIcon,
+        external: true
+      }
+    ]
+  },
+  {
     title: 'WoW Experimental Tools',
     links: [
       {
@@ -472,6 +484,11 @@ const navGroups: Array<{
       {
         name: 'List of all FFXIV Items',
         href: '/ffxiv/itemlist',
+        icon: DocumentTextIcon
+      },
+      {
+        name: 'List of all GW2 Items',
+        href: '/gw2/itemlist',
         icon: DocumentTextIcon
       },
       {

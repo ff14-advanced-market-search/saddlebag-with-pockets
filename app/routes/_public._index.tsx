@@ -32,6 +32,12 @@ const recommendedQueries = [
     href: '/wow'
   },
   {
+    name: 'Guild Wars 2',
+    description:
+      'Tools for Cross-Realm Trading, Market Overviews, Shortage Finders, and our Best Deals Search!',
+    href: '/gw2'
+  },
+  {
     name: 'Patreon',
     description:
       'Join our Patreon Supporters to access the best tools we have!',
