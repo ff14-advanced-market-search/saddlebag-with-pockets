@@ -181,20 +181,24 @@ const GW2PriceVolumeChart = ({
           <b>${format(new Date(dataPoint.date), 'MM/dd/yyyy HH:mm')}</b><br/>
           <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
           <b style="color: ${
-            darkmode ? '#22c55e' : '#16a34a'
+            darkmode ? '#10b981' : '#059669'
           };">Sell:</b> ${dataPoint.sell_price_avg.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 4
         })} (${dataPoint.sell_quantity_avg.toLocaleString()})<br/>
           <b style="color: ${
-            darkmode ? '#f97316' : '#ea580c'
+            darkmode ? '#f59e0b' : '#d97706'
           };">Buy:</b> ${dataPoint.buy_price_avg.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 4
         })} (${dataPoint.buy_quantity_avg.toLocaleString()})<br/>
           <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
-          <span style="color: ${labelColor};">Supply:</span> ${dataPoint.sell_quantity_avg.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Demand:</span> ${dataPoint.buy_quantity_avg.toLocaleString()}
+          <b style="color: ${
+            darkmode ? '#7c3aed' : '#6d28d9'
+          };">Supply:</b> ${dataPoint.sell_quantity_avg.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#dc2626' : '#b91c1c'
+          };">Demand:</b> ${dataPoint.buy_quantity_avg.toLocaleString()}
         </div>`
       }
     },
@@ -203,35 +207,37 @@ const GW2PriceVolumeChart = ({
         name: 'Sell',
         type: 'line',
         data: timeData.map((d) => d.sell_price_avg),
-        color: darkmode ? '#22c55e' : '#16a34a',
+        color: darkmode ? '#10b981' : '#059669', // Darker green
         yAxis: 0,
         lineWidth: 2,
         marker: { radius: 3 }
+        // Solid line (default)
       },
       {
         name: 'Buy',
         type: 'line',
         data: timeData.map((d) => d.buy_price_avg),
-        color: darkmode ? '#f97316' : '#ea580c',
+        color: darkmode ? '#f59e0b' : '#d97706', // Darker orange
         yAxis: 0,
         lineWidth: 2,
-        marker: { radius: 3 },
-        dashStyle: 'Dash'
+        marker: { radius: 3 }
+        // Solid line (removed dashStyle)
       },
       {
         name: 'Supply',
         type: 'line',
         data: timeData.map((d) => d.sell_quantity_avg),
-        color: darkmode ? '#8b5cf6' : '#7c3aed',
+        color: darkmode ? '#7c3aed' : '#6d28d9', // Darker purple
         yAxis: 1,
         lineWidth: 2,
-        marker: { radius: 3 }
+        marker: { radius: 3 },
+        dashStyle: 'Dot' // Dotted line
       },
       {
         name: 'Demand',
         type: 'line',
         data: timeData.map((d) => d.buy_quantity_avg),
-        color: darkmode ? '#ef4444' : '#dc2626',
+        color: darkmode ? '#dc2626' : '#b91c1c', // Darker red
         yAxis: 1,
         lineWidth: 2,
         marker: { radius: 3 },
@@ -323,6 +329,9 @@ const GW2ValueChart = ({
   const maxValue = Math.max(
     ...timeData.map((d) => Math.max(d.sell_value, d.buy_value))
   )
+  const maxQuantity = Math.max(
+    ...timeData.map((d) => Math.max(d.sell_quantity_avg, d.buy_quantity_avg))
+  )
 
   const options: any = {
     chart: {
@@ -351,25 +360,45 @@ const GW2ValueChart = ({
       lineColor: styles.labelColor,
       gridLineColor: styles.gridLineColor
     },
-    yAxis: {
-      title: {
-        text: 'Value',
-        style: { color: styles.color }
+    yAxis: [
+      {
+        title: {
+          text: 'Value',
+          style: { color: styles.color }
+        },
+        labels: {
+          style: { color: styles.labelColor },
+          formatter: function (this: { value: number }) {
+            return this.value.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })
+          }
+        },
+        lineColor: styles.labelColor,
+        gridLineColor: styles.gridLineColor,
+        min: 0,
+        softMax: maxValue * 1.1 || 1,
+        opposite: false
       },
-      labels: {
-        style: { color: styles.labelColor },
-        formatter: function (this: { value: number }) {
-          return this.value.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })
-        }
-      },
-      lineColor: styles.labelColor,
-      gridLineColor: styles.gridLineColor,
-      min: 0,
-      softMax: maxValue * 1.1 || 1
-    },
+      {
+        title: {
+          text: 'Volume',
+          style: { color: styles.color }
+        },
+        labels: {
+          style: { color: styles.labelColor },
+          formatter: function (this: { value: number }) {
+            return this.value.toLocaleString()
+          }
+        },
+        lineColor: styles.labelColor,
+        gridLineColor: styles.gridLineColor,
+        min: 0,
+        softMax: maxQuantity * 1.1 || 1,
+        opposite: true
+      }
+    ],
     tooltip: {
       shared: true,
       useHTML: true,
@@ -389,17 +418,23 @@ const GW2ValueChart = ({
           <b>${format(new Date(dataPoint.date), 'MM/dd/yyyy HH:mm')}</b><br/>
           <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
           <b style="color: ${
-            darkmode ? '#22c55e' : '#16a34a'
+            darkmode ? '#10b981' : '#059669'
           };">Sell Value:</b> ${dataPoint.sell_value.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
         })}<br/>
           <b style="color: ${
-            darkmode ? '#f97316' : '#ea580c'
+            darkmode ? '#f59e0b' : '#d97706'
           };">Buy Value:</b> ${dataPoint.buy_value.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
-        })}
+        })}<br/>
+          <b style="color: ${
+            darkmode ? '#7c3aed' : '#6d28d9'
+          };">Supply:</b> ${dataPoint.sell_quantity_avg.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#dc2626' : '#b91c1c'
+          };">Demand:</b> ${dataPoint.buy_quantity_avg.toLocaleString()}
         </div>`
       }
     },
@@ -408,17 +443,40 @@ const GW2ValueChart = ({
         name: 'Sell Value',
         type: 'area',
         data: timeData.map((d) => d.sell_value),
-        color: darkmode ? '#22c55e' : '#16a34a',
+        color: darkmode ? '#10b981' : '#059669', // Darker green
         fillOpacity: 0.3,
         lineWidth: 2,
-        marker: { radius: 3 }
+        marker: { radius: 3 },
+        yAxis: 0
+        // Solid line (default)
       },
       {
         name: 'Buy Value',
         type: 'area',
         data: timeData.map((d) => d.buy_value),
-        color: darkmode ? '#f97316' : '#ea580c',
+        color: darkmode ? '#f59e0b' : '#d97706', // Darker orange
         fillOpacity: 0.3,
+        lineWidth: 2,
+        marker: { radius: 3 },
+        yAxis: 0
+        // Solid line (removed dashStyle)
+      },
+      {
+        name: 'Supply',
+        type: 'line',
+        data: timeData.map((d) => d.sell_quantity_avg),
+        color: darkmode ? '#7c3aed' : '#6d28d9', // Darker purple
+        yAxis: 1,
+        lineWidth: 2,
+        marker: { radius: 3 },
+        dashStyle: 'Dot' // Dotted line
+      },
+      {
+        name: 'Demand',
+        type: 'line',
+        data: timeData.map((d) => d.buy_quantity_avg),
+        color: darkmode ? '#dc2626' : '#b91c1c', // Darker red
+        yAxis: 1,
         lineWidth: 2,
         marker: { radius: 3 },
         dashStyle: 'Dash'
@@ -514,10 +572,13 @@ const GW2TransactionChart = ({
       Math.max(d.sell_sold, d.buy_sold, d.sell_listed, d.buy_listed)
     )
   )
+  const maxQuantity = Math.max(
+    ...timeData.map((d) => Math.max(d.sell_quantity_avg, d.buy_quantity_avg))
+  )
 
   const options: any = {
     chart: {
-      type: 'column',
+      type: 'line',
       backgroundColor: styles.backgroundColor,
       height: 300,
       zoomType: 'x'
@@ -542,22 +603,42 @@ const GW2TransactionChart = ({
       lineColor: styles.labelColor,
       gridLineColor: styles.gridLineColor
     },
-    yAxis: {
-      title: {
-        text: 'Volume',
-        style: { color: styles.color }
+    yAxis: [
+      {
+        title: {
+          text: 'Volume',
+          style: { color: styles.color }
+        },
+        labels: {
+          style: { color: styles.labelColor },
+          formatter: function (this: { value: number }) {
+            return this.value.toLocaleString()
+          }
+        },
+        lineColor: styles.labelColor,
+        gridLineColor: styles.gridLineColor,
+        min: 0,
+        softMax: maxSold * 1.1 || 1,
+        opposite: false
       },
-      labels: {
-        style: { color: styles.labelColor },
-        formatter: function (this: { value: number }) {
-          return this.value.toLocaleString()
-        }
-      },
-      lineColor: styles.labelColor,
-      gridLineColor: styles.gridLineColor,
-      min: 0,
-      softMax: maxSold * 1.1 || 1
-    },
+      {
+        title: {
+          text: 'Quantity',
+          style: { color: styles.color }
+        },
+        labels: {
+          style: { color: styles.labelColor },
+          formatter: function (this: { value: number }) {
+            return this.value.toLocaleString()
+          }
+        },
+        lineColor: styles.labelColor,
+        gridLineColor: styles.gridLineColor,
+        min: 0,
+        softMax: maxQuantity * 1.1 || 1,
+        opposite: true
+      }
+    ],
     tooltip: {
       shared: true,
       useHTML: true,
@@ -579,38 +660,76 @@ const GW2TransactionChart = ({
           <span style="color: ${labelColor};">Sold:</span> ${dataPoint.sell_sold.toLocaleString()}<br/>
           <span style="color: ${labelColor};">Bought:</span> ${dataPoint.buy_sold.toLocaleString()}<br/>
           <span style="color: ${labelColor};">Offers:</span> ${dataPoint.sell_listed.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Bids:</span> ${dataPoint.buy_listed.toLocaleString()}
+          <span style="color: ${labelColor};">Bids:</span> ${dataPoint.buy_listed.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#7c3aed' : '#6d28d9'
+          };">Supply:</b> ${dataPoint.sell_quantity_avg.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#dc2626' : '#b91c1c'
+          };">Demand:</b> ${dataPoint.buy_quantity_avg.toLocaleString()}
         </div>`
       }
     },
     series: [
       {
         name: 'Sold',
-        type: 'column',
+        type: 'line',
         data: timeData.map((d) => d.sell_sold),
-        color: darkmode ? '#8b5cf6' : '#7c3aed',
-        opacity: 0.8
+        color: darkmode ? '#7c3aed' : '#6d28d9', // Darker purple
+        yAxis: 0,
+        lineWidth: 2,
+        marker: { radius: 3 }
+        // Solid line
       },
       {
         name: 'Bought',
-        type: 'column',
+        type: 'line',
         data: timeData.map((d) => d.buy_sold),
-        color: darkmode ? '#ef4444' : '#dc2626',
-        opacity: 0.8
+        color: darkmode ? '#dc2626' : '#b91c1c', // Darker red
+        yAxis: 0,
+        lineWidth: 2,
+        marker: { radius: 3 }
+        // Solid line
       },
       {
         name: 'Offers',
-        type: 'column',
+        type: 'line',
         data: timeData.map((d) => d.sell_listed),
-        color: darkmode ? '#22c55e' : '#16a34a',
-        opacity: 0.6
+        color: darkmode ? '#10b981' : '#059669', // Darker green
+        yAxis: 0,
+        lineWidth: 2,
+        marker: { radius: 3 },
+        dashStyle: 'Dash' // Dashed line
       },
       {
         name: 'Bids',
-        type: 'column',
+        type: 'line',
         data: timeData.map((d) => d.buy_listed),
-        color: darkmode ? '#f97316' : '#ea580c',
-        opacity: 0.6
+        color: darkmode ? '#f59e0b' : '#d97706', // Darker orange
+        yAxis: 0,
+        lineWidth: 2,
+        marker: { radius: 3 },
+        dashStyle: 'Dash' // Dashed line
+      },
+      {
+        name: 'Supply',
+        type: 'line',
+        data: timeData.map((d) => d.sell_quantity_avg),
+        color: darkmode ? '#7c3aed' : '#6d28d9', // Darker purple
+        yAxis: 1,
+        lineWidth: 2,
+        marker: { radius: 3 },
+        dashStyle: 'Dot' // Dotted line
+      },
+      {
+        name: 'Demand',
+        type: 'line',
+        data: timeData.map((d) => d.buy_quantity_avg),
+        color: darkmode ? '#dc2626' : '#b91c1c', // Darker red
+        yAxis: 1,
+        lineWidth: 2,
+        marker: { radius: 3 },
+        dashStyle: 'Dash'
       }
     ],
     credits: {
@@ -619,10 +738,6 @@ const GW2TransactionChart = ({
     plotOptions: {
       series: {
         connectNulls: true
-      },
-      column: {
-        grouping: true,
-        groupPadding: 0.1
       }
     }
   }
