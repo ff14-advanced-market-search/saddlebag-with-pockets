@@ -292,26 +292,37 @@ const GW2SynchronizedCharts = ({
         labelHeight: number,
         point: any
       ) {
-        // Position tooltip to avoid being cut off
+        // Position tooltip to the side of cursor so it doesn't cover the point
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
         const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
+        const chartWidth = chart.chartWidth
+        const chartHeight = chart.chartHeight
 
-        let x = point.plotX + plotLeft - labelWidth / 2
-        let y = point.plotY + plotTop - labelHeight - 10
+        // Get mouse position relative to chart
+        const mouseX = point.plotX + plotLeft
+        const mouseY = point.plotY + plotTop
 
-        // Keep tooltip within chart bounds
-        if (x < plotLeft) {
-          x = plotLeft + 10
-        } else if (x + labelWidth > plotLeft + plotWidth) {
-          x = plotLeft + plotWidth - labelWidth - 10
+        // Try positioning to the right first
+        let x = mouseX + 15 // Offset to the right of cursor
+        let y = mouseY - labelHeight / 2 // Center vertically on cursor
+
+        // If tooltip would go off the right edge, position to the left
+        if (x + labelWidth > chartWidth - 10) {
+          x = mouseX - labelWidth - 15 // Offset to the left of cursor
         }
 
-        if (y < plotTop) {
+        // Ensure tooltip doesn't go off the left edge
+        if (x < 10) {
+          x = 10
+        }
+
+        // Keep tooltip vertically within chart bounds
+        if (y < plotTop + 10) {
           y = plotTop + 10
-        } else if (y + labelHeight > plotTop + plotHeight) {
+        } else if (y + labelHeight > plotTop + plotHeight - 10) {
           y = plotTop + plotHeight - labelHeight - 10
         }
 
@@ -469,26 +480,37 @@ const GW2SynchronizedCharts = ({
         labelHeight: number,
         point: any
       ) {
-        // Position tooltip to avoid being cut off
+        // Position tooltip to the side of cursor so it doesn't cover the point
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
         const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
+        const chartWidth = chart.chartWidth
+        const chartHeight = chart.chartHeight
 
-        let x = point.plotX + plotLeft - labelWidth / 2
-        let y = point.plotY + plotTop - labelHeight - 10
+        // Get mouse position relative to chart
+        const mouseX = point.plotX + plotLeft
+        const mouseY = point.plotY + plotTop
 
-        // Keep tooltip within chart bounds
-        if (x < plotLeft) {
-          x = plotLeft + 10
-        } else if (x + labelWidth > plotLeft + plotWidth) {
-          x = plotLeft + plotWidth - labelWidth - 10
+        // Try positioning to the right first
+        let x = mouseX + 15 // Offset to the right of cursor
+        let y = mouseY - labelHeight / 2 // Center vertically on cursor
+
+        // If tooltip would go off the right edge, position to the left
+        if (x + labelWidth > chartWidth - 10) {
+          x = mouseX - labelWidth - 15 // Offset to the left of cursor
         }
 
-        if (y < plotTop) {
+        // Ensure tooltip doesn't go off the left edge
+        if (x < 10) {
+          x = 10
+        }
+
+        // Keep tooltip vertically within chart bounds
+        if (y < plotTop + 10) {
           y = plotTop + 10
-        } else if (y + labelHeight > plotTop + plotHeight) {
+        } else if (y + labelHeight > plotTop + plotHeight - 10) {
           y = plotTop + plotHeight - labelHeight - 10
         }
 
@@ -645,26 +667,37 @@ const GW2SynchronizedCharts = ({
         labelHeight: number,
         point: any
       ) {
-        // Position tooltip to avoid being cut off
+        // Position tooltip to the side of cursor so it doesn't cover the point
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
         const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
+        const chartWidth = chart.chartWidth
+        const chartHeight = chart.chartHeight
 
-        let x = point.plotX + plotLeft - labelWidth / 2
-        let y = point.plotY + plotTop - labelHeight - 10
+        // Get mouse position relative to chart
+        const mouseX = point.plotX + plotLeft
+        const mouseY = point.plotY + plotTop
 
-        // Keep tooltip within chart bounds
-        if (x < plotLeft) {
-          x = plotLeft + 10
-        } else if (x + labelWidth > plotLeft + plotWidth) {
-          x = plotLeft + plotWidth - labelWidth - 10
+        // Try positioning to the right first
+        let x = mouseX + 15 // Offset to the right of cursor
+        let y = mouseY - labelHeight / 2 // Center vertically on cursor
+
+        // If tooltip would go off the right edge, position to the left
+        if (x + labelWidth > chartWidth - 10) {
+          x = mouseX - labelWidth - 15 // Offset to the left of cursor
         }
 
-        if (y < plotTop) {
+        // Ensure tooltip doesn't go off the left edge
+        if (x < 10) {
+          x = 10
+        }
+
+        // Keep tooltip vertically within chart bounds
+        if (y < plotTop + 10) {
           y = plotTop + 10
-        } else if (y + labelHeight > plotTop + plotHeight) {
+        } else if (y + labelHeight > plotTop + plotHeight - 10) {
           y = plotTop + plotHeight - labelHeight - 10
         }
 
