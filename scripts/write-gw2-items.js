@@ -1,13 +1,10 @@
 const axios = require('axios')
 const { writeFile } = require('fs')
 
-const ITEMS_ADDRESS = 'https://api.saddlebagexchange.com/api/wow/itemnames'
+const ITEMS_ADDRESS =
+  'https://api.saddlebagexchange.com/api/gw2/marketableitems'
 
-const FILE_PATHS = {
-  regular: './app/utils/items/wowItems.ts',
-  stackable: './app/utils/items/wowStackableItems.ts',
-  pets: './app/utils/items/wowPetItems.ts'
-}
+const FILE_PATH = './app/utils/items/gw2Items.ts'
 
 /**
  * Validates an item ID and item name and returns a sanitized item name.
@@ -45,28 +42,29 @@ const validateItem = (id, itemName) => {
 /**
  * Fetches items from a specified address and returns the response data.
  * @example
- * sync()
- * some sample return value
+ * getItems()
+ * { "123": "Item Name", "456": "Another Item" }
  * @returns {Object} Returns the fetched data from the specified address.
  * @description
  *   - Utilizes 'axios' for making HTTP requests and handles exceptions.
  *   - Logs the error message and terminates the process in case of any request failure.
  *   - Operates asynchronously using 'await' in an async function.
+ *   - Sends POST request with filter parameters to get all marketable items.
  */
-const getItems = async (type = 'regular') => {
+const getItems = async () => {
   try {
-    console.log(`Fetching ${type} items from:`, ITEMS_ADDRESS)
-
-    const data = {
-      regular: {},
-      stackable: { stackable: true },
-      pets: { pets: true }
-    }[type]
+    console.log('Fetching items from:', ITEMS_ADDRESS)
 
     const itemNameResponse = await axios({
       method: 'post',
       url: ITEMS_ADDRESS,
-      data
+      data: {
+        type: -1,
+        details_type: -1,
+        rarity: -1,
+        level: 0,
+        item_ids: []
+      }
     })
 
     return itemNameResponse.data
@@ -79,31 +77,34 @@ const getItems = async (type = 'regular') => {
 /**
  * Synchronizes a collection of items by validating them and writing to a file.
  * @example
- * sync({ item1: 'value1', item2: 'value2' })
- * No# of items successfully written: 2
- * @param {Object} items - Collection of items with unique identifiers.
- * @param {string} type - The type of items being processed ('regular', 'stackable', or 'pets')
+ * saveItemList({ "99185": { itemID: 99185, name: "Item Name", ... } })
+ * No# of items successfully written: 1
+ * @param {Object} items - Collection of items where each value is an object with itemID and name properties.
  * @returns {Promise} A promise that resolves when the file is written.
  * @description
  *   - Writes to FILE_PATH defined in the script.
- *   - Expects each item to be validated using validateItem function.
+ *   - Expects each item to be an object with itemID (number) and name (string) properties.
+ *   - Validates each item using validateItem function.
  *   - Exits the process with error if no items are valid for writing.
  *   - Asynchronously writes JSON to a file using writeFile.
  */
-const saveItemList = async (items, type) => {
+const saveItemList = async (items) => {
   console.log('Writing file...')
 
   const result = {}
 
-  Object.keys(items).forEach((id) => {
-    const validItem = validateItem(id, items[id])
-    if (validItem) {
-      result[id] = validItem
+  Object.keys(items).forEach((key) => {
+    const item = items[key]
+    if (item && item.itemID != null && item.name != null) {
+      const itemId = String(item.itemID)
+      const validItem = validateItem(itemId, item.name)
+      if (validItem) {
+        result[itemId] = validItem
+      }
     }
   })
 
-  const filePath = FILE_PATHS[type]
-  console.log('Writing file:', filePath)
+  console.log('Writing file:', FILE_PATH)
 
   const numberOfItems = Object.keys(result).length
 
@@ -112,15 +113,10 @@ const saveItemList = async (items, type) => {
     process.exit(1)
   }
 
-  const mapName =
-    type === 'regular'
-      ? 'wowItemsMap'
-      : `wow${type.charAt(0).toUpperCase() + type.slice(1)}ItemsMap`
-
   return new Promise((resolve, reject) => {
     writeFile(
-      filePath,
-      `export const ${mapName}: Record<string, string> = ` +
+      FILE_PATH,
+      'export const gw2ItemsMap: Record<string, string> = ' +
         JSON.stringify(result, null, 2),
       function (err) {
         if (err) {
@@ -128,19 +124,16 @@ const saveItemList = async (items, type) => {
           reject(err)
           process.exit(1)
         }
-        console.log(`NO# of ${type} items successfully written:`, numberOfItems)
+        console.log('NO# of items successfully written:', numberOfItems)
         resolve()
       }
     )
   })
 }
 
-// Fetch and save all types of items
-Promise.all([
-  getItems('regular').then((items) => saveItemList(items, 'regular')),
-  getItems('pets').then((items) => saveItemList(items, 'pets')),
-  getItems('stackable').then((items) => saveItemList(items, 'stackable'))
-])
+// Fetch and save items
+getItems()
+  .then(saveItemList)
   .then(() => {
     console.log('All items have been written successfully')
     process.exit(0)
