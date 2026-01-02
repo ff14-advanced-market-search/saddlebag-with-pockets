@@ -255,6 +255,195 @@ const GW2PriceVolumeChart = ({
   )
 }
 
+// GW2 Value Chart Component
+const GW2ValueChart = ({
+  timeData,
+  darkmode,
+  itemName
+}: {
+  timeData: TimeDataPoint[]
+  darkmode: boolean
+  itemName: string
+}) => {
+  const [chartsLoaded, setChartsLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  const loadCharts = () => {
+    setChartsLoaded(true)
+  }
+
+  const shouldShowButton = isMobile && !chartsLoaded
+  const shouldLoadCharts = !isMobile || chartsLoaded
+
+  if (shouldShowButton) {
+    if (timeData.length > 0) {
+      return null // Only show button once for all charts
+    }
+    return null
+  }
+
+  if (!shouldLoadCharts || timeData.length === 0) {
+    return null
+  }
+
+  const Highcharts = require('highcharts')
+  const HighchartsReact = require('highcharts-react-official').default
+
+  const styles = darkmode
+    ? {
+        backgroundColor: '#334155',
+        color: '#f3f4f6',
+        hoverColor: '#f8f8f8',
+        gridLineColor: '#4a5568',
+        labelColor: '#9ca3af'
+      }
+    : {
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        hoverColor: '#666666',
+        gridLineColor: '#e2e8f0',
+        labelColor: '#666666'
+      }
+
+  const xCategories = timeData.map((d) =>
+    format(new Date(d.date), 'MM/dd HH:mm')
+  )
+
+  const maxValue = Math.max(
+    ...timeData.map((d) => Math.max(d.sell_value, d.buy_value))
+  )
+
+  const options: any = {
+    chart: {
+      type: 'area',
+      backgroundColor: styles.backgroundColor,
+      height: 300,
+      zoomType: 'x'
+    },
+    title: {
+      text: `${itemName} - Buy Value and Sell Value`,
+      style: { color: styles.color }
+    },
+    legend: {
+      itemStyle: { color: styles.color },
+      align: 'center',
+      itemHoverStyle: { color: styles.hoverColor },
+      layout: 'horizontal',
+      verticalAlign: 'bottom'
+    },
+    xAxis: {
+      categories: xCategories,
+      labels: {
+        style: { color: styles.labelColor },
+        rotation: -45
+      },
+      lineColor: styles.labelColor,
+      gridLineColor: styles.gridLineColor
+    },
+    yAxis: {
+      title: {
+        text: 'Value',
+        style: { color: styles.color }
+      },
+      labels: {
+        style: { color: styles.labelColor },
+        formatter: function (this: { value: number }) {
+          return this.value.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })
+        }
+      },
+      lineColor: styles.labelColor,
+      gridLineColor: styles.gridLineColor,
+      min: 0,
+      softMax: maxValue * 1.1 || 1
+    },
+    tooltip: {
+      shared: true,
+      useHTML: true,
+      backgroundColor: darkmode ? '#1f2937' : '#ffffff',
+      style: {
+        color: darkmode ? '#f3f4f6' : '#000000'
+      },
+      formatter: function (this: any) {
+        const points = this.points || []
+        if (points.length === 0) return ''
+        const point = points[0]
+        const index = point.point.index || 0
+        const dataPoint = timeData[index]
+        const labelColor = styles.labelColor
+
+        return `<div style="min-width: 200px; color: ${styles.color};">
+          <b>${format(new Date(dataPoint.date), 'MM/dd/yyyy HH:mm')}</b><br/>
+          <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
+          <b style="color: ${
+            darkmode ? '#22c55e' : '#16a34a'
+          };">Sell Value:</b> ${dataPoint.sell_value.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })}<br/>
+          <b style="color: ${
+            darkmode ? '#f97316' : '#ea580c'
+          };">Buy Value:</b> ${dataPoint.buy_value.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })}
+        </div>`
+      }
+    },
+    series: [
+      {
+        name: 'Sell Value',
+        type: 'area',
+        data: timeData.map((d) => d.sell_value),
+        color: darkmode ? '#22c55e' : '#16a34a',
+        fillOpacity: 0.3,
+        lineWidth: 2,
+        marker: { radius: 3 }
+      },
+      {
+        name: 'Buy Value',
+        type: 'area',
+        data: timeData.map((d) => d.buy_value),
+        color: darkmode ? '#f97316' : '#ea580c',
+        fillOpacity: 0.3,
+        lineWidth: 2,
+        marker: { radius: 3 },
+        dashStyle: 'Dash'
+      }
+    ],
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      series: {
+        connectNulls: true
+      },
+      area: {
+        stacking: null
+      }
+    }
+  }
+
+  return (
+    <ContentContainer>
+      <HighchartsReact highcharts={Highcharts} options={options} />
+    </ContentContainer>
+  )
+}
+
 // GW2 Transaction Volume Chart Component
 const GW2TransactionChart = ({
   timeData,
@@ -841,6 +1030,15 @@ export default function Index() {
         {/* Price and Volume Chart */}
         {listing.timeData.length > 0 && (
           <GW2PriceVolumeChart
+            timeData={listing.timeData}
+            darkmode={darkmode}
+            itemName={listing.itemName}
+          />
+        )}
+
+        {/* Buy Value and Sell Value Chart */}
+        {listing.timeData.length > 0 && (
+          <GW2ValueChart
             timeData={listing.timeData}
             darkmode={darkmode}
             itemName={listing.itemName}
