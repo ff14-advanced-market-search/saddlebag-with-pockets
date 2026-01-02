@@ -16,6 +16,42 @@ import ItemDataLink from '~/components/utilities/ItemDataLink'
 import { RadioButtons } from '~/components/Common/RadioButtons'
 import { TabbedButtons } from '~/components/FFXIVResults/Marketshare'
 
+export const SortBySelect = ({
+  label = 'Sort Results By',
+  onChange,
+  defaultValue = 'value'
+}: {
+  label?: string
+  onChange?: (value: GW2MarketshareSortBy) => void
+  defaultValue?: GW2MarketshareSortBy
+}) => (
+  <div className="mt-2">
+    <Label htmlFor="sort_by">{label}</Label>
+    <select
+      name="sort_by"
+      defaultValue={defaultValue}
+      onChange={(event) => {
+        if (onChange) {
+          const newValue = event.target.value
+          const validSortByOptions = sortByOptions.map(({ value }) => value)
+
+          const option = validSortByOptions.find((opt) => opt === newValue)
+
+          if (option) {
+            onChange(option)
+          }
+        }
+      }}
+      className="flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
+      {sortByOptions.map(({ label, value }) => (
+        <option key={value} value={value}>
+          {label}
+        </option>
+      ))}
+    </select>
+  </div>
+)
+
 export const sortByOptions: Array<{
   label: string
   value: GW2MarketshareSortBy
@@ -66,7 +102,7 @@ const getChartData = (
   data: Array<GW2MarketshareItem>,
   sortBy: GW2MarketshareSortBy,
   useHistoric: boolean,
-  colorBy: 'value' | 'quantity'
+  colorBy: 'value' | 'sold' | 'price'
 ): Array<TreemapNode> => {
   const result: Array<TreemapNode> = []
 
@@ -108,18 +144,30 @@ const getChartData = (
     }
 
     // Determine color based on colorBy
-    if (colorBy === 'quantity') {
-      // Use quantity-based state (could be based on current_sell_quantity or current_buy_quantity)
-      // For now, use a simple heuristic based on quantity
-      const avgQuantity =
-        (item.current_sell_quantity + item.current_buy_quantity) / 2
-      if (avgQuantity > 100000) {
+    if (colorBy === 'price') {
+      // Use price-based state - calculate percent change for price
+      const priceChange = item.pricePercentChange
+      if (priceChange > 20) {
         color = hexMap['spiking']
-      } else if (avgQuantity > 50000) {
+      } else if (priceChange > 5) {
         color = hexMap['increasing']
-      } else if (avgQuantity > 10000) {
+      } else if (priceChange > -5) {
         color = hexMap['stable']
-      } else if (avgQuantity > 1000) {
+      } else if (priceChange > -20) {
+        color = hexMap['decreasing']
+      } else {
+        color = hexMap['crashing']
+      }
+    } else if (colorBy === 'sold') {
+      // Use sold-based state - calculate percent change for sold
+      const soldChange = item.soldPercentChange
+      if (soldChange > 20) {
+        color = hexMap['spiking']
+      } else if (soldChange > 5) {
+        color = hexMap['increasing']
+      } else if (soldChange > -5) {
+        color = hexMap['stable']
+      } else if (soldChange > -20) {
         color = hexMap['decreasing']
       } else {
         color = hexMap['crashing']
@@ -210,8 +258,13 @@ export const Results = ({
 }) => {
   const [sortBy, setSortBy] = useState<GW2MarketshareSortBy>(sortByValue)
   const [globalFilter, setGlobalFilter] = useState('')
-  const [useHistoric, setUseHistoric] = useState(false)
-  const [colorBy, setColorBy] = useState<'value' | 'quantity'>('value')
+  const [colorBy, setColorBy] = useState<'value' | 'sold' | 'price'>('value')
+
+  // Determine if we should use historic based on the sortBy selection
+  const useHistoric =
+    sortBy === 'historic_value' ||
+    sortBy === 'historic_sold' ||
+    sortBy === 'historic_price_average'
 
   const chartData = getChartData(data, sortBy, useHistoric, colorBy)
 
@@ -225,20 +278,10 @@ export const Results = ({
 
   const mobileColumnList = getMobileColumns(sortBy)
 
-  const marketValueOptions = [
-    {
-      label: 'Current Value',
-      value: 'current'
-    },
-    {
-      label: 'Historic Value',
-      value: 'historic'
-    }
-  ]
-
   const colorOptions = [
     { label: 'Value', value: 'value' },
-    { label: 'Quantity', value: 'quantity' }
+    { label: 'Sold', value: 'sold' },
+    { label: 'Price', value: 'price' }
   ]
 
   return (
@@ -278,22 +321,12 @@ export const Results = ({
           />
 
           <RadioButtons
-            title="Market values to show"
-            name="valuesToShow"
-            radioOptions={marketValueOptions}
-            defaultChecked={useHistoric ? 'historic' : 'current'}
-            onChange={(value) => {
-              setUseHistoric(value === 'historic')
-            }}
-          />
-
-          <RadioButtons
             title="Color Visualisation"
             name="chartColor"
             radioOptions={colorOptions}
             defaultChecked={colorBy}
             onChange={(value) => {
-              if (value === 'value' || value === 'quantity') {
+              if (value === 'value' || value === 'sold' || value === 'price') {
                 setColorBy(value)
               }
             }}
@@ -327,10 +360,8 @@ export const Results = ({
         data={data}
         sortingOrder={[{ id: sortBy, desc: true }]}
         columnList={mobileColumnList}
-        rowLabels={columnList}
-        columnSelectOptions={Object.keys(columnList).map(
-          (_, i) => columnList[i].columnId
-        )}
+        rowLabels={columnList as any}
+        columnSelectOptions={columnList.map((col) => col.columnId)}
       />
     </>
   )

@@ -14,7 +14,7 @@ import GW2Marketshare, {
   type GW2MarketshareProps
 } from '~/requests/GW2/marketshare'
 import NoResults from '~/components/Common/NoResults'
-import { Results } from '~/components/GW2Results/Marketshare'
+import { Results, SortBySelect } from '~/components/GW2Results/Marketshare'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import {
@@ -366,6 +366,14 @@ export default function Index() {
               const value = e.target.value
               if (value !== undefined) {
                 handleFormChange('level', value)
+              }
+            }}
+          />
+          <SortBySelect
+            defaultValue={loaderData.sort_by}
+            onChange={(value) => {
+              if (value !== undefined) {
+                handleFormChange('sort_by', value)
               }
             }}
           />
