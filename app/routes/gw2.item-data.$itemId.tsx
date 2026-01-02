@@ -620,7 +620,7 @@ export default function Index() {
         {/* Extra Data Section */}
         {listing.extraData && (
           <ContentContainer>
-            <>
+            <div>
               <div className="mb-4">
                 <button
                   type="button"
@@ -804,7 +804,7 @@ export default function Index() {
                   </div>
                 </div>
               )}
-            </>
+            </div>
           </ContentContainer>
         )}
 
