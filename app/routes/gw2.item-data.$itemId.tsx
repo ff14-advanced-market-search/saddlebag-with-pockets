@@ -932,10 +932,13 @@ const sellColumnList: Array<ColumnList<SellOrderItem>> = [
   { columnId: 'quantity', header: 'Quantity' }
 ]
 
+type TimeScale = 'day' | 'week' | 'month' | '3month' | 'year' | 'max'
+
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const [showExtraData, setShowExtraData] = useState(false)
+  const [timeScale, setTimeScale] = useState<TimeScale>('week')
 
   const error = result && 'exception' in result ? result.exception : undefined
 
@@ -952,6 +955,51 @@ export default function Index() {
   }
 
   const listing = 'data' in result ? result.data : undefined
+
+  // Filter data based on selected time scale
+  const getFilteredData = (): TimeDataPoint[] => {
+    if (!listing) return []
+
+    const now = new Date()
+    let cutoffDate: Date
+    let dataSource: TimeDataPoint[]
+
+    switch (timeScale) {
+      case 'day':
+        cutoffDate = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+        dataSource = listing.timeData
+        break
+      case 'week':
+        cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+        dataSource = listing.timeData
+        break
+      case 'month':
+        cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+        dataSource = listing.dailyData || []
+        break
+      case '3month':
+        cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000)
+        dataSource = listing.dailyData || []
+        break
+      case 'year':
+        cutoffDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000)
+        dataSource = listing.dailyData || []
+        break
+      case 'max':
+        dataSource = listing.dailyData || []
+        return dataSource
+      default:
+        dataSource = listing.timeData
+        return dataSource
+    }
+
+    return dataSource.filter((point) => {
+      const pointDate = new Date(point.date)
+      return pointDate >= cutoffDate
+    })
+  }
+
+  const filteredData = getFilteredData()
 
   if (listing) {
     return (
@@ -1244,12 +1292,46 @@ export default function Index() {
         )}
 
         {/* Synchronized Charts */}
-        {listing.timeData.length > 0 && (
-          <GW2SynchronizedCharts
-            timeData={listing.timeData}
-            darkmode={darkmode}
-            itemName={listing.itemName}
-          />
+        {(listing.timeData.length > 0 ||
+          (listing.dailyData && listing.dailyData.length > 0)) && (
+          <ContentContainer>
+            <div>
+              {/* Time Scale Buttons */}
+              <div className="mb-4 flex flex-wrap gap-2 justify-center">
+                {(
+                  [
+                    'day',
+                    'week',
+                    'month',
+                    '3month',
+                    'year',
+                    'max'
+                  ] as TimeScale[]
+                ).map((scale) => (
+                  <button
+                    key={scale}
+                    type="button"
+                    onClick={() => setTimeScale(scale)}
+                    className={`px-4 py-2 rounded-lg shadow-md text-sm font-medium transition-colors ${
+                      timeScale === scale
+                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200'
+                    }`}>
+                    {scale === '3month'
+                      ? '3 Month'
+                      : scale.charAt(0).toUpperCase() + scale.slice(1)}
+                  </button>
+                ))}
+              </div>
+              {filteredData.length > 0 && (
+                <GW2SynchronizedCharts
+                  timeData={filteredData}
+                  darkmode={darkmode}
+                  itemName={listing.itemName}
+                />
+              )}
+            </div>
+          </ContentContainer>
         )}
 
         {/* Orders Tables - Side by Side */}
