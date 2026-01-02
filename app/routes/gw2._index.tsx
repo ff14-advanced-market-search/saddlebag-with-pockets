@@ -54,9 +54,9 @@ export default function Index() {
             </p>
             <div className="mt-8 flex justify-center space-x-4">
               <a
-                href="/gw2/itemlist"
+                href="/gw2/marketshare/recommended"
                 className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
-                Browse All Items
+                Marketshare Overview
               </a>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function Index() {
                 Tools & Features
               </h2>
               <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-                Everything You Need for Gold Making
+                Everything You Need for Trading Post Gold Making
               </p>
             </div>
 

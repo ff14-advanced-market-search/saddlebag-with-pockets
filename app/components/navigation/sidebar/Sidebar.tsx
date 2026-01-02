@@ -350,6 +350,11 @@ const navGroups: Array<{
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#gw2-general-guides',
         icon: DocumentSearchIcon,
         external: true
+      },
+      {
+        name: 'Marketshare Overview',
+        href: '/gw2/marketshare/recommended',
+        icon: ChartSquareBarIcon
       }
     ]
   },
