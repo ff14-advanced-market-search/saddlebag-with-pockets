@@ -291,8 +291,28 @@ const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'buy_quantity_min', header: 'Buy Quantity Min' },
   { columnId: 'buy_quantity_stdev', header: 'Buy Quantity StDev' },
   { columnId: 'count', header: 'Count' },
-  { columnId: 'statsDate', header: 'Stats Date' },
-  { columnId: 'historicStatsDateCutoff', header: 'Historic Stats Date Cutoff' }
+  {
+    columnId: 'statsDate',
+    header: 'Stats Date',
+    accessor: ({ getValue }) => {
+      const value = getValue()
+      if (typeof value === 'string') {
+        return <p>{value}</p>
+      }
+      return <p>{String(value)}</p>
+    }
+  },
+  {
+    columnId: 'historicStatsDateCutoff',
+    header: 'Historic Stats Date Cutoff',
+    accessor: ({ getValue }) => {
+      const value = getValue()
+      if (typeof value === 'string') {
+        return <p>{value}</p>
+      }
+      return <p>{String(value)}</p>
+    }
+  }
 ]
 
 const assertIsSortBy = (value: string): value is GW2MarketshareSortBy => {

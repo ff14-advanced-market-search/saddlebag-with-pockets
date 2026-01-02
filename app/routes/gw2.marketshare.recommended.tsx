@@ -22,15 +22,13 @@ export const meta: MetaFunction = () => {
 
 const searchParams = {
   defaultView: '/gw2/marketshare?sort_by=value',
-  historicValue: '/gw2/marketshare?sort_by=historic_value',
   sold: '/gw2/marketshare?sort_by=sold',
-  historicSold: '/gw2/marketshare?sort_by=historic_sold',
+  highValue: '/gw2/marketshare?desired_avg_price=10000000&sort_by=value',
+  fastSales: '/gw2/marketshare?desired_sales_per_day=1000&sort_by=sold',
   priceAverage: '/gw2/marketshare?sort_by=price_average',
   pricePercentChange: '/gw2/marketshare?sort_by=pricePercentChange',
   soldPercentChange: '/gw2/marketshare?sort_by=soldPercentChange',
-  valuePercentChange: '/gw2/marketshare?sort_by=valuePercentChange',
-  highValue: '/gw2/marketshare?desired_avg_price=10000000&sort_by=value',
-  fastSales: '/gw2/marketshare?desired_sales_per_day=1000&sort_by=sold'
+  valuePercentChange: '/gw2/marketshare?sort_by=valuePercentChange'
 }
 
 const recommendedQueries = [
@@ -42,23 +40,22 @@ const recommendedQueries = [
     href: searchParams.defaultView
   },
   {
-    name: 'Historic Value Overview',
-    description:
-      'View items by their historic value to identify long-term trends.',
-    Icon: DocumentSearchIcon,
-    href: searchParams.historicValue
-  },
-  {
     name: 'Most Sold Items',
     description: 'Find the items with the highest sales volume.',
     Icon: DocumentSearchIcon,
     href: searchParams.sold
   },
   {
-    name: 'Historic Sales Volume',
-    description: 'See items by their historic sales volume.',
+    name: 'High Value Items',
+    description: 'Find items with high average prices (1000+ gold).',
     Icon: DocumentSearchIcon,
-    href: searchParams.historicSold
+    href: searchParams.highValue
+  },
+  {
+    name: 'Fast Selling Items',
+    description: 'Discover items that sell quickly (1000+ sales per day).',
+    Icon: DocumentSearchIcon,
+    href: searchParams.fastSales
   },
   {
     name: 'Price Average',
@@ -86,18 +83,6 @@ const recommendedQueries = [
       'Identify items with the largest value changes - perfect for investment opportunities!',
     Icon: DocumentSearchIcon,
     href: searchParams.valuePercentChange
-  },
-  {
-    name: 'High Value Items',
-    description: 'Find items with high average prices (1000+ gold).',
-    Icon: DocumentSearchIcon,
-    href: searchParams.highValue
-  },
-  {
-    name: 'Fast Selling Items',
-    description: 'Discover items that sell quickly (1000+ sales per day).',
-    Icon: DocumentSearchIcon,
-    href: searchParams.fastSales
   }
 ]
 
