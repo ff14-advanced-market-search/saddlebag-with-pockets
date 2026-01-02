@@ -206,7 +206,7 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'line',
       backgroundColor: styles.backgroundColor,
-      height: 300,
+      height: 350,
       spacingBottom: 20,
       marginBottom: 40,
       events: {
@@ -391,7 +391,7 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'area',
       backgroundColor: styles.backgroundColor,
-      height: 300,
+      height: 350,
       spacingTop: 20,
       spacingBottom: 20,
       marginTop: 20,
@@ -526,7 +526,8 @@ const GW2SynchronizedCharts = ({
         fillOpacity: 0.3,
         lineWidth: 2,
         marker: { radius: 3 },
-        yAxis: 0
+        yAxis: 0,
+        stack: 'value'
       },
       {
         name: 'Buy Value',
@@ -536,7 +537,8 @@ const GW2SynchronizedCharts = ({
         fillOpacity: 0.3,
         lineWidth: 2,
         marker: { radius: 3 },
-        yAxis: 0
+        yAxis: 0,
+        stack: 'value'
       },
       {
         name: 'Supply',
@@ -576,7 +578,7 @@ const GW2SynchronizedCharts = ({
         }
       },
       area: {
-        stacking: null
+        stacking: 'normal'
       }
     }
   }
@@ -586,9 +588,10 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'line',
       backgroundColor: styles.backgroundColor,
-      height: 300,
+      height: 400,
       spacingTop: 20,
       marginTop: 20,
+      marginBottom: 50,
       events: {
         load: function (this: any) {
           chartRefs.current[2] = this
