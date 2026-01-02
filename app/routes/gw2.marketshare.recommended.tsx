@@ -23,7 +23,7 @@ export const meta: MetaFunction = () => {
 const searchParams = {
   defaultView: '/gw2/marketshare?sort_by=value',
   sold: '/gw2/marketshare?sort_by=sold',
-  highValue: '/gw2/marketshare?desired_avg_price=10000000&sort_by=value',
+  highValue: '/gw2/marketshare?desired_avg_price=1000&sort_by=value',
   fastSales: '/gw2/marketshare?desired_sales_per_day=1000&sort_by=sold',
   priceAverage: '/gw2/marketshare?sort_by=price_average',
   pricePercentChange: '/gw2/marketshare?sort_by=pricePercentChange',
