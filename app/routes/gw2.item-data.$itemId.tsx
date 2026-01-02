@@ -144,7 +144,7 @@ const LazyCharts = ({
         lineColor: styles?.color
       },
       tooltip: {
-        formatter: function () {
+        formatter: function (this: any) {
           const point = this.point
           const index = point.index || 0
           const dataPoint = timeData[index]
@@ -185,26 +185,15 @@ const LazyCharts = ({
   }
 
   return (
-    <>
-      <ContentContainer>
-        <PriceQuantityChart
-          chartTitle="Buy Orders - Price vs Quantity"
-          darkMode={darkmode}
-          timeData={timeData}
-          priceKey="buy_price_avg"
-          quantityKey="buy_quantity_avg"
-        />
-      </ContentContainer>
-      <ContentContainer>
-        <PriceQuantityChart
-          chartTitle="Sell Orders - Price vs Quantity"
-          darkMode={darkmode}
-          timeData={timeData}
-          priceKey="sell_price_avg"
-          quantityKey="sell_quantity_avg"
-        />
-      </ContentContainer>
-    </>
+    <ContentContainer>
+      <PriceQuantityChart
+        chartTitle="Sell Orders - Price vs Quantity"
+        darkMode={darkmode}
+        timeData={timeData}
+        priceKey="sell_price_avg"
+        quantityKey="sell_quantity_avg"
+      />
+    </ContentContainer>
   )
 }
 
@@ -314,6 +303,7 @@ const sellColumnList: Array<ColumnList<SellOrderItem>> = [
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
+  const [showExtraData, setShowExtraData] = useState(false)
 
   const error = result && 'exception' in result ? result.exception : undefined
 
@@ -340,6 +330,16 @@ export default function Index() {
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
             <Differences
+              diffTitle="Item ID"
+              diffAmount={listing.itemID.toLocaleString()}
+              className="bg-gray-100 text-gray-900 font-semibold dark:bg-gray-600 dark:text-gray-100"
+            />
+            <Differences
+              diffTitle="Type"
+              diffAmount={listing.type.toLocaleString()}
+              className="bg-gray-100 text-gray-900 font-semibold dark:bg-gray-600 dark:text-gray-100"
+            />
+            <Differences
               diffTitle="Average Price"
               diffAmount={listing.price_average.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -348,9 +348,22 @@ export default function Index() {
               className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
             />
             <Differences
+              diffTitle="Total Value"
+              diffAmount={listing.value.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
+              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+            <Differences
               diffTitle="Total Sold"
               diffAmount={listing.sold.toLocaleString()}
               className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+            />
+            <Differences
+              diffTitle="Date"
+              diffAmount={new Date(listing.date).toLocaleDateString()}
+              className="bg-gray-100 text-gray-900 font-semibold dark:bg-gray-600 dark:text-gray-100"
             />
           </div>
           <div className="flex flex-col max-w-full">
@@ -404,6 +417,22 @@ export default function Index() {
         {/* Lazy loaded charts */}
         <LazyCharts timeData={listing.timeData} darkmode={darkmode} />
 
+        {/* Sell Orders Table */}
+        {listing.sells.length === 0 ? (
+          <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
+            No Sell Orders Available
+          </div>
+        ) : (
+          <SmallTable
+            title={`${listing.itemName} : Sell Orders`}
+            sortingOrder={[{ desc: false, id: 'unit_price' }]}
+            columnList={sellColumnList}
+            mobileColumnList={sellColumnList}
+            columnSelectOptions={['unit_price', 'quantity']}
+            data={listing.sells}
+          />
+        )}
+
         {/* Buy Orders Table */}
         {listing.buys.length === 0 ? (
           <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
@@ -420,20 +449,195 @@ export default function Index() {
           />
         )}
 
-        {/* Sell Orders Table */}
-        {listing.sells.length === 0 ? (
-          <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
-            No Sell Orders Available
-          </div>
-        ) : (
-          <SmallTable
-            title={`${listing.itemName} : Sell Orders`}
-            sortingOrder={[{ desc: false, id: 'unit_price' }]}
-            columnList={sellColumnList}
-            mobileColumnList={sellColumnList}
-            columnSelectOptions={['unit_price', 'quantity']}
-            data={listing.sells}
-          />
+        {/* Extra Data Section */}
+        {listing.extraData && (
+          <ContentContainer>
+            <>
+              <div className="mb-4">
+                <button
+                  type="button"
+                  onClick={() => setShowExtraData(!showExtraData)}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md">
+                  {showExtraData ? 'Hide' : 'Show'} Extra Statistics
+                </button>
+              </div>
+              {showExtraData && (
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                      Sell Statistics
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <Differences
+                        diffTitle="Sell Delisted"
+                        diffAmount={listing.extraData.sell_delisted.toLocaleString()}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Listed"
+                        diffAmount={listing.extraData.sell_listed.toLocaleString()}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Price Max"
+                        diffAmount={listing.extraData.sell_price_max.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 4
+                          }
+                        )}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Price Min"
+                        diffAmount={listing.extraData.sell_price_min.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 4
+                          }
+                        )}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Price StDev"
+                        diffAmount={listing.extraData.sell_price_stdev.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          }
+                        )}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Quantity Avg"
+                        diffAmount={listing.extraData.sell_quantity_avg.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          }
+                        )}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Quantity Max"
+                        diffAmount={listing.extraData.sell_quantity_max.toLocaleString()}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Quantity Min"
+                        diffAmount={listing.extraData.sell_quantity_min.toLocaleString()}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Sell Quantity StDev"
+                        diffAmount={listing.extraData.sell_quantity_stdev.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          }
+                        )}
+                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                      Buy Statistics
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <Differences
+                        diffTitle="Buy Delisted"
+                        diffAmount={listing.extraData.buy_delisted.toLocaleString()}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Listed"
+                        diffAmount={listing.extraData.buy_listed.toLocaleString()}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Price Max"
+                        diffAmount={listing.extraData.buy_price_max.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 4
+                          }
+                        )}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Price Min"
+                        diffAmount={listing.extraData.buy_price_min.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 4
+                          }
+                        )}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Price StDev"
+                        diffAmount={listing.extraData.buy_price_stdev.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          }
+                        )}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Quantity Avg"
+                        diffAmount={listing.extraData.buy_quantity_avg.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          }
+                        )}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Quantity Max"
+                        diffAmount={listing.extraData.buy_quantity_max.toLocaleString()}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Quantity Min"
+                        diffAmount={listing.extraData.buy_quantity_min.toLocaleString()}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                      <Differences
+                        diffTitle="Buy Quantity StDev"
+                        diffAmount={listing.extraData.buy_quantity_stdev.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          }
+                        )}
+                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Differences
+                      diffTitle="Data Points Count"
+                      diffAmount={listing.extraData.count.toLocaleString()}
+                      className="bg-gray-100 text-gray-900 font-semibold dark:bg-gray-600 dark:text-gray-100"
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          </ContentContainer>
         )}
       </PageWrapper>
     )
