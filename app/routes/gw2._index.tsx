@@ -1,4 +1,4 @@
-import type { DocumentSearchIcon } from '@heroicons/react/outline'
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import type { MetaFunction } from '@remix-run/cloudflare'
 
@@ -22,7 +22,13 @@ const recommendedQueries: Array<{
   href: string
   external?: boolean
 }> = [
-  // Pages will be added here later
+  {
+    name: 'Marketshare Overview',
+    description:
+      'Find out what items are actually selling and what are the best items to sell. Shows the top items matching your search.',
+    Icon: DocumentSearchIcon,
+    href: '/gw2/marketshare/recommended'
+  }
 ]
 
 export default function Index() {
