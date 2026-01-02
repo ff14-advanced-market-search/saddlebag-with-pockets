@@ -39,6 +39,10 @@ export const loader: LoaderFunction = () => {
   Allow: /ffxiv/extended-history
   Allow: /ffxiv/best-deals/recommended
   Allow: /ffxiv/weekly-price-group-delta
+  Allow: /gw2
+  Allow: /gw2/marketshare/recommended
+  Allow: /gw2/item-data/*
+  Allow: /gw2/itemlist
 
   Disallow: /nogooglebot/
   Disallow: /build/

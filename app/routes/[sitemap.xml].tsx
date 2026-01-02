@@ -1,6 +1,7 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
 import { ffxivItemsMap } from '~/utils/items/ffxivItems'
 import { wowItemsMap } from '~/utils/items/wowItems'
+import { gw2ItemsMap } from '~/utils/items/gw2Items'
 
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)
 const toW3CDate = (date: Date): string => {
@@ -8,7 +9,10 @@ const toW3CDate = (date: Date): string => {
 }
 
 // Helper to get last modified date for an item
-const getItemLastMod = (_id: string, _type: 'ffxiv' | 'wow'): string => {
+const getItemLastMod = (
+  _id: string,
+  _type: 'ffxiv' | 'wow' | 'gw2'
+): string => {
   // TODO: Implement actual last modified date lookup from your database
   // For now, we'll use a more realistic approach - weekly updates
   const now = new Date()
@@ -23,6 +27,7 @@ export const loader: LoaderFunction = async () => {
   // Get arrays of item IDs without labels
   const ffxivItemIDs = Object.keys(ffxivItemsMap)
   const wowItemIDs = Object.keys(wowItemsMap)
+  const gw2ItemIDs = Object.keys(gw2ItemsMap)
 
   // Generate URLs with dynamic parameters for WoW items
   const dynamicWoWURLs = wowItemIDs.map((id) => {
@@ -37,6 +42,14 @@ export const loader: LoaderFunction = async () => {
     return {
       url: `${baseURL}/queries/item-data/${id}`,
       lastmod: getItemLastMod(id, 'ffxiv')
+    }
+  })
+
+  // Generate URLs with dynamic parameters for GW2 items
+  const dynamicGW2URLs = gw2ItemIDs.map((id) => {
+    return {
+      url: `${baseURL}/gw2/item-data/${id}`,
+      lastmod: getItemLastMod(id, 'gw2')
     }
   })
 
@@ -55,6 +68,11 @@ export const loader: LoaderFunction = async () => {
 </url>
 <url>
   <loc>https://saddlebagexchange.com/wow/itemlist</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/gw2/itemlist</loc>
   <lastmod>${currentDate}</lastmod>
   <priority>0.90</priority>
 </url>
@@ -386,6 +404,17 @@ ${dynamicWoWURLs
   )
   .join('\n')}
 ${dynamicFFXIVURLs
+  .map(
+    (item) => `
+<url>
+  <loc>${item.url}</loc>
+  <lastmod>${item.lastmod}</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.90</priority>
+</url>`
+  )
+  .join('\n')}
+${dynamicGW2URLs
   .map(
     (item) => `
 <url>
