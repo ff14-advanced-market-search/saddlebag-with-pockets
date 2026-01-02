@@ -68,16 +68,16 @@ const createSharedTooltipFormatter = (
       };">Bought:</b> ${dataPoint.buy_sold.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#10b981' : '#059669'
-      };">Offers:</b> ${dataPoint.sell_listed.toLocaleString()}<br/>
+      };">New Offers:</b> ${dataPoint.sell_listed.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#f59e0b' : '#d97706'
-      };">Bids:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
+      };">New Bids:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#10b981' : '#059669'
-      };">Sell Delisted:</b> ${dataPoint.sell_delisted.toLocaleString()}<br/>
+      };">Offers Delisted:</b> ${dataPoint.sell_delisted.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#f59e0b' : '#d97706'
-      };">Buy Delisted:</b> ${dataPoint.buy_delisted.toLocaleString()}<br/>
+      };">Bids Delisted:</b> ${dataPoint.buy_delisted.toLocaleString()}<br/>
       <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
       <b style="color: ${
         darkmode ? '#7c3aed' : '#6d28d9'
