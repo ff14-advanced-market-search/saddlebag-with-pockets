@@ -1021,21 +1021,12 @@ export default function Index() {
                   Data provided by{' '}
                   <span className="underline ml-1">datawars2.ie</span>
                 </a>
-                <div className="flex flex-row items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowExtraData(!showExtraData)}
-                    className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium px-4 py-2 rounded-lg shadow-md text-sm"
-                    style={{ minWidth: 0 }}>
-                    Show Raw Statistics
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowExtraData(!showExtraData)}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium">
-                    {showExtraData ? 'Hide' : 'Show'} Extra Statistics
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowExtraData(!showExtraData)}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium">
+                  {showExtraData ? 'Hide' : 'Show'} Extra Statistics
+                </button>
               </div>
               {showExtraData && (
                 <div className="space-y-4">
@@ -1225,37 +1216,44 @@ export default function Index() {
           />
         )}
 
-        {/* Sell Orders Table */}
-        {listing.sells.length === 0 ? (
-          <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
-            No Sell Orders Available
+        {/* Orders Tables - Side by Side */}
+        <div className="flex flex-col lg:flex-row gap-4 my-8">
+          {/* Sell Orders Table */}
+          <div className="flex-1">
+            {listing.sells.length === 0 ? (
+              <div className="text-center text-xl font-bold text-red-700 dark:text-red-300">
+                No Sell Orders Available
+              </div>
+            ) : (
+              <SmallTable
+                title={`${listing.itemName} : Sell Orders`}
+                sortingOrder={[{ desc: false, id: 'unit_price' }]}
+                columnList={sellColumnList}
+                mobileColumnList={sellColumnList}
+                columnSelectOptions={['unit_price', 'quantity']}
+                data={listing.sells}
+              />
+            )}
           </div>
-        ) : (
-          <SmallTable
-            title={`${listing.itemName} : Sell Orders`}
-            sortingOrder={[{ desc: false, id: 'unit_price' }]}
-            columnList={sellColumnList}
-            mobileColumnList={sellColumnList}
-            columnSelectOptions={['unit_price', 'quantity']}
-            data={listing.sells}
-          />
-        )}
 
-        {/* Buy Orders Table */}
-        {listing.buys.length === 0 ? (
-          <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
-            No Buy Orders Available
+          {/* Buy Orders Table */}
+          <div className="flex-1">
+            {listing.buys.length === 0 ? (
+              <div className="text-center text-xl font-bold text-red-700 dark:text-red-300">
+                No Buy Orders Available
+              </div>
+            ) : (
+              <SmallTable
+                title={`${listing.itemName} : Buy Orders`}
+                sortingOrder={[{ desc: true, id: 'unit_price' }]}
+                columnList={buyColumnList}
+                mobileColumnList={buyColumnList}
+                columnSelectOptions={['unit_price', 'quantity']}
+                data={listing.buys}
+              />
+            )}
           </div>
-        ) : (
-          <SmallTable
-            title={`${listing.itemName} : Buy Orders`}
-            sortingOrder={[{ desc: true, id: 'unit_price' }]}
-            columnList={buyColumnList}
-            mobileColumnList={buyColumnList}
-            columnSelectOptions={['unit_price', 'quantity']}
-            data={listing.buys}
-          />
-        )}
+        </div>
       </PageWrapper>
     )
   }
