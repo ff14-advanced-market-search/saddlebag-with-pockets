@@ -72,6 +72,12 @@ const createSharedTooltipFormatter = (
       <b style="color: ${
         darkmode ? '#f59e0b' : '#d97706'
       };">Bids:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
+      <b style="color: ${
+        darkmode ? '#10b981' : '#059669'
+      };">Sell Delisted:</b> ${dataPoint.sell_delisted.toLocaleString()}<br/>
+      <b style="color: ${
+        darkmode ? '#f59e0b' : '#d97706'
+      };">Buy Delisted:</b> ${dataPoint.buy_delisted.toLocaleString()}<br/>
       <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
       <b style="color: ${
         darkmode ? '#7c3aed' : '#6d28d9'
@@ -207,7 +213,7 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'line',
       backgroundColor: styles.backgroundColor,
-      height: 350,
+      height: 500,
       spacingBottom: 20,
       marginBottom: 40,
       events: {
@@ -392,7 +398,7 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'area',
       backgroundColor: styles.backgroundColor,
-      height: 350,
+      height: 500,
       spacingTop: 20,
       spacingBottom: 20,
       marginTop: 20,
@@ -589,7 +595,7 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'line',
       backgroundColor: styles.backgroundColor,
-      height: 400,
+      height: 550,
       spacingTop: 20,
       spacingBottom: 80,
       marginTop: 20,
@@ -750,6 +756,24 @@ const GW2SynchronizedCharts = ({
         type: 'column',
         data: timeData.map((d) => d.buy_listed),
         color: darkmode ? '#f59e0b' : '#d97706',
+        yAxis: 0,
+        pointPadding: 0.1,
+        groupPadding: 0.1
+      },
+      {
+        name: 'Sell Delisted',
+        type: 'column',
+        data: timeData.map((d) => d.sell_delisted),
+        color: darkmode ? '#34d399' : '#10b981',
+        yAxis: 0,
+        pointPadding: 0.1,
+        groupPadding: 0.1
+      },
+      {
+        name: 'Buy Delisted',
+        type: 'column',
+        data: timeData.map((d) => d.buy_delisted),
+        color: darkmode ? '#fbbf24' : '#f59e0b',
         yAxis: 0,
         pointPadding: 0.1,
         groupPadding: 0.1
