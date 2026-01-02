@@ -38,7 +38,9 @@ import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import {
   ffxivItemsList,
   wowItems,
-  wowItemsList
+  wowItemsList,
+  gw2ItemsList,
+  gw2Items
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
@@ -950,15 +952,20 @@ const ItemSearch = () => {
     (state) => state.user.defaultSearchGame
   )
   const [itemName, setItemName] = useState('')
-  const [game, setGame] = useState<'ffxiv' | 'wow'>(defaultSearchGame)
+  const [game, setGame] = useState<'ffxiv' | 'wow' | 'gw2'>(defaultSearchGame)
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const isWoW = game === 'wow'
+  const isGW2 = game === 'gw2'
 
-  const dataFormItemList = isWoW ? wowItemsList : ffxivItemsList
+  const dataFormItemList = isWoW
+    ? wowItemsList
+    : isGW2
+    ? gw2ItemsList
+    : ffxivItemsList
 
   /**
    * Handles click events on a button to navigate to item data pages.
@@ -983,7 +990,7 @@ const ItemSearch = () => {
 
     const itemId = getItemIDByName(
       itemName.trim(),
-      isWoW ? wowItems : undefined
+      isWoW ? wowItems : isGW2 ? gw2Items : undefined
     )
 
     if (!itemId) {
@@ -992,14 +999,20 @@ const ItemSearch = () => {
       return
     }
 
-    const path = isWoW ? 'wow/item-data/' : '/queries/item-data/'
+    const path = isWoW
+      ? 'wow/item-data/'
+      : isGW2
+      ? 'gw2/item-data/'
+      : '/queries/item-data/'
     navigate(path + itemId)
     setIsOpen(false)
   }
 
   const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
     const value = (event.target as HTMLInputElement).value
-    if (value === 'ffxiv' || value === 'wow') setGame(value)
+    if (value === 'ffxiv' || value === 'wow' || value === 'gw2') {
+      setGame(value as 'ffxiv' | 'wow' | 'gw2')
+    }
   }
 
   const handleSelect = (debounced: string) => {
@@ -1072,6 +1085,21 @@ const ItemSearch = () => {
                 />
                 <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
                   WoW
+                </span>
+              </label>
+              <label
+                htmlFor={`radio-gw2`}
+                className="cursor-pointer w-full md:w-fit">
+                <input
+                  id={`radio-gw2`}
+                  type="radio"
+                  value={'gw2'}
+                  name="game-items"
+                  defaultChecked={game === 'gw2'}
+                  className="peer hidden"
+                />
+                <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
+                  GW2
                 </span>
               </label>
             </div>

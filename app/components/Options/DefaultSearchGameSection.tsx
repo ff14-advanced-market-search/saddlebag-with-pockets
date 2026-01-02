@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { setDefaultSearchGame } from '~/redux/reducers/userSlice'
 
 interface DefaultSearchGameSectionProps {
-  defaultSearchGame: 'ffxiv' | 'wow'
+  defaultSearchGame: 'ffxiv' | 'wow' | 'gw2'
 }
 
 const DefaultSearchGameSection: React.FC<DefaultSearchGameSectionProps> = ({
@@ -11,7 +11,7 @@ const DefaultSearchGameSection: React.FC<DefaultSearchGameSectionProps> = ({
 }) => {
   const dispatch = useDispatch()
 
-  const handleGameChange = (game: 'ffxiv' | 'wow') => {
+  const handleGameChange = (game: 'ffxiv' | 'wow' | 'gw2') => {
     dispatch(setDefaultSearchGame(game))
   }
 
@@ -50,6 +50,19 @@ const DefaultSearchGameSection: React.FC<DefaultSearchGameSectionProps> = ({
           />
           <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
             WoW
+          </span>
+        </label>
+        <label className="flex items-center cursor-pointer">
+          <input
+            type="radio"
+            name="defaultSearchGame"
+            value="gw2"
+            checked={defaultSearchGame === 'gw2'}
+            onChange={() => handleGameChange('gw2')}
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+          />
+          <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+            GW2
           </span>
         </label>
       </div>
