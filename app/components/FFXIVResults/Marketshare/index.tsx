@@ -319,6 +319,38 @@ export const Results = ({
           placeholder={'Search...'}
         />
       </div>
+      <div className="py-2 sm:py-5">
+        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
+            <div className="flex flex-wrap items-center justify-between">
+              <div className="flex w-0 flex-1 items-center">
+                <span className="flex rounded-lg bg-blue-800 p-2">
+                  <svg
+                    className="h-6 w-6 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
+                <p className="ml-3 truncate font-medium text-white flex flex-1 flex-col">
+                  <span className="md:hidden">This is a wide table!</span>
+                  <span className="hidden md:inline">
+                    Heads up, this table is pretty wide. You'll probably need to
+                    scroll horizontally (left & right).
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="hidden sm:block">
         <FullTable<MarketshareItem>
           data={data}

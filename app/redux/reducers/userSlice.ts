@@ -29,7 +29,7 @@ export interface UserState {
   ffScanSortOrder: Array<string>
   ffxivWorld: { data_center: string; world: string }
   wowRealm: { server: WoWServerData; region: WoWServerRegion }
-  defaultSearchGame: 'ffxiv' | 'wow'
+  defaultSearchGame: 'ffxiv' | 'wow' | 'gw2'
 }
 
 const initialState: UserState = {
@@ -87,7 +87,7 @@ export const userSlice = createSlice({
     },
     setDefaultSearchGame: (
       state,
-      { payload }: PayloadAction<'ffxiv' | 'wow'>
+      { payload }: PayloadAction<'ffxiv' | 'wow' | 'gw2'>
     ) => {
       setDefaultSearchGameInLocalStorage(payload)
       state.defaultSearchGame = payload

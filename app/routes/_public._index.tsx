@@ -4,10 +4,11 @@ import Banner from '~/components/Common/Banner'
 export const meta: MetaFunction = () => {
   return {
     charset: 'utf-8',
-    title: 'SaddleBag Exchange: FFXIV Market Board Prices, WoW Gold',
+    title:
+      'SaddleBag Exchange: FFXIV Market Board Prices, WoW Gold, GW2 Trading Post',
     viewport: 'width=device-width,initial-scale=1',
     description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auction House, FFXIV Market Board, and more! ff14 market board, ff14 marketboard prices, ffxiv market board, ffxiv market board prices, ffxiv marketboard, xiv analysis, wow Auctionhouse, wow goldmaking, wow gold',
+      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auction House, FFXIV Market Board, GW2 Trading Post and more!',
     customHeading: 'Explore MMO Market Data with SaddleBag Exchange',
     links: [
       {
@@ -30,6 +31,11 @@ const recommendedQueries = [
     description:
       'Tools for Cross-Realm Trading, Market Overviews, Shortage Finders, and our Best Deals Search!',
     href: '/wow'
+  },
+  {
+    name: 'Guild Wars 2',
+    description: 'Trading Post Tools for Guild Wars 2!',
+    href: '/gw2'
   },
   {
     name: 'Patreon',
@@ -71,19 +77,26 @@ export default function Index() {
               Saddlebag Exchange
             </h1>
             <p className="mt-4 text-xl text-gray-200">
-              Explore MMO Market Data for FFXIV and WoW
+              Explore MMO Market Data for FFXIV, WoW, and GW2
             </p>
             <div className="mt-8 flex justify-center">
-              <a
-                href="/queries"
-                className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md mr-4">
-                Final Fantasy XIV
-              </a>
-              <a
-                href="/wow"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
-                World of Warcraft
-              </a>
+              <div className="flex gap-4">
+                <a
+                  href="/queries"
+                  className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                  Final Fantasy XIV
+                </a>
+                <a
+                  href="/wow"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                  World of Warcraft
+                </a>
+                <a
+                  href="/gw2"
+                  className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                  Guild Wars 2
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -457,7 +470,13 @@ export default function Index() {
           xiv server status, final fantasy 14 online server status, marketboard
           ffxiv, final fantasy 14 market board, ff14 maintenance, ffxiv server
           status, ffxiah, green hills of stranglethorn, ff14 hairstyles,
-          loque'nahak, housing lottery, ffxiv auction house tracker.
+          loque'nahak, housing lottery, ffxiv auction house tracker. guild wars
+          2, gw2, guild wars 2 trading post, gw2 trading post, guild wars 2 gold
+          making, gw2 gold making, guild wars 2 market, gw2 market, guild wars 2
+          economy, gw2 economy, guild wars 2 trading, gw2 trading, guild wars 2
+          items, gw2 items, guild wars 2 prices, gw2 prices, trading post guide,
+          gw2 gold guide, guild wars 2 flipping, gw2 flipping, guild wars 2
+          investment, gw2 investment
         </p>
       </div>
     </>
