@@ -17,8 +17,8 @@ import type { ColumnList } from '~/components/types'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import { format } from 'date-fns'
 
-// Comprehensive GW2 Time Data Chart Component
-const GW2TimeDataChart = ({
+// GW2 Price and Volume Chart Component
+const GW2PriceVolumeChart = ({
   timeData,
   darkmode,
   itemName
@@ -90,38 +90,22 @@ const GW2TimeDataChart = ({
     format(new Date(d.date), 'MM/dd HH:mm')
   )
 
-  // Calculate max values for each axis
   const maxPrice = Math.max(
     ...timeData.map((d) => Math.max(d.sell_price_avg, d.buy_price_avg))
   )
   const maxQuantity = Math.max(
-    ...timeData.map((d) =>
-      Math.max(
-        d.sell_quantity_avg,
-        d.buy_quantity_avg,
-        d.sell_listed,
-        d.sell_delisted,
-        d.buy_listed,
-        d.buy_delisted
-      )
-    )
-  )
-  const maxSold = Math.max(
-    ...timeData.map((d) => Math.max(d.sell_sold, d.buy_sold))
-  )
-  const maxValue = Math.max(
-    ...timeData.map((d) => Math.max(d.sell_value, d.buy_value))
+    ...timeData.map((d) => Math.max(d.sell_quantity_avg, d.buy_quantity_avg))
   )
 
   const options: any = {
     chart: {
       type: 'line',
       backgroundColor: styles.backgroundColor,
-      height: 600,
+      height: 400,
       zoomType: 'x'
     },
     title: {
-      text: `${itemName} - Complete Market Data`,
+      text: `${itemName} - Price vs Volume`,
       style: { color: styles.color }
     },
     legend: {
@@ -142,7 +126,6 @@ const GW2TimeDataChart = ({
     },
     yAxis: [
       {
-        // Y-axis 0: Prices
         title: {
           text: 'Price',
           style: { color: styles.color }
@@ -162,9 +145,8 @@ const GW2TimeDataChart = ({
         softMax: maxPrice * 1.1 || 1
       },
       {
-        // Y-axis 1: Quantities and Listed/Delisted
         title: {
-          text: 'Quantity / Listed / Delisted',
+          text: 'Volume',
           style: { color: styles.color }
         },
         labels: {
@@ -178,44 +160,6 @@ const GW2TimeDataChart = ({
         opposite: true,
         min: 0,
         softMax: maxQuantity * 1.1 || 1
-      },
-      {
-        // Y-axis 2: Sold counts
-        title: {
-          text: 'Sold',
-          style: { color: styles.color }
-        },
-        labels: {
-          style: { color: styles.labelColor },
-          formatter: function (this: { value: number }) {
-            return this.value.toLocaleString()
-          }
-        },
-        lineColor: styles.labelColor,
-        gridLineColor: styles.gridLineColor,
-        min: 0,
-        softMax: maxSold * 1.1 || 1
-      },
-      {
-        // Y-axis 3: Values
-        title: {
-          text: 'Value',
-          style: { color: styles.color }
-        },
-        labels: {
-          style: { color: styles.labelColor },
-          formatter: function (this: { value: number }) {
-            return this.value.toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            })
-          }
-        },
-        lineColor: styles.labelColor,
-        gridLineColor: styles.gridLineColor,
-        opposite: true,
-        min: 0,
-        softMax: maxValue * 1.1 || 1
       }
     ],
     tooltip: {
@@ -233,49 +177,30 @@ const GW2TimeDataChart = ({
         const dataPoint = timeData[index]
         const labelColor = styles.labelColor
 
-        return `<div style="min-width: 250px; color: ${styles.color};">
+        return `<div style="min-width: 200px; color: ${styles.color};">
           <b>${format(new Date(dataPoint.date), 'MM/dd/yyyy HH:mm')}</b><br/>
           <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
           <b style="color: ${
             darkmode ? '#22c55e' : '#16a34a'
-          };">Sell Orders:</b><br/>
-          <span style="color: ${labelColor};">Price Avg:</span> ${dataPoint.sell_price_avg.toLocaleString(
-          undefined,
-          { minimumFractionDigits: 2, maximumFractionDigits: 4 }
-        )}<br/>
-          <span style="color: ${labelColor};">Quantity Avg:</span> ${dataPoint.sell_quantity_avg.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Sold:</span> ${dataPoint.sell_sold.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Value:</span> ${dataPoint.sell_value.toLocaleString(
-          undefined,
-          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-        )}<br/>
-          <span style="color: ${labelColor};">Listed:</span> ${dataPoint.sell_listed.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Delisted:</span> ${dataPoint.sell_delisted.toLocaleString()}<br/>
-          <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
+          };">Sell:</b> ${dataPoint.sell_price_avg.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4
+        })} (${dataPoint.sell_quantity_avg.toLocaleString()})<br/>
           <b style="color: ${
             darkmode ? '#f97316' : '#ea580c'
-          };">Buy Orders:</b><br/>
-          <span style="color: ${labelColor};">Price Avg:</span> ${dataPoint.buy_price_avg.toLocaleString(
-          undefined,
-          { minimumFractionDigits: 2, maximumFractionDigits: 4 }
-        )}<br/>
-          <span style="color: ${labelColor};">Quantity Avg:</span> ${dataPoint.buy_quantity_avg.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Sold:</span> ${dataPoint.buy_sold.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Value:</span> ${dataPoint.buy_value.toLocaleString(
-          undefined,
-          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-        )}<br/>
-          <span style="color: ${labelColor};">Listed:</span> ${dataPoint.buy_listed.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Delisted:</span> ${dataPoint.buy_delisted.toLocaleString()}<br/>
+          };">Buy:</b> ${dataPoint.buy_price_avg.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4
+        })} (${dataPoint.buy_quantity_avg.toLocaleString()})<br/>
           <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
-          <span style="color: ${labelColor};">Data Points:</span> ${dataPoint.count.toLocaleString()}
+          <span style="color: ${labelColor};">Supply:</span> ${dataPoint.sell_quantity_avg.toLocaleString()}<br/>
+          <span style="color: ${labelColor};">Demand:</span> ${dataPoint.buy_quantity_avg.toLocaleString()}
         </div>`
       }
     },
     series: [
-      // Sell Price
       {
-        name: 'Sell Price Avg',
+        name: 'Sell',
         type: 'line',
         data: timeData.map((d) => d.sell_price_avg),
         color: darkmode ? '#22c55e' : '#16a34a',
@@ -283,9 +208,8 @@ const GW2TimeDataChart = ({
         lineWidth: 2,
         marker: { radius: 3 }
       },
-      // Buy Price
       {
-        name: 'Buy Price Avg',
+        name: 'Buy',
         type: 'line',
         data: timeData.map((d) => d.buy_price_avg),
         color: darkmode ? '#f97316' : '#ea580c',
@@ -294,108 +218,24 @@ const GW2TimeDataChart = ({
         marker: { radius: 3 },
         dashStyle: 'Dash'
       },
-      // Sell Quantity
       {
-        name: 'Sell Quantity Avg',
+        name: 'Supply',
         type: 'line',
         data: timeData.map((d) => d.sell_quantity_avg),
-        color: darkmode ? '#86efac' : '#4ade80',
+        color: darkmode ? '#8b5cf6' : '#7c3aed',
         yAxis: 1,
         lineWidth: 2,
         marker: { radius: 3 }
       },
-      // Buy Quantity
       {
-        name: 'Buy Quantity Avg',
+        name: 'Demand',
         type: 'line',
         data: timeData.map((d) => d.buy_quantity_avg),
-        color: darkmode ? '#fdba74' : '#fb923c',
+        color: darkmode ? '#ef4444' : '#dc2626',
         yAxis: 1,
         lineWidth: 2,
         marker: { radius: 3 },
         dashStyle: 'Dash'
-      },
-      // Sell Listed
-      {
-        name: 'Sell Listed',
-        type: 'line',
-        data: timeData.map((d) => d.sell_listed),
-        color: darkmode ? '#34d399' : '#10b981',
-        yAxis: 1,
-        lineWidth: 1,
-        marker: { radius: 2 },
-        dashStyle: 'Dot'
-      },
-      // Sell Delisted
-      {
-        name: 'Sell Delisted',
-        type: 'line',
-        data: timeData.map((d) => d.sell_delisted),
-        color: darkmode ? '#6ee7b7' : '#34d399',
-        yAxis: 1,
-        lineWidth: 1,
-        marker: { radius: 2 },
-        dashStyle: 'Dot'
-      },
-      // Buy Listed
-      {
-        name: 'Buy Listed',
-        type: 'line',
-        data: timeData.map((d) => d.buy_listed),
-        color: darkmode ? '#fb923c' : '#f97316',
-        yAxis: 1,
-        lineWidth: 1,
-        marker: { radius: 2 },
-        dashStyle: 'Dot'
-      },
-      // Buy Delisted
-      {
-        name: 'Buy Delisted',
-        type: 'line',
-        data: timeData.map((d) => d.buy_delisted),
-        color: darkmode ? '#fbbf24' : '#f59e0b',
-        yAxis: 1,
-        lineWidth: 1,
-        marker: { radius: 2 },
-        dashStyle: 'Dot'
-      },
-      // Sell Sold
-      {
-        name: 'Sell Sold',
-        type: 'column',
-        data: timeData.map((d) => d.sell_sold),
-        color: darkmode ? '#10b981' : '#059669',
-        yAxis: 2,
-        opacity: 0.6
-      },
-      // Buy Sold
-      {
-        name: 'Buy Sold',
-        type: 'column',
-        data: timeData.map((d) => d.buy_sold),
-        color: darkmode ? '#f97316' : '#ea580c',
-        yAxis: 2,
-        opacity: 0.6
-      },
-      // Sell Value
-      {
-        name: 'Sell Value',
-        type: 'area',
-        data: timeData.map((d) => d.sell_value),
-        color: darkmode ? '#22c55e' : '#16a34a',
-        yAxis: 3,
-        fillOpacity: 0.2,
-        lineWidth: 1
-      },
-      // Buy Value
-      {
-        name: 'Buy Value',
-        type: 'area',
-        data: timeData.map((d) => d.buy_value),
-        color: darkmode ? '#f97316' : '#ea580c',
-        yAxis: 3,
-        fillOpacity: 0.2,
-        lineWidth: 1
       }
     ],
     credits: {
@@ -404,6 +244,196 @@ const GW2TimeDataChart = ({
     plotOptions: {
       series: {
         connectNulls: true
+      }
+    }
+  }
+
+  return (
+    <ContentContainer>
+      <HighchartsReact highcharts={Highcharts} options={options} />
+    </ContentContainer>
+  )
+}
+
+// GW2 Transaction Volume Chart Component
+const GW2TransactionChart = ({
+  timeData,
+  darkmode,
+  itemName
+}: {
+  timeData: TimeDataPoint[]
+  darkmode: boolean
+  itemName: string
+}) => {
+  const [chartsLoaded, setChartsLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  const loadCharts = () => {
+    setChartsLoaded(true)
+  }
+
+  const shouldShowButton = isMobile && !chartsLoaded
+  const shouldLoadCharts = !isMobile || chartsLoaded
+
+  if (shouldShowButton) {
+    if (timeData.length > 0) {
+      return null // Only show button once for both charts
+    }
+    return null
+  }
+
+  if (!shouldLoadCharts || timeData.length === 0) {
+    return null
+  }
+
+  const Highcharts = require('highcharts')
+  const HighchartsReact = require('highcharts-react-official').default
+
+  const styles = darkmode
+    ? {
+        backgroundColor: '#334155',
+        color: '#f3f4f6',
+        hoverColor: '#f8f8f8',
+        gridLineColor: '#4a5568',
+        labelColor: '#9ca3af'
+      }
+    : {
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        hoverColor: '#666666',
+        gridLineColor: '#e2e8f0',
+        labelColor: '#666666'
+      }
+
+  const xCategories = timeData.map((d) =>
+    format(new Date(d.date), 'MM/dd HH:mm')
+  )
+
+  const maxSold = Math.max(
+    ...timeData.map((d) =>
+      Math.max(d.sell_sold, d.buy_sold, d.sell_listed, d.buy_listed)
+    )
+  )
+
+  const options: any = {
+    chart: {
+      type: 'column',
+      backgroundColor: styles.backgroundColor,
+      height: 300,
+      zoomType: 'x'
+    },
+    title: {
+      text: `${itemName} - Transaction Volumes`,
+      style: { color: styles.color }
+    },
+    legend: {
+      itemStyle: { color: styles.color },
+      align: 'center',
+      itemHoverStyle: { color: styles.hoverColor },
+      layout: 'horizontal',
+      verticalAlign: 'bottom'
+    },
+    xAxis: {
+      categories: xCategories,
+      labels: {
+        style: { color: styles.labelColor },
+        rotation: -45
+      },
+      lineColor: styles.labelColor,
+      gridLineColor: styles.gridLineColor
+    },
+    yAxis: {
+      title: {
+        text: 'Volume',
+        style: { color: styles.color }
+      },
+      labels: {
+        style: { color: styles.labelColor },
+        formatter: function (this: { value: number }) {
+          return this.value.toLocaleString()
+        }
+      },
+      lineColor: styles.labelColor,
+      gridLineColor: styles.gridLineColor,
+      min: 0,
+      softMax: maxSold * 1.1 || 1
+    },
+    tooltip: {
+      shared: true,
+      useHTML: true,
+      backgroundColor: darkmode ? '#1f2937' : '#ffffff',
+      style: {
+        color: darkmode ? '#f3f4f6' : '#000000'
+      },
+      formatter: function (this: any) {
+        const points = this.points || []
+        if (points.length === 0) return ''
+        const point = points[0]
+        const index = point.point.index || 0
+        const dataPoint = timeData[index]
+        const labelColor = styles.labelColor
+
+        return `<div style="min-width: 200px; color: ${styles.color};">
+          <b>${format(new Date(dataPoint.date), 'MM/dd/yyyy HH:mm')}</b><br/>
+          <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
+          <span style="color: ${labelColor};">Sold:</span> ${dataPoint.sell_sold.toLocaleString()}<br/>
+          <span style="color: ${labelColor};">Bought:</span> ${dataPoint.buy_sold.toLocaleString()}<br/>
+          <span style="color: ${labelColor};">Offers:</span> ${dataPoint.sell_listed.toLocaleString()}<br/>
+          <span style="color: ${labelColor};">Bids:</span> ${dataPoint.buy_listed.toLocaleString()}
+        </div>`
+      }
+    },
+    series: [
+      {
+        name: 'Sold',
+        type: 'column',
+        data: timeData.map((d) => d.sell_sold),
+        color: darkmode ? '#8b5cf6' : '#7c3aed',
+        opacity: 0.8
+      },
+      {
+        name: 'Bought',
+        type: 'column',
+        data: timeData.map((d) => d.buy_sold),
+        color: darkmode ? '#ef4444' : '#dc2626',
+        opacity: 0.8
+      },
+      {
+        name: 'Offers',
+        type: 'column',
+        data: timeData.map((d) => d.sell_listed),
+        color: darkmode ? '#22c55e' : '#16a34a',
+        opacity: 0.6
+      },
+      {
+        name: 'Bids',
+        type: 'column',
+        data: timeData.map((d) => d.buy_listed),
+        color: darkmode ? '#f97316' : '#ea580c',
+        opacity: 0.6
+      }
+    ],
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      series: {
+        connectNulls: true
+      },
+      column: {
+        grouping: true,
+        groupPadding: 0.1
       }
     }
   }
@@ -808,9 +838,18 @@ export default function Index() {
           </ContentContainer>
         )}
 
-        {/* Comprehensive Time Data Chart */}
+        {/* Price and Volume Chart */}
         {listing.timeData.length > 0 && (
-          <GW2TimeDataChart
+          <GW2PriceVolumeChart
+            timeData={listing.timeData}
+            darkmode={darkmode}
+            itemName={listing.itemName}
+          />
+        )}
+
+        {/* Transaction Volume Chart */}
+        {listing.timeData.length > 0 && (
+          <GW2TransactionChart
             timeData={listing.timeData}
             darkmode={darkmode}
             itemName={listing.itemName}
