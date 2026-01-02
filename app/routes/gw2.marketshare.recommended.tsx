@@ -2,6 +2,7 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import { itemTypes } from '~/utils/GW2Filters/itemTypes'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -83,7 +84,13 @@ const recommendedQueries = [
       'Identify items with the largest value changes - perfect for investment opportunities!',
     Icon: DocumentSearchIcon,
     href: searchParams.valuePercentChange
-  }
+  },
+  ...itemTypes.map((itemType) => ({
+    name: `${itemType.name} Items`,
+    description: `Browse all ${itemType.name.toLowerCase()} items in the market.`,
+    Icon: DocumentSearchIcon,
+    href: `/gw2/marketshare?type=${itemType.value}&sort_by=value`
+  }))
 ]
 
 export default function Index() {
