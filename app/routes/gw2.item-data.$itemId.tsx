@@ -590,9 +590,9 @@ const GW2SynchronizedCharts = ({
       backgroundColor: styles.backgroundColor,
       height: 400,
       spacingTop: 20,
-      spacingBottom: 40,
+      spacingBottom: 60,
       marginTop: 20,
-      marginBottom: 80,
+      marginBottom: 120,
       events: {
         load: function (this: any) {
           chartRefs.current[2] = this
@@ -610,16 +610,21 @@ const GW2SynchronizedCharts = ({
       itemHoverStyle: { color: styles.hoverColor },
       layout: 'horizontal',
       verticalAlign: 'bottom',
-      enabled: true
+      enabled: true,
+      y: -10
     },
     xAxis: {
       categories: xCategories,
       labels: {
         style: { color: styles.labelColor },
-        rotation: -45
+        rotation: -45,
+        y: 25,
+        reserveSpace: true
       },
       lineColor: styles.labelColor,
-      gridLineColor: styles.gridLineColor
+      gridLineColor: styles.gridLineColor,
+      tickLength: 5,
+      offset: 20
     },
     yAxis: [
       {
