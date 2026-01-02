@@ -87,7 +87,34 @@ const csvColumns: Array<{ title: string; value: keyof GW2MarketshareItem }> = [
   { title: 'Type', value: 'type' },
   { title: 'Details Type', value: 'details_type' },
   { title: 'Rarity', value: 'rarity' },
-  { title: 'Level', value: 'level' }
+  { title: 'Level', value: 'level' },
+  { title: 'Sell Sold', value: 'sell_sold' },
+  { title: 'Sell Price Avg', value: 'sell_price_avg' },
+  { title: 'Sell Value', value: 'sell_value' },
+  { title: 'Sell Delisted', value: 'sell_delisted' },
+  { title: 'Sell Listed', value: 'sell_listed' },
+  { title: 'Sell Price Max', value: 'sell_price_max' },
+  { title: 'Sell Price Min', value: 'sell_price_min' },
+  { title: 'Sell Price StDev', value: 'sell_price_stdev' },
+  { title: 'Sell Quantity Avg', value: 'sell_quantity_avg' },
+  { title: 'Sell Quantity Max', value: 'sell_quantity_max' },
+  { title: 'Sell Quantity Min', value: 'sell_quantity_min' },
+  { title: 'Sell Quantity StDev', value: 'sell_quantity_stdev' },
+  { title: 'Buy Sold', value: 'buy_sold' },
+  { title: 'Buy Price Avg', value: 'buy_price_avg' },
+  { title: 'Buy Value', value: 'buy_value' },
+  { title: 'Buy Delisted', value: 'buy_delisted' },
+  { title: 'Buy Listed', value: 'buy_listed' },
+  { title: 'Buy Price Max', value: 'buy_price_max' },
+  { title: 'Buy Price Min', value: 'buy_price_min' },
+  { title: 'Buy Price StDev', value: 'buy_price_stdev' },
+  { title: 'Buy Quantity Avg', value: 'buy_quantity_avg' },
+  { title: 'Buy Quantity Max', value: 'buy_quantity_max' },
+  { title: 'Buy Quantity Min', value: 'buy_quantity_min' },
+  { title: 'Buy Quantity StDev', value: 'buy_quantity_stdev' },
+  { title: 'Count', value: 'count' },
+  { title: 'Stats Date', value: 'statsDate' },
+  { title: 'Historic Stats Date Cutoff', value: 'historicStatsDateCutoff' }
 ]
 
 const hexMap: Record<string, string> = {
@@ -238,7 +265,34 @@ const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'type', header: 'Type' },
   { columnId: 'details_type', header: 'Details Type' },
   { columnId: 'rarity', header: 'Rarity' },
-  { columnId: 'level', header: 'Level' }
+  { columnId: 'level', header: 'Level' },
+  { columnId: 'sell_sold', header: 'Sell Sold' },
+  { columnId: 'sell_price_avg', header: 'Sell Price Avg' },
+  { columnId: 'sell_value', header: 'Sell Value' },
+  { columnId: 'sell_delisted', header: 'Sell Delisted' },
+  { columnId: 'sell_listed', header: 'Sell Listed' },
+  { columnId: 'sell_price_max', header: 'Sell Price Max' },
+  { columnId: 'sell_price_min', header: 'Sell Price Min' },
+  { columnId: 'sell_price_stdev', header: 'Sell Price StDev' },
+  { columnId: 'sell_quantity_avg', header: 'Sell Quantity Avg' },
+  { columnId: 'sell_quantity_max', header: 'Sell Quantity Max' },
+  { columnId: 'sell_quantity_min', header: 'Sell Quantity Min' },
+  { columnId: 'sell_quantity_stdev', header: 'Sell Quantity StDev' },
+  { columnId: 'buy_sold', header: 'Buy Sold' },
+  { columnId: 'buy_price_avg', header: 'Buy Price Avg' },
+  { columnId: 'buy_value', header: 'Buy Value' },
+  { columnId: 'buy_delisted', header: 'Buy Delisted' },
+  { columnId: 'buy_listed', header: 'Buy Listed' },
+  { columnId: 'buy_price_max', header: 'Buy Price Max' },
+  { columnId: 'buy_price_min', header: 'Buy Price Min' },
+  { columnId: 'buy_price_stdev', header: 'Buy Price StDev' },
+  { columnId: 'buy_quantity_avg', header: 'Buy Quantity Avg' },
+  { columnId: 'buy_quantity_max', header: 'Buy Quantity Max' },
+  { columnId: 'buy_quantity_min', header: 'Buy Quantity Min' },
+  { columnId: 'buy_quantity_stdev', header: 'Buy Quantity StDev' },
+  { columnId: 'count', header: 'Count' },
+  { columnId: 'statsDate', header: 'Stats Date' },
+  { columnId: 'historicStatsDateCutoff', header: 'Historic Stats Date Cutoff' }
 ]
 
 const assertIsSortBy = (value: string): value is GW2MarketshareSortBy => {
@@ -258,7 +312,7 @@ export const Results = ({
 }) => {
   const [sortBy, setSortBy] = useState<GW2MarketshareSortBy>(sortByValue)
   const [globalFilter, setGlobalFilter] = useState('')
-  const [colorBy, setColorBy] = useState<'value' | 'sold' | 'price'>('value')
+  const [colorBy, setColorBy] = useState<'value' | 'sold' | 'price'>('price')
 
   // Determine if we should use historic based on the sortBy selection
   const useHistoric =
