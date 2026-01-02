@@ -17,6 +17,9 @@ import NoResults from '~/components/Common/NoResults'
 import { Results, SortBySelect } from '~/components/GW2Results/Marketshare'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { SubmitButton } from '~/components/form/SubmitButton'
+import ItemTypeSelect from '~/components/form/GW2/ItemTypeSelect'
+import ItemDetailsTypeSelect from '~/components/form/GW2/ItemDetailsTypeSelect'
+import ItemRaritySelect from '~/components/form/GW2/ItemRaritySelect'
 import {
   getActionUrl,
   handleCopyButton,
@@ -91,11 +94,17 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formPayload = Object.fromEntries(formData)
 
+  // If type is -1 (all types), ensure details_type is also -1
+  const typeValue = formPayload.type as string
+  if (typeValue === '-1' || typeValue === undefined) {
+    formPayload.details_type = '-1'
+  }
+
   const validateFormData = z.object({
     desired_avg_price: z
       .string()
       .min(1)
-      .transform((value) => parseFloat(value)),
+      .transform((value) => Math.round(parseFloat(value) * 10000)), // Convert to coppers (e.g., 2.5025 -> 25025)
     desired_sales_per_day: z
       .string()
       .min(1)
@@ -126,7 +135,10 @@ export const action: ActionFunction = async ({ request }) => {
     level: z
       .string()
       .min(1)
-      .transform((value) => parseInt(value))
+      .transform((value) => {
+        const num = parseInt(value)
+        return num < 0 ? 0 : num // Ensure level can't be below 0
+      })
   })
 
   const validInput = validateFormData.safeParse(formPayload)
@@ -171,7 +183,8 @@ const searchParamsType = z.object({
   desired_avg_price: z.union([z.string(), z.null()]).transform((value) => {
     if (value === null || isNaN(Number(value)))
       return defaultParams.desired_avg_price
-    return Number(value)
+    // Convert from gold (user input) to coppers for storage (e.g., 2.5025 -> 25025)
+    return Math.round(Number(value) * 10000)
   }),
   desired_sales_per_day: z.union([z.string(), z.null()]).transform((value) => {
     if (value === null || isNaN(Number(value)))
@@ -238,7 +251,7 @@ export default function Index() {
   const transition = useNavigation()
   const loaderData = useLoaderData<GW2MarketshareLoaderData>()
   const [searchParams, setSearchParams] = useState<GW2MarketshareParams>({
-    desired_avg_price: loaderData.desired_avg_price.toString(),
+    desired_avg_price: (loaderData.desired_avg_price / 10000).toString(), // Convert from coppers to gold for display
     desired_sales_per_day: loaderData.desired_sales_per_day.toString(),
     sort_by: assertSortBy(loaderData.sort_by)
       ? loaderData.sort_by
@@ -248,6 +261,7 @@ export default function Index() {
     rarity: loaderData.rarity.toString(),
     level: loaderData.level.toString()
   })
+  const [selectedType, setSelectedType] = useState(loaderData.type)
 
   const results = useActionData<GW2MarketshareActionResult>()
   const { darkmode } = useTypedSelector((state) => state.user)
@@ -295,8 +309,9 @@ export default function Index() {
             name="desired_avg_price"
             labelTitle="Desired Average Price"
             type="number"
-            defaultValue={loaderData.desired_avg_price}
-            inputTag="Gold"
+            step="0.0001"
+            defaultValue={loaderData.desired_avg_price / 10000}
+            inputTag="Gold (e.g., 2.5025 = 2g 5s 25c)"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
@@ -317,55 +332,45 @@ export default function Index() {
               }
             }}
           />
-          <InputWithLabel
-            name="type"
-            labelTitle="Type"
-            type="number"
+          <ItemTypeSelect
             defaultValue={loaderData.type}
-            inputTag="(-1 for all)"
-            onChange={(e) => {
-              const value = e.target.value
-              if (value !== undefined) {
-                handleFormChange('type', value)
+            onChange={(value) => {
+              setSelectedType(value)
+              handleFormChange('type', value.toString())
+              // Reset details_type when type changes
+              if (value === -1) {
+                handleFormChange('details_type', '-1')
               }
             }}
           />
-          <InputWithLabel
-            name="details_type"
-            labelTitle="Details Type"
-            type="number"
-            defaultValue={loaderData.details_type}
-            inputTag="(-1 for all)"
-            onChange={(e) => {
-              const value = e.target.value
-              if (value !== undefined) {
-                handleFormChange('details_type', value)
-              }
-            }}
-          />
-          <InputWithLabel
-            name="rarity"
-            labelTitle="Rarity"
-            type="number"
+          {selectedType !== -1 && (
+            <ItemDetailsTypeSelect
+              itemType={selectedType}
+              defaultValue={loaderData.details_type}
+              onChange={(value) => {
+                handleFormChange('details_type', value.toString())
+              }}
+            />
+          )}
+          <ItemRaritySelect
             defaultValue={loaderData.rarity}
-            inputTag="(-1 for all)"
-            onChange={(e) => {
-              const value = e.target.value
-              if (value !== undefined) {
-                handleFormChange('rarity', value)
-              }
+            onChange={(value) => {
+              handleFormChange('rarity', value.toString())
             }}
           />
           <InputWithLabel
             name="level"
             labelTitle="Level"
             type="number"
+            min={0}
             defaultValue={loaderData.level}
             inputTag="Level"
             onChange={(e) => {
               const value = e.target.value
               if (value !== undefined) {
-                handleFormChange('level', value)
+                const numValue = parseInt(value, 10)
+                const safeValue = numValue < 0 ? '0' : value
+                handleFormChange('level', safeValue)
               }
             }}
           />
