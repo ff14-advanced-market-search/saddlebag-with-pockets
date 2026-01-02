@@ -70,7 +70,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /options
   Disallow: /refresh-discord-roles
 
-  Sitemap: https://saddlebagexchange.com/sitemap.xml
+  Sitemap: https://saddlebagexchange.com/sitemap-index.xml
   `
   return new Response(robotText, {
     status: 200,
