@@ -87,7 +87,7 @@ const recommendedQueries = [
   },
   ...itemTypes.map((itemType) => ({
     name: `${itemType.name} Items`,
-    description: `Browse all ${itemType.name.toLowerCase()} items in the market.`,
+    description: `Browse The most valuable ${itemType.name.toLowerCase()} items in the market.`,
     Icon: DocumentSearchIcon,
     href: `/gw2/marketshare?type=${itemType.value}&sort_by=value`
   }))
