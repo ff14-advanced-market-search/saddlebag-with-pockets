@@ -5,7 +5,7 @@ import type {
 } from '~/requests/GW2/marketshare'
 import TreemapChart from '~/components/Charts/Treemap'
 import type { TreemapNode } from '~/components/Charts/Treemap'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Label from '~/components/form/Label'
 import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
@@ -14,7 +14,7 @@ import DebouncedInput from '~/components/Common/DebouncedInput'
 import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import { RadioButtons } from '~/components/Common/RadioButtons'
-import { TabbedButtons } from '~/components/FFXIVResults/Marketshare'
+import { TabbedButtons } from '~/components/Common/TabbedButtons'
 
 export const SortBySelect = ({
   label = 'Sort Results By',
@@ -42,7 +42,7 @@ export const SortBySelect = ({
           }
         }
       }}
-      className="flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
+      className="flex-1 min-w-0 block w-full px-3 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 disabled:text-gray-500 shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-gray-400 dark:text-gray-100 dark:bg-gray-600 dark:placeholder-gray-400">
       {sortByOptions.map(({ label, value }) => (
         <option key={value} value={value}>
           {label}
@@ -180,8 +180,8 @@ const getChartData = (
     result.push({
       id: item.itemID.toString(),
       name: item.itemName,
-      value: value,
-      color: color,
+      value,
+      color,
       toolTip: `${item.itemName}: ${value.toLocaleString()}`
     })
   })
@@ -266,7 +266,10 @@ export const Results = ({
     sortBy === 'historic_sold' ||
     sortBy === 'historic_price_average'
 
-  const chartData = getChartData(data, sortBy, useHistoric, colorBy)
+  const chartData = useMemo(
+    () => getChartData(data, sortBy, useHistoric, colorBy),
+    [data, sortBy, useHistoric, colorBy]
+  )
 
   const sortByTitleValue = sortByOptions.find(
     ({ value }) => value === sortBy
@@ -346,6 +349,38 @@ export const Results = ({
           className={'hidden sm:block p-2 rounded-md'}
           placeholder={'Search...'}
         />
+      </div>
+      <div className="py-2 sm:py-5">
+        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
+            <div className="flex flex-wrap items-center justify-between">
+              <div className="flex w-0 flex-1 items-center">
+                <span className="flex rounded-lg bg-blue-800 p-2">
+                  <svg
+                    className="h-6 w-6 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
+                <p className="ml-3 truncate font-medium text-white flex flex-1 flex-col">
+                  <span className="md:hidden">This is a wide table!</span>
+                  <span className="hidden md:inline">
+                    Heads up, this table is pretty wide. You'll probably need to
+                    scroll horizontally (left & right).
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="hidden sm:block">
         <FullTable<GW2MarketshareItem>

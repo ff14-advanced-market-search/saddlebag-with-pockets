@@ -36,7 +36,7 @@ const validateItem = (id, itemName) => {
     return undefined
   }
 
-  return itemName.replace('\u00a0', ' ')
+  return itemName.replace(/\u00a0/g, ' ')
 }
 
 /**

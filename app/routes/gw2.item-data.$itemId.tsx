@@ -120,6 +120,7 @@ const GW2SynchronizedCharts = ({
       return (
         <div className="text-center my-8">
           <button
+            type="button"
             onClick={loadCharts}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Load Charts
@@ -840,6 +841,7 @@ const GW2PriceVolumeChart = ({
       return (
         <div className="text-center my-8">
           <button
+            type="button"
             onClick={loadCharts}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Load Charts

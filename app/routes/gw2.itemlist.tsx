@@ -2,15 +2,20 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import { gw2ItemsMap } from '~/utils/items/gw2Items'
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: Marketable Items GW2',
-    description: 'A list of all marketable items on Saddlebag Exchange for GW2',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/gw2/itemlist' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: Marketable Items GW2' },
+    {
+      name: 'description',
+      content: 'A list of all marketable items on Saddlebag Exchange for GW2'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2/itemlist'
+    }
+  ]
 }
 
 export default function Index() {
@@ -22,13 +27,13 @@ export default function Index() {
 
   return (
     <main>
-      <h1 style={{ textAlign: 'center' }}>List of GW2 Items</h1>
-      <h2 style={{ textAlign: 'center' }}>Get statistics for all GW2 Items</h2>
-      <div style={{ padding: '20px', maxWidth: '600px', margin: 'auto' }}>
-        <ul>
+      <h1 className="text-center">List of GW2 Items</h1>
+      <h2 className="text-center">Get statistics for all GW2 Items</h2>
+      <div className="p-5 max-w-md mx-auto">
+        <ul className="list-disc pl-5 space-y-2">
           {gw2ItemLinks.map((item, index) => (
             <li key={index}>
-              <a href={item.href} style={{ color: 'blue' }}>
+              <a href={item.href} className="text-blue-500 hover:underline">
                 {item.text}
               </a>
             </li>
