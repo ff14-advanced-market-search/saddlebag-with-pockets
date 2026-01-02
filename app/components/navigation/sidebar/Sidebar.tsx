@@ -730,6 +730,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                       WORLD OF WARCRAFT is a registered trademark of Blizzard
                       Entertainment, Inc.
                       <br />© BLIZZARD ENTERTAINMENT, INC. All Rights Reserved.
+                      <br />
+                      GUILD WARS 2 is a registered trademark of ArenaNet, Inc.
+                      <br />© ARENANET, INC. All Rights Reserved.
                     </p>
                   </nav>
                 </div>
@@ -821,6 +824,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 WORLD OF WARCRAFT is a registered trademark of Blizzard
                 Entertainment, Inc.
                 <br />© BLIZZARD ENTERTAINMENT, INC. All Rights Reserved.
+                <br />
+                GUILD WARS 2 is a registered trademark of ArenaNet, Inc.
+                <br />© ARENANET, INC. All Rights Reserved.
               </p>
               {/* <div id="ezoic-pub-ad-placeholder-118" /> */}
             </nav>
