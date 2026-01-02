@@ -590,8 +590,9 @@ const GW2SynchronizedCharts = ({
       backgroundColor: styles.backgroundColor,
       height: 400,
       spacingTop: 20,
+      spacingBottom: 40,
       marginTop: 20,
-      marginBottom: 50,
+      marginBottom: 80,
       events: {
         load: function (this: any) {
           chartRefs.current[2] = this

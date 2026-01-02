@@ -58,7 +58,7 @@ export const loader: LoaderFunction = async () => {
 <!-- Core Pages -->
 <url>
   <loc>https://saddlebagexchange.com/</loc>
-  <lastmod>2024-06-21T00:27:48+00:00</lastmod>
+  <lastmod>2026-01-01T00:27:48+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
@@ -74,6 +74,11 @@ export const loader: LoaderFunction = async () => {
 <url>
   <loc>https://saddlebagexchange.com/gw2/itemlist</loc>
   <lastmod>${currentDate}</lastmod>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/gw2/marketshare/recommended</loc>
+  <lastmod>2026-01-01T00:27:48+00:00</lastmod>
   <priority>0.90</priority>
 </url>
 <url>

@@ -62,6 +62,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/ilvl-export-search
   Disallow: /wow/quantity-manipulation
   Disallow: /wow/weekly-price-group-delta-recommended
+  Disallow: /gw2/marketshare
 
   Disallow: /discord-callback
   Disallow: /discord-disconnect
