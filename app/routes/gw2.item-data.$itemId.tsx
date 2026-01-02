@@ -657,10 +657,18 @@ const GW2TransactionChart = ({
         return `<div style="min-width: 200px; color: ${styles.color};">
           <b>${format(new Date(dataPoint.date), 'MM/dd/yyyy HH:mm')}</b><br/>
           <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
-          <span style="color: ${labelColor};">Sold:</span> ${dataPoint.sell_sold.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Bought:</span> ${dataPoint.buy_sold.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Offers:</span> ${dataPoint.sell_listed.toLocaleString()}<br/>
-          <span style="color: ${labelColor};">Bids:</span> ${dataPoint.buy_listed.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#10b981' : '#059669'
+          };">Sold:</b> ${dataPoint.sell_sold.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#f59e0b' : '#d97706'
+          };">Bought:</b> ${dataPoint.buy_sold.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#10b981' : '#059669'
+          };">Offers:</b> ${dataPoint.sell_listed.toLocaleString()}<br/>
+          <b style="color: ${
+            darkmode ? '#f59e0b' : '#d97706'
+          };">Bids:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
           <b style="color: ${
             darkmode ? '#7c3aed' : '#6d28d9'
           };">Supply:</b> ${dataPoint.sell_quantity_avg.toLocaleString()}<br/>
@@ -675,7 +683,7 @@ const GW2TransactionChart = ({
         name: 'Sold',
         type: 'line',
         data: timeData.map((d) => d.sell_sold),
-        color: darkmode ? '#7c3aed' : '#6d28d9', // Darker purple
+        color: darkmode ? '#10b981' : '#059669', // Green (matching Sell)
         yAxis: 0,
         lineWidth: 2,
         marker: { radius: 3 }
@@ -685,7 +693,7 @@ const GW2TransactionChart = ({
         name: 'Bought',
         type: 'line',
         data: timeData.map((d) => d.buy_sold),
-        color: darkmode ? '#dc2626' : '#b91c1c', // Darker red
+        color: darkmode ? '#f59e0b' : '#d97706', // Orange (matching Buy)
         yAxis: 0,
         lineWidth: 2,
         marker: { radius: 3 }
