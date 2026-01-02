@@ -207,8 +207,8 @@ const GW2SynchronizedCharts = ({
       type: 'line',
       backgroundColor: styles.backgroundColor,
       height: 300,
-      spacingBottom: 0,
-      marginBottom: 0,
+      spacingBottom: 20,
+      marginBottom: 40,
       events: {
         load: function (this: any) {
           chartRefs.current[0] = this
@@ -292,11 +292,30 @@ const GW2SynchronizedCharts = ({
         labelHeight: number,
         point: any
       ) {
-        // Position tooltip consistently across all charts
-        return {
-          x: point.plotX + this.chart.plotLeft - labelWidth / 2,
-          y: point.plotY + this.chart.plotTop - 10
+        // Position tooltip to avoid being cut off
+        const chart = this.chart
+        const plotLeft = chart.plotLeft
+        const plotTop = chart.plotTop
+        const plotWidth = chart.plotWidth
+        const plotHeight = chart.plotHeight
+
+        let x = point.plotX + plotLeft - labelWidth / 2
+        let y = point.plotY + plotTop - labelHeight - 10
+
+        // Keep tooltip within chart bounds
+        if (x < plotLeft) {
+          x = plotLeft + 10
+        } else if (x + labelWidth > plotLeft + plotWidth) {
+          x = plotLeft + plotWidth - labelWidth - 10
         }
+
+        if (y < plotTop) {
+          y = plotTop + 10
+        } else if (y + labelHeight > plotTop + plotHeight) {
+          y = plotTop + plotHeight - labelHeight - 10
+        }
+
+        return { x, y }
       }
     },
     series: [
@@ -362,10 +381,10 @@ const GW2SynchronizedCharts = ({
       type: 'area',
       backgroundColor: styles.backgroundColor,
       height: 300,
-      spacingTop: 0,
-      spacingBottom: 0,
-      marginTop: 0,
-      marginBottom: 0,
+      spacingTop: 20,
+      spacingBottom: 20,
+      marginTop: 20,
+      marginBottom: 40,
       events: {
         load: function (this: any) {
           chartRefs.current[1] = this
@@ -450,11 +469,30 @@ const GW2SynchronizedCharts = ({
         labelHeight: number,
         point: any
       ) {
-        // Position tooltip consistently across all charts
-        return {
-          x: point.plotX + this.chart.plotLeft - labelWidth / 2,
-          y: point.plotY + this.chart.plotTop - 10
+        // Position tooltip to avoid being cut off
+        const chart = this.chart
+        const plotLeft = chart.plotLeft
+        const plotTop = chart.plotTop
+        const plotWidth = chart.plotWidth
+        const plotHeight = chart.plotHeight
+
+        let x = point.plotX + plotLeft - labelWidth / 2
+        let y = point.plotY + plotTop - labelHeight - 10
+
+        // Keep tooltip within chart bounds
+        if (x < plotLeft) {
+          x = plotLeft + 10
+        } else if (x + labelWidth > plotLeft + plotWidth) {
+          x = plotLeft + plotWidth - labelWidth - 10
         }
+
+        if (y < plotTop) {
+          y = plotTop + 10
+        } else if (y + labelHeight > plotTop + plotHeight) {
+          y = plotTop + plotHeight - labelHeight - 10
+        }
+
+        return { x, y }
       }
     },
     series: [
@@ -527,8 +565,8 @@ const GW2SynchronizedCharts = ({
       type: 'line',
       backgroundColor: styles.backgroundColor,
       height: 300,
-      spacingTop: 0,
-      marginTop: 0,
+      spacingTop: 20,
+      marginTop: 20,
       events: {
         load: function (this: any) {
           chartRefs.current[2] = this
@@ -607,51 +645,68 @@ const GW2SynchronizedCharts = ({
         labelHeight: number,
         point: any
       ) {
-        // Position tooltip consistently across all charts
-        return {
-          x: point.plotX + this.chart.plotLeft - labelWidth / 2,
-          y: point.plotY + this.chart.plotTop - 10
+        // Position tooltip to avoid being cut off
+        const chart = this.chart
+        const plotLeft = chart.plotLeft
+        const plotTop = chart.plotTop
+        const plotWidth = chart.plotWidth
+        const plotHeight = chart.plotHeight
+
+        let x = point.plotX + plotLeft - labelWidth / 2
+        let y = point.plotY + plotTop - labelHeight - 10
+
+        // Keep tooltip within chart bounds
+        if (x < plotLeft) {
+          x = plotLeft + 10
+        } else if (x + labelWidth > plotLeft + plotWidth) {
+          x = plotLeft + plotWidth - labelWidth - 10
         }
+
+        if (y < plotTop) {
+          y = plotTop + 10
+        } else if (y + labelHeight > plotTop + plotHeight) {
+          y = plotTop + plotHeight - labelHeight - 10
+        }
+
+        return { x, y }
       }
     },
     series: [
       {
         name: 'Sold',
-        type: 'line',
+        type: 'column',
         data: timeData.map((d) => d.sell_sold),
         color: darkmode ? '#10b981' : '#059669',
         yAxis: 0,
-        lineWidth: 2,
-        marker: { radius: 3 }
+        pointPadding: 0.1,
+        groupPadding: 0.1
       },
       {
         name: 'Bought',
-        type: 'line',
+        type: 'column',
         data: timeData.map((d) => d.buy_sold),
         color: darkmode ? '#f59e0b' : '#d97706',
         yAxis: 0,
-        lineWidth: 2,
-        marker: { radius: 3 }
+        pointPadding: 0.1,
+        groupPadding: 0.1
       },
       {
         name: 'Offers',
-        type: 'line',
+        type: 'column',
         data: timeData.map((d) => d.sell_listed),
         color: darkmode ? '#10b981' : '#059669',
         yAxis: 0,
-        lineWidth: 2,
-        marker: { radius: 3 },
-        dashStyle: 'Dash'
+        pointPadding: 0.1,
+        groupPadding: 0.1
       },
       {
         name: 'Bids',
-        type: 'line',
+        type: 'column',
         data: timeData.map((d) => d.buy_listed),
         color: darkmode ? '#f59e0b' : '#d97706',
         yAxis: 0,
-        lineWidth: 2,
-        marker: { radius: 3 },
-        dashStyle: 'Dash'
+        pointPadding: 0.1,
+        groupPadding: 0.1
       },
       {
         name: 'Supply',
