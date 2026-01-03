@@ -961,13 +961,11 @@ const GW2SynchronizedCharts = forwardRef<
   }
 
   return (
-    <ContentContainer>
-      <div>
-        <HighchartsReact highcharts={Highcharts} options={priceVolumeOptions} />
-        <HighchartsReact highcharts={Highcharts} options={valueOptions} />
-        <HighchartsReact highcharts={Highcharts} options={transactionOptions} />
-      </div>
-    </ContentContainer>
+    <div>
+      <HighchartsReact highcharts={Highcharts} options={priceVolumeOptions} />
+      <HighchartsReact highcharts={Highcharts} options={valueOptions} />
+      <HighchartsReact highcharts={Highcharts} options={transactionOptions} />
+    </div>
   )
 })
 
