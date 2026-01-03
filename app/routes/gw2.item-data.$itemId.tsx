@@ -373,8 +373,9 @@ const GW2SynchronizedCharts = ({
         data: timeData.map((d) => {
           const supply = d.sell_quantity_avg
           const demand = d.buy_quantity_avg
-          // Return [min, max] when supply > demand, otherwise null
-          return supply > demand ? [demand, supply] : null
+          // Only show when supply is strictly greater than demand
+          // Use epsilon to prevent floating point equality issues
+          return supply > demand + Number.EPSILON ? [demand, supply] : null
         }),
         color: darkmode ? '#dc2626' : '#b91c1c', // Red
         yAxis: 1,
@@ -391,8 +392,10 @@ const GW2SynchronizedCharts = ({
         data: timeData.map((d) => {
           const supply = d.sell_quantity_avg
           const demand = d.buy_quantity_avg
-          // Return [min, max] when demand > supply, otherwise null
-          return demand > supply ? [supply, demand] : null
+          // Only show when demand is strictly greater than supply
+          // Use epsilon to prevent floating point equality issues
+          // This ensures mutual exclusivity - only one shows at a time
+          return demand > supply + Number.EPSILON ? [supply, demand] : null
         }),
         color: darkmode ? '#10b981' : '#059669', // Green
         yAxis: 1,
@@ -436,6 +439,9 @@ const GW2SynchronizedCharts = ({
             }
           }
         }
+      },
+      arearange: {
+        connectNulls: false
       }
     }
   }
