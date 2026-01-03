@@ -217,27 +217,32 @@ const getChartData = (
       case 'historic_price_average':
         value = item.historic_price_average
         break
-      case 'pricePercentChange':
+      case 'pricePercentChange': {
         // For negative values, use Math.abs() to make them positive for treemap
         const priceChange = item.pricePercentChange
         value = priceChange < 0 ? Math.abs(priceChange) : priceChange
         break
-      case 'soldPercentChange':
+      }
+      case 'soldPercentChange': {
         const soldChange = item.soldPercentChange
         value = soldChange < 0 ? Math.abs(soldChange) : soldChange
         break
-      case 'valuePercentChange':
+      }
+      case 'valuePercentChange': {
         const valueChange = item.valuePercentChange
         value = valueChange < 0 ? Math.abs(valueChange) : valueChange
         break
-      case 'sellQuantityPercentChange':
+      }
+      case 'sellQuantityPercentChange': {
         const sellQtyChange = item.sellQuantityPercentChange
         value = sellQtyChange < 0 ? Math.abs(sellQtyChange) : sellQtyChange
         break
-      case 'buyQuantityPercentChange':
+      }
+      case 'buyQuantityPercentChange': {
         const buyQtyChange = item.buyQuantityPercentChange
         value = buyQtyChange < 0 ? Math.abs(buyQtyChange) : buyQtyChange
         break
+      }
       default:
         value = useHistoric ? item.historic_value : item.value
     }
