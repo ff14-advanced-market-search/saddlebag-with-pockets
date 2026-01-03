@@ -975,7 +975,7 @@ export default function Index() {
         break
       case '6week':
         cutoffDate = new Date(now.getTime() - 42 * 24 * 60 * 60 * 1000)
-        dataSource = listing.timeData
+        dataSource = listing.dailyData || []
         break
       case 'month':
         cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
