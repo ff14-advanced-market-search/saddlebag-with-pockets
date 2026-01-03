@@ -15,6 +15,8 @@ import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import { RadioButtons } from '~/components/Common/RadioButtons'
 import { TabbedButtons } from '~/components/Common/TabbedButtons'
+import { itemTypes } from '~/utils/GW2Filters/itemTypes'
+import { itemRarities } from '~/utils/GW2Filters/itemRarity'
 
 export const SortBySelect = ({
   label = 'Sort Results By',
@@ -294,6 +296,29 @@ const getMobileColumns = (sortBy: GW2MarketshareSortBy) => {
   ]
 }
 
+// Helper functions to get string names from integer values
+const getTypeName = (typeValue: number): string => {
+  const itemType = itemTypes.find((t) => t.value === typeValue)
+  return itemType ? itemType.name : typeValue.toString()
+}
+
+const getDetailsTypeName = (detailsTypeValue: number): string => {
+  for (const itemType of itemTypes) {
+    const detailsType = itemType.subClasses.find(
+      (sc) => sc.value === detailsTypeValue
+    )
+    if (detailsType) {
+      return detailsType.name
+    }
+  }
+  return detailsTypeValue.toString()
+}
+
+const getRarityName = (rarityValue: number): string => {
+  const rarity = itemRarities.find((r) => r.value === rarityValue)
+  return rarity ? rarity.name : rarityValue.toString()
+}
+
 const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'itemName', header: 'Item Name' },
   {
@@ -332,9 +357,23 @@ const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'current_sell_quantity', header: 'Current Sell Quantity' },
   { columnId: 'current_buy_price', header: 'Current Buy Price' },
   { columnId: 'current_buy_quantity', header: 'Current Buy Quantity' },
-  { columnId: 'type', header: 'Type' },
-  { columnId: 'details_type', header: 'Details Type' },
-  { columnId: 'rarity', header: 'Rarity' },
+  {
+    columnId: 'type',
+    header: 'Type',
+    accessor: ({ getValue }) => <p>{getTypeName(getValue() as number)}</p>
+  },
+  {
+    columnId: 'details_type',
+    header: 'Details Type',
+    accessor: ({ getValue }) => (
+      <p>{getDetailsTypeName(getValue() as number)}</p>
+    )
+  },
+  {
+    columnId: 'rarity',
+    header: 'Rarity',
+    accessor: ({ getValue }) => <p>{getRarityName(getValue() as number)}</p>
+  },
   { columnId: 'level', header: 'Level' },
   { columnId: 'sell_sold', header: 'Sell Sold' },
   { columnId: 'sell_price_avg', header: 'Sell Price Avg' },
