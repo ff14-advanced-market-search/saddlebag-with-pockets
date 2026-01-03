@@ -1150,6 +1150,8 @@ export default function Index() {
     if (minDate && maxDate) {
       setStartDate(minDate)
       setEndDate(maxDate)
+      // Also reset chart zoom when time scale changes
+      chartsRef.current?.resetZoom()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeScale, minDate?.getTime(), maxDate?.getTime()])
@@ -1612,6 +1614,8 @@ export default function Index() {
                           if (minDate && maxDate) {
                             setStartDate(minDate)
                             setEndDate(maxDate)
+                            // Also reset chart zoom when resetting date range
+                            chartsRef.current?.resetZoom()
                           }
                         }}
                         className="w-48 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium">
