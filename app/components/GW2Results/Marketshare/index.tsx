@@ -425,6 +425,8 @@ export const Results = ({
     () => new Set(columnList.map((col) => col.columnId))
   )
   const [showColumnControls, setShowColumnControls] = useState(false)
+  const [columnPage, setColumnPage] = useState(0)
+  const columnsPerPage = 20
 
   // Determine if we should use historic based on the sortBy selection
   const useHistoric =
@@ -563,69 +565,106 @@ export const Results = ({
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
             Column Visibility
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 max-h-96 overflow-y-auto">
-            {columnList.map((col) => (
-              <label
-                key={col.columnId}
-                className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
-                <input
-                  type="checkbox"
-                  checked={visibleColumns.has(col.columnId)}
-                  onChange={(e) => {
-                    const newVisibleColumns = new Set(visibleColumns)
-                    if (e.target.checked) {
-                      newVisibleColumns.add(col.columnId)
-                    } else {
-                      newVisibleColumns.delete(col.columnId)
-                    }
-                    setVisibleColumns(newVisibleColumns)
-                  }}
-                  className="form-checkbox h-4 w-4 text-blue-500"
-                />
-                <span className="text-sm text-gray-900 dark:text-gray-100">
-                  {col.header}
-                </span>
-              </label>
-            ))}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {columnList
+              .slice(
+                columnPage * columnsPerPage,
+                (columnPage + 1) * columnsPerPage
+              )
+              .map((col) => (
+                <label
+                  key={col.columnId}
+                  className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
+                  <input
+                    type="checkbox"
+                    checked={visibleColumns.has(col.columnId)}
+                    onChange={(e) => {
+                      const newVisibleColumns = new Set(visibleColumns)
+                      if (e.target.checked) {
+                        newVisibleColumns.add(col.columnId)
+                      } else {
+                        newVisibleColumns.delete(col.columnId)
+                      }
+                      setVisibleColumns(newVisibleColumns)
+                    }}
+                    className="form-checkbox h-4 w-4 text-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-gray-100">
+                    {col.header}
+                  </span>
+                </label>
+              ))}
           </div>
-          <div className="mt-3 flex gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                setVisibleColumns(
-                  new Set(columnList.map((col) => col.columnId))
-                )
-              }}
-              className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm">
-              Show All
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                // Keep only essential columns visible
-                const essentialColumns = [
-                  'itemName',
-                  'itemID',
-                  sortBy,
-                  'value',
-                  'sold',
-                  'price_average',
-                  'current_sell_price',
-                  'current_buy_price'
-                ]
-                setVisibleColumns(new Set(essentialColumns))
-              }}
-              className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors text-sm">
-              Show Essential Only
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setVisibleColumns(new Set())
-              }}
-              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
-              Hide All
-            </button>
+          <div className="mt-3 flex items-center justify-between">
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleColumns(
+                    new Set(columnList.map((col) => col.columnId))
+                  )
+                }}
+                className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm">
+                Show All
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  // Keep only essential columns visible
+                  const essentialColumns = [
+                    'itemName',
+                    'itemID',
+                    sortBy,
+                    'value',
+                    'sold',
+                    'price_average',
+                    'current_sell_price',
+                    'current_buy_price'
+                  ]
+                  setVisibleColumns(new Set(essentialColumns))
+                }}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors text-sm">
+                Show Essential Only
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleColumns(new Set())
+                }}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
+                Hide All
+              </button>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setColumnPage(Math.max(0, columnPage - 1))}
+                disabled={columnPage === 0}
+                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                Previous
+              </button>
+              <span className="text-sm text-gray-900 dark:text-gray-100">
+                Page {columnPage + 1} of{' '}
+                {Math.ceil(columnList.length / columnsPerPage)}
+              </span>
+              <button
+                type="button"
+                onClick={() =>
+                  setColumnPage(
+                    Math.min(
+                      Math.ceil(columnList.length / columnsPerPage) - 1,
+                      columnPage + 1
+                    )
+                  )
+                }
+                disabled={
+                  columnPage >=
+                  Math.ceil(columnList.length / columnsPerPage) - 1
+                }
+                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                Next
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -654,6 +693,13 @@ export const Results = ({
                   <span className="hidden md:inline">
                     Heads up, this table is pretty wide. You'll probably need to
                     scroll horizontally (left & right).
+                  </span>
+                  <span className="hidden md:inline">
+                    Click the show column controls button to hide or show
+                    columns.
+                  </span>
+                  <span className="hidden md:inline">
+                    Click on a column name to sort by that column.
                   </span>
                 </p>
               </div>
