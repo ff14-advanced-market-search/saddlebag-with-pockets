@@ -190,7 +190,7 @@ const getChartData = (
   data: Array<GW2MarketshareItem>,
   sortBy: GW2MarketshareSortBy,
   useHistoric: boolean,
-  colorBy: 'value' | 'sold' | 'price',
+  colorBy: 'value' | 'sold' | 'price' | 'buyQuantity' | 'sellQuantity',
   filterDirection?: 'positive' | 'negative'
 ): Array<TreemapNode> => {
   const result: Array<TreemapNode> = []
@@ -281,6 +281,34 @@ const getChartData = (
       } else if (soldChange > -5) {
         color = hexMap['stable']
       } else if (soldChange > -20) {
+        color = hexMap['decreasing']
+      } else {
+        color = hexMap['crashing']
+      }
+    } else if (colorBy === 'buyQuantity') {
+      // Use buy quantity percent change for colors
+      const buyQtyChange = item.buyQuantityPercentChange
+      if (buyQtyChange > 20) {
+        color = hexMap['spiking']
+      } else if (buyQtyChange > 5) {
+        color = hexMap['increasing']
+      } else if (buyQtyChange > -5) {
+        color = hexMap['stable']
+      } else if (buyQtyChange > -20) {
+        color = hexMap['decreasing']
+      } else {
+        color = hexMap['crashing']
+      }
+    } else if (colorBy === 'sellQuantity') {
+      // Use sell quantity percent change for colors
+      const sellQtyChange = item.sellQuantityPercentChange
+      if (sellQtyChange > 20) {
+        color = hexMap['spiking']
+      } else if (sellQtyChange > 5) {
+        color = hexMap['increasing']
+      } else if (sellQtyChange > -5) {
+        color = hexMap['stable']
+      } else if (sellQtyChange > -20) {
         color = hexMap['decreasing']
       } else {
         color = hexMap['crashing']
@@ -490,7 +518,9 @@ export const Results = ({
 }) => {
   const [sortBy, setSortBy] = useState<GW2MarketshareSortBy>(sortByValue)
   const [globalFilter, setGlobalFilter] = useState('')
-  const [colorBy, setColorBy] = useState<'value' | 'sold' | 'price'>('price')
+  const [colorBy, setColorBy] = useState<
+    'value' | 'sold' | 'price' | 'buyQuantity' | 'sellQuantity'
+  >('price')
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
     () => new Set(columnList.map((col) => col.columnId))
   )
@@ -539,7 +569,9 @@ export const Results = ({
   const colorOptions = [
     { label: 'Value', value: 'value' },
     { label: 'Sold', value: 'sold' },
-    { label: 'Price', value: 'price' }
+    { label: 'Price', value: 'price' },
+    { label: 'Buy Quantity', value: 'buyQuantity' },
+    { label: 'Sell Quantity', value: 'sellQuantity' }
   ]
 
   return (
@@ -609,7 +641,13 @@ export const Results = ({
             radioOptions={colorOptions}
             defaultChecked={colorBy}
             onChange={(value) => {
-              if (value === 'value' || value === 'sold' || value === 'price') {
+              if (
+                value === 'value' ||
+                value === 'sold' ||
+                value === 'price' ||
+                value === 'buyQuantity' ||
+                value === 'sellQuantity'
+              ) {
                 setColorBy(value)
               }
             }}
