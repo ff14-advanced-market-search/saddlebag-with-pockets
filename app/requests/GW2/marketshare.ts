@@ -74,6 +74,7 @@ export type GW2MarketshareSortBy =
 export interface GW2MarketshareProps {
   desired_avg_price: number
   desired_sales_per_day: number
+  desired_value: number
   sort_by: GW2MarketshareSortBy
   type: number
   details_type: number
@@ -84,6 +85,7 @@ export interface GW2MarketshareProps {
 const GW2Marketshare = async ({
   desired_avg_price,
   desired_sales_per_day,
+  desired_value,
   sort_by,
   type,
   details_type,
@@ -99,6 +101,7 @@ const GW2Marketshare = async ({
     body: JSON.stringify({
       desired_avg_price,
       desired_sales_per_day,
+      desired_value,
       sort_by,
       type,
       details_type,

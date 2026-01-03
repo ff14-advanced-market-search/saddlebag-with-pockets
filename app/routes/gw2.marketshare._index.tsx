@@ -54,6 +54,7 @@ type GW2MarketshareActionResult =
 type GW2MarketshareParams = {
   desired_avg_price: string
   desired_sales_per_day: string
+  desired_value: string
   sort_by: GW2MarketshareSortBy
   type: string
   details_type: string
@@ -66,6 +67,7 @@ type GW2MarketshareLoaderData = GW2MarketshareProps
 const inputMap: Record<string, string> = {
   desired_avg_price: 'Desired Average Price',
   desired_sales_per_day: 'Desired Sales Per Day',
+  desired_value: 'Desired Value',
   sort_by: 'Sort Data By',
   type: 'Type',
   details_type: 'Details Type',
@@ -104,13 +106,22 @@ export const action: ActionFunction = async ({ request }) => {
 
   const validateFormData = z.object({
     desired_avg_price: z
-      .string()
-      .min(1)
-      .transform((value) => Math.round(parseFloat(value) * 10000)), // Convert to coppers (e.g., 2.5025 -> 25025)
+      .union([z.string(), z.undefined()])
+      .transform((value) => {
+        if (!value || value === '' || isNaN(Number(value))) return 1 // Default to 1 copper
+        return Math.round(parseFloat(value) * 10000) // Convert to coppers (e.g., 2.5025 -> 25025)
+      }),
     desired_sales_per_day: z
-      .string()
-      .min(1)
-      .transform((value) => parseFloat(value)),
+      .union([z.string(), z.undefined()])
+      .transform((value) => {
+        if (!value || value === '' || isNaN(Number(value))) return 1
+        return parseFloat(value)
+      }),
+    desired_value: z.union([z.string(), z.undefined()]).transform((value) => {
+      if (!value || value === '' || isNaN(Number(value))) return 10000 // Default to 1 gold = 10000 coppers
+      // Convert from gold (user input) to coppers (e.g., 1.0 -> 10000)
+      return Math.round(Number(value) * 10000)
+    }),
     sort_by: z.union([
       z.literal('value'),
       z.literal('historic_value'),
@@ -174,8 +185,9 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const defaultParams: GW2MarketshareLoaderData = {
-  desired_avg_price: 0,
-  desired_sales_per_day: 0.0,
+  desired_avg_price: 1, // 1 copper
+  desired_sales_per_day: 1.0,
+  desired_value: 10000, // 1 gold in coppers
   sort_by: 'value',
   type: -1,
   details_type: -1,
@@ -186,7 +198,7 @@ const defaultParams: GW2MarketshareLoaderData = {
 const searchParamsType = z.object({
   desired_avg_price: z.union([z.string(), z.null()]).transform((value) => {
     if (value === null || isNaN(Number(value)))
-      return defaultParams.desired_avg_price
+      return defaultParams.desired_avg_price // Already in coppers
     // Convert from gold (user input) to coppers for storage (e.g., 2.5025 -> 25025)
     return Math.round(Number(value) * 10000)
   }),
@@ -194,6 +206,12 @@ const searchParamsType = z.object({
     if (value === null || isNaN(Number(value)))
       return defaultParams.desired_sales_per_day
     return Number(value)
+  }),
+  desired_value: z.union([z.string(), z.null()]).transform((value) => {
+    if (value === null || isNaN(Number(value)))
+      return defaultParams.desired_value // Already in coppers
+    // Convert from gold (user input) to coppers for storage (e.g., 1.0 -> 10000)
+    return Math.round(Number(value) * 10000)
   }),
   sort_by: z
     .union([
@@ -239,6 +257,7 @@ export const loader: LoaderFunction = ({ request }) => {
   const input = {
     desired_avg_price: params.get('desired_avg_price'),
     desired_sales_per_day: params.get('desired_sales_per_day'),
+    desired_value: params.get('desired_value'),
     sort_by: params.get('sort_by'),
     type: params.get('type'),
     details_type: params.get('details_type'),
@@ -259,6 +278,7 @@ export default function Index() {
   const [searchParams, setSearchParams] = useState<GW2MarketshareParams>({
     desired_avg_price: (loaderData.desired_avg_price / 10000).toString(), // Convert from coppers to gold for display
     desired_sales_per_day: loaderData.desired_sales_per_day.toString(),
+    desired_value: (loaderData.desired_value / 10000).toString(), // Convert from coppers to gold for display
     sort_by: assertSortBy(loaderData.sort_by)
       ? loaderData.sort_by
       : defaultParams.sort_by,
@@ -274,6 +294,7 @@ export default function Index() {
     setSearchParams({
       desired_avg_price: (loaderData.desired_avg_price / 10000).toString(), // Convert from coppers to gold for display
       desired_sales_per_day: loaderData.desired_sales_per_day.toString(),
+      desired_value: (loaderData.desired_value / 10000).toString(), // Convert from coppers to gold for display
       sort_by: assertSortBy(loaderData.sort_by)
         ? loaderData.sort_by
         : defaultParams.sort_by,
@@ -351,6 +372,20 @@ export default function Index() {
               const value = e.target.value
               if (value !== undefined) {
                 handleFormChange('desired_sales_per_day', value)
+              }
+            }}
+          />
+          <InputWithLabel
+            name="desired_value"
+            labelTitle="Desired Value"
+            type="number"
+            step="0.0001"
+            defaultValue={loaderData.desired_value / 10000}
+            inputTag="Gold (e.g., 1.0 = 1g)"
+            onChange={(e) => {
+              const value = e.target.value
+              if (value !== undefined) {
+                handleFormChange('desired_value', value)
               }
             }}
           />
