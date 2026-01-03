@@ -1086,7 +1086,7 @@ export default function Index() {
   const listing = 'data' in result ? result.data : undefined
 
   // Filter data based on selected time scale
-  const getFilteredData = (): TimeDataPoint[] => {
+  const timeScaleFilteredData = useMemo((): TimeDataPoint[] => {
     if (!listing) return []
 
     const now = new Date()
@@ -1126,9 +1126,7 @@ export default function Index() {
       const pointDate = new Date(point.date)
       return pointDate >= cutoffDate
     })
-  }
-
-  const timeScaleFilteredData = getFilteredData()
+  }, [listing, timeScale])
 
   // Get unique dates from filtered data for date range picker
   const availableDates = timeScaleFilteredData
