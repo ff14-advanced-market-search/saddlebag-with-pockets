@@ -91,16 +91,16 @@ const createSharedTooltipFormatter = (
       };">Bought:</b> ${dataPoint.buy_sold.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#10b981' : '#059669'
-      };">New Offers:</b> ${dataPoint.sell_listed.toLocaleString()}<br/>
+      };">New Sells Listed:</b> ${dataPoint.sell_listed.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#f59e0b' : '#d97706'
-      };">New Bids:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
+      };">New Buys Listed:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#10b981' : '#059669'
-      };">Offers Delisted:</b> ${dataPoint.sell_delisted.toLocaleString()}<br/>
+      };">Sells Delisted:</b> ${dataPoint.sell_delisted.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#f59e0b' : '#d97706'
-      };">Bids Delisted:</b> ${dataPoint.buy_delisted.toLocaleString()}<br/>
+      };">Buys Delisted:</b> ${dataPoint.buy_delisted.toLocaleString()}<br/>
       <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
       <b style="color: ${
         darkmode ? '#7c3aed' : '#6d28d9'
@@ -899,7 +899,7 @@ const GW2SynchronizedCharts = forwardRef<
         groupPadding: 0.1
       },
       {
-        name: 'Offers',
+        name: 'New Sells Listed',
         type: 'column',
         data: timeData.map((d) => d.sell_listed),
         color: darkmode ? '#10b981' : '#059669',
@@ -908,7 +908,7 @@ const GW2SynchronizedCharts = forwardRef<
         groupPadding: 0.1
       },
       {
-        name: 'Bids',
+        name: 'New Buys Listed',
         type: 'column',
         data: timeData.map((d) => d.buy_listed),
         color: darkmode ? '#f59e0b' : '#d97706',
@@ -917,7 +917,7 @@ const GW2SynchronizedCharts = forwardRef<
         groupPadding: 0.1
       },
       {
-        name: 'Sell Delisted',
+        name: 'Sells Delisted',
         type: 'column',
         data: timeData.map((d) => d.sell_delisted),
         color: darkmode ? '#34d399' : '#10b981',
@@ -926,7 +926,7 @@ const GW2SynchronizedCharts = forwardRef<
         groupPadding: 0.1
       },
       {
-        name: 'Buy Delisted',
+        name: 'Buys Delisted',
         type: 'column',
         data: timeData.map((d) => d.buy_delisted),
         color: darkmode ? '#fbbf24' : '#f59e0b',
