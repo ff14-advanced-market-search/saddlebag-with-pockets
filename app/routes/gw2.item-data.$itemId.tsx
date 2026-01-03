@@ -1220,24 +1220,6 @@ export default function Index() {
         <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
           <div className="flex flex-col max-w-full">
             <Differences
-              diffTitle="Current Sell Price"
-              diffAmount={minSellPrice.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 4
-              })}
-              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Current Buy Price"
-              diffAmount={maxBuyPrice.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 4
-              })}
-              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-            />
-          </div>
-          <div className="flex flex-col max-w-full">
-            <Differences
               diffTitle="Average Price"
               diffAmount={listing.price_average.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -1261,6 +1243,14 @@ export default function Index() {
           </div>
           <div className="flex flex-col max-w-full">
             <Differences
+              diffTitle="Current Sell Price"
+              diffAmount={minSellPrice.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 4
+              })}
+              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+            />
+            <Differences
               diffTitle="Sell Price Avg"
               diffAmount={listing.sell_price_avg.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -1283,6 +1273,14 @@ export default function Index() {
             />
           </div>
           <div className="flex flex-col max-w-full">
+            <Differences
+              diffTitle="Current Buy Price"
+              diffAmount={maxBuyPrice.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 4
+              })}
+              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+            />
             <Differences
               diffTitle="Buy Price Avg"
               diffAmount={listing.buy_price_avg.toLocaleString(undefined, {

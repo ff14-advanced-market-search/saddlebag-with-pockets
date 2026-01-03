@@ -556,20 +556,26 @@ export const Results = ({
 
           {isPercentChange ? (
             <>
-              <Title title={`${chartTitle} - Increases`} />
-              <TreemapChart
-                chartData={chartDataIncreases}
-                darkMode={darkmode}
-                backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
-              />
-              <div className="mt-6">
-                <Title title={`${chartTitle} - Decreases`} />
-                <TreemapChart
-                  chartData={chartDataDecreases}
-                  darkMode={darkmode}
-                  backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
-                />
-              </div>
+              {chartDataIncreases.length > 0 && (
+                <>
+                  <Title title={`${chartTitle} - Increases`} />
+                  <TreemapChart
+                    chartData={chartDataIncreases}
+                    darkMode={darkmode}
+                    backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+                  />
+                </>
+              )}
+              {chartDataDecreases.length > 0 && (
+                <div className={chartDataIncreases.length > 0 ? 'mt-6' : ''}>
+                  <Title title={`${chartTitle} - Decreases`} />
+                  <TreemapChart
+                    chartData={chartDataDecreases}
+                    darkMode={darkmode}
+                    backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+                  />
+                </div>
+              )}
             </>
           ) : (
             <TreemapChart
