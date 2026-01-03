@@ -25,8 +25,9 @@ const searchParams = {
   value: '/gw2/marketshare?sort_by=value&desired_value=1000',
   sold: '/gw2/marketshare?sort_by=sold&desired_sales_per_day=5000',
   sellQuantityPercentChange:
-    '/gw2/marketshare?sort_by=sellQuantityPercentChange',
-  buyQuantityPercentChange: '/gw2/marketshare?sort_by=buyQuantityPercentChange',
+    '/gw2/marketshare?sort_by=sellQuantityPercentChange&desired_sales_per_day=100',
+  buyQuantityPercentChange:
+    '/gw2/marketshare?sort_by=buyQuantityPercentChange&desired_sales_per_day=100',
   priceAverage: '/gw2/marketshare?sort_by=price_average&desired_avg_price=1000',
   pricePercentChange: '/gw2/marketshare?sort_by=pricePercentChange',
   soldPercentChange: '/gw2/marketshare?sort_by=soldPercentChange',
