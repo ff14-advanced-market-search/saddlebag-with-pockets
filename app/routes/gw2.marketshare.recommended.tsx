@@ -27,14 +27,13 @@ const searchParams = {
   highValue: '/gw2/marketshare?desired_avg_price=1000&sort_by=price_average',
   fastSales: '/gw2/marketshare?desired_sales_per_day=100000&sort_by=sold',
   priceAverage: '/gw2/marketshare?sort_by=price_average',
-  pricePercentChange:
-    '/gw2/marketshare?sort_by=pricePercentChange&desired_sales_per_day=100',
-  soldPercentChange:
-    '/gw2/marketshare?sort_by=soldPercentChange&desired_sales_per_day=100',
+  pricePercentChange: '/gw2/marketshare?sort_by=pricePercentChange',
+  soldPercentChange: '/gw2/marketshare?sort_by=soldPercentChange',
   valuePercentChange: '/gw2/marketshare?sort_by=valuePercentChange',
   sellQuantityPercentChange:
-    '/gw2/marketshare?sort_by=sellQuantityPercentChange',
-  buyQuantityPercentChange: '/gw2/marketshare?sort_by=buyQuantityPercentChange'
+    '/gw2/marketshare?sort_by=sellQuantityPercentChange&desired_sales_per_day=100',
+  buyQuantityPercentChange:
+    '/gw2/marketshare?sort_by=buyQuantityPercentChange&desired_sales_per_day=100'
 }
 
 const recommendedQueries = [
