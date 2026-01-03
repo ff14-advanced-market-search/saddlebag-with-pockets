@@ -12,10 +12,33 @@ import ItemListingsData from '~/requests/GW2/ItemListingsData'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Banner from '~/components/Common/Banner'
-import { useState, useEffect, useRef } from 'react'
+import {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useImperativeHandle,
+  forwardRef
+} from 'react'
 import type { ColumnList } from '~/components/types'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import { format } from 'date-fns'
+import Highcharts from 'highcharts'
+import addHighchartsMore from 'highcharts/highcharts-more'
+import HighchartsReact from 'highcharts-react-official'
+
+// Initialize the highcharts-more module at the module level
+let highchartsMoreLoaded = false
+try {
+  addHighchartsMore(Highcharts)
+  highchartsMoreLoaded = true
+} catch (error) {
+  console.error(
+    'Failed to initialize Highcharts more module:',
+    error instanceof Error ? error.message : String(error)
+  )
+  highchartsMoreLoaded = false
+}
 
 // Shared tooltip formatter for all charts
 const createSharedTooltipFormatter = (
@@ -68,10 +91,16 @@ const createSharedTooltipFormatter = (
       };">Bought:</b> ${dataPoint.buy_sold.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#10b981' : '#059669'
-      };">Offers:</b> ${dataPoint.sell_listed.toLocaleString()}<br/>
+      };">New Offers:</b> ${dataPoint.sell_listed.toLocaleString()}<br/>
       <b style="color: ${
         darkmode ? '#f59e0b' : '#d97706'
-      };">Bids:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
+      };">New Bids:</b> ${dataPoint.buy_listed.toLocaleString()}<br/>
+      <b style="color: ${
+        darkmode ? '#10b981' : '#059669'
+      };">Offers Delisted:</b> ${dataPoint.sell_delisted.toLocaleString()}<br/>
+      <b style="color: ${
+        darkmode ? '#f59e0b' : '#d97706'
+      };">Bids Delisted:</b> ${dataPoint.buy_delisted.toLocaleString()}<br/>
       <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
       <b style="color: ${
         darkmode ? '#7c3aed' : '#6d28d9'
@@ -84,15 +113,18 @@ const createSharedTooltipFormatter = (
 }
 
 // GW2 Synchronized Charts Component
-const GW2SynchronizedCharts = ({
-  timeData,
-  darkmode,
-  itemName
-}: {
-  timeData: TimeDataPoint[]
-  darkmode: boolean
-  itemName: string
-}) => {
+export interface GW2ChartsRef {
+  resetZoom: () => void
+}
+
+const GW2SynchronizedCharts = forwardRef<
+  GW2ChartsRef,
+  {
+    timeData: TimeDataPoint[]
+    darkmode: boolean
+    itemName: string
+  }
+>(({ timeData, darkmode, itemName }, ref) => {
   const [chartsLoaded, setChartsLoaded] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const chartRefs = useRef<any[]>([])
@@ -111,6 +143,19 @@ const GW2SynchronizedCharts = ({
   const loadCharts = () => {
     setChartsLoaded(true)
   }
+
+  // Expose resetZoom function to parent component
+  // Must be called before any early returns to follow React hooks rules
+  useImperativeHandle(ref, () => ({
+    resetZoom: () => {
+      chartRefs.current.forEach((chartRef) => {
+        if (chartRef && chartRef.chart) {
+          // Reset Date Range by setting extremes to null
+          chartRef.chart.xAxis[0].setExtremes(null, null)
+        }
+      })
+    }
+  }))
 
   const shouldShowButton = isMobile && !chartsLoaded
   const shouldLoadCharts = !isMobile || chartsLoaded
@@ -134,9 +179,6 @@ const GW2SynchronizedCharts = ({
   if (!shouldLoadCharts || timeData.length === 0) {
     return null
   }
-
-  const Highcharts = require('highcharts')
-  const HighchartsReact = require('highcharts-react-official').default
 
   const styles = darkmode
     ? {
@@ -207,12 +249,36 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'line',
       backgroundColor: styles.backgroundColor,
-      height: 350,
+      height: 500,
       spacingBottom: 20,
       marginBottom: 40,
+      zoomType: 'x',
       events: {
         load: function (this: any) {
           chartRefs.current[0] = this
+        }
+      },
+      resetZoomButton: {
+        theme: {
+          fill: darkmode ? '#3b82f6' : '#2563eb',
+          stroke: darkmode ? '#1e40af' : '#1e3a8a',
+          style: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          },
+          r: 4,
+          states: {
+            hover: {
+              fill: darkmode ? '#2563eb' : '#1d4ed8'
+            }
+          }
+        },
+        position: {
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 10
         }
       }
     },
@@ -297,10 +363,8 @@ const GW2SynchronizedCharts = ({
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
-        const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
         const chartWidth = chart.chartWidth
-        const chartHeight = chart.chartHeight
 
         // Get mouse position relative to chart
         const mouseX = point.plotX + plotLeft
@@ -349,6 +413,55 @@ const GW2SynchronizedCharts = ({
         lineWidth: 2,
         marker: { radius: 3 }
       },
+      // Colored area between Supply and Demand lines using arearange
+      // Only include if highcharts-more module loaded successfully
+      ...(highchartsMoreLoaded
+        ? [
+            // Red area when Supply > Demand
+            {
+              name: 'Supply Above Demand',
+              type: 'arearange',
+              data: timeData.map((d) => {
+                const supply = d.sell_quantity_avg
+                const demand = d.buy_quantity_avg
+                // Only show when supply is strictly greater than demand
+                // Use epsilon to prevent floating point equality issues
+                return supply > demand + Number.EPSILON
+                  ? [demand, supply]
+                  : null
+              }),
+              color: darkmode ? '#dc2626' : '#b91c1c', // Red
+              yAxis: 1,
+              fillOpacity: 0.3,
+              lineWidth: 0,
+              enableMouseTracking: false,
+              zIndex: 0,
+              showInLegend: false
+            },
+            // Green area when Demand > Supply
+            {
+              name: 'Demand Above Supply',
+              type: 'arearange',
+              data: timeData.map((d) => {
+                const supply = d.sell_quantity_avg
+                const demand = d.buy_quantity_avg
+                // Only show when demand is strictly greater than supply
+                // Use epsilon to prevent floating point equality issues
+                // This ensures mutual exclusivity - only one shows at a time
+                return demand > supply + Number.EPSILON
+                  ? [supply, demand]
+                  : null
+              }),
+              color: darkmode ? '#10b981' : '#059669', // Green
+              yAxis: 1,
+              fillOpacity: 0.3,
+              lineWidth: 0,
+              enableMouseTracking: false,
+              zIndex: 0,
+              showInLegend: false
+            }
+          ]
+        : []),
       {
         name: 'Supply',
         type: 'line',
@@ -383,7 +496,12 @@ const GW2SynchronizedCharts = ({
             }
           }
         }
-      }
+      },
+      ...(highchartsMoreLoaded && {
+        arearange: {
+          connectNulls: false
+        }
+      })
     }
   }
 
@@ -392,14 +510,38 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'area',
       backgroundColor: styles.backgroundColor,
-      height: 350,
+      height: 500,
       spacingTop: 20,
       spacingBottom: 20,
       marginTop: 20,
       marginBottom: 40,
+      zoomType: 'x',
       events: {
         load: function (this: any) {
           chartRefs.current[1] = this
+        }
+      },
+      resetZoomButton: {
+        theme: {
+          fill: darkmode ? '#3b82f6' : '#2563eb',
+          stroke: darkmode ? '#1e40af' : '#1e3a8a',
+          style: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          },
+          r: 4,
+          states: {
+            hover: {
+              fill: darkmode ? '#2563eb' : '#1d4ed8'
+            }
+          }
+        },
+        position: {
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 10
         }
       }
     },
@@ -485,10 +627,8 @@ const GW2SynchronizedCharts = ({
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
-        const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
         const chartWidth = chart.chartWidth
-        const chartHeight = chart.chartHeight
 
         // Get mouse position relative to chart
         const mouseX = point.plotX + plotLeft
@@ -589,14 +729,38 @@ const GW2SynchronizedCharts = ({
     chart: {
       type: 'line',
       backgroundColor: styles.backgroundColor,
-      height: 400,
+      height: 550,
       spacingTop: 20,
       spacingBottom: 80,
+      zoomType: 'x',
       marginTop: 20,
       marginBottom: 150,
       events: {
         load: function (this: any) {
           chartRefs.current[2] = this
+        }
+      },
+      resetZoomButton: {
+        theme: {
+          fill: darkmode ? '#3b82f6' : '#2563eb',
+          stroke: darkmode ? '#1e40af' : '#1e3a8a',
+          style: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          },
+          r: 4,
+          states: {
+            hover: {
+              fill: darkmode ? '#2563eb' : '#1d4ed8'
+            }
+          }
+        },
+        position: {
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 10
         }
       }
     },
@@ -684,10 +848,8 @@ const GW2SynchronizedCharts = ({
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
-        const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
         const chartWidth = chart.chartWidth
-        const chartHeight = chart.chartHeight
 
         // Get mouse position relative to chart
         const mouseX = point.plotX + plotLeft
@@ -755,6 +917,24 @@ const GW2SynchronizedCharts = ({
         groupPadding: 0.1
       },
       {
+        name: 'Sell Delisted',
+        type: 'column',
+        data: timeData.map((d) => d.sell_delisted),
+        color: darkmode ? '#34d399' : '#10b981',
+        yAxis: 0,
+        pointPadding: 0.1,
+        groupPadding: 0.1
+      },
+      {
+        name: 'Buy Delisted',
+        type: 'column',
+        data: timeData.map((d) => d.buy_delisted),
+        color: darkmode ? '#fbbf24' : '#f59e0b',
+        yAxis: 0,
+        pointPadding: 0.1,
+        groupPadding: 0.1
+      },
+      {
         name: 'Supply',
         type: 'line',
         data: timeData.map((d) => d.sell_quantity_avg),
@@ -795,15 +975,13 @@ const GW2SynchronizedCharts = ({
   }
 
   return (
-    <ContentContainer>
-      <div>
-        <HighchartsReact highcharts={Highcharts} options={priceVolumeOptions} />
-        <HighchartsReact highcharts={Highcharts} options={valueOptions} />
-        <HighchartsReact highcharts={Highcharts} options={transactionOptions} />
-      </div>
-    </ContentContainer>
+    <div>
+      <HighchartsReact highcharts={Highcharts} options={priceVolumeOptions} />
+      <HighchartsReact highcharts={Highcharts} options={valueOptions} />
+      <HighchartsReact highcharts={Highcharts} options={transactionOptions} />
+    </div>
   )
-}
+})
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -908,10 +1086,106 @@ const sellColumnList: Array<ColumnList<SellOrderItem>> = [
   { columnId: 'quantity', header: 'Quantity' }
 ]
 
+type TimeScale = 'day' | 'week' | '6week' | '3month' | 'year' | 'max'
+
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const [showExtraData, setShowExtraData] = useState(false)
+  const [timeScale, setTimeScale] = useState<TimeScale>('6week')
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
+  const chartsRef = useRef<GW2ChartsRef>(null)
+
+  const listing = 'data' in result ? result.data : undefined
+
+  // Filter data based on selected time scale
+  const timeScaleFilteredData = useMemo((): TimeDataPoint[] => {
+    if (!listing) return []
+
+    const now = new Date()
+    let cutoffDate: Date
+    let dataSource: TimeDataPoint[]
+
+    switch (timeScale) {
+      case 'day':
+        cutoffDate = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+        dataSource = listing.timeData
+        break
+      case 'week':
+        cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+        dataSource = listing.timeData
+        break
+      case '6week':
+        cutoffDate = new Date(now.getTime() - 42 * 24 * 60 * 60 * 1000)
+        dataSource = listing.dailyData || []
+        break
+      case '3month':
+        cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000)
+        dataSource = listing.dailyData || []
+        break
+      case 'year':
+        cutoffDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000)
+        dataSource = listing.dailyData || []
+        break
+      case 'max':
+        dataSource = listing.dailyData || []
+        return dataSource
+      default:
+        dataSource = listing.timeData
+        return dataSource
+    }
+
+    return dataSource.filter((point) => {
+      const pointDate = new Date(point.date)
+      return pointDate >= cutoffDate
+    })
+  }, [listing, timeScale])
+
+  // Get unique dates from filtered data for date range picker
+  const availableDates = timeScaleFilteredData
+    .map((point) => point.date)
+    .filter((date, index, self) => self.indexOf(date) === index)
+    .sort()
+
+  // Get min and max dates as Date objects
+  const minDate = availableDates.length > 0 ? new Date(availableDates[0]) : null
+  const maxDate =
+    availableDates.length > 0
+      ? new Date(availableDates[availableDates.length - 1])
+      : null
+
+  // Reset date range to full range when time scale changes
+  useEffect(() => {
+    if (minDate && maxDate) {
+      setStartDate(minDate)
+      setEndDate(maxDate)
+      // Also reset chart zoom when time scale changes
+      chartsRef.current?.resetZoom()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeScale, minDate?.getTime(), maxDate?.getTime()])
+
+  // Initialize date range to full range when data first loads
+  useEffect(() => {
+    if (minDate && maxDate && (!startDate || !endDate)) {
+      setStartDate(minDate)
+      setEndDate(maxDate)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [minDate?.getTime(), maxDate?.getTime()])
+
+  // Filter data based on selected date range
+  const filteredData = useMemo(() => {
+    if (!startDate || !endDate) {
+      return timeScaleFilteredData
+    }
+    const startDateStr = format(startDate, 'yyyy-MM-dd')
+    const endDateStr = format(endDate, 'yyyy-MM-dd')
+    return timeScaleFilteredData.filter((point) => {
+      return point.date >= startDateStr && point.date <= endDateStr
+    })
+  }, [timeScaleFilteredData, startDate, endDate])
 
   const error = result && 'exception' in result ? result.exception : undefined
 
@@ -927,9 +1201,17 @@ export default function Index() {
     return <NoResults />
   }
 
-  const listing = 'data' in result ? result.data : undefined
-
   if (listing) {
+    // Calculate minimum sell price and maximum buy price from arrays
+    const minSellPrice =
+      listing.sells.length > 0
+        ? Math.min(...listing.sells.map((sell) => sell.unit_price))
+        : 0
+    const maxBuyPrice =
+      listing.buys.length > 0
+        ? Math.max(...listing.buys.map((buy) => buy.unit_price))
+        : 0
+
     return (
       <PageWrapper>
         <Title title={listing.itemName} />
@@ -961,6 +1243,14 @@ export default function Index() {
           </div>
           <div className="flex flex-col max-w-full">
             <Differences
+              diffTitle="Current Sell Price"
+              diffAmount={minSellPrice.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 4
+              })}
+              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+            />
+            <Differences
               diffTitle="Sell Price Avg"
               diffAmount={listing.sell_price_avg.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -983,6 +1273,14 @@ export default function Index() {
             />
           </div>
           <div className="flex flex-col max-w-full">
+            <Differences
+              diffTitle="Current Buy Price"
+              diffAmount={maxBuyPrice.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 4
+              })}
+              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+            />
             <Differences
               diffTitle="Buy Price Avg"
               diffAmount={listing.buy_price_avg.toLocaleString(undefined, {
@@ -1220,12 +1518,131 @@ export default function Index() {
         )}
 
         {/* Synchronized Charts */}
-        {listing.timeData.length > 0 && (
-          <GW2SynchronizedCharts
-            timeData={listing.timeData}
-            darkmode={darkmode}
-            itemName={listing.itemName}
-          />
+        {(listing.timeData.length > 0 ||
+          (listing.dailyData && listing.dailyData.length > 0)) && (
+          <ContentContainer>
+            <div>
+              {/* Time Scale Buttons */}
+              <div className="mb-4 flex flex-wrap gap-2 justify-center">
+                {(
+                  [
+                    'day',
+                    'week',
+                    '6week',
+                    '3month',
+                    'year',
+                    'max'
+                  ] as TimeScale[]
+                ).map((scale) => (
+                  <button
+                    key={scale}
+                    type="button"
+                    onClick={() => setTimeScale(scale)}
+                    className={`px-4 py-2 rounded-lg shadow-md text-sm font-medium transition-colors ${
+                      timeScale === scale
+                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200'
+                    }`}>
+                    {scale === '3month'
+                      ? '3 Month'
+                      : scale === '6week'
+                      ? '6 Week'
+                      : scale.charAt(0).toUpperCase() + scale.slice(1)}
+                  </button>
+                ))}
+              </div>
+              {/* Date Range Controls */}
+              {minDate && maxDate && (
+                <div className="mb-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                  <div className="flex flex-wrap justify-center items-end gap-4">
+                    <div>
+                      <label
+                        htmlFor="startDate"
+                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        Start Date
+                      </label>
+                      <input
+                        type="date"
+                        id="startDate"
+                        min={format(minDate, 'yyyy-MM-dd')}
+                        max={format(endDate || maxDate, 'yyyy-MM-dd')}
+                        value={startDate ? format(startDate, 'yyyy-MM-dd') : ''}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            const newStart = new Date(e.target.value)
+                            setStartDate(newStart)
+                            // Ensure end date is not before start date
+                            if (endDate && newStart > endDate) {
+                              setEndDate(newStart)
+                            }
+                          } else {
+                            setStartDate(null)
+                          }
+                        }}
+                        className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="endDate"
+                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        End Date
+                      </label>
+                      <input
+                        type="date"
+                        id="endDate"
+                        min={format(startDate || minDate, 'yyyy-MM-dd')}
+                        max={format(maxDate, 'yyyy-MM-dd')}
+                        value={endDate ? format(endDate, 'yyyy-MM-dd') : ''}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            const newEnd = new Date(e.target.value)
+                            setEndDate(newEnd)
+                            // Ensure start date is not after end date
+                            if (startDate && newEnd < startDate) {
+                              setStartDate(newEnd)
+                            }
+                          } else {
+                            setEndDate(null)
+                          }
+                        }}
+                        className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="resetZoom"
+                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        Reset Date Range
+                      </label>
+                      <button
+                        id="resetZoom"
+                        type="button"
+                        onClick={() => {
+                          if (minDate && maxDate) {
+                            setStartDate(minDate)
+                            setEndDate(maxDate)
+                            // Also reset chart zoom when resetting date range
+                            chartsRef.current?.resetZoom()
+                          }
+                        }}
+                        className="w-48 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium">
+                        Reset Date Range
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {filteredData.length > 0 && (
+                <GW2SynchronizedCharts
+                  ref={chartsRef}
+                  timeData={filteredData}
+                  darkmode={darkmode}
+                  itemName={listing.itemName}
+                />
+              )}
+            </div>
+          </ContentContainer>
         )}
 
         {/* Orders Tables - Side by Side */}

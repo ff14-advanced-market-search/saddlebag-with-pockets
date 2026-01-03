@@ -15,21 +15,25 @@ import MobileTable from '~/components/WoWResults/FullScan/MobileTable'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import { RadioButtons } from '~/components/Common/RadioButtons'
 import { TabbedButtons } from '~/components/Common/TabbedButtons'
+import { itemTypes } from '~/utils/GW2Filters/itemTypes'
+import { itemRarities } from '~/utils/GW2Filters/itemRarity'
 
 export const SortBySelect = ({
   label = 'Sort Results By',
   onChange,
-  defaultValue = 'value'
+  defaultValue = 'value',
+  value
 }: {
   label?: string
   onChange?: (value: GW2MarketshareSortBy) => void
   defaultValue?: GW2MarketshareSortBy
+  value?: GW2MarketshareSortBy
 }) => (
   <div className="mt-2">
     <Label htmlFor="sort_by">{label}</Label>
     <select
       name="sort_by"
-      defaultValue={defaultValue}
+      value={value !== undefined ? value : defaultValue}
       onChange={(event) => {
         if (onChange) {
           const newValue = event.target.value
@@ -64,7 +68,9 @@ export const sortByOptions: Array<{
   { label: 'Historic Price Average', value: 'historic_price_average' },
   { label: 'Price Percent Change', value: 'pricePercentChange' },
   { label: 'Sold Percent Change', value: 'soldPercentChange' },
-  { label: 'Value Percent Change', value: 'valuePercentChange' }
+  { label: 'Value Percent Change', value: 'valuePercentChange' },
+  { label: 'Sell Quantity Percent Change', value: 'sellQuantityPercentChange' },
+  { label: 'Buy Quantity Percent Change', value: 'buyQuantityPercentChange' }
 ]
 
 const csvColumns: Array<{ title: string; value: keyof GW2MarketshareItem }> = [
@@ -129,17 +135,67 @@ const hexMap: Record<string, string> = {
   spiking: '#24b406'
 }
 
+// Helper to check if a sortBy is a percent change type
+const isPercentChangeSort = (
+  sortBy: GW2MarketshareSortBy
+): sortBy is
+  | 'pricePercentChange'
+  | 'soldPercentChange'
+  | 'valuePercentChange'
+  | 'sellQuantityPercentChange'
+  | 'buyQuantityPercentChange' => {
+  return [
+    'pricePercentChange',
+    'soldPercentChange',
+    'valuePercentChange',
+    'sellQuantityPercentChange',
+    'buyQuantityPercentChange'
+  ].includes(sortBy)
+}
+
+// Helper to get the percent change value for a given sortBy
+const getPercentChangeValue = (
+  item: GW2MarketshareItem,
+  sortBy:
+    | 'pricePercentChange'
+    | 'soldPercentChange'
+    | 'valuePercentChange'
+    | 'sellQuantityPercentChange'
+    | 'buyQuantityPercentChange'
+): number => {
+  switch (sortBy) {
+    case 'pricePercentChange':
+      return item.pricePercentChange
+    case 'soldPercentChange':
+      return item.soldPercentChange
+    case 'valuePercentChange':
+      return item.valuePercentChange
+    case 'sellQuantityPercentChange':
+      return item.sellQuantityPercentChange
+    case 'buyQuantityPercentChange':
+      return item.buyQuantityPercentChange
+  }
+}
+
 const getChartData = (
   data: Array<GW2MarketshareItem>,
   sortBy: GW2MarketshareSortBy,
   useHistoric: boolean,
-  colorBy: 'value' | 'sold' | 'price'
+  colorBy: 'value' | 'sold' | 'price',
+  filterDirection?: 'positive' | 'negative'
 ): Array<TreemapNode> => {
   const result: Array<TreemapNode> = []
 
   data.forEach((item) => {
     let value: number
     let color: string
+
+    // For percent change sorts, filter by direction if specified
+    if (isPercentChangeSort(sortBy) && filterDirection) {
+      const percentChange = getPercentChangeValue(item, sortBy)
+      if (filterDirection === 'positive' && percentChange <= 0) return
+      if (filterDirection === 'negative' && percentChange >= 0) return
+    }
 
     // Determine the value based on sortBy and useHistoric
     switch (sortBy) {
@@ -161,15 +217,32 @@ const getChartData = (
       case 'historic_price_average':
         value = item.historic_price_average
         break
-      case 'pricePercentChange':
-        value = Math.abs(item.pricePercentChange)
+      case 'pricePercentChange': {
+        // For negative values, use Math.abs() to make them positive for treemap
+        const priceChange = item.pricePercentChange
+        value = priceChange < 0 ? Math.abs(priceChange) : priceChange
         break
-      case 'soldPercentChange':
-        value = Math.abs(item.soldPercentChange)
+      }
+      case 'soldPercentChange': {
+        const soldChange = item.soldPercentChange
+        value = soldChange < 0 ? Math.abs(soldChange) : soldChange
         break
-      case 'valuePercentChange':
-        value = Math.abs(item.valuePercentChange)
+      }
+      case 'valuePercentChange': {
+        const valueChange = item.valuePercentChange
+        value = valueChange < 0 ? Math.abs(valueChange) : valueChange
         break
+      }
+      case 'sellQuantityPercentChange': {
+        const sellQtyChange = item.sellQuantityPercentChange
+        value = sellQtyChange < 0 ? Math.abs(sellQtyChange) : sellQtyChange
+        break
+      }
+      case 'buyQuantityPercentChange': {
+        const buyQtyChange = item.buyQuantityPercentChange
+        value = buyQtyChange < 0 ? Math.abs(buyQtyChange) : buyQtyChange
+        break
+      }
       default:
         value = useHistoric ? item.historic_value : item.value
     }
@@ -228,6 +301,37 @@ const getMobileColumns = (sortBy: GW2MarketshareSortBy) => {
   ]
 }
 
+// Pre-build lookup maps for O(1) lookups
+const typeMap = new Map<number, string>()
+itemTypes.forEach((itemType) => {
+  typeMap.set(itemType.value, itemType.name)
+})
+
+const detailsTypeMap = new Map<number, string>()
+itemTypes.forEach((itemType) => {
+  itemType.subClasses.forEach((sc) => {
+    detailsTypeMap.set(sc.value, sc.name)
+  })
+})
+
+const rarityMap = new Map<number, string>()
+itemRarities.forEach((rarity) => {
+  rarityMap.set(rarity.value, rarity.name)
+})
+
+// Helper functions to get string names from integer values
+const getTypeName = (typeValue: number): string => {
+  return typeMap.get(typeValue) ?? typeValue.toString()
+}
+
+const getDetailsTypeName = (detailsTypeValue: number): string => {
+  return detailsTypeMap.get(detailsTypeValue) ?? detailsTypeValue.toString()
+}
+
+const getRarityName = (rarityValue: number): string => {
+  return rarityMap.get(rarityValue) ?? rarityValue.toString()
+}
+
 const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'itemName', header: 'Item Name' },
   {
@@ -266,9 +370,23 @@ const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'current_sell_quantity', header: 'Current Sell Quantity' },
   { columnId: 'current_buy_price', header: 'Current Buy Price' },
   { columnId: 'current_buy_quantity', header: 'Current Buy Quantity' },
-  { columnId: 'type', header: 'Type' },
-  { columnId: 'details_type', header: 'Details Type' },
-  { columnId: 'rarity', header: 'Rarity' },
+  {
+    columnId: 'type',
+    header: 'Type',
+    accessor: ({ getValue }) => <p>{getTypeName(getValue() as number)}</p>
+  },
+  {
+    columnId: 'details_type',
+    header: 'Details Type',
+    accessor: ({ getValue }) => (
+      <p>{getDetailsTypeName(getValue() as number)}</p>
+    )
+  },
+  {
+    columnId: 'rarity',
+    header: 'Rarity',
+    accessor: ({ getValue }) => <p>{getRarityName(getValue() as number)}</p>
+  },
   { columnId: 'level', header: 'Level' },
   { columnId: 'sell_sold', header: 'Sell Sold' },
   { columnId: 'sell_price_avg', header: 'Sell Price Avg' },
@@ -355,6 +473,12 @@ export const Results = ({
   const [sortBy, setSortBy] = useState<GW2MarketshareSortBy>(sortByValue)
   const [globalFilter, setGlobalFilter] = useState('')
   const [colorBy, setColorBy] = useState<'value' | 'sold' | 'price'>('price')
+  const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
+    () => new Set(columnList.map((col) => col.columnId))
+  )
+  const [showColumnControls, setShowColumnControls] = useState(false)
+  const [columnPage, setColumnPage] = useState(0)
+  const columnsPerPage = 20
 
   // Determine if we should use historic based on the sortBy selection
   const useHistoric =
@@ -362,9 +486,23 @@ export const Results = ({
     sortBy === 'historic_sold' ||
     sortBy === 'historic_price_average'
 
-  const chartData = useMemo(
-    () => getChartData(data, sortBy, useHistoric, colorBy),
-    [data, sortBy, useHistoric, colorBy]
+  // For percent change sorts, create two separate charts (increases and decreases)
+  const isPercentChange = isPercentChangeSort(sortBy)
+
+  const chartDataIncreases = useMemo(
+    () =>
+      isPercentChange
+        ? getChartData(data, sortBy, useHistoric, colorBy, 'positive')
+        : getChartData(data, sortBy, useHistoric, colorBy),
+    [data, sortBy, useHistoric, colorBy, isPercentChange]
+  )
+
+  const chartDataDecreases = useMemo(
+    () =>
+      isPercentChange
+        ? getChartData(data, sortBy, useHistoric, colorBy, 'negative')
+        : [],
+    [data, sortBy, useHistoric, colorBy, isPercentChange]
   )
 
   const sortByTitleValue = sortByOptions.find(
@@ -376,6 +514,9 @@ export const Results = ({
     : 'Marketshare Overview'
 
   const mobileColumnList = getMobileColumns(sortBy)
+
+  // For sell quantity percent change, sort ascending (smallest first), otherwise descending
+  const sortDesc = sortBy !== 'sellQuantityPercentChange'
 
   const colorOptions = [
     { label: 'Value', value: 'value' },
@@ -413,11 +554,36 @@ export const Results = ({
             </select>
           </div>
 
-          <TreemapChart
-            chartData={chartData}
-            darkMode={darkmode}
-            backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
-          />
+          {isPercentChange ? (
+            <>
+              {chartDataIncreases.length > 0 && (
+                <>
+                  <Title title={`${chartTitle} - Increases`} />
+                  <TreemapChart
+                    chartData={chartDataIncreases}
+                    darkMode={darkmode}
+                    backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+                  />
+                </>
+              )}
+              {chartDataDecreases.length > 0 && (
+                <div className={chartDataIncreases.length > 0 ? 'mt-6' : ''}>
+                  <Title title={`${chartTitle} - Decreases`} />
+                  <TreemapChart
+                    chartData={chartDataDecreases}
+                    darkMode={darkmode}
+                    backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <TreemapChart
+              chartData={chartDataIncreases}
+              darkMode={darkmode}
+              backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+            />
+          )}
 
           <RadioButtons
             title="Color Visualisation"
@@ -432,12 +598,18 @@ export const Results = ({
           />
         </>
       </ContentContainer>
-      <div className="my-2 flex justify-between">
+      <div className="my-2 flex justify-between items-center flex-wrap gap-2">
         <CSVButton
           filename="saddlebag-gw2-marketshare.csv"
           data={data}
           columns={csvColumns}
         />
+        <button
+          type="button"
+          onClick={() => setShowColumnControls(!showColumnControls)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium text-sm">
+          {showColumnControls ? 'Hide' : 'Show'} Column Controls
+        </button>
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
@@ -446,6 +618,114 @@ export const Results = ({
           placeholder={'Search...'}
         />
       </div>
+      {showColumnControls && (
+        <div className="my-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+            Column Visibility
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {columnList
+              .slice(
+                columnPage * columnsPerPage,
+                (columnPage + 1) * columnsPerPage
+              )
+              .map((col) => (
+                <label
+                  key={col.columnId}
+                  className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
+                  <input
+                    type="checkbox"
+                    checked={visibleColumns.has(col.columnId)}
+                    onChange={(e) => {
+                      const newVisibleColumns = new Set(visibleColumns)
+                      if (e.target.checked) {
+                        newVisibleColumns.add(col.columnId)
+                      } else {
+                        newVisibleColumns.delete(col.columnId)
+                      }
+                      setVisibleColumns(newVisibleColumns)
+                    }}
+                    className="form-checkbox h-4 w-4 text-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-gray-100">
+                    {col.header}
+                  </span>
+                </label>
+              ))}
+          </div>
+          <div className="mt-3 flex items-center justify-between">
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleColumns(
+                    new Set(columnList.map((col) => col.columnId))
+                  )
+                }}
+                className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm">
+                Show All
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  // Keep only essential columns visible
+                  const essentialColumns = [
+                    'itemName',
+                    'itemID',
+                    sortBy,
+                    'value',
+                    'sold',
+                    'price_average',
+                    'current_sell_price',
+                    'current_buy_price'
+                  ]
+                  setVisibleColumns(new Set(essentialColumns))
+                }}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors text-sm">
+                Show Essential Only
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleColumns(new Set())
+                }}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
+                Hide All
+              </button>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setColumnPage(Math.max(0, columnPage - 1))}
+                disabled={columnPage === 0}
+                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                Previous
+              </button>
+              <span className="text-sm text-gray-900 dark:text-gray-100">
+                Page {columnPage + 1} of{' '}
+                {Math.ceil(columnList.length / columnsPerPage)}
+              </span>
+              <button
+                type="button"
+                onClick={() =>
+                  setColumnPage(
+                    Math.min(
+                      Math.ceil(columnList.length / columnsPerPage) - 1,
+                      columnPage + 1
+                    )
+                  )
+                }
+                disabled={
+                  columnPage >=
+                  Math.ceil(columnList.length / columnsPerPage) - 1
+                }
+                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="py-2 sm:py-5">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
@@ -472,6 +752,13 @@ export const Results = ({
                     Heads up, this table is pretty wide. You'll probably need to
                     scroll horizontally (left & right).
                   </span>
+                  <span className="hidden md:inline">
+                    Click the show column controls button to hide or show
+                    columns.
+                  </span>
+                  <span className="hidden md:inline">
+                    Click on a column name to sort by that column.
+                  </span>
                 </p>
               </div>
             </div>
@@ -481,15 +768,17 @@ export const Results = ({
       <div className="hidden sm:block">
         <FullTable<GW2MarketshareItem>
           data={data}
-          sortingOrder={[{ id: sortBy, desc: true }]}
-          columnList={columnList}
+          sortingOrder={[{ id: sortBy, desc: sortDesc }]}
+          columnList={columnList.filter((col) =>
+            visibleColumns.has(col.columnId)
+          )}
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
       </div>
       <MobileTable
         data={data}
-        sortingOrder={[{ id: sortBy, desc: true }]}
+        sortingOrder={[{ id: sortBy, desc: sortDesc }]}
         columnList={mobileColumnList}
         rowLabels={columnList as any}
         columnSelectOptions={columnList.map((col) => col.columnId)}

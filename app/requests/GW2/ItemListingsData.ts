@@ -71,6 +71,7 @@ export interface ItemListingData {
   buy_value: number
   date: string
   timeData: TimeDataPoint[]
+  dailyData: TimeDataPoint[]
   extraData: ExtraData
 }
 
