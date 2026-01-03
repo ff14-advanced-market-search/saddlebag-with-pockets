@@ -68,6 +68,8 @@ export type GW2MarketshareSortBy =
   | 'pricePercentChange'
   | 'soldPercentChange'
   | 'valuePercentChange'
+  | 'sellQuantityPercentChange'
+  | 'buyQuantityPercentChange'
 
 export interface GW2MarketshareProps {
   desired_avg_price: number

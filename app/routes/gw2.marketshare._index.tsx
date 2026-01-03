@@ -82,7 +82,9 @@ const validSortBys: Array<GW2MarketshareSortBy> = [
   'historic_price_average',
   'pricePercentChange',
   'soldPercentChange',
-  'valuePercentChange'
+  'valuePercentChange',
+  'sellQuantityPercentChange',
+  'buyQuantityPercentChange'
 ]
 
 const assertSortBy = (value: any): value is GW2MarketshareSortBy => {

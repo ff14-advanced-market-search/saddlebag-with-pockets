@@ -64,7 +64,9 @@ export const sortByOptions: Array<{
   { label: 'Historic Price Average', value: 'historic_price_average' },
   { label: 'Price Percent Change', value: 'pricePercentChange' },
   { label: 'Sold Percent Change', value: 'soldPercentChange' },
-  { label: 'Value Percent Change', value: 'valuePercentChange' }
+  { label: 'Value Percent Change', value: 'valuePercentChange' },
+  { label: 'Sell Quantity Percent Change', value: 'sellQuantityPercentChange' },
+  { label: 'Buy Quantity Percent Change', value: 'buyQuantityPercentChange' }
 ]
 
 const csvColumns: Array<{ title: string; value: keyof GW2MarketshareItem }> = [
@@ -169,6 +171,12 @@ const getChartData = (
         break
       case 'valuePercentChange':
         value = Math.abs(item.valuePercentChange)
+        break
+      case 'sellQuantityPercentChange':
+        value = Math.abs(item.sellQuantityPercentChange)
+        break
+      case 'buyQuantityPercentChange':
+        value = Math.abs(item.buyQuantityPercentChange)
         break
       default:
         value = useHistoric ? item.historic_value : item.value
@@ -377,6 +385,9 @@ export const Results = ({
 
   const mobileColumnList = getMobileColumns(sortBy)
 
+  // For sell quantity percent change, sort ascending (smallest first), otherwise descending
+  const sortDesc = sortBy !== 'sellQuantityPercentChange'
+
   const colorOptions = [
     { label: 'Value', value: 'value' },
     { label: 'Sold', value: 'sold' },
@@ -481,7 +492,7 @@ export const Results = ({
       <div className="hidden sm:block">
         <FullTable<GW2MarketshareItem>
           data={data}
-          sortingOrder={[{ id: sortBy, desc: true }]}
+          sortingOrder={[{ id: sortBy, desc: sortDesc }]}
           columnList={columnList}
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
@@ -489,7 +500,7 @@ export const Results = ({
       </div>
       <MobileTable
         data={data}
-        sortingOrder={[{ id: sortBy, desc: true }]}
+        sortingOrder={[{ id: sortBy, desc: sortDesc }]}
         columnList={mobileColumnList}
         rowLabels={columnList as any}
         columnSelectOptions={columnList.map((col) => col.columnId)}
