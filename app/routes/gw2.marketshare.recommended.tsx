@@ -22,46 +22,30 @@ export const meta: MetaFunction = () => {
 }
 
 const searchParams = {
-  defaultView: '/gw2/marketshare?sort_by=value',
-  sold: '/gw2/marketshare?sort_by=sold',
-  highValue: '/gw2/marketshare?desired_avg_price=1000&sort_by=price_average',
-  fastSales: '/gw2/marketshare?desired_sales_per_day=100000&sort_by=sold',
-  priceAverage: '/gw2/marketshare?sort_by=price_average',
+  value: '/gw2/marketshare?sort_by=value&desired_value=1000',
+  sold: '/gw2/marketshare?sort_by=sold&desired_sales_per_day=5000',
+  sellQuantityPercentChange:
+    '/gw2/marketshare?sort_by=sellQuantityPercentChange',
+  buyQuantityPercentChange: '/gw2/marketshare?sort_by=buyQuantityPercentChange',
+  priceAverage: '/gw2/marketshare?sort_by=price_average&desired_avg_price=1000',
   pricePercentChange: '/gw2/marketshare?sort_by=pricePercentChange',
   soldPercentChange: '/gw2/marketshare?sort_by=soldPercentChange',
-  valuePercentChange: '/gw2/marketshare?sort_by=valuePercentChange',
-  sellQuantityPercentChange:
-    '/gw2/marketshare?sort_by=sellQuantityPercentChange&desired_sales_per_day=100',
-  buyQuantityPercentChange:
-    '/gw2/marketshare?sort_by=buyQuantityPercentChange&desired_sales_per_day=100'
+  valuePercentChange: '/gw2/marketshare?sort_by=valuePercentChange'
 }
 
 const recommendedQueries = [
   {
     name: 'Total Market View',
     description:
-      'See a general overview of the biggest gold earners in the GW2 Trading Post by revenue earned.',
+      'See a general overview of the biggest gold earners in the GW2 Trading Post by most revenue earned.',
     Icon: DocumentSearchIcon,
-    href: searchParams.defaultView
-  },
-  {
-    name: 'Most Sold Items',
-    description:
-      'Find the items with the highest sales volume that sell the fastest.',
-    Icon: DocumentSearchIcon,
-    href: searchParams.sold
-  },
-  {
-    name: 'Expensive Items',
-    description: 'Find items with high average prices (1000+ gold).',
-    Icon: DocumentSearchIcon,
-    href: searchParams.highValue
+    href: searchParams.value
   },
   {
     name: 'Fast Selling Items',
-    description: 'Discover items that sell quickly (100000+ sales per day).',
+    description: 'Discover items that sell quickly (5000+ sales per day).',
     Icon: DocumentSearchIcon,
-    href: searchParams.fastSales
+    href: searchParams.sold
   },
   {
     name: 'Sell Quantity Percent Change',
@@ -78,8 +62,8 @@ const recommendedQueries = [
     href: searchParams.buyQuantityPercentChange
   },
   {
-    name: 'Price Average',
-    description: 'View items sorted by their average price.',
+    name: 'Expensive Items',
+    description: 'Find items with high average prices (1000+ gold).',
     Icon: DocumentSearchIcon,
     href: searchParams.priceAverage
   },
