@@ -90,6 +90,15 @@ const csvColumns: Array<{ title: string; value: keyof GW2MarketshareItem }> = [
   { title: 'Current Sell Quantity', value: 'current_sell_quantity' },
   { title: 'Current Buy Price', value: 'current_buy_price' },
   { title: 'Current Buy Quantity', value: 'current_buy_quantity' },
+  {
+    title: 'Current Buy to Sell Ratio',
+    value: 'current_buy_to_sell_ratio'
+  },
+  { title: 'Avg Buy to Sell Ratio', value: 'avg_buy_to_sell_ratio' },
+  {
+    title: 'Historic Avg Buy to Sell Ratio',
+    value: 'historic_avg_buy_to_sell_ratio'
+  },
   { title: 'Type', value: 'type' },
   { title: 'Details Type', value: 'details_type' },
   { title: 'Rarity', value: 'rarity' },
@@ -370,6 +379,15 @@ const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'current_sell_quantity', header: 'Current Sell Quantity' },
   { columnId: 'current_buy_price', header: 'Current Buy Price' },
   { columnId: 'current_buy_quantity', header: 'Current Buy Quantity' },
+  {
+    columnId: 'current_buy_to_sell_ratio',
+    header: 'Current Buy to Sell Ratio'
+  },
+  { columnId: 'avg_buy_to_sell_ratio', header: 'Avg Buy to Sell Ratio' },
+  {
+    columnId: 'historic_avg_buy_to_sell_ratio',
+    header: 'Historic Avg Buy to Sell Ratio'
+  },
   {
     columnId: 'type',
     header: 'Type',

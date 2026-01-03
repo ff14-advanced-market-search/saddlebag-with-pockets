@@ -17,6 +17,9 @@ export interface GW2MarketshareItem {
   current_sell_quantity: number
   current_buy_price: number
   current_buy_quantity: number
+  current_buy_to_sell_ratio: number
+  avg_buy_to_sell_ratio: number
+  historic_avg_buy_to_sell_ratio: number
   type: number
   details_type: number
   rarity: number
