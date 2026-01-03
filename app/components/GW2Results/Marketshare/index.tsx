@@ -301,27 +301,35 @@ const getMobileColumns = (sortBy: GW2MarketshareSortBy) => {
   ]
 }
 
+// Pre-build lookup maps for O(1) lookups
+const typeMap = new Map<number, string>()
+itemTypes.forEach((itemType) => {
+  typeMap.set(itemType.value, itemType.name)
+})
+
+const detailsTypeMap = new Map<number, string>()
+itemTypes.forEach((itemType) => {
+  itemType.subClasses.forEach((sc) => {
+    detailsTypeMap.set(sc.value, sc.name)
+  })
+})
+
+const rarityMap = new Map<number, string>()
+itemRarities.forEach((rarity) => {
+  rarityMap.set(rarity.value, rarity.name)
+})
+
 // Helper functions to get string names from integer values
 const getTypeName = (typeValue: number): string => {
-  const itemType = itemTypes.find((t) => t.value === typeValue)
-  return itemType ? itemType.name : typeValue.toString()
+  return typeMap.get(typeValue) ?? typeValue.toString()
 }
 
 const getDetailsTypeName = (detailsTypeValue: number): string => {
-  for (const itemType of itemTypes) {
-    const detailsType = itemType.subClasses.find(
-      (sc) => sc.value === detailsTypeValue
-    )
-    if (detailsType) {
-      return detailsType.name
-    }
-  }
-  return detailsTypeValue.toString()
+  return detailsTypeMap.get(detailsTypeValue) ?? detailsTypeValue.toString()
 }
 
 const getRarityName = (rarityValue: number): string => {
-  const rarity = itemRarities.find((r) => r.value === rarityValue)
-  return rarity ? rarity.name : rarityValue.toString()
+  return rarityMap.get(rarityValue) ?? rarityValue.toString()
 }
 
 const columnList: Array<ColumnList<GW2MarketshareItem>> = [
