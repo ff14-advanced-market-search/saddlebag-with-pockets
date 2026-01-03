@@ -260,13 +260,13 @@ const getChartData = (
     if (colorBy === 'price') {
       // Use price-based state - calculate percent change for price
       const priceChange = item.pricePercentChange
-      if (priceChange > 20) {
+      if (priceChange > 25) {
         color = hexMap['spiking']
-      } else if (priceChange > 5) {
+      } else if (priceChange > 15) {
         color = hexMap['increasing']
-      } else if (priceChange > -5) {
+      } else if (priceChange > -15) {
         color = hexMap['stable']
-      } else if (priceChange > -20) {
+      } else if (priceChange > -25) {
         color = hexMap['decreasing']
       } else {
         color = hexMap['crashing']
@@ -274,13 +274,13 @@ const getChartData = (
     } else if (colorBy === 'sold') {
       // Use sold-based state - calculate percent change for sold
       const soldChange = item.soldPercentChange
-      if (soldChange > 20) {
+      if (soldChange > 25) {
         color = hexMap['spiking']
-      } else if (soldChange > 5) {
+      } else if (soldChange > 15) {
         color = hexMap['increasing']
-      } else if (soldChange > -5) {
+      } else if (soldChange > -15) {
         color = hexMap['stable']
-      } else if (soldChange > -20) {
+      } else if (soldChange > -25) {
         color = hexMap['decreasing']
       } else {
         color = hexMap['crashing']
@@ -288,13 +288,13 @@ const getChartData = (
     } else if (colorBy === 'buyQuantity') {
       // Use buy quantity percent change for colors
       const buyQtyChange = item.buyQuantityPercentChange
-      if (buyQtyChange > 20) {
+      if (buyQtyChange > 25) {
         color = hexMap['spiking']
-      } else if (buyQtyChange > 5) {
+      } else if (buyQtyChange > 15) {
         color = hexMap['increasing']
-      } else if (buyQtyChange > -5) {
+      } else if (buyQtyChange > -15) {
         color = hexMap['stable']
-      } else if (buyQtyChange > -20) {
+      } else if (buyQtyChange > -25) {
         color = hexMap['decreasing']
       } else {
         color = hexMap['crashing']
@@ -302,13 +302,13 @@ const getChartData = (
     } else if (colorBy === 'sellQuantity') {
       // Use sell quantity percent change for colors
       const sellQtyChange = item.sellQuantityPercentChange
-      if (sellQtyChange > 20) {
+      if (sellQtyChange > 25) {
         color = hexMap['spiking']
-      } else if (sellQtyChange > 5) {
+      } else if (sellQtyChange > 15) {
         color = hexMap['increasing']
-      } else if (sellQtyChange > -5) {
+      } else if (sellQtyChange > -15) {
         color = hexMap['stable']
-      } else if (sellQtyChange > -20) {
+      } else if (sellQtyChange > -25) {
         color = hexMap['decreasing']
       } else {
         color = hexMap['crashing']
