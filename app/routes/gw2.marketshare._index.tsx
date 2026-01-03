@@ -120,7 +120,9 @@ export const action: ActionFunction = async ({ request }) => {
       z.literal('historic_price_average'),
       z.literal('pricePercentChange'),
       z.literal('soldPercentChange'),
-      z.literal('valuePercentChange')
+      z.literal('valuePercentChange'),
+      z.literal('sellQuantityPercentChange'),
+      z.literal('buyQuantityPercentChange')
     ]),
     type: z
       .string()

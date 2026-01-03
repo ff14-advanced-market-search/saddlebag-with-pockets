@@ -131,17 +131,67 @@ const hexMap: Record<string, string> = {
   spiking: '#24b406'
 }
 
+// Helper to check if a sortBy is a percent change type
+const isPercentChangeSort = (
+  sortBy: GW2MarketshareSortBy
+): sortBy is
+  | 'pricePercentChange'
+  | 'soldPercentChange'
+  | 'valuePercentChange'
+  | 'sellQuantityPercentChange'
+  | 'buyQuantityPercentChange' => {
+  return [
+    'pricePercentChange',
+    'soldPercentChange',
+    'valuePercentChange',
+    'sellQuantityPercentChange',
+    'buyQuantityPercentChange'
+  ].includes(sortBy)
+}
+
+// Helper to get the percent change value for a given sortBy
+const getPercentChangeValue = (
+  item: GW2MarketshareItem,
+  sortBy:
+    | 'pricePercentChange'
+    | 'soldPercentChange'
+    | 'valuePercentChange'
+    | 'sellQuantityPercentChange'
+    | 'buyQuantityPercentChange'
+): number => {
+  switch (sortBy) {
+    case 'pricePercentChange':
+      return item.pricePercentChange
+    case 'soldPercentChange':
+      return item.soldPercentChange
+    case 'valuePercentChange':
+      return item.valuePercentChange
+    case 'sellQuantityPercentChange':
+      return item.sellQuantityPercentChange
+    case 'buyQuantityPercentChange':
+      return item.buyQuantityPercentChange
+  }
+}
+
 const getChartData = (
   data: Array<GW2MarketshareItem>,
   sortBy: GW2MarketshareSortBy,
   useHistoric: boolean,
-  colorBy: 'value' | 'sold' | 'price'
+  colorBy: 'value' | 'sold' | 'price',
+  filterDirection?: 'positive' | 'negative'
 ): Array<TreemapNode> => {
   const result: Array<TreemapNode> = []
 
   data.forEach((item) => {
     let value: number
     let color: string
+
+    // For percent change sorts, filter by direction if specified
+    if (isPercentChangeSort(sortBy) && filterDirection) {
+      const percentChange = getPercentChangeValue(item, sortBy)
+      if (filterDirection === 'positive' && percentChange <= 0) return
+      if (filterDirection === 'negative' && percentChange >= 0) return
+    }
 
     // Determine the value based on sortBy and useHistoric
     switch (sortBy) {
@@ -164,19 +214,25 @@ const getChartData = (
         value = item.historic_price_average
         break
       case 'pricePercentChange':
-        value = Math.abs(item.pricePercentChange)
+        // For negative values, use Math.abs() to make them positive for treemap
+        const priceChange = item.pricePercentChange
+        value = priceChange < 0 ? Math.abs(priceChange) : priceChange
         break
       case 'soldPercentChange':
-        value = Math.abs(item.soldPercentChange)
+        const soldChange = item.soldPercentChange
+        value = soldChange < 0 ? Math.abs(soldChange) : soldChange
         break
       case 'valuePercentChange':
-        value = Math.abs(item.valuePercentChange)
+        const valueChange = item.valuePercentChange
+        value = valueChange < 0 ? Math.abs(valueChange) : valueChange
         break
       case 'sellQuantityPercentChange':
-        value = Math.abs(item.sellQuantityPercentChange)
+        const sellQtyChange = item.sellQuantityPercentChange
+        value = sellQtyChange < 0 ? Math.abs(sellQtyChange) : sellQtyChange
         break
       case 'buyQuantityPercentChange':
-        value = Math.abs(item.buyQuantityPercentChange)
+        const buyQtyChange = item.buyQuantityPercentChange
+        value = buyQtyChange < 0 ? Math.abs(buyQtyChange) : buyQtyChange
         break
       default:
         value = useHistoric ? item.historic_value : item.value
@@ -370,9 +426,23 @@ export const Results = ({
     sortBy === 'historic_sold' ||
     sortBy === 'historic_price_average'
 
-  const chartData = useMemo(
-    () => getChartData(data, sortBy, useHistoric, colorBy),
-    [data, sortBy, useHistoric, colorBy]
+  // For percent change sorts, create two separate charts (increases and decreases)
+  const isPercentChange = isPercentChangeSort(sortBy)
+
+  const chartDataIncreases = useMemo(
+    () =>
+      isPercentChange
+        ? getChartData(data, sortBy, useHistoric, colorBy, 'positive')
+        : getChartData(data, sortBy, useHistoric, colorBy),
+    [data, sortBy, useHistoric, colorBy, isPercentChange]
+  )
+
+  const chartDataDecreases = useMemo(
+    () =>
+      isPercentChange
+        ? getChartData(data, sortBy, useHistoric, colorBy, 'negative')
+        : [],
+    [data, sortBy, useHistoric, colorBy, isPercentChange]
   )
 
   const sortByTitleValue = sortByOptions.find(
@@ -424,11 +494,30 @@ export const Results = ({
             </select>
           </div>
 
-          <TreemapChart
-            chartData={chartData}
-            darkMode={darkmode}
-            backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
-          />
+          {isPercentChange ? (
+            <>
+              <Title title={`${chartTitle} - Increases`} />
+              <TreemapChart
+                chartData={chartDataIncreases}
+                darkMode={darkmode}
+                backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+              />
+              <div className="mt-6">
+                <Title title={`${chartTitle} - Decreases`} />
+                <TreemapChart
+                  chartData={chartDataDecreases}
+                  darkMode={darkmode}
+                  backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+                />
+              </div>
+            </>
+          ) : (
+            <TreemapChart
+              chartData={chartDataIncreases}
+              darkMode={darkmode}
+              backgroundColor={darkmode ? '#1f2937' : '#f3f4f6'}
+            />
+          )}
 
           <RadioButtons
             title="Color Visualisation"
