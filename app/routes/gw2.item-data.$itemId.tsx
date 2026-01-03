@@ -28,13 +28,16 @@ import addHighchartsMore from 'highcharts/highcharts-more'
 import HighchartsReact from 'highcharts-react-official'
 
 // Initialize the highcharts-more module at the module level
+let highchartsMoreLoaded = false
 try {
   addHighchartsMore(Highcharts)
+  highchartsMoreLoaded = true
 } catch (error) {
   console.error(
     'Failed to initialize Highcharts more module:',
     error instanceof Error ? error.message : String(error)
   )
+  highchartsMoreLoaded = false
 }
 
 // Shared tooltip formatter for all charts
@@ -411,45 +414,54 @@ const GW2SynchronizedCharts = forwardRef<
         marker: { radius: 3 }
       },
       // Colored area between Supply and Demand lines using arearange
-      // Red area when Supply > Demand
-      {
-        name: 'Supply Above Demand',
-        type: 'arearange',
-        data: timeData.map((d) => {
-          const supply = d.sell_quantity_avg
-          const demand = d.buy_quantity_avg
-          // Only show when supply is strictly greater than demand
-          // Use epsilon to prevent floating point equality issues
-          return supply > demand + Number.EPSILON ? [demand, supply] : null
-        }),
-        color: darkmode ? '#dc2626' : '#b91c1c', // Red
-        yAxis: 1,
-        fillOpacity: 0.3,
-        lineWidth: 0,
-        enableMouseTracking: false,
-        zIndex: 0,
-        showInLegend: false
-      },
-      // Green area when Demand > Supply
-      {
-        name: 'Demand Above Supply',
-        type: 'arearange',
-        data: timeData.map((d) => {
-          const supply = d.sell_quantity_avg
-          const demand = d.buy_quantity_avg
-          // Only show when demand is strictly greater than supply
-          // Use epsilon to prevent floating point equality issues
-          // This ensures mutual exclusivity - only one shows at a time
-          return demand > supply + Number.EPSILON ? [supply, demand] : null
-        }),
-        color: darkmode ? '#10b981' : '#059669', // Green
-        yAxis: 1,
-        fillOpacity: 0.3,
-        lineWidth: 0,
-        enableMouseTracking: false,
-        zIndex: 0,
-        showInLegend: false
-      },
+      // Only include if highcharts-more module loaded successfully
+      ...(highchartsMoreLoaded
+        ? [
+            // Red area when Supply > Demand
+            {
+              name: 'Supply Above Demand',
+              type: 'arearange',
+              data: timeData.map((d) => {
+                const supply = d.sell_quantity_avg
+                const demand = d.buy_quantity_avg
+                // Only show when supply is strictly greater than demand
+                // Use epsilon to prevent floating point equality issues
+                return supply > demand + Number.EPSILON
+                  ? [demand, supply]
+                  : null
+              }),
+              color: darkmode ? '#dc2626' : '#b91c1c', // Red
+              yAxis: 1,
+              fillOpacity: 0.3,
+              lineWidth: 0,
+              enableMouseTracking: false,
+              zIndex: 0,
+              showInLegend: false
+            },
+            // Green area when Demand > Supply
+            {
+              name: 'Demand Above Supply',
+              type: 'arearange',
+              data: timeData.map((d) => {
+                const supply = d.sell_quantity_avg
+                const demand = d.buy_quantity_avg
+                // Only show when demand is strictly greater than supply
+                // Use epsilon to prevent floating point equality issues
+                // This ensures mutual exclusivity - only one shows at a time
+                return demand > supply + Number.EPSILON
+                  ? [supply, demand]
+                  : null
+              }),
+              color: darkmode ? '#10b981' : '#059669', // Green
+              yAxis: 1,
+              fillOpacity: 0.3,
+              lineWidth: 0,
+              enableMouseTracking: false,
+              zIndex: 0,
+              showInLegend: false
+            }
+          ]
+        : []),
       {
         name: 'Supply',
         type: 'line',
@@ -485,9 +497,11 @@ const GW2SynchronizedCharts = forwardRef<
           }
         }
       },
-      arearange: {
-        connectNulls: false
-      }
+      ...(highchartsMoreLoaded && {
+        arearange: {
+          connectNulls: false
+        }
+      })
     }
   }
 
