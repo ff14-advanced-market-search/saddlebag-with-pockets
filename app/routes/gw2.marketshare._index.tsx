@@ -25,7 +25,7 @@ import {
   handleCopyButton,
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import type { GW2MarketshareItem } from '~/requests/GW2/marketshare'
 
@@ -206,6 +206,8 @@ const searchParamsType = z.object({
       z.literal('pricePercentChange'),
       z.literal('soldPercentChange'),
       z.literal('valuePercentChange'),
+      z.literal('sellQuantityPercentChange'),
+      z.literal('buyQuantityPercentChange'),
       z.null()
     ])
     .transform((value) => {
@@ -266,6 +268,22 @@ export default function Index() {
     level: loaderData.level.toString()
   })
   const [selectedType, setSelectedType] = useState(loaderData.type)
+
+  // Update searchParams when loaderData changes (e.g., from URL changes)
+  useEffect(() => {
+    setSearchParams({
+      desired_avg_price: (loaderData.desired_avg_price / 10000).toString(), // Convert from coppers to gold for display
+      desired_sales_per_day: loaderData.desired_sales_per_day.toString(),
+      sort_by: assertSortBy(loaderData.sort_by)
+        ? loaderData.sort_by
+        : defaultParams.sort_by,
+      type: loaderData.type.toString(),
+      details_type: loaderData.details_type.toString(),
+      rarity: loaderData.rarity.toString(),
+      level: loaderData.level.toString()
+    })
+    setSelectedType(loaderData.type)
+  }, [loaderData])
 
   const results = useActionData<GW2MarketshareActionResult>()
   const { darkmode } = useTypedSelector((state) => state.user)
@@ -379,6 +397,7 @@ export default function Index() {
             }}
           />
           <SortBySelect
+            value={searchParams.sort_by}
             defaultValue={loaderData.sort_by}
             onChange={(value) => {
               if (value !== undefined) {

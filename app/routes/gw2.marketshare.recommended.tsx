@@ -39,7 +39,7 @@ const recommendedQueries = [
   {
     name: 'Total Market View',
     description:
-      'See a general overview of the GW2 Trading Post by revenue earned.',
+      'See a general overview of the biggest gold earners in the GW2 Trading Post by revenue earned.',
     Icon: DocumentSearchIcon,
     href: searchParams.defaultView
   },
@@ -65,7 +65,7 @@ const recommendedQueries = [
   {
     name: 'Sell Quantity Percent Change',
     description:
-      'Find items with the largest changes in sell quantity - identify supply fluctuations!',
+      'Find items with the largest changes in sell quantity - identify potential shortages!',
     Icon: DocumentSearchIcon,
     href: searchParams.sellQuantityPercentChange
   },
@@ -85,7 +85,7 @@ const recommendedQueries = [
   {
     name: 'Price Percent Change',
     description:
-      'Find items with the largest price changes - great for identifying spikes!',
+      'Find items with the largest price changes - great for identifying price spikes!',
     Icon: DocumentSearchIcon,
     href: searchParams.pricePercentChange
   },

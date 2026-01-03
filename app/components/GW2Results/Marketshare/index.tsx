@@ -19,17 +19,19 @@ import { TabbedButtons } from '~/components/Common/TabbedButtons'
 export const SortBySelect = ({
   label = 'Sort Results By',
   onChange,
-  defaultValue = 'value'
+  defaultValue = 'value',
+  value
 }: {
   label?: string
   onChange?: (value: GW2MarketshareSortBy) => void
   defaultValue?: GW2MarketshareSortBy
+  value?: GW2MarketshareSortBy
 }) => (
   <div className="mt-2">
     <Label htmlFor="sort_by">{label}</Label>
     <select
       name="sort_by"
-      defaultValue={defaultValue}
+      value={value !== undefined ? value : defaultValue}
       onChange={(event) => {
         if (onChange) {
           const newValue = event.target.value
