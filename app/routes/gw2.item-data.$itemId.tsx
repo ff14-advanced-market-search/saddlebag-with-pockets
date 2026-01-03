@@ -932,13 +932,13 @@ const sellColumnList: Array<ColumnList<SellOrderItem>> = [
   { columnId: 'quantity', header: 'Quantity' }
 ]
 
-type TimeScale = 'day' | 'week' | 'month' | '3month' | 'year' | 'max'
+type TimeScale = 'day' | 'week' | '6week' | 'month' | '3month' | 'year' | 'max'
 
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const [showExtraData, setShowExtraData] = useState(false)
-  const [timeScale, setTimeScale] = useState<TimeScale>('week')
+  const [timeScale, setTimeScale] = useState<TimeScale>('6week')
 
   const error = result && 'exception' in result ? result.exception : undefined
 
@@ -971,6 +971,10 @@ export default function Index() {
         break
       case 'week':
         cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+        dataSource = listing.timeData
+        break
+      case '6week':
+        cutoffDate = new Date(now.getTime() - 42 * 24 * 60 * 60 * 1000)
         dataSource = listing.timeData
         break
       case 'month':
@@ -1302,6 +1306,7 @@ export default function Index() {
                   [
                     'day',
                     'week',
+                    '6week',
                     'month',
                     '3month',
                     'year',
@@ -1319,6 +1324,8 @@ export default function Index() {
                     }`}>
                     {scale === '3month'
                       ? '3 Month'
+                      : scale === '6week'
+                      ? '6 Week'
                       : scale.charAt(0).toUpperCase() + scale.slice(1)}
                   </button>
                 ))}
