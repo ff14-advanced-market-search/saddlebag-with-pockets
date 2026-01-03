@@ -421,6 +421,10 @@ export const Results = ({
   const [sortBy, setSortBy] = useState<GW2MarketshareSortBy>(sortByValue)
   const [globalFilter, setGlobalFilter] = useState('')
   const [colorBy, setColorBy] = useState<'value' | 'sold' | 'price'>('price')
+  const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
+    () => new Set(columnList.map((col) => col.columnId))
+  )
+  const [showColumnControls, setShowColumnControls] = useState(false)
 
   // Determine if we should use historic based on the sortBy selection
   const useHistoric =
@@ -534,12 +538,18 @@ export const Results = ({
           />
         </>
       </ContentContainer>
-      <div className="my-2 flex justify-between">
+      <div className="my-2 flex justify-between items-center flex-wrap gap-2">
         <CSVButton
           filename="saddlebag-gw2-marketshare.csv"
           data={data}
           columns={csvColumns}
         />
+        <button
+          type="button"
+          onClick={() => setShowColumnControls(!showColumnControls)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium text-sm">
+          {showColumnControls ? 'Hide' : 'Show'} Column Controls
+        </button>
         <DebouncedInput
           onDebouncedChange={(value) => {
             setGlobalFilter(value)
@@ -548,6 +558,77 @@ export const Results = ({
           placeholder={'Search...'}
         />
       </div>
+      {showColumnControls && (
+        <div className="my-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+            Column Visibility
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 max-h-96 overflow-y-auto">
+            {columnList.map((col) => (
+              <label
+                key={col.columnId}
+                className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
+                <input
+                  type="checkbox"
+                  checked={visibleColumns.has(col.columnId)}
+                  onChange={(e) => {
+                    const newVisibleColumns = new Set(visibleColumns)
+                    if (e.target.checked) {
+                      newVisibleColumns.add(col.columnId)
+                    } else {
+                      newVisibleColumns.delete(col.columnId)
+                    }
+                    setVisibleColumns(newVisibleColumns)
+                  }}
+                  className="form-checkbox h-4 w-4 text-blue-500"
+                />
+                <span className="text-sm text-gray-900 dark:text-gray-100">
+                  {col.header}
+                </span>
+              </label>
+            ))}
+          </div>
+          <div className="mt-3 flex gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setVisibleColumns(
+                  new Set(columnList.map((col) => col.columnId))
+                )
+              }}
+              className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm">
+              Show All
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                // Keep only essential columns visible
+                const essentialColumns = [
+                  'itemName',
+                  'itemID',
+                  sortBy,
+                  'value',
+                  'sold',
+                  'price_average',
+                  'current_sell_price',
+                  'current_buy_price'
+                ]
+                setVisibleColumns(new Set(essentialColumns))
+              }}
+              className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors text-sm">
+              Show Essential Only
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setVisibleColumns(new Set())
+              }}
+              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
+              Hide All
+            </button>
+          </div>
+        </div>
+      )}
       <div className="py-2 sm:py-5">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="rounded-lg bg-blue-600 p-2 shadow-lg sm:p-3">
@@ -584,7 +665,9 @@ export const Results = ({
         <FullTable<GW2MarketshareItem>
           data={data}
           sortingOrder={[{ id: sortBy, desc: sortDesc }]}
-          columnList={columnList}
+          columnList={columnList.filter((col) =>
+            visibleColumns.has(col.columnId)
+          )}
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
