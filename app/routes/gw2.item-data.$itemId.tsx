@@ -12,7 +12,14 @@ import ItemListingsData from '~/requests/GW2/ItemListingsData'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Banner from '~/components/Common/Banner'
-import { useState, useEffect, useRef } from 'react'
+import {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useImperativeHandle,
+  forwardRef
+} from 'react'
 import type { ColumnList } from '~/components/types'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import { format } from 'date-fns'
@@ -103,15 +110,18 @@ const createSharedTooltipFormatter = (
 }
 
 // GW2 Synchronized Charts Component
-const GW2SynchronizedCharts = ({
-  timeData,
-  darkmode,
-  itemName
-}: {
-  timeData: TimeDataPoint[]
-  darkmode: boolean
-  itemName: string
-}) => {
+export interface GW2ChartsRef {
+  resetZoom: () => void
+}
+
+const GW2SynchronizedCharts = forwardRef<
+  GW2ChartsRef,
+  {
+    timeData: TimeDataPoint[]
+    darkmode: boolean
+    itemName: string
+  }
+>(({ timeData, darkmode, itemName }, ref) => {
   const [chartsLoaded, setChartsLoaded] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const chartRefs = useRef<any[]>([])
@@ -130,6 +140,19 @@ const GW2SynchronizedCharts = ({
   const loadCharts = () => {
     setChartsLoaded(true)
   }
+
+  // Expose resetZoom function to parent component
+  // Must be called before any early returns to follow React hooks rules
+  useImperativeHandle(ref, () => ({
+    resetZoom: () => {
+      chartRefs.current.forEach((chartRef) => {
+        if (chartRef && chartRef.chart) {
+          // Reset Date Range by setting extremes to null
+          chartRef.chart.xAxis[0].setExtremes(null, null)
+        }
+      })
+    }
+  }))
 
   const shouldShowButton = isMobile && !chartsLoaded
   const shouldLoadCharts = !isMobile || chartsLoaded
@@ -226,9 +249,33 @@ const GW2SynchronizedCharts = ({
       height: 500,
       spacingBottom: 20,
       marginBottom: 40,
+      zoomType: 'x',
       events: {
         load: function (this: any) {
           chartRefs.current[0] = this
+        }
+      },
+      resetZoomButton: {
+        theme: {
+          fill: darkmode ? '#3b82f6' : '#2563eb',
+          stroke: darkmode ? '#1e40af' : '#1e3a8a',
+          style: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          },
+          r: 4,
+          states: {
+            hover: {
+              fill: darkmode ? '#2563eb' : '#1d4ed8'
+            }
+          }
+        },
+        position: {
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 10
         }
       }
     },
@@ -313,10 +360,8 @@ const GW2SynchronizedCharts = ({
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
-        const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
         const chartWidth = chart.chartWidth
-        const chartHeight = chart.chartHeight
 
         // Get mouse position relative to chart
         const mouseX = point.plotX + plotLeft
@@ -456,9 +501,33 @@ const GW2SynchronizedCharts = ({
       spacingBottom: 20,
       marginTop: 20,
       marginBottom: 40,
+      zoomType: 'x',
       events: {
         load: function (this: any) {
           chartRefs.current[1] = this
+        }
+      },
+      resetZoomButton: {
+        theme: {
+          fill: darkmode ? '#3b82f6' : '#2563eb',
+          stroke: darkmode ? '#1e40af' : '#1e3a8a',
+          style: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          },
+          r: 4,
+          states: {
+            hover: {
+              fill: darkmode ? '#2563eb' : '#1d4ed8'
+            }
+          }
+        },
+        position: {
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 10
         }
       }
     },
@@ -544,10 +613,8 @@ const GW2SynchronizedCharts = ({
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
-        const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
         const chartWidth = chart.chartWidth
-        const chartHeight = chart.chartHeight
 
         // Get mouse position relative to chart
         const mouseX = point.plotX + plotLeft
@@ -651,11 +718,35 @@ const GW2SynchronizedCharts = ({
       height: 550,
       spacingTop: 20,
       spacingBottom: 80,
+      zoomType: 'x',
       marginTop: 20,
       marginBottom: 150,
       events: {
         load: function (this: any) {
           chartRefs.current[2] = this
+        }
+      },
+      resetZoomButton: {
+        theme: {
+          fill: darkmode ? '#3b82f6' : '#2563eb',
+          stroke: darkmode ? '#1e40af' : '#1e3a8a',
+          style: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          },
+          r: 4,
+          states: {
+            hover: {
+              fill: darkmode ? '#2563eb' : '#1d4ed8'
+            }
+          }
+        },
+        position: {
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 10
         }
       }
     },
@@ -743,10 +834,8 @@ const GW2SynchronizedCharts = ({
         const chart = this.chart
         const plotLeft = chart.plotLeft
         const plotTop = chart.plotTop
-        const plotWidth = chart.plotWidth
         const plotHeight = chart.plotHeight
         const chartWidth = chart.chartWidth
-        const chartHeight = chart.chartHeight
 
         // Get mouse position relative to chart
         const mouseX = point.plotX + plotLeft
@@ -880,7 +969,7 @@ const GW2SynchronizedCharts = ({
       </div>
     </ContentContainer>
   )
-}
+})
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -985,27 +1074,16 @@ const sellColumnList: Array<ColumnList<SellOrderItem>> = [
   { columnId: 'quantity', header: 'Quantity' }
 ]
 
-type TimeScale = 'day' | 'week' | '6week' | 'month' | '3month' | 'year' | 'max'
+type TimeScale = 'day' | 'week' | '6week' | '3month' | 'year' | 'max'
 
 export default function Index() {
   const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
   const [showExtraData, setShowExtraData] = useState(false)
   const [timeScale, setTimeScale] = useState<TimeScale>('6week')
-
-  const error = result && 'exception' in result ? result.exception : undefined
-
-  if (error) {
-    return (
-      <PageWrapper>
-        <h2 className="text-red-800 dark:text-red-200">Error: {error}</h2>
-      </PageWrapper>
-    )
-  }
-
-  if (!Object.keys(result).length) {
-    return <NoResults />
-  }
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
+  const chartsRef = useRef<GW2ChartsRef>(null)
 
   const listing = 'data' in result ? result.data : undefined
 
@@ -1030,10 +1108,6 @@ export default function Index() {
         cutoffDate = new Date(now.getTime() - 42 * 24 * 60 * 60 * 1000)
         dataSource = listing.dailyData || []
         break
-      case 'month':
-        cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
-        dataSource = listing.dailyData || []
-        break
       case '3month':
         cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000)
         dataSource = listing.dailyData || []
@@ -1056,7 +1130,64 @@ export default function Index() {
     })
   }
 
-  const filteredData = getFilteredData()
+  const timeScaleFilteredData = getFilteredData()
+
+  // Get unique dates from filtered data for date range picker
+  const availableDates = timeScaleFilteredData
+    .map((point) => point.date)
+    .filter((date, index, self) => self.indexOf(date) === index)
+    .sort()
+
+  // Get min and max dates as Date objects
+  const minDate = availableDates.length > 0 ? new Date(availableDates[0]) : null
+  const maxDate =
+    availableDates.length > 0
+      ? new Date(availableDates[availableDates.length - 1])
+      : null
+
+  // Reset date range to full range when time scale changes
+  useEffect(() => {
+    if (minDate && maxDate) {
+      setStartDate(minDate)
+      setEndDate(maxDate)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeScale, minDate?.getTime(), maxDate?.getTime()])
+
+  // Initialize date range to full range when data first loads
+  useEffect(() => {
+    if (minDate && maxDate && (!startDate || !endDate)) {
+      setStartDate(minDate)
+      setEndDate(maxDate)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [minDate?.getTime(), maxDate?.getTime()])
+
+  // Filter data based on selected date range
+  const filteredData = useMemo(() => {
+    if (!startDate || !endDate) {
+      return timeScaleFilteredData
+    }
+    const startDateStr = format(startDate, 'yyyy-MM-dd')
+    const endDateStr = format(endDate, 'yyyy-MM-dd')
+    return timeScaleFilteredData.filter((point) => {
+      return point.date >= startDateStr && point.date <= endDateStr
+    })
+  }, [timeScaleFilteredData, startDate, endDate])
+
+  const error = result && 'exception' in result ? result.exception : undefined
+
+  if (error) {
+    return (
+      <PageWrapper>
+        <h2 className="text-red-800 dark:text-red-200">Error: {error}</h2>
+      </PageWrapper>
+    )
+  }
+
+  if (!Object.keys(result).length) {
+    return <NoResults />
+  }
 
   if (listing) {
     return (
@@ -1360,7 +1491,6 @@ export default function Index() {
                     'day',
                     'week',
                     '6week',
-                    'month',
                     '3month',
                     'year',
                     'max'
@@ -1383,8 +1513,89 @@ export default function Index() {
                   </button>
                 ))}
               </div>
+              {/* Date Range Controls */}
+              {minDate && maxDate && (
+                <div className="mb-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                  <div className="flex flex-wrap justify-center items-end gap-4">
+                    <div>
+                      <label
+                        htmlFor="startDate"
+                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        Start Date
+                      </label>
+                      <input
+                        type="date"
+                        id="startDate"
+                        min={format(minDate, 'yyyy-MM-dd')}
+                        max={format(endDate || maxDate, 'yyyy-MM-dd')}
+                        value={startDate ? format(startDate, 'yyyy-MM-dd') : ''}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            const newStart = new Date(e.target.value)
+                            setStartDate(newStart)
+                            // Ensure end date is not before start date
+                            if (endDate && newStart > endDate) {
+                              setEndDate(newStart)
+                            }
+                          } else {
+                            setStartDate(null)
+                          }
+                        }}
+                        className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="endDate"
+                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        End Date
+                      </label>
+                      <input
+                        type="date"
+                        id="endDate"
+                        min={format(startDate || minDate, 'yyyy-MM-dd')}
+                        max={format(maxDate, 'yyyy-MM-dd')}
+                        value={endDate ? format(endDate, 'yyyy-MM-dd') : ''}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            const newEnd = new Date(e.target.value)
+                            setEndDate(newEnd)
+                            // Ensure start date is not after end date
+                            if (startDate && newEnd < startDate) {
+                              setStartDate(newEnd)
+                            }
+                          } else {
+                            setEndDate(null)
+                          }
+                        }}
+                        className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="resetZoom"
+                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        Reset Date Range
+                      </label>
+                      <button
+                        id="resetZoom"
+                        type="button"
+                        onClick={() => {
+                          if (minDate && maxDate) {
+                            setStartDate(minDate)
+                            setEndDate(maxDate)
+                          }
+                        }}
+                        className="w-48 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium">
+                        Reset Date Range
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               {filteredData.length > 0 && (
                 <GW2SynchronizedCharts
+                  ref={chartsRef}
                   timeData={filteredData}
                   darkmode={darkmode}
                   itemName={listing.itemName}
