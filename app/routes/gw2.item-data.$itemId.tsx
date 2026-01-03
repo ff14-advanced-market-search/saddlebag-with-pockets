@@ -1309,7 +1309,7 @@ export default function Index() {
         {listing.extraData && (
           <ContentContainer>
             <div>
-              <div className="mb-4 flex flex-row justify-between items-center gap-2">
+              <div className="mb-4 flex flex-row justify-center items-center gap-2 flex-wrap">
                 <a
                   href="https://www.datawars2.ie/"
                   target="_blank"
@@ -1319,24 +1319,22 @@ export default function Index() {
                   Data provided by{' '}
                   <span className="underline ml-1">datawars2.ie</span>
                 </a>
-                <div className="flex gap-2">
-                  <a
-                    href={`https://wiki.guildwars2.com/wiki/${listing.itemName
-                      .replace(/\s+/g, '_')
-                      .replace(/'/g, '%27')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium"
-                    aria-label="View on GW2 Wiki">
-                    View on GW2 Wiki
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => setShowExtraData(!showExtraData)}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium">
-                    {showExtraData ? 'Hide' : 'Show'} Extra Statistics
-                  </button>
-                </div>
+                <a
+                  href={`https://wiki.guildwars2.com/wiki/${listing.itemName
+                    .replace(/\s+/g, '_')
+                    .replace(/'/g, '%27')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium"
+                  aria-label="View on GW2 Wiki">
+                  View on GW2 Wiki
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setShowExtraData(!showExtraData)}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium">
+                  {showExtraData ? 'Hide' : 'Show'} Extra Statistics
+                </button>
               </div>
               {showExtraData && (
                 <div className="space-y-4">
