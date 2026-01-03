@@ -97,6 +97,8 @@ const csvColumns: Array<{ title: string; value: keyof GW2MarketshareItem }> = [
   { title: 'Sell Price Min', value: 'sell_price_min' },
   { title: 'Sell Price StDev', value: 'sell_price_stdev' },
   { title: 'Sell Quantity Avg', value: 'sell_quantity_avg' },
+  { title: 'Historic Sell Quantity Avg', value: 'historic_sell_quantity_avg' },
+  { title: 'Sell Quantity Percent Change', value: 'sellQuantityPercentChange' },
   { title: 'Sell Quantity Max', value: 'sell_quantity_max' },
   { title: 'Sell Quantity Min', value: 'sell_quantity_min' },
   { title: 'Sell Quantity StDev', value: 'sell_quantity_stdev' },
@@ -109,6 +111,8 @@ const csvColumns: Array<{ title: string; value: keyof GW2MarketshareItem }> = [
   { title: 'Buy Price Min', value: 'buy_price_min' },
   { title: 'Buy Price StDev', value: 'buy_price_stdev' },
   { title: 'Buy Quantity Avg', value: 'buy_quantity_avg' },
+  { title: 'Historic Buy Quantity Avg', value: 'historic_buy_quantity_avg' },
+  { title: 'Buy Quantity Percent Change', value: 'buyQuantityPercentChange' },
   { title: 'Buy Quantity Max', value: 'buy_quantity_max' },
   { title: 'Buy Quantity Min', value: 'buy_quantity_min' },
   { title: 'Buy Quantity StDev', value: 'buy_quantity_stdev' },
@@ -275,6 +279,15 @@ const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'sell_price_min', header: 'Sell Price Min' },
   { columnId: 'sell_price_stdev', header: 'Sell Price StDev' },
   { columnId: 'sell_quantity_avg', header: 'Sell Quantity Avg' },
+  {
+    columnId: 'historic_sell_quantity_avg',
+    header: 'Historic Sell Quantity Avg'
+  },
+  {
+    columnId: 'sellQuantityPercentChange',
+    header: 'Sell Quantity Percent Change',
+    accessor: ({ getValue }) => <p>{`${getValue()}%`}</p>
+  },
   { columnId: 'sell_quantity_max', header: 'Sell Quantity Max' },
   { columnId: 'sell_quantity_min', header: 'Sell Quantity Min' },
   { columnId: 'sell_quantity_stdev', header: 'Sell Quantity StDev' },
@@ -287,6 +300,15 @@ const columnList: Array<ColumnList<GW2MarketshareItem>> = [
   { columnId: 'buy_price_min', header: 'Buy Price Min' },
   { columnId: 'buy_price_stdev', header: 'Buy Price StDev' },
   { columnId: 'buy_quantity_avg', header: 'Buy Quantity Avg' },
+  {
+    columnId: 'historic_buy_quantity_avg',
+    header: 'Historic Buy Quantity Avg'
+  },
+  {
+    columnId: 'buyQuantityPercentChange',
+    header: 'Buy Quantity Percent Change',
+    accessor: ({ getValue }) => <p>{`${getValue()}%`}</p>
+  },
   { columnId: 'buy_quantity_max', header: 'Buy Quantity Max' },
   { columnId: 'buy_quantity_min', header: 'Buy Quantity Min' },
   { columnId: 'buy_quantity_stdev', header: 'Buy Quantity StDev' },

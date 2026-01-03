@@ -33,6 +33,8 @@ export interface GW2MarketshareItem {
   sell_quantity_max: number
   sell_quantity_min: number
   sell_quantity_stdev: number
+  historic_sell_quantity_avg: number
+  sellQuantityPercentChange: number
   buy_sold: number
   buy_price_avg: number
   buy_value: number
@@ -45,6 +47,8 @@ export interface GW2MarketshareItem {
   buy_quantity_max: number
   buy_quantity_min: number
   buy_quantity_stdev: number
+  historic_buy_quantity_avg: number
+  buyQuantityPercentChange: number
   count: number
   statsDate: string
   historicStatsDateCutoff: string
