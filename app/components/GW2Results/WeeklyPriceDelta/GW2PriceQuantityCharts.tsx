@@ -1,8 +1,22 @@
 import { useMemo } from 'react'
 import Highcharts from 'highcharts'
+import addHighchartsMore from 'highcharts/highcharts-more'
 import HighchartsReact from 'highcharts-react-official'
 import { format } from 'date-fns'
 import type { GW2ItemData } from '~/requests/GW2/WeeklyPriceGroupDelta'
+
+// Initialize the highcharts-more module at the module level
+let highchartsMoreLoaded = false
+try {
+  addHighchartsMore(Highcharts)
+  highchartsMoreLoaded = true
+} catch (error) {
+  console.error(
+    'Failed to initialize Highcharts more module:',
+    error instanceof Error ? error.message : String(error)
+  )
+  highchartsMoreLoaded = false
+}
 
 interface GW2PriceQuantityChartsProps {
   weeklyData: GW2ItemData['weekly_data']
@@ -238,6 +252,55 @@ export default function GW2PriceQuantityCharts({
           marker: { radius: 3 },
           dashStyle: 'Dash'
         },
+        // Colored area between Supply and Demand lines using arearange
+        // Only include if highcharts-more module loaded successfully
+        ...(highchartsMoreLoaded
+          ? [
+              // Red area when Supply > Demand
+              {
+                name: 'Supply Above Demand',
+                type: 'arearange',
+                data: weeklyData.map((d) => {
+                  const supply = d.sell_quantity_avg
+                  const demand = d.buy_quantity_avg
+                  // Only show when supply is strictly greater than demand
+                  // Use epsilon to prevent floating point equality issues
+                  return supply > demand + Number.EPSILON
+                    ? [demand, supply]
+                    : null
+                }),
+                color: darkMode ? '#dc2626' : '#b91c1c', // Red
+                yAxis: 1,
+                fillOpacity: 0.3,
+                lineWidth: 0,
+                enableMouseTracking: false,
+                zIndex: 0,
+                showInLegend: false
+              },
+              // Green area when Demand > Supply
+              {
+                name: 'Demand Above Supply',
+                type: 'arearange',
+                data: weeklyData.map((d) => {
+                  const supply = d.sell_quantity_avg
+                  const demand = d.buy_quantity_avg
+                  // Only show when demand is strictly greater than supply
+                  // Use epsilon to prevent floating point equality issues
+                  // This ensures mutual exclusivity - only one shows at a time
+                  return demand > supply + Number.EPSILON
+                    ? [supply, demand]
+                    : null
+                }),
+                color: darkMode ? '#10b981' : '#059669', // Green
+                yAxis: 1,
+                fillOpacity: 0.3,
+                lineWidth: 0,
+                enableMouseTracking: false,
+                zIndex: 0,
+                showInLegend: false
+              }
+            ]
+          : []),
         {
           name: 'Supply',
           type: 'line',
@@ -261,6 +324,16 @@ export default function GW2PriceQuantityCharts({
       ],
       credits: {
         enabled: false
+      },
+      plotOptions: {
+        series: {
+          connectNulls: true
+        },
+        ...(highchartsMoreLoaded && {
+          arearange: {
+            connectNulls: false
+          }
+        })
       }
     }),
     [weeklyData, darkMode, styles, xCategories, maxPrice, maxQuantity]
