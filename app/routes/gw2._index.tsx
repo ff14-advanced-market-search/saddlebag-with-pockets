@@ -59,6 +59,13 @@ export default function Index() {
                 Marketshare Overview
               </a>
             </div>
+            <div className="mt-8 flex justify-center space-x-4">
+              <a
+                href="/gw2/weekly-price-group-delta-recommended"
+                className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                Weekly Price Group Delta
+              </a>
+            </div>
           </div>
         </section>
 
