@@ -67,8 +67,33 @@ export default function RequestDataSection({
             null,
             2
           )}
-          onClick={() => {
-            alert('Copied to clipboard!')
+          onClick={async () => {
+            const requestData = {
+              start_year: startDateParts.year,
+              start_month: startDateParts.month,
+              start_day: startDateParts.day,
+              end_year: endDateParts.year,
+              end_month: endDateParts.month,
+              end_day: endDateParts.day,
+              minimum_value: minimumValue,
+              minimum_sales: minimumSales,
+              minimum_average_price: minimumAveragePrice,
+              price_groups: Object.entries(data).map(([name, groupData]) => ({
+                name,
+                item_ids: Object.keys(groupData.item_data).map((id: string) =>
+                  Number.parseInt(id)
+                ),
+                types: []
+              }))
+            }
+            try {
+              const textToCopy = JSON.stringify(requestData, null, 2)
+              await navigator.clipboard.writeText(textToCopy)
+              alert('Copied to clipboard!')
+            } catch (error) {
+              console.error('Failed to copy to clipboard:', error)
+              alert('Failed to copy to clipboard. Please try again.')
+            }
           }}>
           <p className="italic text-sm text-gray-700 dark:text-gray-300 py-2">
             You can copy this data to recreate the same analysis later.

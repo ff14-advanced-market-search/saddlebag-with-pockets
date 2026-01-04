@@ -21,7 +21,7 @@ type FormProps = {
   pageTitle: string
   actionError: string | undefined
   edit: boolean
-  actionData: ActionData
+  actionData: ActionData | undefined
   onSubmit: () => void
 }
 
@@ -48,19 +48,21 @@ export const Form = ({
   const transition = useNavigation()
   let initialValues = defaultValues
 
-  if (edit && actionData.state === 'success') {
+  if (edit && actionData?.state === 'success' && 'request' in actionData) {
     initialValues = {
       ...defaultValues,
-      startYear: actionData.request.start_year,
-      startMonth: actionData.request.start_month,
-      startDay: actionData.request.start_day,
-      endYear: actionData.request.end_year,
-      endMonth: actionData.request.end_month,
-      endDay: actionData.request.end_day,
-      minimumValue: actionData.request.minimum_value / 10000, // Convert coppers to gold for display
-      minimumSales: actionData.request.minimum_sales,
-      minimumAveragePrice: actionData.request.minimum_average_price / 10000, // Convert coppers to gold for display
-      priceGroups: actionData.request.price_groups
+      startYear: actionData.request.start_year ?? defaultValues.startYear,
+      startMonth: actionData.request.start_month ?? defaultValues.startMonth,
+      startDay: actionData.request.start_day ?? defaultValues.startDay,
+      endYear: actionData.request.end_year ?? defaultValues.endYear,
+      endMonth: actionData.request.end_month ?? defaultValues.endMonth,
+      endDay: actionData.request.end_day ?? defaultValues.endDay,
+      minimumValue: (actionData.request.minimum_value ?? 0) / 10000, // Convert coppers to gold for display
+      minimumSales:
+        actionData.request.minimum_sales ?? defaultValues.minimumSales,
+      minimumAveragePrice:
+        (actionData.request.minimum_average_price ?? 0) / 10000, // Convert coppers to gold for display
+      priceGroups: actionData.request.price_groups ?? defaultValues.priceGroups
     }
   }
 

@@ -59,21 +59,54 @@ export const loader: LoaderFunction = () => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
 
+  // Parse and validate date fields
   const startYear = Number.parseInt(formData.get('startYear') as string)
   const startMonth = Number.parseInt(formData.get('startMonth') as string)
   const startDay = Number.parseInt(formData.get('startDay') as string)
   const endYear = Number.parseInt(formData.get('endYear') as string)
   const endMonth = Number.parseInt(formData.get('endMonth') as string)
   const endDay = Number.parseInt(formData.get('endDay') as string)
+
+  // Validate date fields
+  if (
+    Number.isNaN(startYear) ||
+    Number.isNaN(startMonth) ||
+    Number.isNaN(startDay) ||
+    Number.isNaN(endYear) ||
+    Number.isNaN(endMonth) ||
+    Number.isNaN(endDay)
+  ) {
+    return json<ActionData>({
+      state: 'error',
+      exception: 'Invalid date values. All date fields must be valid numbers.'
+    })
+  }
+
   // Convert from gold (UI) to coppers (API)
-  const minimumValueGold =
-    parseFloat(formData.get('minimum_value') as string) || 10000
-  const minimumValue = Math.round(minimumValueGold * 10000) // Convert gold to coppers
-  const minimumSales =
-    Number.parseInt(formData.get('minimum_sales') as string) || 0
-  const minimumAveragePriceGold =
-    parseFloat(formData.get('minimum_average_price') as string) || 0
-  const minimumAveragePrice = Math.round(minimumAveragePriceGold * 10000) // Convert gold to coppers
+  const minimumValueGold = parseFloat(formData.get('minimum_value') as string)
+  if (Number.isNaN(minimumValueGold)) {
+    return json<ActionData>({
+      state: 'error',
+      exception: 'Invalid minimum value. Must be a valid number.'
+    })
+  }
+  const minimumValue = Math.round((minimumValueGold || 10000) * 10000) // Convert gold to coppers
+
+  const minimumSalesRaw = Number.parseInt(
+    formData.get('minimum_sales') as string
+  )
+  const minimumSales = Number.isNaN(minimumSalesRaw) ? 0 : minimumSalesRaw
+
+  const minimumAveragePriceGold = parseFloat(
+    formData.get('minimum_average_price') as string
+  )
+  if (Number.isNaN(minimumAveragePriceGold)) {
+    return json<ActionData>({
+      state: 'error',
+      exception: 'Invalid minimum average price. Must be a valid number.'
+    })
+  }
+  const minimumAveragePrice = Math.round((minimumAveragePriceGold || 0) * 10000) // Convert gold to coppers
 
   let priceGroups
   try {

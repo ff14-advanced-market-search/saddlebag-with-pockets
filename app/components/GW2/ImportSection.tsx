@@ -19,11 +19,11 @@ interface ImportSectionProps {
 }
 
 const validateImportData = (
-  data: string | GW2ImportData
+  data: GW2ImportData
 ): { valid: boolean; error?: string } => {
   try {
-    // Parse if string
-    const jsonData = typeof data === 'string' ? JSON.parse(data) : data
+    // Data should already be parsed
+    const jsonData = data
 
     // Validate start date
     if (jsonData.start_year !== undefined) {
@@ -186,8 +186,16 @@ export default function ImportSection({ onImport }: ImportSectionProps) {
   const [error, setError] = useState<string | undefined>()
 
   const handleImport = () => {
+    // Check if input is non-empty
+    if (!jsonInput || jsonInput.trim() === '') {
+      setError('Please enter JSON data')
+      return
+    }
+
     try {
+      // Parse JSON once
       const data = JSON.parse(jsonInput)
+      // Validate the parsed object
       const validation = validateImportData(data)
       if (!validation.valid) {
         setError(validation.error)

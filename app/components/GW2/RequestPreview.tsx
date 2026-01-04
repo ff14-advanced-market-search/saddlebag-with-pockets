@@ -40,6 +40,9 @@ export default function RequestPreview({
     price_groups: priceGroups
   }
 
+  // Serialize once and reuse
+  const serializedRequest = JSON.stringify(requestData, null, 2)
+
   return (
     <div className="mt-8">
       <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
@@ -49,11 +52,10 @@ export default function RequestPreview({
         <CodeBlock
           title="Input for weekly price group delta"
           buttonTitle="Copy"
-          codeString={JSON.stringify(requestData, null, 2)}
+          codeString={serializedRequest}
           onClick={async () => {
             try {
-              const textToCopy = JSON.stringify(requestData, null, 2)
-              await navigator.clipboard.writeText(textToCopy)
+              await navigator.clipboard.writeText(serializedRequest)
               alert('Copied to clipboard!')
             } catch (error) {
               console.error('Failed to copy to clipboard:', error)

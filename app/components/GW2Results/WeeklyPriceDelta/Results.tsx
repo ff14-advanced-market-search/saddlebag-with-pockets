@@ -72,10 +72,42 @@ export const Results = ({
 
   // Format timestamp into YYYY-MM-DD
   const formatTimestamp = (timestamp: string) => {
-    const dateStr = timestamp.padStart(10, '0') // Ensure 10 digits
+    // Validate input: must be non-empty string of digits
+    if (
+      !timestamp ||
+      typeof timestamp !== 'string' ||
+      !/^\d+$/.test(timestamp)
+    ) {
+      return ''
+    }
+
+    // Ensure at least 8 digits (YYYYMMDD)
+    const dateStr = timestamp.padStart(8, '0')
+    if (dateStr.length < 8) {
+      return ''
+    }
+
     const year = dateStr.slice(0, 4)
     const month = dateStr.slice(4, 6)
     const day = dateStr.slice(6, 8)
+
+    // Validate date components are valid
+    const yearNum = Number.parseInt(year, 10)
+    const monthNum = Number.parseInt(month, 10)
+    const dayNum = Number.parseInt(day, 10)
+
+    if (
+      Number.isNaN(yearNum) ||
+      Number.isNaN(monthNum) ||
+      Number.isNaN(dayNum) ||
+      monthNum < 1 ||
+      monthNum > 12 ||
+      dayNum < 1 ||
+      dayNum > 31
+    ) {
+      return ''
+    }
+
     return `${year}-${month}-${day}`
   }
 

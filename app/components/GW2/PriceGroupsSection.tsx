@@ -105,9 +105,12 @@ export default function PriceGroupsSection({
       if (!isNaN(numericItemId)) {
         if (groupIndex !== undefined) {
           // Adding to existing group
-          const newGroups = [...priceGroups]
-          if (!newGroups[groupIndex].item_ids.includes(numericItemId)) {
-            newGroups[groupIndex].item_ids.push(numericItemId)
+          if (!priceGroups[groupIndex].item_ids.includes(numericItemId)) {
+            const newGroups = priceGroups.map((group, idx) =>
+              idx === groupIndex
+                ? { ...group, item_ids: [...group.item_ids, numericItemId] }
+                : group
+            )
             onPriceGroupsChange(newGroups)
           }
           // Clear the input for this group
@@ -136,9 +139,10 @@ export default function PriceGroupsSection({
   }
 
   const handleRemoveItem = (groupIndex: number, itemId: number) => {
-    const newGroups = [...priceGroups]
-    newGroups[groupIndex].item_ids = newGroups[groupIndex].item_ids.filter(
-      (id) => id !== itemId
+    const newGroups = priceGroups.map((group, idx) =>
+      idx === groupIndex
+        ? { ...group, item_ids: group.item_ids.filter((id) => id !== itemId) }
+        : group
     )
     onPriceGroupsChange(newGroups)
   }
@@ -150,15 +154,17 @@ export default function PriceGroupsSection({
   const handleTypeToggle = (typeValue: number, groupIndex?: number) => {
     if (groupIndex !== undefined) {
       // Toggle type in existing group
-      const newGroups = [...priceGroups]
-      const currentTypes = newGroups[groupIndex].types
-      if (currentTypes.includes(typeValue)) {
-        newGroups[groupIndex].types = currentTypes.filter(
-          (t) => t !== typeValue
-        )
-      } else {
-        newGroups[groupIndex].types = [...currentTypes, typeValue]
-      }
+      const currentTypes = priceGroups[groupIndex].types
+      const newGroups = priceGroups.map((group, idx) =>
+        idx === groupIndex
+          ? {
+              ...group,
+              types: currentTypes.includes(typeValue)
+                ? currentTypes.filter((t) => t !== typeValue)
+                : [...currentTypes, typeValue]
+            }
+          : group
+      )
       onPriceGroupsChange(newGroups)
     } else {
       // Toggle type in new group being created

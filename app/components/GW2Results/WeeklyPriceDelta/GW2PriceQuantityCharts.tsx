@@ -122,8 +122,20 @@ export default function GW2PriceQuantityCharts({
       const points = this.points || []
       if (points.length === 0) return ''
       const point = points[0]
-      const index = point.point.index || 0
+      if (!point || !point.point) return ''
+
+      // Safely get and validate index
+      const rawIndex = point.point.index
+      if (rawIndex === undefined || rawIndex === null) return ''
+
+      const index = Number.parseInt(String(rawIndex), 10)
+      if (Number.isNaN(index) || index < 0 || index >= weeklyData.length) {
+        return ''
+      }
+
       const dataPoint = weeklyData[index]
+      if (!dataPoint) return ''
+
       const labelColor = styles.labelColor
 
       return `<div style="min-width: 200px; color: ${styles.color};">
