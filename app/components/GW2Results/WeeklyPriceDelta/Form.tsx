@@ -14,7 +14,7 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { GW2PriceGroup } from '~/requests/GW2/WeeklyPriceGroupDelta'
 import type { ActionData } from '~/routes/gw2.weekly-price-group-delta'
 
-const startFromDate = new Date(2024, 0, 1)
+const startFromDate = new Date(2019, 11, 23)
 const endFromDate = new Date()
 
 type FormProps = {
@@ -26,7 +26,7 @@ type FormProps = {
 }
 
 const defaultValues = {
-  startYear: 2024,
+  startYear: 2025,
   startMonth: 1,
   startDay: 1,
   endYear: new Date().getFullYear(),

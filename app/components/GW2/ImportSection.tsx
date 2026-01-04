@@ -29,12 +29,12 @@ const validateImportData = (
     if (jsonData.start_year !== undefined) {
       if (
         typeof jsonData.start_year !== 'number' ||
-        jsonData.start_year < 2020 ||
+        jsonData.start_year < 2019 ||
         jsonData.start_year > 2090
       ) {
         return {
           valid: false,
-          error: `Start year must be a number between 2020 and 2090, got ${jsonData.start_year}`
+          error: `Start year must be a number between 2019 and 2090, got ${jsonData.start_year}`
         }
       }
     }
@@ -67,12 +67,12 @@ const validateImportData = (
     if (jsonData.end_year !== undefined) {
       if (
         typeof jsonData.end_year !== 'number' ||
-        jsonData.end_year < 2020 ||
+        jsonData.end_year < 2019 ||
         jsonData.end_year > 2090
       ) {
         return {
           valid: false,
-          error: `End year must be a number between 2020 and 2090, got ${jsonData.end_year}`
+          error: `End year must be a number between 2019 and 2090, got ${jsonData.end_year}`
         }
       }
     }
