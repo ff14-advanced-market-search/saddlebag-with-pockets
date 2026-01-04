@@ -21,7 +21,6 @@ try {
 interface GW2PriceQuantityChartsProps {
   weeklyData: GW2ItemData['weekly_data']
   darkMode: boolean
-  itemName: string
 }
 
 // Format timestamp like 2025110300 to Date
@@ -35,8 +34,7 @@ const formatTimestamp = (timestamp: number): Date => {
 
 export default function GW2PriceQuantityCharts({
   weeklyData,
-  darkMode,
-  itemName
+  darkMode
 }: GW2PriceQuantityChartsProps) {
   // Memoize styles to prevent recreation on every render
   const styles = useMemo(

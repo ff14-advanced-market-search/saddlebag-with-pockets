@@ -25,7 +25,6 @@ export const Results = ({
   const { darkmode } = useTypedSelector((state) => state.user)
   const [minYAxis, setMinYAxis] = useState<number | null>(null)
   const [maxYAxis, setMaxYAxis] = useState<number | null>(null)
-  const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({})
   const [visibilityFilter, setVisibilityFilter] = useState('')
   const [selectedItemForChart, setSelectedItemForChart] = useState<
     string | null
@@ -111,30 +110,45 @@ export const Results = ({
     return `${year}-${month}-${day}`
   }
 
-  // Update visibleItems when selectedGroup or actionData changes
-  useEffect(() => {
-    if (!(actionData && 'data' in actionData)) return
+  // Compute default visibleItems from selectedGroup and actionData
+  const defaultVisibleItems = useMemo(() => {
+    if (!(actionData && 'data' in actionData)) {
+      return {}
+    }
     if (selectedGroup === 'All') {
       const newVisibleItems: Record<string, boolean> = {}
       Object.keys(actionData.data).forEach((groupName) => {
         newVisibleItems[groupName] = true
       })
-      setVisibleItems(newVisibleItems)
-      return
+      return newVisibleItems
     }
     const newVisibleItems: Record<string, boolean> = {
       [`${selectedGroup} (Average)`]: true
     }
     const groupData = actionData.data[selectedGroup]
-    if (!groupData) return
+    if (!groupData) return newVisibleItems
     const itemCount = Object.keys(groupData.item_data).length
     const defaultVisibility = itemCount <= 50
     Object.keys(groupData.item_data).forEach((itemId) => {
       newVisibleItems[groupData.item_names[itemId]] = defaultVisibility
     })
-    setVisibleItems(newVisibleItems)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return newVisibleItems
   }, [actionData, selectedGroup])
+
+  // State for user modifications to visibility (merged with defaults)
+  const [visibleItemsOverrides, setVisibleItemsOverrides] = useState<
+    Record<string, boolean>
+  >({})
+
+  // Merge default visibleItems with user overrides
+  const visibleItems = useMemo(() => {
+    return { ...defaultVisibleItems, ...visibleItemsOverrides }
+  }, [defaultVisibleItems, visibleItemsOverrides])
+
+  // Reset overrides when group changes
+  useEffect(() => {
+    setVisibleItemsOverrides({})
+  }, [selectedGroup])
 
   // Only show item details if a specific group is selected
   const showItemDetails = selectedGroup !== 'All'
@@ -294,7 +308,7 @@ export const Results = ({
             onMaxYAxisChange={setMaxYAxis}
             visibleItems={visibleItems}
             visibilityFilter={visibilityFilter}
-            onVisibleItemsChange={setVisibleItems}
+            onVisibleItemsChange={setVisibleItemsOverrides}
             onVisibilityFilterChange={setVisibilityFilter}
             filteredTimestamps={filteredTimestamps}
             formatTimestamp={formatTimestamp}
@@ -349,7 +363,6 @@ export const Results = ({
                       groupData.item_data[selectedItemForChart].weekly_data
                     }
                     darkMode={darkmode}
-                    itemName={groupData.item_names[selectedItemForChart]}
                   />
                 </div>
               </div>

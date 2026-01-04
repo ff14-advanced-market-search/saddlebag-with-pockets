@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import CodeBlock from '~/components/Common/CodeBlock'
 import type { GW2WeeklyPriceGroupDeltaResponse } from '~/requests/GW2/WeeklyPriceGroupDelta'
 
@@ -33,6 +34,35 @@ export default function RequestDataSection({
   const startDateParts = formatTimestampToDate(startDate)
   const endDateParts = formatTimestampToDate(endDate)
 
+  const requestData = useMemo(
+    () => ({
+      start_year: startDateParts.year,
+      start_month: startDateParts.month,
+      start_day: startDateParts.day,
+      end_year: endDateParts.year,
+      end_month: endDateParts.month,
+      end_day: endDateParts.day,
+      minimum_value: minimumValue,
+      minimum_sales: minimumSales,
+      minimum_average_price: minimumAveragePrice,
+      price_groups: Object.entries(data).map(([name, groupData]) => ({
+        name,
+        item_ids: Object.keys(groupData.item_data).map((id: string) =>
+          Number.parseInt(id)
+        ),
+        types: []
+      }))
+    }),
+    [
+      startDateParts,
+      endDateParts,
+      minimumValue,
+      minimumSales,
+      minimumAveragePrice,
+      data
+    ]
+  )
+
   return (
     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mt-4">
       <h3
@@ -45,47 +75,8 @@ export default function RequestDataSection({
         <CodeBlock
           title="Request data used for this analysis"
           buttonTitle="Copy"
-          codeString={JSON.stringify(
-            {
-              start_year: startDateParts.year,
-              start_month: startDateParts.month,
-              start_day: startDateParts.day,
-              end_year: endDateParts.year,
-              end_month: endDateParts.month,
-              end_day: endDateParts.day,
-              minimum_value: minimumValue, // Already in coppers from API
-              minimum_sales: minimumSales,
-              minimum_average_price: minimumAveragePrice, // Already in coppers from API
-              price_groups: Object.entries(data).map(([name, groupData]) => ({
-                name,
-                item_ids: Object.keys(groupData.item_data).map((id: string) =>
-                  Number.parseInt(id)
-                ),
-                types: [] // Types are not stored in the response, so we can't reconstruct them
-              }))
-            },
-            null,
-            2
-          )}
+          codeString={JSON.stringify(requestData, null, 2)}
           onClick={async () => {
-            const requestData = {
-              start_year: startDateParts.year,
-              start_month: startDateParts.month,
-              start_day: startDateParts.day,
-              end_year: endDateParts.year,
-              end_month: endDateParts.month,
-              end_day: endDateParts.day,
-              minimum_value: minimumValue,
-              minimum_sales: minimumSales,
-              minimum_average_price: minimumAveragePrice,
-              price_groups: Object.entries(data).map(([name, groupData]) => ({
-                name,
-                item_ids: Object.keys(groupData.item_data).map((id: string) =>
-                  Number.parseInt(id)
-                ),
-                types: []
-              }))
-            }
             try {
               const textToCopy = JSON.stringify(requestData, null, 2)
               await navigator.clipboard.writeText(textToCopy)
