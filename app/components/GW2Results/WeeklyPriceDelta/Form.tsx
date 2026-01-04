@@ -5,6 +5,7 @@ import type { DateRangeType, DateValueType } from 'react-tailwindcss-datepicker'
 import Datepicker from 'react-tailwindcss-datepicker'
 import { PageWrapper } from '~/components/Common'
 import ErrorPopup from '~/components/Common/ErrorPopup'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 import PriceGroupsSection from '~/components/GW2/PriceGroupsSection'
 import RequestPreview from '~/components/GW2/RequestPreview'
 import ImportSection from '~/components/GW2/ImportSection'
@@ -274,11 +275,14 @@ export const Form = ({
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label
-                  htmlFor="minimumValueInput"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                  Minimum Value
-                </label>
+                <div className="relative flex items-center gap-1 mb-1">
+                  <label
+                    htmlFor="minimumValueInput"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    Minimum Gold Earned Per Day
+                  </label>
+                  <ToolTip data="Filters out items that where all sales revenue has never exceeded this gold amount." />
+                </div>
                 <input
                   id="minimumValueInput"
                   type="number"
@@ -294,11 +298,14 @@ export const Form = ({
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="minimumSalesInput"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                  Minimum Sales
-                </label>
+                <div className="relative flex items-center gap-1 mb-1">
+                  <label
+                    htmlFor="minimumSalesInput"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    Minimum Sales
+                  </label>
+                  <ToolTip data="Filters out items that never sold this much on any day in the date range." />
+                </div>
                 <input
                   id="minimumSalesInput"
                   type="number"
@@ -310,11 +317,14 @@ export const Form = ({
                 />
               </div>
               <div>
-                <label
-                  htmlFor="minimumAveragePriceInput"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                  Minimum Average Price
-                </label>
+                <div className="relative flex items-center gap-1 mb-1">
+                  <label
+                    htmlFor="minimumAveragePriceInput"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    Minimum Average Price
+                  </label>
+                  <ToolTip data="Filters out items that have never had the average price go over this limit." />
+                </div>
                 <input
                   id="minimumAveragePriceInput"
                   type="number"
