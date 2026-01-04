@@ -73,6 +73,12 @@ export default function RecommendedWeeklyPriceGroupDelta() {
 
     document.body.appendChild(form)
     form.submit()
+    // Clean up the form element after submission starts
+    setTimeout(() => {
+      if (document.body.contains(form)) {
+        document.body.removeChild(form)
+      }
+    }, 0)
   }
 
   return (

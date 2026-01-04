@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import type {
   GW2ItemData,
   GW2GroupData
@@ -10,7 +10,6 @@ import FullTable, { type ColumnList } from '~/components/Tables/FullTable'
 
 interface ItemDetailsTableProps {
   data: GW2ItemData[]
-  columnList: Array<ColumnList<GW2ItemData>>
   selectedDate: string
   formatTimestamp: (timestamp: string) => string
   selectedGroup: string
@@ -307,10 +306,7 @@ export default function ItemDetailsTable({
     }
   ]
 
-  // Filter data (FullTable handles sorting internally)
-  const filteredData = useMemo(() => {
-    return [...data]
-  }, [data])
+  // FullTable handles filtering internally via globalFilter
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
@@ -321,7 +317,7 @@ export default function ItemDetailsTable({
               {selectedGroup} Details
             </h3>
             <CSVButton
-              data={filteredData.map((item) => {
+              data={data.map((item) => {
                 const itemData = getDataForTimestamp(item, selectedDate)
                 return {
                   itemName: item.itemName,
@@ -415,7 +411,7 @@ export default function ItemDetailsTable({
               filename={`${selectedGroup}-${formatTimestamp(selectedDate)}.csv`}
             />
             <JSONDownloadButton
-              data={filteredData.map((item) => {
+              data={data.map((item) => {
                 const itemData = getDataForTimestamp(item, selectedDate)
                 return {
                   itemName: item.itemName,
@@ -463,9 +459,9 @@ export default function ItemDetailsTable({
 
         {/* Table */}
         <FullTable<GW2ItemData>
-          data={filteredData}
+          data={data}
           columnList={columnList}
-          sortingOrder={[{ id: 'itemName' as keyof GW2ItemData, desc: false }]}
+          sortingOrder={[{ id: 'itemName', desc: false }]}
           globalFilter={searchQuery}
           setGlobalFilter={setSearchQuery}
         />

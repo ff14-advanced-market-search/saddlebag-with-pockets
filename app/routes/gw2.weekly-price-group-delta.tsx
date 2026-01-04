@@ -74,7 +74,26 @@ export const action: ActionFunction = async ({ request }) => {
   const minimumAveragePriceGold =
     parseFloat(formData.get('minimum_average_price') as string) || 0
   const minimumAveragePrice = Math.round(minimumAveragePriceGold * 10000) // Convert gold to coppers
-  const priceGroups = JSON.parse(formData.get('priceGroups') as string)
+
+  let priceGroups
+  try {
+    const priceGroupsString = formData.get('priceGroups') as string
+    priceGroups = JSON.parse(priceGroupsString)
+
+    // Validate that priceGroups is an array
+    if (!Array.isArray(priceGroups)) {
+      return json<ActionData>({
+        state: 'error',
+        exception: 'Invalid price groups data format: expected an array'
+      })
+    }
+  } catch (error) {
+    console.error('Failed to parse price groups JSON:', error)
+    return json<ActionData>({
+      state: 'error',
+      exception: 'Invalid price groups data format'
+    })
+  }
 
   if (priceGroups.length < 1) {
     return json<ActionData>({
@@ -98,13 +117,13 @@ export const action: ActionFunction = async ({ request }) => {
     })
 
     if (!response.ok) {
-      const errorData = await response
-        .json()
-        .catch(() => ({ message: `Server responded with ${response}` }))
+      const errorData = await response.json().catch(() => ({
+        message: `Server responded with status ${response.status} ${response.statusText}`
+      }))
       throw new Error(
-        errorData.message ||
-          errorData.exception ||
-          `Server responded with ${response}`
+        errorData?.message ||
+          errorData?.exception ||
+          `Server responded with status ${response.status} ${response.statusText}`
       )
     }
 

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import Highcharts from 'highcharts'
 import addHighchartsMore from 'highcharts/highcharts-more'
 import HighchartsReact from 'highcharts-react-official'
@@ -38,80 +38,122 @@ export default function GW2PriceQuantityCharts({
   darkMode,
   itemName
 }: GW2PriceQuantityChartsProps) {
-  const styles = darkMode
-    ? {
-        backgroundColor: '#1e293b',
-        color: '#f3f4f6',
-        hoverColor: '#f8f8f8',
-        gridLineColor: '#334155',
-        labelColor: '#94a3b8',
-        borderColor: '#475569'
-      }
-    : {
-        backgroundColor: '#ffffff',
-        color: '#1f2937',
-        hoverColor: '#4b5563',
-        gridLineColor: '#e2e8f0',
-        labelColor: '#64748b',
-        borderColor: '#e2e8f0'
-      }
-
-  const xCategories = weeklyData.map((d) =>
-    format(formatTimestamp(d.time), 'MM/dd/yyyy')
+  // Memoize styles to prevent recreation on every render
+  const styles = useMemo(
+    () =>
+      darkMode
+        ? {
+            backgroundColor: '#1e293b',
+            color: '#f3f4f6',
+            hoverColor: '#f8f8f8',
+            gridLineColor: '#334155',
+            labelColor: '#94a3b8',
+            borderColor: '#475569'
+          }
+        : {
+            backgroundColor: '#ffffff',
+            color: '#1f2937',
+            hoverColor: '#4b5563',
+            gridLineColor: '#e2e8f0',
+            labelColor: '#64748b',
+            borderColor: '#e2e8f0'
+          },
+    [darkMode]
   )
 
-  const maxPrice = Math.max(
-    ...weeklyData.map((d) => Math.max(d.sell_price_avg, d.buy_price_avg))
-  )
-  const maxQuantity = Math.max(
-    ...weeklyData.map((d) => Math.max(d.sell_quantity_avg, d.buy_quantity_avg))
-  )
-  const maxValue = Math.max(
-    ...weeklyData.map((d) => Math.max(d.sell_value, d.buy_value))
-  )
-  const maxSold = Math.max(
-    ...weeklyData.map((d) =>
-      Math.max(d.sell_sold, d.buy_sold, d.sell_listed, d.buy_listed)
-    )
+  // Calculate derived values - use empty arrays as fallback for empty data
+  const xCategories = useMemo(
+    () =>
+      weeklyData.length > 0
+        ? weeklyData.map((d) => format(formatTimestamp(d.time), 'MM/dd/yyyy'))
+        : [],
+    [weeklyData]
   )
 
-  // Shared tooltip formatter
-  const sharedTooltipFormatter = function (this: any) {
-    const points = this.points || []
-    if (points.length === 0) return ''
-    const point = points[0]
-    const index = point.point.index || 0
-    const dataPoint = weeklyData[index]
-    const labelColor = styles.labelColor
+  const maxPrice = useMemo(
+    () =>
+      weeklyData.length > 0
+        ? Math.max(
+            ...weeklyData.map((d) =>
+              Math.max(d.sell_price_avg, d.buy_price_avg)
+            )
+          )
+        : 0,
+    [weeklyData]
+  )
 
-    return `<div style="min-width: 200px; color: ${styles.color};">
+  const maxQuantity = useMemo(
+    () =>
+      weeklyData.length > 0
+        ? Math.max(
+            ...weeklyData.map((d) =>
+              Math.max(d.sell_quantity_avg, d.buy_quantity_avg)
+            )
+          )
+        : 0,
+    [weeklyData]
+  )
+
+  const maxValue = useMemo(
+    () =>
+      weeklyData.length > 0
+        ? Math.max(
+            ...weeklyData.map((d) => Math.max(d.sell_value, d.buy_value))
+          )
+        : 0,
+    [weeklyData]
+  )
+
+  const maxSold = useMemo(
+    () =>
+      weeklyData.length > 0
+        ? Math.max(
+            ...weeklyData.map((d) =>
+              Math.max(d.sell_sold, d.buy_sold, d.sell_listed, d.buy_listed)
+            )
+          )
+        : 0,
+    [weeklyData]
+  )
+
+  // Shared tooltip formatter - memoized with useCallback
+  const sharedTooltipFormatter = useCallback(
+    function (this: any) {
+      const points = this.points || []
+      if (points.length === 0) return ''
+      const point = points[0]
+      const index = point.point.index || 0
+      const dataPoint = weeklyData[index]
+      const labelColor = styles.labelColor
+
+      return `<div style="min-width: 200px; color: ${styles.color};">
       <b>${format(formatTimestamp(dataPoint.time), 'MM/dd/yyyy')}</b><br/>
       <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
       <b style="color: ${
         darkMode ? '#10b981' : '#059669'
       };">Sell Price:</b> ${dataPoint.sell_price_avg.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 4
-    })}<br/>
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 4
+      })}<br/>
       <b style="color: ${
         darkMode ? '#f59e0b' : '#d97706'
       };">Buy Price:</b> ${dataPoint.buy_price_avg.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 4
-    })}<br/>
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 4
+      })}<br/>
       <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
       <b style="color: ${
         darkMode ? '#10b981' : '#059669'
       };">Sell Value:</b> ${dataPoint.sell_value.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })}<br/>
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}<br/>
       <b style="color: ${
         darkMode ? '#f59e0b' : '#d97706'
       };">Buy Value:</b> ${dataPoint.buy_value.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })}<br/>
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}<br/>
       <hr style="border-color: ${labelColor}; margin: 8px 0;"/>
       <b style="color: ${
         darkMode ? '#10b981' : '#059669'
@@ -139,7 +181,9 @@ export default function GW2PriceQuantityCharts({
         darkMode ? '#dc2626' : '#b91c1c'
       };">Demand:</b> ${dataPoint.buy_quantity_avg.toLocaleString()}
     </div>`
-  }
+    },
+    [weeklyData, darkMode, styles]
+  )
 
   // Chart 1: Price vs Volume
   const priceVolumeOptions: any = useMemo(
@@ -336,7 +380,15 @@ export default function GW2PriceQuantityCharts({
         })
       }
     }),
-    [weeklyData, darkMode, styles, xCategories, maxPrice, maxQuantity]
+    [
+      weeklyData,
+      darkMode,
+      styles,
+      xCategories,
+      maxPrice,
+      maxQuantity,
+      sharedTooltipFormatter
+    ]
   )
 
   // Chart 2: Value
@@ -438,7 +490,14 @@ export default function GW2PriceQuantityCharts({
         }
       }
     }),
-    [weeklyData, darkMode, styles, xCategories, maxValue]
+    [
+      weeklyData,
+      darkMode,
+      styles,
+      xCategories,
+      maxValue,
+      sharedTooltipFormatter
+    ]
   )
 
   // Chart 3: Transaction Volumes
@@ -609,8 +668,25 @@ export default function GW2PriceQuantityCharts({
         enabled: false
       }
     }),
-    [weeklyData, darkMode, styles, xCategories, maxSold, maxQuantity]
+    [
+      weeklyData,
+      darkMode,
+      styles,
+      xCategories,
+      maxSold,
+      maxQuantity,
+      sharedTooltipFormatter
+    ]
   )
+
+  // Early return for empty data - after all hooks
+  if (weeklyData.length === 0) {
+    return (
+      <div className="text-center text-gray-500 dark:text-gray-400 py-8">
+        No weekly data available to display charts.
+      </div>
+    )
+  }
 
   return (
     <div>

@@ -1,7 +1,6 @@
 import { Link } from '@remix-run/react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { PageWrapper, Title, ContentContainer } from '~/components/Common'
-import ItemDataLink from '~/components/utilities/ItemDataLink'
 import DateRangeControls from '~/components/WoW/DateRangeControls'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
 import GroupSelector from '~/components/WoW/GroupSelector'
@@ -31,6 +30,8 @@ export const Results = ({
   const [selectedItemForChart, setSelectedItemForChart] = useState<
     string | null
   >(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
   const [selectedGroup, setSelectedGroup] = useState<string>('All')
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [startDate, setStartDate] = useState<string>('')
@@ -111,6 +112,38 @@ export const Results = ({
   const getDataForTimestamp = (itemData: GW2ItemData, timestamp: string) => {
     return itemData.weekly_data.find((d) => d.time.toString() === timestamp)
   }
+
+  // Close modal on Escape key and manage focus
+  useEffect(() => {
+    if (!selectedItemForChart) {
+      // Restore focus when modal closes
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus()
+        previousFocusRef.current = null
+      }
+      return
+    }
+
+    // Store the previously focused element
+    previousFocusRef.current = (document.activeElement as HTMLElement) || null
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedItemForChart(null)
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+
+    // Focus the modal container when it opens
+    if (modalRef.current) {
+      modalRef.current.focus()
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [selectedItemForChart])
 
   // Convert GW2 data to format expected by DeltaChartContainer
   const convertedData = useMemo(() => {
@@ -239,7 +272,6 @@ export const Results = ({
           {showItemDetails && groupData && (
             <ItemDetailsTable
               data={Object.values(groupData.item_data)}
-              columnList={[]}
               selectedDate={selectedDate}
               formatTimestamp={formatTimestamp}
               selectedGroup={selectedGroup}
@@ -253,10 +285,17 @@ export const Results = ({
 
           {/* Price vs Quantity Chart Popup */}
           {selectedItemForChart && groupData && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div
+              ref={modalRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-title"
+              tabIndex={-1}
+              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-7xl w-full mx-4 max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                   <h3
+                    id="modal-title"
                     className={`text-lg font-medium ${
                       darkmode ? 'text-gray-300' : 'text-gray-900'
                     }`}>

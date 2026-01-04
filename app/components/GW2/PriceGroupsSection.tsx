@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { InputWithLabel } from '../form/InputWithLabel'
 import DebouncedSelectInput from '../Common/DebouncedSelectInput'
 import { gw2ItemsList } from '~/utils/items/id_to_item'
-import { itemTypes } from '~/utils/GW2Filters/itemTypes'
+import { itemTypes, type ItemType } from '~/utils/GW2Filters/itemTypes'
 import ErrorPopup from '../Common/ErrorPopup'
 import type { GW2PriceGroup } from '~/requests/GW2/WeeklyPriceGroupDelta'
 
@@ -23,7 +23,7 @@ const allTypesAndDetails: Array<{
   isDetailsType: boolean
 }> = []
 
-itemTypes.forEach((itemType) => {
+itemTypes.forEach((itemType: ItemType) => {
   // Add main type
   allTypesAndDetails.push({
     name: `${itemType.name} (Type)`,
@@ -129,8 +129,9 @@ export default function PriceGroupsSection({
     onPriceGroupsChange(newGroups)
     // Remove the input value for this group
     setCurrentItemNames((prev) => {
-      const { [index]: _, ...rest } = prev
-      return rest
+      return Object.fromEntries(
+        Object.entries(prev).filter(([key]) => key !== index.toString())
+      )
     })
   }
 
