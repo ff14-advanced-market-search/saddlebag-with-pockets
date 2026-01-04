@@ -10,6 +10,7 @@ import type { GW2ItemData } from '~/requests/GW2/WeeklyPriceGroupDelta'
 import type { SuccessActionData } from '~/routes/gw2.weekly-price-group-delta'
 import GW2PriceQuantityCharts from './GW2PriceQuantityCharts'
 import ItemDetailsTable from './ItemDetailsTable'
+import RequestDataSection from './RequestDataSection'
 
 type ResultsProps = {
   actionData: SuccessActionData
@@ -283,6 +284,17 @@ export const Results = ({
               </div>
             </div>
           )}
+
+          {/* Request Data Section */}
+          <RequestDataSection
+            data={actionData.data}
+            startDate={startDate}
+            endDate={endDate}
+            darkmode={darkmode}
+            minimumValue={actionData.request?.minimum_value ?? 100000000}
+            minimumSales={actionData.request?.minimum_sales ?? 0}
+            minimumAveragePrice={actionData.request?.minimum_average_price ?? 0}
+          />
         </div>
       </ContentContainer>
     </PageWrapper>

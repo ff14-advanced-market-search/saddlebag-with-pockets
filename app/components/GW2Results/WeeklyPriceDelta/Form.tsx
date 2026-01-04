@@ -6,6 +6,9 @@ import Datepicker from 'react-tailwindcss-datepicker'
 import { PageWrapper } from '~/components/Common'
 import ErrorPopup from '~/components/Common/ErrorPopup'
 import PriceGroupsSection from '~/components/GW2/PriceGroupsSection'
+import RequestPreview from '~/components/GW2/RequestPreview'
+import ImportSection from '~/components/GW2/ImportSection'
+import type { GW2ImportData } from '~/components/GW2/ImportSection'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { GW2PriceGroup } from '~/requests/GW2/WeeklyPriceGroupDelta'
 import type { ActionData } from '~/routes/gw2.weekly-price-group-delta'
@@ -127,6 +130,39 @@ export const Form = ({
     }
   }
 
+  const handleImport = (data: GW2ImportData) => {
+    if (data.start_year) setStartYear(data.start_year)
+    if (data.start_month) setStartMonth(data.start_month)
+    if (data.start_day) setStartDay(data.start_day)
+    if (data.end_year) setEndYear(data.end_year)
+    if (data.end_month) setEndMonth(data.end_month)
+    if (data.end_day) setEndDay(data.end_day)
+    if (data.minimum_value !== undefined) setMinimumValue(data.minimum_value)
+    if (data.minimum_sales !== undefined) setMinimumSales(data.minimum_sales)
+    if (data.minimum_average_price !== undefined)
+      setMinimumAveragePrice(data.minimum_average_price)
+    if (data.price_groups) setPriceGroups(data.price_groups)
+
+    // Update date range picker when importing
+    if (
+      data.start_year &&
+      data.start_month &&
+      data.start_day &&
+      data.end_year &&
+      data.end_month &&
+      data.end_day
+    ) {
+      setDateRange({
+        startDate: new Date(
+          data.start_year,
+          data.start_month - 1,
+          data.start_day
+        ),
+        endDate: new Date(data.end_year, data.end_month - 1, data.end_day)
+      })
+    }
+  }
+
   return (
     <PageWrapper>
       <SmallFormContainer
@@ -146,13 +182,14 @@ export const Form = ({
           }
         }}>
         <div className="space-y-4 mb-4">
-          {/* Row with See Recommended Searches */}
+          {/* Row with See Recommended Searches and Import Configuration */}
           <div className="flex justify-between items-center mb-4">
             <Link
               to="/gw2/weekly-price-group-delta-recommended"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transform transition-all duration-200 hover:scale-105 flex items-center gap-2">
               ← See Recommended Searches
             </Link>
+            <ImportSection onImport={handleImport} />
           </div>
 
           <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
@@ -290,6 +327,19 @@ export const Form = ({
             type="hidden"
             name="priceGroups"
             value={JSON.stringify(priceGroups)}
+          />
+
+          <RequestPreview
+            startYear={startYear}
+            startMonth={startMonth}
+            startDay={startDay}
+            endYear={endYear}
+            endMonth={endMonth}
+            endDay={endDay}
+            minimumValue={minimumValue}
+            minimumSales={minimumSales}
+            minimumAveragePrice={minimumAveragePrice}
+            priceGroups={priceGroups}
           />
         </div>
       </SmallFormContainer>
