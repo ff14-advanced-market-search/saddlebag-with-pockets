@@ -103,8 +103,8 @@ export default function RecommendedWeeklyPriceGroupDelta() {
                     📊
                   </span>
                   <span className="font-bold">Data Availability:</span> All
-                  market board items from{' '}
-                  <span className="font-semibold">January 2024</span> onward.
+                  Trading Post items from{' '}
+                  <span className="font-semibold">November 2019</span> onward.
                 </span>
               </div>
             </div>
