@@ -141,22 +141,13 @@ export const Form = ({
     if (data.end_month) setEndMonth(data.end_month)
     if (data.end_day) setEndDay(data.end_day)
     // Convert from coppers (API) to gold (UI) when importing
-    // If value is > 10000, assume it's in coppers and convert to gold
-    // Otherwise, assume it's already in gold
+    // Imported data is always in coppers, so always convert to gold for display
     if (data.minimum_value !== undefined) {
-      const value =
-        data.minimum_value > 10000
-          ? data.minimum_value / 10000
-          : data.minimum_value
-      setMinimumValue(value)
+      setMinimumValue(data.minimum_value / 10000)
     }
     if (data.minimum_sales !== undefined) setMinimumSales(data.minimum_sales)
     if (data.minimum_average_price !== undefined) {
-      const price =
-        data.minimum_average_price > 10000
-          ? data.minimum_average_price / 10000
-          : data.minimum_average_price
-      setMinimumAveragePrice(price)
+      setMinimumAveragePrice(data.minimum_average_price / 10000)
     }
     if (data.price_groups) setPriceGroups(data.price_groups)
 
