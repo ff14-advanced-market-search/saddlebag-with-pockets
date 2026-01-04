@@ -65,12 +65,15 @@ export const action: ActionFunction = async ({ request }) => {
   const endYear = Number.parseInt(formData.get('endYear') as string)
   const endMonth = Number.parseInt(formData.get('endMonth') as string)
   const endDay = Number.parseInt(formData.get('endDay') as string)
-  const minimumValue =
-    Number.parseInt(formData.get('minimum_value') as string) || 100000000
+  // Convert from gold (UI) to coppers (API)
+  const minimumValueGold =
+    parseFloat(formData.get('minimum_value') as string) || 10000
+  const minimumValue = Math.round(minimumValueGold * 10000) // Convert gold to coppers
   const minimumSales =
     Number.parseInt(formData.get('minimum_sales') as string) || 0
-  const minimumAveragePrice =
-    Number.parseInt(formData.get('minimum_average_price') as string) || 0
+  const minimumAveragePriceGold =
+    parseFloat(formData.get('minimum_average_price') as string) || 0
+  const minimumAveragePrice = Math.round(minimumAveragePriceGold * 10000) // Convert gold to coppers
   const priceGroups = JSON.parse(formData.get('priceGroups') as string)
 
   if (priceGroups.length < 1) {

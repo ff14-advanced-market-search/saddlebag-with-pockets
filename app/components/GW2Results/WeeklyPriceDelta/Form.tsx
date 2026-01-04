@@ -31,9 +31,9 @@ const defaultValues = {
   endYear: new Date().getFullYear(),
   endMonth: new Date().getMonth() + 1,
   endDay: new Date().getDate(),
-  minimumValue: 100000000,
+  minimumValue: 10000, // 10000 gold in UI (will be converted to coppers)
   minimumSales: 0,
-  minimumAveragePrice: 0,
+  minimumAveragePrice: 0, // 0 gold in UI
   priceGroups: [] as GW2PriceGroup[]
 }
 
@@ -56,9 +56,9 @@ export const Form = ({
       endYear: actionData.request.end_year,
       endMonth: actionData.request.end_month,
       endDay: actionData.request.end_day,
-      minimumValue: actionData.request.minimum_value,
+      minimumValue: actionData.request.minimum_value / 10000, // Convert coppers to gold for display
       minimumSales: actionData.request.minimum_sales,
-      minimumAveragePrice: actionData.request.minimum_average_price,
+      minimumAveragePrice: actionData.request.minimum_average_price / 10000, // Convert coppers to gold for display
       priceGroups: actionData.request.price_groups
     }
   }
@@ -137,10 +137,24 @@ export const Form = ({
     if (data.end_year) setEndYear(data.end_year)
     if (data.end_month) setEndMonth(data.end_month)
     if (data.end_day) setEndDay(data.end_day)
-    if (data.minimum_value !== undefined) setMinimumValue(data.minimum_value)
+    // Convert from coppers (API) to gold (UI) when importing
+    // If value is > 10000, assume it's in coppers and convert to gold
+    // Otherwise, assume it's already in gold
+    if (data.minimum_value !== undefined) {
+      const value =
+        data.minimum_value > 10000
+          ? data.minimum_value / 10000
+          : data.minimum_value
+      setMinimumValue(value)
+    }
     if (data.minimum_sales !== undefined) setMinimumSales(data.minimum_sales)
-    if (data.minimum_average_price !== undefined)
-      setMinimumAveragePrice(data.minimum_average_price)
+    if (data.minimum_average_price !== undefined) {
+      const price =
+        data.minimum_average_price > 10000
+          ? data.minimum_average_price / 10000
+          : data.minimum_average_price
+      setMinimumAveragePrice(price)
+    }
     if (data.price_groups) setPriceGroups(data.price_groups)
 
     // Update date range picker when importing
@@ -263,17 +277,21 @@ export const Form = ({
                 <label
                   htmlFor="minimumValueInput"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                  Minimum Value (in coppers)
+                  Minimum Value
                 </label>
                 <input
                   id="minimumValueInput"
                   type="number"
+                  step="0.0001"
                   name="minimum_value"
                   value={minimumValue}
                   onChange={(e) => setMinimumValue(Number(e.target.value))}
                   min={0}
                   className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Gold (e.g., 1.0 = 1g)
+                </p>
               </div>
               <div>
                 <label
@@ -295,11 +313,12 @@ export const Form = ({
                 <label
                   htmlFor="minimumAveragePriceInput"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                  Minimum Average Price (in coppers)
+                  Minimum Average Price
                 </label>
                 <input
                   id="minimumAveragePriceInput"
                   type="number"
+                  step="0.0001"
                   name="minimum_average_price"
                   value={minimumAveragePrice}
                   onChange={(e) =>
@@ -308,6 +327,9 @@ export const Form = ({
                   min={0}
                   className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Gold (e.g., 2.5025 = 2g 5s 25c)
+                </p>
               </div>
             </div>
           </div>
