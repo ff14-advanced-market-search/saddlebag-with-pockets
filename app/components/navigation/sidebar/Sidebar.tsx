@@ -355,6 +355,11 @@ const navGroups: Array<{
         name: 'Marketshare Overview',
         href: '/gw2/marketshare/recommended',
         icon: ChartSquareBarIcon
+      },
+      {
+        name: 'Weekly Price Group Delta',
+        href: '/gw2/weekly-price-group-delta-recommended',
+        icon: ChartSquareBarIcon
       }
     ]
   },
