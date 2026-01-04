@@ -441,7 +441,7 @@ export default function ItemDetailsTable({
             id="dateSelect"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+            className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
             {filteredTimestamps.map((timestamp) => (
               <option key={timestamp} value={timestamp}>
                 {formatTimestamp(timestamp)}
@@ -457,7 +457,7 @@ export default function ItemDetailsTable({
             placeholder="Search items..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+            className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
           />
         </div>
 
