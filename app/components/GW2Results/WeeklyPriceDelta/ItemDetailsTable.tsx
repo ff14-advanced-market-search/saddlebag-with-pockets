@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react'
-import type { ColumnList } from '~/components/types'
 import type {
   GW2ItemData,
   GW2GroupData
 } from '~/requests/GW2/WeeklyPriceGroupDelta'
 import CSVButton from '~/components/utilities/CSVButton'
+import JSONDownloadButton from '~/components/utilities/JSONDownloadButton'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
-import FullTable from '~/components/Tables/FullTable'
+import FullTable, { type ColumnList } from '~/components/Tables/FullTable'
 
 interface ItemDetailsTableProps {
   data: GW2ItemData[]
@@ -35,18 +35,7 @@ export default function ItemDetailsTable({
   groupData,
   onItemSelect
 }: ItemDetailsTableProps) {
-  const [sortColumn, setSortColumn] = useState<string>('itemName')
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
   const [searchQuery, setSearchQuery] = useState('')
-
-  const handleSort = (columnId: string) => {
-    if (sortColumn === columnId) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
-    } else {
-      setSortColumn(columnId)
-      setSortDirection('asc')
-    }
-  }
 
   // Table columns for item details
   const columnList: Array<ColumnList<GW2ItemData>> = [
@@ -148,43 +137,180 @@ export default function ItemDetailsTable({
         return <span>{data ? data.sold.toLocaleString() : 'N/A'}</span>
       },
       sortUndefined: 'last'
+    },
+    {
+      columnId: 'sell_sold',
+      header: `Sell Sold (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.sell_sold,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.sell_sold.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'sell_price_avg',
+      header: `Sell Price Avg (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.sell_price_avg,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>
+            {data
+              ? data.sell_price_avg.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 4
+                })
+              : 'N/A'}
+          </span>
+        )
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'sell_value',
+      header: `Sell Value (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.sell_value,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>
+            {data
+              ? data.sell_value.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              : 'N/A'}
+          </span>
+        )
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'sell_delisted',
+      header: `Sell Delisted (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.sell_delisted,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.sell_delisted.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'sell_listed',
+      header: `Sell Listed (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.sell_listed,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.sell_listed.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'sell_quantity_avg',
+      header: `Sell Quantity Avg (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.sell_quantity_avg,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>{data ? data.sell_quantity_avg.toLocaleString() : 'N/A'}</span>
+        )
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'buy_sold',
+      header: `Buy Sold (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.buy_sold,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.buy_sold.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'buy_price_avg',
+      header: `Buy Price Avg (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.buy_price_avg,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>
+            {data
+              ? data.buy_price_avg.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 4
+                })
+              : 'N/A'}
+          </span>
+        )
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'buy_value',
+      header: `Buy Value (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.buy_value,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>
+            {data
+              ? data.buy_value.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              : 'N/A'}
+          </span>
+        )
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'buy_delisted',
+      header: `Buy Delisted (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.buy_delisted,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.buy_delisted.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'buy_listed',
+      header: `Buy Listed (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) => getDataForTimestamp(row, selectedDate)?.buy_listed,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return <span>{data ? data.buy_listed.toLocaleString() : 'N/A'}</span>
+      },
+      sortUndefined: 'last'
+    },
+    {
+      columnId: 'buy_quantity_avg',
+      header: `Buy Quantity Avg (${formatTimestamp(selectedDate)})`,
+      dataAccessor: (row) =>
+        getDataForTimestamp(row, selectedDate)?.buy_quantity_avg,
+      accessor: ({ row }) => {
+        const data = getDataForTimestamp(row, selectedDate)
+        return (
+          <span>{data ? data.buy_quantity_avg.toLocaleString() : 'N/A'}</span>
+        )
+      },
+      sortUndefined: 'last'
     }
   ]
 
-  // Filter and sort data
-  const filteredAndSortedData = useMemo(() => {
-    let filtered = [...data]
-
-    // Apply search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase()
-      filtered = filtered.filter((item) => {
-        const itemName = item.itemName.toLowerCase()
-        return itemName.includes(query)
-      })
-    }
-
-    // Apply sorting
-    return filtered.sort((a, b) => {
-      const column = columnList.find((col) => col.columnId === sortColumn)
-      if (!column) return 0
-
-      let aValue: any = column.dataAccessor
-        ? column.dataAccessor(a)
-        : a[column.columnId as keyof GW2ItemData]
-      let bValue: any = column.dataAccessor
-        ? column.dataAccessor(b)
-        : b[column.columnId as keyof GW2ItemData]
-
-      if (aValue === undefined && bValue === undefined) return 0
-      if (aValue === undefined) return column.sortUndefined === 'first' ? -1 : 1
-      if (bValue === undefined) return column.sortUndefined === 'first' ? 1 : -1
-
-      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
-      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
-      return 0
-    })
-  }, [data, searchQuery, sortColumn, sortDirection, columnList])
+  // Filter data (FullTable handles sorting internally)
+  const filteredData = useMemo(() => {
+    return [...data]
+  }, [data])
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
@@ -195,18 +321,111 @@ export default function ItemDetailsTable({
               {selectedGroup} Details
             </h3>
             <CSVButton
-              data={filteredAndSortedData.map((item) => {
+              data={filteredData.map((item) => {
                 const itemData = getDataForTimestamp(item, selectedDate)
                 return {
                   itemName: item.itemName,
                   itemID: item.itemID,
-                  delta: itemData?.delta ?? 'N/A',
-                  value: itemData?.value ?? 'N/A',
-                  price: itemData?.price_average ?? 'N/A',
-                  sold: itemData?.sold ?? 'N/A'
+                  delta: itemData?.delta ?? 0,
+                  value: itemData?.value ?? 0,
+                  price: itemData?.price_average ?? 0,
+                  sold: itemData?.sold ?? 0,
+                  sell_sold: itemData?.sell_sold ?? 0,
+                  sell_price_avg: itemData?.sell_price_avg ?? 0,
+                  sell_value: itemData?.sell_value ?? 0,
+                  sell_delisted: itemData?.sell_delisted ?? 0,
+                  sell_listed: itemData?.sell_listed ?? 0,
+                  sell_quantity_avg: itemData?.sell_quantity_avg ?? 0,
+                  buy_sold: itemData?.buy_sold ?? 0,
+                  buy_price_avg: itemData?.buy_price_avg ?? 0,
+                  buy_value: itemData?.buy_value ?? 0,
+                  buy_delisted: itemData?.buy_delisted ?? 0,
+                  buy_listed: itemData?.buy_listed ?? 0,
+                  buy_quantity_avg: itemData?.buy_quantity_avg ?? 0
                 }
               })}
+              columns={[
+                { title: 'Item Name', value: 'itemName' },
+                { title: 'Item ID', value: 'itemID' },
+                {
+                  title: `Delta % (${formatTimestamp(selectedDate)})`,
+                  value: 'delta'
+                },
+                {
+                  title: `Value (${formatTimestamp(selectedDate)})`,
+                  value: 'value'
+                },
+                {
+                  title: `Price (${formatTimestamp(selectedDate)})`,
+                  value: 'price'
+                },
+                {
+                  title: `Sold (${formatTimestamp(selectedDate)})`,
+                  value: 'sold'
+                },
+                {
+                  title: `Sell Sold (${formatTimestamp(selectedDate)})`,
+                  value: 'sell_sold'
+                },
+                {
+                  title: `Sell Price Avg (${formatTimestamp(selectedDate)})`,
+                  value: 'sell_price_avg'
+                },
+                {
+                  title: `Sell Value (${formatTimestamp(selectedDate)})`,
+                  value: 'sell_value'
+                },
+                {
+                  title: `Sell Delisted (${formatTimestamp(selectedDate)})`,
+                  value: 'sell_delisted'
+                },
+                {
+                  title: `Sell Listed (${formatTimestamp(selectedDate)})`,
+                  value: 'sell_listed'
+                },
+                {
+                  title: `Sell Quantity Avg (${formatTimestamp(selectedDate)})`,
+                  value: 'sell_quantity_avg'
+                },
+                {
+                  title: `Buy Sold (${formatTimestamp(selectedDate)})`,
+                  value: 'buy_sold'
+                },
+                {
+                  title: `Buy Price Avg (${formatTimestamp(selectedDate)})`,
+                  value: 'buy_price_avg'
+                },
+                {
+                  title: `Buy Value (${formatTimestamp(selectedDate)})`,
+                  value: 'buy_value'
+                },
+                {
+                  title: `Buy Delisted (${formatTimestamp(selectedDate)})`,
+                  value: 'buy_delisted'
+                },
+                {
+                  title: `Buy Listed (${formatTimestamp(selectedDate)})`,
+                  value: 'buy_listed'
+                },
+                {
+                  title: `Buy Quantity Avg (${formatTimestamp(selectedDate)})`,
+                  value: 'buy_quantity_avg'
+                }
+              ]}
               filename={`${selectedGroup}-${formatTimestamp(selectedDate)}.csv`}
+            />
+            <JSONDownloadButton
+              data={filteredData.map((item) => {
+                const itemData = getDataForTimestamp(item, selectedDate)
+                return {
+                  itemName: item.itemName,
+                  itemID: item.itemID,
+                  ...(itemData || {})
+                }
+              })}
+              filename={`${selectedGroup}-${formatTimestamp(
+                selectedDate
+              )}.json`}
             />
           </div>
         </div>
@@ -243,12 +462,12 @@ export default function ItemDetailsTable({
         </div>
 
         {/* Table */}
-        <FullTable
-          data={filteredAndSortedData}
+        <FullTable<GW2ItemData>
+          data={filteredData}
           columnList={columnList}
-          sortColumn={sortColumn}
-          sortDirection={sortDirection}
-          onSort={handleSort}
+          sortingOrder={[{ id: 'itemName' as keyof GW2ItemData, desc: false }]}
+          globalFilter={searchQuery}
+          setGlobalFilter={setSearchQuery}
         />
       </div>
     </div>
