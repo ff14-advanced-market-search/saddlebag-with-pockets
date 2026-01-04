@@ -26,6 +26,7 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { useState, useEffect } from 'react'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 
 import type { GW2MarketshareItem } from '~/requests/GW2/marketshare'
 
@@ -351,6 +352,7 @@ export default function Index() {
           <InputWithLabel
             name="desired_avg_price"
             labelTitle="Desired Average Price"
+            toolTip="Filters out items that have never had the average price go over this limit."
             type="number"
             step="0.0001"
             defaultValue={loaderData.desired_avg_price / 10000}
@@ -365,6 +367,7 @@ export default function Index() {
           <InputWithLabel
             name="desired_sales_per_day"
             labelTitle="Desired Sales Per Day"
+            toolTip="Filters out items that never sold this much on any day in the date range."
             type="number"
             defaultValue={loaderData.desired_sales_per_day}
             inputTag="Sales"
@@ -378,6 +381,7 @@ export default function Index() {
           <InputWithLabel
             name="desired_value"
             labelTitle="Desired Value"
+            toolTip="Filters out items that where all sales revenue has never exceeded this gold amount."
             type="number"
             step="0.0001"
             defaultValue={loaderData.desired_value / 10000}
@@ -389,35 +393,72 @@ export default function Index() {
               }
             }}
           />
-          <ItemTypeSelect
-            defaultValue={loaderData.type}
-            onChange={(value) => {
-              setSelectedType(value)
-              handleFormChange('type', value.toString())
-              // Reset details_type when type changes
-              if (value === -1) {
-                handleFormChange('details_type', '-1')
-              }
-            }}
-          />
+          <div>
+            <div className="relative flex items-center gap-1 mb-1">
+              <label
+                htmlFor="type"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Type
+              </label>
+              <ToolTip data="Filter items by their main category type (e.g., Armor, Weapon, Consumable)." />
+            </div>
+            <div className="[&_label]:hidden">
+              <ItemTypeSelect
+                defaultValue={loaderData.type}
+                onChange={(value) => {
+                  setSelectedType(value)
+                  handleFormChange('type', value.toString())
+                  // Reset details_type when type changes
+                  if (value === -1) {
+                    handleFormChange('details_type', '-1')
+                  }
+                }}
+              />
+            </div>
+          </div>
           {selectedType !== -1 && (
-            <ItemDetailsTypeSelect
-              itemType={selectedType}
-              defaultValue={loaderData.details_type}
-              onChange={(value) => {
-                handleFormChange('details_type', value.toString())
-              }}
-            />
+            <div>
+              <div className="relative flex items-center gap-1 mb-1">
+                <label
+                  htmlFor="details_type"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                  Details Type
+                </label>
+                <ToolTip data="Filter items by their specific details type or subclass (e.g., Boots, Coat for Armor type). Only available when a specific Type is selected." />
+              </div>
+              <div className="[&_label]:hidden">
+                <ItemDetailsTypeSelect
+                  itemType={selectedType}
+                  defaultValue={loaderData.details_type}
+                  onChange={(value) => {
+                    handleFormChange('details_type', value.toString())
+                  }}
+                />
+              </div>
+            </div>
           )}
-          <ItemRaritySelect
-            defaultValue={loaderData.rarity}
-            onChange={(value) => {
-              handleFormChange('rarity', value.toString())
-            }}
-          />
+          <div>
+            <div className="relative flex items-center gap-1 mb-1">
+              <label
+                htmlFor="rarity"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Rarity
+              </label>
+              <ToolTip data="Filter items to a rarity at or above this level (e.g., Common, Rare, Exotic, Legendary)." />
+            </div>
+            <div className="[&_label]:hidden">
+              <ItemRaritySelect
+                defaultValue={loaderData.rarity}
+                onChange={(value) => {
+                  handleFormChange('rarity', value.toString())
+                }}
+              />
+            </div>
+          </div>
           <InputWithLabel
             name="level"
             labelTitle="Level"
+            toolTip="Filter items by their required level, filters out items that are below this level. Set to 0 to include all levels."
             type="number"
             min={0}
             defaultValue={loaderData.level}
@@ -431,15 +472,27 @@ export default function Index() {
               }
             }}
           />
-          <SortBySelect
-            value={searchParams.sort_by}
-            defaultValue={loaderData.sort_by}
-            onChange={(value) => {
-              if (value !== undefined) {
-                handleFormChange('sort_by', value)
-              }
-            }}
-          />
+          <div>
+            <div className="relative flex items-center gap-1 mb-1">
+              <label
+                htmlFor="sort_by"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Sort Results By
+              </label>
+              <ToolTip data="Choose how to sort the results. Options include value, sales, price changes, various percentage changes, and various quantity changes." />
+            </div>
+            <div className="[&_label]:hidden">
+              <SortBySelect
+                value={searchParams.sort_by}
+                defaultValue={loaderData.sort_by}
+                onChange={(value) => {
+                  if (value !== undefined) {
+                    handleFormChange('sort_by', value)
+                  }
+                }}
+              />
+            </div>
+          </div>
         </div>
       </SmallFormContainer>
       {noResults && <NoResults />}
