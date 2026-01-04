@@ -28,6 +28,13 @@ const recommendedQueries: Array<{
       'Find out what items are actually selling and what are the best items to sell. Shows the top items matching your search.',
     Icon: DocumentSearchIcon,
     href: '/gw2/marketshare/recommended'
+  },
+  {
+    name: 'Weekly Price Group Delta',
+    description:
+      'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
+    Icon: DocumentSearchIcon,
+    href: '/gw2/weekly-price-group-delta-recommended'
   }
 ]
 
@@ -57,13 +64,6 @@ export default function Index() {
                 href="/gw2/marketshare/recommended"
                 className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
                 Marketshare Overview
-              </a>
-            </div>
-            <div className="mt-8 flex justify-center space-x-4">
-              <a
-                href="/gw2/weekly-price-group-delta-recommended"
-                className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
-                Weekly Price Group Delta
               </a>
             </div>
           </div>
