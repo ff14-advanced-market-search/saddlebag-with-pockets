@@ -23,6 +23,13 @@ const recommendedQueries: Array<{
   external?: boolean
 }> = [
   {
+    name: 'Detailed Item Data',
+    description:
+      'View detailed data for an item on the Trading Post. Includes price history charts, current buy and sell orders, and more.',
+    Icon: DocumentSearchIcon,
+    href: '/gw2/item-data-detailed'
+  },
+  {
     name: 'Marketshare Overview',
     description:
       'Find out what items are actually selling and what are the best items to sell. Shows the top items matching your search.',
