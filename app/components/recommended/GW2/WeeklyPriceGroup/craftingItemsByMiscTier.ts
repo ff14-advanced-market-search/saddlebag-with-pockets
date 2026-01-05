@@ -22,7 +22,7 @@ const craftingItemsByMiscTier = {
         types: []
       },
       {
-        name: 'Misc.',
+        name: 'Misc',
         item_ids: [
           19717, 24366, 24370, 37907, 43773, 68063, 70647, 71473, 74763, 75762,
           76146, 76453, 77651, 73834, 62942, 74090, 75075, 75241, 76839, 77256,
@@ -31,7 +31,7 @@ const craftingItemsByMiscTier = {
         types: []
       },
       {
-        name: 'Seasons 1 & 2',
+        name: 'Seasons 1 and 2',
         item_ids: [
           37897, 43772, 44941, 46682, 48884, 49782, 50025, 66637, 66650, 66766,
           66902, 67832, 71641
@@ -148,7 +148,7 @@ const craftingItemsByMiscTier = {
         types: []
       },
       {
-        name: 'Symbols & Charms',
+        name: 'Symbols and Charms',
         item_ids: [89098, 89103, 89141, 89182, 89216, 89258],
         types: []
       },
