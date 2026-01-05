@@ -65,6 +65,7 @@ export const loader: LoaderFunction = () => {
   Disallow: /wow/weekly-price-group-delta-recommended
   Disallow: /gw2/marketshare
   Disallow: /gw2/weekly-price-group-delta-recommended
+  Disallow: /gw2/item-data-detailed
 
   Disallow: /discord-callback
   Disallow: /discord-disconnect
