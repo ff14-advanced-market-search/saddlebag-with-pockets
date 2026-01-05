@@ -574,44 +574,42 @@ export default function ItemDataDisplay({
                 </div>
               </div>
             )}
-            {filteredData.length > 0 && (
-              <>
-                {!isDetailed &&
-                (timeScale === 'day' ||
-                  timeScale === 'week' ||
-                  timeScale === '6week') ? (
-                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 my-8">
-                    <div className="flex flex-col items-center text-center space-y-4">
-                      <h3 className="text-lg font-semibold text-yellow-800 dark:text-yellow-200">
-                        Limited Data Available
-                      </h3>
-                      <p className="text-yellow-700 dark:text-yellow-300 max-w-2xl">
-                        Data for{' '}
-                        {timeScale === 'day'
-                          ? 'daily'
-                          : timeScale === 'week'
-                          ? 'weekly'
-                          : '6-week'}{' '}
-                        views is limited on this page because it is crawled by
-                        Google indexers. For more full historical data, please
-                        use the detailed item search page.
-                      </p>
-                      <a
-                        href="/gw2/item-data-detailed"
-                        className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg shadow-md transition-colors">
-                        Go to Detailed Item Search Page
-                      </a>
-                    </div>
-                  </div>
-                ) : (
-                  <GW2SynchronizedCharts
-                    ref={chartsRef}
-                    timeData={filteredData}
-                    darkmode={darkmode}
-                    itemName={listing.itemName}
-                  />
-                )}
-              </>
+            {!isDetailed &&
+            (timeScale === 'day' ||
+              timeScale === 'week' ||
+              timeScale === '6week') ? (
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 my-8">
+                <div className="flex flex-col items-center text-center space-y-4">
+                  <h3 className="text-lg font-semibold text-yellow-800 dark:text-yellow-200">
+                    Limited Data Available
+                  </h3>
+                  <p className="text-yellow-700 dark:text-yellow-300 max-w-2xl">
+                    Data for{' '}
+                    {timeScale === 'day'
+                      ? 'daily'
+                      : timeScale === 'week'
+                      ? 'weekly'
+                      : '6-week'}{' '}
+                    views is limited on this page because it is crawled by
+                    Google indexers. For more full historical data, please use
+                    the detailed item search page.
+                  </p>
+                  <a
+                    href="/gw2/item-data-detailed"
+                    className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg shadow-md transition-colors">
+                    Go to Detailed Item Search Page
+                  </a>
+                </div>
+              </div>
+            ) : (
+              filteredData.length > 0 && (
+                <GW2SynchronizedCharts
+                  ref={chartsRef}
+                  timeData={filteredData}
+                  darkmode={darkmode}
+                  itemName={listing.itemName}
+                />
+              )
             )}
           </div>
         </ContentContainer>
