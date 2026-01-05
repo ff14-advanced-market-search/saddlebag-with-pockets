@@ -1,14 +1,17 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
-import { json } from '@remix-run/cloudflare'
-import { useLoaderData } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import type {
   ItemListingResponse,
   TimeDataPoint
-} from '~/requests/GW2/ItemListingsData'
-import ItemListingsData from '~/requests/GW2/ItemListingsData'
+} from '~/requests/GW2/ItemListingsDetailedData'
+import ItemListingsDetailedData from '~/requests/GW2/ItemListingsDetailedData'
+import ItemSelect, { type ItemSelected } from '~/components/Common/ItemSelect'
+import { gw2Items } from '~/utils/items/id_to_item'
+import { useActionData, useNavigation } from '@remix-run/react'
+import type { ActionFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
+import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import Banner from '~/components/Common/Banner'
@@ -985,48 +988,44 @@ const GW2SynchronizedCharts = forwardRef<
 
 export const ErrorBoundary = () => <ErrorBounds />
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  if ('exception' in data) {
-    return {
-      charset: 'utf-8',
-      viewport: 'width=device-width,initial-scale=1',
-      title: 'Error',
-      description: `Error: ${data.exception}`
-    }
-  } else {
-    return {
-      charset: 'utf-8',
-      viewport: 'width=device-width,initial-scale=1',
-      title: data.data.itemName,
-      description: `Guild Wars 2 trading post data for ${data.data.itemName}`,
-      links: [
-        {
-          rel: 'canonical',
-          href: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
-        }
-      ]
-    }
+const validateInput = ({
+  itemId
+}: {
+  itemId?: FormDataEntryValue | null
+}): { itemID: number } | { exception: string } => {
+  if (itemId === undefined || itemId === null) {
+    return { exception: 'Item not found' }
   }
+
+  if (typeof itemId !== 'string') {
+    return { exception: 'Invalid item' }
+  }
+
+  const parsedItemId = Number.parseInt(itemId)
+
+  if (isNaN(parsedItemId)) return { exception: 'Invalid item' }
+
+  return { itemID: parsedItemId }
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const itemId = params.itemId
-  if (!itemId) {
-    return json({ exception: 'No item found, please try again' })
-  }
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData()
 
-  const parsedItemId = parseInt(itemId)
-  if (isNaN(parsedItemId)) {
-    return json({ exception: 'Invalid item' })
+  const validInput = validateInput({
+    itemId: formData.get('itemId')
+  })
+
+  if ('exception' in validInput) {
+    return json(validInput)
   }
 
   try {
-    const response = await ItemListingsData({
-      itemID: parsedItemId
-    })
+    const response = await ItemListingsDetailedData(validInput)
 
     if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`)
+      throw new Error(
+        `API request failed with status ${response.status} ${response.statusText}`
+      )
     }
 
     const data = await response.json()
@@ -1042,7 +1041,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   }
 }
 
-type ResponseType = ItemListingResponse | { exception: string }
+type ResponseType = ItemListingResponse | { exception: string } | undefined
 
 type BuyOrderItem = {
   unit_price: number
@@ -1089,15 +1088,45 @@ const sellColumnList: Array<ColumnList<SellOrderItem>> = [
 type TimeScale = 'day' | 'week' | '6week' | '3month' | 'year' | 'max'
 
 export default function Index() {
-  const result = useLoaderData<ResponseType>()
   const { darkmode } = useTypedSelector((state) => state.user)
+  const transition = useNavigation()
+  const result = useActionData<ResponseType>()
+  const [formState, setFormState] = useState<ItemSelected | undefined>()
+  const [error, setError] = useState<string | undefined>()
   const [showExtraData, setShowExtraData] = useState(false)
   const [timeScale, setTimeScale] = useState<TimeScale>('max')
   const [startDate, setStartDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
   const chartsRef = useRef<GW2ChartsRef>(null)
 
-  const listing = 'data' in result ? result.data : undefined
+  useEffect(() => {
+    if (result && 'exception' in result) {
+      setError(`Server Error: ${result.exception}`)
+    } else if (result && 'data' in result) {
+      setError(undefined)
+    }
+  }, [result])
+
+  const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (transition.state === 'submitting' || !formState) {
+      e.preventDefault()
+      return
+    }
+  }
+
+  const handleFormChange = (selectValue?: ItemSelected | undefined) => {
+    if (error) {
+      setError(undefined)
+    }
+    setFormState(selectValue)
+  }
+
+  const handleTextChange = () => {
+    setError(undefined)
+  }
+
+  const listing = result && 'data' in result ? result.data : undefined
+  const loading = transition.state === 'submitting'
 
   // Filter data based on selected time scale
   const timeScaleFilteredData = useMemo((): TimeDataPoint[] => {
@@ -1187,503 +1216,528 @@ export default function Index() {
     })
   }, [timeScaleFilteredData, startDate, endDate])
 
-  const error = result && 'exception' in result ? result.exception : undefined
+  return (
+    <PageWrapper>
+      <Title title="GW2 Detailed Item Data" />
+      <Banner />
 
-  if (error) {
-    return (
-      <PageWrapper>
-        <h2 className="text-red-800 dark:text-red-200">Error: {error}</h2>
-      </PageWrapper>
-    )
-  }
-
-  if (!Object.keys(result).length) {
-    return <NoResults />
-  }
-
-  if (listing) {
-    // Calculate minimum sell price and maximum buy price from arrays
-    const minSellPrice =
-      listing.sells.length > 0
-        ? Math.min(...listing.sells.map((sell) => sell.unit_price))
-        : 0
-    const maxBuyPrice =
-      listing.buys.length > 0
-        ? Math.max(...listing.buys.map((buy) => buy.unit_price))
-        : 0
-
-    return (
-      <PageWrapper>
-        <Title title={listing.itemName} />
-        <p style={{ fontSize: '1px' }}>{listing.blog}</p>
-        <Banner />
-        <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
-          <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Average Price"
-              diffAmount={listing.price_average.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 4
-              })}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+      {/* Search Form */}
+      <ContentContainer>
+        <div className="mb-6">
+          <SmallFormContainer
+            title="Get Item Listing Details"
+            onClick={onSubmit}
+            loading={loading}
+            disabled={!formState || !formState.id}
+            error={error}>
+            <ItemSelect
+              onSelectChange={handleFormChange}
+              onTextChange={handleTextChange}
+              itemList={gw2Items}
+              tooltip="Search for a Guild Wars 2 item to view detailed trading post data"
             />
-            <Differences
-              diffTitle="Total Value"
-              diffAmount={listing.value.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Total Sold"
-              diffAmount={listing.sold.toLocaleString()}
-              className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
-            />
-          </div>
-          <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Current Sell Price"
-              diffAmount={minSellPrice.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 4
-              })}
-              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Sell Price Avg"
-              diffAmount={listing.sell_price_avg.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 4
-              })}
-              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Sell Orders Sold"
-              diffAmount={listing.sell_sold.toLocaleString()}
-              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Sell Value"
-              diffAmount={listing.sell_value.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })}
-              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-            />
-          </div>
-          <div className="flex flex-col max-w-full">
-            <Differences
-              diffTitle="Current Buy Price"
-              diffAmount={maxBuyPrice.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 4
-              })}
-              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Buy Price Avg"
-              diffAmount={listing.buy_price_avg.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 4
-              })}
-              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Buy Orders Sold"
-              diffAmount={listing.buy_sold.toLocaleString()}
-              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-            />
-            <Differences
-              diffTitle="Buy Value"
-              diffAmount={listing.buy_value.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })}
-              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-            />
-          </div>
+          </SmallFormContainer>
         </div>
+      </ContentContainer>
 
-        {/* Extra Data Section */}
-        {listing.extraData && (
-          <ContentContainer>
-            <div>
-              <div className="mb-4 flex flex-row justify-center items-center gap-2 flex-wrap">
-                <a
-                  href="https://www.datawars2.ie/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md text-sm flex items-center"
-                  aria-label="Visit Datawars2">
-                  Data provided by{' '}
-                  <span className="underline ml-1">datawars2.ie</span>
-                </a>
-                <a
-                  href={`https://wiki.guildwars2.com/wiki/${listing.itemName
-                    .replace(/\s+/g, '_')
-                    .replace(/'/g, '%27')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium"
-                  aria-label="View on GW2 Wiki">
-                  View on GW2 Wiki
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setShowExtraData(!showExtraData)}
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium">
-                  {showExtraData ? 'Hide' : 'Show'} Extra Statistics
-                </button>
-              </div>
-              {showExtraData && (
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
-                      Sell Statistics
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <Differences
-                        diffTitle="Sell Delisted"
-                        diffAmount={listing.extraData.sell_delisted.toLocaleString()}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Listed"
-                        diffAmount={listing.extraData.sell_listed.toLocaleString()}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Price Max"
-                        diffAmount={listing.extraData.sell_price_max.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 4
-                          }
-                        )}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Price Min"
-                        diffAmount={listing.extraData.sell_price_min.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 4
-                          }
-                        )}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Price StDev"
-                        diffAmount={listing.extraData.sell_price_stdev.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                          }
-                        )}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Quantity Avg"
-                        diffAmount={listing.extraData.sell_quantity_avg.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                          }
-                        )}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Quantity Max"
-                        diffAmount={listing.extraData.sell_quantity_max.toLocaleString()}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Quantity Min"
-                        diffAmount={listing.extraData.sell_quantity_min.toLocaleString()}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Sell Quantity StDev"
-                        diffAmount={listing.extraData.sell_quantity_stdev.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                          }
-                        )}
-                        className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
-                      Buy Statistics
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <Differences
-                        diffTitle="Buy Delisted"
-                        diffAmount={listing.extraData.buy_delisted.toLocaleString()}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Listed"
-                        diffAmount={listing.extraData.buy_listed.toLocaleString()}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Price Max"
-                        diffAmount={listing.extraData.buy_price_max.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 4
-                          }
-                        )}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Price Min"
-                        diffAmount={listing.extraData.buy_price_min.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 4
-                          }
-                        )}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Price StDev"
-                        diffAmount={listing.extraData.buy_price_stdev.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                          }
-                        )}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Quantity Avg"
-                        diffAmount={listing.extraData.buy_quantity_avg.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                          }
-                        )}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Quantity Max"
-                        diffAmount={listing.extraData.buy_quantity_max.toLocaleString()}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Quantity Min"
-                        diffAmount={listing.extraData.buy_quantity_min.toLocaleString()}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                      <Differences
-                        diffTitle="Buy Quantity StDev"
-                        diffAmount={listing.extraData.buy_quantity_stdev.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                          }
-                        )}
-                        className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Differences
-                      diffTitle="Data Points Count"
-                      diffAmount={listing.extraData.count.toLocaleString()}
-                      className="bg-gray-100 text-gray-900 font-semibold dark:bg-gray-600 dark:text-gray-100"
-                    />
-                  </div>
+      {/* Item Data Display */}
+      {listing &&
+        !loading &&
+        (() => {
+          // Calculate minimum sell price and maximum buy price from arrays
+          const minSellPrice =
+            listing.sells.length > 0
+              ? Math.min(...listing.sells.map((sell) => sell.unit_price))
+              : 0
+          const maxBuyPrice =
+            listing.buys.length > 0
+              ? Math.max(...listing.buys.map((buy) => buy.unit_price))
+              : 0
+
+          return (
+            <>
+              <Title title={listing.itemName} />
+              <p style={{ fontSize: '1px' }}>{listing.blog}</p>
+              <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
+                <div className="flex flex-col max-w-full">
+                  <Differences
+                    diffTitle="Average Price"
+                    diffAmount={listing.price_average.toLocaleString(
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 4
+                      }
+                    )}
+                    className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Total Value"
+                    diffAmount={listing.value.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
+                    className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Total Sold"
+                    diffAmount={listing.sold.toLocaleString()}
+                    className="bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100"
+                  />
                 </div>
-              )}
-            </div>
-          </ContentContainer>
-        )}
-
-        {/* Synchronized Charts */}
-        {(listing.timeData.length > 0 ||
-          (listing.dailyData && listing.dailyData.length > 0)) && (
-          <ContentContainer>
-            <div>
-              {/* Time Scale Buttons */}
-              <div className="mb-4 flex flex-wrap gap-2 justify-center">
-                {(
-                  [
-                    'day',
-                    'week',
-                    '6week',
-                    '3month',
-                    'year',
-                    'max'
-                  ] as TimeScale[]
-                ).map((scale) => (
-                  <button
-                    key={scale}
-                    type="button"
-                    onClick={() => setTimeScale(scale)}
-                    className={`px-4 py-2 rounded-lg shadow-md text-sm font-medium transition-colors ${
-                      timeScale === scale
-                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                        : 'bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200'
-                    }`}>
-                    {scale === '3month'
-                      ? '3 Month'
-                      : scale === '6week'
-                      ? '6 Week'
-                      : scale.charAt(0).toUpperCase() + scale.slice(1)}
-                  </button>
-                ))}
+                <div className="flex flex-col max-w-full">
+                  <Differences
+                    diffTitle="Current Sell Price"
+                    diffAmount={minSellPrice.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 4
+                    })}
+                    className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Sell Price Avg"
+                    diffAmount={listing.sell_price_avg.toLocaleString(
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 4
+                      }
+                    )}
+                    className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Sell Orders Sold"
+                    diffAmount={listing.sell_sold.toLocaleString()}
+                    className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Sell Value"
+                    diffAmount={listing.sell_value.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
+                    className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                  />
+                </div>
+                <div className="flex flex-col max-w-full">
+                  <Differences
+                    diffTitle="Current Buy Price"
+                    diffAmount={maxBuyPrice.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 4
+                    })}
+                    className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Buy Price Avg"
+                    diffAmount={listing.buy_price_avg.toLocaleString(
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 4
+                      }
+                    )}
+                    className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Buy Orders Sold"
+                    diffAmount={listing.buy_sold.toLocaleString()}
+                    className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                  />
+                  <Differences
+                    diffTitle="Buy Value"
+                    diffAmount={listing.buy_value.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
+                    className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                  />
+                </div>
               </div>
-              {/* Date Range Controls */}
-              {minDate && maxDate && (
-                <div className="mb-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-                  <div className="flex flex-wrap justify-center items-end gap-4">
-                    <div>
-                      <label
-                        htmlFor="startDate"
-                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
-                        Start Date
-                      </label>
-                      <input
-                        type="date"
-                        id="startDate"
-                        min={format(minDate, 'yyyy-MM-dd')}
-                        max={format(endDate || maxDate, 'yyyy-MM-dd')}
-                        value={startDate ? format(startDate, 'yyyy-MM-dd') : ''}
-                        onChange={(e) => {
-                          if (e.target.value) {
-                            const newStart = new Date(e.target.value)
-                            setStartDate(newStart)
-                            // Ensure end date is not before start date
-                            if (endDate && newStart > endDate) {
-                              setEndDate(newStart)
-                            }
-                          } else {
-                            setStartDate(null)
-                          }
-                        }}
-                        className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="endDate"
-                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
-                        End Date
-                      </label>
-                      <input
-                        type="date"
-                        id="endDate"
-                        min={format(startDate || minDate, 'yyyy-MM-dd')}
-                        max={format(maxDate, 'yyyy-MM-dd')}
-                        value={endDate ? format(endDate, 'yyyy-MM-dd') : ''}
-                        onChange={(e) => {
-                          if (e.target.value) {
-                            const newEnd = new Date(e.target.value)
-                            setEndDate(newEnd)
-                            // Ensure start date is not after end date
-                            if (startDate && newEnd < startDate) {
-                              setStartDate(newEnd)
-                            }
-                          } else {
-                            setEndDate(null)
-                          }
-                        }}
-                        className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="resetZoom"
-                        className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
-                        Reset Date Range
-                      </label>
+
+              {/* Extra Data Section */}
+              {listing.extraData && (
+                <ContentContainer>
+                  <div>
+                    <div className="mb-4 flex flex-row justify-center items-center gap-2 flex-wrap">
+                      <a
+                        href="https://www.datawars2.ie/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md text-sm flex items-center"
+                        aria-label="Visit Datawars2">
+                        Data provided by{' '}
+                        <span className="underline ml-1">datawars2.ie</span>
+                      </a>
+                      <a
+                        href={`https://wiki.guildwars2.com/wiki/${listing.itemName
+                          .replace(/\s+/g, '_')
+                          .replace(/'/g, '%27')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium"
+                        aria-label="View on GW2 Wiki">
+                        View on GW2 Wiki
+                      </a>
                       <button
-                        id="resetZoom"
                         type="button"
-                        onClick={() => {
-                          if (minDate && maxDate) {
-                            setStartDate(minDate)
-                            setEndDate(maxDate)
-                            // Also reset chart zoom when resetting date range
-                            chartsRef.current?.resetZoom()
-                          }
-                        }}
-                        className="w-48 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium">
-                        Reset Date Range
+                        onClick={() => setShowExtraData(!showExtraData)}
+                        className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md text-sm font-medium">
+                        {showExtraData ? 'Hide' : 'Show'} Extra Statistics
                       </button>
                     </div>
+                    {showExtraData && (
+                      <div className="space-y-4">
+                        <div>
+                          <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                            Sell Statistics
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <Differences
+                              diffTitle="Sell Delisted"
+                              diffAmount={listing.extraData.sell_delisted.toLocaleString()}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Listed"
+                              diffAmount={listing.extraData.sell_listed.toLocaleString()}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Price Max"
+                              diffAmount={listing.extraData.sell_price_max.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 4
+                                }
+                              )}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Price Min"
+                              diffAmount={listing.extraData.sell_price_min.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 4
+                                }
+                              )}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Price StDev"
+                              diffAmount={listing.extraData.sell_price_stdev.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                }
+                              )}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Quantity Avg"
+                              diffAmount={listing.extraData.sell_quantity_avg.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                }
+                              )}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Quantity Max"
+                              diffAmount={listing.extraData.sell_quantity_max.toLocaleString()}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Quantity Min"
+                              diffAmount={listing.extraData.sell_quantity_min.toLocaleString()}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Sell Quantity StDev"
+                              diffAmount={listing.extraData.sell_quantity_stdev.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                }
+                              )}
+                              className="bg-green-100 text-green-900 font-semibold dark:bg-green-600 dark:text-gray-100"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                            Buy Statistics
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <Differences
+                              diffTitle="Buy Delisted"
+                              diffAmount={listing.extraData.buy_delisted.toLocaleString()}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Listed"
+                              diffAmount={listing.extraData.buy_listed.toLocaleString()}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Price Max"
+                              diffAmount={listing.extraData.buy_price_max.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 4
+                                }
+                              )}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Price Min"
+                              diffAmount={listing.extraData.buy_price_min.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 4
+                                }
+                              )}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Price StDev"
+                              diffAmount={listing.extraData.buy_price_stdev.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                }
+                              )}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Quantity Avg"
+                              diffAmount={listing.extraData.buy_quantity_avg.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                }
+                              )}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Quantity Max"
+                              diffAmount={listing.extraData.buy_quantity_max.toLocaleString()}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Quantity Min"
+                              diffAmount={listing.extraData.buy_quantity_min.toLocaleString()}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                            <Differences
+                              diffTitle="Buy Quantity StDev"
+                              diffAmount={listing.extraData.buy_quantity_stdev.toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                }
+                              )}
+                              className="bg-orange-100 text-orange-900 font-semibold dark:bg-orange-600 dark:text-gray-100"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <Differences
+                            diffTitle="Data Points Count"
+                            diffAmount={listing.extraData.count.toLocaleString()}
+                            className="bg-gray-100 text-gray-900 font-semibold dark:bg-gray-600 dark:text-gray-100"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
+                </ContentContainer>
+              )}
+
+              {/* Synchronized Charts */}
+              {(listing.timeData.length > 0 ||
+                (listing.dailyData && listing.dailyData.length > 0)) && (
+                <ContentContainer>
+                  <div>
+                    {/* Time Scale Buttons */}
+                    <div className="mb-4 flex flex-wrap gap-2 justify-center">
+                      {(
+                        [
+                          'day',
+                          'week',
+                          '6week',
+                          '3month',
+                          'year',
+                          'max'
+                        ] as TimeScale[]
+                      ).map((scale) => (
+                        <button
+                          key={scale}
+                          type="button"
+                          onClick={() => setTimeScale(scale)}
+                          className={`px-4 py-2 rounded-lg shadow-md text-sm font-medium transition-colors ${
+                            timeScale === scale
+                              ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                              : 'bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200'
+                          }`}>
+                          {scale === '3month'
+                            ? '3 Month'
+                            : scale === '6week'
+                            ? '6 Week'
+                            : scale.charAt(0).toUpperCase() + scale.slice(1)}
+                        </button>
+                      ))}
+                    </div>
+                    {/* Date Range Controls */}
+                    {minDate && maxDate && (
+                      <div className="mb-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                        <div className="flex flex-wrap justify-center items-end gap-4">
+                          <div>
+                            <label
+                              htmlFor="startDate"
+                              className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                              Start Date
+                            </label>
+                            <input
+                              type="date"
+                              id="startDate"
+                              min={format(minDate, 'yyyy-MM-dd')}
+                              max={format(endDate || maxDate, 'yyyy-MM-dd')}
+                              value={
+                                startDate ? format(startDate, 'yyyy-MM-dd') : ''
+                              }
+                              onChange={(e) => {
+                                if (e.target.value) {
+                                  const newStart = new Date(e.target.value)
+                                  setStartDate(newStart)
+                                  // Ensure end date is not before start date
+                                  if (endDate && newStart > endDate) {
+                                    setEndDate(newStart)
+                                  }
+                                } else {
+                                  setStartDate(null)
+                                }
+                              }}
+                              className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label
+                              htmlFor="endDate"
+                              className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                              End Date
+                            </label>
+                            <input
+                              type="date"
+                              id="endDate"
+                              min={format(startDate || minDate, 'yyyy-MM-dd')}
+                              max={format(maxDate, 'yyyy-MM-dd')}
+                              value={
+                                endDate ? format(endDate, 'yyyy-MM-dd') : ''
+                              }
+                              onChange={(e) => {
+                                if (e.target.value) {
+                                  const newEnd = new Date(e.target.value)
+                                  setEndDate(newEnd)
+                                  // Ensure start date is not after end date
+                                  if (startDate && newEnd < startDate) {
+                                    setStartDate(newEnd)
+                                  }
+                                } else {
+                                  setEndDate(null)
+                                }
+                              }}
+                              className="w-48 p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label
+                              htmlFor="resetZoom"
+                              className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                              Reset Date Range
+                            </label>
+                            <button
+                              id="resetZoom"
+                              type="button"
+                              onClick={() => {
+                                if (minDate && maxDate) {
+                                  setStartDate(minDate)
+                                  setEndDate(maxDate)
+                                  // Also reset chart zoom when resetting date range
+                                  chartsRef.current?.resetZoom()
+                                }
+                              }}
+                              className="w-48 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium">
+                              Reset Date Range
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {filteredData.length > 0 && (
+                      <GW2SynchronizedCharts
+                        ref={chartsRef}
+                        timeData={filteredData}
+                        darkmode={darkmode}
+                        itemName={listing.itemName}
+                      />
+                    )}
+                  </div>
+                </ContentContainer>
+              )}
+
+              {/* Orders Tables - Side by Side */}
+              <div className="flex flex-col lg:flex-row gap-4 my-8">
+                {/* Sell Orders Table */}
+                <div className="flex-1">
+                  {listing.sells.length === 0 ? (
+                    <div className="text-center text-xl font-bold text-red-700 dark:text-red-300">
+                      No Sell Orders Available
+                    </div>
+                  ) : (
+                    <SmallTable
+                      title={`${listing.itemName} : Sell Orders`}
+                      sortingOrder={[{ desc: false, id: 'unit_price' }]}
+                      columnList={sellColumnList}
+                      mobileColumnList={sellColumnList}
+                      columnSelectOptions={['unit_price', 'quantity']}
+                      data={listing.sells as any}
+                    />
+                  )}
                 </div>
-              )}
-              {filteredData.length > 0 && (
-                <GW2SynchronizedCharts
-                  ref={chartsRef}
-                  timeData={filteredData}
-                  darkmode={darkmode}
-                  itemName={listing.itemName}
-                />
-              )}
-            </div>
-          </ContentContainer>
-        )}
 
-        {/* Orders Tables - Side by Side */}
-        <div className="flex flex-col lg:flex-row gap-4 my-8">
-          {/* Sell Orders Table */}
-          <div className="flex-1">
-            {listing.sells.length === 0 ? (
-              <div className="text-center text-xl font-bold text-red-700 dark:text-red-300">
-                No Sell Orders Available
+                {/* Buy Orders Table */}
+                <div className="flex-1">
+                  {listing.buys.length === 0 ? (
+                    <div className="text-center text-xl font-bold text-red-700 dark:text-red-300">
+                      No Buy Orders Available
+                    </div>
+                  ) : (
+                    <SmallTable
+                      title={`${listing.itemName} : Buy Orders`}
+                      sortingOrder={[{ desc: true, id: 'unit_price' }]}
+                      columnList={buyColumnList}
+                      mobileColumnList={buyColumnList}
+                      columnSelectOptions={['unit_price', 'quantity']}
+                      data={listing.buys as any}
+                    />
+                  )}
+                </div>
               </div>
-            ) : (
-              <SmallTable
-                title={`${listing.itemName} : Sell Orders`}
-                sortingOrder={[{ desc: false, id: 'unit_price' }]}
-                columnList={sellColumnList}
-                mobileColumnList={sellColumnList}
-                columnSelectOptions={['unit_price', 'quantity']}
-                data={listing.sells}
-              />
-            )}
-          </div>
-
-          {/* Buy Orders Table */}
-          <div className="flex-1">
-            {listing.buys.length === 0 ? (
-              <div className="text-center text-xl font-bold text-red-700 dark:text-red-300">
-                No Buy Orders Available
-              </div>
-            ) : (
-              <SmallTable
-                title={`${listing.itemName} : Buy Orders`}
-                sortingOrder={[{ desc: true, id: 'unit_price' }]}
-                columnList={buyColumnList}
-                mobileColumnList={buyColumnList}
-                columnSelectOptions={['unit_price', 'quantity']}
-                data={listing.buys}
-              />
-            )}
-          </div>
-        </div>
-      </PageWrapper>
-    )
-  }
-
-  return <NoResults />
+            </>
+          )
+        })()}
+    </PageWrapper>
+  )
 }
