@@ -1,6 +1,7 @@
 import type { MetaFunction } from '@remix-run/cloudflare'
 import { Link } from '@remix-run/react'
 import Banner from '~/components/Common/Banner'
+import recommendedConfigs from '~/components/recommended/GW2/WeeklyPriceGroup'
 
 type RecommendedConfig = {
   name: string
@@ -22,9 +23,6 @@ type RecommendedConfig = {
     }>
   }
 }
-
-// TODO: Add recommended configurations here
-const recommendedConfigs: RecommendedConfig[] = []
 
 export const meta: MetaFunction = () => {
   return {
