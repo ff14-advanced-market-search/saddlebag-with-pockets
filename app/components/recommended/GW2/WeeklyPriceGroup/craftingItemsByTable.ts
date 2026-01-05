@@ -9,9 +9,9 @@ const craftingItemsByTable = {
     end_year: 2026,
     end_month: 1,
     end_day: 1,
-    minimum_value: 10,
+    minimum_value: 0,
     minimum_sales: 10,
-    minimum_average_price: 10,
+    minimum_average_price: 0,
     price_groups: [
       {
         name: 'Intermediate Crafting Materials',
