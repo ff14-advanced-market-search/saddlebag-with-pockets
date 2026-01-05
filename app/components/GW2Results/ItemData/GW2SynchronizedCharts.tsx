@@ -135,9 +135,9 @@ const GW2SynchronizedCharts = forwardRef<
   useImperativeHandle(ref, () => ({
     resetZoom: () => {
       chartRefs.current.forEach((chartRef) => {
-        if (chartRef && chartRef.chart) {
+        if (chartRef) {
           // Reset Date Range by setting extremes to null
-          chartRef.chart.xAxis[0].setExtremes(null, null)
+          chartRef.xAxis[0].setExtremes(null, null)
         }
       })
     }
@@ -210,20 +210,18 @@ const GW2SynchronizedCharts = forwardRef<
   // Synchronize hover across all charts
   const syncCharts = (chartIndex: number, pointIndex: number) => {
     chartRefs.current.forEach((chart, idx) => {
-      if (chart && chart.chart && idx !== chartIndex) {
+      if (chart && idx !== chartIndex) {
         // Trigger hover on all series in the other charts
-        chart.chart.series.forEach((series: any) => {
+        chart.series.forEach((series: any) => {
           const point = series.data[pointIndex]
           if (point && point.setState) {
             point.setState('hover')
           }
         })
         // Update tooltip position
-        if (chart.chart.tooltip) {
-          chart.chart.tooltip.refresh(
-            chart.chart.series
-              .map((s: any) => s.data[pointIndex])
-              .filter(Boolean)
+        if (chart.tooltip) {
+          chart.tooltip.refresh(
+            chart.series.map((s: any) => s.data[pointIndex]).filter(Boolean)
           )
         }
       }

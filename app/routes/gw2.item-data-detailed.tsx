@@ -120,6 +120,9 @@ export default function Index() {
             loading={loading}
             disabled={!formState || !formState.id}
             error={error}>
+            {formState?.id && (
+              <input type="hidden" name="itemId" value={formState.id} />
+            )}
             <ItemSelect
               onSelectChange={handleFormChange}
               onTextChange={handleTextChange}
