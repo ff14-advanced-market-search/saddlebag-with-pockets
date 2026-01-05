@@ -132,7 +132,11 @@ export default function Index() {
 
       {/* Item Data Display */}
       {listing && !loading && (
-        <ItemDataDisplay listing={listing} darkmode={darkmode} />
+        <ItemDataDisplay
+          listing={listing}
+          darkmode={darkmode}
+          isDetailed={true}
+        />
       )}
     </PageWrapper>
   )

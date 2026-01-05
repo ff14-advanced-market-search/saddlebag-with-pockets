@@ -95,7 +95,11 @@ export default function Index() {
     return (
       <PageWrapper>
         <Banner />
-        <ItemDataDisplay listing={listing} darkmode={darkmode} />
+        <ItemDataDisplay
+          listing={listing}
+          darkmode={darkmode}
+          isDetailed={false}
+        />
       </PageWrapper>
     )
   }
