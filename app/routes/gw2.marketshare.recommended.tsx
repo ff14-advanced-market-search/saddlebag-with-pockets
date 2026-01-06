@@ -49,6 +49,19 @@ const recommendedQueries = [
     href: searchParams.sold
   },
   {
+    name: 'Price Percent Change',
+    description:
+      'Find items with the largest price changes - great for identifying price spikes!',
+    Icon: DocumentSearchIcon,
+    href: searchParams.pricePercentChange
+  },
+  {
+    name: 'Expensive Items',
+    description: 'Find items with high average prices (1000+ gold).',
+    Icon: DocumentSearchIcon,
+    href: searchParams.priceAverage
+  },
+  {
     name: 'Sell Quantity Percent Change',
     description:
       'Find items with the largest changes in sell quantity - identify potential shortages!',
@@ -61,19 +74,6 @@ const recommendedQueries = [
       'See items with the largest changes in buy quantity - track demand shifts!',
     Icon: DocumentSearchIcon,
     href: searchParams.buyQuantityPercentChange
-  },
-  {
-    name: 'Expensive Items',
-    description: 'Find items with high average prices (1000+ gold).',
-    Icon: DocumentSearchIcon,
-    href: searchParams.priceAverage
-  },
-  {
-    name: 'Price Percent Change',
-    description:
-      'Find items with the largest price changes - great for identifying price spikes!',
-    Icon: DocumentSearchIcon,
-    href: searchParams.pricePercentChange
   },
   {
     name: 'Sold Percent Change',
