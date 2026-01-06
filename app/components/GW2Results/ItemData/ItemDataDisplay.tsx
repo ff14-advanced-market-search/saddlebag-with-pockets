@@ -167,7 +167,12 @@ export default function ItemDataDisplay({
 
   return (
     <>
-      <Title title={listing.itemName} />
+      <div className="flex flex-col items-center mb-2">
+        <Title title={listing.itemName} />
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Item ID: {listing.itemID}
+        </p>
+      </div>
       <p style={{ fontSize: '1px' }}>{listing.blog}</p>
       <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
         <div className="flex flex-col max-w-full">
@@ -592,9 +597,9 @@ export default function ItemDataDisplay({
                       : timeScale === 'week'
                       ? 'weekly'
                       : '6-week'}{' '}
-                    views is limited on this page because it is crawled by
-                    Google indexers. For more full historical data, please use
-                    the detailed item search page.
+                    views is limited on this page because bots abuse it. For
+                    more full historical data, please use the detailed item
+                    search page which is protected by an anti-bot search.
                   </p>
                   <a
                     href="/gw2/item-data-detailed"
