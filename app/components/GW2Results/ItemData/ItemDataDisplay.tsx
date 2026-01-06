@@ -159,7 +159,9 @@ export default function ItemDataDisplay({
     const startDateStr = format(startDate, 'yyyy-MM-dd')
     const endDateStr = format(endDate, 'yyyy-MM-dd')
     return timeScaleFilteredData.filter((point) => {
-      return point.date >= startDateStr && point.date <= endDateStr
+      // Extract date part from point.date (handles both "YYYY-MM-DD" and "YYYY-MM-DDTHH:mm:ss" formats)
+      const pointDateStr = point.date.split('T')[0]
+      return pointDateStr >= startDateStr && pointDateStr <= endDateStr
     })
   }, [timeScaleFilteredData, startDate, endDate])
 
