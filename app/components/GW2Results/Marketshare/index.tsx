@@ -66,11 +66,11 @@ export const sortByOptions: Array<{
   { label: 'Historic Sold', value: 'historic_sold' },
   { label: 'Price Average', value: 'price_average' },
   { label: 'Historic Price Average', value: 'historic_price_average' },
-  { label: 'Price Percent Change', value: 'pricePercentChange' },
-  { label: 'Sold Percent Change', value: 'soldPercentChange' },
-  { label: 'Value Percent Change', value: 'valuePercentChange' },
-  { label: 'Sell Quantity Percent Change', value: 'sellQuantityPercentChange' },
-  { label: 'Buy Quantity Percent Change', value: 'buyQuantityPercentChange' }
+  { label: 'Price % Change', value: 'pricePercentChange' },
+  { label: 'Sold % Change', value: 'soldPercentChange' },
+  { label: 'Value % Change', value: 'valuePercentChange' },
+  { label: 'Sell Quantity % Change', value: 'sellQuantityPercentChange' },
+  { label: 'Buy Quantity % Change', value: 'buyQuantityPercentChange' }
 ]
 
 const csvColumns: Array<{ title: string; value: keyof GW2MarketshareItem }> = [
