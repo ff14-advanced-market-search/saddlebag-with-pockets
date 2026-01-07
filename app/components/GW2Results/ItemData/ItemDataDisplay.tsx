@@ -597,10 +597,10 @@ export default function ItemDataDisplay({
                       : timeScale === 'week'
                       ? 'weekly'
                       : '6-week'}{' '}
-                    views is limited on this page because bots and web scrapers
-                    abuse it. For more full historical data, please use the
-                    detailed item search page which is protected by an anti-bot
-                    search.
+                    views is limited on this page because google indexing bots
+                    and web scrapers crawl it very frequently. For more full
+                    historical data, please use the detailed item search page
+                    which is protected by an anti-bot search.
                   </p>
                   <a
                     href="/gw2/item-data-detailed"
