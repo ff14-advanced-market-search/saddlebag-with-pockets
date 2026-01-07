@@ -352,6 +352,11 @@ const navGroups: Array<{
         external: true
       },
       {
+        name: 'Detailed Item Data',
+        href: '/gw2/item-data-detailed',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'Marketshare Overview',
         href: '/gw2/marketshare/recommended',
         icon: ChartSquareBarIcon
