@@ -12,6 +12,7 @@ import {
   useNavigation
 } from '@remix-run/react'
 import { useState, useEffect } from 'react'
+import { format } from 'date-fns'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WoWLoaderData } from '~/requests/WoW/types'
@@ -32,7 +33,6 @@ import GroupSelector from '~/components/WoW/GroupSelector'
 import DeltaChartContainer from '~/components/WoW/DeltaChartContainer'
 import PriceQuantityAnalysis from '~/components/WoW/PriceQuantityAnalysis'
 import RequestDataSection from '~/components/WoW/RequestDataSection'
-import DateRangeInputs from '~/components/FFXIV/DateRangeInputs'
 import ImportSection from '~/components/WoW/ImportSection'
 import PriceGroupsSection from '~/components/WoW/PriceGroupsSection'
 import RequestPreview from '~/components/WoW/RequestPreview'
@@ -171,12 +171,8 @@ const Index = () => {
   const [showErrorPopup, setShowErrorPopup] = useState(false)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
   const [showLocalErrorPopup, setShowLocalErrorPopup] = useState(false)
-  const [startYear, setStartYear] = useState(2025)
-  const [startMonth, setStartMonth] = useState(1)
-  const [startDay, setStartDay] = useState(1)
-  const [endYear, setEndYear] = useState(new Date().getFullYear())
-  const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1)
-  const [endDay, setEndDay] = useState(new Date().getDate())
+  const [startDate, setStartDate] = useState<Date>(new Date(2025, 0, 1))
+  const [endDate, setEndDate] = useState<Date>(new Date())
   const [shortTerm, setShortTerm] = useState(false)
 
   const pageTitle = `Weekly Price Group Delta Analysis - ${wowRealm.name} (${wowRegion})`
@@ -225,12 +221,20 @@ const Index = () => {
           </Link>
           <ImportSection
             onImport={(data) => {
-              if (data.start_year) setStartYear(data.start_year)
-              if (data.start_month) setStartMonth(data.start_month)
-              if (data.start_day) setStartDay(data.start_day)
-              if (data.end_year) setEndYear(data.end_year)
-              if (data.end_month) setEndMonth(data.end_month)
-              if (data.end_day) setEndDay(data.end_day)
+              if (data.start_year && data.start_month && data.start_day) {
+                setStartDate(
+                  new Date(
+                    data.start_year,
+                    data.start_month - 1,
+                    data.start_day
+                  )
+                )
+              }
+              if (data.end_year && data.end_month && data.end_day) {
+                setEndDate(
+                  new Date(data.end_year, data.end_month - 1, data.end_day)
+                )
+              }
               if (data.price_groups) setPriceGroups(data.price_groups)
               if (data.short_term !== undefined) setShortTerm(data.short_term)
             }}
@@ -240,28 +244,81 @@ const Index = () => {
           method="post"
           className="space-y-4 mb-4"
           onSubmit={(e) => e.preventDefault()}>
-          <DateRangeInputs
-            startYear={startYear}
-            startMonth={startMonth}
-            startDay={startDay}
-            endYear={endYear}
-            endMonth={endMonth}
-            endDay={endDay}
-            onStartYearChange={setStartYear}
-            onStartMonthChange={setStartMonth}
-            onStartDayChange={setStartDay}
-            onEndYearChange={setEndYear}
-            onEndMonthChange={setEndMonth}
-            onEndDayChange={setEndDay}
-            onError={(err) => {
-              setLocalError(err)
-              setShowLocalErrorPopup(!!err)
-            }}
-          />
+          {/* Date Range Inputs */}
+          <div className="space-y-4">
+            <div>
+              <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+                Start Date
+              </h4>
+              <div>
+                <label
+                  htmlFor="startDate"
+                  className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  id="startDate"
+                  value={format(startDate, 'yyyy-MM-dd')}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      const newStart = new Date(e.target.value)
+                      setStartDate(newStart)
+                      // Ensure end date is not before start date
+                      if (endDate && newStart > endDate) {
+                        setEndDate(newStart)
+                      }
+                    }
+                  }}
+                  className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+            <div>
+              <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+                End Date
+              </h4>
+              <div>
+                <label
+                  htmlFor="endDate"
+                  className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  id="endDate"
+                  min={format(startDate, 'yyyy-MM-dd')}
+                  value={format(endDate, 'yyyy-MM-dd')}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      const newEnd = new Date(e.target.value)
+                      setEndDate(newEnd)
+                      // Ensure start date is not after end date
+                      if (startDate && newEnd < startDate) {
+                        setStartDate(newEnd)
+                      }
+                    }
+                  }}
+                  className="w-full p-2 border rounded text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+          </div>
 
-          <input type="hidden" name="endYear" value={endYear} />
-          <input type="hidden" name="endMonth" value={endMonth} />
-          <input type="hidden" name="endDay" value={endDay} />
+          <input
+            type="hidden"
+            name="startYear"
+            value={startDate.getFullYear()}
+          />
+          <input
+            type="hidden"
+            name="startMonth"
+            value={startDate.getMonth() + 1}
+          />
+          <input type="hidden" name="startDay" value={startDate.getDate()} />
+          <input type="hidden" name="endYear" value={endDate.getFullYear()} />
+          <input type="hidden" name="endMonth" value={endDate.getMonth() + 1} />
+          <input type="hidden" name="endDay" value={endDate.getDate()} />
 
           {/* Short Term Checkbox */}
           <div className="flex items-center gap-2">
@@ -297,12 +354,12 @@ const Index = () => {
 
           <RequestPreview
             region={wowRegion}
-            startYear={startYear}
-            startMonth={startMonth}
-            startDay={startDay}
-            endYear={endYear}
-            endMonth={endMonth}
-            endDay={endDay}
+            startYear={startDate.getFullYear()}
+            startMonth={startDate.getMonth() + 1}
+            startDay={startDate.getDate()}
+            endYear={endDate.getFullYear()}
+            endMonth={endDate.getMonth() + 1}
+            endDay={endDate.getDate()}
             priceGroups={priceGroups}
             shortTerm={shortTerm}
           />
