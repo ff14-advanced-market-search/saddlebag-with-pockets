@@ -8,7 +8,7 @@ const consumablesTier11_2 = {
     start_month: 5,
     start_day: 10,
     end_year: 2026,
-    end_month: 5,
+    end_month: 2,
     end_day: 10,
     price_groups: [
       {
