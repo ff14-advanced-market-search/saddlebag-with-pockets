@@ -38,6 +38,7 @@ import {
   ItemClassSelect
 } from '~/components/form/WoW/WoWScanForm'
 import { itemQuality } from '~/utils/WoWFilers/itemQuality'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 
 const PAGE_URL = '/wow/ultrarare'
 
@@ -298,6 +299,7 @@ const UltrararePage = () => {
               name="populationBlizz"
               type="number"
               min={0}
+              toolTip="Filter servers by Blizzard's population rating (0 = Low, 1 = Medium, 2 = High, 3 = Full)"
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
@@ -312,6 +314,7 @@ const UltrararePage = () => {
               type="number"
               min={1}
               max={100}
+              toolTip="Filter by raid clearance (1-100, based on how many guilds cleared the raid and how soon. 1 is the best raiders, 100 is the worst raiders.)"
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
@@ -325,6 +328,7 @@ const UltrararePage = () => {
               name="populationWP"
               type="number"
               min={1}
+              toolTip="Minimum WoWProgress server population to include in search"
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
@@ -338,6 +342,7 @@ const UltrararePage = () => {
               name="min_quantity"
               type="number"
               min={0}
+              toolTip="Minimum total quantity of items available across all eligible realms"
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
@@ -351,6 +356,7 @@ const UltrararePage = () => {
               name="max_quantity"
               type="number"
               min={0}
+              toolTip="Maximum total quantity of items available across all eligible realms"
               onChange={(e) => {
                 const value = e.currentTarget.value
                 if (value !== null || value !== undefined) {
@@ -400,6 +406,7 @@ const UltrararePage = () => {
                   className="block text-sm font-medium text-gray-700 dark:text-gray-100">
                   {inputMap.min_quality}
                 </label>
+                <ToolTip data="Filter items by minimum quality level (Poor, Common, Uncommon, Rare, Epic, Legendary, Artifact, Heirloom)" />
               </div>
               <select
                 id="min_quality"
@@ -420,61 +427,72 @@ const UltrararePage = () => {
                 ))}
               </select>
             </div>
-            <Select
-              title={inputMap.sortBy}
-              defaultValue={loaderData.sortBy}
-              name="sortBy"
-              options={[
-                { label: 'Shortage', value: 'shortage' },
-                { label: 'Min Price', value: 'minPrice' },
-                { label: 'Total Quantity', value: 'total_quantity' },
-                {
-                  label: 'Eligible Realm Count',
-                  value: 'eligible_realm_count'
-                },
-                {
-                  label: 'Realm Count With Item',
-                  value: 'realm_count_with_item'
-                },
-                { label: 'Median Min Price', value: 'medianMinPrice' },
-                { label: 'Average Min Price', value: 'averageMinPrice' },
-                { label: 'TSM Market Value', value: 'tsmMarketValue' },
-                { label: 'TSM Avg Sale Price', value: 'tsmAvgSalePrice' },
-                { label: 'TSM Sale Rate', value: 'tsmSaleRate' },
-                { label: 'TSM Sold Per Day', value: 'tsmSoldPerDay' },
-                { label: 'TSM Historical', value: 'tsmHistorical' },
-                {
-                  label: 'TSM Avg Sale VS Current Min',
-                  value: 'tsmAvgSaleVSCurrentMin'
-                },
-                {
-                  label: 'TSM Avg Sale VS Current Average',
-                  value: 'tsmAvgSaleVSCurrentAverage'
-                },
-                {
-                  label: 'TSM Avg Sale VS Current Median',
-                  value: 'tsmAvgSaleVSCurrentMedian'
-                },
-                {
-                  label: 'TSM Historic VS Current Min',
-                  value: 'tsmHistoricVSCurrentMin'
-                },
-                {
-                  label: 'TSM Historic VS Current Average',
-                  value: 'tsmHistoricVSCurrentAverage'
-                },
-                {
-                  label: 'TSM Historic VS Current Median',
-                  value: 'tsmHistoricVSCurrentMedian'
-                }
-              ]}
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleFormChange('sortBy', value)
-                }
-              }}
-            />
+            <div className="w-full mt-2">
+              <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+                <label
+                  htmlFor="sortBy"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                  {inputMap.sortBy}
+                </label>
+                <ToolTip data="Choose how to sort the search results. Results will be sorted in descending order by the selected field" />
+              </div>
+              <Select
+                id="sortBy"
+                title=""
+                defaultValue={loaderData.sortBy}
+                name="sortBy"
+                options={[
+                  { label: 'Shortage', value: 'shortage' },
+                  { label: 'Min Price', value: 'minPrice' },
+                  { label: 'Total Quantity', value: 'total_quantity' },
+                  {
+                    label: 'Eligible Realm Count',
+                    value: 'eligible_realm_count'
+                  },
+                  {
+                    label: 'Realm Count With Item',
+                    value: 'realm_count_with_item'
+                  },
+                  { label: 'Median Min Price', value: 'medianMinPrice' },
+                  { label: 'Average Min Price', value: 'averageMinPrice' },
+                  { label: 'TSM Market Value', value: 'tsmMarketValue' },
+                  { label: 'TSM Avg Sale Price', value: 'tsmAvgSalePrice' },
+                  { label: 'TSM Sale Rate', value: 'tsmSaleRate' },
+                  { label: 'TSM Sold Per Day', value: 'tsmSoldPerDay' },
+                  { label: 'TSM Historical', value: 'tsmHistorical' },
+                  {
+                    label: 'TSM Avg Sale VS Current Min',
+                    value: 'tsmAvgSaleVSCurrentMin'
+                  },
+                  {
+                    label: 'TSM Avg Sale VS Current Average',
+                    value: 'tsmAvgSaleVSCurrentAverage'
+                  },
+                  {
+                    label: 'TSM Avg Sale VS Current Median',
+                    value: 'tsmAvgSaleVSCurrentMedian'
+                  },
+                  {
+                    label: 'TSM Historic VS Current Min',
+                    value: 'tsmHistoricVSCurrentMin'
+                  },
+                  {
+                    label: 'TSM Historic VS Current Average',
+                    value: 'tsmHistoricVSCurrentAverage'
+                  },
+                  {
+                    label: 'TSM Historic VS Current Median',
+                    value: 'tsmHistoricVSCurrentMedian'
+                  }
+                ]}
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null || value !== undefined) {
+                    handleFormChange('sortBy', value)
+                  }
+                }}
+              />
+            </div>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
             Note: Results may vary based on server population and availability.
