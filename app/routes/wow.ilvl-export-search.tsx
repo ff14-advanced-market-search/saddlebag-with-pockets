@@ -31,6 +31,7 @@ import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName, getItemNameById } from '~/utils/items'
 import Select from '~/components/form/select'
 import type { ItemStat } from '~/requests/WoW/IlvlShoppingList'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
@@ -327,6 +328,7 @@ const IlvlExportSearchComponent = () => {
         <div className="pt-3 flex flex-col gap-4">
           <DebouncedSelectInput
             title={'Item to search for'}
+            tooltip="Search for a specific raid BOE item by name. Type to search and select from the dropdown."
             label="Item"
             id="export-item-select"
             selectOptions={wowItemsList}
@@ -340,6 +342,7 @@ const IlvlExportSearchComponent = () => {
             type="number"
             value={formValues.ilvl.toString()}
             min={0}
+            toolTip="Minimum item level to filter search results. Current 11.1 BOE levels are 675, 688, or 701."
             onChange={(e) =>
               setFormValues((prev) => ({
                 ...prev,
@@ -353,6 +356,7 @@ const IlvlExportSearchComponent = () => {
             type="number"
             value={formValues.populationWP.toString()}
             min={1}
+            toolTip="Minimum WoWProgress server population to include in search"
             onChange={(e) =>
               setFormValues((prev) => ({
                 ...prev,
@@ -360,29 +364,41 @@ const IlvlExportSearchComponent = () => {
               }))
             }
           />
-          <Select
-            title="Population Blizzard"
-            name="populationBlizz"
-            value={formValues.populationBlizz.toString()}
-            options={[
-              { label: 'FULL', value: '3' },
-              { label: 'HIGH', value: '2' },
-              { label: 'MEDIUM', value: '1' },
-              { label: 'LOW', value: '0' }
-            ]}
-            onChange={(e) =>
-              setFormValues((prev) => ({
-                ...prev,
-                populationBlizz: parseInt(e.target.value)
-              }))
-            }
-          />
+          <div className="w-full mt-2">
+            <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+              <label
+                htmlFor="populationBlizz"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                Population Blizzard
+              </label>
+              <ToolTip data="Filter servers by Blizzard's population rating (LOW = 0, MEDIUM = 1, HIGH = 2, FULL = 3)" />
+            </div>
+            <Select
+              id="populationBlizz"
+              title=""
+              name="populationBlizz"
+              value={formValues.populationBlizz.toString()}
+              options={[
+                { label: 'FULL', value: '3' },
+                { label: 'HIGH', value: '2' },
+                { label: 'MEDIUM', value: '1' },
+                { label: 'LOW', value: '0' }
+              ]}
+              onChange={(e) =>
+                setFormValues((prev) => ({
+                  ...prev,
+                  populationBlizz: parseInt(e.target.value)
+                }))
+              }
+            />
+          </div>
           <InputWithLabel
             labelTitle="Ranking"
             name="rankingWP"
             type="number"
             value={formValues.rankingWP.toString()}
             min={1}
+            toolTip="Filter by raid clearance (1-100, based on how many guilds cleared the raid and how soon. 1 is the best raiders, 100 is the worst raiders.)"
             onChange={(e) =>
               setFormValues((prev) => ({
                 ...prev,
@@ -390,27 +406,41 @@ const IlvlExportSearchComponent = () => {
               }))
             }
           />
-          <Select
-            title="Sort Results By"
-            name="sortBy"
-            value={formValues.sortBy}
-            options={[
-              { label: 'Minimum Price', value: 'minPrice' },
-              { label: 'Item Quantity', value: 'itemQuantity' },
-              { label: 'Realm Population', value: 'realmPopulationReal' },
-              { label: 'Realm Ranking', value: 'realmRanking' }
-            ]}
-            onChange={(e) =>
-              setFormValues((prev) => ({
-                ...prev,
-                sortBy: e.target.value as SortByValue
-              }))
-            }
-          />
+          <div className="w-full mt-2">
+            <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+              <label
+                htmlFor="sortBy"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                Sort Results By
+              </label>
+              <ToolTip data="Choose how to sort the search results. Results will be sorted in descending order by the selected field" />
+            </div>
+            <Select
+              id="sortBy"
+              title=""
+              name="sortBy"
+              value={formValues.sortBy}
+              options={[
+                { label: 'Minimum Price', value: 'minPrice' },
+                { label: 'Item Quantity', value: 'itemQuantity' },
+                { label: 'Realm Population', value: 'realmPopulationReal' },
+                { label: 'Realm Ranking', value: 'realmRanking' }
+              ]}
+              onChange={(e) =>
+                setFormValues((prev) => ({
+                  ...prev,
+                  sortBy: e.target.value as SortByValue
+                }))
+              }
+            />
+          </div>
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium dark:text-gray-200">
-              Desired Stats
-            </label>
+            <div className="flex flex-1 items-center gap-1 relative">
+              <label className="text-sm font-medium dark:text-gray-200">
+                Desired Stats
+              </label>
+              <ToolTip data="Select additional stats you want on the item (Socket, Leech, Speed, Avoidance). Leave unchecked to search for any stats." />
+            </div>
             <div className="flex flex-wrap gap-2">
               {AVAILABLE_STATS.map((stat) => (
                 <label key={stat} className="flex items-center gap-2">

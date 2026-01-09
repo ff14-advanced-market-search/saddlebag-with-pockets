@@ -293,20 +293,34 @@ const UltrararePage = () => {
             </div>
           </div>
           <div className="pt-3 flex flex-col">
-            <InputWithLabel
-              labelTitle={inputMap.populationBlizz}
-              defaultValue={loaderData.populationBlizz}
-              name="populationBlizz"
-              type="number"
-              min={0}
-              toolTip="Filter servers by Blizzard's population rating (0 = Low, 1 = Medium, 2 = High, 3 = Full)"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleFormChange('populationBlizz', parseInt(value, 10))
-                }
-              }}
-            />
+            <div className="w-full mt-2">
+              <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+                <label
+                  htmlFor="populationBlizz"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                  {inputMap.populationBlizz}
+                </label>
+                <ToolTip data="Filter servers by Blizzard's population rating (LOW = 0, MEDIUM = 1, HIGH = 2, FULL = 3)" />
+              </div>
+              <Select
+                id="populationBlizz"
+                title=""
+                defaultValue={loaderData.populationBlizz.toString()}
+                name="populationBlizz"
+                options={[
+                  { label: 'FULL', value: '3' },
+                  { label: 'HIGH', value: '2' },
+                  { label: 'MEDIUM', value: '1' },
+                  { label: 'LOW', value: '0' }
+                ]}
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null || value !== undefined) {
+                    handleFormChange('populationBlizz', parseInt(value, 10))
+                  }
+                }}
+              />
+            </div>
             <InputWithLabel
               labelTitle={inputMap.rankingWP}
               defaultValue={loaderData.rankingWP}
