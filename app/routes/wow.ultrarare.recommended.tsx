@@ -27,6 +27,7 @@ const BASE_URL = '/wow/ultrarare'
 const searchParams = {
   weapons: `${BASE_URL}?item_class=2&max_quantity=10`,
   armor: `${BASE_URL}?item_class=4&max_quantity=10&item_subclass=-2`,
+  mounts: `${BASE_URL}?item_class=15&item_subclass=5`,
   questItem: `${BASE_URL}?item_class=12&min_quality=1`,
   recipe: `${BASE_URL}?item_class=9&min_quality=1`,
   consumable: `${BASE_URL}?item_class=0&min_quality=1`,
@@ -48,6 +49,12 @@ const recommendedQueries = [
       'Discover ultra rare transmog armor pieces. Double check wowhead for other items with similar models.',
     Icon: DocumentSearchIcon,
     href: searchParams.armor
+  },
+  {
+    name: 'Mounts',
+    description: 'Discover ultra rare mounts. All these are great!',
+    Icon: DocumentSearchIcon,
+    href: searchParams.mounts
   },
   {
     name: 'Quest Items',
@@ -73,7 +80,7 @@ const recommendedQueries = [
   {
     name: 'Miscellaneous',
     description:
-      'Search for mounts and other rare miscellaneous items. Note: Double check pet items carefully - the item that makes a pet might be rare but the caged pet may not be. Verify with the shopping list or Undermine Exchange before investing.',
+      'Search for other rare miscellaneous items. Note: Double check pet items carefully - the item that makes a pet might be rare but the caged pet may not be. Verify with the shopping list or Undermine Exchange before investing.',
     Icon: DocumentSearchIcon,
     href: searchParams.miscellaneous
   }
