@@ -37,7 +37,6 @@ import {
   ExpansionSelect,
   ItemClassSelect
 } from '~/components/form/WoW/WoWScanForm'
-import { itemClasses } from '~/utils/WoWFilers/itemClasses'
 import { itemQuality } from '~/utils/WoWFilers/itemQuality'
 
 const PAGE_URL = '/wow/ultrarare'
@@ -462,6 +461,7 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
         columnSelectOptions={[
           'itemDataLink',
           'shoppingListLink',
+          'whereToSellLink',
           'shortage',
           'minPrice',
           'total_quantity',
@@ -528,6 +528,16 @@ const columnList: Array<ColumnList<UltrarareItem & Record<string, any>>> = [
       />
     )
   },
+  {
+    columnId: 'whereToSellLink',
+    header: 'Where to Sell',
+    accessor: ({ row }) => (
+      <ExternalLink
+        text="Where to Sell"
+        link={`/wow/export-search?itemId=${row.itemID}`}
+      />
+    )
+  },
   { columnId: 'shortage', header: 'Shortage' },
   { columnId: 'minPrice', header: 'Min Price' },
   { columnId: 'total_quantity', header: 'Total Quantity' },
@@ -584,6 +594,16 @@ const mobileColumnList: Array<ColumnList<UltrarareItem & Record<string, any>>> =
         <ExternalLink
           text="Shopping List"
           link={`/wow/shopping-list?itemId=${row.itemID}`}
+        />
+      )
+    },
+    {
+      columnId: 'whereToSellLink',
+      header: 'Where to Sell',
+      accessor: ({ row }) => (
+        <ExternalLink
+          text="Where to Sell"
+          link={`/wow/export-search?itemId=${row.itemID}`}
         />
       )
     },
