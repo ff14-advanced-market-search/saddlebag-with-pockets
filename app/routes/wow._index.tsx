@@ -74,9 +74,9 @@ const recommendedQueries = [
   {
     name: 'Ultra Rare',
     description:
-      'Find rarest items in the game, guarenteed to have no competition on multiple realms!',
+      'Find rarest items in the game, guaranteed to have no competition on multiple realms!',
     Icon: DocumentSearchIcon,
-    href: '/wow/ultrarare'
+    href: '/wow/ultrarare/recommended'
   },
   {
     name: 'Current Content Marketshare Overview',

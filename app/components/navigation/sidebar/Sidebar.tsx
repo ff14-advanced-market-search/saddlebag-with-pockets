@@ -299,7 +299,7 @@ const navGroups: Array<{
       },
       {
         name: 'Ultra Rare',
-        href: 'wow/ultrarare',
+        href: 'wow/ultrarare/recommended',
         icon: DocumentSearchIcon
       },
       {
