@@ -47,7 +47,7 @@ const defaultFormValues = {
   rankingWP: 99,
   populationWP: 5000,
   min_quantity: 0,
-  max_quantity: 10,
+  max_quantity: 30,
   item_class: -1,
   item_subclass: -1,
   min_quality: -1,

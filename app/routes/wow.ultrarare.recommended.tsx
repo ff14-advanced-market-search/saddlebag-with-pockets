@@ -25,8 +25,8 @@ const BASE_URL = '/wow/ultrarare'
 
 // Search parameters for recommended queries
 const searchParams = {
-  weapons: `${BASE_URL}?item_class=2`,
-  armor: `${BASE_URL}?item_class=4`,
+  weapons: `${BASE_URL}?item_class=2&max_quantity=10`,
+  armor: `${BASE_URL}?item_class=4&max_quantity=10`,
   questItem: `${BASE_URL}?item_class=12&min_quality=1`,
   recipe: `${BASE_URL}?item_class=9&min_quality=1`,
   consumable: `${BASE_URL}?item_class=0&min_quality=1`,
