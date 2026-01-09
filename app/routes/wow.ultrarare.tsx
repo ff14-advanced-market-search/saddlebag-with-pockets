@@ -547,11 +547,12 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
     'itemDataLink',
     'shortage',
     'minPrice',
-    'totalQuantity',
-    'eligibleRealmCount',
-    'realmCountWithItem',
+    'total_quantity',
+    'eligible_realm_count',
+    'realm_count_with_item',
     'tsmAvgSalePrice',
     'tsmSoldPerDay',
+    'tsmAvgSaleVSCurrentMin',
     sortby
   ]
 
