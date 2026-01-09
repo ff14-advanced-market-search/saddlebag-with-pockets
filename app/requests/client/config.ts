@@ -1,5 +1,5 @@
-const defaultAddress = `https://api.saddlebagexchange.com`
-// const defaultAddress = `http://localhost:8000`
+// const defaultAddress = `https://api.saddlebagexchange.com`
+const defaultAddress = `http://localhost:8000`
 
 export const address = defaultAddress
 // @todo update via env var

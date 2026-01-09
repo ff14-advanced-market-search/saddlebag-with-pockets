@@ -51,7 +51,7 @@ const defaultFormValues = {
   item_subclass: -1,
   min_quality: -1,
   expansion_number: -1,
-  sortBy: 'shortage'
+  sortBy: 'tsmAvgSaleVSCurrentMin'
 }
 
 const inputMap: Record<string, string> = {
@@ -442,7 +442,31 @@ const UltrararePage = () => {
                 { label: 'TSM Avg Sale Price', value: 'tsmAvgSalePrice' },
                 { label: 'TSM Sale Rate', value: 'tsmSaleRate' },
                 { label: 'TSM Sold Per Day', value: 'tsmSoldPerDay' },
-                { label: 'TSM Historical', value: 'tsmHistorical' }
+                { label: 'TSM Historical', value: 'tsmHistorical' },
+                {
+                  label: 'TSM Avg Sale VS Current Min',
+                  value: 'tsmAvgSaleVSCurrentMin'
+                },
+                {
+                  label: 'TSM Avg Sale VS Current Average',
+                  value: 'tsmAvgSaleVSCurrentAverage'
+                },
+                {
+                  label: 'TSM Avg Sale VS Current Median',
+                  value: 'tsmAvgSaleVSCurrentMedian'
+                },
+                {
+                  label: 'TSM Historic VS Current Min',
+                  value: 'tsmHistoricVSCurrentMin'
+                },
+                {
+                  label: 'TSM Historic VS Current Average',
+                  value: 'tsmHistoricVSCurrentAverage'
+                },
+                {
+                  label: 'TSM Historic VS Current Median',
+                  value: 'tsmHistoricVSCurrentMedian'
+                }
               ]}
               onChange={(e) => {
                 const value = e.currentTarget.value
@@ -498,7 +522,13 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
           'tsmAvgSalePrice',
           'tsmSaleRate',
           'tsmSoldPerDay',
-          'tsmHistorical'
+          'tsmHistorical',
+          'tsmAvgSaleVSCurrentMin',
+          'tsmAvgSaleVSCurrentAverage',
+          'tsmAvgSaleVSCurrentMedian',
+          'tsmHistoricVSCurrentMin',
+          'tsmHistoricVSCurrentAverage',
+          'tsmHistoricVSCurrentMedian'
         ]}
         data={data as Array<UltrarareItem & Record<string, any>>}
         csvOptions={{
