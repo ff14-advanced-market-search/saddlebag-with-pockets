@@ -4,7 +4,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json, redirect } from '@remix-run/cloudflare'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { UltrarareItem, UltrarareResponse } from '~/requests/WoW/Ultrarare'
@@ -520,11 +520,40 @@ const UltrararePage = () => {
 export default UltrararePage
 
 const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
+  const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
+    () => new Set(columnList.map((col) => col.columnId))
+  )
+  const [showColumnControls, setShowColumnControls] = useState(false)
+  const [columnPage, setColumnPage] = useState(0)
+  const columnsPerPage = 20
+
   useEffect(() => {
     if (window && document) {
       window.scroll({ top: 0, behavior: 'smooth' })
     }
   }, [])
+
+  const filteredColumnList = useMemo(
+    () => columnList.filter((col) => visibleColumns.has(col.columnId)),
+    [visibleColumns]
+  )
+
+  // The column headers, left to right, from the image:
+  // Item Name, Item Data, Shortage, Min Price, Total Quantity,
+  // Eligible Realm Count, Realm Count With Item, TSM Avg Sale Price, TSM Sold Per Day
+
+  const essentialColumns = [
+    'itemName',
+    'itemDataLink',
+    'shortage',
+    'minPrice',
+    'totalQuantity',
+    'eligibleRealmCount',
+    'realmCountWithItem',
+    'tsmAvgSalePrice',
+    'tsmSoldPerDay',
+    sortby
+  ]
 
   return (
     <PageWrapper>
@@ -533,11 +562,116 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
           <Title title="Ultra Rare Item Results" />
         </div>
       </ContentContainer>
+      <div className="my-2 flex justify-between items-center flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={() => setShowColumnControls(!showColumnControls)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium text-sm">
+          {showColumnControls ? 'Hide' : 'Show'} Column Controls
+        </button>
+      </div>
+      {showColumnControls && (
+        <div className="my-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+            Column Visibility
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {columnList
+              .slice(
+                columnPage * columnsPerPage,
+                (columnPage + 1) * columnsPerPage
+              )
+              .map((col) => (
+                <label
+                  key={col.columnId}
+                  className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
+                  <input
+                    type="checkbox"
+                    checked={visibleColumns.has(col.columnId)}
+                    onChange={(e) => {
+                      const newVisibleColumns = new Set(visibleColumns)
+                      if (e.target.checked) {
+                        newVisibleColumns.add(col.columnId)
+                      } else {
+                        newVisibleColumns.delete(col.columnId)
+                      }
+                      setVisibleColumns(newVisibleColumns)
+                    }}
+                    className="form-checkbox h-4 w-4 text-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-gray-100">
+                    {col.header}
+                  </span>
+                </label>
+              ))}
+          </div>
+          <div className="mt-3 flex items-center justify-between">
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleColumns(
+                    new Set(columnList.map((col) => col.columnId))
+                  )
+                }}
+                className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm">
+                Show All
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleColumns(new Set(essentialColumns))
+                }}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors text-sm">
+                Show Essential Only
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleColumns(new Set())
+                }}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
+                Hide All
+              </button>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setColumnPage(Math.max(0, columnPage - 1))}
+                disabled={columnPage === 0}
+                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                Previous
+              </button>
+              <span className="text-sm text-gray-900 dark:text-gray-100">
+                Page {columnPage + 1} of{' '}
+                {Math.ceil(columnList.length / columnsPerPage)}
+              </span>
+              <button
+                type="button"
+                onClick={() =>
+                  setColumnPage(
+                    Math.min(
+                      Math.ceil(columnList.length / columnsPerPage) - 1,
+                      columnPage + 1
+                    )
+                  )
+                }
+                disabled={
+                  columnPage >=
+                  Math.ceil(columnList.length / columnsPerPage) - 1
+                }
+                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <SmallTable
         title="Ultra Rare Items"
         description="Items matching your search criteria"
         sortingOrder={[{ desc: true, id: sortby }]}
-        columnList={columnList}
+        columnList={filteredColumnList}
         mobileColumnList={mobileColumnList}
         columnSelectOptions={[
           'itemDataLink',
@@ -643,6 +777,30 @@ const columnList: Array<ColumnList<UltrarareItem & Record<string, any>>> = [
   { columnId: 'tsmSaleRate', header: 'TSM Sale Rate' },
   { columnId: 'tsmSoldPerDay', header: 'TSM Sold Per Day' },
   { columnId: 'tsmHistorical', header: 'TSM Historical' },
+  {
+    columnId: 'tsmAvgSaleVSCurrentMin',
+    header: 'TSM Avg Sale VS Current Min'
+  },
+  {
+    columnId: 'tsmAvgSaleVSCurrentAverage',
+    header: 'TSM Avg Sale VS Current Average'
+  },
+  {
+    columnId: 'tsmAvgSaleVSCurrentMedian',
+    header: 'TSM Avg Sale VS Current Median'
+  },
+  {
+    columnId: 'tsmHistoricVSCurrentMin',
+    header: 'TSM Historic VS Current Min'
+  },
+  {
+    columnId: 'tsmHistoricVSCurrentAverage',
+    header: 'TSM Historic VS Current Average'
+  },
+  {
+    columnId: 'tsmHistoricVSCurrentMedian',
+    header: 'TSM Historic VS Current Median'
+  },
   {
     columnId: 'quality',
     header: 'Quality',
