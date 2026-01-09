@@ -157,7 +157,19 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formData = Object.fromEntries(await request.formData())
 
-  const validatedFormData = validateInput.safeParse(formData)
+  // Map itemClass/itemSubClass from ItemClassSelect to item_class/item_subclass
+  // ItemClassSelect uses camelCase internally (itemClass/itemSubClass), but API expects snake_case
+  // Also map expansionNumber to expansion_number
+  // Use component values (itemClass/itemSubClass/expansionNumber) as primary source since those are what user selects
+  const mappedFormData = {
+    ...formData,
+    item_class: formData.itemClass || formData.item_class || '-1',
+    item_subclass: formData.itemSubClass || formData.item_subclass || '-1',
+    expansion_number:
+      formData.expansionNumber || formData.expansion_number || '-1'
+  }
+
+  const validatedFormData = validateInput.safeParse(mappedFormData)
   if (!validatedFormData.success) {
     return json({
       exception: parseZodErrorsToDisplayString(
@@ -167,9 +179,16 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
+  // Ensure that if item_class is -1, item_subclass is also -1
+  const finalItemClass = validatedFormData.data.item_class
+  const finalItemSubclass =
+    finalItemClass === -1 ? -1 : validatedFormData.data.item_subclass
+
   const result = await UltrarareSearch({
     region,
     ...validatedFormData.data,
+    item_class: finalItemClass,
+    item_subclass: finalItemSubclass,
     earlyAccessToken
   })
 
@@ -351,13 +370,17 @@ const UltrararePage = () => {
               value={searchParams.expansion_number}
             />
             <ItemClassSelect
-              itemClass={loaderData.item_class}
-              itemSubClass={loaderData.item_subclass}
+              itemClass={searchParams.item_class}
+              itemSubClass={searchParams.item_subclass}
               onChange={(itemClassValue, itemSubClassValue) => {
+                // If item_class is -1 (All), ensure item_subclass is also -1
+                const finalSubclass =
+                  itemClassValue === -1 ? -1 : itemSubClassValue
                 handleFormChange('item_class', itemClassValue)
-                handleFormChange('item_subclass', itemSubClassValue)
+                handleFormChange('item_subclass', finalSubclass)
               }}
             />
+            {/* Hidden inputs to ensure correct values are submitted (ItemClassSelect uses itemClass/itemSubClass internally) */}
             <input
               type="hidden"
               name="item_class"
@@ -366,7 +389,9 @@ const UltrararePage = () => {
             <input
               type="hidden"
               name="item_subclass"
-              value={searchParams.item_subclass}
+              value={
+                searchParams.item_class === -1 ? -1 : searchParams.item_subclass
+              }
             />
             <div className="w-full mt-2">
               <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
