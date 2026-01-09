@@ -28,7 +28,9 @@ const searchParams = {
   weapons: `${BASE_URL}?item_class=2`,
   armor: `${BASE_URL}?item_class=4`,
   questItem: `${BASE_URL}?item_class=12`,
-  recipe: `${BASE_URL}?item_class=9&min_quality=1`
+  recipe: `${BASE_URL}?item_class=9&min_quality=1`,
+  consumable: `${BASE_URL}?item_class=0`,
+  miscellaneous: `${BASE_URL}?item_class=15`
 }
 
 // Recommended queries for ultra rare item searches
@@ -60,6 +62,20 @@ const recommendedQueries = [
       'Find ultra rare recipes with Common quality and better. Often desired by Achievement Hunters and Collectors! Double check all these on wowhead to confirm they were not turned into trainers recipes. Junk quality are often deprecated and not worth anything.',
     Icon: DocumentSearchIcon,
     href: searchParams.recipe
+  },
+  {
+    name: 'Consumables',
+    description:
+      'Search for ultra rare consumable items. Note: Most consumables might be worthless and not used for achievements. Double check wowhead to verify if items are still obtainable and useful.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.consumable
+  },
+  {
+    name: 'Miscellaneous',
+    description:
+      'Search for mounts and other rare miscellaneous items. Note: Double check pet items carefully - the item that makes a pet might be rare but the caged pet may not be. Verify with the shopping list or Undermine Exchange before investing.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.miscellaneous
   }
 ]
 
