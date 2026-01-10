@@ -52,7 +52,11 @@ const defaultFormValues = {
   item_subclass: -1,
   min_quality: -1,
   expansion_number: -1,
-  sortBy: 'tsmAvgSaleVSCurrentMin'
+  sortBy: 'tsmAvgSaleVSCurrentMin',
+  min_buyoutPrice: 0,
+  max_buyoutPrice: 9999999.99,
+  min_tsmAvgSalePrice: 0,
+  max_tsmAvgSalePrice: 9999999.99
 }
 
 const inputMap: Record<string, string> = {
@@ -65,8 +69,22 @@ const inputMap: Record<string, string> = {
   item_subclass: 'Item Subclass',
   min_quality: 'Minimum Quality',
   expansion_number: 'Expansion',
-  sortBy: 'Sort Results By'
+  sortBy: 'Sort Results By',
+  min_buyoutPrice: 'Minimum Buyout Price (Gold)',
+  max_buyoutPrice: 'Maximum Buyout Price (Gold)',
+  min_tsmAvgSalePrice: 'Minimum TSM Avg Sale Price (Gold)',
+  max_tsmAvgSalePrice: 'Maximum TSM Avg Sale Price (Gold)'
 }
+
+// Helper to parse gold values (converts to number, defaults to 0 if invalid)
+const parseGoldValue = z
+  .string()
+  .default('0')
+  .transform((val) => {
+    if (!val || val === '') return 0
+    const num = parseFloat(val)
+    return isNaN(num) ? 0 : num
+  })
 
 const validateInput = z.object({
   populationBlizz: parseStringToNumber,
@@ -78,7 +96,11 @@ const validateInput = z.object({
   item_subclass: parseStringToNumber,
   min_quality: parseStringToNumber,
   expansion_number: parseStringToNumber,
-  sortBy: z.string()
+  sortBy: z.string(),
+  min_buyoutPrice: parseGoldValue,
+  max_buyoutPrice: parseGoldValue,
+  min_tsmAvgSalePrice: parseGoldValue,
+  max_tsmAvgSalePrice: parseGoldValue
 })
 
 // Overwrite default meta in the root.tsx
@@ -103,6 +125,21 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const params = new URL(request.url).searchParams
 
+  // Helper to get gold value from URL param (convert from copper to gold, or use default)
+  const getGoldParam = (paramName: string, defaultValueGold: number) => {
+    const param = params.get(paramName)
+    if (!param) {
+      return defaultValueGold.toString()
+    }
+    // If param is already in copper (large number), convert to gold
+    const numValue = parseFloat(param)
+    if (numValue >= 10000) {
+      return (numValue / 10000).toString()
+    }
+    // Otherwise assume it's already in gold
+    return param
+  }
+
   const values = {
     populationBlizz:
       params.get('populationBlizz') ||
@@ -124,7 +161,23 @@ export const loader: LoaderFunction = async ({ request }) => {
     expansion_number:
       params.get('expansion_number') ||
       defaultFormValues.expansion_number.toString(),
-    sortBy: params.get('sortBy') || defaultFormValues.sortBy.toString()
+    sortBy: params.get('sortBy') || defaultFormValues.sortBy.toString(),
+    min_buyoutPrice: getGoldParam(
+      'min_buyoutPrice',
+      defaultFormValues.min_buyoutPrice
+    ),
+    max_buyoutPrice: getGoldParam(
+      'max_buyoutPrice',
+      defaultFormValues.max_buyoutPrice
+    ),
+    min_tsmAvgSalePrice: getGoldParam(
+      'min_tsmAvgSalePrice',
+      defaultFormValues.min_tsmAvgSalePrice
+    ),
+    max_tsmAvgSalePrice: getGoldParam(
+      'max_tsmAvgSalePrice',
+      defaultFormValues.max_tsmAvgSalePrice
+    )
   }
   const validParams = validateInput.safeParse(values)
 
@@ -185,11 +238,28 @@ export const action: ActionFunction = async ({ request }) => {
   const finalItemSubclass =
     finalItemClass === -1 ? -1 : validatedFormData.data.item_subclass
 
+  // Convert gold values to copper (multiply by 10000)
+  const convertGoldToCopper = (goldValue: number): number => {
+    return Math.round(goldValue * 10000)
+  }
+
   const result = await UltrarareSearch({
     region,
     ...validatedFormData.data,
     item_class: finalItemClass,
     item_subclass: finalItemSubclass,
+    min_buyoutPrice: convertGoldToCopper(
+      validatedFormData.data.min_buyoutPrice
+    ),
+    max_buyoutPrice: convertGoldToCopper(
+      validatedFormData.data.max_buyoutPrice
+    ),
+    min_tsmAvgSalePrice: convertGoldToCopper(
+      validatedFormData.data.min_tsmAvgSalePrice
+    ),
+    max_tsmAvgSalePrice: convertGoldToCopper(
+      validatedFormData.data.max_tsmAvgSalePrice
+    ),
     earlyAccessToken
   })
 
@@ -236,7 +306,15 @@ const UltrararePage = () => {
     item_subclass: loaderData.item_subclass,
     min_quality: loaderData.min_quality,
     expansion_number: loaderData.expansion_number,
-    sortBy: loaderData.sortBy
+    sortBy: loaderData.sortBy,
+    min_buyoutPrice:
+      loaderData.min_buyoutPrice ?? defaultFormValues.min_buyoutPrice,
+    max_buyoutPrice:
+      loaderData.max_buyoutPrice ?? defaultFormValues.max_buyoutPrice,
+    min_tsmAvgSalePrice:
+      loaderData.min_tsmAvgSalePrice ?? defaultFormValues.min_tsmAvgSalePrice,
+    max_tsmAvgSalePrice:
+      loaderData.max_tsmAvgSalePrice ?? defaultFormValues.max_tsmAvgSalePrice
   })
 
   const error = result && 'exception' in result ? result.exception : undefined
@@ -441,6 +519,86 @@ const UltrararePage = () => {
                 ))}
               </select>
             </div>
+            <InputWithLabel
+              labelTitle={inputMap.min_buyoutPrice}
+              defaultValue={searchParams.min_buyoutPrice}
+              name="min_buyoutPrice"
+              type="number"
+              min={0}
+              step="0.01"
+              toolTip="Minimum buyout price in gold to filter search results."
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null && value !== undefined) {
+                  const numValue = parseFloat(value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('min_buyoutPrice', numValue)
+                  } else {
+                    handleFormChange('min_buyoutPrice', 0)
+                  }
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.max_buyoutPrice}
+              defaultValue={searchParams.max_buyoutPrice}
+              name="max_buyoutPrice"
+              type="number"
+              min={0}
+              step="0.01"
+              toolTip="Maximum buyout price in gold to filter search results."
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null && value !== undefined) {
+                  const numValue = parseFloat(value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('max_buyoutPrice', numValue)
+                  } else {
+                    handleFormChange('max_buyoutPrice', 0)
+                  }
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.min_tsmAvgSalePrice}
+              defaultValue={searchParams.min_tsmAvgSalePrice}
+              name="min_tsmAvgSalePrice"
+              type="number"
+              min={0}
+              step="0.01"
+              toolTip="Minimum TSM average sale price in gold to filter search results."
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null && value !== undefined) {
+                  const numValue = parseFloat(value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('min_tsmAvgSalePrice', numValue)
+                  } else {
+                    handleFormChange('min_tsmAvgSalePrice', 0)
+                  }
+                }
+              }}
+            />
+            <InputWithLabel
+              labelTitle={inputMap.max_tsmAvgSalePrice}
+              defaultValue={searchParams.max_tsmAvgSalePrice}
+              name="max_tsmAvgSalePrice"
+              type="number"
+              min={0}
+              step="0.01"
+              toolTip="Maximum TSM average sale price in gold to filter search results."
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null && value !== undefined) {
+                  const numValue = parseFloat(value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('max_tsmAvgSalePrice', numValue)
+                  } else {
+                    handleFormChange('max_tsmAvgSalePrice', 0)
+                  }
+                }
+              }}
+            />
             <div className="w-full mt-2">
               <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
                 <label

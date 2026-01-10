@@ -13,6 +13,10 @@ export interface UltrarareSearchProps {
   min_quality: number
   expansion_number: number
   sortBy: string
+  min_buyoutPrice: number
+  max_buyoutPrice: number
+  min_tsmAvgSalePrice: number
+  max_tsmAvgSalePrice: number
   earlyAccessToken: string
 }
 
@@ -71,6 +75,10 @@ const UltrarareSearch = async ({
   min_quality,
   expansion_number,
   sortBy,
+  min_buyoutPrice,
+  max_buyoutPrice,
+  min_tsmAvgSalePrice,
+  max_tsmAvgSalePrice,
   earlyAccessToken
 }: UltrarareSearchProps) =>
   fetch(`${address}/api/wow/${earlyAccessToken}`, {
@@ -90,7 +98,11 @@ const UltrarareSearch = async ({
       item_subclass,
       min_quality,
       expansion_number,
-      sortBy
+      sortBy,
+      min_buyoutPrice,
+      max_buyoutPrice,
+      min_tsmAvgSalePrice,
+      max_tsmAvgSalePrice
     })
   })
 
