@@ -125,21 +125,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const params = new URL(request.url).searchParams
 
-  // Helper to get gold value from URL param (convert from copper to gold, or use default)
-  const getGoldParam = (paramName: string, defaultValueGold: number) => {
-    const param = params.get(paramName)
-    if (!param) {
-      return defaultValueGold.toString()
-    }
-    // If param is already in copper (large number), convert to gold
-    const numValue = parseFloat(param)
-    if (numValue >= 10000) {
-      return (numValue / 10000).toString()
-    }
-    // Otherwise assume it's already in gold
-    return param
-  }
-
   const values = {
     populationBlizz:
       params.get('populationBlizz') ||
@@ -162,22 +147,18 @@ export const loader: LoaderFunction = async ({ request }) => {
       params.get('expansion_number') ||
       defaultFormValues.expansion_number.toString(),
     sortBy: params.get('sortBy') || defaultFormValues.sortBy.toString(),
-    min_buyoutPrice: getGoldParam(
-      'min_buyoutPrice',
-      defaultFormValues.min_buyoutPrice
-    ),
-    max_buyoutPrice: getGoldParam(
-      'max_buyoutPrice',
-      defaultFormValues.max_buyoutPrice
-    ),
-    min_tsmAvgSalePrice: getGoldParam(
-      'min_tsmAvgSalePrice',
-      defaultFormValues.min_tsmAvgSalePrice
-    ),
-    max_tsmAvgSalePrice: getGoldParam(
-      'max_tsmAvgSalePrice',
-      defaultFormValues.max_tsmAvgSalePrice
-    )
+    min_buyoutPrice:
+      params.get('min_buyoutPrice') ||
+      defaultFormValues.min_buyoutPrice.toString(),
+    max_buyoutPrice:
+      params.get('max_buyoutPrice') ||
+      defaultFormValues.max_buyoutPrice.toString(),
+    min_tsmAvgSalePrice:
+      params.get('min_tsmAvgSalePrice') ||
+      defaultFormValues.min_tsmAvgSalePrice.toString(),
+    max_tsmAvgSalePrice:
+      params.get('max_tsmAvgSalePrice') ||
+      defaultFormValues.max_tsmAvgSalePrice.toString()
   }
   const validParams = validateInput.safeParse(values)
 
@@ -238,28 +219,11 @@ export const action: ActionFunction = async ({ request }) => {
   const finalItemSubclass =
     finalItemClass === -1 ? -1 : validatedFormData.data.item_subclass
 
-  // Convert gold values to copper (multiply by 10000)
-  const convertGoldToCopper = (goldValue: number): number => {
-    return Math.round(goldValue * 10000)
-  }
-
   const result = await UltrarareSearch({
     region,
     ...validatedFormData.data,
     item_class: finalItemClass,
     item_subclass: finalItemSubclass,
-    min_buyoutPrice: convertGoldToCopper(
-      validatedFormData.data.min_buyoutPrice
-    ),
-    max_buyoutPrice: convertGoldToCopper(
-      validatedFormData.data.max_buyoutPrice
-    ),
-    min_tsmAvgSalePrice: convertGoldToCopper(
-      validatedFormData.data.min_tsmAvgSalePrice
-    ),
-    max_tsmAvgSalePrice: convertGoldToCopper(
-      validatedFormData.data.max_tsmAvgSalePrice
-    ),
     earlyAccessToken
   })
 
