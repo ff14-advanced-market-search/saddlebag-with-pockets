@@ -428,34 +428,6 @@ const UltrararePage = () => {
                 }
               }}
             />
-            <InputWithLabel
-              labelTitle={inputMap.min_quantity}
-              defaultValue={loaderData.min_quantity}
-              name="min_quantity"
-              type="number"
-              min={0}
-              toolTip="Minimum total quantity of items available across all eligible realms"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleFormChange('min_quantity', parseInt(value, 10))
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.max_quantity}
-              defaultValue={loaderData.max_quantity}
-              name="max_quantity"
-              type="number"
-              min={0}
-              toolTip="Maximum total quantity of items available across all eligible realms"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleFormChange('max_quantity', parseInt(value, 10))
-                }
-              }}
-            />
             <ExpansionSelect
               defaultValue={loaderData.expansion_number.toString()}
               onChange={(value) =>
@@ -518,6 +490,36 @@ const UltrararePage = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <InputWithLabel
+                labelTitle={inputMap.min_quantity}
+                defaultValue={loaderData.min_quantity}
+                name="min_quantity"
+                type="number"
+                min={0}
+                toolTip="Minimum total quantity of items available across all eligible realms"
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null || value !== undefined) {
+                    handleFormChange('min_quantity', parseInt(value, 10))
+                  }
+                }}
+              />
+              <InputWithLabel
+                labelTitle={inputMap.max_quantity}
+                defaultValue={loaderData.max_quantity}
+                name="max_quantity"
+                type="number"
+                min={0}
+                toolTip="Maximum total quantity of items available across all eligible realms"
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null || value !== undefined) {
+                    handleFormChange('max_quantity', parseInt(value, 10))
+                  }
+                }}
+              />
             </div>
             <div className="grid grid-cols-2 gap-4 mt-2">
               <InputWithLabel
