@@ -696,9 +696,6 @@ const UltrararePage = () => {
               />
             </div>
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
-            Note: Results may vary based on server population and availability.
-          </p>
         </SmallFormContainer>
       </PremiumPaywall>
     </PageWrapper>
@@ -735,6 +732,13 @@ const numericColumns = [
   { id: 'tsmHistoricVSCurrentMedian', label: 'TSM Historic VS Current Median' }
 ]
 
+interface NumericFilter {
+  id: string
+  column: string
+  min: string
+  max: string
+}
+
 const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
     () => new Set(columnList.map((col) => col.columnId))
@@ -743,9 +747,7 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
   const [columnPage, setColumnPage] = useState(0)
   const columnsPerPage = 20
   const [showNumericFilter, setShowNumericFilter] = useState(false)
-  const [filterColumn, setFilterColumn] = useState<string>('')
-  const [filterMin, setFilterMin] = useState<string>('')
-  const [filterMax, setFilterMax] = useState<string>('')
+  const [filters, setFilters] = useState<NumericFilter[]>([])
 
   useEffect(() => {
     if (window && document) {
@@ -758,39 +760,68 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
     [visibleColumns]
   )
 
-  // Filter data based on numeric filter
+  // Filter data based on all numeric filters
   const filteredData = useMemo(() => {
-    if (!filterColumn || (!filterMin && !filterMax)) {
+    const activeFilters = filters.filter((f) => f.column && (f.min || f.max))
+    if (activeFilters.length === 0) {
       return data
     }
 
     return data.filter((row) => {
       const rowData = row as Record<string, any>
-      const value = rowData[filterColumn]
-      if (value === null || value === undefined) return false
 
-      // Handle string values that represent numbers (like TSM comparison ratios)
-      let numValue: number
-      if (typeof value === 'string') {
-        const parsed = parseFloat(value)
-        if (isNaN(parsed)) return false
-        numValue = parsed
-      } else if (typeof value === 'number') {
-        numValue = value
-      } else {
-        return false
-      }
+      // All filters must pass (AND logic)
+      return activeFilters.every((filter) => {
+        const value = rowData[filter.column]
+        if (value === null || value === undefined) return false
 
-      const min = filterMin ? parseFloat(filterMin) : -Infinity
-      const max = filterMax ? parseFloat(filterMax) : Infinity
+        // Handle string values that represent numbers (like TSM comparison ratios)
+        let numValue: number
+        if (typeof value === 'string') {
+          const parsed = parseFloat(value)
+          if (isNaN(parsed)) return false
+          numValue = parsed
+        } else if (typeof value === 'number') {
+          numValue = value
+        } else {
+          return false
+        }
 
-      if (isNaN(min) && isNaN(max)) return true
-      if (isNaN(min)) return numValue <= max
-      if (isNaN(max)) return numValue >= min
+        const min = filter.min ? parseFloat(filter.min) : -Infinity
+        const max = filter.max ? parseFloat(filter.max) : Infinity
 
-      return numValue >= min && numValue <= max
+        if (isNaN(min) && isNaN(max)) return true
+        if (isNaN(min)) return numValue <= max
+        if (isNaN(max)) return numValue >= min
+
+        return numValue >= min && numValue <= max
+      })
     })
-  }, [data, filterColumn, filterMin, filterMax])
+  }, [data, filters])
+
+  const addFilter = () => {
+    setFilters([
+      ...filters,
+      {
+        id: Date.now().toString(),
+        column: '',
+        min: '',
+        max: ''
+      }
+    ])
+  }
+
+  const removeFilter = (id: string) => {
+    setFilters(filters.filter((f) => f.id !== id))
+  }
+
+  const updateFilter = (id: string, updates: Partial<NumericFilter>) => {
+    setFilters(filters.map((f) => (f.id === id ? { ...f, ...updates } : f)))
+  }
+
+  const clearAllFilters = () => {
+    setFilters([])
+  }
 
   // The column headers, left to right, from the image:
   // Item Name, Item Data, Shortage, Min Price, Total Quantity,
@@ -816,7 +847,7 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
           <Title title="Ultra Rare Item Results" />
         </div>
       </ContentContainer>
-      <div className="my-2 flex justify-between items-center flex-wrap gap-2">
+      <div className="my-2 flex items-center flex-wrap gap-2">
         <button
           type="button"
           onClick={() => setShowColumnControls(!showColumnControls)}
@@ -831,69 +862,128 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
         </button>
       </div>
       {showNumericFilter && (
-        <div className="my-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
-            Numeric Filter
-          </h3>
-          <div className="flex flex-wrap gap-4 items-end">
-            <div className="w-64">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
-                Column
-              </label>
-              <select
-                value={filterColumn}
-                onChange={(e) => setFilterColumn(e.target.value)}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2">
-                <option value="">Select a column...</option>
-                {numericColumns.map((col) => (
-                  <option key={col.id} value={col.id}>
-                    {col.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="w-40">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
-                Min Value (optional)
-              </label>
-              <input
-                type="number"
-                value={filterMin}
-                onChange={(e) => setFilterMin(e.target.value)}
-                placeholder="Min"
-                step="0.01"
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2"
-              />
-            </div>
-            <div className="w-40">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
-                Max Value (optional)
-              </label>
-              <input
-                type="number"
-                value={filterMax}
-                onChange={(e) => setFilterMax(e.target.value)}
-                placeholder="Max"
-                step="0.01"
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2"
-              />
+        <div className="my-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow max-w-4xl">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Numeric Filter
+            </h3>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={addFilter}
+                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm">
+                Add Filter
+              </button>
+              {filters.length > 0 && (
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
+                  Clear All
+                </button>
+              )}
             </div>
           </div>
-          {(filterColumn || filterMin || filterMax) && (
-            <div className="mt-3 flex items-center justify-between">
+          {filters.length === 0 ? (
+            <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+              No filters added. Click "Add Filter" to create one.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {filters.map((filter) => {
+                const columnLabel =
+                  numericColumns.find((c) => c.id === filter.column)?.label ||
+                  'Select a column...'
+                const isActive = filter.column && (filter.min || filter.max)
+                return (
+                  <div
+                    key={filter.id}
+                    className={`p-3 rounded-lg border-2 ${
+                      isActive
+                        ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
+                        : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50'
+                    }`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-100 flex-1 min-w-0">
+                        {isActive ? (
+                          <span className="text-green-700 dark:text-green-400">
+                            {columnLabel}
+                            {filter.min && ` ≥ ${filter.min}`}
+                            {filter.max && ` ≤ ${filter.max}`}
+                          </span>
+                        ) : (
+                          <span className="text-gray-500 dark:text-gray-400">
+                            Filter {filters.indexOf(filter) + 1} (inactive)
+                          </span>
+                        )}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeFilter(filter.id)}
+                        className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-xs ml-2 flex-shrink-0">
+                        Remove
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-4 items-end">
+                      <div className="w-64">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
+                          Column
+                        </label>
+                        <select
+                          value={filter.column}
+                          onChange={(e) =>
+                            updateFilter(filter.id, { column: e.target.value })
+                          }
+                          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2">
+                          <option value="">Select a column...</option>
+                          {numericColumns.map((col) => (
+                            <option key={col.id} value={col.id}>
+                              {col.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="w-40">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
+                          Min Value (optional)
+                        </label>
+                        <input
+                          type="number"
+                          value={filter.min}
+                          onChange={(e) =>
+                            updateFilter(filter.id, { min: e.target.value })
+                          }
+                          placeholder="Min"
+                          step="0.01"
+                          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2"
+                        />
+                      </div>
+                      <div className="w-40">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
+                          Max Value (optional)
+                        </label>
+                        <input
+                          type="number"
+                          value={filter.max}
+                          onChange={(e) =>
+                            updateFilter(filter.id, { max: e.target.value })
+                          }
+                          placeholder="Max"
+                          step="0.01"
+                          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          {filters.some((f) => f.column && (f.min || f.max)) && (
+            <div className="mt-3 pt-3 border-t border-gray-300 dark:border-gray-600">
               <span className="text-sm text-gray-600 dark:text-gray-400">
                 Showing {filteredData.length} of {data.length} items
               </span>
-              <button
-                type="button"
-                onClick={() => {
-                  setFilterColumn('')
-                  setFilterMin('')
-                  setFilterMax('')
-                }}
-                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
-                Clear Filter
-              </button>
             </div>
           )}
         </div>
