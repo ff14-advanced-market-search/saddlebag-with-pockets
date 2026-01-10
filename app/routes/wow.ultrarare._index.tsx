@@ -38,6 +38,7 @@ import {
   ItemClassSelect
 } from '~/components/form/WoW/WoWScanForm'
 import { itemQuality } from '~/utils/WoWFilers/itemQuality'
+import { itemClasses } from '~/utils/WoWFilers/itemClasses'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 
 const PAGE_URL = '/wow/ultrarare'
@@ -335,86 +336,197 @@ const UltrararePage = () => {
             </div>
           </div>
           <div className="pt-3 flex flex-col">
+            {/* Sort By - at the top */}
             <div className="w-full mt-2">
               <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
                 <label
-                  htmlFor="populationBlizz"
+                  htmlFor="sortBy"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-100">
-                  {inputMap.populationBlizz}
+                  {inputMap.sortBy}
                 </label>
-                <ToolTip data="Filter servers by Blizzard's population rating (LOW = 0, MEDIUM = 1, HIGH = 2, FULL = 3)" />
+                <ToolTip data="Choose how to sort the search results. Results will be sorted in descending order by the selected field" />
               </div>
               <Select
-                id="populationBlizz"
+                id="sortBy"
                 title=""
-                defaultValue={loaderData.populationBlizz.toString()}
-                name="populationBlizz"
+                defaultValue={loaderData.sortBy}
+                name="sortBy"
                 options={[
-                  { label: 'FULL', value: '3' },
-                  { label: 'HIGH', value: '2' },
-                  { label: 'MEDIUM', value: '1' },
-                  { label: 'LOW', value: '0' }
+                  { label: 'Shortage', value: 'shortage' },
+                  { label: 'Min Price', value: 'minPrice' },
+                  { label: 'Total Quantity', value: 'total_quantity' },
+                  {
+                    label: 'Eligible Realm Count',
+                    value: 'eligible_realm_count'
+                  },
+                  {
+                    label: 'Realm Count With Item',
+                    value: 'realm_count_with_item'
+                  },
+                  { label: 'Median Min Price', value: 'medianMinPrice' },
+                  { label: 'Average Min Price', value: 'averageMinPrice' },
+                  { label: 'TSM Market Value', value: 'tsmMarketValue' },
+                  { label: 'TSM Avg Sale Price', value: 'tsmAvgSalePrice' },
+                  { label: 'TSM Sale Rate', value: 'tsmSaleRate' },
+                  { label: 'TSM Sold Per Day', value: 'tsmSoldPerDay' },
+                  { label: 'TSM Historical', value: 'tsmHistorical' },
+                  {
+                    label: 'TSM Avg Sale VS Current Min',
+                    value: 'tsmAvgSaleVSCurrentMin'
+                  },
+                  {
+                    label: 'TSM Avg Sale VS Current Average',
+                    value: 'tsmAvgSaleVSCurrentAverage'
+                  },
+                  {
+                    label: 'TSM Avg Sale VS Current Median',
+                    value: 'tsmAvgSaleVSCurrentMedian'
+                  },
+                  {
+                    label: 'TSM Historic VS Current Min',
+                    value: 'tsmHistoricVSCurrentMin'
+                  },
+                  {
+                    label: 'TSM Historic VS Current Average',
+                    value: 'tsmHistoricVSCurrentAverage'
+                  },
+                  {
+                    label: 'TSM Historic VS Current Median',
+                    value: 'tsmHistoricVSCurrentMedian'
+                  }
                 ]}
                 onChange={(e) => {
                   const value = e.currentTarget.value
                   if (value !== null || value !== undefined) {
-                    handleFormChange('populationBlizz', parseInt(value, 10))
+                    handleFormChange('sortBy', value)
                   }
                 }}
               />
             </div>
-            <InputWithLabel
-              labelTitle={inputMap.rankingWP}
-              defaultValue={loaderData.rankingWP}
-              name="rankingWP"
-              type="number"
-              min={1}
-              max={100}
-              toolTip="Filter by raid clearance (1-100, based on how many guilds cleared the raid and how soon. 1 is the best raiders, 100 is the worst raiders.)"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleFormChange('rankingWP', parseInt(value, 10))
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.populationWP}
-              defaultValue={loaderData.populationWP}
-              name="populationWP"
-              type="number"
-              min={1}
-              toolTip="Minimum WoWProgress server population to include in search"
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null || value !== undefined) {
-                  handleFormChange('populationWP', parseInt(value, 10))
-                }
-              }}
-            />
-            <ExpansionSelect
-              defaultValue={loaderData.expansion_number.toString()}
-              onChange={(value) =>
-                handleFormChange('expansion_number', parseInt(value, 10))
-              }
-            />
-            <input
-              type="hidden"
-              name="expansion_number"
-              value={searchParams.expansion_number}
-            />
-            <ItemClassSelect
-              itemClass={searchParams.item_class}
-              itemSubClass={searchParams.item_subclass}
-              onChange={(itemClassValue, itemSubClassValue) => {
-                // If item_class is -1 (All), ensure item_subclass is also -1
-                const finalSubclass =
-                  itemClassValue === -1 ? -1 : itemSubClassValue
-                handleFormChange('item_class', itemClassValue)
-                handleFormChange('item_subclass', finalSubclass)
-              }}
-            />
-            {/* Hidden inputs to ensure correct values are submitted (ItemClassSelect uses itemClass/itemSubClass internally) */}
+            {/* Population Blizzard, Ranking, Population WP - side by side */}
+            <div className="grid grid-cols-3 gap-4 mt-2">
+              <div className="w-full">
+                <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+                  <label
+                    htmlFor="populationBlizz"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                    {inputMap.populationBlizz}
+                  </label>
+                  <ToolTip data="Filter servers by Blizzard's population rating (LOW = 0, MEDIUM = 1, HIGH = 2, FULL = 3)" />
+                </div>
+                <Select
+                  id="populationBlizz"
+                  title=""
+                  defaultValue={loaderData.populationBlizz.toString()}
+                  name="populationBlizz"
+                  options={[
+                    { label: 'FULL', value: '3' },
+                    { label: 'HIGH', value: '2' },
+                    { label: 'MEDIUM', value: '1' },
+                    { label: 'LOW', value: '0' }
+                  ]}
+                  onChange={(e) => {
+                    const value = e.currentTarget.value
+                    if (value !== null || value !== undefined) {
+                      handleFormChange('populationBlizz', parseInt(value, 10))
+                    }
+                  }}
+                />
+              </div>
+              <InputWithLabel
+                labelTitle={inputMap.rankingWP}
+                defaultValue={loaderData.rankingWP}
+                name="rankingWP"
+                type="number"
+                min={1}
+                max={100}
+                toolTip="Filter by raid clearance (1-100, based on how many guilds cleared the raid and how soon. 1 is the best raiders, 100 is the worst raiders.)"
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null || value !== undefined) {
+                    handleFormChange('rankingWP', parseInt(value, 10))
+                  }
+                }}
+              />
+              <InputWithLabel
+                labelTitle={inputMap.populationWP}
+                defaultValue={loaderData.populationWP}
+                name="populationWP"
+                type="number"
+                min={1}
+                toolTip="Minimum WoWProgress server population to include in search"
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null || value !== undefined) {
+                    handleFormChange('populationWP', parseInt(value, 10))
+                  }
+                }}
+              />
+            </div>
+            {/* Item Category and Item Sub Category - side by side */}
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <div className="w-full">
+                <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+                  <label
+                    htmlFor="itemClass"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                    Item Category
+                  </label>
+                  <ToolTip data="Pick an item category to search for" />
+                </div>
+                <select
+                  id="itemClass"
+                  name="itemClass"
+                  value={searchParams.item_class}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100"
+                  onChange={(e) => {
+                    const itemClassValue = parseInt(e.target.value, 10)
+                    const finalSubclass =
+                      itemClassValue === -1 ? -1 : searchParams.item_subclass
+                    handleFormChange('item_class', itemClassValue)
+                    handleFormChange('item_subclass', finalSubclass)
+                  }}>
+                  <option value={-1}>All</option>
+                  {itemClasses.map(({ name, value }) => (
+                    <option key={name + value} value={value}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="w-full">
+                <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+                  <label
+                    htmlFor="itemSubClass"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                    Item Sub Category
+                  </label>
+                  <ToolTip data="Pick an item sub category to search for, or select 'Exclude Non-Cosmetic' to filter out items not used for transmogrification." />
+                </div>
+                <select
+                  id="itemSubClass"
+                  name="itemSubClass"
+                  value={searchParams.item_subclass}
+                  disabled={searchParams.item_class === -1}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 disabled:bg-gray-200 dark:disabled:bg-gray-700"
+                  onChange={(e) => {
+                    handleFormChange(
+                      'item_subclass',
+                      parseInt(e.target.value, 10)
+                    )
+                  }}>
+                  <option value={-1}>All</option>
+                  {itemClasses
+                    .find((c) => c.value === searchParams.item_class)
+                    ?.subClasses?.map(({ name, value }) => (
+                      <option key={name + value} value={value}>
+                        {name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+            {/* Hidden inputs to ensure correct values are submitted */}
             <input
               type="hidden"
               name="item_class"
@@ -427,34 +539,48 @@ const UltrararePage = () => {
                 searchParams.item_class === -1 ? -1 : searchParams.item_subclass
               }
             />
-            <div className="w-full mt-2">
-              <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
-                <label
-                  htmlFor="min_quality"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-100">
-                  {inputMap.min_quality}
-                </label>
-                <ToolTip data="Filter items by minimum quality level (Poor, Common, Uncommon, Rare, Epic, Legendary, Artifact, Heirloom)" />
+            {/* Expansion and Min Quality - side by side */}
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <ExpansionSelect
+                defaultValue={loaderData.expansion_number.toString()}
+                onChange={(value) =>
+                  handleFormChange('expansion_number', parseInt(value, 10))
+                }
+              />
+              <div className="w-full">
+                <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+                  <label
+                    htmlFor="min_quality"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                    {inputMap.min_quality}
+                  </label>
+                  <ToolTip data="Filter items by minimum quality level (Poor, Common, Uncommon, Rare, Epic, Legendary, Artifact, Heirloom)" />
+                </div>
+                <select
+                  id="min_quality"
+                  name="min_quality"
+                  defaultValue={loaderData.min_quality.toString()}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100"
+                  onChange={(e) => {
+                    const value = e.currentTarget.value
+                    if (value !== null || value !== undefined) {
+                      handleFormChange('min_quality', parseInt(value, 10))
+                    }
+                  }}>
+                  <option value={-1}>All</option>
+                  {itemQuality.map(({ name, value }) => (
+                    <option key={name + value} value={value}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <select
-                id="min_quality"
-                name="min_quality"
-                defaultValue={loaderData.min_quality.toString()}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100"
-                onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null || value !== undefined) {
-                    handleFormChange('min_quality', parseInt(value, 10))
-                  }
-                }}>
-                <option value={-1}>All</option>
-                {itemQuality.map(({ name, value }) => (
-                  <option key={name + value} value={value}>
-                    {name}
-                  </option>
-                ))}
-              </select>
             </div>
+            <input
+              type="hidden"
+              name="expansion_number"
+              value={searchParams.expansion_number}
+            />
             <div className="grid grid-cols-2 gap-4 mt-2">
               <InputWithLabel
                 labelTitle={inputMap.min_quantity}
@@ -569,72 +695,6 @@ const UltrararePage = () => {
                 }}
               />
             </div>
-            <div className="w-full mt-2">
-              <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
-                <label
-                  htmlFor="sortBy"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-100">
-                  {inputMap.sortBy}
-                </label>
-                <ToolTip data="Choose how to sort the search results. Results will be sorted in descending order by the selected field" />
-              </div>
-              <Select
-                id="sortBy"
-                title=""
-                defaultValue={loaderData.sortBy}
-                name="sortBy"
-                options={[
-                  { label: 'Shortage', value: 'shortage' },
-                  { label: 'Min Price', value: 'minPrice' },
-                  { label: 'Total Quantity', value: 'total_quantity' },
-                  {
-                    label: 'Eligible Realm Count',
-                    value: 'eligible_realm_count'
-                  },
-                  {
-                    label: 'Realm Count With Item',
-                    value: 'realm_count_with_item'
-                  },
-                  { label: 'Median Min Price', value: 'medianMinPrice' },
-                  { label: 'Average Min Price', value: 'averageMinPrice' },
-                  { label: 'TSM Market Value', value: 'tsmMarketValue' },
-                  { label: 'TSM Avg Sale Price', value: 'tsmAvgSalePrice' },
-                  { label: 'TSM Sale Rate', value: 'tsmSaleRate' },
-                  { label: 'TSM Sold Per Day', value: 'tsmSoldPerDay' },
-                  { label: 'TSM Historical', value: 'tsmHistorical' },
-                  {
-                    label: 'TSM Avg Sale VS Current Min',
-                    value: 'tsmAvgSaleVSCurrentMin'
-                  },
-                  {
-                    label: 'TSM Avg Sale VS Current Average',
-                    value: 'tsmAvgSaleVSCurrentAverage'
-                  },
-                  {
-                    label: 'TSM Avg Sale VS Current Median',
-                    value: 'tsmAvgSaleVSCurrentMedian'
-                  },
-                  {
-                    label: 'TSM Historic VS Current Min',
-                    value: 'tsmHistoricVSCurrentMin'
-                  },
-                  {
-                    label: 'TSM Historic VS Current Average',
-                    value: 'tsmHistoricVSCurrentAverage'
-                  },
-                  {
-                    label: 'TSM Historic VS Current Median',
-                    value: 'tsmHistoricVSCurrentMedian'
-                  }
-                ]}
-                onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null || value !== undefined) {
-                    handleFormChange('sortBy', value)
-                  }
-                }}
-              />
-            </div>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
             Note: Results may vary based on server population and availability.
@@ -647,6 +707,34 @@ const UltrararePage = () => {
 
 export default UltrararePage
 
+// List of numeric columns that can be filtered
+const numericColumns = [
+  { id: 'shortage', label: 'Shortage' },
+  { id: 'minPrice', label: 'Min Price' },
+  { id: 'total_quantity', label: 'Total Quantity' },
+  { id: 'eligible_realm_count', label: 'Eligible Realm Count' },
+  { id: 'realm_count_with_item', label: 'Realm Count With Item' },
+  { id: 'medianMinPrice', label: 'Median Min Price' },
+  { id: 'averageMinPrice', label: 'Average Min Price' },
+  { id: 'tsmMarketValue', label: 'TSM Market Value' },
+  { id: 'tsmAvgSalePrice', label: 'TSM Avg Sale Price' },
+  { id: 'tsmSaleRate', label: 'TSM Sale Rate' },
+  { id: 'tsmSoldPerDay', label: 'TSM Sold Per Day' },
+  { id: 'tsmHistorical', label: 'TSM Historical' },
+  { id: 'tsmAvgSaleVSCurrentMin', label: 'TSM Avg Sale VS Current Min' },
+  {
+    id: 'tsmAvgSaleVSCurrentAverage',
+    label: 'TSM Avg Sale VS Current Average'
+  },
+  { id: 'tsmAvgSaleVSCurrentMedian', label: 'TSM Avg Sale VS Current Median' },
+  { id: 'tsmHistoricVSCurrentMin', label: 'TSM Historic VS Current Min' },
+  {
+    id: 'tsmHistoricVSCurrentAverage',
+    label: 'TSM Historic VS Current Average'
+  },
+  { id: 'tsmHistoricVSCurrentMedian', label: 'TSM Historic VS Current Median' }
+]
+
 const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
     () => new Set(columnList.map((col) => col.columnId))
@@ -654,6 +742,10 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
   const [showColumnControls, setShowColumnControls] = useState(false)
   const [columnPage, setColumnPage] = useState(0)
   const columnsPerPage = 20
+  const [showNumericFilter, setShowNumericFilter] = useState(false)
+  const [filterColumn, setFilterColumn] = useState<string>('')
+  const [filterMin, setFilterMin] = useState<string>('')
+  const [filterMax, setFilterMax] = useState<string>('')
 
   useEffect(() => {
     if (window && document) {
@@ -665,6 +757,40 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
     () => columnList.filter((col) => visibleColumns.has(col.columnId)),
     [visibleColumns]
   )
+
+  // Filter data based on numeric filter
+  const filteredData = useMemo(() => {
+    if (!filterColumn || (!filterMin && !filterMax)) {
+      return data
+    }
+
+    return data.filter((row) => {
+      const rowData = row as Record<string, any>
+      const value = rowData[filterColumn]
+      if (value === null || value === undefined) return false
+
+      // Handle string values that represent numbers (like TSM comparison ratios)
+      let numValue: number
+      if (typeof value === 'string') {
+        const parsed = parseFloat(value)
+        if (isNaN(parsed)) return false
+        numValue = parsed
+      } else if (typeof value === 'number') {
+        numValue = value
+      } else {
+        return false
+      }
+
+      const min = filterMin ? parseFloat(filterMin) : -Infinity
+      const max = filterMax ? parseFloat(filterMax) : Infinity
+
+      if (isNaN(min) && isNaN(max)) return true
+      if (isNaN(min)) return numValue <= max
+      if (isNaN(max)) return numValue >= min
+
+      return numValue >= min && numValue <= max
+    })
+  }, [data, filterColumn, filterMin, filterMax])
 
   // The column headers, left to right, from the image:
   // Item Name, Item Data, Shortage, Min Price, Total Quantity,
@@ -697,7 +823,81 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium text-sm">
           {showColumnControls ? 'Hide' : 'Show'} Column Controls
         </button>
+        <button
+          type="button"
+          onClick={() => setShowNumericFilter(!showNumericFilter)}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors font-medium text-sm">
+          {showNumericFilter ? 'Hide' : 'Show'} Numeric Filter
+        </button>
       </div>
+      {showNumericFilter && (
+        <div className="my-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+            Numeric Filter
+          </h3>
+          <div className="flex flex-wrap gap-4 items-end">
+            <div className="w-64">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
+                Column
+              </label>
+              <select
+                value={filterColumn}
+                onChange={(e) => setFilterColumn(e.target.value)}
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2">
+                <option value="">Select a column...</option>
+                {numericColumns.map((col) => (
+                  <option key={col.id} value={col.id}>
+                    {col.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-40">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
+                Min Value (optional)
+              </label>
+              <input
+                type="number"
+                value={filterMin}
+                onChange={(e) => setFilterMin(e.target.value)}
+                placeholder="Min"
+                step="0.01"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2"
+              />
+            </div>
+            <div className="w-40">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-1">
+                Max Value (optional)
+              </label>
+              <input
+                type="number"
+                value={filterMax}
+                onChange={(e) => setFilterMax(e.target.value)}
+                placeholder="Max"
+                step="0.01"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100 p-2"
+              />
+            </div>
+          </div>
+          {(filterColumn || filterMin || filterMax) && (
+            <div className="mt-3 flex items-center justify-between">
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                Showing {filteredData.length} of {data.length} items
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setFilterColumn('')
+                  setFilterMin('')
+                  setFilterMax('')
+                }}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
+                Clear Filter
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       {showColumnControls && (
         <div className="my-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
@@ -824,7 +1024,7 @@ const Results = ({ data, sortby }: UltrarareResponse & { sortby: string }) => {
           'tsmHistoricVSCurrentAverage',
           'tsmHistoricVSCurrentMedian'
         ]}
-        data={data as Array<UltrarareItem & Record<string, any>>}
+        data={filteredData as Array<UltrarareItem & Record<string, any>>}
         csvOptions={{
           filename: 'saddlebag-wow-ultrarare.csv',
           columns: [
