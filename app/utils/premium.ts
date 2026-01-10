@@ -28,6 +28,21 @@ export function getHasPremium(roles: string[] | undefined | null): boolean {
   return roles.some((roleId) => PREMIUM_ROLE_IDS.includes(roleId))
 }
 
+/**
+ * Determines whether the user has the Elite role.
+ * Checks for both ELITE_ROLE_ID and DISCORD_ELITE_ROLE_ID.
+ *
+ * @param roles - An array of role IDs to check, or `undefined`/`null`
+ * @returns `true` if the user has an Elite role; otherwise, `false`
+ */
+export function getHasElite(roles: string[] | undefined | null): boolean {
+  if (!Array.isArray(roles)) return false
+  return (
+    roles.includes('1209734479581552731') || // ELITE_ROLE_ID
+    roles.includes('1211140468205944852') // DISCORD_ELITE_ROLE_ID
+  )
+}
+
 // Session timeout configuration (8 days in milliseconds)
 export const ROLES_REFRESH_TIMEOUT = 8 * 24 * 60 * 60 * 1000 // 10 * 1000
 

@@ -7,5 +7,6 @@ export {
   FF14_WORLD,
   WOW_REALM_ID,
   WOW_REALM_NAME,
-  WOW_REGION
+  WOW_REGION,
+  EARLY_ACCESS_TOKEN
 } from './sessions/index'

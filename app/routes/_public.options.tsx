@@ -14,7 +14,8 @@ import {
   FF14_WORLD,
   WOW_REALM_ID,
   WOW_REALM_NAME,
-  WOW_REGION
+  WOW_REGION,
+  EARLY_ACCESS_TOKEN
 } from '~/sessions'
 import { useDispatch } from 'react-redux'
 import { setCookie } from '~/utils/cookies'
@@ -36,7 +37,8 @@ import {
   StatusBanner,
   ThemeSection,
   OptionsHeader,
-  DefaultSearchGameSection
+  DefaultSearchGameSection,
+  EarlyAccessTokenSection
 } from '~/components/Options'
 import { getWindowUrlParams } from '~/utils/urlHelpers'
 
@@ -63,7 +65,11 @@ export const validator = z.object({
   data_center: z.string().min(1),
   world: z.string().min(1),
   region: z.union([z.literal('NA'), z.literal('EU')]),
-  homeRealm: z.string().min(1)
+  homeRealm: z.string().min(1),
+  earlyAccessToken: z
+    .string()
+    .regex(/^[a-zA-Z0-9]*$/, 'Token must be alphanumeric only')
+    .default('')
 })
 
 export const action: ActionFunction = async ({ request }) => {
@@ -97,6 +103,14 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(WOW_REALM_NAME, server.name)
   session.set(WOW_REGION, region)
 
+  // Handle early access token - save if provided, remove if empty
+  const trimmedToken = result.data.earlyAccessToken?.trim() || ''
+  if (trimmedToken) {
+    session.set(EARLY_ACCESS_TOKEN, trimmedToken)
+  } else {
+    session.unset(EARLY_ACCESS_TOKEN)
+  }
+
   const cookies = [
     setCookie(DATA_CENTER, data_center),
     setCookie(FF14_WORLD, world),
@@ -104,6 +118,16 @@ export const action: ActionFunction = async ({ request }) => {
     setCookie(WOW_REALM_NAME, server.name),
     setCookie(WOW_REGION, region)
   ]
+
+  // Add early access token cookie if it exists, or delete it if empty
+  if (trimmedToken) {
+    cookies.push(setCookie(EARLY_ACCESS_TOKEN, trimmedToken))
+  } else {
+    // Delete cookie by setting Max-Age=0
+    cookies.push(
+      `${EARLY_ACCESS_TOKEN}=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Lax`
+    )
+  }
 
   // Save the session and cookies without redirecting
   return json(
@@ -185,7 +209,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     discordId: session.get('discord_id'),
     discordUsername: session.get('discord_username'),
     discordAvatar: session.get('discord_avatar'),
-    discordRoles: session.get('discord_roles') || []
+    discordRoles: session.get('discord_roles') || [],
+    earlyAccessToken: session.get(EARLY_ACCESS_TOKEN) || ''
   })
 }
 
@@ -224,6 +249,7 @@ export default function Options() {
     formData.append('world', newWorld.world)
     formData.append('region', data.wowRegion)
     formData.append('homeRealm', `${data.wowRealm.id}---${data.wowRealm.name}`)
+    formData.append('earlyAccessToken', data.earlyAccessToken || '')
     fetcher.submit(formData, { method: 'POST' })
   }
 
@@ -241,6 +267,18 @@ export default function Options() {
       'homeRealm',
       `${newRealm.server.id}---${newRealm.server.name}`
     )
+    formData.append('earlyAccessToken', data.earlyAccessToken || '')
+    fetcher.submit(formData, { method: 'POST' })
+  }
+
+  const handleEarlyAccessTokenChange = (token: string) => {
+    // Save to session
+    const formData = new FormData()
+    formData.append('data_center', data.data_center)
+    formData.append('world', data.world)
+    formData.append('region', data.wowRegion)
+    formData.append('homeRealm', `${data.wowRealm.id}---${data.wowRealm.name}`)
+    formData.append('earlyAccessToken', token)
     fetcher.submit(formData, { method: 'POST' })
   }
 
@@ -282,6 +320,15 @@ export default function Options() {
           title="Default Search Game"
           description="Choose which game the item search defaults to when opened.">
           <DefaultSearchGameSection defaultSearchGame={defaultSearchGame} />
+        </OptionSection>
+        <OptionSection
+          title="Early Access Token"
+          description="Enter your early access token to unlock premium features.">
+          <EarlyAccessTokenSection
+            earlyAccessToken={data.earlyAccessToken || ''}
+            onTokenChange={handleEarlyAccessTokenChange}
+            isSubmitting={fetcher.state === 'submitting'}
+          />
         </OptionSection>
         <OptionSection
           title="FFXIV World Selection"

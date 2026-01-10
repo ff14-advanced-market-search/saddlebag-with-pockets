@@ -298,6 +298,11 @@ const navGroups: Array<{
         icon: DocumentSearchIcon
       },
       {
+        name: 'Ultra Rare',
+        href: 'wow/ultrarare/recommended',
+        icon: DocumentSearchIcon
+      },
+      {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
         icon: PencilAltIcon

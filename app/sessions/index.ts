@@ -13,6 +13,7 @@ export const WOW_REALM_NAME = 'wow_realm_name'
 export const DISCORD_ID = 'discord_id'
 export const DISCORD_USERNAME = 'discord_username'
 export const DISCORD_AVATAR = 'discord_avatar'
+export const EARLY_ACCESS_TOKEN = 'early_access_token'
 
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
