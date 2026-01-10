@@ -295,7 +295,8 @@ const UltrararePage = () => {
           isLoggedIn: loaderData.isLoggedIn,
           hasPremium: loaderData.hasElite,
           needsRefresh: loaderData.needsRefresh
-        }}>
+        }}
+        tier="elite">
         <Results {...result} />
       </PremiumPaywall>
     )
@@ -318,7 +319,8 @@ const UltrararePage = () => {
           isLoggedIn: loaderData.isLoggedIn,
           hasPremium: loaderData.hasElite,
           needsRefresh: loaderData.needsRefresh
-        }}>
+        }}
+        tier="elite">
         <SmallFormContainer
           title="Ultra Rare Item Search"
           onClick={() => {}}
