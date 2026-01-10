@@ -519,86 +519,90 @@ const UltrararePage = () => {
                 ))}
               </select>
             </div>
-            <InputWithLabel
-              labelTitle={inputMap.min_buyoutPrice}
-              defaultValue={searchParams.min_buyoutPrice}
-              name="min_buyoutPrice"
-              type="number"
-              min={0}
-              step="0.01"
-              toolTip="Minimum buyout price in gold to filter search results."
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null && value !== undefined) {
-                  const numValue = parseFloat(value)
-                  if (!isNaN(numValue) && numValue >= 0) {
-                    handleFormChange('min_buyoutPrice', numValue)
-                  } else {
-                    handleFormChange('min_buyoutPrice', 0)
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <InputWithLabel
+                labelTitle={inputMap.min_buyoutPrice}
+                defaultValue={searchParams.min_buyoutPrice}
+                name="min_buyoutPrice"
+                type="number"
+                min={0}
+                step="0.01"
+                toolTip="Minimum buyout price in gold to filter search results."
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null && value !== undefined) {
+                    const numValue = parseFloat(value)
+                    if (!isNaN(numValue) && numValue >= 0) {
+                      handleFormChange('min_buyoutPrice', numValue)
+                    } else {
+                      handleFormChange('min_buyoutPrice', 0)
+                    }
                   }
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.max_buyoutPrice}
-              defaultValue={searchParams.max_buyoutPrice}
-              name="max_buyoutPrice"
-              type="number"
-              min={0}
-              step="0.01"
-              toolTip="Maximum buyout price in gold to filter search results."
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null && value !== undefined) {
-                  const numValue = parseFloat(value)
-                  if (!isNaN(numValue) && numValue >= 0) {
-                    handleFormChange('max_buyoutPrice', numValue)
-                  } else {
-                    handleFormChange('max_buyoutPrice', 0)
+                }}
+              />
+              <InputWithLabel
+                labelTitle={inputMap.max_buyoutPrice}
+                defaultValue={searchParams.max_buyoutPrice}
+                name="max_buyoutPrice"
+                type="number"
+                min={0}
+                step="0.01"
+                toolTip="Maximum buyout price in gold to filter search results."
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null && value !== undefined) {
+                    const numValue = parseFloat(value)
+                    if (!isNaN(numValue) && numValue >= 0) {
+                      handleFormChange('max_buyoutPrice', numValue)
+                    } else {
+                      handleFormChange('max_buyoutPrice', 0)
+                    }
                   }
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.min_tsmAvgSalePrice}
-              defaultValue={searchParams.min_tsmAvgSalePrice}
-              name="min_tsmAvgSalePrice"
-              type="number"
-              min={0}
-              step="0.01"
-              toolTip="Minimum TSM average sale price in gold to filter search results."
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null && value !== undefined) {
-                  const numValue = parseFloat(value)
-                  if (!isNaN(numValue) && numValue >= 0) {
-                    handleFormChange('min_tsmAvgSalePrice', numValue)
-                  } else {
-                    handleFormChange('min_tsmAvgSalePrice', 0)
+                }}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <InputWithLabel
+                labelTitle={inputMap.min_tsmAvgSalePrice}
+                defaultValue={searchParams.min_tsmAvgSalePrice}
+                name="min_tsmAvgSalePrice"
+                type="number"
+                min={0}
+                step="0.01"
+                toolTip="Minimum TSM average sale price in gold to filter search results."
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null && value !== undefined) {
+                    const numValue = parseFloat(value)
+                    if (!isNaN(numValue) && numValue >= 0) {
+                      handleFormChange('min_tsmAvgSalePrice', numValue)
+                    } else {
+                      handleFormChange('min_tsmAvgSalePrice', 0)
+                    }
                   }
-                }
-              }}
-            />
-            <InputWithLabel
-              labelTitle={inputMap.max_tsmAvgSalePrice}
-              defaultValue={searchParams.max_tsmAvgSalePrice}
-              name="max_tsmAvgSalePrice"
-              type="number"
-              min={0}
-              step="0.01"
-              toolTip="Maximum TSM average sale price in gold to filter search results."
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                if (value !== null && value !== undefined) {
-                  const numValue = parseFloat(value)
-                  if (!isNaN(numValue) && numValue >= 0) {
-                    handleFormChange('max_tsmAvgSalePrice', numValue)
-                  } else {
-                    handleFormChange('max_tsmAvgSalePrice', 0)
+                }}
+              />
+              <InputWithLabel
+                labelTitle={inputMap.max_tsmAvgSalePrice}
+                defaultValue={searchParams.max_tsmAvgSalePrice}
+                name="max_tsmAvgSalePrice"
+                type="number"
+                min={0}
+                step="0.01"
+                toolTip="Maximum TSM average sale price in gold to filter search results."
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  if (value !== null && value !== undefined) {
+                    const numValue = parseFloat(value)
+                    if (!isNaN(numValue) && numValue >= 0) {
+                      handleFormChange('max_tsmAvgSalePrice', numValue)
+                    } else {
+                      handleFormChange('max_tsmAvgSalePrice', 0)
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            </div>
             <div className="w-full mt-2">
               <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
                 <label
