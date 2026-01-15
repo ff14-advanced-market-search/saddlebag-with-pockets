@@ -25,7 +25,7 @@ import {
   toggleDarkMode
 } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import React from 'react'
+import React, { useRef } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
@@ -271,15 +271,28 @@ export default function Options() {
     fetcher.submit(formData, { method: 'POST' })
   }
 
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
+
   const handleEarlyAccessTokenChange = (token: string) => {
-    // Save to session
-    const formData = new FormData()
-    formData.append('data_center', data.data_center)
-    formData.append('world', data.world)
-    formData.append('region', data.wowRegion)
-    formData.append('homeRealm', `${data.wowRealm.id}---${data.wowRealm.name}`)
-    formData.append('earlyAccessToken', token)
-    fetcher.submit(formData, { method: 'POST' })
+    // Clear previous timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current)
+    }
+
+    // Set new timer to submit after 500ms of no input
+    debounceTimerRef.current = setTimeout(() => {
+      // Save to session
+      const formData = new FormData()
+      formData.append('data_center', data.data_center)
+      formData.append('world', data.world)
+      formData.append('region', data.wowRegion)
+      formData.append(
+        'homeRealm',
+        `${data.wowRealm.id}---${data.wowRealm.name}`
+      )
+      formData.append('earlyAccessToken', token)
+      fetcher.submit(formData, { method: 'POST' })
+    }, 500)
   }
 
   // Show success message when fetcher completes successfully

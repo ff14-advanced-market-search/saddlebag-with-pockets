@@ -48,7 +48,7 @@ export interface UltrarareItem {
 }
 
 export interface UltrarareResponse {
-  data: Array<UltrarareItem>
+  data: UltrarareItem[]
 }
 
 /**

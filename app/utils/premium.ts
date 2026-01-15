@@ -37,10 +37,11 @@ export function getHasPremium(roles: string[] | undefined | null): boolean {
  */
 export function getHasElite(roles: string[] | undefined | null): boolean {
   if (!Array.isArray(roles)) return false
-  return (
-    roles.includes('1209734479581552731') || // ELITE_ROLE_ID
-    roles.includes('1211140468205944852') // DISCORD_ELITE_ROLE_ID
+  const eliteRoleIds = PREMIUM_ROLE_IDS.filter(
+    (roleId) =>
+      roleId === '1209734479581552731' || roleId === '1211140468205944852'
   )
+  return eliteRoleIds.some((roleId) => roles.includes(roleId))
 }
 
 // Session timeout configuration (8 days in milliseconds)

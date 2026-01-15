@@ -3,7 +3,7 @@ import type {
   LoaderFunction,
   MetaFunction
 } from '@remix-run/cloudflare'
-import { json, redirect } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { useEffect, useState, useMemo } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
@@ -398,10 +398,7 @@ const UltrararePage = () => {
                   }
                 ]}
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null || value !== undefined) {
-                    handleFormChange('sortBy', value)
-                  }
+                  handleFormChange('sortBy', e.currentTarget.value)
                 }}
               />
             </div>
@@ -428,10 +425,10 @@ const UltrararePage = () => {
                     { label: 'LOW', value: '0' }
                   ]}
                   onChange={(e) => {
-                    const value = e.currentTarget.value
-                    if (value !== null || value !== undefined) {
-                      handleFormChange('populationBlizz', parseInt(value, 10))
-                    }
+                    handleFormChange(
+                      'populationBlizz',
+                      parseInt(e.currentTarget.value, 10)
+                    )
                   }}
                 />
               </div>
@@ -444,10 +441,10 @@ const UltrararePage = () => {
                 max={100}
                 toolTip="Filter by raid clearance (1-100, based on how many guilds cleared the raid and how soon. 1 is the best raiders, 100 is the worst raiders.)"
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null || value !== undefined) {
-                    handleFormChange('rankingWP', parseInt(value, 10))
-                  }
+                  handleFormChange(
+                    'rankingWP',
+                    parseInt(e.currentTarget.value, 10)
+                  )
                 }}
               />
               <InputWithLabel
@@ -458,10 +455,10 @@ const UltrararePage = () => {
                 min={1}
                 toolTip="Minimum WoWProgress server population to include in search"
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null || value !== undefined) {
-                    handleFormChange('populationWP', parseInt(value, 10))
-                  }
+                  handleFormChange(
+                    'populationWP',
+                    parseInt(e.currentTarget.value, 10)
+                  )
                 }}
               />
             </div>
@@ -564,10 +561,10 @@ const UltrararePage = () => {
                   defaultValue={loaderData.min_quality.toString()}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-100"
                   onChange={(e) => {
-                    const value = e.currentTarget.value
-                    if (value !== null || value !== undefined) {
-                      handleFormChange('min_quality', parseInt(value, 10))
-                    }
+                    handleFormChange(
+                      'min_quality',
+                      parseInt(e.currentTarget.value, 10)
+                    )
                   }}>
                   <option value={-1}>All</option>
                   {itemQuality.map(({ name, value }) => (
@@ -592,10 +589,10 @@ const UltrararePage = () => {
                 min={0}
                 toolTip="Minimum total quantity of items available across all eligible realms"
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null || value !== undefined) {
-                    handleFormChange('min_quantity', parseInt(value, 10))
-                  }
+                  handleFormChange(
+                    'min_quantity',
+                    parseInt(e.currentTarget.value, 10)
+                  )
                 }}
               />
               <InputWithLabel
@@ -606,10 +603,10 @@ const UltrararePage = () => {
                 min={0}
                 toolTip="Maximum total quantity of items available across all eligible realms"
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null || value !== undefined) {
-                    handleFormChange('max_quantity', parseInt(value, 10))
-                  }
+                  handleFormChange(
+                    'max_quantity',
+                    parseInt(e.currentTarget.value, 10)
+                  )
                 }}
               />
             </div>
@@ -623,14 +620,11 @@ const UltrararePage = () => {
                 step="0.01"
                 toolTip="Minimum buyout price in gold to filter search results."
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null && value !== undefined) {
-                    const numValue = parseFloat(value)
-                    if (!isNaN(numValue) && numValue >= 0) {
-                      handleFormChange('min_buyoutPrice', numValue)
-                    } else {
-                      handleFormChange('min_buyoutPrice', 0)
-                    }
+                  const numValue = parseFloat(e.currentTarget.value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('min_buyoutPrice', numValue)
+                  } else {
+                    handleFormChange('min_buyoutPrice', 0)
                   }
                 }}
               />
@@ -643,14 +637,11 @@ const UltrararePage = () => {
                 step="0.01"
                 toolTip="Maximum buyout price in gold to filter search results."
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null && value !== undefined) {
-                    const numValue = parseFloat(value)
-                    if (!isNaN(numValue) && numValue >= 0) {
-                      handleFormChange('max_buyoutPrice', numValue)
-                    } else {
-                      handleFormChange('max_buyoutPrice', 0)
-                    }
+                  const numValue = parseFloat(e.currentTarget.value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('max_buyoutPrice', numValue)
+                  } else {
+                    handleFormChange('max_buyoutPrice', 0)
                   }
                 }}
               />
@@ -665,14 +656,11 @@ const UltrararePage = () => {
                 step="0.01"
                 toolTip="Minimum TSM average sale price in gold to filter search results."
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null && value !== undefined) {
-                    const numValue = parseFloat(value)
-                    if (!isNaN(numValue) && numValue >= 0) {
-                      handleFormChange('min_tsmAvgSalePrice', numValue)
-                    } else {
-                      handleFormChange('min_tsmAvgSalePrice', 0)
-                    }
+                  const numValue = parseFloat(e.currentTarget.value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('min_tsmAvgSalePrice', numValue)
+                  } else {
+                    handleFormChange('min_tsmAvgSalePrice', 0)
                   }
                 }}
               />
@@ -685,14 +673,11 @@ const UltrararePage = () => {
                 step="0.01"
                 toolTip="Maximum TSM average sale price in gold to filter search results."
                 onChange={(e) => {
-                  const value = e.currentTarget.value
-                  if (value !== null && value !== undefined) {
-                    const numValue = parseFloat(value)
-                    if (!isNaN(numValue) && numValue >= 0) {
-                      handleFormChange('max_tsmAvgSalePrice', numValue)
-                    } else {
-                      handleFormChange('max_tsmAvgSalePrice', 0)
-                    }
+                  const numValue = parseFloat(e.currentTarget.value)
+                  if (!isNaN(numValue) && numValue >= 0) {
+                    handleFormChange('max_tsmAvgSalePrice', numValue)
+                  } else {
+                    handleFormChange('max_tsmAvgSalePrice', 0)
                   }
                 }}
               />
