@@ -39,7 +39,7 @@ import {
   handleSearchParamChange
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
-import { getCommodityItemClasses } from '~/utils/WoWFilers/commodityClasses'
+import { getCommodityItemClasses } from '~/utils/WoWFilters/commodityClasses'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
