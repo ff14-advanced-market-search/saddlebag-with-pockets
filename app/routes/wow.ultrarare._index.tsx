@@ -37,8 +37,8 @@ import {
   ExpansionSelect,
   ItemClassSelect
 } from '~/components/form/WoW/WoWScanForm'
-import { itemQuality } from '~/utils/WoWFilers/itemQuality'
-import { itemClasses } from '~/utils/WoWFilers/itemClasses'
+import { itemQuality } from '~/utils/WoWFilters/itemQuality'
+import { itemClasses } from '~/utils/WoWFilters/itemClasses'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 
 const PAGE_URL = '/wow/ultrarare'

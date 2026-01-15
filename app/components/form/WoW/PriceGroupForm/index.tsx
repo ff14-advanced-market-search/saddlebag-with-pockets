@@ -7,8 +7,8 @@ import {
 } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import CategorySelectionPopup from '../CategorySelectionPopup'
-import { itemClasses } from '~/utils/WoWFilers/itemClasses'
-import { getExpansionName } from '~/utils/WoWFilers/expansions'
+import { itemClasses } from '~/utils/WoWFilters/itemClasses'
+import { getExpansionName } from '~/utils/WoWFilters/expansions'
 
 export interface PriceGroup {
   name: string
