@@ -30,8 +30,9 @@ const EarlyAccessTokenSection: React.FC<EarlyAccessTokenSectionProps> = ({
     <div className="flex flex-col gap-4">
       <div>
         <p className="text-sm text-gray-500 dark:text-gray-300">
-          Enter your early access token to unlock premium features. Token must
-          be alphanumeric only.
+          Enter your early access token to unlock premium features. This is
+          givent to you by the Saddlebag Exchange team if you win an Elite
+          Auction. See the discord for more details.
         </p>
       </div>
       <div className="mt-2 flex-col">
