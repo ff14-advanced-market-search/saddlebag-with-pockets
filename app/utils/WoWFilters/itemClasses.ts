@@ -49,7 +49,7 @@ export const itemClasses = [
       { name: 'Warglaives', value: 9 },
       { name: 'Staves', value: 10 },
       { name: 'Bear Claws', value: 11 },
-      { name: 'CatClaws', value: 12 },
+      { name: 'Cat Claws', value: 12 },
       { name: 'Fist Weapons', value: 13 },
       { name: 'Miscellaneous', value: 14 },
       { name: 'Daggers', value: 15 },
