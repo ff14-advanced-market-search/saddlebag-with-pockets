@@ -6,10 +6,10 @@ import type { WoWServerRegion, WoWServerData } from '~/requests/WoW/types'
 import Label from '../Label'
 import WoWServerSelect from './WoWServerSelect'
 import RegionAndServerSelect from './RegionAndServerSelect'
-import { itemClasses } from '~/utils/WoWFilers/itemClasses'
-import { itemQuality } from '~/utils/WoWFilers/itemQuality'
-import { expansionOptions } from '~/utils/WoWFilers/expansions'
-import { subclassRestrictions } from '~/utils/WoWFilers/commodityClasses'
+import { itemClasses } from '~/utils/WoWFilters/itemClasses'
+import { itemQuality } from '~/utils/WoWFilters/itemQuality'
+import { expansionOptions } from '~/utils/WoWFilters/expansions'
+import { subclassRestrictions } from '~/utils/WoWFilters/commodityClasses'
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
