@@ -21,7 +21,7 @@ const notifications: Notification[] = [
     id: 'wow-weekly-price-delta',
     title: 'Try WoW Weekly Price Delta!',
     description:
-      'Discover price trends and 11.2 investment opportunities across different realms with our new Weekly Price Delta feature.',
+      'Discover price trends and investment opportunities across different realms with our new Weekly Price Delta feature.',
     link: '/wow/weekly-price-group-delta-recommended',
     icon: ChartSquareBarIcon,
     showOn: (pathname) => pathname.startsWith('/wow')
