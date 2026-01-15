@@ -1,6 +1,10 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { BellIcon, ChartSquareBarIcon } from '@heroicons/react/outline'
+import {
+  BellIcon,
+  ChartSquareBarIcon,
+  DocumentSearchIcon
+} from '@heroicons/react/outline'
 import { Link, useLocation } from '@remix-run/react'
 
 interface Notification {
@@ -20,6 +24,15 @@ const notifications: Notification[] = [
       'Discover price trends and 11.2 investment opportunities across different realms with our new Weekly Price Delta feature.',
     link: '/wow/weekly-price-group-delta-recommended',
     icon: ChartSquareBarIcon,
+    showOn: (pathname) => pathname.startsWith('/wow')
+  },
+  {
+    id: 'wow-ultrarare-elite',
+    title: 'Upgrade to Elite for Ultimate Snipe List Builder!',
+    description:
+      'Access the Ultra Rare search tool - the ultimate snipe list builder. Upgrade to Elite subscriber plans to find the rarest items with no competition across multiple realms.',
+    link: '/wow/ultrarare/recommended',
+    icon: DocumentSearchIcon,
     showOn: (pathname) => pathname.startsWith('/wow')
   },
   {
