@@ -92,7 +92,8 @@ export const itemClasses = [
       { name: 'Idols', value: 8 },
       { name: 'Totems', value: 9 },
       { name: 'Sigils', value: 10 },
-      { name: 'Relic', value: 11 }
+      { name: 'Relic', value: 11 },
+      { name: 'Exclude Non-Cosmetic', value: -2 }
     ]
   },
   {

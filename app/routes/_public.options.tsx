@@ -14,7 +14,8 @@ import {
   FF14_WORLD,
   WOW_REALM_ID,
   WOW_REALM_NAME,
-  WOW_REGION
+  WOW_REGION,
+  EARLY_ACCESS_TOKEN
 } from '~/sessions'
 import { useDispatch } from 'react-redux'
 import { setCookie } from '~/utils/cookies'
@@ -24,7 +25,7 @@ import {
   toggleDarkMode
 } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
@@ -36,7 +37,8 @@ import {
   StatusBanner,
   ThemeSection,
   OptionsHeader,
-  DefaultSearchGameSection
+  DefaultSearchGameSection,
+  EarlyAccessTokenSection
 } from '~/components/Options'
 import { getWindowUrlParams } from '~/utils/urlHelpers'
 
@@ -63,7 +65,11 @@ export const validator = z.object({
   data_center: z.string().min(1),
   world: z.string().min(1),
   region: z.union([z.literal('NA'), z.literal('EU')]),
-  homeRealm: z.string().min(1)
+  homeRealm: z.string().min(1),
+  earlyAccessToken: z
+    .string()
+    .regex(/^[a-zA-Z0-9]*$/, 'Token must be alphanumeric only')
+    .default('')
 })
 
 export const action: ActionFunction = async ({ request }) => {
@@ -97,6 +103,14 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(WOW_REALM_NAME, server.name)
   session.set(WOW_REGION, region)
 
+  // Handle early access token - save if provided, remove if empty
+  const trimmedToken = result.data.earlyAccessToken?.trim() || ''
+  if (trimmedToken) {
+    session.set(EARLY_ACCESS_TOKEN, trimmedToken)
+  } else {
+    session.unset(EARLY_ACCESS_TOKEN)
+  }
+
   const cookies = [
     setCookie(DATA_CENTER, data_center),
     setCookie(FF14_WORLD, world),
@@ -104,6 +118,16 @@ export const action: ActionFunction = async ({ request }) => {
     setCookie(WOW_REALM_NAME, server.name),
     setCookie(WOW_REGION, region)
   ]
+
+  // Add early access token cookie if it exists, or delete it if empty
+  if (trimmedToken) {
+    cookies.push(setCookie(EARLY_ACCESS_TOKEN, trimmedToken))
+  } else {
+    // Delete cookie by setting Max-Age=0
+    cookies.push(
+      `${EARLY_ACCESS_TOKEN}=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Lax`
+    )
+  }
 
   // Save the session and cookies without redirecting
   return json(
@@ -185,7 +209,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     discordId: session.get('discord_id'),
     discordUsername: session.get('discord_username'),
     discordAvatar: session.get('discord_avatar'),
-    discordRoles: session.get('discord_roles') || []
+    discordRoles: session.get('discord_roles') || [],
+    earlyAccessToken: session.get(EARLY_ACCESS_TOKEN) || ''
   })
 }
 
@@ -206,6 +231,11 @@ export default function Options() {
     (state) => state.user
   )
 
+  // Tab state
+  const [activeTab, setActiveTab] = useState<'general' | 'wow' | 'ffxiv'>(
+    'general'
+  )
+
   // Extract URL parameters for success/error messages
   const { success, error } = getWindowUrlParams()
 
@@ -224,6 +254,7 @@ export default function Options() {
     formData.append('world', newWorld.world)
     formData.append('region', data.wowRegion)
     formData.append('homeRealm', `${data.wowRealm.id}---${data.wowRealm.name}`)
+    formData.append('earlyAccessToken', data.earlyAccessToken || '')
     fetcher.submit(formData, { method: 'POST' })
   }
 
@@ -241,12 +272,43 @@ export default function Options() {
       'homeRealm',
       `${newRealm.server.id}---${newRealm.server.name}`
     )
+    formData.append('earlyAccessToken', data.earlyAccessToken || '')
     fetcher.submit(formData, { method: 'POST' })
+  }
+
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+  const handleEarlyAccessTokenChange = (token: string) => {
+    // Clear previous timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current)
+    }
+
+    // Set new timer to submit after 500ms of no input
+    debounceTimerRef.current = setTimeout(() => {
+      // Save to session
+      const formData = new FormData()
+      formData.append('data_center', data.data_center)
+      formData.append('world', data.world)
+      formData.append('region', data.wowRegion)
+      formData.append(
+        'homeRealm',
+        `${data.wowRealm.id}---${data.wowRealm.name}`
+      )
+      formData.append('earlyAccessToken', token)
+      fetcher.submit(formData, { method: 'POST' })
+    }, 500)
   }
 
   // Show success message when fetcher completes successfully
   const showSaveSuccess =
     fetcher.state === 'idle' && fetcher.data?.success ? 'settings_saved' : null
+
+  const tabs = [
+    { id: 'general' as const, label: 'General' },
+    { id: 'wow' as const, label: 'WoW' },
+    { id: 'ffxiv' as const, label: 'FFXIV' }
+  ]
 
   return (
     <PageWrapper>
@@ -258,66 +320,114 @@ export default function Options() {
       )}
       <div>
         <OptionsHeader isSubmitting={fetcher.state === 'submitting'} />
-        <OptionSection
-          title="Discord Account"
-          description="Connect your Discord account to access premium features and receive notifications."
-          hideHRule={true}>
-          <DiscordAccountSection
-            discordId={data.discordId}
-            discordUsername={data.discordUsername}
-            discordAvatar={data.discordAvatar}
-            discordRoles={data.discordRoles}
-            isSubmitting={transition.state === 'submitting'}
-          />
-        </OptionSection>
-        <OptionSection
-          title="Theme"
-          description="Needs more sparkles.. ✨✨✨✨">
-          <ThemeSection
-            darkMode={darkmode}
-            onDarkModeToggle={handleDarkModeToggle}
-          />
-        </OptionSection>
-        <OptionSection
-          title="Default Search Game"
-          description="Choose which game the item search defaults to when opened.">
-          <DefaultSearchGameSection defaultSearchGame={defaultSearchGame} />
-        </OptionSection>
-        <OptionSection
-          title="FFXIV World Selection"
-          description="The selected server will change what marketplace your queries are run against.">
-          <SelectDCandWorld
-            navigation={transition}
-            sessionData={data}
-            onChange={handleFFXIVWorldChange}
-          />
-        </OptionSection>
-        <OptionSection
-          title="WoW Home Realm Selection"
-          description="Your region and home realm that will be the default on WoW queries.">
-          <RegionAndServerSelect
-            region={wowRealm.region}
-            defaultRealm={wowRealm.server}
-            serverSelectFormName="homeRealm"
-            onServerSelectChange={(newServer) => {
-              if (newServer) {
-                handleWoWRealmChange({ ...wowRealm, server: newServer })
-              }
-            }}
-            regionOnChange={(newRegion) => {
-              if (newRegion) {
-                // When region changes, we need to find a valid server in the new region
-                // Try to find the same server name in the new region, or use a default
-                const { server, region } = validateServerAndRegion(
-                  newRegion,
-                  wowRealm.server.id,
-                  wowRealm.server.name
+
+        {/* Tab Navigation */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="border-b border-gray-200 dark:border-gray-700">
+            <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+              {tabs.map((tab) => {
+                const isActive = activeTab === tab.id
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`
+                      ${
+                        isActive
+                          ? 'border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                      }
+                      whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                    `}
+                    aria-current={isActive ? 'page' : undefined}>
+                    {tab.label}
+                  </button>
                 )
-                handleWoWRealmChange({ server, region })
-              }
-            }}
-          />
-        </OptionSection>
+              })}
+            </nav>
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'general' && (
+          <>
+            <OptionSection
+              title="Discord Account"
+              description="Connect your Discord account to access premium features and receive notifications."
+              hideHRule={true}>
+              <DiscordAccountSection
+                discordId={data.discordId}
+                discordUsername={data.discordUsername}
+                discordAvatar={data.discordAvatar}
+                discordRoles={data.discordRoles}
+                isSubmitting={transition.state === 'submitting'}
+              />
+            </OptionSection>
+            <OptionSection
+              title="Theme"
+              description="Needs more sparkles.. ✨✨✨✨">
+              <ThemeSection
+                darkMode={darkmode}
+                onDarkModeToggle={handleDarkModeToggle}
+              />
+            </OptionSection>
+            <OptionSection
+              title="Default Search Game"
+              description="Choose which game the item search defaults to when opened.">
+              <DefaultSearchGameSection defaultSearchGame={defaultSearchGame} />
+            </OptionSection>
+            <OptionSection
+              title="Early Access Token"
+              description="Enter your early access token to unlock premium features.">
+              <EarlyAccessTokenSection
+                earlyAccessToken={data.earlyAccessToken || ''}
+                onTokenChange={handleEarlyAccessTokenChange}
+                isSubmitting={fetcher.state === 'submitting'}
+              />
+            </OptionSection>
+          </>
+        )}
+
+        {activeTab === 'wow' && (
+          <OptionSection
+            title="WoW Home Realm Selection"
+            description="Your region and home realm that will be the default on WoW queries.">
+            <RegionAndServerSelect
+              region={wowRealm.region}
+              defaultRealm={wowRealm.server}
+              serverSelectFormName="homeRealm"
+              onServerSelectChange={(newServer) => {
+                if (newServer) {
+                  handleWoWRealmChange({ ...wowRealm, server: newServer })
+                }
+              }}
+              regionOnChange={(newRegion) => {
+                if (newRegion) {
+                  // When region changes, we need to find a valid server in the new region
+                  // Try to find the same server name in the new region, or use a default
+                  const { server, region } = validateServerAndRegion(
+                    newRegion,
+                    wowRealm.server.id,
+                    wowRealm.server.name
+                  )
+                  handleWoWRealmChange({ server, region })
+                }
+              }}
+            />
+          </OptionSection>
+        )}
+
+        {activeTab === 'ffxiv' && (
+          <OptionSection
+            title="FFXIV World Selection"
+            description="The selected server will change what marketplace your queries are run against.">
+            <SelectDCandWorld
+              navigation={transition}
+              sessionData={data}
+              onChange={handleFFXIVWorldChange}
+            />
+          </OptionSection>
+        )}
       </div>
     </PageWrapper>
   )

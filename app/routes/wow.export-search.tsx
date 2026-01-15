@@ -17,6 +17,7 @@ import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import { getItemIDByName, getItemNameById } from '~/utils/items'
 import Select from '~/components/form/select'
+import { ToolTip } from '~/components/Common/InfoToolTip'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
@@ -241,6 +242,7 @@ const ExportSearch = () => {
             name="maxQuantity"
             type="number"
             min={0}
+            toolTip="Maximum quantity of items to include in search results"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -254,6 +256,7 @@ const ExportSearch = () => {
             name="minPrice"
             type="number"
             min={0}
+            toolTip="Minimum price in gold to filter search results"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -267,6 +270,7 @@ const ExportSearch = () => {
             name="populationWP"
             type="number"
             min={1}
+            toolTip="Minimum WoWProgress server population to include in search"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -274,29 +278,41 @@ const ExportSearch = () => {
               }
             }}
           />
-          <Select
-            title={inputMap.populationBlizz}
-            defaultValue={loaderData.populationBlizz.toString()}
-            name="populationBlizz"
-            options={[
-              { label: 'FULL', value: '3' },
-              { label: 'HIGH', value: '2' },
-              { label: 'MEDIUM', value: '1' },
-              { label: 'LOW', value: '0' }
-            ]}
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('populationBlizz', value)
-              }
-            }}
-          />
+          <div className="w-full mt-2">
+            <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+              <label
+                htmlFor="populationBlizz"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                {inputMap.populationBlizz}
+              </label>
+              <ToolTip data="Filter servers by Blizzard's population rating (LOW = 0, MEDIUM = 1, HIGH = 2, FULL = 3)" />
+            </div>
+            <Select
+              id="populationBlizz"
+              title=""
+              defaultValue={loaderData.populationBlizz.toString()}
+              name="populationBlizz"
+              options={[
+                { label: 'FULL', value: '3' },
+                { label: 'HIGH', value: '2' },
+                { label: 'MEDIUM', value: '1' },
+                { label: 'LOW', value: '0' }
+              ]}
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('populationBlizz', value)
+                }
+              }}
+            />
+          </div>
           <InputWithLabel
             labelTitle={inputMap.rankingWP}
             defaultValue={loaderData.rankingWP}
             name="rankingWP"
             type="number"
             min={1}
+            toolTip="Filter by raid clearance (1-100, based on how many guilds cleared the raid and how soon. 1 is the best raiders, 100 is the worst raiders.)"
             onChange={(e) => {
               const value = e.currentTarget.value
               if (value !== null || value !== undefined) {
@@ -304,23 +320,34 @@ const ExportSearch = () => {
               }
             }}
           />
-          <Select
-            title={inputMap.sortBy}
-            defaultValue={loaderData.sortBy}
-            name="sortBy"
-            options={[
-              { label: 'Minimum Price', value: 'minPrice' },
-              { label: 'Item Quantity', value: 'itemQuantity' },
-              { label: 'Realm Population', value: 'realmPopulationReal' },
-              { label: 'Realm Ranking', value: 'realmRanking' }
-            ]}
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              if (value !== null || value !== undefined) {
-                handleFormChange('sortBy', value)
-              }
-            }}
-          />
+          <div className="w-full mt-2">
+            <div className="flex flex-1 items-center gap-1 mt-0.5 relative">
+              <label
+                htmlFor="sortBy"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                {inputMap.sortBy}
+              </label>
+              <ToolTip data="Choose how to sort the search results. Results will be sorted in descending order by the selected field" />
+            </div>
+            <Select
+              id="sortBy"
+              title=""
+              defaultValue={loaderData.sortBy}
+              name="sortBy"
+              options={[
+                { label: 'Minimum Price', value: 'minPrice' },
+                { label: 'Item Quantity', value: 'itemQuantity' },
+                { label: 'Realm Population', value: 'realmPopulationReal' },
+                { label: 'Realm Ranking', value: 'realmRanking' }
+              ]}
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                if (value !== null || value !== undefined) {
+                  handleFormChange('sortBy', value)
+                }
+              }}
+            />
+          </div>
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400 italic mt-2">
           Note: If the search button does not appear after you select your item,
