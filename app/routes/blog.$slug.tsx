@@ -8,8 +8,12 @@ interface LoaderData {
   componentName: string
 }
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = ({ params }: LoaderFunctionArgs) => {
   const { slug } = params
+
+  if (!slug || typeof slug !== 'string') {
+    throw new Response('Missing slug', { status: 400 })
+  }
 
   // For research posts, look up directly by slug
   const post = blogPosts[slug]
@@ -50,6 +54,22 @@ export default function BlogSlugRoute() {
   const Component = blogComponents[componentName]
 
   if (!Component) {
+    const isDev = process.env.NODE_ENV === 'development'
+
+    if (!isDev) {
+      console.error(`Blog component not found: ${componentName}`)
+      return (
+        <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+          <div className="bg-white shadow-md rounded-lg p-8">
+            <h1 className="text-2xl font-bold text-red-600">
+              Content unavailable
+            </h1>
+            <p>This blog post is currently unavailable.</p>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
         <div className="bg-white shadow-md rounded-lg p-8">

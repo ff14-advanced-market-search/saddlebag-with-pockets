@@ -1,5 +1,3 @@
-import Banner from '~/components/Common/Banner'
-
 const WoWCrossRealm1 = () => {
   return (
     <div className={`m-12`}>

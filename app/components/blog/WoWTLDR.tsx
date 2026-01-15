@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import Banner from '~/components/Common/Banner'
 
 const WoWTLDR = () => {

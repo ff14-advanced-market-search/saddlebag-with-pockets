@@ -1,5 +1,3 @@
-import Banner from '~/components/Common/Banner'
-
 const FFXIVHowToResell = () => {
   return (
     <div className="container mx-auto p-12">

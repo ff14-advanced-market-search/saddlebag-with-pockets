@@ -1,5 +1,3 @@
-import Banner from '~/components/Common/Banner'
-
 const ResearchPost2 = () => {
   return (
     <div className={`m-12`}>

@@ -8,8 +8,12 @@ interface LoaderData {
   componentName: string
 }
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = ({ params }: LoaderFunctionArgs) => {
   const { category, slug } = params
+
+  if (!category || !slug) {
+    throw new Response('Missing category or slug', { status: 400 })
+  }
 
   // Construct the key based on category and slug
   const postKey = `${category}/${slug}`

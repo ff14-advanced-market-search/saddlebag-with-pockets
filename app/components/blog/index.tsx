@@ -5,6 +5,7 @@
  * Components are dynamically loaded based on the 'component' field in blogPosts configuration.
  */
 
+import React from 'react'
 import FFXIVBs1 from './FFXIVBs1'
 import FFXIVBs2 from './FFXIVBs2'
 import FFXIVBs3 from './FFXIVBs3'

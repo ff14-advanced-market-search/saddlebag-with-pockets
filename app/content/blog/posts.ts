@@ -1,6 +1,8 @@
 import type React from 'react'
 import { DocumentSearchIcon } from '@heroicons/react/outline'
 
+type FeaturedPostIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>
+
 export interface BlogPost {
   category: string
   slug: string
@@ -14,9 +16,11 @@ export interface BlogPost {
 export interface FeaturedPost {
   name: string
   description: string
-  Icon: React.ComponentType<{ className?: string }>
+  Icon: FeaturedPostIcon
   href: string
 }
+
+const documentSearchIcon = DocumentSearchIcon as FeaturedPostIcon
 
 /**
  * Central configuration for all blog posts
@@ -291,21 +295,21 @@ export const featuredPosts: FeaturedPost[] = [
   {
     name: 'FFXIV Gil Mastery',
     description: 'Master the FFXIV Marketboard and maximize your gil earnings.',
-    Icon: DocumentSearchIcon,
+    Icon: documentSearchIcon,
     href: '/blog/ffxiv/bs1'
   },
   {
     name: 'WoW Gold Making',
     description:
       'Learn proven strategies for making gold in World of Warcraft.',
-    Icon: DocumentSearchIcon,
+    Icon: documentSearchIcon,
     href: '/blog/wow/tldr'
   },
   {
     name: 'MMO Economics',
     description:
       'Understand the economic principles that govern virtual worlds.',
-    Icon: DocumentSearchIcon,
+    Icon: documentSearchIcon,
     href: '/blog/mmo/economics-theory'
   }
 ]
