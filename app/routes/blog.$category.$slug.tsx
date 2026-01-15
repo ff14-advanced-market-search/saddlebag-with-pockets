@@ -27,21 +27,21 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) {
-    return [
-      { title: 'Blog Post Not Found' },
-      { name: 'description', content: 'This blog post could not be found.' }
-    ]
+    return {
+      title: 'Blog Post Not Found',
+      description: 'This blog post could not be found.'
+    }
   }
 
   const { post } = data
 
-  return [
-    { title: post.title },
-    { name: 'description', content: post.description },
-    { name: 'og:title', content: post.title },
-    { name: 'og:description', content: post.description },
-    post.canonical ? { rel: 'canonical', href: post.canonical } : null
-  ].filter(Boolean)
+  return {
+    title: post.title,
+    description: post.description,
+    'og:title': post.title,
+    'og:description': post.description,
+    ...(post.canonical && { canonical: post.canonical })
+  }
 }
 
 export default function BlogCategorySlugRoute() {
