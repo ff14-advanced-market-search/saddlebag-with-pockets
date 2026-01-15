@@ -31,7 +31,7 @@ const EarlyAccessTokenSection: React.FC<EarlyAccessTokenSectionProps> = ({
       <div>
         <p className="text-sm text-gray-500 dark:text-gray-300">
           Enter your early access token to unlock premium features. This is
-          givent to you by the Saddlebag Exchange team if you win an Elite
+          given to you by the Saddlebag Exchange team if you win an Elite
           Auction. See the discord for more details.
         </p>
       </div>
