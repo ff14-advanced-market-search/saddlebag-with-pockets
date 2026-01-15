@@ -25,7 +25,7 @@ import {
   toggleDarkMode
 } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
@@ -231,6 +231,11 @@ export default function Options() {
     (state) => state.user
   )
 
+  // Tab state
+  const [activeTab, setActiveTab] = useState<'general' | 'wow' | 'ffxiv'>(
+    'general'
+  )
+
   // Extract URL parameters for success/error messages
   const { success, error } = getWindowUrlParams()
 
@@ -299,6 +304,12 @@ export default function Options() {
   const showSaveSuccess =
     fetcher.state === 'idle' && fetcher.data?.success ? 'settings_saved' : null
 
+  const tabs = [
+    { id: 'general' as const, label: 'General' },
+    { id: 'wow' as const, label: 'WoW' },
+    { id: 'ffxiv' as const, label: 'FFXIV' }
+  ]
+
   return (
     <PageWrapper>
       <Banner />
@@ -309,75 +320,114 @@ export default function Options() {
       )}
       <div>
         <OptionsHeader isSubmitting={fetcher.state === 'submitting'} />
-        <OptionSection
-          title="Discord Account"
-          description="Connect your Discord account to access premium features and receive notifications."
-          hideHRule={true}>
-          <DiscordAccountSection
-            discordId={data.discordId}
-            discordUsername={data.discordUsername}
-            discordAvatar={data.discordAvatar}
-            discordRoles={data.discordRoles}
-            isSubmitting={transition.state === 'submitting'}
-          />
-        </OptionSection>
-        <OptionSection
-          title="Theme"
-          description="Needs more sparkles.. ✨✨✨✨">
-          <ThemeSection
-            darkMode={darkmode}
-            onDarkModeToggle={handleDarkModeToggle}
-          />
-        </OptionSection>
-        <OptionSection
-          title="Default Search Game"
-          description="Choose which game the item search defaults to when opened.">
-          <DefaultSearchGameSection defaultSearchGame={defaultSearchGame} />
-        </OptionSection>
-        <OptionSection
-          title="Early Access Token"
-          description="Enter your early access token to unlock premium features.">
-          <EarlyAccessTokenSection
-            earlyAccessToken={data.earlyAccessToken || ''}
-            onTokenChange={handleEarlyAccessTokenChange}
-            isSubmitting={fetcher.state === 'submitting'}
-          />
-        </OptionSection>
-        <OptionSection
-          title="FFXIV World Selection"
-          description="The selected server will change what marketplace your queries are run against.">
-          <SelectDCandWorld
-            navigation={transition}
-            sessionData={data}
-            onChange={handleFFXIVWorldChange}
-          />
-        </OptionSection>
-        <OptionSection
-          title="WoW Home Realm Selection"
-          description="Your region and home realm that will be the default on WoW queries.">
-          <RegionAndServerSelect
-            region={wowRealm.region}
-            defaultRealm={wowRealm.server}
-            serverSelectFormName="homeRealm"
-            onServerSelectChange={(newServer) => {
-              if (newServer) {
-                handleWoWRealmChange({ ...wowRealm, server: newServer })
-              }
-            }}
-            regionOnChange={(newRegion) => {
-              if (newRegion) {
-                // When region changes, we need to find a valid server in the new region
-                // Try to find the same server name in the new region, or use a default
-                const { server, region } = validateServerAndRegion(
-                  newRegion,
-                  wowRealm.server.id,
-                  wowRealm.server.name
+
+        {/* Tab Navigation */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="border-b border-gray-200 dark:border-gray-700">
+            <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+              {tabs.map((tab) => {
+                const isActive = activeTab === tab.id
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`
+                      ${
+                        isActive
+                          ? 'border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                      }
+                      whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                    `}
+                    aria-current={isActive ? 'page' : undefined}>
+                    {tab.label}
+                  </button>
                 )
-                handleWoWRealmChange({ server, region })
-              }
-            }}
-          />
-        </OptionSection>
+              })}
+            </nav>
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'general' && (
+          <>
+            <OptionSection
+              title="Discord Account"
+              description="Connect your Discord account to access premium features and receive notifications."
+              hideHRule={true}>
+              <DiscordAccountSection
+                discordId={data.discordId}
+                discordUsername={data.discordUsername}
+                discordAvatar={data.discordAvatar}
+                discordRoles={data.discordRoles}
+                isSubmitting={transition.state === 'submitting'}
+              />
+            </OptionSection>
+            <OptionSection
+              title="Theme"
+              description="Needs more sparkles.. ✨✨✨✨">
+              <ThemeSection
+                darkMode={darkmode}
+                onDarkModeToggle={handleDarkModeToggle}
+              />
+            </OptionSection>
+            <OptionSection
+              title="Default Search Game"
+              description="Choose which game the item search defaults to when opened.">
+              <DefaultSearchGameSection defaultSearchGame={defaultSearchGame} />
+            </OptionSection>
+            <OptionSection
+              title="Early Access Token"
+              description="Enter your early access token to unlock premium features.">
+              <EarlyAccessTokenSection
+                earlyAccessToken={data.earlyAccessToken || ''}
+                onTokenChange={handleEarlyAccessTokenChange}
+                isSubmitting={fetcher.state === 'submitting'}
+              />
+            </OptionSection>
+          </>
+        )}
+
+        {activeTab === 'wow' && (
+          <OptionSection
+            title="WoW Home Realm Selection"
+            description="Your region and home realm that will be the default on WoW queries.">
+            <RegionAndServerSelect
+              region={wowRealm.region}
+              defaultRealm={wowRealm.server}
+              serverSelectFormName="homeRealm"
+              onServerSelectChange={(newServer) => {
+                if (newServer) {
+                  handleWoWRealmChange({ ...wowRealm, server: newServer })
+                }
+              }}
+              regionOnChange={(newRegion) => {
+                if (newRegion) {
+                  // When region changes, we need to find a valid server in the new region
+                  // Try to find the same server name in the new region, or use a default
+                  const { server, region } = validateServerAndRegion(
+                    newRegion,
+                    wowRealm.server.id,
+                    wowRealm.server.name
+                  )
+                  handleWoWRealmChange({ server, region })
+                }
+              }}
+            />
+          </OptionSection>
+        )}
+
+        {activeTab === 'ffxiv' && (
+          <OptionSection
+            title="FFXIV World Selection"
+            description="The selected server will change what marketplace your queries are run against.">
+            <SelectDCandWorld
+              navigation={transition}
+              sessionData={data}
+              onChange={handleFFXIVWorldChange}
+            />
+          </OptionSection>
+        )}
       </div>
     </PageWrapper>
   )
