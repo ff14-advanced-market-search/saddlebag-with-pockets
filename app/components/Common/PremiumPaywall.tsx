@@ -10,6 +10,7 @@ interface PremiumPaywallProps {
     needsRefresh?: boolean
   }
   children: React.ReactNode
+  tier?: 'premium' | 'elite'
 }
 
 // Main paywall overlay component
@@ -21,6 +22,7 @@ const PaywallOverlay: React.FC<{
   onLogin: () => void
   onSubscribe: () => void
   onRefresh: () => void
+  tier?: 'premium' | 'elite'
 }> = ({
   isLoggedIn,
   hasPremium,
@@ -28,7 +30,8 @@ const PaywallOverlay: React.FC<{
   isRefreshing,
   onLogin,
   onSubscribe,
-  onRefresh
+  onRefresh,
+  tier = 'premium'
 }) => (
   <div className="flex flex-col items-center justify-center bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 sm:p-8 max-w-md w-full mx-2">
     {!isLoggedIn ? (
@@ -40,6 +43,7 @@ const PaywallOverlay: React.FC<{
         onSubscribe={onSubscribe}
         onRefresh={onRefresh}
         isRefreshing={isRefreshing}
+        tier={tier}
       />
     ) : null}
   </div>
@@ -86,43 +90,52 @@ const DiscordNeedsToSubscribe: React.FC<{
   onSubscribe: () => void
   onRefresh: () => void
   isRefreshing: boolean
-}> = ({ onSubscribe, onRefresh, isRefreshing }) => (
-  <>
-    <DiscordIcon className="w-16 h-16 text-[#5865F2] mb-4" />
-    <h2 className="text-2xl font-bold mb-2 text-center">
-      Subscribe to Premium to use this tool
-    </h2>
-    <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
-      This feature is available to Saddlebag Exchange Premium subscribers. Join
-      the discord server to get access to a free trial.
-    </p>
-    <button
-      type="button"
-      onClick={onSubscribe}
-      className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2] mb-6">
-      <DiscordIcon className="w-6 h-6 mr-2" />
-      Subscribe on Discord
-    </button>
-    <div className="w-full flex flex-col items-center">
-      <p className="text-xs text-gray-500 dark:text-gray-400 text-center max-w-xs mb-2">
-        If you just subscribed to Premium and are still seeing this message, you
-        may need to refresh your roles.
+  tier?: 'premium' | 'elite'
+}> = ({ onSubscribe, onRefresh, isRefreshing, tier = 'premium' }) => {
+  const isElite = tier === 'elite'
+  return (
+    <>
+      <DiscordIcon className="w-16 h-16 text-[#5865F2] mb-4" />
+      <h2 className="text-2xl font-bold mb-2 text-center">
+        {isElite
+          ? 'Elite Plan Required'
+          : 'Subscribe to Premium to use this tool'}
+      </h2>
+      <p className="mb-6 text-center text-gray-600 dark:text-gray-300">
+        {isElite
+          ? 'This feature is available to Saddlebag Exchange Elite plan subscribers. Join the discord server to upgrade to Elite plan.'
+          : 'This feature is available to Saddlebag Exchange Premium subscribers. Join the discord server to get access to a free trial.'}
       </p>
       <button
         type="button"
-        onClick={onRefresh}
-        disabled={isRefreshing}
-        className="flex items-center px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-md text-xs font-medium shadow hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 disabled:opacity-50 disabled:cursor-not-allowed mt-1">
-        <DiscordIcon className="w-4 h-4 mr-2" />
-        {isRefreshing ? 'Refreshing, wait a few seconds...' : 'Refresh Roles'}
+        onClick={onSubscribe}
+        className="flex items-center px-6 py-3 bg-[#5865F2] text-white rounded-md text-lg font-semibold shadow hover:bg-[#4752C4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2] mb-6">
+        <DiscordIcon className="w-6 h-6 mr-2" />
+        {isElite ? 'Upgrade to Elite on Discord' : 'Subscribe on Discord'}
       </button>
-    </div>
-  </>
-)
+      <div className="w-full flex flex-col items-center">
+        <p className="text-xs text-gray-500 dark:text-gray-400 text-center max-w-xs mb-2">
+          {isElite
+            ? 'If you just upgraded to Elite plan and are still seeing this message, you may need to refresh your roles.'
+            : 'If you just subscribed to Premium and are still seeing this message, you may need to refresh your roles.'}
+        </p>
+        <button
+          type="button"
+          onClick={onRefresh}
+          disabled={isRefreshing}
+          className="flex items-center px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-md text-xs font-medium shadow hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 disabled:opacity-50 disabled:cursor-not-allowed mt-1">
+          <DiscordIcon className="w-4 h-4 mr-2" />
+          {isRefreshing ? 'Refreshing, wait a few seconds...' : 'Refresh Roles'}
+        </button>
+      </div>
+    </>
+  )
+}
 
 const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
   loaderData,
-  children
+  children,
+  tier = 'premium'
 }) => {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const navigate = useNavigate()
@@ -183,6 +196,7 @@ const PremiumPaywall: React.FC<PremiumPaywallProps> = ({
         onLogin={handleLogin}
         onSubscribe={handleSubscribe}
         onRefresh={handleRefresh}
+        tier={tier}
       />
     </div>
   )

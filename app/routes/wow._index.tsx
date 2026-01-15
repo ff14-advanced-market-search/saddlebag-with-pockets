@@ -72,6 +72,13 @@ const recommendedQueries = [
     href: '/wow/ilvl-export-search'
   },
   {
+    name: 'Ultra Rare',
+    description:
+      'Find rarest items in the game, guaranteed to have no competition on multiple realms!',
+    Icon: DocumentSearchIcon,
+    href: '/wow/ultrarare/recommended'
+  },
+  {
     name: 'Current Content Marketshare Overview',
     description:
       'Find out what items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
