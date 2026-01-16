@@ -1,3 +1,24 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Flip items on the FFXIV Marketboard : FFXIV Mods',
+    description:
+      'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange : FFXIV Mods',
+    customHeading:
+      'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange : FFXIV Mods',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/howtoresell'
+      }
+    ]
+  }
+}
+
 const FFXIVHowToResell = () => {
   return (
     <div className="container mx-auto p-12">

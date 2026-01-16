@@ -1,3 +1,22 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => ({
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1',
+  title:
+    'How to Best Prepare and Properly Complete Mythic+ Dungeons in World of Warcraft',
+  description:
+    'Learn how to prepare and properly complete Mythic+ dungeons in World of Warcraft, where you can get the best weapons and gear.',
+  customHeading: 'Guide to Mythic+ Dungeons and Best Gear in WoW',
+  links: [
+    {
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/wow/skycoach'
+    }
+  ]
+})
+
 const WoWSkyCoach = () => {
   return (
     <div className="container mx-auto p-6 bg-gray-50 min-h-screen">

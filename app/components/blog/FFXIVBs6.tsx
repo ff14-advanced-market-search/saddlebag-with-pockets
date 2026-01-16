@@ -429,6 +429,85 @@ const FFXIVBs6 = () => {
               </p>
             </div>
           </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-semibold mb-6 text-gray-700">
+              Master-Level WoW Strategies
+            </h2>
+
+            <div className="space-y-6">
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold mb-3 text-blue-700">
+                  Market Research and Analysis
+                </h3>
+                <p>
+                  Successful gold making in WoW starts with thorough market
+                  research. Use addons like Auctioneer or TradeSkillMaster to
+                  analyze historical pricing data and identify trends. Look for
+                  items with consistent demand and fluctuating prices, as these
+                  present prime opportunities for profit.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold mb-3 text-green-700">
+                  Crafting and Gathering Professions
+                </h3>
+                <p>
+                  Professions are a cornerstone of gold making in WoW. Crafting
+                  professions allow you to create valuable items that players
+                  need, while gathering professions provide the raw materials
+                  necessary for crafting. By mastering a combination of crafting
+                  and gathering professions, you can control the entire supply
+                  chain and maximize profits.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold mb-3 text-purple-700">
+                  Understanding Supply and Demand
+                </h3>
+                <p>
+                  The key to success in the Auction House is understanding
+                  supply and demand dynamics. Keep an eye on popular raid
+                  consumables, crafting materials, and rare items that are in
+                  high demand. During content patches or new raid releases,
+                  prices for these items often skyrocket, presenting lucrative
+                  opportunities for sellers.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold mb-3 text-orange-700">
+                  Strategic Buying and Selling
+                </h3>
+                <p>
+                  Timing is everything when it comes to buying and selling on
+                  the Auction House. Look for underpriced items that you can buy
+                  and resell for a profit. Be patient and wait for opportune
+                  moments to sell, such as when demand is high or when competing
+                  sellers are scarce. Additionally, consider diversifying your
+                  portfolio by investing in multiple types of items to spread
+                  risk.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold mb-3 text-red-700">
+                  Flip It Good
+                </h3>
+                <p>
+                  Flipping items is a popular gold-making strategy where you buy
+                  low and sell high for a profit. Keep an eye on the Auction
+                  House for mispriced items or items listed below their market
+                  value. Snatch them up quickly and relist them at a higher
+                  price to capitalize on the price difference. However, be
+                  cautious not to flood the market or drive prices down with
+                  excessive undercutting.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
     </div>

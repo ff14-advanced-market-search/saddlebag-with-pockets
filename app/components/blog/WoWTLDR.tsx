@@ -1,4 +1,18 @@
 import Banner from '~/components/Common/Banner'
+import type { MetaFunction } from '@remix-run/cloudflare'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'TLDR: How to make gold in WoW with cross realm trading',
+    description: 'Easy 4 step method to making gold.',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/wow/tldr' }
+    ]
+  }
+}
 
 const WoWTLDR = () => {
   return (
