@@ -4,6 +4,7 @@
  * This file exports all blog post components by name.
  * Components are dynamically loaded based on the 'component' field in blogPosts configuration.
  */
+import type { MetaFunction } from '@remix-run/cloudflare'
 
 import type React from 'react'
 import FFXIVBs1 from './FFXIVBs1'
@@ -128,7 +129,7 @@ export const blogComponents: Record<string, React.ComponentType> = {
 }
 
 // Meta functions registry - maps component names to their meta exports
-export const blogMetaFunctions: Record<string, (() => any) | undefined> = {
+export const blogMetaFunctions: Record<string, MetaFunction | undefined> = {
   FFXIVBs1: FFXIVBs1Meta.meta,
   FFXIVBs2: FFXIVBs2Meta.meta,
   FFXIVBs3: FFXIVBs3Meta.meta,
