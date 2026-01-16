@@ -1,4 +1,19 @@
 import Banner from '~/components/Common/Banner'
+import type { MetaFunction } from '@remix-run/cloudflare'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'FFXIV Marketboard Guide: Mastering Undercutting',
+    description:
+      'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts.',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs2' }
+    ]
+  }
+}
 
 const FFXIVBs2 = () => {
   return (

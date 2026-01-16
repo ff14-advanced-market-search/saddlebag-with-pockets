@@ -1,4 +1,20 @@
 import Banner from '~/components/Common/Banner'
+import type { MetaFunction } from '@remix-run/cloudflare'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Mastering Gil Earning on the FFXIV Marketboard',
+    description:
+      'Explore strategies to maximize your Gil earnings on the FFXIV Marketboard.',
+    customHeading: 'Unlock the Secrets to Gil Mastery on the FFXIV Marketboard',
+    links: [
+      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs1' }
+    ]
+  }
+}
 
 const FFXIVBs1 = () => {
   return (

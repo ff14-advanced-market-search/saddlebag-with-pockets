@@ -1,4 +1,24 @@
 import Banner from '~/components/Common/Banner'
+import type { MetaFunction } from '@remix-run/cloudflare'
+
+// Overwrite default meta in the root.tsx
+export const meta: MetaFunction = () => {
+  return {
+    charset: 'utf-8',
+    viewport: 'width=device-width,initial-scale=1',
+    title: 'Exploring Alternative Revenue Streams in MMO Economies',
+    description:
+      'Discover innovative methods to generate revenue in MMO economies beyond traditional means.',
+    customHeading:
+      'Unlocking Revenue Opportunities: Exploring Alternative Streams in MMO Economies',
+    links: [
+      {
+        rel: 'canonical',
+        href: 'https://saddlebagexchange.com/blog/ffxiv/bs13'
+      }
+    ]
+  }
+}
 
 const FFXIVBs13 = () => {
   return (
