@@ -5,7 +5,7 @@
  * Components are dynamically loaded based on the 'component' field in blogPosts configuration.
  */
 
-import React from 'react'
+import type React from 'react'
 import FFXIVBs1 from './FFXIVBs1'
 import FFXIVBs2 from './FFXIVBs2'
 import FFXIVBs3 from './FFXIVBs3'
@@ -44,6 +44,42 @@ import TradingAutomationTools from './TradingAutomationTools'
 import ResearchPost1 from './ResearchPost1'
 import ResearchPost2 from './ResearchPost2'
 import ResearchPost3 from './ResearchPost3'
+
+// Import meta functions from components
+import * as FFXIVBs1Meta from './FFXIVBs1'
+import * as FFXIVBs2Meta from './FFXIVBs2'
+import * as FFXIVBs3Meta from './FFXIVBs3'
+import * as FFXIVBs4Meta from './FFXIVBs4'
+import * as FFXIVBs5Meta from './FFXIVBs5'
+import * as FFXIVBs6Meta from './FFXIVBs6'
+import * as FFXIVBs7Meta from './FFXIVBs7'
+import * as FFXIVBs8Meta from './FFXIVBs8'
+import * as FFXIVBs9Meta from './FFXIVBs9'
+import * as FFXIVBs10Meta from './FFXIVBs10'
+import * as FFXIVBs11Meta from './FFXIVBs11'
+import * as FFXIVBs12Meta from './FFXIVBs12'
+import * as FFXIVBs13Meta from './FFXIVBs13'
+import * as FFXIVBs14Meta from './FFXIVBs14'
+import * as FFXIVBs15Meta from './FFXIVBs15'
+import * as FFXIVBs16Meta from './FFXIVBs16'
+import * as FFXIVBs17Meta from './FFXIVBs17'
+import * as FFXIVAdvancedCraftingMeta from './FFXIVAdvancedCrafting'
+import * as FFXIVHowToResellMeta from './FFXIVHowToResell'
+import * as FFXIVMarketMasteryMeta from './FFXIVMarketMastery'
+import * as FFXIVUndercutMeta from './FFXIVUndercut'
+import * as WoWTLDRMeta from './WoWTLDR'
+import * as WoWCrossRealm1Meta from './WoWCrossRealm1'
+import * as WoWAdvancedStrategiesMeta from './WoWAdvancedStrategies'
+import * as WoWMarketDominationMeta from './WoWMarketDomination'
+import * as WoWSkyCoachMeta from './WoWSkyCoach'
+import * as WoWSkyCoachMoPGoldMeta from './WoWSkyCoachMoPGold'
+import * as WoWSkyCoachDelvesMeta from './WoWSkyCoachDelves'
+import * as MMOEconomicsTheoryMeta from './MMOEconomicsTheory'
+import * as MMOFutureEconomiesMeta from './MMOFutureEconomies'
+import * as TradingAutomationToolsMeta from './TradingAutomationTools'
+import * as ResearchPost1Meta from './ResearchPost1'
+import * as ResearchPost2Meta from './ResearchPost2'
+import * as ResearchPost3Meta from './ResearchPost3'
 
 export const blogComponents: Record<string, React.ComponentType> = {
   // FFXIV Blog Series
@@ -89,4 +125,42 @@ export const blogComponents: Record<string, React.ComponentType> = {
   ResearchPost1,
   ResearchPost2,
   ResearchPost3
+}
+
+// Meta functions registry - maps component names to their meta exports
+export const blogMetaFunctions: Record<string, (() => any) | undefined> = {
+  FFXIVBs1: FFXIVBs1Meta.meta,
+  FFXIVBs2: FFXIVBs2Meta.meta,
+  FFXIVBs3: FFXIVBs3Meta.meta,
+  FFXIVBs4: FFXIVBs4Meta.meta,
+  FFXIVBs5: FFXIVBs5Meta.meta,
+  FFXIVBs6: FFXIVBs6Meta.meta,
+  FFXIVBs7: FFXIVBs7Meta.meta,
+  FFXIVBs8: FFXIVBs8Meta.meta,
+  FFXIVBs9: FFXIVBs9Meta.meta,
+  FFXIVBs10: FFXIVBs10Meta.meta,
+  FFXIVBs11: FFXIVBs11Meta.meta,
+  FFXIVBs12: FFXIVBs12Meta.meta,
+  FFXIVBs13: FFXIVBs13Meta.meta,
+  FFXIVBs14: FFXIVBs14Meta.meta,
+  FFXIVBs15: FFXIVBs15Meta.meta,
+  FFXIVBs16: FFXIVBs16Meta.meta,
+  FFXIVBs17: FFXIVBs17Meta.meta,
+  FFXIVAdvancedCrafting: FFXIVAdvancedCraftingMeta.meta,
+  FFXIVHowToResell: FFXIVHowToResellMeta.meta,
+  FFXIVMarketMastery: FFXIVMarketMasteryMeta.meta,
+  FFXIVUndercut: FFXIVUndercutMeta.meta,
+  WoWTLDR: WoWTLDRMeta.meta,
+  WoWCrossRealm1: WoWCrossRealm1Meta.meta,
+  WoWAdvancedStrategies: WoWAdvancedStrategiesMeta.meta,
+  WoWMarketDomination: WoWMarketDominationMeta.meta,
+  WoWSkyCoach: WoWSkyCoachMeta.meta,
+  WoWSkyCoachMoPGold: WoWSkyCoachMoPGoldMeta.meta,
+  WoWSkyCoachDelves: WoWSkyCoachDelvesMeta.meta,
+  MMOEconomicsTheory: MMOEconomicsTheoryMeta.meta,
+  MMOFutureEconomies: MMOFutureEconomiesMeta.meta,
+  TradingAutomationTools: TradingAutomationToolsMeta.meta,
+  ResearchPost1: ResearchPost1Meta.meta,
+  ResearchPost2: ResearchPost2Meta.meta,
+  ResearchPost3: ResearchPost3Meta.meta
 }

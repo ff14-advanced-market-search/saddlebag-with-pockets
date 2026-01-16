@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { blogPosts } from '~/content/blog/posts'
-import { blogComponents } from '~/components/blog'
+import { blogComponents, blogMetaFunctions } from '~/components/blog'
 
 interface LoaderData {
   post: (typeof blogPosts)[string]
@@ -37,8 +37,15 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     }
   }
 
-  const { post } = data
+  const { post, componentName } = data
 
+  // Use component meta if available, otherwise fallback to post config
+  const componentMeta = blogMetaFunctions[componentName]
+  if (componentMeta && typeof componentMeta === 'function') {
+    return componentMeta()
+  }
+
+  // Fallback to post config
   return {
     title: post.title,
     description: post.description,
