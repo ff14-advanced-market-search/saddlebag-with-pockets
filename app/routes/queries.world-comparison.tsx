@@ -14,7 +14,7 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import ItemServerComparison from '~/requests/FFXIV/ItemServerComparison'
 import type { ItemServerComparisonList } from '~/requests/FFXIV/ItemServerComparison'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions.server'
 import { z } from 'zod'
 import CheckBox from '~/components/form/CheckBox'
 import { useState } from 'react'

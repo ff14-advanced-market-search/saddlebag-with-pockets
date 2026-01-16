@@ -11,5 +11,8 @@ export default defineConfig({
       'react-dnd-scrolling',
       'raf'
     ]
+  },
+  test: {
+    environment: 'jsdom'
   }
 })

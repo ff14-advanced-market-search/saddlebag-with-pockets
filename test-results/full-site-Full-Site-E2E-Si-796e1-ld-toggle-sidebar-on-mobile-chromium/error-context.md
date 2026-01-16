@@ -1,0 +1,242 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - button "Open sidebar" [ref=e4] [cursor=pointer]:
+        - generic [ref=e5]: Open sidebar
+        - img [ref=e6]
+      - generic [ref=e8]:
+        - button [ref=e10] [cursor=pointer]:
+          - img [ref=e11]
+        - link "Settings" [ref=e14] [cursor=pointer]:
+          - /url: /options
+          - generic [ref=e16]: Settings
+          - img [ref=e18]
+        - generic [ref=e20]:
+          - button "View notifications" [ref=e22] [cursor=pointer]:
+            - generic [ref=e23]: View notifications
+            - img [ref=e25]
+          - button "Open user menu tiny-chocobo" [ref=e29] [cursor=pointer]:
+            - generic [ref=e30]: Open user menu
+            - img "tiny-chocobo" [ref=e31]
+    - main [ref=e32]:
+      - generic [ref=e33]:
+        - img "Hero Background" [ref=e35]
+        - generic [ref=e37]:
+          - heading "Saddlebag Exchange" [level=1] [ref=e38]
+          - paragraph [ref=e39]: Explore MMO Market Data for FFXIV, WoW, and GW2
+          - generic [ref=e41]:
+            - link "Final Fantasy XIV" [ref=e42] [cursor=pointer]:
+              - /url: /queries
+            - link "World of Warcraft" [ref=e43] [cursor=pointer]:
+              - /url: /wow
+            - link "Guild Wars 2" [ref=e44] [cursor=pointer]:
+              - /url: /gw2
+      - generic [ref=e46]:
+        - img [ref=e48]
+        - generic [ref=e50]:
+          - paragraph [ref=e51]: Join our Discord for access to our best tools!
+          - paragraph [ref=e52]:
+            - link "Discord" [ref=e53] [cursor=pointer]:
+              - /url: https://discord.gg/saddlebag-exchange-973380473281724476
+              - text: Discord →
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - heading "Features" [level=2] [ref=e57]
+          - paragraph [ref=e58]: What We Offer
+          - paragraph [ref=e59]: Powerful tools and analytics to enhance your MMO trading experience.
+        - generic [ref=e61]:
+          - link "Final Fantasy XIV Tools for Cross-Server reselling, FFXIV Market Board Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More!" [ref=e62] [cursor=pointer]:
+            - /url: /queries
+            - generic [ref=e63]:
+              - heading "Final Fantasy XIV" [level=3] [ref=e64]
+              - paragraph [ref=e65]: Tools for Cross-Server reselling, FFXIV Market Board Overviews, Crafting Profit Simulation, Shopping Lists, Alerts and More!
+          - link "World of Warcraft Tools for Cross-Realm Trading, Market Overviews, Shortage Finders, and our Best Deals Search!" [ref=e66] [cursor=pointer]:
+            - /url: /wow
+            - generic [ref=e67]:
+              - heading "World of Warcraft" [level=3] [ref=e68]
+              - paragraph [ref=e69]: Tools for Cross-Realm Trading, Market Overviews, Shortage Finders, and our Best Deals Search!
+          - link "Guild Wars 2 Trading Post Tools for Guild Wars 2!" [ref=e70] [cursor=pointer]:
+            - /url: /gw2
+            - generic [ref=e71]:
+              - heading "Guild Wars 2" [level=3] [ref=e72]
+              - paragraph [ref=e73]: Trading Post Tools for Guild Wars 2!
+          - link "Patreon Join our Patreon Supporters to access the best tools we have!" [ref=e74] [cursor=pointer]:
+            - /url: https://www.patreon.com/indopan
+            - generic [ref=e75]:
+              - heading "Patreon" [level=3] [ref=e76]
+              - paragraph [ref=e77]: Join our Patreon Supporters to access the best tools we have!
+          - link "Discord Webpage Or join our Discord Subscribers to access the best tools we have!" [ref=e78] [cursor=pointer]:
+            - /url: https://discord.com/servers/saddlebag-exchange-973380473281724476
+            - generic [ref=e79]:
+              - heading "Discord Webpage" [level=3] [ref=e80]
+              - paragraph [ref=e81]: Or join our Discord Subscribers to access the best tools we have!
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - heading "About Us" [level=2] [ref=e85]
+          - paragraph [ref=e86]: Your Gateway to Mastering MMO Markets
+          - paragraph [ref=e87]: Saddlebag Exchange provides tools to revolutionize how you engage with in-game economies.
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - heading "For Final Fantasy XIV Players" [level=3] [ref=e90]
+            - list [ref=e91]:
+              - listitem [ref=e92]:
+                - text: Discover the best deals in your whole region with our
+                - link "Best Deals Search" [ref=e93] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/ffxiv/best-deals
+                - text: .
+              - listitem [ref=e94]:
+                - text: Discover high-demand items with our
+                - link "Marketshare Overview Tool" [ref=e95] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/ffxiv/marketshare/queries
+                - text: .
+              - listitem [ref=e96]:
+                - text: Explore crafting opportunities with our
+                - link "Crafting Profit Simulations" [ref=e97] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/ffxiv/craftsim/queries
+                - text: .
+              - listitem [ref=e98]:
+                - text: Optimize material costs with our
+                - link "Shopping List Search" [ref=e99] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/ffxiv/shopping-list
+                - text: .
+              - listitem [ref=e100]:
+                - text: Track market trends and invest for patch and raid cycles with our
+                - link "Weekly Price Delta Tool" [ref=e101] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/ffxiv/weekly-price-group-delta
+                - text: .
+              - listitem [ref=e102]:
+                - text: Get real-time FFXIV Discord alerts for
+                - link "Prices" [ref=e103] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/price-sniper
+                - text: ","
+                - link "Undercuts, Sales" [ref=e104] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/undercut
+                - text: ", and more!"
+              - listitem [ref=e105]:
+                - text: Unlock the best items to buy from vendors or other servers and sell on your home server with our
+                - link "Cross-Server Reselling Tool" [ref=e106] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/queries/recommended
+                - text: .
+              - listitem [ref=e107]:
+                - text: Access exclusive
+                - link "Secret Sale Leads" [ref=e108] [cursor=pointer]:
+                  - /url: https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads
+                - text: and
+                - link "Experimental Discount Price Sniper" [ref=e109] [cursor=pointer]:
+                  - /url: https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Experimental-Discount-Price-Sniper
+                - text: alert channels for premium members!
+          - generic [ref=e110]:
+            - heading "For World of Warcraft Adventurers" [level=3] [ref=e111]
+            - list [ref=e112]:
+              - listitem [ref=e113]:
+                - text: Discover ultra-cheap deals with our
+                - link "Ultra Cheap Deals" [ref=e114] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/best-deals?discount=99&minPrice=100&salesPerDay=0.1
+                - text: search.
+              - listitem [ref=e115]:
+                - text: Snipe amazing discounts and deals with our desktop app the
+                - link "Azeroth Auction Assassin" [ref=e116] [cursor=pointer]:
+                  - /url: https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md
+                - text: .
+              - listitem [ref=e117]:
+                - text: Find lucrative items with our
+                - link "Marketshare Gold Earning Searches" [ref=e118] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/marketshare
+                - text: .
+              - listitem [ref=e119]:
+                - text: Experiance Cross-Realm Trading with our
+                - link "Shopping List" [ref=e120] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/shopping-list
+                - text: and
+                - link "Export Search" [ref=e121] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/export-search
+                - text: tools so you can find which realms to buy and sell items.
+              - listitem [ref=e122]:
+                - text: Shop for the most valuable high ilvl raid BOE drops with our
+                - link "ilvl Shopping" [ref=e123] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/ilvl-shopping-list
+                - text: tool and easily export lists with our
+                - link "Export List" [ref=e124] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/export-search
+                - text: .
+              - listitem [ref=e125]:
+                - text: Discover long-term trends with our
+                - link "Weekly Price Group Delta" [ref=e126] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/weekly-price-group-delta
+                - text: ", and invest in the top commodities for patch and raid cycles!"
+              - listitem [ref=e127]:
+                - text: Get real-time WoW AH Discord
+                - link "Price Alerts" [ref=e128] [cursor=pointer]:
+                  - /url: https://saddlebagexchange.com/wow/price-alert
+                - text: ","
+                - link "Undercut Alerts" [ref=e129] [cursor=pointer]:
+                  - /url: https://www.curseforge.com/wow/addons/saddlebag-exchange
+                - text: ", and more!"
+      - generic [ref=e131]:
+        - heading "Join Saddlebag Exchange Today" [level=2] [ref=e132]
+        - paragraph [ref=e133]: Transform your MMO trading into a highly efficient, rewarding journey.
+        - link "Get Started" [ref=e135] [cursor=pointer]:
+          - /url: https://discord.gg/saddlebag-exchange-973380473281724476
+    - contentinfo [ref=e136]:
+      - paragraph [ref=e138]: © 2026 Saddlebag Exchange. All rights reserved.
+    - generic:
+      - paragraph [ref=e139]:
+        - text: Join
+        - strong [ref=e140]: Saddlebag Exchange
+        - text: today and transform your MMO trading into a highly efficient, rewarding journey. Let us help you elevate your game and dominate the market!
+      - paragraph [ref=e141]: "Welcome to the Saddlebag Exchange. Our platform offers a comprehensive suite of tools designed to elevate your game trading strategy. Your Gateway to Mastering MMO Markets! Saddlebag Exchange is positioned at the intersection of gaming and financial optimization. Our tools don't just assist players; they revolutionize how they engage with the in-game economy. For \"Final Fantasy XIV,\" we turn limited inventory slots into a high-yield asset. In \"World of Warcraft,\" we transform gameplay into a means for self-sustaining subscription. This is more than a service for gamers; it's an innovative approach to in-game economics, providing players with tools to maximize their resources and financial potential. For supporters, this represents a unique opportunity to enter a vibrant, growing market with a product that offers tangible value to a dedicated user base. Our service not only retains customers by offering substantial returns on their investment but also fosters a dedicated community of players who see Saddlebag Exchange as essential to their gaming experience. **\"FinalFantasy XIV\" Component:** In \"Final Fantasy XIV\" our service offers a compelling alternative to the game's own expansion of selling slots. Players are restricted to 40 item slots in their market listings. The game allows expansion of this limit by 20 slots for an additional $3/month (up to a max of 100 extra sale slots for $15 per month). However, Saddlebag Exchange offers a more strategic solution. For the same price, our service optimizes the use of the existing 40 slots. Instead of merely increasing quantity, we enhance the quality and profitability of each slot. Our tools enable players to identify and list items with the highest market demand and profitability, thereby maximizing their earnings within the existing constraints. While pitched as an alternative to paid extra retainers, it can also be a multiplier for those who still want to use the advantages of the purchasing extra retainer slots. Once you purchase the maximum of 100 extra slots for $15 a month then the Saddlebag Exchange elite package for $10 to $20 a month becomes even more valuable. Our tools also help large scale operations maximize their potential! **\"World of Warcraft\" Component:** For \"World of Warcraft\" the WoW Token represents a pivotal aspect of in-game economy. This token allows players to exchange in-game gold for additional game time or add funds to their Battle.net balance. Given that a WoW Token can be exchanged for 30 days of game time or $15 for Battle.net balance, our service becomes an invaluable asset for players looking to make their gameplay self-sustaining. Our service, priced lower than the monthly subscription, empowers players to earn significant amounts of in-game gold, enough to regularly purchase WoW Tokens. This essentially makes the game free to play, as players can earn enough in-game currency to continuously renew their game time without spending real money. The potential is immense; one of our users earned 20 million gold in a few days, an amount that can cover years of subscription costs. Keywords for google: xiv analysis, the ffxiv market board, selling items, ff14 marketboard prices, ffxiv market board, ff14 market board, ffxiv marketboard, ff14 marketboard prices, ffxiv market board prices, megalotragus horn, ff14 market board prices, ff14 marketboard, ffxiv market, how to sell on market board ffxiv, how to sell items on market board ffxiv, world of warcraft player count, wow Auctionhouse, games like world of warcraft, world of warcraft hairstyles, world of warcraft expansions in order, world of warcraft the war within, world of warcraft season of discovery gold, chocobo saddlebag ffxiv, server status final fantasy 14, ff14 servers status, universalis, ffxiv character lookup, final fantasy online xiv download, ff14 online download, ff14 house, universus, ffxiv house, universalis ffxiv, universalis ff14, ffxiv universalis, ffxiv servers, ff online servers, ff14 servers, ff14 universalis, server ffxiv, ff14 server, ffxiv server, ffxi ah, ffxiv logs, ffxiv log, ff14 player search, ffxiv player search, data center ff14, final fantasy xiv data center, ffxiv data center, ff14 data center, data centers ffxiv, data center ffxiv, ffxiv housing tracker, ff14 housing tracker, ffx celestial weapons, universalis europa, ff11 wiki, ffxiv house tracker, celestial weapons ffx, wiki ff11, ff11 wikipedia, ff14 login, bard ff14, login ffxiv, final fantasy 14 mog, final fantasy 14 moogle, ff14 bard, eorzea, ff14 moogle, aether auctions, final fantasy 14 gil, moogle ff14, ffxiv mog, aether auction, retainer ffxiv, ffxiv cost, ff14 fish, ff14 retainer, ffxiv retainer, retainers ffxiv, ffxiv prices, ffxiv cost, ff14 price, final fantasy xiv pricing, ff14 prices, ff14 cost, ff14 moogle shop, ffxiv materia, ff14 auction house, ff14 excalibur, ffxiv web, ffxiv auction house, ffxiv website, auction house ffxiv, ffxiv mb, ffxiv websites, auction house ff14, materia ffxiv, ffxiv site, ff14 websites, ffxiv house prices, ff14 house prices, ffxiv housing prices, ffxiv data, ff14 housing prices, ff13 weapons upgrade guide, ffxiv character search, final fantasy xiv sale, universalis ffxiv, choco bo, xiv server status, final fantasy 14 online server status, marketboard ffxiv, final fantasy 14 market board, ff14 maintenance, ffxiv server status, ffxiah, green hills of stranglethorn, ff14 hairstyles, loque'nahak, housing lottery, ffxiv auction house tracker. guild wars 2, gw2, guild wars 2 trading post, gw2 trading post, guild wars 2 gold making, gw2 gold making, guild wars 2 market, gw2 market, guild wars 2 economy, gw2 economy, guild wars 2 trading, gw2 trading, guild wars 2 items, gw2 items, guild wars 2 prices, gw2 prices, trading post guide, gw2 gold guide, guild wars 2 flipping, gw2 flipping, guild wars 2 investment, gw2 investment"
+  - button "Get Help" [ref=e143] [cursor=pointer]:
+    - generic [ref=e144]: "?"
+  - generic:
+    - generic:
+      - generic:
+        - dialog [active]:
+          - generic [ref=e147]:
+            - button "Close sidebar" [ref=e149] [cursor=pointer]:
+              - generic [ref=e150]: Close sidebar
+              - img [ref=e151]
+            - link "Saddlebag Exchange" [ref=e154] [cursor=pointer]:
+              - /url: /
+              - img "Saddlebag Exchange" [ref=e155]
+            - navigation [ref=e157]:
+              - button "Final Fantasy XIV" [ref=e159] [cursor=pointer]:
+                - generic [ref=e160]: Final Fantasy XIV
+                - img [ref=e161]
+              - button "World of Warcraft" [ref=e164] [cursor=pointer]:
+                - generic [ref=e165]: World of Warcraft
+                - img [ref=e166]
+              - button "Guild Wars 2" [ref=e169] [cursor=pointer]:
+                - generic [ref=e170]: Guild Wars 2
+                - img [ref=e171]
+              - button "WoW Experimental Tools" [ref=e174] [cursor=pointer]:
+                - generic [ref=e175]: WoW Experimental Tools
+                - img [ref=e176]
+              - button "FFXIV Experimental Tools" [ref=e179] [cursor=pointer]:
+                - generic [ref=e180]: FFXIV Experimental Tools
+                - img [ref=e181]
+              - button "Other" [ref=e184] [cursor=pointer]:
+                - generic [ref=e185]: Other
+                - img [ref=e186]
+              - link "Patreon" [ref=e188] [cursor=pointer]:
+                - /url: https://www.patreon.com/indopan
+                - img [ref=e189]
+                - text: Patreon
+              - link "Guides and Tutorials" [ref=e192] [cursor=pointer]:
+                - /url: https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki
+                - img [ref=e193]
+                - text: Guides and Tutorials
+              - link "Join our Discord" [ref=e195] [cursor=pointer]:
+                - /url: https://discord.gg/saddlebag-exchange-973380473281724476
+                - img [ref=e196]
+                - text: Join our Discord
+              - paragraph [ref=e200]:
+                - text: FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
+                - text: © SQUARE ENIX CO., LTD. All Rights Reserved.
+                - text: WORLD OF WARCRAFT is a registered trademark of Blizzard Entertainment, Inc.
+                - text: © BLIZZARD ENTERTAINMENT, INC. All Rights Reserved.
+                - text: GUILD WARS 2 is a registered trademark of ArenaNet, Inc.
+                - text: © ARENANET, INC. All Rights Reserved.
+```

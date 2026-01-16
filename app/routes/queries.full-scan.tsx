@@ -5,7 +5,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import FullScanRequest, { formatFullScanInput } from '~/requests/FFXIV/FullScan'
 import { useEffect, useRef, lazy, Suspense } from 'react'
 import NoResults from '~/components/Common/NoResults'

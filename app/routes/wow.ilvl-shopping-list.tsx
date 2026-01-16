@@ -14,7 +14,7 @@ import type {
   ItemStat
 } from '~/requests/WoW/IlvlShoppingList'
 import IlvlShoppingList from '~/requests/WoW/IlvlShoppingList'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
 import {
   useActionData,

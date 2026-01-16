@@ -22,7 +22,7 @@ import {
   WOW_REGION,
   WOW_REALM_ID,
   WOW_REALM_NAME
-} from '~/sessions'
+} from '~/sessions.server'
 import {
   EnsureThemeApplied,
   Theme,

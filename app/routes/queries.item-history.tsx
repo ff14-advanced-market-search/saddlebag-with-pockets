@@ -16,7 +16,7 @@ import type {
   GetHistoryResponse
 } from '~/requests/FFXIV/GetHistory'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions.server'
 import ItemSelect from '~/components/Common/ItemSelect'
 import type { ItemSelected } from '~/components/Common/ItemSelect'
 import { useEffect, useState } from 'react'

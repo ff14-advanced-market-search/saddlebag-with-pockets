@@ -1,4 +1,3 @@
-import { MagnifyingGlassIcon as DocumentSearchIcon } from '@heroicons/react/24/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -47,87 +46,87 @@ const recommendedQueries = [
     name: 'Total Market View (Weekly)',
     description:
       'See an general overview of your servers market by revenue earned.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.marketView
   },
   {
     name: 'Highest Price Increases (Weekly)',
     description:
       'Find the best selling items that are out of stock or have had massive price increases!',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.percentChange
   },
   {
     name: 'Eaving Tidemoores Best Raw Materials to Gather.',
     description:
       'See the best earning and fastest selling raw materials to gather. Made by Eaving Tidemoore.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.bestGathering
   },
   {
     name: 'Mega Value Marketshare (Weekly)',
     description:
       'Find the ultra high value items with the most revenue based on the last 7 days sales.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.megaValue
   },
   {
     name: 'Best Selling Items (Last Hour)',
     description: 'See the items with the top revenue from the last hour.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.lastHour
   },
   {
     name: 'Fastest Selling Items (Daily)',
     description: 'See the fastest selling items from the last 24 hours.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.mostPurchases
   },
   {
     name: 'Most Quantity Purchased (Daily).',
     description:
       'See the items that sell in bulk with the most quantity sold in the last 24 hours.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.mostQuantity
   },
   {
     name: 'Best Selling Furniture (Weekly).',
     description: 'See the best selling furniture items from the last week.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.bestFurniture
   },
   {
     name: 'Best Selling Collectible Items (Weekly).',
     description: 'See the best selling collectible items from the last week.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.bestCollectible
   },
   {
     name: 'Best Selling Consumable Items (Weekly).',
     description:
       'See the best selling food, seafood, tincture items from the last week.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.bestCollectible
   },
   {
     name: 'Best Selling Vendor Items (Weekly).',
     description:
       'See the best selling items you can buy from vendors from the last week.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.bestVendorItems
   },
   {
     name: 'Best Selling Gear, Weapons, Armor and Glamors (Weekly).',
     description:
       'See the best selling gear, weapons, armor and glamors from the last week. Excluding crafted raid gear.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.bestGear
   },
   {
     name: 'Best Raw Materials to Sell.',
     description:
       'See the best earning and fastest selling raw materials to sell.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.bestRawMats
   }
 ]

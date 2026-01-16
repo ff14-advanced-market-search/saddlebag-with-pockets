@@ -28,7 +28,7 @@ import type {
 import WoWQuantityManipulation from '~/requests/WoW/QuantityManipulation'
 import NoResults from '~/components/Common/NoResults'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import { Results } from '~/components/WoWResults/QuantityManipulation/Results'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { useState } from 'react'

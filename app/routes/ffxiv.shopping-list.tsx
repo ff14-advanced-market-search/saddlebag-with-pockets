@@ -30,7 +30,7 @@ import type {
   ShoppingListItem
 } from '~/requests/FFXIV/shopping-list'
 import GetShoppingList from '~/requests/FFXIV/shopping-list'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'

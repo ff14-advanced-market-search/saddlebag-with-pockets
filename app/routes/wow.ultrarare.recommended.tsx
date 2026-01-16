@@ -1,4 +1,3 @@
-import { MagnifyingGlassIcon as DocumentSearchIcon } from '@heroicons/react/24/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -34,48 +33,48 @@ const recommendedQueries = [
     name: 'Weapons',
     description:
       'Search for ultra rare transmog weapons across all weapon types. Double check wowhead for other items with similar models.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.weapons
   },
   {
     name: 'Armor',
     description:
       'Discover ultra rare transmog armor pieces. Double check wowhead for other items with similar models.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.armor
   },
   {
     name: 'Mounts',
     description: 'Discover ultra rare mounts. All these are great!',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.mounts
   },
   {
     name: 'Quest Items',
     description:
       'Search for rare quest items that are hard to find. Often desired by Achievement Hunters and Collectors! Double check wowhead to make sure the quest line still exists in game and if its used for achievements.  Junk quality are often deprecated and not worth anything.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.questItem
   },
   {
     name: 'Recipes (Common Quality and better)',
     description:
       'Find ultra rare recipes with Common quality and better. Often desired by Achievement Hunters and Collectors! Double check all these on wowhead to confirm they were not turned into trainers recipes. Junk quality are often deprecated and not worth anything.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.recipe
   },
   {
     name: 'Consumables',
     description:
       'Search for ultra rare consumable items. Note: Most consumables might be worthless and not used for achievements. Double check wowhead to verify if items are still obtainable and useful.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.consumable
   },
   {
     name: 'Miscellaneous',
     description:
       'Search for other rare miscellaneous items. Note: Double check pet items carefully - the item that makes a pet might be rare but the caged pet may not be. Verify with the shopping list or Undermine Exchange before investing.',
-    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
+    iconType: 'magnify',
     href: searchParams.miscellaneous
   }
 ]

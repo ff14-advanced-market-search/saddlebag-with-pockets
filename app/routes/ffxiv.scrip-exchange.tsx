@@ -7,7 +7,7 @@ import {
 import type { MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions.server'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'

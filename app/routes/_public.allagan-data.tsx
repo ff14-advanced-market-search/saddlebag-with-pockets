@@ -16,7 +16,7 @@ import type { ColumnList } from '~/components/types'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 

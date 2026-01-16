@@ -12,7 +12,7 @@ import type {
   IlvlExportResponse
 } from '~/requests/WoW/IlvlExportSearch'
 import IlvlExportSearch from '~/requests/WoW/IlvlExportSearch'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
 import {
   useActionData,

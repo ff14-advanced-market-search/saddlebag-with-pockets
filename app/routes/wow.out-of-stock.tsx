@@ -9,7 +9,7 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { OutOfStockItem } from '~/requests/WoW/OutOfStock'
 import WoWOutOfStock from '~/requests/WoW/OutOfStock'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
 import {
   useActionData,
