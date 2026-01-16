@@ -1,4 +1,3 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 import { getSession, commitSession } from '~/sessions'
 import {

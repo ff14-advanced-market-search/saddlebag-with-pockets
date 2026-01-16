@@ -15,11 +15,15 @@ export const DISCORD_USERNAME = 'discord_username'
 export const DISCORD_AVATAR = 'discord_avatar'
 export const EARLY_ACCESS_TOKEN = 'early_access_token'
 
+// Use a default dev secret - production should set SESSION_SECRET env var
+const sessionSecret = 'dev-secret'
+
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
     cookie: {
       name: '__session',
-      secure: process.env.NODE_ENV === 'production',
+      secrets: [sessionSecret],
+      secure: false,
       httpOnly: true,
       sameSite: 'lax',
       path: '/',

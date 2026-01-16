@@ -42,13 +42,12 @@ import { getWowheadLink } from '~/components/utilities/getWowheadLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Weekly Price Group Delta Analysis',
-    description:
-      'WoW New Raid Investment Analysis! View weekly price changes for investment opportunities!'
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Weekly Price Group Delta Analysis' },
+    { name: 'description', content: 'WoW New Raid Investment Analysis! View weekly price changes for investment opportunities!' }
+  ]
 }
 
 // Add keyframe animation for the pulsing effect

@@ -1,7 +1,7 @@
 import { useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useState } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -16,19 +16,21 @@ import Modal from '~/components/form/Modal'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 
 export const meta: MetaFunction = () => {
-  return {
-    title: 'Saddlebag Exchange: FFXIV Discord Undercut and Sale Alerts',
-    description:
-      'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.',
-    viewport: 'width=device-width,initial-scale=1',
-    charSet: 'utf-8',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/undercut'
-      }
-    ]
-  }
+  return [
+    { title: 'Saddlebag Exchange: FFXIV Discord Undercut and Sale Alerts' },
+    {
+      name: 'description',
+      content:
+        'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.'
+    },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { charset: 'utf-8' },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/undercut'
+    }
+  ]
 }
 
 interface TrackedItem {

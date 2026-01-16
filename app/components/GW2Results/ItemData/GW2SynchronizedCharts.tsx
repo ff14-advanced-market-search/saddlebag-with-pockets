@@ -7,22 +7,8 @@ import {
 } from 'react'
 import { format } from 'date-fns'
 import Highcharts from 'highcharts'
-import addHighchartsMore from 'highcharts/highcharts-more'
 import HighchartsReact from 'highcharts-react-official'
 import type { TimeDataPoint } from '~/requests/GW2/ItemListingsData'
-
-// Initialize the highcharts-more module at the module level
-let highchartsMoreLoaded = false
-try {
-  addHighchartsMore(Highcharts)
-  highchartsMoreLoaded = true
-} catch (error) {
-  console.error(
-    'Failed to initialize Highcharts more module:',
-    error instanceof Error ? error.message : String(error)
-  )
-  highchartsMoreLoaded = false
-}
 
 // Shared tooltip formatter for all charts
 const createSharedTooltipFormatter = (
@@ -113,7 +99,30 @@ const GW2SynchronizedCharts = forwardRef<
 >(({ timeData, darkmode, itemName }, ref) => {
   const [chartsLoaded, setChartsLoaded] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [moreReady, setMoreReady] = useState(false)
   const chartRefs = useRef<any[]>([])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    let cancelled = false
+    import('highcharts/highcharts-more')
+      .then((mod) => {
+        if (cancelled) return
+        mod.default(Highcharts)
+        setMoreReady(true)
+      })
+      .catch((error) => {
+        console.error(
+          'Failed to initialize Highcharts more module:',
+          error instanceof Error ? error.message : String(error)
+        )
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     const checkMobile = () => {
@@ -399,7 +408,7 @@ const GW2SynchronizedCharts = forwardRef<
       },
       // Colored area between Supply and Demand lines using arearange
       // Only include if highcharts-more module loaded successfully
-      ...(highchartsMoreLoaded
+      ...(moreReady
         ? [
             // Red area when Supply > Demand
             {
@@ -481,7 +490,7 @@ const GW2SynchronizedCharts = forwardRef<
           }
         }
       },
-      ...(highchartsMoreLoaded && {
+      ...(moreReady && {
         arearange: {
           connectNulls: false
         }

@@ -7,10 +7,12 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { formatFullScanInput } from '~/requests/FFXIV/FullScan'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, lazy, Suspense } from 'react'
 import NoResults from '~/components/Common/NoResults'
-import Results from '~/components/FFXIVResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
+
+// Lazy load Results since it has browser-only dependencies (react-dnd-scrolling, etc.)
+const Results = lazy(() => import('~/components/FFXIVResults/FullScan/Results.client'))
 import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { PreviousResultsLink } from '../components/FFXIVResults/FullScan/PreviousResultsLink'
@@ -55,19 +57,21 @@ const inputMap = {
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Reselling Trade Search',
-    description:
-      'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/queries/full-scan'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Reselling Trade Search' },
+    {
+      name: 'description',
+      content:
+        'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/full-scan'
+    }
+  ]
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -214,7 +218,9 @@ const Index = () => {
           )}
           {displayResultsTable && (
             <div className="w-full">
-              <Results rows={results.data} />
+              <Suspense fallback={<div className="p-4">Loading results...</div>}>
+                <Results rows={results.data} />
+              </Suspense>
             </div>
           )}
         </div>

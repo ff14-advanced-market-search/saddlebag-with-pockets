@@ -4,7 +4,6 @@ import type { ItemListingResponse } from '~/requests/GW2/ItemListingsDetailedDat
 import ItemListingsDetailedData from '~/requests/GW2/ItemListingsDetailedData'
 import { gw2ItemsList } from '~/utils/items/id_to_item'
 import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { useTypedSelector } from '~/redux/useTypedSelector'

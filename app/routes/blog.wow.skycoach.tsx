@@ -1,21 +1,24 @@
 import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1',
-  title:
-    'How to Best Prepare and Properly Complete Mythic+ Dungeons in World of Warcraft',
-  description:
-    'Learn how to prepare and properly complete Mythic+ dungeons in World of Warcraft, where you can get the best weapons and gear.',
-  customHeading: 'Guide to Mythic+ Dungeons and Best Gear in WoW',
-  links: [
-    {
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/wow/skycoach'
-    }
-  ]
-})
+export const meta: MetaFunction = () => [
+  { charset: 'utf-8' },
+  { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  {
+    title:
+      'How to Best Prepare and Properly Complete Mythic+ Dungeons in World of Warcraft'
+  },
+  {
+    name: 'description',
+    content:
+      'Learn how to prepare and properly complete Mythic+ dungeons in World of Warcraft, where you can get the best weapons and gear.'
+  },
+  {
+    tagName: 'link',
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/blog/wow/skycoach'
+  }
+]
 
 const MythicPlusGuide = () => {
   return (

@@ -2,22 +2,28 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'The Future of MMO Economies: Blockchain, AI, VR, and Next-Generation Virtual Markets',
-    description:
-      'Explore the future of virtual economies with blockchain integration, AI-driven markets, virtual reality economics, and emerging regulatory frameworks.',
-    customHeading:
-      'The Future of MMO Economies: Blockchain, AI, VR, and Next-Generation Virtual Markets',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/mmo/future-economies'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      title:
+        'The Future of MMO Economies: Blockchain, AI, VR, and Next-Generation Virtual Markets'
+    },
+    {
+      name: 'description',
+      content:
+        'Explore the future of virtual economies with blockchain integration, AI-driven markets, virtual reality economics, and emerging regulatory frameworks.'
+    },
+    {
+      customHeading:
+        'The Future of MMO Economies: Blockchain, AI, VR, and Next-Generation Virtual Markets'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/mmo/future-economies'
+    }
+  ]
 }
 
 const MMOFutureEconomies = () => {

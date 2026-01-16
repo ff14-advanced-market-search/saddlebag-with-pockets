@@ -3,20 +3,13 @@ import Banner from '~/components/Common/Banner'
 import recommendedConfigs from '~/components/recommended/WoW/WeeklyPriceGroup'
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'Saddlebag Exchange: WoW Weekly Price Group Delta Recommended Configurations',
-    description:
-      'Pre-configured weekly price group delta analyses for WoW markets. Track price changes across different item categories and make informed investment decisions.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/weekly-price-group-delta/recommended'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Weekly Price Group Delta Recommended Configurations' },
+    { name: 'description', content: 'Pre-configured weekly price group delta analyses for WoW markets. Track price changes across different item categories and make informed investment decisions.' },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/weekly-price-group-delta/recommended' }
+  ]
 }
 
 export default function RecommendedWeeklyPriceGroupDelta() {

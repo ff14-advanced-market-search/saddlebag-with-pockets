@@ -3,16 +3,17 @@ import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Marketboard Guide: Community Insights',
-    description:
-      'Explore community insights and tips for the FFXIV Marketboard.',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs7' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'FFXIV Marketboard Guide: Community Insights' },
+    {
+      name: 'description',
+      content:
+        'Explore community insights and tips for the FFXIV Marketboard.'
+    },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs7' }
+  ]
 }
 
 const HowtoCrossServerTradeinFFXIV = () => {

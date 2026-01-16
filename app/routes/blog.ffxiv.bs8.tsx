@@ -3,16 +3,17 @@ import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Marketboard Guide: Patch Impact',
-    description:
-      'Understand how game patches impact the FFXIV Marketboard and trading strategies.',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs8' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'FFXIV Marketboard Guide: Patch Impact' },
+    {
+      name: 'description',
+      content:
+        'Understand how game patches impact the FFXIV Marketboard and trading strategies.'
+    },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs8' }
+  ]
 }
 
 const HowtoCrossServerTradeinFFXIV = () => {

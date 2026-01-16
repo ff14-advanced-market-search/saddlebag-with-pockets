@@ -44,21 +44,25 @@ import { getWindowUrlParams } from '~/utils/urlHelpers'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: Options Menu',
-    description:
-      'Set your FFXIV datacenter and server / Set your wow realm and region',
-    customHeading:
-      'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/options'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: Options Menu' },
+    {
+      name: 'description',
+      content:
+        'Set your FFXIV datacenter and server / Set your wow realm and region'
+    },
+    {
+      customHeading:
+        'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/options'
+    }
+  ]
 }
 
 export const validator = z.object({

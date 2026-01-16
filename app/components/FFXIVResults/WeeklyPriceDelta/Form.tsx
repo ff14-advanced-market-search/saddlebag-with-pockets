@@ -1,5 +1,5 @@
 import { Link, useNavigation } from '@remix-run/react'
-import dayjs from 'dayjs'
+import { startOfYear, subDays, subMonths, subYears } from 'date-fns'
 import { useEffect, useState } from 'react'
 import type { DateRangeType, DateValueType } from 'react-tailwindcss-datepicker'
 import Datepicker from 'react-tailwindcss-datepicker'
@@ -211,35 +211,35 @@ export const Form = ({
                 thisYear: {
                   text: 'This year',
                   period: {
-                    start: dayjs().startOf('year').toDate(),
+                    start: startOfYear(new Date()),
                     end: endFromDate
                   }
                 },
                 last30Days: {
                   text: 'Last 30 days',
                   period: {
-                    start: dayjs().subtract(30, 'day').toDate(),
+                    start: subDays(new Date(), 30),
                     end: endFromDate
                   }
                 },
                 last90Days: {
                   text: 'Last 90 days',
                   period: {
-                    start: dayjs().subtract(90, 'day').toDate(),
+                    start: subDays(new Date(), 90),
                     end: endFromDate
                   }
                 },
                 last6Months: {
                   text: 'Last 6 months',
                   period: {
-                    start: dayjs().subtract(6, 'month').toDate(),
+                    start: subMonths(new Date(), 6),
                     end: endFromDate
                   }
                 },
                 lastYear: {
                   text: 'Last year',
                   period: {
-                    start: dayjs().subtract(1, 'year').toDate(),
+                    start: subYears(new Date(), 1),
                     end: endFromDate
                   }
                 }

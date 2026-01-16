@@ -1,8 +1,4 @@
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction
-} from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import overrides from './base.css'
@@ -220,13 +216,16 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const meta: MetaFunction = ({ data }) => {
   const { site_name } = data
-  return {
-    charset: 'utf-8',
-    title: site_name,
-    viewport: 'width=device-width,initial-scale=1',
-    description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: site_name },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
+    }
+  ]
 }
 
 /**
@@ -372,7 +371,7 @@ function App() {
     <DatadogProvider>
       <html lang="en" className={classNames(`h-full`, theme || '')}>
         <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <Meta />
           <Links />
           <EnsureThemeApplied />

@@ -1,5 +1,5 @@
 import { useActionData, useNavigation } from '@remix-run/react'
-import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
 import { getUserSessionData } from '~/sessions'
@@ -17,18 +17,13 @@ import { format } from 'date-fns'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Full Sale History',
-    description: 'Saddlebag Exchange: FFXIV sale history on past 1800 sales',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/extended-history'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Full Sale History' },
+    { name: 'description', content: 'Saddlebag Exchange: FFXIV sale history on past 1800 sales' },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/extended-history' }
+  ]
 }
 
 const validateInput = ({

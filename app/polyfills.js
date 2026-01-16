@@ -1,4 +1,4 @@
-// Polyfill for global object in Cloudflare Workers
+// Polyfill for node global object in Cloudflare Workers/Pages environment
 if (typeof globalThis !== 'undefined' && !globalThis.global) {
   globalThis.global = globalThis
 }
@@ -10,14 +10,13 @@ if (typeof MessageChannel === 'undefined') {
       this.port1 = {
         postMessage: (message) => {
           if (this.port2.onmessage) {
+            // Use queueMicrotask to make it async like the real MessageChannel
             queueMicrotask(() => {
               this.port2.onmessage({ data: message })
             })
           }
         },
-        onmessage: null,
-        close: () => {},
-        start: () => {}
+        onmessage: null
       }
       this.port2 = {
         postMessage: (message) => {
@@ -27,28 +26,14 @@ if (typeof MessageChannel === 'undefined') {
             })
           }
         },
-        onmessage: null,
-        close: () => {},
-        start: () => {}
+        onmessage: null
       }
     }
   }
   
+  // Set on both globalThis and global for compatibility
   globalThis.MessageChannel = MessageChannelPolyfill
   if (typeof global !== 'undefined') {
     global.MessageChannel = MessageChannelPolyfill
   }
-}
-
-import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
-import * as build from "@remix-run/dev/server-build";
-
-const handleRequest = createPagesFunctionHandler({
-    build,
-    mode: "production",
-    getLoadContext: (context) => context.env,
-});
-
-export function onRequest(context) {
-    return handleRequest(context);
 }

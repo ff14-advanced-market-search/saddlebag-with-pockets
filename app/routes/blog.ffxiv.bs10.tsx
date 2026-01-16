@@ -3,19 +3,21 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Marketboard Guide: Third-Party Tools',
-    description:
-      'Explore third-party tools that can help you on the FFXIV Marketboard.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/ffxiv/bs10'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'FFXIV Marketboard Guide: Third-Party Tools' },
+    {
+      name: 'description',
+      content:
+        'Explore third-party tools that can help you on the FFXIV Marketboard.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs10'
+    }
+  ]
 }
 
 const howtocrossservertradeinffxiv = () => {

@@ -3,16 +3,21 @@ import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'How to Trade Using Commodity Shortage Futures as a Crafter',
-    description:
-      'Explore effective strategies for trading using commodity shortage futures to maximize profits as a crafter.',
-    customHeading:
-      'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter',
-    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/blog/r3' }]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'How to Trade Using Commodity Shortage Futures as a Crafter' },
+    {
+      name: 'description',
+      content:
+        'Explore effective strategies for trading using commodity shortage futures to maximize profits as a crafter.'
+    },
+    {
+      customHeading:
+        'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter'
+    },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/blog/r3' }
+  ]
 }
 
 const HowtoCrossServerTradeinFFXIV = () => {

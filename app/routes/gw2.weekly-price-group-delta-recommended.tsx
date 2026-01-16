@@ -25,20 +25,13 @@ type RecommendedConfig = {
 }
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'Saddlebag Exchange: GW2 Weekly Price Group Delta Recommended Configurations',
-    description:
-      'Pre-configured weekly price group delta analyses for GW2 markets. Track price changes across different item categories and make informed investment decisions.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta-recommended'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: GW2 Weekly Price Group Delta Recommended Configurations' },
+    { name: 'description', content: 'Pre-configured weekly price group delta analyses for GW2 markets. Track price changes across different item categories and make informed investment decisions.' },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta-recommended' }
+  ]
 }
 
 export default function RecommendedWeeklyPriceGroupDelta() {

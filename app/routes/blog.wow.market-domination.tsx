@@ -2,22 +2,28 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'WoW Market Domination: Building Trading Empires and Mastering Server Economics',
-    description:
-      'Master World of Warcraft trading with advanced server economics, guild trading empires, auction house domination, and cross-realm strategies.',
-    customHeading:
-      'WoW Market Domination: Building Trading Empires and Mastering Server Economics',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/wow/market-domination'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      title:
+        'WoW Market Domination: Building Trading Empires and Mastering Server Economics'
+    },
+    {
+      name: 'description',
+      content:
+        'Master World of Warcraft trading with advanced server economics, guild trading empires, auction house domination, and cross-realm strategies.'
+    },
+    {
+      customHeading:
+        'WoW Market Domination: Building Trading Empires and Mastering Server Economics'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/wow/market-domination'
+    }
+  ]
 }
 
 const WoWMarketDomination = () => {

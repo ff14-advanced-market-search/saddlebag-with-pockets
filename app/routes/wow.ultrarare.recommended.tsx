@@ -5,19 +5,13 @@ import TileLink from '~/components/Common/TileLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Ultra Rare Item Search Recommendations',
-    description:
-      'Recommended searches for ultra rare items in World of Warcraft. Find weapons, armor, quest items, and recipes with the best profit potential.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/ultrarare/recommended'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Ultra Rare Item Search Recommendations' },
+    { name: 'description', content: 'Recommended searches for ultra rare items in World of Warcraft. Find weapons, armor, quest items, and recipes with the best profit potential.' },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ultrarare/recommended' }
+  ]
 }
 
 // Define the base URL for the search parameters

@@ -1,22 +1,24 @@
 import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1',
-  title:
-    "The War Within's Delves Are a Game-Changer for Solo and Casual Players",
-  description:
-    "Discover how The War Within's Delves revolutionize solo and casual gameplay in World of Warcraft, offering new opportunities for progression and rewards.",
-  customHeading:
-    "The War Within's Delves Are a Game-Changer for Solo and Casual Players",
-  links: [
-    {
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/wow/skycoach-delves'
-    }
-  ]
-})
+export const meta: MetaFunction = () => [
+  { charset: 'utf-8' },
+  { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  {
+    title:
+      "The War Within's Delves Are a Game-Changer for Solo and Casual Players"
+  },
+  {
+    name: 'description',
+    content:
+      "Discover how The War Within's Delves revolutionize solo and casual gameplay in World of Warcraft, offering new opportunities for progression and rewards."
+  },
+  {
+    tagName: 'link',
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/blog/wow/skycoach-delves'
+  }
+]
 
 const DelvesGuide = () => {
   return (

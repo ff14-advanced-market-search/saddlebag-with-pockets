@@ -1,4 +1,4 @@
-import { LoaderFunction } from '@remix-run/cloudflare'
+
 
 export const loader: LoaderFunction = () => {
   const bingSiteAuth = `<?xml version="1.0"?>

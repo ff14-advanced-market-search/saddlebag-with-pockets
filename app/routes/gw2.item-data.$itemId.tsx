@@ -1,4 +1,4 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
@@ -14,25 +14,24 @@ export const ErrorBoundary = () => <ErrorBounds />
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if ('exception' in data) {
-    return {
-      charset: 'utf-8',
-      viewport: 'width=device-width,initial-scale=1',
-      title: 'Error',
-      description: `Error: ${data.exception}`
-    }
+    return [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+      { title: 'Error' },
+      { name: 'description', content: `Error: ${data.exception}` }
+    ]
   } else {
-    return {
-      charset: 'utf-8',
-      viewport: 'width=device-width,initial-scale=1',
-      title: data.data.itemName,
-      description: `Guild Wars 2 trading post data for ${data.data.itemName}`,
-      links: [
-        {
-          rel: 'canonical',
-          href: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
-        }
-      ]
-    }
+    return [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+      { title: data.data.itemName },
+      { name: 'description', content: `Guild Wars 2 trading post data for ${data.data.itemName}` },
+      {
+        tagName: 'link',
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
+      }
+    ]
   }
 }
 

@@ -6,20 +6,13 @@ import VideoGuide from '~/components/Common/VideoGuide'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'Saddlebag Exchange: FFXIV Crafting Profit Simulation Recommendations',
-    description:
-      'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/craftsim/queries'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Crafting Profit Simulation Recommendations' },
+    { name: 'description', content: 'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations' },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/craftsim/queries' }
+  ]
 }
 
 const searchParams = {

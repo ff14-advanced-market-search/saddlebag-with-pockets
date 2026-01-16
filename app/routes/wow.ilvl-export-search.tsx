@@ -43,19 +43,13 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW BOE Item Level Export Search',
-    description:
-      'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/ilvl-export-search'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW BOE Item Level Export Search' },
+    { name: 'description', content: 'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!' },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-export-search' }
+  ]
 }
 
 const PAGE_URL = '/wow/ilvl-export-search'

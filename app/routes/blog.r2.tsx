@@ -2,15 +2,18 @@ import { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'How to Cross-Server Trade in FFXIV',
-    description:
-      'Discover effective methods and guidelines for cross-server trading in Final Fantasy XIV.',
-    customHeading: 'Mastering Cross-Server Trading: Strategies for FFXIV',
-    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/blog/r2' }]
-  }
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { title: 'How to Cross-Server Trade in FFXIV' },
+    {
+      name: 'description',
+      content:
+        'Discover effective methods and guidelines for cross-server trading in Final Fantasy XIV.'
+    },
+    { customHeading: 'Mastering Cross-Server Trading: Strategies for FFXIV' },
+    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/blog/r2' }
+  ]
 }
 
 const HowtoCrossServerTradeinFFXIV = () => {

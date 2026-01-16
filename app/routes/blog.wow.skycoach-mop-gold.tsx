@@ -1,20 +1,21 @@
 import type { MetaFunction, LinksFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1',
-  title: '10 Ways to Farm Mists of Pandaria Gold in WoW Classic',
-  description:
-    'Learn the best methods to farm gold in WoW Classic Mists of Pandaria, including professions, raids, and trading strategies.',
-  customHeading: '10 Ways to Farm Mists of Pandaria Gold in WoW Classic',
-  links: [
-    {
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/wow/skycoach-mop-gold'
-    }
-  ]
-})
+export const meta: MetaFunction = () => [
+  { charset: 'utf-8' },
+  { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  { title: '10 Ways to Farm Mists of Pandaria Gold in WoW Classic' },
+  {
+    name: 'description',
+    content:
+      'Learn the best methods to farm gold in WoW Classic Mists of Pandaria, including professions, raids, and trading strategies.'
+  },
+  {
+    tagName: 'link',
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/blog/wow/skycoach-mop-gold'
+  }
+]
 
 const MoPGoldGuide = () => {
   return (
