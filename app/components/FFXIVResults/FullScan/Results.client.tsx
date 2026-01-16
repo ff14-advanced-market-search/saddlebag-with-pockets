@@ -24,7 +24,7 @@ import {
   ChevronDoubleRightIcon,
   ChevronDownIcon,
   ChevronUpIcon
-} from '@heroicons/react/solid'
+} from '@heroicons/react/20/solid'
 import { classNames } from '~/utils'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ItemDataLink from '~/components/utilities/ItemDataLink'

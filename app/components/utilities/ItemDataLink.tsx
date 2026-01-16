@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { LinkIcon } from '@heroicons/react/solid'
+import { LinkIcon } from '@heroicons/react/20/solid'
 import { NavLink } from '@remix-run/react'
 
 type Props = {

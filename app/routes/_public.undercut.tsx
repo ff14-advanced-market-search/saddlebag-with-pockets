@@ -11,7 +11,7 @@ import { getUserSessionData } from '~/sessions'
 import Banner from '~/components/Common/Banner'
 import { RadioButtons } from '~/components/Common/RadioButtons'
 import ItemSelect from '~/components/form/select/ItemSelect'
-import { TrashIcon } from '@heroicons/react/outline'
+import { TrashIcon } from '@heroicons/react/24/outline'
 import Modal from '~/components/form/Modal'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 

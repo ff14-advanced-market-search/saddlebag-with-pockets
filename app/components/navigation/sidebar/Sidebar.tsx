@@ -2,21 +2,20 @@ import type { FC, PropsWithChildren } from 'react'
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
-  ChartSquareBarIcon,
+  ChartBarIcon as ChartSquareBarIcon,
   ClockIcon,
   CogIcon,
-  MenuAlt2Icon,
-  XIcon,
+  Bars3Icon as MenuAlt2Icon,
+  XMarkIcon as XIcon,
   DocumentTextIcon,
-  DocumentSearchIcon,
+  MagnifyingGlassIcon,
   ChevronUpIcon,
   ChevronDownIcon,
-  PencilAltIcon,
-  SearchIcon,
+  PencilIcon as PencilAltIcon,
   ExclamationCircleIcon,
   ShoppingCartIcon,
-  ExternalLinkIcon
-} from '@heroicons/react/outline'
+  ArrowTopRightOnSquareIcon as ExternalLinkIcon
+} from '@heroicons/react/24/outline'
 import {
   Form,
   Link,
@@ -159,13 +158,13 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#ffxiv-alert-guides',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Reselling Trading Searches',
         href: 'queries/recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Best Deals',
@@ -175,17 +174,17 @@ const navGroups: Array<{
       {
         name: 'Marketshare Overview',
         href: 'ffxiv/marketshare/queries',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Weekly Price Group Delta',
         href: '/ffxiv/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Craftsim Search',
         href: 'ffxiv/craftsim/queries',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Shopping List',
@@ -195,59 +194,59 @@ const navGroups: Array<{
       {
         name: 'Allagan Data Reports',
         href: 'allagan-data',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Scrip Value Search',
         href: 'ffxiv/scrip-exchange',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Extended Sale History',
         href: '/ffxiv/extended-history',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Self Purchase Records',
         href: 'ffxiv/self-purchase',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Export Trading Search',
         href: 'queries/world-comparison',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Undercut Alert Input',
         href: 'undercut',
-        icon: PencilAltIcon
+        icon: PencilIcon as PencilAltIcon
       },
       {
         name: 'Price Sniper Alert Input',
         href: 'price-sniper',
-        icon: PencilAltIcon
+        icon: PencilIcon as PencilAltIcon
       },
       {
         name: 'Secret Sale Leads',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Experimental Discount Price Sniper',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Experimental-Discount-Price-Sniper',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Item History Statistics and Graphs',
         href: 'queries/item-history',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       }
     ]
   },
@@ -258,13 +257,13 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#wow-general-guides',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Azeroth Auction Assassin Sniper',
         href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         external: true
       },
       {
@@ -275,7 +274,7 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: 'wow/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Shopping List',
@@ -285,7 +284,7 @@ const navGroups: Array<{
       {
         name: 'Item Export Search',
         href: 'wow/export-search',
-        icon: DocumentSearchIcon
+        icon: MagnifyingGlassIcon
       },
       {
         name: 'Raid BOE Ilvl Shopping List',
@@ -295,17 +294,17 @@ const navGroups: Array<{
       {
         name: 'Raid BOE Ilvl Export Search',
         href: 'wow/ilvl-export-search',
-        icon: DocumentSearchIcon
+        icon: MagnifyingGlassIcon
       },
       {
         name: 'Ultra Rare',
         href: 'wow/ultrarare/recommended',
-        icon: DocumentSearchIcon
+        icon: MagnifyingGlassIcon
       },
       {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
-        icon: PencilAltIcon
+        icon: PencilIcon as PencilAltIcon
       },
       {
         name: 'Upload Timers',
@@ -315,33 +314,33 @@ const navGroups: Array<{
       {
         name: 'Region Wide Undercut Checker',
         href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
+        icon: MagnifyingGlassIcon
       },
       {
         name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
         external: true
       },
       {
         name: 'Current Content Marketshare Overview',
         href: '/wow/marketshare/recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Legacy Marketshare Overview',
         href: '/wow/legacy-marketshare',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Pet Marketshare Overview',
         href: '/wow/pet-marketshare',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'TSM to AAA converter Addon',
         href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         external: true
       }
     ]
@@ -353,23 +352,23 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#gw2-general-guides',
-        icon: DocumentSearchIcon,
+        icon: MagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Detailed Item Data',
         href: '/gw2/item-data-detailed',
-        icon: DocumentSearchIcon
+        icon: MagnifyingGlassIcon
       },
       {
         name: 'Marketshare Overview',
         href: '/gw2/marketshare/recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Weekly Price Group Delta',
         href: '/gw2/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       }
     ]
   },
@@ -379,37 +378,37 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: '/wow/weekly-price-group-delta',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Big Goblin Tracker',
         href: '/wow/quantity-manipulation',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Out of Stock',
         href: '/wow/out-of-stock',
-        icon: DocumentSearchIcon
+        icon: MagnifyingGlassIcon
       },
       {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Commodity Shortage Futures',
         href: 'wow/shortage-predictor',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       }
     ]
   },
@@ -419,12 +418,12 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: '/ffxiv/weekly-price-group-delta',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       },
       {
         name: 'Marketboard Shortage Futures',
         href: '/ffxiv/shortage-predictor',
-        icon: ChartSquareBarIcon
+        icon: ChartBarIcon as ChartSquareBarIcon
       }
     ]
   },
@@ -494,7 +493,7 @@ const navGroups: Array<{
       {
         name: 'blog',
         href: '/blog',
-        icon: DocumentSearchIcon
+        icon: MagnifyingGlassIcon
       },
       {
         name: 'List of all WoW Items',

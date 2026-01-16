@@ -2,9 +2,9 @@ import { Fragment, useState, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
-  ChartSquareBarIcon,
-  DocumentSearchIcon
-} from '@heroicons/react/outline'
+  ChartBarIcon,
+  MagnifyingGlassIcon
+} from '@heroicons/react/24/outline'
 import { Link, useLocation } from '@remix-run/react'
 
 interface Notification {
@@ -12,7 +12,7 @@ interface Notification {
   title: string
   description: string
   link: string
-  icon: typeof ChartSquareBarIcon
+  icon: typeof ChartBarIcon
   showOn: (pathname: string) => boolean
 }
 
@@ -23,7 +23,7 @@ const notifications: Notification[] = [
     description:
       'Discover price trends and investment opportunities across different realms with our new Weekly Price Delta feature.',
     link: '/wow/weekly-price-group-delta-recommended',
-    icon: ChartSquareBarIcon,
+    icon: ChartBarIcon,
     showOn: (pathname) => pathname.startsWith('/wow')
   },
   {
@@ -32,7 +32,7 @@ const notifications: Notification[] = [
     description:
       'Access the Ultra Rare search tool - the ultimate snipe list builder. Upgrade to Elite subscriber plans to find the rarest items with no competition across multiple realms.',
     link: '/wow/ultrarare/recommended',
-    icon: DocumentSearchIcon,
+    icon: MagnifyingGlassIcon,
     showOn: (pathname) => pathname.startsWith('/wow')
   },
   {
@@ -41,7 +41,7 @@ const notifications: Notification[] = [
     description:
       'Check out the new FFXIV Weekly Price Delta for market trends and investment opportunities for the next patch cycle.',
     link: '/ffxiv/weekly-price-group-delta-recommended',
-    icon: ChartSquareBarIcon,
+    icon: ChartBarIcon,
     showOn: (pathname) =>
       pathname.startsWith('/ffxiv') || pathname.startsWith('/queries')
   }

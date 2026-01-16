@@ -1,6 +1,6 @@
 import { Form } from '@remix-run/react'
 import React, { useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import ItemsFilter from './ItemsFilter'

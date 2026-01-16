@@ -1,4 +1,4 @@
-import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { MagnifyingGlassIcon as DocumentSearchIcon } from '@heroicons/react/24/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -33,60 +33,60 @@ const recommendedQueries = [
     name: 'Total Market View',
     description:
       'See a general overview of the biggest gold earners in the GW2 Trading Post by most revenue earned.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.value
   },
   {
     name: 'Fast Selling Items',
     description: 'Discover items that sell quickly (5000+ sales per day).',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.sold
   },
   {
     name: 'Price Percent Change',
     description:
       'Find items with the largest price changes - great for identifying price spikes!',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.pricePercentChange
   },
   {
     name: 'Expensive Items',
     description: 'Find items with high average prices (1000+ gold).',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.priceAverage
   },
   {
     name: 'Sell Quantity Percent Change',
     description:
       'Find items with the largest changes in sell quantity - identify potential shortages!',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.sellQuantityPercentChange
   },
   {
     name: 'Buy Quantity Percent Change',
     description:
       'See items with the largest changes in buy quantity - track demand shifts!',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.buyQuantityPercentChange
   },
   {
     name: 'Sold Percent Change',
     description:
       'See items with the largest changes in sales volume over time.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.soldPercentChange
   },
   {
     name: 'Value Percent Change',
     description:
       'Identify items with the largest value changes - perfect for investment opportunities!',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.valuePercentChange
   },
   ...itemTypes.map((itemType) => ({
     name: `${itemType.name} Items`,
     description: `Browse The most valuable ${itemType.name.toLowerCase()} items in the market.`,
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: `/gw2/marketshare?type=${itemType.value}&sort_by=value`
   }))
 ]

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline'
+import { EyeIcon, EyeSlashIcon as EyeOffIcon } from '@heroicons/react/24/outline'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 
 interface EarlyAccessTokenSectionProps {

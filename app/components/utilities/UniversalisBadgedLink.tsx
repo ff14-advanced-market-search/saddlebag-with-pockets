@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import UniversalisBadge from '~/components/icons/brands/UniversalisBadge'
-import { LinkIcon } from '@heroicons/react/solid'
+import { LinkIcon } from '@heroicons/react/20/solid'
 
 type Props = {
   link: string

@@ -1,4 +1,4 @@
-import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { MagnifyingGlassIcon as DocumentSearchIcon } from '@heroicons/react/24/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -37,52 +37,52 @@ const recommendedQueries = [
   {
     name: 'Default Dawntrail',
     description: 'Search for profitable new Dawntrail items to craft.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.defaultDawntrail
   },
   {
     name: 'Default Search',
     description: 'Default search for profitable items to craft.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.defaultItems
   },
   {
     name: 'Fast Selling Commodity Items',
     description: 'Search for fast selling commodities items to craft.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.fastSaleItems
   },
   {
     name: 'Food Items',
     description: 'Find food items that sell fast and in bulk.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.foodItems
   },
   {
     name: 'Food Items (Trained Eye)',
     description:
       'Find food items that can be crafted 100% HQ using the level 80 crafter skill, Trained Eye.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.foodItemsTrainedEye
   },
   {
     name: 'Furniture and Glamour Items',
     description:
       'Find all the worthwhile furniture and glamour items to craft.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.furnitureAndGlamourItems
   },
   {
     name: 'Expert Craft Items (Pentameld)',
     description: 'Find items for pentamelding.',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.expertCraftItems
   },
   {
     name: 'Best Crafted Gear',
     description:
       'Find all the current BiS gear (Diadochos for Combat/Indagators for Crafter/Gatherer).',
-    Icon: DocumentSearchIcon,
+    Icon: MagnifyingGlassIcon as DocumentSearchIcon,
     href: searchParams.bestCraftedGear
   }
 ]

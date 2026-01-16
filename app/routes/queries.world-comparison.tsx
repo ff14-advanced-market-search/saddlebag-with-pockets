@@ -26,7 +26,7 @@ import {
   ChevronUpIcon,
   TrashIcon,
   ChevronDownIcon
-} from '@heroicons/react/outline'
+} from '@heroicons/react/24/outline'
 import { WorldList } from '~/utils/locations/Worlds'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import {

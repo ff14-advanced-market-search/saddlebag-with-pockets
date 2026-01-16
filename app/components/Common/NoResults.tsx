@@ -1,4 +1,4 @@
-import { ExclamationIcon, SearchIcon } from '@heroicons/react/solid'
+import { ExclamationCircleIcon as ExclamationIcon, MagnifyingGlassIcon as SearchIcon } from '@heroicons/react/20/solid'
 import type { FC } from 'react'
 import { Link } from '@remix-run/react'
 import React from 'react'
