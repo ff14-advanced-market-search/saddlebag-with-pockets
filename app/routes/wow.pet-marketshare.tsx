@@ -15,9 +15,7 @@ import PetMarketshareResults from '~/components/WoWResults/PetMarketshareResults
 import PetMarketShareForm from '~/components/form/WoW/PetMarketshareForm'
 import NoResults from '~/components/Common/NoResults'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import type {
-  PetMarketshareSortBy
-} from '~/requests/WoW/PetMarketshare';
+import type { PetMarketshareSortBy } from '~/requests/WoW/PetMarketshare'
 import PetMarketshare from '~/requests/WoW/PetMarketshare'
 
 // Overwrite default meta in the root.tsx
