@@ -12,7 +12,7 @@ interface Notification {
   title: string
   description: string
   link: string
-  icon: typeof ChartBarIcon
+  iconType: 'chart' | 'search'
   showOn: (pathname: string) => boolean
 }
 
@@ -23,7 +23,7 @@ const notifications: Notification[] = [
     description:
       'Discover price trends and investment opportunities across different realms with our new Weekly Price Delta feature.',
     link: '/wow/weekly-price-group-delta-recommended',
-    icon: ChartBarIcon,
+    iconType: 'chart',
     showOn: (pathname) => pathname.startsWith('/wow')
   },
   {
@@ -32,7 +32,7 @@ const notifications: Notification[] = [
     description:
       'Access the Ultra Rare search tool - the ultimate snipe list builder. Upgrade to Elite subscriber plans to find the rarest items with no competition across multiple realms.',
     link: '/wow/ultrarare/recommended',
-    icon: MagnifyingGlassIcon,
+    iconType: 'search',
     showOn: (pathname) => pathname.startsWith('/wow')
   },
   {
@@ -41,7 +41,7 @@ const notifications: Notification[] = [
     description:
       'Check out the new FFXIV Weekly Price Delta for market trends and investment opportunities for the next patch cycle.',
     link: '/ffxiv/weekly-price-group-delta-recommended',
-    icon: ChartBarIcon,
+    iconType: 'chart',
     showOn: (pathname) =>
       pathname.startsWith('/ffxiv') || pathname.startsWith('/queries')
   }
@@ -124,7 +124,11 @@ export const NotificationBell = () => {
                     } block px-4 py-3 text-sm text-gray-700 dark:text-gray-200`}
                     onClick={() => handleClick(notification.id)}>
                     <div className="flex items-start">
-                      <notification.icon className="h-5 w-5 text-blue-500 mr-3 mt-0.5" />
+                      {notification.iconType === 'chart' ? (
+                        <ChartBarIcon className="h-5 w-5 text-blue-500 mr-3 mt-0.5" />
+                      ) : (
+                        <MagnifyingGlassIcon className="h-5 w-5 text-blue-500 mr-3 mt-0.5" />
+                      )}
                       <div>
                         <p className="font-medium">{notification.title}</p>
                         <p className="text-gray-500 dark:text-gray-400 mt-1">
