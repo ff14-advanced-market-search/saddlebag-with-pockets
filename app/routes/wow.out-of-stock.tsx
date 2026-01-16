@@ -34,19 +34,21 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Out of Stock Items',
-    description:
-      'Sell without Competition! Search for items that are out of stock across various WoW Realms.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/out-of-stock'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Out of Stock Items' },
+    {
+      name: 'description',
+      content:
+        'Sell without Competition! Search for items that are out of stock across various WoW Realms.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/out-of-stock'
+    }
+  ]
 }
 
 const PAGE_URL = '/wow/out-of-stock'

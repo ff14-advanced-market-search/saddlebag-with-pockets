@@ -5,18 +5,20 @@ import TileLink from '~/components/Common/TileLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Best Deals Recommendations',
-    description: 'Saddlebag Exchange: WoW Amazing Auction House Deals',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Best Deals Recommendations' },
+    {
+      name: 'description',
+      content: 'Saddlebag Exchange: WoW Amazing Auction House Deals'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
+    }
+  ]
 }
 
 // Updated searchParams with WoW best deals endpoints

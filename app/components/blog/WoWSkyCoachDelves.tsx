@@ -1,22 +1,29 @@
 import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1',
-  title:
-    "The War Within's Delves Are a Game-Changer for Solo and Casual Players",
-  description:
-    "Discover how The War Within's Delves revolutionize solo and casual gameplay in World of Warcraft, offering new opportunities for progression and rewards.",
-  customHeading:
-    "The War Within's Delves Are a Game-Changer for Solo and Casual Players",
-  links: [
-    {
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/wow/skycoach-delves'
-    }
-  ]
-})
+export const meta: MetaFunction = () => [
+  { charset: 'utf-8' },
+  { viewport: 'width=device-width, initial-scale=1' },
+  {
+    title:
+      "The War Within's Delves Are a Game-Changer for Solo and Casual Players"
+  },
+  {
+    name: 'description',
+    content:
+      "Discover how The War Within's Delves revolutionize solo and casual gameplay in World of Warcraft, offering new opportunities for progression and rewards."
+  },
+  {
+    name: 'customHeading',
+    content:
+      "The War Within's Delves Are a Game-Changer for Solo and Casual Players"
+  },
+  {
+    tagName: 'link',
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/blog/wow/skycoach-delves'
+  }
+]
 
 const WoWSkyCoachDelves = () => {
   return (

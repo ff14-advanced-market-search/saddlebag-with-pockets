@@ -3,22 +3,29 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'MMO Economic Theory: Understanding Virtual World Economics and Market Dynamics',
-    description:
-      'Explore the fundamental economic principles that govern virtual worlds and learn how traditional economic theory applies to MMO markets and player behavior.',
-    customHeading:
-      'MMO Economic Theory: Understanding Virtual World Economics and Market Dynamics',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/mmo/economics-theory'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    {
+      title:
+        'MMO Economic Theory: Understanding Virtual World Economics and Market Dynamics'
+    },
+    {
+      name: 'description',
+      content:
+        'Explore the fundamental economic principles that govern virtual worlds and learn how traditional economic theory applies to MMO markets and player behavior.'
+    },
+    {
+      name: 'customHeading',
+      content:
+        'MMO Economic Theory: Understanding Virtual World Economics and Market Dynamics'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/mmo/economics-theory'
+    }
+  ]
 }
 
 const MMOEconomicsTheory = () => {

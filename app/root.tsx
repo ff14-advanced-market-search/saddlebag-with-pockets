@@ -220,13 +220,16 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const meta: MetaFunction = ({ data }) => {
   const { site_name } = data
-  return {
-    charset: 'utf-8',
-    title: site_name,
-    viewport: 'width=device-width,initial-scale=1',
-    description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: site_name },
+    { viewport: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
+    }
+  ]
 }
 
 /**

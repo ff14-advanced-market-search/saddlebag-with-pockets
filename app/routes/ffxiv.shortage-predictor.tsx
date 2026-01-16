@@ -106,19 +106,21 @@ export const action: ActionFunction = async ({ request }) => {
 type ActionResponse = PredictionResponse | { exception: string }
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Market Shortage Predictions',
-    description:
-      'Find Market Shortages and Price Spikes BEFORE they happen and be there first!',
-    links: [
-      {
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/ffxiv/shortage-predictor`
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Market Shortage Predictions' },
+    {
+      name: 'description',
+      content:
+        'Find Market Shortages and Price Spikes BEFORE they happen and be there first!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: `https://saddlebagexchange.com/ffxiv/shortage-predictor`
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

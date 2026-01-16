@@ -3,22 +3,29 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'FFXIV Market Mastery: Advanced Trading Techniques and Strategic Insights',
-    description:
-      'Master the FFXIV marketboard with advanced trading techniques, market psychology insights, competitive strategies, and future trend analysis.',
-    customHeading:
-      'FFXIV Market Mastery: Advanced Trading Techniques and Strategic Insights',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/ffxiv/market-mastery'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    {
+      title:
+        'FFXIV Market Mastery: Advanced Trading Techniques and Strategic Insights'
+    },
+    {
+      name: 'description',
+      content:
+        'Master the FFXIV marketboard with advanced trading techniques, market psychology insights, competitive strategies, and future trend analysis.'
+    },
+    {
+      name: 'customHeading',
+      content:
+        'FFXIV Market Mastery: Advanced Trading Techniques and Strategic Insights'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/market-mastery'
+    }
+  ]
 }
 
 const FFXIVMarketMastery = () => {

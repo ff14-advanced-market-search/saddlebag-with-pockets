@@ -62,18 +62,17 @@ const pageDescription =
   'Find the best deals on your server and region wide with our Best Deals search!'
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Best Deals',
-    description: pageDescription,
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/best-deals'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Best Deals' },
+    { name: 'description', content: pageDescription },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/best-deals'
+    }
+  ]
 }
 
 const validateInput = z.object({

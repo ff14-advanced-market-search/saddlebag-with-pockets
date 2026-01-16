@@ -3,21 +3,26 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Economic Policies on MMO Economies',
-    description:
-      'Explore the impact of economic policies on MMO economies through a comprehensive analysis.',
-    customHeading:
-      'Navigating Economic Landscapes: The Impact of Policies on MMO Economies',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/ffxiv/bs14'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Economic Policies on MMO Economies' },
+    {
+      name: 'description',
+      content:
+        'Explore the impact of economic policies on MMO economies through a comprehensive analysis.'
+    },
+    {
+      name: 'customHeading',
+      content:
+        'Navigating Economic Landscapes: The Impact of Policies on MMO Economies'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs14'
+    }
+  ]
 }
 
 const FFXIVBs14 = () => {

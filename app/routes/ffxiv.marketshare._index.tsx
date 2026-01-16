@@ -30,19 +30,21 @@ import { useState } from 'react'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Marketshare Gil Making Overview',
-    description:
-      'Find what items make the most gil in FFXIV, sell the most in FFXIV, sell the fastest in in FFXIV and have the best market gaps!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/marketshare'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Marketshare Gil Making Overview' },
+    {
+      name: 'description',
+      content:
+        'Find what items make the most gil in FFXIV, sell the most in FFXIV, sell the fastest in in FFXIV and have the best market gaps!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/marketshare'
+    }
+  ]
 }
 
 type MarketshareActionResult =

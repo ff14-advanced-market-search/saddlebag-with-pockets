@@ -2,21 +2,26 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Flip items on the FFXIV Marketboard : FFXIV Mods',
-    description:
-      'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange : FFXIV Mods',
-    customHeading:
-      'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange : FFXIV Mods',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/ffxiv/howtoresell'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Flip items on the FFXIV Marketboard : FFXIV Mods' },
+    {
+      name: 'description',
+      content:
+        'Discover effective strategies for flipping items on the FFXIV Marketboard using Saddlebag Exchange : FFXIV Mods'
+    },
+    {
+      name: 'customHeading',
+      content:
+        'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange : FFXIV Mods'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/howtoresell'
+    }
+  ]
 }
 
 const FFXIVHowToResell = () => {

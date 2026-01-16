@@ -241,25 +241,27 @@ const makeTimeString = ({
 
 export const meta: MetaFunction = ({ data }) => {
   if ('exception' in data) {
-    return {
-      charset: 'utf-8',
-      viewport: 'width=device-width,initial-scale=1',
-      title: 'Error',
-      description: `Error: ${data.exception}`
-    }
+    return [
+      { charset: 'utf-8' },
+      { viewport: 'width=device-width,initial-scale=1' },
+      { title: 'Error' },
+      { name: 'description', content: `Error: ${data.exception}` }
+    ]
   } else {
-    return {
-      charset: 'utf-8',
-      viewport: 'width=device-width,initial-scale=1',
-      title: data.data.itemName,
-      description: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`,
-      links: [
-        {
-          rel: 'canonical',
-          href: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
-        }
-      ]
-    }
+    return [
+      { charset: 'utf-8' },
+      { viewport: 'width=device-width,initial-scale=1' },
+      { title: data.data.itemName },
+      {
+        name: 'description',
+        content: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`
+      },
+      {
+        tagName: 'link',
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
+      }
+    ]
   }
 }
 

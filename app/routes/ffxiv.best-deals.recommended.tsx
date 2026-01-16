@@ -5,18 +5,17 @@ import TileLink from '~/components/Common/TileLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Best Deals Recommendations',
-    description: 'FFXIV Amazing Market Board Deals',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/best-deals/recommended'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Best Deals Recommendations' },
+    { name: 'description', content: 'FFXIV Amazing Market Board Deals' },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/best-deals/recommended'
+    }
+  ]
 }
 
 const searchParams = {

@@ -49,19 +49,21 @@ const validateInput = z.object({
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Shopping List',
-    description:
-      'See the wow listings across all realms on one page ordered by price',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/shopping-list'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Shopping List' },
+    {
+      name: 'description',
+      content:
+        'See the wow listings across all realms on one page ordered by price'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/shopping-list'
+    }
+  ]
 }
 
 export const action: ActionFunction = async ({ request }) => {

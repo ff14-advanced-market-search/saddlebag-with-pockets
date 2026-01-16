@@ -55,19 +55,21 @@ const inputMap = {
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Reselling Trade Search',
-    description:
-      'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/queries/full-scan'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Reselling Trade Search' },
+    {
+      name: 'description',
+      content:
+        'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/full-scan'
+    }
+  ]
 }
 
 export const action: ActionFunction = async ({ request }) => {

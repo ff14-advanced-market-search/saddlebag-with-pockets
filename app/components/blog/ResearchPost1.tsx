@@ -3,16 +3,26 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'How to Use Commodity Shortage Futures as a Crafter',
-    description:
-      'Discover effective strategies for utilizing commodity shortage futures to maximize profits as a crafter.',
-    customHeading:
-      'Maximizing Profits: Using Commodity Shortage Futures as a Crafter',
-    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/blog/r1' }]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'How to Use Commodity Shortage Futures as a Crafter' },
+    {
+      name: 'description',
+      content:
+        'Discover effective strategies for utilizing commodity shortage futures to maximize profits as a crafter.'
+    },
+    {
+      name: 'customHeading',
+      content:
+        'Maximizing Profits: Using Commodity Shortage Futures as a Crafter'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/r1'
+    }
+  ]
 }
 
 const ResearchPost1 = () => {

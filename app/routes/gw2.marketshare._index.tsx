@@ -32,19 +32,21 @@ import type { GW2MarketshareItem } from '~/requests/GW2/marketshare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: GW2 Marketshare Gold Making Overview',
-    description:
-      'Find what items make the most gold in GW2, sell the most in GW2, sell the fastest in GW2 and have the best market gaps!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/gw2/marketshare'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: GW2 Marketshare Gold Making Overview' },
+    {
+      name: 'description',
+      content:
+        'Find what items make the most gold in GW2, sell the most in GW2, sell the fastest in GW2 and have the best market gaps!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2/marketshare'
+    }
+  ]
 }
 
 type GW2MarketshareActionResult =

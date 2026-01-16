@@ -3,16 +3,21 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Marketboard Guide: Avoiding Pitfalls',
-    description:
-      'Learn how to avoid common mistakes and pitfalls on the FFXIV Marketboard.',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs6' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'FFXIV Marketboard Guide: Avoiding Pitfalls' },
+    {
+      name: 'description',
+      content:
+        'Learn how to avoid common mistakes and pitfalls on the FFXIV Marketboard.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs6'
+    }
+  ]
 }
 
 const FFXIVBs6 = () => {

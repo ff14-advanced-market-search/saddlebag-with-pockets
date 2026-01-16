@@ -31,16 +31,21 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Server Transfer Trade Search',
-    description:
-      'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/wow/full-scan' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Server Transfer Trade Search' },
+    {
+      name: 'description',
+      content:
+        'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/full-scan'
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

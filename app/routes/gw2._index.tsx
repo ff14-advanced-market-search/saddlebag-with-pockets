@@ -4,15 +4,24 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'Saddlebag Exchange: GW2 Guild Wars 2 Trading Post Prices and Gold making tools!',
-    description:
-      'Tools and resources to make gold on the Guild Wars 2 Trading Post',
-    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/gw2' }]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    {
+      title:
+        'Saddlebag Exchange: GW2 Guild Wars 2 Trading Post Prices and Gold making tools!'
+    },
+    {
+      name: 'description',
+      content:
+        'Tools and resources to make gold on the Guild Wars 2 Trading Post'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2'
+    }
+  ]
 }
 
 const recommendedQueries: Array<{

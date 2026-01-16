@@ -75,19 +75,21 @@ const validateInput = z.object({
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Export Search',
-    description:
-      'Find the best realm to sell any item on! Wow realm population data.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/export-search'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: WoW Export Search' },
+    {
+      name: 'description',
+      content:
+        'Find the best realm to sell any item on! Wow realm population data.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/export-search'
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

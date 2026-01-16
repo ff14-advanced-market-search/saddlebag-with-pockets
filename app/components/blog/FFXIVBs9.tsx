@@ -3,16 +3,21 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Marketboard Guide: Seasonal Events',
-    description:
-      'Learn how to take advantage of seasonal events on the FFXIV Marketboard.',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs9' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'FFXIV Marketboard Guide: Seasonal Events' },
+    {
+      name: 'description',
+      content:
+        'Learn how to take advantage of seasonal events on the FFXIV Marketboard.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs9'
+    }
+  ]
 }
 
 const FFXIVBs9 = () => {

@@ -38,19 +38,21 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Shopping List, Bulk Craft',
-    description:
-      'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    { title: 'Saddlebag Exchange: FFXIV Shopping List, Bulk Craft' },
+    {
+      name: 'description',
+      content:
+        'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
+    }
+  ]
 }
 
 const FORM_DEFAULTS = {

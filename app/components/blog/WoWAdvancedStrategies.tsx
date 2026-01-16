@@ -3,22 +3,29 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title:
-      'Advanced World of Warcraft Trading Strategies: Mastering the Auction House',
-    description:
-      "Discover advanced trading strategies specifically designed for World of Warcraft's unique economy, from commodity trading to cross-realm arbitrage.",
-    customHeading:
-      'Advanced World of Warcraft Trading Strategies: Mastering the Auction House',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/wow/advanced-strategies'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { viewport: 'width=device-width,initial-scale=1' },
+    {
+      title:
+        'Advanced World of Warcraft Trading Strategies: Mastering the Auction House'
+    },
+    {
+      name: 'description',
+      content:
+        "Discover advanced trading strategies specifically designed for World of Warcraft's unique economy, from commodity trading to cross-realm arbitrage."
+    },
+    {
+      name: 'customHeading',
+      content:
+        'Advanced World of Warcraft Trading Strategies: Mastering the Auction House'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/wow/advanced-strategies'
+    }
+  ]
 }
 
 const WoWAdvancedStrategies = () => {
