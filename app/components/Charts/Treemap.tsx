@@ -45,12 +45,12 @@ const TreemapChart = ({
 
     let cancelled = false
     import('highcharts/modules/treemap')
-      .then(mod => {
+      .then((mod) => {
         if (cancelled) return
         mod.default(Highcharts)
         setTreemapReady(true)
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(
           'Failed to initialize Highcharts treemap module:',
           error instanceof Error ? error.message : String(error)

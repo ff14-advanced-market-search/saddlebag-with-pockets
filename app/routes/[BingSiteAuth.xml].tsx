@@ -1,5 +1,3 @@
-
-
 export const loader: LoaderFunction = () => {
   const bingSiteAuth = `<?xml version="1.0"?>
 <users>

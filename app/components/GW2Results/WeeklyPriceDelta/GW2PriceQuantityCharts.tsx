@@ -141,8 +141,8 @@ export default function GW2PriceQuantityCharts({
         return ''
       }
 
-        const dataPoint = weeklyData[index]
-        if (!dataPoint) return ''
+      const dataPoint = weeklyData[index]
+      if (!dataPoint) return ''
 
       return `<div style="min-width: 200px; color: ${styles.color};">
       <b>${format(formatTimestamp(dataPoint.time), 'MM/dd/yyyy')}</b><br/>

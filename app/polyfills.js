@@ -30,7 +30,7 @@ if (typeof MessageChannel === 'undefined') {
       }
     }
   }
-  
+
   // Set on both globalThis and global for compatibility
   globalThis.MessageChannel = MessageChannelPolyfill
   if (typeof global !== 'undefined') {

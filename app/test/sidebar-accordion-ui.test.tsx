@@ -9,7 +9,8 @@ vi.mock('@remix-run/react', async () => {
   const React = await import('react')
   const NavLink = ({ to, className, children }: any) => {
     const isActive = false
-    const cls = typeof className === 'function' ? className({ isActive }) : className
+    const cls =
+      typeof className === 'function' ? className({ isActive }) : className
     return (
       <a href={to} className={cls} data-testid={`navlink-${to}`}>
         {typeof children === 'function' ? children({ isActive }) : children}
@@ -30,7 +31,15 @@ vi.mock('@remix-run/react', async () => {
   const useLocation = () => ({ pathname: '/' })
   const useNavigate = () => () => {}
   const useNavigation = () => ({ state: 'idle' })
-  return { NavLink, Link, Form, useMatches, useNavigate, useNavigation, useLocation }
+  return {
+    NavLink,
+    Link,
+    Form,
+    useMatches,
+    useNavigate,
+    useNavigation,
+    useLocation
+  }
 })
 
 import Sidebar from '../components/navigation/sidebar'
@@ -52,11 +61,15 @@ describe('Sidebar accordion UI', () => {
       </Provider>
     )
 
-    const ffxivButton = screen.getByRole('button', { name: 'Final Fantasy XIV' })
+    const ffxivButton = screen.getByRole('button', {
+      name: 'Final Fantasy XIV'
+    })
     fireEvent.click(ffxivButton)
 
     // One of the links expected under the FFXIV group
-    expect(screen.getByTestId('navlink-ffxiv/best-deals/recommended')).toBeDefined()
+    expect(
+      screen.getByTestId('navlink-ffxiv/best-deals/recommended')
+    ).toBeDefined()
   })
 
   it('expands WoW group and shows a known link', async () => {
@@ -75,9 +88,13 @@ describe('Sidebar accordion UI', () => {
       </Provider>
     )
 
-    const wowButtons = screen.getAllByRole('button', { name: 'World of Warcraft' })
+    const wowButtons = screen.getAllByRole('button', {
+      name: 'World of Warcraft'
+    })
     fireEvent.click(wowButtons[0])
 
-    expect(screen.getByTestId('navlink-/wow/best-deals/recommended')).toBeDefined()
+    expect(
+      screen.getByTestId('navlink-/wow/best-deals/recommended')
+    ).toBeDefined()
   })
 })

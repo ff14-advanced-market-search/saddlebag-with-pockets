@@ -1,4 +1,3 @@
-
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { lazy, Suspense } from 'react'
@@ -6,7 +5,9 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import NoResults from '~/components/Common/NoResults'
 import type { LoaderFunction } from '@remix-run/cloudflare'
 
-const Results = lazy(() => import('../components/FFXIVResults/FullScan/Results.client'))
+const Results = lazy(
+  () => import('../components/FFXIVResults/FullScan/Results.client')
+)
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)

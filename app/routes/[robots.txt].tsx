@@ -1,5 +1,3 @@
-
-
 export const loader: LoaderFunction = () => {
   const robotText = `
   User-agent: *

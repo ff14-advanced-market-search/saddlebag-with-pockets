@@ -1,4 +1,3 @@
-
 import { ffxivItemsMap } from '~/utils/items/ffxivItems'
 
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)

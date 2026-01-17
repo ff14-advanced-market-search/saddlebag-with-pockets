@@ -1,4 +1,3 @@
-
 import { gw2ItemsMap } from '~/utils/items/gw2Items'
 
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)

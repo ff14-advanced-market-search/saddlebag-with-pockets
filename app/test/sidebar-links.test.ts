@@ -10,7 +10,9 @@ describe('sidebar links', () => {
       navGroups
         .flatMap((group) => group.links)
         .filter((link) => !link.external)
-        .map((link) => (link.href.startsWith('/') ? link.href : `/${link.href}`))
+        .map((link) =>
+          link.href.startsWith('/') ? link.href : `/${link.href}`
+        )
     )
   )
 

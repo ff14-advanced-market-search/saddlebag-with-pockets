@@ -57,7 +57,20 @@ type Props = PropsWithChildren<any> & {
 interface NavbarLinkProps {
   name: string
   href: string
-  iconType?: 'chart' | 'magnify' | 'exclamation' | 'cart' | 'pencil' | 'document' | 'clock' | 'cog' | 'kofi' | 'github' | 'youtube' | 'discord' | 'external'
+  iconType?:
+    | 'chart'
+    | 'magnify'
+    | 'exclamation'
+    | 'cart'
+    | 'pencil'
+    | 'document'
+    | 'clock'
+    | 'cog'
+    | 'kofi'
+    | 'github'
+    | 'youtube'
+    | 'discord'
+    | 'external'
   icon?: React.ComponentType<any>
   external?: boolean
 }
@@ -71,7 +84,9 @@ const renderIcon = (item: NavbarLinkProps, className: string) => {
       case 'magnify':
         return <MagnifyingGlassIcon className={className} aria-hidden="true" />
       case 'exclamation':
-        return <ExclamationCircleIcon className={className} aria-hidden="true" />
+        return (
+          <ExclamationCircleIcon className={className} aria-hidden="true" />
+        )
       case 'cart':
         return <ShoppingCartIcon className={className} aria-hidden="true" />
       case 'pencil':
@@ -569,7 +584,6 @@ export const navGroups: Array<{
   }
 ]
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _userNavigation = [
   {
     name: 'Your Profile',
@@ -615,7 +629,6 @@ const ButtonAccordian = ({
     if (!isOpen && openOverride) {
       setIsOpen(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openOverride])
 
   return (

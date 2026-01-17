@@ -14,14 +14,18 @@ test.describe('Full Site E2E', () => {
     test('should load FFXIV landing page', async ({ page }) => {
       await page.goto('/ffxiv')
       expect(page.url()).toContain('/ffxiv')
-      expect(await page.locator('text=FFXIV Market Board Tools').count()).toBeGreaterThan(0)
+      expect(
+        await page.locator('text=FFXIV Market Board Tools').count()
+      ).toBeGreaterThan(0)
       expect(await page.locator('text=Unexpected Server Error').count()).toBe(0)
     })
 
     test('should load WoW landing page', async ({ page }) => {
       await page.goto('/wow')
       expect(page.url()).toContain('/wow')
-      expect(await page.locator('text=Azeroth Auction Assassin').count()).toBeGreaterThan(0)
+      expect(
+        await page.locator('text=Azeroth Auction Assassin').count()
+      ).toBeGreaterThan(0)
       expect(await page.locator('text=Unexpected Server Error').count()).toBe(0)
     })
 
@@ -46,7 +50,9 @@ test.describe('Full Site E2E', () => {
       await expect(ffxivButton).toBeVisible()
       await ffxivButton.first().click()
 
-      const bestDealsLink = page.locator('a[data-discover][href*="ffxiv/best-deals"]')
+      const bestDealsLink = page.locator(
+        'a[data-discover][href*="ffxiv/best-deals"]'
+      )
       await expect(bestDealsLink.first()).toBeVisible()
 
       await Promise.all([
@@ -59,11 +65,15 @@ test.describe('Full Site E2E', () => {
 
     test('should toggle WoW accordion and navigate', async ({ page }) => {
       await page.goto('/')
-      const wowButton = page.locator('button:has-text("World of Warcraft")').first()
+      const wowButton = page
+        .locator('button:has-text("World of Warcraft")')
+        .first()
       await expect(wowButton).toBeVisible()
       await wowButton.click()
 
-      const bestDealsLink = page.locator('a[data-discover][href*="wow/best-deals"]')
+      const bestDealsLink = page.locator(
+        'a[data-discover][href*="wow/best-deals"]'
+      )
       await expect(bestDealsLink.first()).toBeVisible()
 
       await Promise.all([
@@ -93,11 +103,15 @@ test.describe('Full Site E2E', () => {
 
     test('should toggle experimental tools accordion', async ({ page }) => {
       await page.goto('/')
-      const expButton = page.locator('button:has-text("WoW Experimental Tools")').first()
+      const expButton = page
+        .locator('button:has-text("WoW Experimental Tools")')
+        .first()
       await expect(expButton).toBeVisible()
       await expButton.click()
 
-      const queueLink = page.locator('a:has-text("Weekly Price Group Delta")').first()
+      const queueLink = page
+        .locator('a:has-text("Weekly Price Group Delta")')
+        .first()
       await expect(queueLink).toBeVisible()
     })
   })
@@ -252,8 +266,12 @@ test.describe('Full Site E2E', () => {
 
       for (const route of routes) {
         await page.goto(route)
-        const errorCount = await page.locator('text=Unexpected Server Error').count()
-        expect(errorCount, `Route ${route} should not have server errors`).toBe(0)
+        const errorCount = await page
+          .locator('text=Unexpected Server Error')
+          .count()
+        expect(errorCount, `Route ${route} should not have server errors`).toBe(
+          0
+        )
       }
     })
   })
@@ -262,7 +280,9 @@ test.describe('Full Site E2E', () => {
     test('should render sidebar icons without errors', async ({ page }) => {
       await page.goto('/')
       // Check that sidebar is visible
-      expect(await page.locator('[aria-hidden="true"]').count()).toBeGreaterThan(0)
+      expect(
+        await page.locator('[aria-hidden="true"]').count()
+      ).toBeGreaterThan(0)
       // Verify no console errors about missing icons
       expect(await page.locator('text=is not defined').count()).toBe(0)
     })

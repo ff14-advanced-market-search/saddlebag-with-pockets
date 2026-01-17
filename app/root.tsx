@@ -298,7 +298,6 @@ function App() {
       setFFWorldDataInLocalStorage(ffxivWorld.world, ffxivWorld.data_center)
       setWoWRealmDataInLocalStorage(wowRealm.server, wowRealm.region)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
