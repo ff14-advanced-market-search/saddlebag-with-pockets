@@ -6,19 +6,19 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Saddlebag Exchange: WoW World of Warcraft Auction House Prices and Gold making tools!'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Tools and Addons to make gold on the World of Warcraft Auction House Auctionhouse'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow'
     }
   ]
 }

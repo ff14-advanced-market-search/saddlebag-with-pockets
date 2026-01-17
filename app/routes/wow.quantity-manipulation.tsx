@@ -139,16 +139,16 @@ type ActionResponse = ManipulationResponse | { exception: string } | {}
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Big Goblin Tracker' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Track potential market manipulators by finding auctions with suspicious quantity changes and price spikes.'
     },
     {
-      name: 'canonical',
-      content: `https://saddlebagexchange.com/wow/quantity-manipulation`
+      rel: 'canonical',
+      href: `https://saddlebagexchange.com/wow/quantity-manipulation`
     }
   ]
 }

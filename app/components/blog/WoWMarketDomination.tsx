@@ -5,11 +5,11 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'WoW Market Domination: Building Trading Empires and Mastering Server Economics'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -21,8 +21,8 @@ export const meta: MetaFunction = () => {
         'WoW Market Domination: Building Trading Empires and Mastering Server Economics'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/wow/market-domination'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/wow/market-domination'
     }
   ]
 }

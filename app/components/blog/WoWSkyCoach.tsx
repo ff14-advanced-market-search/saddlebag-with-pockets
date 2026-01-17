@@ -18,8 +18,8 @@ export const meta: MetaFunction = () => [
     content: 'Guide to Mythic+ Dungeons and Best Gear in WoW'
   },
   {
-    name: 'canonical',
-    content: 'https://saddlebagexchange.com/blog/wow/skycoach'
+    rel: 'canonical',
+    href: 'https://saddlebagexchange.com/blog/wow/skycoach'
   }
 ]
 

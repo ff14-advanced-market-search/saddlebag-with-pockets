@@ -34,16 +34,16 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV History Analysis' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Saddlebag Exchange: FFXIV History Analysis for current prices, competition metrics and more!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/queries/item-history'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/item-history'
     }
   ]
 }

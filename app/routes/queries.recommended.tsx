@@ -27,16 +27,16 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Reselling Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Saddlebag Exchange: FFXIV Reselling Recommendations find the best items to buy from a vendor or another server and resell on your home server!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/queries/recommended'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/recommended'
     }
   ]
 }

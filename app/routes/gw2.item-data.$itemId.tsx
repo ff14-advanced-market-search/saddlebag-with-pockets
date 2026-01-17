@@ -16,8 +16,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if ('exception' in data) {
     return [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { title: 'Error' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { name: 'description', content: `Error: ${data.exception}` }
     ]
   } else {
@@ -30,8 +30,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
         content: `Guild Wars 2 trading post data for ${data.data.itemName}`
       },
       {
-        name: 'canonical',
-        content: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
       }
     ]
   }

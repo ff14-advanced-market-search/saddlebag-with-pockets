@@ -39,16 +39,16 @@ export type ActionData = ErrorActionData | SuccessActionData
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: GW2 Weekly Price Group Delta Analysis' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'GW2 Price Group Analysis! View weekly price changes for investment opportunities!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta'
     }
   ]
 }

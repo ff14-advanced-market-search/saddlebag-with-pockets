@@ -108,15 +108,15 @@ const validateInput = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Ultra Rare Item Search' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content: 'Search for ultra rare items across World of Warcraft servers'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/ultrarare'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/ultrarare'
     }
   ]
 }

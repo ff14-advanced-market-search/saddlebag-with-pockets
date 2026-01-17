@@ -7,16 +7,16 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Marketshare Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview. Master crafting, gathering, and flipping items for profit.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/marketshare/recommended'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/marketshare/recommended'
     }
   ]
 }

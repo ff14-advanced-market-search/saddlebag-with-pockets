@@ -72,16 +72,16 @@ const validateInput = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Auctionhouse Best Deals' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/best-deals'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/best-deals'
     }
   ]
 }

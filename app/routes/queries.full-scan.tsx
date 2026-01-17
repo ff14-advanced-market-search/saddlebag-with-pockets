@@ -57,16 +57,16 @@ const inputMap = {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Reselling Trade Search' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/queries/full-scan'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/full-scan'
     }
   ]
 }

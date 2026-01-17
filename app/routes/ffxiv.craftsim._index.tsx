@@ -83,16 +83,16 @@ const CopyButton = ({ text }: { text: string }) => {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV crafting profit simulation' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/ffxiv/craftsim'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/craftsim'
     }
   ]
 }

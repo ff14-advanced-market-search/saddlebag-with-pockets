@@ -5,16 +5,16 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'FFXIV Marketboard Guide: Profitable Flipping' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Discover how to profit from flipping items on the FFXIV Marketboard.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/ffxiv/bs5'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs5'
     }
   ]
 }

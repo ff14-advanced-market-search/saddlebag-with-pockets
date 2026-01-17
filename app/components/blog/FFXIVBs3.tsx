@@ -5,16 +5,16 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'FFXIV Marketboard Guide: Advanced Strategies' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Learn advanced strategies for maximizing your FFXIV gil earnings on the Marketboard.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/ffxiv/bs3'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs3'
     }
   ]
 }

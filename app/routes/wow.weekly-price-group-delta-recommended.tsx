@@ -5,20 +5,19 @@ import recommendedConfigs from '~/components/recommended/WoW/WeeklyPriceGroup'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Saddlebag Exchange: WoW Weekly Price Group Delta Recommended Configurations'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Pre-configured weekly price group delta analyses for WoW markets. Track price changes across different item categories and make informed investment decisions.'
     },
     {
-      name: 'canonical',
-      content:
-        'https://saddlebagexchange.com/wow/weekly-price-group-delta/recommended'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/weekly-price-group-delta/recommended'
     }
   ]
 }

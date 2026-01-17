@@ -5,15 +5,15 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Advanced Crafting Strategies in FFXIV' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content: 'Deep dive into crafting for maximum market profit.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/ffxiv/advanced-crafting'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/advanced-crafting'
     }
   ]
 }

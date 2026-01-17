@@ -22,16 +22,16 @@ import PetMarketshare from '~/requests/WoW/PetMarketshare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Battle Pets Most Gold' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Find what battle pets make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/pet-marketshare'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/pet-marketshare'
     }
   ]
 }

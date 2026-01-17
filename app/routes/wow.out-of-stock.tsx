@@ -36,16 +36,16 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Out of Stock Items' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Sell without Competition! Search for items that are out of stock across various WoW Realms.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/out-of-stock'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/out-of-stock'
     }
   ]
 }

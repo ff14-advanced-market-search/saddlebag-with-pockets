@@ -54,8 +54,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     ...(post.canonical
       ? [
           {
-            name: 'canonical',
-            content: post.canonical
+            rel: 'canonical',
+            href: post.canonical
           }
         ]
       : [])

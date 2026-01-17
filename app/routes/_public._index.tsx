@@ -19,8 +19,9 @@ export const meta: MetaFunction = () => {
       content: 'Explore MMO Market Data with SaddleBag Exchange'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com'
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com'
     }
   ]
 }

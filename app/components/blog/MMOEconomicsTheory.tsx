@@ -5,11 +5,11 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'MMO Economic Theory: Understanding Virtual World Economics and Market Dynamics'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -21,8 +21,8 @@ export const meta: MetaFunction = () => {
         'MMO Economic Theory: Understanding Virtual World Economics and Market Dynamics'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/mmo/economics-theory'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/mmo/economics-theory'
     }
   ]
 }

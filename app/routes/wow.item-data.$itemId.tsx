@@ -243,8 +243,8 @@ export const meta: MetaFunction = ({ data }) => {
   if ('exception' in data) {
     return [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { title: 'Error' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { name: 'description', content: `Error: ${data.exception}` }
     ]
   } else {
@@ -257,8 +257,8 @@ export const meta: MetaFunction = ({ data }) => {
         content: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`
       },
       {
-        name: 'canonical',
-        content: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
+        rel: 'canonical',
+        href: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
       }
     ]
   }

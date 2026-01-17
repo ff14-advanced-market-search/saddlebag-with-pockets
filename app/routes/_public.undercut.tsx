@@ -17,17 +17,17 @@ import SelectDCandWorld from '~/components/form/select/SelectWorld'
 
 export const meta: MetaFunction = () => {
   return [
+    { charset: 'utf-8' },
     { title: 'Saddlebag Exchange: FFXIV Discord Undercut and Sale Alerts' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.'
     },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-    { charset: 'utf-8' },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/undercut'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/undercut'
     }
   ]
 }

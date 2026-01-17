@@ -7,16 +7,16 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Ultra Rare Item Search Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Recommended searches for ultra rare items in World of Warcraft. Find weapons, armor, quest items, and recipes with the best profit potential.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/ultrarare/recommended'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/ultrarare/recommended'
     }
   ]
 }

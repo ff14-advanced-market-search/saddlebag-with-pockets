@@ -33,16 +33,16 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Server Transfer Trade Search' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/full-scan'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/full-scan'
     }
   ]
 }

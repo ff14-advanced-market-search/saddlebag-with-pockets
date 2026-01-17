@@ -45,16 +45,16 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW BOE Item Level Export Search' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/ilvl-export-search'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/ilvl-export-search'
     }
   ]
 }

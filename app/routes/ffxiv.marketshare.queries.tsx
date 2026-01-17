@@ -7,16 +7,16 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Market Overview Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Discover the best FFXIV market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, best raw materials, furniture, collectibles, and more. Optimize your market strategy with data-driven insights for maximum profit.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
     }
   ]
 }

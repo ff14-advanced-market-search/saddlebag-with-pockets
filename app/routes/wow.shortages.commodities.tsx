@@ -163,16 +163,16 @@ export const ErrorBoundary = () => <ErrorBounds />
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Commodity Shortages' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Find wow commodity auctionhouse items that can be flipped for a profit'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/wow/shortages/commodities'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/shortages/commodities'
     }
   ]
 }

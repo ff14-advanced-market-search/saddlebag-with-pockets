@@ -64,12 +64,12 @@ const pageDescription =
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Best Deals' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: pageDescription },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/ffxiv/best-deals'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/best-deals'
     }
   ]
 }

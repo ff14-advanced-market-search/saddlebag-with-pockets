@@ -8,19 +8,19 @@ import VideoGuide from '~/components/Common/VideoGuide'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Saddlebag Exchange: FFXIV Crafting Profit Simulation Recommendations'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/ffxiv/craftsim/queries'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/craftsim/queries'
     }
   ]
 }

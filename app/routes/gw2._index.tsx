@@ -6,19 +6,19 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Saddlebag Exchange: GW2 Guild Wars 2 Trading Post Prices and Gold making tools!'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Tools and resources to make gold on the Guild Wars 2 Trading Post'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/gw2'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2'
     }
   ]
 }

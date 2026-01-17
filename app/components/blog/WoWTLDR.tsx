@@ -5,12 +5,12 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'TLDR: How to make gold in WoW with cross realm trading' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: 'Easy 4 step method to making gold.' },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/wow/tldr'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/wow/tldr'
     }
   ]
 }

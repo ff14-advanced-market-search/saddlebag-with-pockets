@@ -5,8 +5,8 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Exploring Alternative Revenue Streams in MMO Economies' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -18,8 +18,8 @@ export const meta: MetaFunction = () => {
         'Unlocking Revenue Opportunities: Exploring Alternative Streams in MMO Economies'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/ffxiv/bs13'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs13'
     }
   ]
 }

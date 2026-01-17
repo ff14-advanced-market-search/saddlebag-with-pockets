@@ -8,16 +8,16 @@ import { itemTypes } from '~/utils/GW2Filters/itemTypes'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: GW2 Marketshare Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Discover the best GW2 market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, and more. Optimize your market strategy with data-driven insights for maximum profit.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/gw2/marketshare/recommended'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2/marketshare/recommended'
     }
   ]
 }

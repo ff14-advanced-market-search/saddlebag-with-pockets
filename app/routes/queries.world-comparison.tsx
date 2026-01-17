@@ -48,16 +48,16 @@ const pathHash: Record<string, string> = {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Export Search World Comparison' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Explore and compare FFXIV item prices across different servers with Saddlebag Exchange.'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/queries/world-comparison'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/world-comparison'
     }
   ]
 }

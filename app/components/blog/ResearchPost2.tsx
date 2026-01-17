@@ -4,8 +4,8 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'How to Cross-Server Trade in FFXIV' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -16,8 +16,8 @@ export const meta: MetaFunction = () => {
       content: 'Mastering Cross-Server Trading: Strategies for FFXIV'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/r2'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/r2'
     }
   ]
 }

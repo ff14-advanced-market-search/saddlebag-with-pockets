@@ -5,8 +5,8 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Mastering Gil Earning on the FFXIV Marketboard' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -17,8 +17,8 @@ export const meta: MetaFunction = () => {
       content: 'Unlock the Secrets to Gil Mastery on the FFXIV Marketboard'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/ffxiv/bs1'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs1'
     }
   ]
 }

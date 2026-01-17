@@ -5,8 +5,8 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'The Impact of Social Dynamics on MMO Economies' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -18,8 +18,8 @@ export const meta: MetaFunction = () => {
         'Understanding the Role of Social Dynamics in Shaping MMO Economies'
     },
     {
-      name: 'canonical',
-      content: 'https://saddlebagexchange.com/blog/ffxiv/bs15'
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs15'
     }
   ]
 }
