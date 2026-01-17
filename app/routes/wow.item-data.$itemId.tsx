@@ -250,8 +250,8 @@ export const meta: MetaFunction = ({ data }) => {
   } else {
     return [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { title: data.data.itemName },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       {
         name: 'description',
         content: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`
