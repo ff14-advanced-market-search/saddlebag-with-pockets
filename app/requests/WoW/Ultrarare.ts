@@ -17,7 +17,6 @@ export interface UltrarareSearchProps {
   max_buyoutPrice: number
   min_tsmAvgSalePrice: number
   max_tsmAvgSalePrice: number
-  earlyAccessToken: string
 }
 
 export interface UltrarareItem {
@@ -54,13 +53,12 @@ export interface UltrarareResponse {
 /**
  * Performs a fetch request to the WoW ultrarare API.
  * @example
- * UltrarareSearch({ region: 'NA', populationBlizz: 0, rankingWP: 99, populationWP: 5000, min_quantity: 0, max_quantity: 10, item_class: 2, item_subclass: -1, min_quality: -1, expansion_number: -1, sortBy: 'shortage', earlyAccessToken: 'token123' })
+ * UltrarareSearch({ region: 'NA', populationBlizz: 0, rankingWP: 99, populationWP: 5000, min_quantity: 0, max_quantity: 10, item_class: 2, item_subclass: -1, min_quality: -1, expansion_number: -1, sortBy: 'shortage' })
  * Promise<Response>
  * @param {UltrarareSearchProps} props - Object containing search properties for WoW ultrarare.
  * @returns {Promise<Response>} Returns a Promise that resolves to the response of the fetch request.
  * @description
  *   - Sends request as 'POST' method with JSON stringified body to the endpoint.
- *   - Uses the early access token in the URL path.
  *   - Includes content types and user agent in the headers.
  */
 const UltrarareSearch = async ({
@@ -78,10 +76,9 @@ const UltrarareSearch = async ({
   min_buyoutPrice,
   max_buyoutPrice,
   min_tsmAvgSalePrice,
-  max_tsmAvgSalePrice,
-  earlyAccessToken
+  max_tsmAvgSalePrice
 }: UltrarareSearchProps) =>
-  fetch(`${address}/api/wow/${earlyAccessToken}`, {
+  fetch(`${address}/api/wow/ultrarare`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
