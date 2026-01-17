@@ -7,11 +7,9 @@
 
 # React
 node_modules
-/functions/\[\[path\]\].js
-/functions/\[\[path\]\].js.map
-/functions/_assets
 /build
 /public/build
+/.vite
 
 .eslintcache
 
