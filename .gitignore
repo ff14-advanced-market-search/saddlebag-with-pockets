@@ -40,4 +40,6 @@ DEPENDENCY_ANALYSIS.md
 IMPORT_GUIDELINES.md
 TYPE_GUIDELINES.md
 UPGRADE_COMPLETE.md
-playwright-report/index.html
+playwright-report/*
+*.log
+test-results/*
