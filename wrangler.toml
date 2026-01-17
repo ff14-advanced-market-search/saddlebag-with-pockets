@@ -1,0 +1,7 @@
+name = "saddlebag-with-pockets"
+compatibility_date = "2025-06-04"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+compatibility_date = "2025-06-04"
+compatibility_flags = ["nodejs_compat"]
