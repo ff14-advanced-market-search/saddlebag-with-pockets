@@ -2,6 +2,7 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import VideoGuide from '~/components/Common/VideoGuide'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -93,6 +94,14 @@ export default function Index() {
     <>
       <main className="flex-1">
         <Banner />
+        <div className="py-3">
+          <VideoGuide
+            title="Video Guide: WoW Ultra Rare Item Search Recommendations"
+            description="Learn how to use our curated searches to find the most valuable ultra rare items in World of Warcraft!"
+            videoId="oJsOR2Eyzvc"
+            videoTitle="WoW Ultra Rare Item Search Recommendations Guide"
+          />
+        </div>
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
