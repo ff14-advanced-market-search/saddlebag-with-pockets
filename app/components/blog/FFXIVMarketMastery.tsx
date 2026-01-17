@@ -5,7 +5,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'FFXIV Market Mastery: Advanced Trading Techniques and Strategic Insights'
@@ -21,9 +21,8 @@ export const meta: MetaFunction = () => {
         'FFXIV Market Mastery: Advanced Trading Techniques and Strategic Insights'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/ffxiv/market-mastery'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog/ffxiv/market-mastery'
     }
   ]
 }

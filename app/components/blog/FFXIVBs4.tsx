@@ -5,7 +5,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'FFXIV Marketboard Guide: Market Analysis' },
     {
       name: 'description',
@@ -13,9 +13,8 @@ export const meta: MetaFunction = () => {
         'Learn how to analyze the FFXIV Marketboard for better trading decisions.'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/ffxiv/bs4'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog/ffxiv/bs4'
     }
   ]
 }

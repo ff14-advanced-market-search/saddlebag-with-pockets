@@ -34,7 +34,7 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV History Analysis' },
     {
       name: 'description',
@@ -42,9 +42,8 @@ export const meta: MetaFunction = () => {
         'Saddlebag Exchange: FFXIV History Analysis for current prices, competition metrics and more!'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/queries/item-history'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/queries/item-history'
     }
   ]
 }

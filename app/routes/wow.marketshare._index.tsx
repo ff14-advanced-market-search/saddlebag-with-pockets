@@ -85,16 +85,15 @@ const searchParamsTypes = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Current Content Marketshare' },
     {
       name: 'description',
       content: 'Find what current content items make the most gold in WoW!'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: `https://saddlebagexchange.com/wow/marketshare`
+      name: 'canonical',
+      content: `https://saddlebagexchange.com/wow/marketshare`
     }
   ]
 }

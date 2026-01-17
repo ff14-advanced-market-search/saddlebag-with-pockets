@@ -26,7 +26,7 @@ const formName = 'allaganData'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Allagan Tools Data Import' },
     {
       name: 'description',
@@ -38,9 +38,8 @@ export const meta: MetaFunction = () => {
       content: 'Welcome to the FFXIV Allagan Tools Data Import Page'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/allagan-data'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/allagan-data'
     }
   ]
 }

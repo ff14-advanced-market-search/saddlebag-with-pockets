@@ -5,7 +5,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'MMO Economy Psychology: Understanding Player Behavior and Market Dynamics'
@@ -21,9 +21,8 @@ export const meta: MetaFunction = () => {
         'MMO Economy Psychology: Understanding Player Behavior and Market Dynamics'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/ffxiv/bs17'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog/ffxiv/bs17'
     }
   ]
 }

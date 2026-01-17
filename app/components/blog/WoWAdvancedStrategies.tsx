@@ -5,7 +5,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Advanced World of Warcraft Trading Strategies: Mastering the Auction House'
@@ -21,9 +21,8 @@ export const meta: MetaFunction = () => {
         'Advanced World of Warcraft Trading Strategies: Mastering the Auction House'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/wow/advanced-strategies'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog/wow/advanced-strategies'
     }
   ]
 }

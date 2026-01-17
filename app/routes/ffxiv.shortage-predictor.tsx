@@ -108,7 +108,7 @@ type ActionResponse = PredictionResponse | { exception: string }
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Market Shortage Predictions' },
     {
       name: 'description',
@@ -116,9 +116,8 @@ export const meta: MetaFunction = () => {
         'Find Market Shortages and Price Spikes BEFORE they happen and be there first!'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: `https://saddlebagexchange.com/ffxiv/shortage-predictor`
+      name: 'canonical',
+      content: `https://saddlebagexchange.com/ffxiv/shortage-predictor`
     }
   ]
 }

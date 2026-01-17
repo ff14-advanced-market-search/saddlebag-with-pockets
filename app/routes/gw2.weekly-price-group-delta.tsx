@@ -39,7 +39,7 @@ export type ActionData = ErrorActionData | SuccessActionData
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: GW2 Weekly Price Group Delta Analysis' },
     {
       name: 'description',
@@ -47,9 +47,8 @@ export const meta: MetaFunction = () => {
         'GW2 Price Group Analysis! View weekly price changes for investment opportunities!'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta'
     }
   ]
 }

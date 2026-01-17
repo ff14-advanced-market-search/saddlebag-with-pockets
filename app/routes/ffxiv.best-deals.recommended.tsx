@@ -7,13 +7,12 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Best Deals Recommendations' },
     { name: 'description', content: 'FFXIV Amazing Market Board Deals' },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/ffxiv/best-deals/recommended'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/ffxiv/best-deals/recommended'
     }
   ]
 }

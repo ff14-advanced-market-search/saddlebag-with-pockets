@@ -5,7 +5,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'The Future of MMO Economies: Blockchain, AI, VR, and Next-Generation Virtual Markets'
@@ -21,9 +21,8 @@ export const meta: MetaFunction = () => {
         'The Future of MMO Economies: Blockchain, AI, VR, and Next-Generation Virtual Markets'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/mmo/future-economies'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog/mmo/future-economies'
     }
   ]
 }

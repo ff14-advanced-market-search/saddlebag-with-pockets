@@ -19,16 +19,15 @@ import { format } from 'date-fns'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Full Sale History' },
     {
       name: 'description',
       content: 'Saddlebag Exchange: FFXIV sale history on past 1800 sales'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/ffxiv/extended-history'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/ffxiv/extended-history'
     }
   ]
 }

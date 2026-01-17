@@ -5,7 +5,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'FFXIV Marketboard Guide: Patch Impact' },
     {
       name: 'description',
@@ -13,9 +13,8 @@ export const meta: MetaFunction = () => {
         'Understand how game patches impact the FFXIV Marketboard and trading strategies.'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/ffxiv/bs8'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog/ffxiv/bs8'
     }
   ]
 }

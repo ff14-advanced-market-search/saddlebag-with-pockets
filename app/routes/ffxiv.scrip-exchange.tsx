@@ -29,7 +29,7 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Scrip Exchange' },
     {
       name: 'description',
@@ -37,9 +37,8 @@ export const meta: MetaFunction = () => {
         'Convert FFXIV currencies efficiently with our scrip exchange calculator. Compare exchange rates for Orange/Purple Crafters and Gatherers scrips, Grand Company seals, and Bicolor Gemstones. Find the best items to exchange for maximum value and optimize your currency conversion strategy.'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/ffxiv/scrip-exchange'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/ffxiv/scrip-exchange'
     }
   ]
 }

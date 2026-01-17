@@ -4,7 +4,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => [
   { charset: 'utf-8' },
-  { viewport: 'width=device-width, initial-scale=1' },
+  { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   { title: '10 Ways to Farm Mists of Pandaria Gold in WoW Classic' },
   {
     name: 'description',
@@ -16,9 +16,8 @@ export const meta: MetaFunction = () => [
     content: '10 Ways to Farm Mists of Pandaria Gold in WoW Classic'
   },
   {
-    tagName: 'link',
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/blog/wow/skycoach-mop-gold'
+    name: 'canonical',
+    content: 'https://saddlebagexchange.com/blog/wow/skycoach-mop-gold'
   }
 ]
 

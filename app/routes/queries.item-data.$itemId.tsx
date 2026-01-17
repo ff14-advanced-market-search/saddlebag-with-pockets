@@ -37,13 +37,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: itemName },
     { name: 'description', content: `${itemName}: FFXIV Market Data` },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: `https://saddlebagexchange.com/queries/item-data/${itemId}`
+      name: 'canonical',
+      content: `https://saddlebagexchange.com/queries/item-data/${itemId}`
     }
   ]
 }

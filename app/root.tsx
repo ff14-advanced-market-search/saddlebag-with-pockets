@@ -223,7 +223,7 @@ export const meta: MetaFunction = ({ data }) => {
   return [
     { charset: 'utf-8' },
     { title: site_name },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:

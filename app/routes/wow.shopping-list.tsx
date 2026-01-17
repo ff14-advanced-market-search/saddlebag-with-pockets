@@ -51,7 +51,7 @@ const validateInput = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Shopping List' },
     {
       name: 'description',
@@ -59,9 +59,8 @@ export const meta: MetaFunction = () => {
         'See the wow listings across all realms on one page ordered by price'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/wow/shopping-list'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/wow/shopping-list'
     }
   ]
 }

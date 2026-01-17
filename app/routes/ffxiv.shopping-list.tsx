@@ -40,7 +40,7 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Shopping List, Bulk Craft' },
     {
       name: 'description',
@@ -48,9 +48,8 @@ export const meta: MetaFunction = () => {
         'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/ffxiv/shopping-list'
     }
   ]
 }

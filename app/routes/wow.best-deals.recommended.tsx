@@ -7,16 +7,15 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Best Deals Recommendations' },
     {
       name: 'description',
       content: 'Saddlebag Exchange: WoW Amazing Auction House Deals'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/wow/best-deals/recommended'
     }
   ]
 }

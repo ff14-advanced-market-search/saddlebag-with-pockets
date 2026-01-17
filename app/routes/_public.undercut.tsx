@@ -23,12 +23,11 @@ export const meta: MetaFunction = () => {
       content:
         'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.'
     },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { charset: 'utf-8' },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/undercut'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/undercut'
     }
   ]
 }

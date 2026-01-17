@@ -6,16 +6,15 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange Blogs, posts and random stuff' },
     {
       name: 'description',
       content: 'Saddlebag Exchange best blogs and guides are all on github'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog'
     }
   ]
 }

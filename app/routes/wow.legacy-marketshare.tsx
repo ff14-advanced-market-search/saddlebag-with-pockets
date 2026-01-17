@@ -106,7 +106,7 @@ export const ErrorBoundary = () => <ErrorBounds />
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Legacy Marketshare' },
     {
       name: 'description',
@@ -114,9 +114,8 @@ export const meta: MetaFunction = () => {
         'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/wow/legacy-marketshare'
     }
   ]
 }

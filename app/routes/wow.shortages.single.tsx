@@ -72,7 +72,7 @@ export const action: ActionFunction = async ({ request }) => {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Realm Shortages' },
     {
       name: 'description',
@@ -80,9 +80,8 @@ export const meta: MetaFunction = () => {
         'Find wow local realm auctionhouse items that can be flipped for a profit'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/wow/shortages/single'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/wow/shortages/single'
     }
   ]
 }

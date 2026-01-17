@@ -4,16 +4,15 @@ import { wowItemsMap } from '~/utils/items/wowItems'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: Marketable Items WoW' },
     {
       name: 'description',
       content: 'A list of all marketable items on Saddlebag Exchange for WoW'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/wow/itemlist'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/wow/itemlist'
     }
   ]
 }

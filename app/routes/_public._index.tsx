@@ -8,7 +8,7 @@ export const meta: MetaFunction = () => {
       title:
         'SaddleBag Exchange: FFXIV Market Board Prices, WoW Gold, GW2 Trading Post'
     },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -19,9 +19,8 @@ export const meta: MetaFunction = () => {
       content: 'Explore MMO Market Data with SaddleBag Exchange'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com'
     }
   ]
 }

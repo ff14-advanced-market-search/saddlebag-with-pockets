@@ -65,7 +65,7 @@ const getInputString = (input: Input, isPrice: boolean) => {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Price Sniper' },
     {
       name: 'description',
@@ -73,9 +73,8 @@ export const meta: MetaFunction = () => {
         'Generate data for Saddlebag Exchange discord bot wow price sniper alerts'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/wow/price-alert'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/wow/price-alert'
     }
   ]
 }

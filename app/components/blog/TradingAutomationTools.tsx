@@ -5,7 +5,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Trading Automation and Tools: Advanced Technology for MMO Market Success'
@@ -21,9 +21,8 @@ export const meta: MetaFunction = () => {
         'Trading Automation and Tools: Advanced Technology for MMO Market Success'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/blog/trading/automation-tools'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/blog/trading/automation-tools'
     }
   ]
 }

@@ -18,7 +18,7 @@ import Banner from '~/components/Common/Banner'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Price Sniper' },
     {
       name: 'description',
@@ -31,9 +31,8 @@ export const meta: MetaFunction = () => {
         'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/price-sniper'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/price-sniper'
     }
   ]
 }

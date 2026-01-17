@@ -15,7 +15,7 @@ import Banner from '~/components/Common/Banner'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Realm Status API Upload Timers' },
     {
       name: 'description',
@@ -23,9 +23,8 @@ export const meta: MetaFunction = () => {
         'WoW: see what time blizzard updates the auctionhouse api data, this is the time when saddlebag exchange and azeroth auction assassin will update with the latest data!'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/wow/upload-timers'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/wow/upload-timers'
     }
   ]
 }

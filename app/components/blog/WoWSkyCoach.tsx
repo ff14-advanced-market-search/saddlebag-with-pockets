@@ -3,7 +3,7 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => [
   { charset: 'utf-8' },
-  { viewport: 'width=device-width, initial-scale=1' },
+  { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   {
     title:
       'How to Best Prepare and Properly Complete Mythic+ Dungeons in World of Warcraft'
@@ -18,9 +18,8 @@ export const meta: MetaFunction = () => [
     content: 'Guide to Mythic+ Dungeons and Best Gear in WoW'
   },
   {
-    tagName: 'link',
-    rel: 'canonical',
-    href: 'https://saddlebagexchange.com/blog/wow/skycoach'
+    name: 'canonical',
+    content: 'https://saddlebagexchange.com/blog/wow/skycoach'
   }
 ]
 

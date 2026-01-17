@@ -11,16 +11,15 @@ import Banner from '~/components/Common/Banner'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Market Board Tools' },
     {
       name: 'description',
       content: 'Saddlebag Exchange: FFXIV MarketBoard Tools'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/ffxiv'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/ffxiv'
     }
   ]
 }

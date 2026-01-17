@@ -34,7 +34,7 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV marketboard purchase history' },
     {
       name: 'description',
@@ -42,9 +42,8 @@ export const meta: MetaFunction = () => {
         'Track your FFXIV market board purchase history and analyze your buying patterns. View detailed transaction records, item prices, and purchase dates to optimize your market strategy. Monitor your spending habits and identify the best times to buy items for maximum savings.'
     },
     {
-      tagName: 'link',
-      rel: 'canonical',
-      href: 'https://saddlebagexchange.com/ffxiv/self-purchase'
+      name: 'canonical',
+      content: 'https://saddlebagexchange.com/ffxiv/self-purchase'
     }
   ]
 }
