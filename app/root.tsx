@@ -4,8 +4,8 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
-import styles from './tailwind.css'
-import overrides from './base.css'
+import styles from './tailwind.css?url'
+import overrides from './base.css?url'
 import {
   Links,
   LiveReload,
