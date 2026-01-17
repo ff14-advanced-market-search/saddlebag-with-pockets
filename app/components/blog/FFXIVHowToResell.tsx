@@ -17,6 +17,7 @@ export const meta: MetaFunction = () => {
         'Mastering Item Flipping: FFXIV Marketboard Strategies with Saddlebag Exchange : FFXIV Mods'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/howtoresell'
     }

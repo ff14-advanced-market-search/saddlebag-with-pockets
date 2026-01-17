@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
         'FFXIV Market Mastery: Advanced Trading Techniques and Strategic Insights'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/market-mastery'
     }

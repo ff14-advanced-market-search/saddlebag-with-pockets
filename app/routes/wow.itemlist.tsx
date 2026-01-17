@@ -11,6 +11,7 @@ export const meta: MetaFunction = () => {
       content: 'A list of all marketable items on Saddlebag Exchange for WoW'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/itemlist'
     }

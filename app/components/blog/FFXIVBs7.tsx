@@ -12,6 +12,7 @@ export const meta: MetaFunction = () => {
       content: 'Explore community insights and tips for the FFXIV Marketboard.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs7'
     }

@@ -17,6 +17,7 @@ export const meta: MetaFunction = () => {
         'Tools and Addons to make gold on the World of Warcraft Auction House Auctionhouse'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow'
     }

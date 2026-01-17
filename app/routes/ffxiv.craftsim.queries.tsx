@@ -19,6 +19,7 @@ export const meta: MetaFunction = () => {
         'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/craftsim/queries'
     }

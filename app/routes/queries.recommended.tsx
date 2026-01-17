@@ -35,6 +35,7 @@ export const meta: MetaFunction = () => {
         'Saddlebag Exchange: FFXIV Reselling Recommendations find the best items to buy from a vendor or another server and resell on your home server!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/queries/recommended'
     }

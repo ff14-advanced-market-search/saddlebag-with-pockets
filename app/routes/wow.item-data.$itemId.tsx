@@ -257,6 +257,7 @@ export const meta: MetaFunction = ({ data }) => {
         content: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`
       },
       {
+        tagName: 'link',
         rel: 'canonical',
         href: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
       }

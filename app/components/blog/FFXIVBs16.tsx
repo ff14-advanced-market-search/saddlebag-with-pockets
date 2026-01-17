@@ -17,6 +17,7 @@ export const meta: MetaFunction = () => {
       content: 'Advanced MMO Trading Strategies: Mastering Virtual Economies'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs16'
     }

@@ -9,6 +9,7 @@ export const meta: MetaFunction = () => {
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: 'Easy 4 step method to making gold.' },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/wow/tldr'
     }

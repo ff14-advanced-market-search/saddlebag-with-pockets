@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
         'MMO Economic Theory: Understanding Virtual World Economics and Market Dynamics'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/mmo/economics-theory'
     }

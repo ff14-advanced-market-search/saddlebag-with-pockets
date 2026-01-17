@@ -54,6 +54,7 @@ export const meta: MetaFunction = () => {
 
 export const links: LinksFunction = () => [
   {
+    tagName: 'link',
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list'
   }

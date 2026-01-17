@@ -80,6 +80,7 @@ export const meta: MetaFunction = () => {
         'Find wow local realm auctionhouse items that can be flipped for a profit'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/shortages/single'
     }

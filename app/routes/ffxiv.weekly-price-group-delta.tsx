@@ -45,6 +45,7 @@ export const meta: MetaFunction = () => {
         'FFXIV Price Group Analysis! View weekly price changes for investment opportunities!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/weekly-price-group-delta'
     }

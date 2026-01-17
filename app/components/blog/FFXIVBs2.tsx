@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs2'
     }

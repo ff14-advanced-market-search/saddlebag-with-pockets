@@ -80,6 +80,7 @@ export const meta: MetaFunction = () => {
         'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/best-deals'
     }

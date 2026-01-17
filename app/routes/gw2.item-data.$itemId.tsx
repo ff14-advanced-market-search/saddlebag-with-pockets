@@ -30,6 +30,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
         content: `Guild Wars 2 trading post data for ${data.data.itemName}`
       },
       {
+        tagName: 'link',
         rel: 'canonical',
         href: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
       }

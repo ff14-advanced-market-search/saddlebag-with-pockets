@@ -14,6 +14,7 @@ export const meta: MetaFunction = () => {
       content: 'Saddlebag Exchange: WoW Amazing Auction House Deals'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
     }

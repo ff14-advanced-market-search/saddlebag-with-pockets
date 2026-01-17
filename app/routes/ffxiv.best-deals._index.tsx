@@ -68,6 +68,7 @@ export const meta: MetaFunction = () => {
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: pageDescription },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/best-deals'
     }

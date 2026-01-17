@@ -16,6 +16,7 @@ export const meta: MetaFunction = () => {
       content: 'Mastering Cross-Server Trading: Strategies for FFXIV'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/r2'
     }

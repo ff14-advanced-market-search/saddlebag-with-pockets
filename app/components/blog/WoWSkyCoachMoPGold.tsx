@@ -16,6 +16,7 @@ export const meta: MetaFunction = () => [
     content: '10 Ways to Farm Mists of Pandaria Gold in WoW Classic'
   },
   {
+    tagName: 'link',
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/blog/wow/skycoach-mop-gold'
   }

@@ -47,6 +47,7 @@ export const meta: MetaFunction = () => {
         'GW2 Price Group Analysis! View weekly price changes for investment opportunities!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta'
     }

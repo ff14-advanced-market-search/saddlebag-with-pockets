@@ -41,6 +41,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: `${itemName}: FFXIV Market Data` },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: `https://saddlebagexchange.com/queries/item-data/${itemId}`
     }

@@ -12,6 +12,7 @@ export const meta: MetaFunction = () => {
       content: 'Deep dive into crafting for maximum market profit.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/advanced-crafting'
     }

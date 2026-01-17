@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
         'Advanced World of Warcraft Trading Strategies: Mastering the Auction House'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/wow/advanced-strategies'
     }

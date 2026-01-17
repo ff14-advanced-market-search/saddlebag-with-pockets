@@ -53,6 +53,7 @@ export const meta: MetaFunction = () => {
         'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/ilvl-export-search'
     }

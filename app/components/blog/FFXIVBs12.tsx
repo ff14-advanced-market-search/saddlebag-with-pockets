@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Explore key trends and opportunities in MMO economies, its impact on virtual markets.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs12'
     }

@@ -42,6 +42,7 @@ export const meta: MetaFunction = () => {
         'Saddlebag Exchange: FFXIV History Analysis for current prices, competition metrics and more!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/queries/item-history'
     }

@@ -91,6 +91,7 @@ export const meta: MetaFunction = () => {
         'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/craftsim'
     }

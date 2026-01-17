@@ -15,6 +15,7 @@ export const meta: MetaFunction = () => {
         'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview. Master crafting, gathering, and flipping items for profit.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/marketshare/recommended'
     }

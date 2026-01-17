@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => {
         'Navigating Economic Landscapes: The Impact of Policies on MMO Economies'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs14'
     }

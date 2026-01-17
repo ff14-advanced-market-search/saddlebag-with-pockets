@@ -26,6 +26,7 @@ export const meta: MetaFunction = () => {
       content: 'Saddlebag Exchange: FFXIV sale history on past 1800 sales'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/extended-history'
     }

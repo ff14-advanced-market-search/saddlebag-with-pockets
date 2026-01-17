@@ -115,6 +115,7 @@ export const meta: MetaFunction = () => {
       content: 'Search for ultra rare items across World of Warcraft servers'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/ultrarare'
     }

@@ -41,6 +41,7 @@ export const meta: MetaFunction = () => {
         'Saddlebag Exchange: FFXIV Listings Analysis for current prices, competition metrics and more!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/queries/listings'
     }

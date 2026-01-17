@@ -65,6 +65,7 @@ export const meta: MetaFunction = () => {
         'Find what items in FFXIV are the best to buy from other servers or from vendors and sell on your local ffxiv marketboard!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/queries/full-scan'
     }

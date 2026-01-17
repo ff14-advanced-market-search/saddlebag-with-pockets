@@ -15,6 +15,7 @@ export const meta: MetaFunction = () => {
         'Recommended searches for ultra rare items in World of Warcraft. Find weapons, armor, quest items, and recipes with the best profit potential.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/ultrarare/recommended'
     }

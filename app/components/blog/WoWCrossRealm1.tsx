@@ -16,6 +16,7 @@ export const meta: MetaFunction = () => {
       content: 'Breaking News: WoW Cross Realm Trading Announcement'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/wow/crossrealm1'
     }

@@ -37,6 +37,7 @@ export const meta: MetaFunction = () => {
         'Look up your wow undercuts across all realms at once using our Undercut Tracker Addon!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/region-undercut'
     }

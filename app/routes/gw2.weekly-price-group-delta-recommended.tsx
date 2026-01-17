@@ -38,6 +38,7 @@ export const meta: MetaFunction = () => {
         'Pre-configured weekly price group delta analyses for GW2 markets. Track price changes across different item categories and make informed investment decisions.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/gw2/weekly-price-group-delta-recommended'
     }

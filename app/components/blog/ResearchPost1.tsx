@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => {
         'Maximizing Profits: Using Commodity Shortage Futures as a Crafter'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/r1'
     }

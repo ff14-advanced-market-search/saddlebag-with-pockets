@@ -17,6 +17,7 @@ export const meta: MetaFunction = () => {
         'Tools and resources to make gold on the Guild Wars 2 Trading Post'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/gw2'
     }

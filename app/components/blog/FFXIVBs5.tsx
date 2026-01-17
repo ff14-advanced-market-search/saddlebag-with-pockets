@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Discover how to profit from flipping items on the FFXIV Marketboard.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs5'
     }

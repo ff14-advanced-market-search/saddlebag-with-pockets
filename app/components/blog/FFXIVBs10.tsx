@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Explore third-party tools that can help you on the FFXIV Marketboard.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs10'
     }

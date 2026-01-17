@@ -31,6 +31,7 @@ export const meta: MetaFunction = () => {
         'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/price-sniper'
     }

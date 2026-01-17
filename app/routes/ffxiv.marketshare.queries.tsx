@@ -15,6 +15,7 @@ export const meta: MetaFunction = () => {
         'Discover the best FFXIV market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, best raw materials, furniture, collectibles, and more. Optimize your market strategy with data-driven insights for maximum profit.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
     }

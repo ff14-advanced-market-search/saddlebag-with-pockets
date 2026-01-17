@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
         'WoW Market Domination: Building Trading Empires and Mastering Server Economics'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/wow/market-domination'
     }

@@ -44,6 +44,7 @@ export const meta: MetaFunction = () => {
         'Sell without Competition! Search for items that are out of stock across various WoW Realms.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/out-of-stock'
     }

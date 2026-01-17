@@ -19,6 +19,7 @@ export const meta: MetaFunction = () => [
       "The War Within's Delves Are a Game-Changer for Solo and Casual Players"
   },
   {
+    tagName: 'link',
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/blog/wow/skycoach-delves'
   }

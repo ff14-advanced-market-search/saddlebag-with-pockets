@@ -11,6 +11,7 @@ export const meta: MetaFunction = () => {
       content: 'A list of all marketable items on Saddlebag Exchange for GW2'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/gw2/itemlist'
     }

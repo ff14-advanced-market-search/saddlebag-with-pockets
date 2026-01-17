@@ -23,6 +23,7 @@ export const meta: MetaFunction = () => {
         'WoW: see what time blizzard updates the auctionhouse api data, this is the time when saddlebag exchange and azeroth auction assassin will update with the latest data!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/upload-timers'
     }

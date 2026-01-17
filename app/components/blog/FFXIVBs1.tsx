@@ -17,6 +17,7 @@ export const meta: MetaFunction = () => {
       content: 'Unlock the Secrets to Gil Mastery on the FFXIV Marketboard'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs1'
     }

@@ -41,6 +41,7 @@ export const meta: MetaFunction = () => {
         'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/full-scan'
     }

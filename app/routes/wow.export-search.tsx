@@ -85,6 +85,7 @@ export const meta: MetaFunction = () => {
         'Find the best realm to sell any item on! Wow realm population data.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/export-search'
     }

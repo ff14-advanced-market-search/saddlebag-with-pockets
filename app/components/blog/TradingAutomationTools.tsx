@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
         'Trading Automation and Tools: Advanced Technology for MMO Market Success'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/trading/automation-tools'
     }

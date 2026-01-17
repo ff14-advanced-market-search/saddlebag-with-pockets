@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Learn how to use data analysis to improve your FFXIV Marketboard trading.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs11'
     }

@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
         'MMO Economy Psychology: Understanding Player Behavior and Market Dynamics'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs17'
     }

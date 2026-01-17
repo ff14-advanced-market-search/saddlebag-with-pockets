@@ -40,6 +40,7 @@ export const meta: MetaFunction = () => {
         'Find what items make the most gil in FFXIV, sell the most in FFXIV, sell the fastest in in FFXIV and have the best market gaps!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/marketshare'
     }

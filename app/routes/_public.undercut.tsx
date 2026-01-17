@@ -26,6 +26,7 @@ export const meta: MetaFunction = () => {
         'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/undercut'
     }

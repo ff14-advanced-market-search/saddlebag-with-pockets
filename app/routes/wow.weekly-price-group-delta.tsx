@@ -76,6 +76,7 @@ const styles = `
 // Overwrite default links in the root.tsx
 export const links: LinksFunction = () => [
   {
+    tagName: 'link',
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/wow/weekly-price-group-delta'
   },

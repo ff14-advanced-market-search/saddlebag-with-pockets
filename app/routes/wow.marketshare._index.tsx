@@ -92,6 +92,7 @@ export const meta: MetaFunction = () => {
       content: 'Find what current content items make the most gold in WoW!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: `https://saddlebagexchange.com/wow/marketshare`
     }

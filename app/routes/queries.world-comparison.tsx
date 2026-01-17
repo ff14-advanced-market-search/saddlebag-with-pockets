@@ -56,6 +56,7 @@ export const meta: MetaFunction = () => {
         'Explore and compare FFXIV item prices across different servers with Saddlebag Exchange.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/queries/world-comparison'
     }

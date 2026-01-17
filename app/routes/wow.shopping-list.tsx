@@ -59,6 +59,7 @@ export const meta: MetaFunction = () => {
         'See the wow listings across all realms on one page ordered by price'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/shopping-list'
     }

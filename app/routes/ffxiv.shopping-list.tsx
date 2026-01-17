@@ -48,6 +48,7 @@ export const meta: MetaFunction = () => {
         'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
     }

@@ -147,6 +147,7 @@ export const meta: MetaFunction = () => {
         'Track potential market manipulators by finding auctions with suspicious quantity changes and price spikes.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: `https://saddlebagexchange.com/wow/quantity-manipulation`
     }

@@ -11,6 +11,7 @@ export const meta: MetaFunction = () => {
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: 'FFXIV Amazing Market Board Deals' },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv/best-deals/recommended'
     }

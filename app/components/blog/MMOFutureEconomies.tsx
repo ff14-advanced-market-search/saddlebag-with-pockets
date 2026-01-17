@@ -21,6 +21,7 @@ export const meta: MetaFunction = () => {
         'The Future of MMO Economies: Blockchain, AI, VR, and Next-Generation Virtual Markets'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/mmo/future-economies'
     }

@@ -130,6 +130,7 @@ export const meta: MetaFunction = () => {
         'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: `https://saddlebagexchange.com/wow/shortage-predictor`
     }

@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Learn advanced strategies for maximizing your FFXIV gil earnings on the Marketboard.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs3'
     }

@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => [
     content: 'Guide to Mythic+ Dungeons and Best Gear in WoW'
   },
   {
+    tagName: 'link',
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/blog/wow/skycoach'
   }

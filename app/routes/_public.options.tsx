@@ -59,6 +59,7 @@ export const meta: MetaFunction = () => {
         'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/options'
     }

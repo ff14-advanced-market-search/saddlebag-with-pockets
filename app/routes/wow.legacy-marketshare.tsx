@@ -114,6 +114,7 @@ export const meta: MetaFunction = () => {
         'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
     }

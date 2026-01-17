@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Learn how to avoid common mistakes and pitfalls on the FFXIV Marketboard.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs6'
     }

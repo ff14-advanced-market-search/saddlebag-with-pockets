@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
         'Understand how game patches impact the FFXIV Marketboard and trading strategies.'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs8'
     }

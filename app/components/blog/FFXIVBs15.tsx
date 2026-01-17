@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => {
         'Understanding the Role of Social Dynamics in Shaping MMO Economies'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs15'
     }

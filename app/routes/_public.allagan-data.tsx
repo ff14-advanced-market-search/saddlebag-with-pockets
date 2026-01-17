@@ -38,6 +38,7 @@ export const meta: MetaFunction = () => {
       content: 'Welcome to the FFXIV Allagan Tools Data Import Page'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/allagan-data'
     }

@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => {
       content: 'Saddlebag Exchange: FFXIV MarketBoard Tools'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/ffxiv'
     }

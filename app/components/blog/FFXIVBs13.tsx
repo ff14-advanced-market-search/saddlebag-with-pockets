@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => {
         'Unlocking Revenue Opportunities: Exploring Alternative Streams in MMO Economies'
     },
     {
+      tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com/blog/ffxiv/bs13'
     }
