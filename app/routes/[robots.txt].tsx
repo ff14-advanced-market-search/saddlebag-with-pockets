@@ -1,5 +1,3 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
-
 export const loader: LoaderFunction = () => {
   const robotText = `
   User-agent: *

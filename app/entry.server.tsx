@@ -1,8 +1,11 @@
+import './polyfills'
 import type { EntryContext } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
 import { RemixServer } from '@remix-run/react'
-import { renderToString } from 'react-dom/server'
+import { renderToReadableStream } from 'react-dom/server.browser'
 import { redirectOnPath } from './utils/redirectOnPath'
+
+const ABORT_DELAY = 5_000
 
 /**
  * Processes an incoming request and generates an appropriate HTML response.
@@ -32,14 +35,26 @@ export default function handleRequest(
     return redirect(shouldRedirect.path)
   }
 
-  let markup = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
-  )
-
   responseHeaders.set('Content-Type', 'text/html')
 
-  return new Response(`<!DOCTYPE html>${markup}`, {
-    status: responseStatusCode,
-    headers: responseHeaders
+  return renderToReadableStream(
+    <RemixServer context={remixContext} url={request.url} />,
+    {
+      signal: request.signal,
+      onError(error: unknown) {
+        responseStatusCode = 500
+        console.error(error)
+      }
+    }
+  ).then(async (stream) => {
+    // Ensure shell is ready before responding
+    if (stream.allReady) {
+      await stream.allReady
+    }
+
+    return new Response(stream, {
+      status: responseStatusCode,
+      headers: responseHeaders
+    })
   })
 }

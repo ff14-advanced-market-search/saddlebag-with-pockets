@@ -1,8 +1,4 @@
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction
-} from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
 import styles from './tailwind.css'
 import overrides from './base.css'
@@ -302,7 +298,6 @@ function App() {
       setFFWorldDataInLocalStorage(ffxivWorld.world, ffxivWorld.data_center)
       setWoWRealmDataInLocalStorage(wowRealm.server, wowRealm.region)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -375,7 +370,7 @@ function App() {
     <DatadogProvider>
       <html lang="en" className={classNames(`h-full`, theme || '')}>
         <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <Meta />
           <Links />
           <EnsureThemeApplied />

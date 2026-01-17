@@ -1,22 +1,8 @@
-import { useMemo, useCallback } from 'react'
+import { useMemo, useCallback, useEffect, useState } from 'react'
 import Highcharts from 'highcharts'
-import addHighchartsMore from 'highcharts/highcharts-more'
 import HighchartsReact from 'highcharts-react-official'
 import { format } from 'date-fns'
 import type { GW2ItemData } from '~/requests/GW2/WeeklyPriceGroupDelta'
-
-// Initialize the highcharts-more module at the module level
-let highchartsMoreLoaded = false
-try {
-  addHighchartsMore(Highcharts)
-  highchartsMoreLoaded = true
-} catch (error) {
-  console.error(
-    'Failed to initialize Highcharts more module:',
-    error instanceof Error ? error.message : String(error)
-  )
-  highchartsMoreLoaded = false
-}
 
 interface GW2PriceQuantityChartsProps {
   weeklyData: GW2ItemData['weekly_data']
@@ -36,6 +22,30 @@ export default function GW2PriceQuantityCharts({
   weeklyData,
   darkMode
 }: GW2PriceQuantityChartsProps) {
+  const [moreReady, setMoreReady] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    let cancelled = false
+    import('highcharts/highcharts-more')
+      .then((mod) => {
+        if (cancelled) return
+        mod.default(Highcharts)
+        setMoreReady(true)
+      })
+      .catch((error) => {
+        console.error(
+          'Failed to initialize Highcharts more module:',
+          error instanceof Error ? error.message : String(error)
+        )
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   // Memoize styles to prevent recreation on every render
   const styles = useMemo(
     () =>
@@ -133,8 +143,6 @@ export default function GW2PriceQuantityCharts({
 
       const dataPoint = weeklyData[index]
       if (!dataPoint) return ''
-
-      const labelColor = styles.labelColor
 
       return `<div style="min-width: 200px; color: ${styles.color};">
       <b>${format(formatTimestamp(dataPoint.time), 'MM/dd/yyyy')}</b><br/>
@@ -308,7 +316,7 @@ export default function GW2PriceQuantityCharts({
         },
         // Colored area between Supply and Demand lines using arearange
         // Only include if highcharts-more module loaded successfully
-        ...(highchartsMoreLoaded
+        ...(moreReady
           ? [
               // Red area when Supply > Demand
               {
@@ -383,7 +391,7 @@ export default function GW2PriceQuantityCharts({
         series: {
           connectNulls: true
         },
-        ...(highchartsMoreLoaded && {
+        ...(moreReady && {
           arearange: {
             connectNulls: false
           }

@@ -1,5 +1,3 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
-
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)
 const toW3CDate = (date: Date): string => {
   return date.toISOString().replace(/\.\d{3}Z$/, '+00:00')

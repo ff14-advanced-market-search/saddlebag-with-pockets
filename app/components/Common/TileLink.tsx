@@ -1,11 +1,44 @@
 import { Link } from '@remix-run/react'
+import {
+  ChartBarIcon,
+  ExclamationCircleIcon,
+  MagnifyingGlassIcon,
+  PencilIcon
+} from '@heroicons/react/outline'
+
+type IconType = 'magnify' | 'pencil' | 'exclamation' | 'chart'
 
 interface Props {
   name: string
   href: string
   description: string
+  iconType?: IconType
   Icon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element
   external?: boolean
+}
+
+const renderIcon = (
+  iconType: IconType | undefined,
+  Icon: Props['Icon'] | undefined
+) => {
+  if (iconType) {
+    switch (iconType) {
+      case 'magnify':
+        return <MagnifyingGlassIcon className={`w-8 h-8 dark:text-white`} />
+      case 'pencil':
+        return <PencilIcon className={`w-8 h-8 dark:text-white`} />
+      case 'exclamation':
+        return <ExclamationCircleIcon className={`w-8 h-8 dark:text-white`} />
+      case 'chart':
+        return <ChartBarIcon className={`w-8 h-8 dark:text-white`} />
+    }
+  }
+
+  if (Icon) {
+    return <Icon className={`w-8 h-8 dark:text-white`} />
+  }
+
+  return null
 }
 
 /**
@@ -29,9 +62,12 @@ export default function TileLink({
   name,
   description,
   href,
+  iconType,
   Icon,
   external
 }: Props) {
+  const icon = renderIcon(iconType, Icon)
+
   return (
     <div
       key={name}
@@ -40,7 +76,7 @@ export default function TileLink({
         className={`absolute -inset-px rounded-xl border-2 border-transparent opacity-0 [background:linear-gradient(var(--quick-links-hover-bg,theme(colors.blue.50)),var(--quick-links-hover-bg,theme(colors.blue.50)))_padding-box,linear-gradient(to_top,theme(colors.yellow.400),theme(colors.yellow.400),theme(colors.blue.500))_border-box] group-hover:opacity-100 dark:[--quick-links-hover-bg:theme(colors.slate.800)]`}
       />
       <div className={`relative overflow-hidden rounded-xl p-6`}>
-        {Icon && <Icon className={`w-8 h-8 dark:text-white`} />}
+        {icon}
         <h2
           className={`mt-4 font-display text-base text-slate-900 dark:text-white`}>
           {external ? (

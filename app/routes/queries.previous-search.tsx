@@ -1,9 +1,13 @@
-import type { LoaderFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
+import { lazy, Suspense } from 'react'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import NoResults from '~/components/Common/NoResults'
-import Results from '../components/FFXIVResults/FullScan/Results'
+import type { LoaderFunction } from '@remix-run/cloudflare'
+
+const Results = lazy(
+  () => import('../components/FFXIVResults/FullScan/Results.client')
+)
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url)
@@ -29,7 +33,11 @@ const PreviousSearch = () => {
 
   const rowData = dataToUse
 
-  return <Results rows={rowData} />
+  return (
+    <Suspense fallback={<div className="p-4">Loading results...</div>}>
+      <Results rows={rowData} />
+    </Suspense>
+  )
 }
 
 export default PreviousSearch

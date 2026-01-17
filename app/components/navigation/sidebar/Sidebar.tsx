@@ -1,21 +1,22 @@
+'use client'
+
 import type { FC, PropsWithChildren } from 'react'
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
-  ChartSquareBarIcon,
+  ChartBarIcon as ChartSquareBarIcon,
   ClockIcon,
   CogIcon,
-  MenuAlt2Icon,
-  XIcon,
+  Bars3Icon as MenuAlt2Icon,
+  XMarkIcon as XIcon,
   DocumentTextIcon,
-  DocumentSearchIcon,
+  MagnifyingGlassIcon,
   ChevronUpIcon,
   ChevronDownIcon,
-  PencilAltIcon,
-  SearchIcon,
+  PencilIcon as PencilAltIcon,
   ExclamationCircleIcon,
   ShoppingCartIcon,
-  ExternalLinkIcon
+  ArrowTopRightOnSquareIcon as ExternalLinkIcon
 } from '@heroicons/react/outline'
 import {
   Form,
@@ -56,8 +57,64 @@ type Props = PropsWithChildren<any> & {
 interface NavbarLinkProps {
   name: string
   href: string
-  icon: (props: any) => JSX.Element | null
+  iconType?:
+    | 'chart'
+    | 'magnify'
+    | 'exclamation'
+    | 'cart'
+    | 'pencil'
+    | 'document'
+    | 'clock'
+    | 'cog'
+    | 'kofi'
+    | 'github'
+    | 'youtube'
+    | 'discord'
+    | 'external'
+  icon?: React.ComponentType<any>
   external?: boolean
+}
+
+const renderIcon = (item: NavbarLinkProps, className: string) => {
+  // If it's a built-in heroicons type
+  if (item.iconType) {
+    switch (item.iconType) {
+      case 'chart':
+        return <ChartSquareBarIcon className={className} aria-hidden="true" />
+      case 'magnify':
+        return <MagnifyingGlassIcon className={className} aria-hidden="true" />
+      case 'exclamation':
+        return (
+          <ExclamationCircleIcon className={className} aria-hidden="true" />
+        )
+      case 'cart':
+        return <ShoppingCartIcon className={className} aria-hidden="true" />
+      case 'pencil':
+        return <PencilAltIcon className={className} aria-hidden="true" />
+      case 'document':
+        return <DocumentTextIcon className={className} aria-hidden="true" />
+      case 'clock':
+        return <ClockIcon className={className} aria-hidden="true" />
+      case 'cog':
+        return <CogIcon className={className} aria-hidden="true" />
+      case 'kofi':
+        return <KofiIcon className={className} aria-hidden="true" />
+      case 'github':
+        return <GithubIcon className={className} aria-hidden="true" />
+      case 'youtube':
+        return <YoutubeIcon className={className} aria-hidden="true" />
+      case 'discord':
+        return <DiscordIcon className={className} aria-hidden="true" />
+      case 'external':
+        return <ExternalLinkIcon className={className} aria-hidden="true" />
+    }
+  }
+  // If it's a custom icon component (backward compatibility)
+  if (item.icon) {
+    const IconComponent = item.icon
+    return <IconComponent className={className} aria-hidden="true" />
+  }
+  return null
 }
 
 /**
@@ -147,7 +204,7 @@ const DiscordLink = () => (
   </a>
 )
 
-const navGroups: Array<{
+export const navGroups: Array<{
   title: string
   openMatch?: string
   links: Array<NavbarLinkProps>
@@ -159,95 +216,95 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#ffxiv-alert-guides',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         external: true
       },
       {
         name: 'Reselling Trading Searches',
         href: 'queries/recommended',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Best Deals',
         href: 'ffxiv/best-deals/recommended',
-        icon: ExclamationCircleIcon
+        iconType: 'exclamation'
       },
       {
         name: 'Marketshare Overview',
         href: 'ffxiv/marketshare/queries',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Weekly Price Group Delta',
         href: '/ffxiv/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Craftsim Search',
         href: 'ffxiv/craftsim/queries',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Shopping List',
         href: 'ffxiv/shopping-list',
-        icon: ShoppingCartIcon
+        iconType: 'cart'
       },
       {
         name: 'Allagan Data Reports',
         href: 'allagan-data',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Scrip Value Search',
         href: 'ffxiv/scrip-exchange',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Extended Sale History',
         href: '/ffxiv/extended-history',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Self Purchase Records',
         href: 'ffxiv/self-purchase',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Export Trading Search',
         href: 'queries/world-comparison',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Undercut Alert Input',
         href: 'undercut',
-        icon: PencilAltIcon
+        iconType: 'pencil'
       },
       {
         name: 'Price Sniper Alert Input',
         href: 'price-sniper',
-        icon: PencilAltIcon
+        iconType: 'pencil'
       },
       {
         name: 'Secret Sale Leads',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         external: true
       },
       {
         name: 'Experimental Discount Price Sniper',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Experimental-Discount-Price-Sniper',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         external: true
       },
       {
         name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Item History Statistics and Graphs',
         href: 'queries/item-history',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       }
     ]
   },
@@ -258,90 +315,90 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#wow-general-guides',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         external: true
       },
       {
         name: 'Azeroth Auction Assassin Sniper',
         href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         external: true
       },
       {
         name: 'Best Deals',
         href: '/wow/best-deals/recommended',
-        icon: ExclamationCircleIcon
+        iconType: 'exclamation'
       },
       {
         name: 'Weekly Price Group Delta',
         href: 'wow/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Shopping List',
         href: '/wow/shopping-list',
-        icon: ShoppingCartIcon
+        iconType: 'cart'
       },
       {
         name: 'Item Export Search',
         href: 'wow/export-search',
-        icon: DocumentSearchIcon
+        iconType: 'magnify'
       },
       {
         name: 'Raid BOE Ilvl Shopping List',
         href: '/wow/ilvl-shopping-list',
-        icon: ShoppingCartIcon
+        iconType: 'cart'
       },
       {
         name: 'Raid BOE Ilvl Export Search',
         href: 'wow/ilvl-export-search',
-        icon: DocumentSearchIcon
+        iconType: 'magnify'
       },
       {
         name: 'Ultra Rare',
         href: 'wow/ultrarare/recommended',
-        icon: DocumentSearchIcon
+        iconType: 'magnify'
       },
       {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
-        icon: PencilAltIcon
+        iconType: 'pencil'
       },
       {
         name: 'Upload Timers',
         href: '/wow/upload-timers',
-        icon: ClockIcon
+        iconType: 'clock'
       },
       {
         name: 'Region Wide Undercut Checker',
         href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
+        iconType: 'magnify'
       },
       {
         name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
         external: true
       },
       {
         name: 'Current Content Marketshare Overview',
         href: '/wow/marketshare/recommended',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Legacy Marketshare Overview',
         href: '/wow/legacy-marketshare',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Pet Marketshare Overview',
         href: '/wow/pet-marketshare',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'TSM to AAA converter Addon',
         href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         external: true
       }
     ]
@@ -353,23 +410,23 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#gw2-general-guides',
-        icon: DocumentSearchIcon,
+        iconType: 'magnify',
         external: true
       },
       {
         name: 'Detailed Item Data',
         href: '/gw2/item-data-detailed',
-        icon: DocumentSearchIcon
+        iconType: 'magnify'
       },
       {
         name: 'Marketshare Overview',
         href: '/gw2/marketshare/recommended',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Weekly Price Group Delta',
         href: '/gw2/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       }
     ]
   },
@@ -379,37 +436,37 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: '/wow/weekly-price-group-delta',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Big Goblin Tracker',
         href: '/wow/quantity-manipulation',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Out of Stock',
         href: '/wow/out-of-stock',
-        icon: DocumentSearchIcon
+        iconType: 'magnify'
       },
       {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Commodity Shortage Futures',
         href: 'wow/shortage-predictor',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       }
     ]
   },
@@ -419,12 +476,12 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: '/ffxiv/weekly-price-group-delta',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       },
       {
         name: 'Marketboard Shortage Futures',
         href: '/ffxiv/shortage-predictor',
-        icon: ChartSquareBarIcon
+        iconType: 'chart'
       }
     ]
   },
@@ -440,94 +497,93 @@ const navGroups: Array<{
       {
         name: 'Ko-fi',
         href: 'https://ko-fi.com/indopan',
-        icon: KofiIcon,
+        iconType: 'kofi',
         external: true
       },
       {
         name: 'PayPal',
         href: 'https://www.paypal.me/alexcohen1',
         external: true,
-        icon: KofiIcon
+        iconType: 'kofi'
       },
       {
         name: 'Github',
         href: 'https://github.com/ff14-advanced-market-search',
         external: true,
-        icon: GithubIcon
+        iconType: 'github'
       },
       {
         name: 'Join Our Team - Help Wanted!',
         href: 'https://drive.google.com/file/d/1R9J51hNuwMfPuLi0u1snaLvQnJiZ2jRo/view?usp=sharing',
         external: true,
-        icon: GithubIcon
+        iconType: 'github'
       },
       {
         name: 'API ReDocs',
         href: 'https://docs.saddlebagexchange.com/redoc',
         external: true,
-        icon: GithubIcon
+        iconType: 'github'
       },
       {
         name: 'API Swagger Docs',
         href: 'https://docs.saddlebagexchange.com/docs',
         external: true,
-        icon: GithubIcon
+        iconType: 'github'
       },
       {
         name: 'API Postman Collection',
         href: 'https://www.postman.com/restless-zodiac-865092/workspace/saddlebag-exchange-public-api',
         external: true,
-        icon: GithubIcon
+        iconType: 'github'
       },
       {
         name: 'YouTube',
         href: 'https://www.youtube.com/@saddlebagexchange',
         external: true,
-        icon: YoutubeIcon
+        iconType: 'youtube'
       },
       {
         name: 'Twitter / X',
         href: 'https://x.com/SaddlebagE36285',
         external: true,
-        icon: YoutubeIcon
+        iconType: 'youtube'
       },
       {
         name: 'blog',
         href: '/blog',
-        icon: DocumentSearchIcon
+        iconType: 'magnify'
       },
       {
         name: 'List of all WoW Items',
         href: '/wow/itemlist',
-        icon: DocumentTextIcon
+        iconType: 'document'
       },
       {
         name: 'List of all FFXIV Items',
         href: '/ffxiv/itemlist',
-        icon: DocumentTextIcon
+        iconType: 'document'
       },
       {
         name: 'List of all GW2 Items',
         href: '/gw2/itemlist',
-        icon: DocumentTextIcon
+        iconType: 'document'
       },
       {
         name: 'Fandom',
         href: 'https://ffxivmarketboard.fandom.com/wiki/Ffxivmarketboard_Wiki',
         external: true,
-        icon: ExternalLinkIcon
+        iconType: 'external'
       },
       {
         name: 'Discord Webpage',
         href: 'https://discord.com/servers/saddlebag-exchange-973380473281724476',
         external: true,
-        icon: DiscordIcon
+        iconType: 'discord'
       }
     ]
   }
 ]
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _userNavigation = [
   {
     name: 'Your Profile',
@@ -573,12 +629,12 @@ const ButtonAccordian = ({
     if (!isOpen && openOverride) {
       setIsOpen(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openOverride])
 
   return (
     <div className={`flex flex-col my-1 p-0 bg-gray-700 rounded`}>
       <button
+        type="button"
         className={`flex justify-between items-center cursor-pointer border-0 p-2 ${
           isOpen ? 'text-white' : 'text-gray-300'
         } hover:bg-gray-500 hover:text-white rounded font-semibold`}
@@ -590,11 +646,8 @@ const ButtonAccordian = ({
           <ChevronDownIcon className={`h-4 w-4`} />
         )}
       </button>
-      <div
-        className={`${
-          isOpen ? 'animate-open' : 'animate-close'
-        } flex flex-col`}>
-        {children}
+      <div className={`${isOpen ? 'flex flex-col animate-open' : 'hidden'}`}>
+        {isOpen ? children : null}
       </div>
     </div>
   )
@@ -701,15 +754,15 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                               }>
                               {({ isActive }) => (
                                 <>
-                                  <item.icon
+                                  <div
                                     className={classNames(
                                       isActive
                                         ? 'text-gray-300'
                                         : 'text-gray-400 group-hover:text-gray-300',
                                       'mr-4 flex-shrink-0 h-6 w-6 animate-child'
-                                    )}
-                                    aria-hidden="true"
-                                  />
+                                    )}>
+                                    {renderIcon(item, 'w-6 h-6')}
+                                  </div>
                                   {item.name}
                                 </>
                               )}
@@ -721,13 +774,13 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                               target="_blank"
                               rel="noreferrer"
                               className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md`}>
-                              <item.icon
+                              <div
                                 className={classNames(
                                   'text-gray-400 group-hover:text-gray-300',
                                   'mr-4 flex-shrink-0 h-6 w-6'
-                                )}
-                                aria-hidden="true"
-                              />
+                                )}>
+                                {renderIcon(item, 'w-6 h-6')}
+                              </div>
                               {item.name}
                             </a>
                           )
@@ -795,15 +848,15 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                         }>
                         {({ isActive }) => (
                           <>
-                            <item.icon
+                            <div
                               className={classNames(
                                 isActive
                                   ? 'text-gray-300'
                                   : 'text-gray-400 group-hover:text-gray-300',
                                 'mr-3 flex-shrink-0 h-6 w-6'
-                              )}
-                              aria-hidden="true"
-                            />
+                              )}>
+                              {renderIcon(item, 'w-6 h-6')}
+                            </div>
                             {item.name}
                           </>
                         )}
@@ -815,13 +868,13 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                         target="_blank"
                         rel="noreferrer"
                         className={`text-gray-300 hover:bg-gray-500 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md animate-child`}>
-                        <item.icon
+                        <div
                           className={classNames(
                             'text-gray-400 group-hover:text-gray-300',
                             'mr-4 flex-shrink-0 h-6 w-6'
-                          )}
-                          aria-hidden="true"
-                        />
+                          )}>
+                          {renderIcon(item, 'w-6 h-6')}
+                        </div>
                         {item.name}
                       </a>
                     )
@@ -1087,7 +1140,7 @@ const ItemSearch = () => {
         type="button"
         onClick={handleFormToggle}
         className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
-        <SearchIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
+        <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
         <p className="hidden md:block font-medium shrink-0 text-sm text-gray-500 dark:text-gray-200">
           Item Search
         </p>
