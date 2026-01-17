@@ -1,4 +1,4 @@
-import { TrashIcon } from '@heroicons/react/24/outline'
+import { TrashIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import { RadioButtons } from '~/components/Common/RadioButtons'

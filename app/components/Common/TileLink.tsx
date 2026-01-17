@@ -4,7 +4,7 @@ import {
   ExclamationCircleIcon,
   MagnifyingGlassIcon,
   PencilIcon
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/outline'
 
 type IconType = 'magnify' | 'pencil' | 'exclamation' | 'chart'
 

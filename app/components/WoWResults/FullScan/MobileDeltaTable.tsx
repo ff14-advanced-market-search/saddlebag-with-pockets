@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
 import { Title } from '~/components/Common'
 import Label from '~/components/form/Label'
 import Modal from '~/components/form/Modal'

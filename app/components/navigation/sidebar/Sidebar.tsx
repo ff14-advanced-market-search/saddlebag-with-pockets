@@ -17,7 +17,7 @@ import {
   ExclamationCircleIcon,
   ShoppingCartIcon,
   ArrowTopRightOnSquareIcon as ExternalLinkIcon
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/outline'
 import {
   Form,
   Link,

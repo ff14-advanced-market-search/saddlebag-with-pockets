@@ -4,7 +4,7 @@ import {
   BellIcon,
   ChartBarIcon,
   MagnifyingGlassIcon
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/outline'
 import { Link, useLocation } from '@remix-run/react'
 
 interface Notification {

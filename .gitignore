@@ -33,3 +33,11 @@ package-lock.json
 #Ignore cursor AI rules
 .cursor/rules/codacy.mdc
 .codacy/*
+
+# new stuff added in v2_upgrades
+ARCHITECTURE.md
+DEPENDENCY_ANALYSIS.md
+IMPORT_GUIDELINES.md
+TYPE_GUIDELINES.md
+UPGRADE_COMPLETE.md
+playwright-report/index.html
