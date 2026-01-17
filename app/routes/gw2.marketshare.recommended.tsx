@@ -2,6 +2,7 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import VideoGuide from '~/components/Common/VideoGuide'
 import { itemTypes } from '~/utils/GW2Filters/itemTypes'
 
 // Overwrite default meta in the root.tsx
@@ -104,6 +105,14 @@ export default function Index() {
     <>
       <main className="flex-1">
         <Banner />
+        <div className="py-3">
+          <VideoGuide
+            title="Video Guide: GW2 Marketshare Recommendations"
+            description="Learn how to use our curated marketshare queries to discover the best GW2 market opportunities and optimize your trading strategy!"
+            videoId="lCwfMaM_Z2Q"
+            videoTitle="GW2 Marketshare Recommendations Guide"
+          />
+        </div>
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">
