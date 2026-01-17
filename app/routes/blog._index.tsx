@@ -4,13 +4,20 @@ import TileLink from '~/components/Common/TileLink'
 import type { MetaFunction } from '@remix-run/cloudflare'
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange Blogs, posts and random stuff',
-    description: 'Saddlebag Exchange best blogs and guides are all on github',
-    links: [{ rel: 'canonical', href: 'https://saddlebagexchange.com/blog' }]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange Blogs, posts and random stuff' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'Saddlebag Exchange best blogs and guides are all on github'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog'
+    }
+  ]
 }
 
 const recommendedQueries = [

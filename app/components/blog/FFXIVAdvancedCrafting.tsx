@@ -3,18 +3,20 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Advanced Crafting Strategies in FFXIV',
-    description: 'Deep dive into crafting for maximum market profit.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/ffxiv/advanced-crafting'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Advanced Crafting Strategies in FFXIV' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'Deep dive into crafting for maximum market profit.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/advanced-crafting'
+    }
+  ]
 }
 
 const FFXIVAdvancedCrafting = () => {

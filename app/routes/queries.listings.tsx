@@ -31,19 +31,21 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Listings Analysis',
-    description:
-      'Saddlebag Exchange: FFXIV Listings Analysis for current prices, competition metrics and more!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/queries/listings'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: FFXIV Listings Analysis' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Saddlebag Exchange: FFXIV Listings Analysis for current prices, competition metrics and more!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/listings'
+    }
+  ]
 }
 
 const validateInput = ({

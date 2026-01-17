@@ -35,18 +35,17 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const itemName = data?.itemName || 'Unknown Item'
   const itemId = data?.itemId || '4745'
 
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: itemName,
-    description: `${itemName}: FFXIV Market Data`,
-    links: [
-      {
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/queries/item-data/${itemId}`
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: itemName },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { name: 'description', content: `${itemName}: FFXIV Market Data` },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: `https://saddlebagexchange.com/queries/item-data/${itemId}`
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ params, request }) => {

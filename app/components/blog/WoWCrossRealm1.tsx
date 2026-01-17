@@ -2,20 +2,25 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'WoW Cross Realm Trading Announcement',
-    description:
-      'Stay updated with the latest announcement regarding cross-realm trading in World of Warcraft.',
-    customHeading: 'Breaking News: WoW Cross Realm Trading Announcement',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/blog/wow/crossrealm1'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'WoW Cross Realm Trading Announcement' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Stay updated with the latest announcement regarding cross-realm trading in World of Warcraft.'
+    },
+    {
+      name: 'customHeading',
+      content: 'Breaking News: WoW Cross Realm Trading Announcement'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/wow/crossrealm1'
+    }
+  ]
 }
 
 const WoWCrossRealm1 = () => {

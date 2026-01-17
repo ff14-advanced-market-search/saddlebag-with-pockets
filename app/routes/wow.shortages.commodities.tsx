@@ -161,19 +161,21 @@ export const ErrorBoundary = () => <ErrorBounds />
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Commodity Shortages',
-    description:
-      'Find wow commodity auctionhouse items that can be flipped for a profit',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/shortages/commodities'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW Commodity Shortages' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find wow commodity auctionhouse items that can be flipped for a profit'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/shortages/commodities'
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

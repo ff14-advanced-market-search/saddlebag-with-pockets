@@ -104,19 +104,21 @@ export const ErrorBoundary = () => <ErrorBounds />
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Legacy Marketshare',
-    description:
-      'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW Legacy Marketshare' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find what legacy content items make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/legacy-marketshare'
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

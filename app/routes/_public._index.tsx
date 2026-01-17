@@ -2,21 +2,28 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    title:
-      'SaddleBag Exchange: FFXIV Market Board Prices, WoW Gold, GW2 Trading Post',
-    viewport: 'width=device-width,initial-scale=1',
-    description:
-      'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auction House, FFXIV Market Board, GW2 Trading Post and more!',
-    customHeading: 'Explore MMO Market Data with SaddleBag Exchange',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    {
+      title:
+        'SaddleBag Exchange: FFXIV Market Board Prices, WoW Gold, GW2 Trading Post'
+    },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auction House, FFXIV Market Board, GW2 Trading Post and more!'
+    },
+    {
+      name: 'customHeading',
+      content: 'Explore MMO Market Data with SaddleBag Exchange'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com'
+    }
+  ]
 }
 
 const recommendedQueries = [

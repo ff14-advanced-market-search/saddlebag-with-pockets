@@ -25,19 +25,21 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Reselling Recommendations',
-    description:
-      'Saddlebag Exchange: FFXIV Reselling Recommendations find the best items to buy from a vendor or another server and resell on your home server!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/queries/recommended'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: FFXIV Reselling Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Saddlebag Exchange: FFXIV Reselling Recommendations find the best items to buy from a vendor or another server and resell on your home server!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/queries/recommended'
+    }
+  ]
 }
 
 const recommendedQueries = [

@@ -137,19 +137,21 @@ export const action: ActionFunction = async ({ request }) => {
 type ActionResponse = ManipulationResponse | { exception: string } | {}
 
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Big Goblin Tracker',
-    description:
-      'Track potential market manipulators by finding auctions with suspicious quantity changes and price spikes.',
-    links: [
-      {
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/wow/quantity-manipulation`
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW Big Goblin Tracker' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Track potential market manipulators by finding auctions with suspicious quantity changes and price spikes.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: `https://saddlebagexchange.com/wow/quantity-manipulation`
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

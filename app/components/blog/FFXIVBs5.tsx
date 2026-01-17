@@ -3,16 +3,21 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Marketboard Guide: Profitable Flipping',
-    description:
-      'Discover how to profit from flipping items on the FFXIV Marketboard.',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs5' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'FFXIV Marketboard Guide: Profitable Flipping' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Discover how to profit from flipping items on the FFXIV Marketboard.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs5'
+    }
+  ]
 }
 
 const FFXIVBs5 = () => {

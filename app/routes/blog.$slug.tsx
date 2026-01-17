@@ -30,10 +30,10 @@ export const loader = ({ params }: LoaderFunctionArgs) => {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) {
-    return {
-      title: 'Blog Post Not Found',
-      description: 'This blog post could not be found.'
-    }
+    return [
+      { title: 'Blog Post Not Found' },
+      { name: 'description', content: 'This blog post could not be found.' }
+    ]
   }
 
   const { post, componentName } = data
@@ -45,13 +45,21 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   }
 
   // Fallback to post config
-  return {
-    title: post.title,
-    description: post.description,
-    'og:title': post.title,
-    'og:description': post.description,
-    ...(post.canonical && { canonical: post.canonical })
-  }
+  return [
+    { title: post.title },
+    { name: 'description', content: post.description },
+    { property: 'og:title', content: post.title },
+    { property: 'og:description', content: post.description },
+    ...(post.canonical
+      ? [
+          {
+            tagName: 'link',
+            rel: 'canonical',
+            href: post.canonical
+          }
+        ]
+      : [])
+  ]
 }
 
 export default function BlogSlugRoute() {

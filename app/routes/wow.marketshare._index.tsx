@@ -83,18 +83,20 @@ const searchParamsTypes = z.object({
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Current Content Marketshare',
-    description: 'Find what current content items make the most gold in WoW!',
-    links: [
-      {
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/wow/marketshare`
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW Current Content Marketshare' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'Find what current content items make the most gold in WoW!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: `https://saddlebagexchange.com/wow/marketshare`
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

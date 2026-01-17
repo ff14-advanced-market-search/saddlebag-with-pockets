@@ -40,17 +40,21 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW BOE Item Level Shopping List',
-    description:
-      'Search for raid BOE items with specific item levels and stats across all realms with our WoW Item Level Shopping List!'
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW BOE Item Level Shopping List' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Search for raid BOE items with specific item levels and stats across all realms with our WoW Item Level Shopping List!'
+    }
+  ]
 }
 
 export const links: LinksFunction = () => [
   {
+    tagName: 'link',
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/wow/ilvl-shopping-list'
   }

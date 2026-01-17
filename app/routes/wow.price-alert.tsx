@@ -63,19 +63,21 @@ const getInputString = (input: Input, isPrice: boolean) => {
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Price Sniper',
-    description:
-      'Generate data for Saddlebag Exchange discord bot wow price sniper alerts',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/price-alert'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW Price Sniper' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Generate data for Saddlebag Exchange discord bot wow price sniper alerts'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/price-alert'
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

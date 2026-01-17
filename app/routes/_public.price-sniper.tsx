@@ -16,21 +16,26 @@ import Banner from '~/components/Common/Banner'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Price Sniper',
-    description:
-      'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts',
-    customHeading:
-      'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/price-sniper'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: FFXIV Price Sniper' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts'
+    },
+    {
+      name: 'customHeading',
+      content:
+        'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/price-sniper'
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

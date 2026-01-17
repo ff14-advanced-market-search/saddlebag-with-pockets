@@ -16,19 +16,21 @@ import Modal from '~/components/form/Modal'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 
 export const meta: MetaFunction = () => {
-  return {
-    title: 'Saddlebag Exchange: FFXIV Discord Undercut and Sale Alerts',
-    description:
-      'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.',
-    viewport: 'width=device-width,initial-scale=1',
-    charSet: 'utf-8',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/undercut'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: FFXIV Discord Undercut and Sale Alerts' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/undercut'
+    }
+  ]
 }
 
 interface TrackedItem {

@@ -106,18 +106,20 @@ const validateInput = z.object({
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Ultra Rare Item Search',
-    description: 'Search for ultra rare items across World of Warcraft servers',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/ultrarare'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW Ultra Rare Item Search' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'Search for ultra rare items across World of Warcraft servers'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/ultrarare'
+    }
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

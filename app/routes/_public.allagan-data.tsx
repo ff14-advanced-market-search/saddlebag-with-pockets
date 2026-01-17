@@ -24,20 +24,25 @@ const formName = 'allaganData'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Allagan Tools Data Import',
-    description:
-      'Input your Allagan Tools generated data here, and we will turn it into useful stuff!',
-    customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/allagan-data'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: FFXIV Allagan Tools Data Import' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Input your Allagan Tools generated data here, and we will turn it into useful stuff!'
+    },
+    {
+      name: 'customHeading',
+      content: 'Welcome to the FFXIV Allagan Tools Data Import Page'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/allagan-data'
+    }
+  ]
 }
 
 const objectHasProperties = (object: Object) => {

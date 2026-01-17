@@ -27,19 +27,21 @@ const formName = 'region-undercut'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: Region Wide Undercut Search',
-    description:
-      'Look up your wow undercuts across all realms at once using our Undercut Tracker Addon!',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/region-undercut'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: Region Wide Undercut Search' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Look up your wow undercuts across all realms at once using our Undercut Tracker Addon!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/region-undercut'
+    }
+  ]
 }
 
 const petAuction = z.object({

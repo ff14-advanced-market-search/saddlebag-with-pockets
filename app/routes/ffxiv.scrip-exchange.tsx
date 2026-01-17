@@ -27,19 +27,21 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: FFXIV Scrip Exchange',
-    description:
-      'Convert FFXIV currencies efficiently with our scrip exchange calculator. Compare exchange rates for Orange/Purple Crafters and Gatherers scrips, Grand Company seals, and Bicolor Gemstones. Find the best items to exchange for maximum value and optimize your currency conversion strategy.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/ffxiv/scrip-exchange'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: FFXIV Scrip Exchange' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Convert FFXIV currencies efficiently with our scrip exchange calculator. Compare exchange rates for Orange/Purple Crafters and Gatherers scrips, Grand Company seals, and Bicolor Gemstones. Find the best items to exchange for maximum value and optimize your currency conversion strategy.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/scrip-exchange'
+    }
+  ]
 }
 
 const validateInput = ({

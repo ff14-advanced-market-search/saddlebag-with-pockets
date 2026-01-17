@@ -3,16 +3,21 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'FFXIV Marketboard Guide: Patch Impact',
-    description:
-      'Understand how game patches impact the FFXIV Marketboard and trading strategies.',
-    links: [
-      { rel: 'canonical', href: 'https://saddlebagexchange.com/blog/ffxiv/bs8' }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'FFXIV Marketboard Guide: Patch Impact' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Understand how game patches impact the FFXIV Marketboard and trading strategies.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/blog/ffxiv/bs8'
+    }
+  ]
 }
 
 const FFXIVBs8 = () => {

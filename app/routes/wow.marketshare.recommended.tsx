@@ -5,19 +5,21 @@ import TileLink from '~/components/Common/TileLink'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
-  return {
-    charset: 'utf-8',
-    viewport: 'width=device-width,initial-scale=1',
-    title: 'Saddlebag Exchange: WoW Marketshare Recommendations',
-    description:
-      'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview. Master crafting, gathering, and flipping items for profit.',
-    links: [
-      {
-        rel: 'canonical',
-        href: 'https://saddlebagexchange.com/wow/marketshare/recommended'
-      }
-    ]
-  }
+  return [
+    { charset: 'utf-8' },
+    { title: 'Saddlebag Exchange: WoW Marketshare Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview. Master crafting, gathering, and flipping items for profit.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/marketshare/recommended'
+    }
+  ]
 }
 
 // Define the base URL for the search parameters
