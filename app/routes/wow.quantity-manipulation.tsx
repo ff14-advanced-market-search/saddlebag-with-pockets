@@ -28,7 +28,7 @@ import type {
 import WoWQuantityManipulation from '~/requests/WoW/QuantityManipulation'
 import NoResults from '~/components/Common/NoResults'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import { Results } from '~/components/WoWResults/QuantityManipulation/Results'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { useState } from 'react'
@@ -139,9 +139,18 @@ type ActionResponse = ManipulationResponse | { exception: string } | {}
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Big Goblin Tracker' },
-    { name: 'description', content: 'Track potential market manipulators by finding auctions with suspicious quantity changes and price spikes.' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Track potential market manipulators by finding auctions with suspicious quantity changes and price spikes.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: `https://saddlebagexchange.com/wow/quantity-manipulation`
+    }
   ]
 }
 

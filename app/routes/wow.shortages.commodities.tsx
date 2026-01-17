@@ -18,7 +18,7 @@ import { InputWithLabel } from '~/components/form/InputWithLabel'
 import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import { useState } from 'react'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
@@ -163,10 +163,18 @@ export const ErrorBoundary = () => <ErrorBounds />
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Commodity Shortages' },
-    { name: 'description', content: 'Find wow commodity auctionhouse items that can be flipped for a profit' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/shortages/commodities' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find wow commodity auctionhouse items that can be flipped for a profit'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/shortages/commodities'
+    }
   ]
 }
 

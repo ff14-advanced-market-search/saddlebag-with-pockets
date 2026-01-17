@@ -12,7 +12,7 @@ import type {
   IlvlExportResponse
 } from '~/requests/WoW/IlvlExportSearch'
 import IlvlExportSearch from '~/requests/WoW/IlvlExportSearch'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import z from 'zod'
 import {
   useActionData,
@@ -45,10 +45,18 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW BOE Item Level Export Search' },
-    { name: 'description', content: 'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ilvl-export-search' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Search for raid BOE items with specific item levels and stats across all realms, with detailed realm data and export capabilities!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/ilvl-export-search'
+    }
   ]
 }
 

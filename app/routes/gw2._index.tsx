@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import type { MetaFunction } from '@remix-run/cloudflare'
 
@@ -6,39 +6,28 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Saddlebag Exchange: GW2 Guild Wars 2 Trading Post Prices and Gold making tools!'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Tools and resources to make gold on the Guild Wars 2 Trading Post'
     },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/gw2' }
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2'
+    }
   ]
-}
-
-type IconType = 'magnify'
-
-const renderIcon = (iconType?: IconType) => {
-  if (iconType === 'magnify') {
-    return (
-      <MagnifyingGlassIcon
-        className="h-6 w-6 text-green-500 dark:text-green-400"
-        aria-hidden="true"
-      />
-    )
-  }
-
-  return null
 }
 
 const recommendedQueries: Array<{
   name: string
   description: string
-  iconType: IconType
+  Icon: typeof DocumentSearchIcon
   href: string
   external?: boolean
 }> = [
@@ -46,21 +35,21 @@ const recommendedQueries: Array<{
     name: 'Detailed Item Data',
     description:
       'View detailed data for an item on the Trading Post. Includes price history charts, current buy and sell orders, and more.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/gw2/item-data-detailed'
   },
   {
     name: 'Marketshare Overview',
     description:
       'Find out what items are actually selling and what are the best items to sell. Shows the top items matching your search.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/gw2/marketshare/recommended'
   },
   {
     name: 'Weekly Price Group Delta',
     description:
       'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/gw2/weekly-price-group-delta-recommended'
   }
 ]
@@ -121,7 +110,7 @@ export default function Index() {
                     className="block">
                     <div className="h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-green-50 dark:hover:bg-green-900/50">
                       <div className="flex items-center mb-4">
-                        {renderIcon(query.iconType)}
+                        <query.Icon className="h-6 w-6 text-green-500 dark:text-green-400" />
                         <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">
                           {query.name}
                         </h3>

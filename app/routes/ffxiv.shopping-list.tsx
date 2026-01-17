@@ -1,4 +1,4 @@
-import { TrashIcon } from '@heroicons/react/20/solid'
+import { TrashIcon } from '@heroicons/react/solid'
 import type {
   ActionFunction,
   LoaderFunction,
@@ -30,7 +30,7 @@ import type {
   ShoppingListItem
 } from '~/requests/FFXIV/shopping-list'
 import GetShoppingList from '~/requests/FFXIV/shopping-list'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
@@ -40,10 +40,18 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Shopping List, Bulk Craft' },
-    { name: 'description', content: 'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/shopping-list' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find the best sever to buy items from the FFXIV marketboard. Find bulk crafting ingredients'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/shopping-list'
+    }
   ]
 }
 

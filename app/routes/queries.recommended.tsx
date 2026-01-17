@@ -1,3 +1,4 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import {
   COMMODITY_SCAN_PATH,
   FAST_SCAN_PATH,
@@ -26,8 +27,8 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Reselling Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -45,119 +46,119 @@ const recommendedQueries = [
   {
     name: 'Olivias Furnishing Items Medium Sell',
     description: 'Finds medium priced furniture to sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_5_PATH
   },
   {
     name: 'Olivias Consumable Collectables Medium Sell',
     description: 'Medium priced Consumable Collectables to sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_6_PATH
   },
   {
     name: 'Fast Sales Search',
     description:
       'Search for items with high rate of sales. May not return results if your server has slow sales.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: FAST_SCAN_PATH
   },
   {
     name: 'NPC Vendor Furniture Item Search',
     description:
       'Search for items sold by Housing Vendors which can be resold on the marketboard.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: VENDOR_FURNITURE_PATH
   },
   {
     name: 'Commodities Search',
     description:
       'Search for items that sell in larger stack sizes (i.e. larger quantities)',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: COMMODITY_SCAN_PATH
   },
   {
     name: 'Mega Value Search',
     description:
       'Searches for the absolute highest value items on the whole marketboard with no regard to sale rates.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: MEGA_VALUE_PATH
   },
   {
     name: 'NPC Vendor Item Search',
     description:
       'Search for items sold by NPC Vendors which can be resold on the marketboard.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: VENDOR_PATH
   },
   {
     name: 'Beginner Out of Stock Search',
     description:
       'Recommended for Beginners. No level requirement, high profit margins, low risk, low cost, low effort, low competition, but slow sale rates. Ignore Average Value, everything this finds can be sold for 70k if there are no other listings on your server.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OUT_OF_STOCK_PATH
   },
   {
     name: 'Low Quality Out of Stock Search',
     description:
       'Same rules as the out of stock search, but this one looks for Low Quality items that can sell for like furniture or dyes that can sell for much higher prices than out of stock armor or weapons.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: NQ_OUT_OF_STOCK_PATH
   },
   {
     name: 'Olivias General Flipping Quick Sell',
     description: 'Low Investment General Flipping Quick Sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_1_PATH
   },
   {
     name: 'Olivias Class Quest Items Quick Sell',
     description: 'Low Investment Class Quest Items Quick Sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_2_PATH
   },
   {
     name: 'Olivias Furnishing Items Quick Sell',
     description: 'Low Investment Furnishing Items Quick Sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_3_PATH
   },
   {
     name: 'Olivias Minions, Mounts, and Collectable Items Quick Sell',
     description:
       'Low Investment Minions, Mounts, and Collectable Items Quick Sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_4_PATH
   },
   {
     name: 'Olivias Glamor Medium Sell',
     description:
       'Medium priced glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_7_PATH
   },
   {
     name: 'Olivias High Investment Furniture Items',
     description: 'Furnishing items with big profits but slow sales',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_10_PATH
   },
   {
     name: 'Olivias High Investment Collectable Items',
     description: 'Collectable items with big profits but slow sales',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_8_PATH
   },
   {
     name: 'Olivias High Value Glamor Items',
     description:
       'Finds expensive glamor items, it will also find class/profession gear ignore these and go for stuff that looks nice.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_9_PATH
   },
   {
     name: 'Olivias High Value Materials',
     description: 'Finds expensive Materials and Trade goods.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: OLIVIA_11_PATH
   }
 ]
@@ -166,14 +167,14 @@ const recommendedQueries = [
 // {
 //   name: 'High Value Search',
 //   description: 'Search for high value trades.',
-//   iconType: 'magnify',
+//   Icon: DocumentSearchIcon,
 //   href: '/queries/value-scan'
 // },
 // {
 //   name: 'Quest Item Search',
 //   description:
 //     'Searches for items that are bought from the marketboard to be turned in for "Crafter Quests" or "Supply and Provisioning Missions".',
-//   iconType: 'magnify',
+//   Icon: DocumentSearchIcon,
 //   href: QUEST_SCAN_PATH
 // },
 

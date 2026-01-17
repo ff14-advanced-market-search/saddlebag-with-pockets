@@ -44,9 +44,13 @@ import { getWowheadLink } from '~/components/utilities/getWowheadLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Weekly Price Group Delta Analysis' },
-    { name: 'description', content: 'WoW New Raid Investment Analysis! View weekly price changes for investment opportunities!' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'WoW New Raid Investment Analysis! View weekly price changes for investment opportunities!'
+    }
   ]
 }
 
@@ -72,6 +76,7 @@ const styles = `
 // Overwrite default links in the root.tsx
 export const links: LinksFunction = () => [
   {
+    tagName: 'link',
     rel: 'canonical',
     href: 'https://saddlebagexchange.com/wow/weekly-price-group-delta'
   },

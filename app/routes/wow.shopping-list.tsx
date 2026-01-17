@@ -51,10 +51,18 @@ const validateInput = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Shopping List' },
-    { name: 'description', content: 'See the wow listings across all realms on one page ordered by price' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/shopping-list' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'See the wow listings across all realms on one page ordered by price'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/shopping-list'
+    }
   ]
 }
 

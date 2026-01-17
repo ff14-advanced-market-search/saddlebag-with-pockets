@@ -1,3 +1,4 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -7,10 +8,21 @@ import VideoGuide from '~/components/Common/VideoGuide'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
+    {
+      title:
+        'Saddlebag Exchange: FFXIV Crafting Profit Simulation Recommendations'
+    },
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-    { title: 'Saddlebag Exchange: FFXIV Crafting Profit Simulation Recommendations' },
-    { name: 'description', content: 'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/craftsim/queries' }
+    {
+      name: 'description',
+      content:
+        'Discover the most profitable FFXIV crafting opportunities with simulation-based recommendations'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/craftsim/queries'
+    }
   ]
 }
 
@@ -36,52 +48,52 @@ const recommendedQueries = [
   {
     name: 'Default Dawntrail',
     description: 'Search for profitable new Dawntrail items to craft.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.defaultDawntrail
   },
   {
     name: 'Default Search',
     description: 'Default search for profitable items to craft.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.defaultItems
   },
   {
     name: 'Fast Selling Commodity Items',
     description: 'Search for fast selling commodities items to craft.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.fastSaleItems
   },
   {
     name: 'Food Items',
     description: 'Find food items that sell fast and in bulk.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.foodItems
   },
   {
     name: 'Food Items (Trained Eye)',
     description:
       'Find food items that can be crafted 100% HQ using the level 80 crafter skill, Trained Eye.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.foodItemsTrainedEye
   },
   {
     name: 'Furniture and Glamour Items',
     description:
       'Find all the worthwhile furniture and glamour items to craft.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.furnitureAndGlamourItems
   },
   {
     name: 'Expert Craft Items (Pentameld)',
     description: 'Find items for pentamelding.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.expertCraftItems
   },
   {
     name: 'Best Crafted Gear',
     description:
       'Find all the current BiS gear (Diadochos for Combat/Indagators for Crafter/Gatherer).',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestCraftedGear
   }
 ]

@@ -1,16 +1,26 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import VideoGuide from '~/components/Common/VideoGuide'
 import { itemTypes } from '~/utils/GW2Filters/itemTypes'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: GW2 Marketshare Recommendations' },
-    { name: 'description', content: 'Discover the best GW2 market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, and more. Optimize your market strategy with data-driven insights for maximum profit.' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/gw2/marketshare/recommended' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Discover the best GW2 market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, and more. Optimize your market strategy with data-driven insights for maximum profit.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/gw2/marketshare/recommended'
+    }
   ]
 }
 
@@ -32,60 +42,60 @@ const recommendedQueries = [
     name: 'Total Market View',
     description:
       'See a general overview of the biggest gold earners in the GW2 Trading Post by most revenue earned.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.value
   },
   {
     name: 'Fast Selling Items',
     description: 'Discover items that sell quickly (5000+ sales per day).',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.sold
   },
   {
     name: 'Price Percent Change',
     description:
       'Find items with the largest price changes - great for identifying price spikes!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.pricePercentChange
   },
   {
     name: 'Expensive Items',
     description: 'Find items with high average prices (1000+ gold).',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.priceAverage
   },
   {
     name: 'Sell Quantity Percent Change',
     description:
       'Find items with the largest changes in sell quantity - identify potential shortages!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.sellQuantityPercentChange
   },
   {
     name: 'Buy Quantity Percent Change',
     description:
       'See items with the largest changes in buy quantity - track demand shifts!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.buyQuantityPercentChange
   },
   {
     name: 'Sold Percent Change',
     description:
       'See items with the largest changes in sales volume over time.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.soldPercentChange
   },
   {
     name: 'Value Percent Change',
     description:
       'Identify items with the largest value changes - perfect for investment opportunities!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.valuePercentChange
   },
   ...itemTypes.map((itemType) => ({
     name: `${itemType.name} Items`,
     description: `Browse The most valuable ${itemType.name.toLowerCase()} items in the market.`,
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: `/gw2/marketshare?type=${itemType.value}&sort_by=value`
   }))
 ]
@@ -95,6 +105,14 @@ export default function Index() {
     <>
       <main className="flex-1">
         <Banner />
+        <div className="py-3">
+          <VideoGuide
+            title="Video Guide: GW2 Marketshare Recommendations"
+            description="Learn how to use our curated marketshare queries to discover the best GW2 market opportunities and optimize your trading strategy!"
+            videoId="lCwfMaM_Z2Q"
+            videoTitle="GW2 Marketshare Recommendations Guide"
+          />
+        </div>
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">

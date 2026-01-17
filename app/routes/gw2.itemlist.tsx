@@ -4,8 +4,8 @@ import { gw2ItemsMap } from '~/utils/items/gw2Items'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { viewport: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: Marketable Items GW2' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content: 'A list of all marketable items on Saddlebag Exchange for GW2'

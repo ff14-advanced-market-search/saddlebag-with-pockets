@@ -1,4 +1,4 @@
-import type { MetaFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
@@ -16,8 +16,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if ('exception' in data) {
     return [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { title: 'Error' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { name: 'description', content: `Error: ${data.exception}` }
     ]
   } else {
@@ -25,7 +25,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { title: data.data.itemName },
-      { name: 'description', content: `Guild Wars 2 trading post data for ${data.data.itemName}` },
+      {
+        name: 'description',
+        content: `Guild Wars 2 trading post data for ${data.data.itemName}`
+      },
       {
         tagName: 'link',
         rel: 'canonical',

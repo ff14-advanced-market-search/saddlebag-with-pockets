@@ -1,4 +1,4 @@
-import type { MetaFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import Banner from '~/components/Common/Banner'
@@ -14,7 +14,7 @@ import GetHistory from '~/requests/FFXIV/GetHistory'
 import type { ListingResponseType } from '~/requests/FFXIV/GetListing'
 import GetListing from '~/requests/FFXIV/GetListing'
 import GetBlog from '~/requests/FFXIV/GetBlog'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import { getItemNameById } from '~/utils/items'
 import HistoryResults from '~/components/FFXIVResults/item-history/Results'
 import NoResults from '~/components/Common/NoResults'
@@ -37,8 +37,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: itemName },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: `${itemName}: FFXIV Market Data` },
     {
       tagName: 'link',

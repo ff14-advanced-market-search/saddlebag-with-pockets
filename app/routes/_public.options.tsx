@@ -46,15 +46,16 @@ import { getWindowUrlParams } from '~/utils/urlHelpers'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: Options Menu' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Set your FFXIV datacenter and server / Set your wow realm and region'
     },
     {
-      customHeading:
+      name: 'customHeading',
+      content:
         'Personalize Your FFXIV and WoW Experience with Saddlebag Exchange'
     },
     {

@@ -22,7 +22,7 @@ import { Results } from '~/components/WoWResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { setWoWScan } from '~/redux/reducers/wowSlice'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import Banner from '~/components/Common/Banner'
@@ -33,10 +33,18 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Server Transfer Trade Search' },
-    { name: 'description', content: 'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/full-scan' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find wow local realm auctionhouse items that can be moved from one sever to another for a profit'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/full-scan'
+    }
   ]
 }
 

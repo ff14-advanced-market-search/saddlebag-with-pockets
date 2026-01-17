@@ -1,15 +1,25 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
+import VideoGuide from '~/components/Common/VideoGuide'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Ultra Rare Item Search Recommendations' },
-    { name: 'description', content: 'Recommended searches for ultra rare items in World of Warcraft. Find weapons, armor, quest items, and recipes with the best profit potential.' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ultrarare/recommended' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Recommended searches for ultra rare items in World of Warcraft. Find weapons, armor, quest items, and recipes with the best profit potential.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/ultrarare/recommended'
+    }
   ]
 }
 
@@ -33,48 +43,48 @@ const recommendedQueries = [
     name: 'Weapons',
     description:
       'Search for ultra rare transmog weapons across all weapon types. Double check wowhead for other items with similar models.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.weapons
   },
   {
     name: 'Armor',
     description:
       'Discover ultra rare transmog armor pieces. Double check wowhead for other items with similar models.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.armor
   },
   {
     name: 'Mounts',
     description: 'Discover ultra rare mounts. All these are great!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.mounts
   },
   {
     name: 'Quest Items',
     description:
       'Search for rare quest items that are hard to find. Often desired by Achievement Hunters and Collectors! Double check wowhead to make sure the quest line still exists in game and if its used for achievements.  Junk quality are often deprecated and not worth anything.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.questItem
   },
   {
     name: 'Recipes (Common Quality and better)',
     description:
       'Find ultra rare recipes with Common quality and better. Often desired by Achievement Hunters and Collectors! Double check all these on wowhead to confirm they were not turned into trainers recipes. Junk quality are often deprecated and not worth anything.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.recipe
   },
   {
     name: 'Consumables',
     description:
       'Search for ultra rare consumable items. Note: Most consumables might be worthless and not used for achievements. Double check wowhead to verify if items are still obtainable and useful.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.consumable
   },
   {
     name: 'Miscellaneous',
     description:
       'Search for other rare miscellaneous items. Note: Double check pet items carefully - the item that makes a pet might be rare but the caged pet may not be. Verify with the shopping list or Undermine Exchange before investing.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.miscellaneous
   }
 ]
@@ -84,6 +94,14 @@ export default function Index() {
     <>
       <main className="flex-1">
         <Banner />
+        <div className="py-3">
+          <VideoGuide
+            title="Video Guide: WoW Ultra Rare Item Search Recommendations"
+            description="Learn how to use our curated searches to find the most valuable ultra rare items in World of Warcraft!"
+            videoId="oJsOR2Eyzvc"
+            videoTitle="WoW Ultra Rare Item Search Recommendations Guide"
+          />
+        </div>
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-blue-900 dark:text-gray-100">

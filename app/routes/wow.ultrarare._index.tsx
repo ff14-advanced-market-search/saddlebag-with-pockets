@@ -9,7 +9,7 @@ import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { UltrarareItem, UltrarareResponse } from '~/requests/WoW/Ultrarare'
 import UltrarareSearch from '~/requests/WoW/Ultrarare'
-import { getUserSessionData, getSession, EARLY_ACCESS_TOKEN } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { getHasElite } from '~/utils/premium'
@@ -108,17 +108,21 @@ const validateInput = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Ultra Rare Item Search' },
-    { name: 'description', content: 'Search for ultra rare items across World of Warcraft servers' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/ultrarare' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'Search for ultra rare items across World of Warcraft servers'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/ultrarare'
+    }
   ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  const earlyAccessToken = session.get(EARLY_ACCESS_TOKEN) || ''
-
   const params = new URL(request.url).searchParams
 
   const values = {
@@ -158,31 +162,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
   const validParams = validateInput.safeParse(values)
 
-  const formData = validParams.success
-    ? { ...validParams.data, earlyAccessToken }
-    : { ...defaultFormValues, earlyAccessToken }
+  const formData = validParams.success ? validParams.data : defaultFormValues
 
   return combineWithDiscordSession(request, formData)
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  const earlyAccessToken = session.get(EARLY_ACCESS_TOKEN) || ''
-  const discordRoles = session.get('discord_roles') || []
-  const hasElite = getHasElite(discordRoles)
-
-  // Return error if no elite role
-  if (!hasElite) {
-    return json({
-      exception: 'Elite Discord role is required to access this feature'
-    })
-  }
-
-  // Return error if no token
-  if (!earlyAccessToken) {
-    return json({ exception: 'Early access token is required' })
-  }
-
   const { getWoWSessionData } = await getUserSessionData(request)
   const region = getWoWSessionData().region
 
@@ -219,8 +204,7 @@ export const action: ActionFunction = async ({ request }) => {
     region,
     ...validatedFormData.data,
     item_class: finalItemClass,
-    item_subclass: finalItemSubclass,
-    earlyAccessToken
+    item_subclass: finalItemSubclass
   })
 
   const responseData = await result.json()
@@ -245,7 +229,6 @@ type ActionResponseType =
 const UltrararePage = () => {
   const loaderData = useLoaderData<
     typeof defaultFormValues & {
-      earlyAccessToken: string
       isLoggedIn: boolean
       hasPremium: boolean
       hasElite: boolean

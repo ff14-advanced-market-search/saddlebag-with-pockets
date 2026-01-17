@@ -1,7 +1,7 @@
 import { useLoaderData } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { MetaFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { getSession } from '~/sessions'
 import { validateWorldAndDataCenter } from '~/utils/locations'
@@ -18,15 +18,16 @@ import Banner from '~/components/Common/Banner'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Price Sniper' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Generate data for Sadddlebag Exchange discord bot ffxiv price sniper alerts'
     },
     {
-      customHeading:
+      name: 'customHeading',
+      content:
         'Stay Ahead with FFXIV Price Sniper Alerts from Saddlebag Exchange'
     },
     {

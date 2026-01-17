@@ -15,6 +15,10 @@ export const meta: MetaFunction = () => {
         'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auction House, FFXIV Market Board, GW2 Trading Post and more!'
     },
     {
+      name: 'customHeading',
+      content: 'Explore MMO Market Data with SaddleBag Exchange'
+    },
+    {
       tagName: 'link',
       rel: 'canonical',
       href: 'https://saddlebagexchange.com'

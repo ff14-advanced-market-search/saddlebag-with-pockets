@@ -1,3 +1,4 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -6,10 +7,18 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Marketshare Recommendations' },
-    { name: 'description', content: 'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview. Master crafting, gathering, and flipping items for profit.' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/marketshare/recommended' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Maximizing Gold in WoW with Saddlebag Exchanges Market Overview. Master crafting, gathering, and flipping items for profit.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/marketshare/recommended'
+    }
   ]
 }
 
@@ -77,253 +86,253 @@ const recommendedQueries = [
     name: 'TWW Single Realm',
     description:
       'See what "The War Within" items make the most gold on your realm.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.defaultTWWSingle
   },
   {
     name: 'TWW Commodity Realm',
     description:
       'See what "The War Within" items make the most gold on your region wide commodity market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.defaultTWWCommodity
   },
   {
     name: '1 MILLION SOLD A DAY!!!',
     description: 'See what items sell over 1 million a day on your region.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.ultraFast
   },
   {
     name: 'Legacy Marketshare',
     description:
       'Find out what Legacy items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.legacy
   },
   {
     name: 'High Value Sales Single Realm',
     description: 'Find items that have a high sales price on your realm.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.valueSalesSingleRealm
   },
   {
     name: 'High Value Commodities',
     description:
       'Identify commodities that have a high sales price on the region-wide market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.valueCommodities
   },
   {
     name: 'Fast Sales Single Realm',
     description: 'Find items that have a high sales rate on your realm.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.fastSalesSingleRealm
   },
   {
     name: 'Fast Commodities',
     description:
       'Identify commodities that sell quickly on the region-wide market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.fastCommodities
   },
   {
     name: 'Default Single Realm',
     description: 'See what items make the most gold on your realm.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.defaultSingleRealm
   },
   {
     name: 'Default Commodity Realm',
     description:
       'See what items make the most gold on your region wide commodity market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.defaultCommodity
   },
   {
     name: 'Housing Decor',
     description: 'Explore housing decor items that are in demand.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.housingDecor
   },
   {
     name: 'Housing Dye Pigments',
     description: 'Find housing dye pigments on the commodity market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.housingDye
   },
   {
     name: 'Toys',
     description: 'Discover toys that can be sold for profit.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.toys
   },
   {
     name: 'Recipes',
     description: 'Look up recipes that have high market value.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.recipes
   },
   {
     name: 'Miscellaneous',
     description: 'Explore various miscellaneous items for sale.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.misc
   },
   {
     name: 'Miscellaneous Commodities',
     description: 'Check out miscellaneous commodities that sell well.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.miscCommodities
   },
   {
     name: 'Weapons',
     description: 'Find profitable weapons on the market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.weapons
   },
   {
     name: 'Armor',
     description: 'Explore armor pieces that are in demand.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.armor
   },
   {
     name: 'Cloth Armor',
     description: 'Discover cloth armor that can be sold.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.cloth
   },
   {
     name: 'Leather Armor',
     description: 'Check out leather armor for sale.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.leather
   },
   {
     name: 'Mail Armor',
     description: 'Check out mail armor for sale.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.mail
   },
   {
     name: 'Plate Armor',
     description: 'Identify valuable plate armor items.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.plate
   },
   {
     name: 'Miscellaneous Armor',
     description:
       'Miscellaneous: Trinkets, Rings, Necks, Spellstones, Firestones, etc.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.armorMiscellaneous
   },
   {
     name: 'Bags',
     description: 'Look up bags that are in high demand.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bags
   },
   {
     name: 'Item Enhancements',
     description: 'Identify item enhancements that sell well.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.itemEnhancement
   },
   {
     name: 'Gems',
     description: 'Explore gems that are profitable.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.gems
   },
   {
     name: 'Consumables',
     description: 'Find consumable items that have high sales rates.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.consumable
   },
   {
     name: 'Trade Goods',
     description: 'Look up various trade goods on the market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.tradegoods
   },
   {
     name: 'Parts Trade Goods',
     description: 'Explore parts trade goods.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.partsTradegoods
   },
   {
     name: 'Jewelcrafting Trade Goods',
     description: 'Find jewelcrafting materials on the market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.jcTradegoods
   },
   {
     name: 'Cloth Trade Goods',
     description: 'Look up cloth materials that are in demand.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.clothTradegoods
   },
   {
     name: 'Leather Trade Goods',
     description: 'Check out leather materials for sale.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.leatherTradegoods
   },
   {
     name: 'Metal & Stone Trade Goods',
     description: 'Identify valuable metal and stone materials.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.metalStoneTradegoods
   },
   {
     name: 'Cooking Trade Goods',
     description: 'Discover cooking materials that sell well.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.cookingTradegoods
   },
   {
     name: 'Herb Trade Goods',
     description: 'Find herbs on the market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.herbTradegoods
   },
   {
     name: 'Elemental Trade Goods',
     description: 'Explore elemental materials that are profitable.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.elementalTradegoods
   },
   {
     name: 'Other Trade Goods',
     description: 'Look up other various trade goods.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.otherTradegoods
   },
   {
     name: 'Enchanting Trade Goods',
     description: 'Find enchanting materials on the market.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.enchantingTradegoods
   },
   {
     name: 'Inscription Trade Goods',
     description: 'Discover inscription materials that sell well.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.inscriptionTradegoods
   },
   {
     name: 'Optional Reagents Trade Goods',
     description: 'Identify optional reagents for sale.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.optionalReagentsTradegoods
   },
   {
     name: 'Finishing Reagents Trade Goods',
     description: 'Explore finishing reagents that are in demand.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.finishingReagentsTradegoods
   }
 ]

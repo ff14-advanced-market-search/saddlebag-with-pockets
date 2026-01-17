@@ -32,10 +32,18 @@ import { useState } from 'react'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Marketshare Gil Making Overview' },
-    { name: 'description', content: 'Find what items make the most gil in FFXIV, sell the most in FFXIV, sell the fastest in in FFXIV and have the best market gaps!' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/marketshare' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find what items make the most gil in FFXIV, sell the most in FFXIV, sell the fastest in in FFXIV and have the best market gaps!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/marketshare'
+    }
   ]
 }
 

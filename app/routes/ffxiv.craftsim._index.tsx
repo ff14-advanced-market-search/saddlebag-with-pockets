@@ -17,7 +17,7 @@ import VideoGuide from '~/components/Common/VideoGuide'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CheckBox from '~/components/form/CheckBox'
-import { ClipboardDocumentIcon as ClipboardIcon } from '@heroicons/react/24/outline'
+import { ClipboardIcon } from '@heroicons/react/outline'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
@@ -83,10 +83,18 @@ const CopyButton = ({ text }: { text: string }) => {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV crafting profit simulation' },
-    { name: 'description', content: 'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/craftsim' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find the most profitable items to craft region wide and sell on the ffxiv marketboard!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/craftsim'
+    }
   ]
 }
 

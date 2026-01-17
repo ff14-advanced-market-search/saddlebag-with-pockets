@@ -77,10 +77,18 @@ const validateInput = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Export Search' },
-    { name: 'description', content: 'Find the best realm to sell any item on! Wow realm population data.' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/export-search' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find the best realm to sell any item on! Wow realm population data.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/export-search'
+    }
   ]
 }
 

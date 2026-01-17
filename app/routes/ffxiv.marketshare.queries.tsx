@@ -1,3 +1,4 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -6,10 +7,18 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Market Overview Recommendations' },
-    { name: 'description', content: 'Discover the best FFXIV market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, best raw materials, furniture, collectibles, and more. Optimize your market strategy with data-driven insights for maximum profit.' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Discover the best FFXIV market opportunities with our curated collection of recommended marketshare queries. Find high-value items, fastest-selling goods, best raw materials, furniture, collectibles, and more. Optimize your market strategy with data-driven insights for maximum profit.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/marketshare/queries'
+    }
   ]
 }
 
@@ -46,87 +55,87 @@ const recommendedQueries = [
     name: 'Total Market View (Weekly)',
     description:
       'See an general overview of your servers market by revenue earned.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.marketView
   },
   {
     name: 'Highest Price Increases (Weekly)',
     description:
       'Find the best selling items that are out of stock or have had massive price increases!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.percentChange
   },
   {
     name: 'Eaving Tidemoores Best Raw Materials to Gather.',
     description:
       'See the best earning and fastest selling raw materials to gather. Made by Eaving Tidemoore.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestGathering
   },
   {
     name: 'Mega Value Marketshare (Weekly)',
     description:
       'Find the ultra high value items with the most revenue based on the last 7 days sales.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.megaValue
   },
   {
     name: 'Best Selling Items (Last Hour)',
     description: 'See the items with the top revenue from the last hour.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.lastHour
   },
   {
     name: 'Fastest Selling Items (Daily)',
     description: 'See the fastest selling items from the last 24 hours.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.mostPurchases
   },
   {
     name: 'Most Quantity Purchased (Daily).',
     description:
       'See the items that sell in bulk with the most quantity sold in the last 24 hours.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.mostQuantity
   },
   {
     name: 'Best Selling Furniture (Weekly).',
     description: 'See the best selling furniture items from the last week.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestFurniture
   },
   {
     name: 'Best Selling Collectible Items (Weekly).',
     description: 'See the best selling collectible items from the last week.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestCollectible
   },
   {
     name: 'Best Selling Consumable Items (Weekly).',
     description:
       'See the best selling food, seafood, tincture items from the last week.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestCollectible
   },
   {
     name: 'Best Selling Vendor Items (Weekly).',
     description:
       'See the best selling items you can buy from vendors from the last week.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestVendorItems
   },
   {
     name: 'Best Selling Gear, Weapons, Armor and Glamors (Weekly).',
     description:
       'See the best selling gear, weapons, armor and glamors from the last week. Excluding crafted raid gear.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestGear
   },
   {
     name: 'Best Raw Materials to Sell.',
     description:
       'See the best earning and fastest selling raw materials to sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.bestRawMats
   }
 ]

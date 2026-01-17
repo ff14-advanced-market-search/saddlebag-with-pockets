@@ -5,14 +5,12 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import FullScanRequest, { formatFullScanInput } from '~/requests/FFXIV/FullScan'
-import { useEffect, useRef, lazy, Suspense } from 'react'
+import { useEffect, useRef } from 'react'
 import NoResults from '~/components/Common/NoResults'
+import Results from '~/components/FFXIVResults/FullScan/Results'
 import { useDispatch } from 'react-redux'
-
-// Lazy load Results since it has browser-only dependencies (react-dnd-scrolling, etc.)
-const Results = lazy(() => import('~/components/FFXIVResults/FullScan/Results.client'))
 import { setFullScan } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { PreviousResultsLink } from '../components/FFXIVResults/FullScan/PreviousResultsLink'
@@ -59,8 +57,8 @@ const inputMap = {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Reselling Trade Search' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
@@ -218,9 +216,7 @@ const Index = () => {
           )}
           {displayResultsTable && (
             <div className="w-full">
-              <Suspense fallback={<div className="p-4">Loading results...</div>}>
-                <Results rows={results.data} />
-              </Suspense>
+              <Results rows={results.data} />
             </div>
           )}
         </div>

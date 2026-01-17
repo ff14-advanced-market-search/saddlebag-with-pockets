@@ -1,69 +1,42 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import type { MetaFunction } from '@remix-run/cloudflare'
-import {
-  ChartBarIcon,
-  ExclamationCircleIcon,
-  MagnifyingGlassIcon,
-  PencilIcon
-} from '@heroicons/react/24/outline'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       title:
         'Saddlebag Exchange: WoW World of Warcraft Auction House Prices and Gold making tools!'
     },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Tools and Addons to make gold on the World of Warcraft Auction House Auctionhouse'
     },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow' }
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow'
+    }
   ]
 }
 
-type IconType = 'magnify' | 'pencil' | 'exclamation' | 'chart'
-
-type RecommendedQuery = {
-  name: string
-  description: string
-  iconType?: IconType
-  href: string
-  external?: boolean
-}
-
-const renderIcon = (iconType?: IconType) => {
-  switch (iconType) {
-    case 'pencil':
-      return <PencilIcon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-    case 'exclamation':
-      return (
-        <ExclamationCircleIcon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-      )
-    case 'chart':
-      return <ChartBarIcon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-    case 'magnify':
-    default:
-      return <MagnifyingGlassIcon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-  }
-}
-
-const recommendedQueries: RecommendedQuery[] = [
+const recommendedQueries = [
   {
     name: 'Best Deals',
     description:
       'Find the best deals on your server and region wide with our Best Deals search!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/best-deals/recommended'
   },
   {
     name: 'Ultra Fast Azeroth Auction Assassin Sniper',
     description:
       'Try our standalone Azeroth Auction Assassin Sniper, designed to snipe across all realms for the best deals seconds after the Blizzard AH API updates so you get there first!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
     external: true
   },
@@ -71,81 +44,81 @@ const recommendedQueries: RecommendedQuery[] = [
     name: 'Weekly Price Group Delta',
     description:
       'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/weekly-price-group-delta-recommended'
   },
   {
     name: 'Upload Timers',
     description:
       'View the time each hour when the Blizzard API AH data updates. This shows which minute the Mega-Alerts will trigger on.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/upload-timers'
   },
   {
     name: 'Shopping List',
     description: 'Search for the realms with the lowest price for an item.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/shopping-list'
   },
   {
     name: 'Item Export Search',
     description:
       'Finds the best servers to sell your items on! This shows you where to sell the items you buy with Best Deals or Mega-Alerts.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/export-search'
   },
   {
     name: 'Raid BOE Item Level Shopping List',
     description: 'Search for deals on raid BOE items with specific stats.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/ilvl-shopping-list'
   },
   {
     name: 'Raid BOE Item Level Export Search',
     description:
       'Find the best servers to sell raid BOE items with specific stats and item levels.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/ilvl-export-search'
   },
   {
     name: 'Ultra Rare',
     description:
       'Find rarest items in the game, guaranteed to have no competition on multiple realms!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/ultrarare/recommended'
   },
   {
     name: 'Current Content Marketshare Overview',
     description:
       'Find out what items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/marketshare/recommended'
   },
   {
     name: 'Legacy Marketshare Overview',
     description:
       'Find out what Legacy items are actually selling and what are the best items to sell. Shows the top 200 items matching your search.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/legacy-marketshare'
   },
   {
     name: 'Pet Marketshare Overview',
     description:
       'Find out what pets are actually selling and what are the best pets to sell.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/pet-marketshare'
   },
   {
     name: 'Region Wide Undercut Checker',
     description:
       'Use our Addon with this search to check all of your undercuts on all your alts on one page!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/region-undercut'
   },
   {
     name: 'Undercut Alerts Curseforge Addon',
     description: 'The addon for our Undercut Checks and Alerts!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
     external: true
   },
@@ -153,54 +126,54 @@ const recommendedQueries: RecommendedQuery[] = [
     name: 'Server Transfer Trading Search',
     description:
       'Search for items that can be bought cheaply on a your home server and sold for a profit when transfering realms.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/full-scan'
   },
   {
     name: 'Commodity Shortage Futures',
     description:
       'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/shortage-predictor'
   },
   {
     name: 'Out of Stock',
     description: 'Find items that are out of stock on any realm!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/out-of-stock'
   },
   {
     name: 'Big Goblin Tracker',
     description:
       'Find items controlled by big goblins who are oligopolists, these skyrocket in price whenever the big goblin takes a WoW break or lets their auctions expire.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/quantity-manipulation'
   },
   {
     name: 'Local Realm Shortage Finder',
     description:
       'Searches for items on your local server / realm that you can flip and take over the market!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/shortages/single'
   },
   {
     name: 'Commodity Shortage Finder',
     description:
       'Searches for region wide commodities that you can flip and take over the market!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/shortages/commodities'
   },
   {
     name: 'Price Sniper and Price Spike Alerts',
     description:
       'Alerts you when prices for items go above or below a price you pick! For one server and region wide commodities.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: '/wow/price-alert'
   },
   {
     name: 'Zygor Guides',
     description: 'Addons and Guides for WoW',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: 'https://zygorguides.com/ref/indopan/',
     external: true
   }
@@ -271,7 +244,7 @@ export default function Index() {
                   className="block">
                   <div className="h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/50">
                     <div className="flex items-center mb-4">
-                      {renderIcon(query.iconType)}
+                      <query.Icon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                       <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">
                         {query.name}
                       </h3>

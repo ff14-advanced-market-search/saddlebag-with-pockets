@@ -1,4 +1,5 @@
 import type { MetaFunction } from '@remix-run/cloudflare'
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 
@@ -6,8 +7,8 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Best Deals Recommendations' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: 'FFXIV Amazing Market Board Deals' },
     {
       tagName: 'link',
@@ -49,74 +50,74 @@ const recommendedQueries = [
     name: 'HQ Ultra Cheap Deals (Beginner Friendly)',
     description:
       'Find HQ items with massive discounts (95%+) for quick profits.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.ultraCheapDealsHQ
   },
   {
     name: 'NQ Ultra Cheap Deals (Beginner Friendly)',
     description:
       'Find NQ items with massive discounts (99%+) for quick profits.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.ultraCheapDealsNQ
   },
   {
     name: 'HQ Fast Selling Items',
     description: 'HQ Items that sell quickly with good profit margins.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.fastSellingItemsHQ
   },
   {
     name: 'NQ Fast Selling Items',
     description: 'NQ Items that sell quickly with good profit margins.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.fastSellingItemsNQ
   },
   {
     name: 'Furnishing Items',
     description: 'All housing-related items at a discount.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.housing
   },
   {
     name: 'Consumable Collectables: Mounts, Minions, etc',
     description: 'Find deals on Mounts, Minions, etc.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.collectables
   },
   {
     name: 'Food & Potions',
     description: 'Find deals on consumables like food and potions.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.foodAndPotions
   },
   {
     name: 'Combat Gear & Weapons',
     description: 'Find deals on combat gear and weapons.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.gearAndWeapons
   },
   {
     name: 'NQ Crafting Materials',
     description: 'NQ Raw materials and crafting components at a discount.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.materialsNQ
   },
   {
     name: 'HQ Crafting Materials',
     description: 'HQ Raw materials and crafting components at a discount.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.materialsHQ
   },
   {
     name: 'Mega Value NQ',
     description: 'Find NQ items with a mega value at a discount.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.megaValueNQ
   },
   {
     name: 'Mega Value HQ',
     description: 'Find HQ items with a mega value at a discount.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.megaValueHQ
   }
 ]

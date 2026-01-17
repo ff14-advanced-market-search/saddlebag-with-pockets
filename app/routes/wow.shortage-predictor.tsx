@@ -122,9 +122,18 @@ type ActionResponse = PredictionResponse | { exception: string } | {}
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Commodity Shortage Predictions' },
-    { name: 'description', content: 'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: `https://saddlebagexchange.com/wow/shortage-predictor`
+    }
   ]
 }
 

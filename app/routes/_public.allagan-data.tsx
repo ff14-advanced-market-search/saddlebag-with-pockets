@@ -16,7 +16,7 @@ import type { ColumnList } from '~/components/types'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 
@@ -26,14 +26,17 @@ const formName = 'allaganData'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Allagan Tools Data Import' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Input your Allagan Tools generated data here, and we will turn it into useful stuff!'
     },
-    { customHeading: 'Welcome to the FFXIV Allagan Tools Data Import Page' },
+    {
+      name: 'customHeading',
+      content: 'Welcome to the FFXIV Allagan Tools Data Import Page'
+    },
     {
       tagName: 'link',
       rel: 'canonical',

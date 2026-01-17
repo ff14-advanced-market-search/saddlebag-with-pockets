@@ -1,13 +1,20 @@
-import { MetaFunction } from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { ffxivItemsMap } from '~/utils/items/ffxivItems'
 
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: Marketable Items FFXIV' },
-    { name: 'description', content: 'A list of all marketable items on Saddlebag Exchange for FFXIV' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/itemlist' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'A list of all marketable items on Saddlebag Exchange for FFXIV'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/itemlist'
+    }
   ]
 }
 

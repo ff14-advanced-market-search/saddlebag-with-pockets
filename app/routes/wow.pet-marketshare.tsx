@@ -15,18 +15,25 @@ import PetMarketshareResults from '~/components/WoWResults/PetMarketshareResults
 import PetMarketShareForm from '~/components/form/WoW/PetMarketshareForm'
 import NoResults from '~/components/Common/NoResults'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import PetMarketshare, {
-  PetMarketshareSortBy
-} from '~/requests/WoW/PetMarketshare'
+import type { PetMarketshareSortBy } from '~/requests/WoW/PetMarketshare'
+import PetMarketshare from '~/requests/WoW/PetMarketshare'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Battle Pets Most Gold' },
-    { name: 'description', content: 'Find what battle pets make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/pet-marketshare' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find what battle pets make the most gold in WoW, sell the most in WoW, sell the fastest in in WoW and have the best market gaps!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/pet-marketshare'
+    }
   ]
 }
 

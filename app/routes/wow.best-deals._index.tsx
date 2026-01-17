@@ -9,7 +9,7 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { DealItem, WoWDealResponse } from '~/requests/WoW/BestDeals'
 import WoWBestDeals from '~/requests/WoW/BestDeals'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import z from 'zod'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -72,10 +72,18 @@ const validateInput = z.object({
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Auctionhouse Best Deals' },
-    { name: 'description', content: 'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/best-deals' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find the best deals on every auctionhouse region wide with our WoW Best Deals search!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/best-deals'
+    }
   ]
 }
 

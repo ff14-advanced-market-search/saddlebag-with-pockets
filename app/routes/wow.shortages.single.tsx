@@ -24,7 +24,7 @@ import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoW/WoWSingleItemShortage'
 import WoWSingleItemShortage from '~/requests/WoW/WoWSingleItemShortage'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
@@ -72,10 +72,18 @@ export const action: ActionFunction = async ({ request }) => {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Realm Shortages' },
-    { name: 'description', content: 'Find wow local realm auctionhouse items that can be flipped for a profit' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/shortages/single' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Find wow local realm auctionhouse items that can be flipped for a profit'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/shortages/single'
+    }
   ]
 }
 

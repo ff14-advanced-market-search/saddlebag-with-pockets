@@ -14,7 +14,7 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import ItemServerComparison from '~/requests/FFXIV/ItemServerComparison'
 import type { ItemServerComparisonList } from '~/requests/FFXIV/ItemServerComparison'
-import { getUserSessionData, getSession } from '~/sessions.server'
+import { getUserSessionData, getSession } from '~/sessions'
 import { z } from 'zod'
 import CheckBox from '~/components/form/CheckBox'
 import { useState } from 'react'
@@ -26,7 +26,7 @@ import {
   ChevronUpIcon,
   TrashIcon,
   ChevronDownIcon
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/outline'
 import { WorldList } from '~/utils/locations/Worlds'
 import TitleTooltip from '~/components/Common/TitleTooltip'
 import {
@@ -48,8 +48,8 @@ const pathHash: Record<string, string> = {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Export Search World Comparison' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:

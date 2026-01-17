@@ -29,10 +29,18 @@ const formName = 'region-undercut'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: Region Wide Undercut Search' },
-    { name: 'description', content: 'Look up your wow undercuts across all realms at once using our Undercut Tracker Addon!' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/region-undercut' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Look up your wow undercuts across all realms at once using our Undercut Tracker Addon!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/region-undercut'
+    }
   ]
 }
 

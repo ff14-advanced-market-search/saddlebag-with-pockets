@@ -37,10 +37,18 @@ export type ActionData = ErrorActionData | SuccessActionData
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Weekly Price Group Delta Analysis' },
-    { name: 'description', content: 'FFXIV Price Group Analysis! View weekly price changes for investment opportunities!' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv/weekly-price-group-delta' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'FFXIV Price Group Analysis! View weekly price changes for investment opportunities!'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv/weekly-price-group-delta'
+    }
   ]
 }
 

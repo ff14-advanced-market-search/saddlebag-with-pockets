@@ -1,9 +1,9 @@
 import {
-  ChartBarIcon,
-  ExclamationCircleIcon,
-  MagnifyingGlassIcon,
-  PencilIcon
-} from '@heroicons/react/24/outline'
+  DocumentSearchIcon,
+  ChartSquareBarIcon,
+  PencilAltIcon
+} from '@heroicons/react/outline'
+import { ExclamationCircleIcon } from '@heroicons/react/solid'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
@@ -11,98 +11,79 @@ import Banner from '~/components/Common/Banner'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV Market Board Tools' },
-    { name: 'description', content: 'Saddlebag Exchange: FFXIV MarketBoard Tools' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/ffxiv' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'Saddlebag Exchange: FFXIV MarketBoard Tools'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/ffxiv'
+    }
   ]
 }
 
-type IconType = 'magnify' | 'pencil' | 'exclamation' | 'chart'
-
-type FFXIVPage = {
-  name: string
-  description: string
-  iconType?: IconType
-  href: string
-  external?: boolean
-}
-
-const renderIcon = (iconType?: IconType) => {
-  switch (iconType) {
-    case 'pencil':
-      return <PencilIcon className="h-6 w-6 text-purple-500 dark:text-purple-400" />
-    case 'exclamation':
-      return (
-        <ExclamationCircleIcon className="h-6 w-6 text-purple-500 dark:text-purple-400" />
-      )
-    case 'chart':
-      return <ChartBarIcon className="h-6 w-6 text-purple-500 dark:text-purple-400" />
-    case 'magnify':
-    default:
-      return <MagnifyingGlassIcon className="h-6 w-6 text-purple-500 dark:text-purple-400" />
-  }
-}
-
-const ffxivPages: FFXIVPage[] = [
+const ffxivPages = [
   {
     name: 'Reselling Trade Searches',
     description:
       'Find items you can buy on other servers and resell on your own for a profit!',
-    iconType: 'chart',
+    Icon: ChartSquareBarIcon,
     href: '/queries/recommended'
   },
   {
     name: 'Best Deals',
     href: '/ffxiv/best-deals/recommended',
     description: 'Find the best deals on items across all categories!',
-    iconType: 'exclamation'
+    Icon: ExclamationCircleIcon
   },
   {
     name: 'Marketshare Overview',
     href: '/ffxiv/marketshare/queries',
     description:
       'Finds the best items to sell! Shows the top 200 best selling items on your home server.',
-    iconType: 'chart'
+    Icon: ChartSquareBarIcon
   },
   {
     name: 'Craftsim Search',
     href: '/ffxiv/craftsim/queries',
     description: 'Finds the best items to craft!',
-    iconType: 'chart'
+    Icon: ChartSquareBarIcon
   },
   {
     name: 'Shopping List Search',
     href: '/ffxiv/shopping-list',
     description:
       'Helps make a shopping list, telling you where to find crafting materials for the best prices!',
-    iconType: 'pencil'
+    Icon: PencilAltIcon
   },
   {
     name: 'Weekly Price Group Delta',
     href: '/ffxiv/weekly-price-group-delta',
     description: 'View weekly price changes for investment opportunities!',
-    iconType: 'chart'
+    Icon: ChartSquareBarIcon
   },
   {
     name: 'Discord Undercut and Sale Alerts Generator',
     description:
       'Undercut Alerts will notify you via discord direct message when you are undercut. Sale Alerts will notify you via discord direct message when you have a sale.',
-    iconType: 'pencil',
+    Icon: PencilAltIcon,
     href: '/undercut'
   },
   {
     name: 'Undercut Alerts Guide',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
     description: 'A guide on how to setup and use Undercut Alerts.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     external: true
   },
   {
     name: 'Discord Price Discount Sniper and Price Spike Alert Generator',
     description:
       'Price Discount Sniper and Price Spike Alerts will notify you via discord direct message when items go above or below prices you set.',
-    iconType: 'pencil',
+    Icon: PencilAltIcon,
     href: '/price-sniper'
   },
   {
@@ -110,7 +91,7 @@ const ffxivPages: FFXIVPage[] = [
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Price-Sniper-and-Item-Price-Alerts',
     description:
       'A guide on how to setup and use Price Discount Sniper and Price Spike Alerts.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     external: true
   },
   {
@@ -118,48 +99,48 @@ const ffxivPages: FFXIVPage[] = [
     href: '/allagan-data',
     description:
       'Use data from the Allagan Tools Plugin to create sale alerts and find valuable items in your bags you may have forgotten about.',
-    iconType: 'chart'
+    Icon: ChartSquareBarIcon
   },
   {
     name: 'Orange and Purple Scrip to Gil',
     href: '/ffxiv/scrip-exchange',
     description:
       'Get the most Gil per Scrip! Find the best Orange or Purple Scrip to Gil conversion.',
-    iconType: 'chart'
+    Icon: ChartSquareBarIcon
   },
   {
     name: 'Extended Sale History',
     description:
       'See extended sale history of last 1800 sales on any FFXIV item.',
-    iconType: 'chart',
+    Icon: ChartSquareBarIcon,
     href: '/ffxiv/extended-history'
   },
   {
     name: 'Item History Statistics and Graphs',
     description:
       'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
-    iconType: 'chart',
+    Icon: ChartSquareBarIcon,
     href: '/queries/item-history'
   },
   {
     name: 'Listings Comparison and Competition Metric',
     description:
       'Shows you how tough the undercutting competition is on specific items.',
-    iconType: 'chart',
+    Icon: ChartSquareBarIcon,
     href: '/queries/listings'
   },
   {
     name: 'Export Trading Search',
     description:
       'Compare prices on items between servers to find the best server to sell your items on.',
-    iconType: 'chart',
+    Icon: ChartSquareBarIcon,
     href: '/queries/world-comparison'
   },
   {
     name: 'Self Purchase Records',
     description:
       'See a record of your recent past purchases from our stored data. Note we only store the last 40 sales of any single item, some purchases may not appear.',
-    iconType: 'chart',
+    Icon: ChartSquareBarIcon,
     href: '/ffxiv/self-purchase'
   },
   {
@@ -167,7 +148,7 @@ const ffxivPages: FFXIVPage[] = [
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
     description:
       'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     external: true
   }
 ]
@@ -232,7 +213,7 @@ export default function Index() {
                   className="block">
                   <div className="h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-purple-50 dark:hover:bg-purple-900/50">
                     <div className="flex items-center mb-4">
-                      {renderIcon(query.iconType)}
+                      <query.Icon className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                       <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">
                         {query.name}
                       </h3>

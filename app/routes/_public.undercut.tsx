@@ -1,7 +1,7 @@
 import { useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import type { MetaFunction } from '@remix-run/cloudflare'
+import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useState } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -11,20 +11,20 @@ import { getUserSessionData } from '~/sessions'
 import Banner from '~/components/Common/Banner'
 import { RadioButtons } from '~/components/Common/RadioButtons'
 import ItemSelect from '~/components/form/select/ItemSelect'
-import { TrashIcon } from '@heroicons/react/24/outline'
+import { TrashIcon } from '@heroicons/react/outline'
 import Modal from '~/components/form/Modal'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 
 export const meta: MetaFunction = () => {
   return [
+    { charset: 'utf-8' },
     { title: 'Saddlebag Exchange: FFXIV Discord Undercut and Sale Alerts' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
         'Generate data for Saddlebag Exchange discord bot ffxiv undercut and sale alerts.'
     },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-    { charset: 'utf-8' },
     {
       tagName: 'link',
       rel: 'canonical',

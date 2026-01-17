@@ -1,3 +1,4 @@
+import { DocumentSearchIcon } from '@heroicons/react/outline'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
@@ -6,10 +7,17 @@ import TileLink from '~/components/Common/TileLink'
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Best Deals Recommendations' },
-    { name: 'description', content: 'Saddlebag Exchange: WoW Amazing Auction House Deals' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/best-deals/recommended' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content: 'Saddlebag Exchange: WoW Amazing Auction House Deals'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/best-deals/recommended'
+    }
   ]
 }
 
@@ -63,132 +71,132 @@ const recommendedQueries = [
     name: 'Ultra Cheap Deals (Beginner Friendly / Low Risk)',
     description:
       'Scout for ultra-cheap deals across all categories with the highest discounts.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.ultraCheapDeals
   },
   {
     name: 'Fast Selling Items (Beginner Friendly / Low Risk)',
     description:
       'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.superFastSelling
   },
   {
     name: 'Default TWW Deals',
     description: 'Find deals on current content.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.defaultTWW
   },
   {
     name: 'Cheap Pet Deals',
     description:
       'Find cheap battle pets. Good for cross realm trading on one wow account.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.cheapPetDeals
   },
   // {
   //   name: 'High Value Deals',
   //   description:
   //     'Uncover high-value items across all expansions with substantial discounts.',
-  //   iconType: 'magnify',
+  //   Icon: DocumentSearchIcon,
   //   href: searchParams.highValue
   // },
   {
     name: 'Transmog Weapons',
     description: 'Find discount deals on legacy transmog weapons.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.transmogWeapons
   },
   {
     name: 'Transmog Gear',
     description:
       'Discover great discounts on legacy transmog gear for your collection.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.transmogGear
   },
   {
     name: 'TWW Recipes',
     description: 'Find TWW recipes at a discount for crafting advancements.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.recipesTWW
   },
   {
     name: 'Legacy Recipes',
     description:
       'Acquire legacy recipes for your collection or crafting needs at a discount.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.legacyRecipes
   },
   {
     name: 'Illusions and Consumables',
     description: 'Seek out deals on Weapon Illusions and consumable transmog.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.illusionsAndConsumables
   },
   {
     name: 'Housing Decor',
     description:
       'Find discounted housing decor items to furnish your player home.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.housingDecor
   },
   {
     name: 'High Value Toys',
     description:
       'Explore toys with high value and rarity across expansions at a discount.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.highValueToys
   },
   {
     name: 'Mounts',
     description: 'Pursue discounts on mounts to travel Azeroth in style.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.mounts
   },
   {
     name: 'Quest Items',
     description: 'Brawlers Passes, Darkmoon Fair Items, etc.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.questItems
   },
   {
     name: 'Medium Value Pet Deals',
     description: 'Find pets with medium value and ok sale rate.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.mediumValuePetDeals
   },
   {
     name: 'High Value Pet Deals',
     description:
       'Seek out high-value pets to add rare companions to your collection.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.highValuePetDeals
   },
   {
     name: 'Uncaged Pets',
     description:
       'These are items that when consumed become a pet in your journal.  The same as getting a level 1 pet.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.uncagedPetsItem
   },
   {
     name: 'Holiday Items',
     description: 'Discover festive holiday items to celebrate seasonal events.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.holidayItem
   },
   {
     name: 'Fast Selling Miscellaneous',
     description:
       'Identify quickly selling miscellaneous items like Sturdy Expedition Shovel, Zapthrottle Soul Inhaler, etc.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.fastSellingMiscellaneous
   },
   {
     name: 'Other Miscellaneous',
     description:
       'Find unique and random items, including trading post parts, books, and keys.',
-    iconType: 'magnify',
+    Icon: DocumentSearchIcon,
     href: searchParams.otherMiscellaneous
   }
 ]

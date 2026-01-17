@@ -9,7 +9,7 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { OutOfStockItem } from '~/requests/WoW/OutOfStock'
 import WoWOutOfStock from '~/requests/WoW/OutOfStock'
-import { getUserSessionData } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions'
 import z from 'zod'
 import {
   useActionData,
@@ -36,10 +36,18 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: WoW Out of Stock Items' },
-    { name: 'description', content: 'Sell without Competition! Search for items that are out of stock across various WoW Realms.' },
-    { tagName: 'link', rel: 'canonical', href: 'https://saddlebagexchange.com/wow/out-of-stock' }
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    {
+      name: 'description',
+      content:
+        'Sell without Competition! Search for items that are out of stock across various WoW Realms.'
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://saddlebagexchange.com/wow/out-of-stock'
+    }
   ]
 }
 

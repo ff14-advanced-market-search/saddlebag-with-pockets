@@ -16,7 +16,7 @@ import type {
   GetHistoryResponse
 } from '~/requests/FFXIV/GetHistory'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions.server'
+import { getUserSessionData, getSession } from '~/sessions'
 import ItemSelect from '~/components/Common/ItemSelect'
 import type { ItemSelected } from '~/components/Common/ItemSelect'
 import { useEffect, useState } from 'react'
@@ -34,8 +34,8 @@ import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoa
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { title: 'Saddlebag Exchange: FFXIV History Analysis' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
