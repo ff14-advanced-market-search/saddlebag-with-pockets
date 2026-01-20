@@ -5,7 +5,9 @@
   "license": "Apache-2.0",
   "proxy": "https://localhost:3000",
   "homepage": "https://saddlebagexchange.com/",
-  "sideEffects": false,
+  "sideEffects": [
+    "functions/global-shim.ts"
+  ],
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",

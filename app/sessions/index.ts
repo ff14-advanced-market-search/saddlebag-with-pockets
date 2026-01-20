@@ -15,6 +15,8 @@ export const DISCORD_USERNAME = 'discord_username'
 export const DISCORD_AVATAR = 'discord_avatar'
 export const EARLY_ACCESS_TOKEN = 'early_access_token'
 
+const sessionSecret = process.env.SESSION_SECRET || 'dev-session-secret'
+
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
     cookie: {
@@ -23,7 +25,8 @@ const { getSession, commitSession, destroySession } =
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      maxAge: defaultMaxAge
+      maxAge: defaultMaxAge,
+      secrets: [sessionSecret]
     }
   })
 
