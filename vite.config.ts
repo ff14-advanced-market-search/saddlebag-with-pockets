@@ -28,5 +28,9 @@ export default defineConfig({
     esbuildOptions: {
       target: 'es2020'
     }
+  },
+  define: {
+    // Polyfill global for Cloudflare Workers
+    global: 'globalThis'
   }
 })
