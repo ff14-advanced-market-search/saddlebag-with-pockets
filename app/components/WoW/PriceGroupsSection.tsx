@@ -1,8 +1,7 @@
 import type { PriceGroup } from '~/requests/WoW/WeeklyPriceGroupDelta'
 import PriceGroupForm from '~/components/form/WoW/PriceGroupForm'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ErrorPopup from '~/components/Common/ErrorPopup'
-import { wowStackableItems } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 
 interface PriceGroupsSectionProps {
@@ -67,6 +66,16 @@ export default function PriceGroupsSection({
   onError,
   isSubmitting
 }: PriceGroupsSectionProps) {
+  const [wowStackableItems, setWowStackableItems] = useState<
+    Array<[string, string]>
+  >([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(({ wowStackableItems: items }) => {
+      setWowStackableItems(items)
+    })
+  }, [])
+
   const [validationError, setValidationError] = useState<string | undefined>(
     undefined
   )

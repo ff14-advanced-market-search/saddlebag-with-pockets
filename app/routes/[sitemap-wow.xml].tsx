@@ -1,5 +1,4 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
-import { wowItemsMap } from '~/utils/items/wowItems'
 
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)
 const toW3CDate = (date: Date): string => {
@@ -16,6 +15,9 @@ const getItemLastMod = (_id: string): string => {
 }
 
 export const loader: LoaderFunction = async () => {
+  // Dynamic import - only loads when this route is hit, not during Worker init
+  const { wowItemsMap } = await import('~/utils/items/wowItems')
+
   const baseURL = 'https://saddlebagexchange.com'
 
   // Get arrays of item IDs without labels

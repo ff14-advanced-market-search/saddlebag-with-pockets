@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { InputWithLabel } from '../form/InputWithLabel'
 import DebouncedSelectInput from '../Common/DebouncedSelectInput'
-import { ffxivItems, ffxivItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName } from '~/utils/items'
 import ItemsFilter from '../form/ffxiv/ItemsFilter'
 import type { ImportData } from '~/requests/FFXIV/types'
@@ -26,6 +25,20 @@ export default function PriceGroupsSection({
   isSubmitting,
   setIsAddingPriceGroup
 }: PriceGroupsSectionProps) {
+  const [ffxivItemsList, setFfxivItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+  const [ffxivItems, setFfxivItems] = useState<Array<[string, string]>>([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(
+      ({ ffxivItems: items, ffxivItemsList: itemsList }) => {
+        setFfxivItems(items)
+        setFfxivItemsList(itemsList)
+      }
+    )
+  }, [])
+
   const [showAddGroup, setStateShowAddGroup] = useState(false)
   const [groupName, setGroupName] = useState('')
   const [currentItemNames, setCurrentItemNames] = useState<

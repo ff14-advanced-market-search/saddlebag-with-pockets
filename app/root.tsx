@@ -53,8 +53,7 @@ import {
 import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
-// Import CSS files - Remix's <Links /> component will automatically inject them from the build manifest
-import './tailwind.css'
+// Import CSS files - Vite processes Tailwind directives from base.css automatically
 import './base.css'
 
 /**

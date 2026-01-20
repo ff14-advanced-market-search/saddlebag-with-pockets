@@ -1,5 +1,5 @@
+import { useState, useEffect } from 'react'
 import type { MetaFunction } from '@remix-run/cloudflare'
-import { ffxivItemsMap } from '~/utils/items/ffxivItems'
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,11 +19,30 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  // Generate simple anchor links for ffxiv items
-  const ffxivItemLinks = Object.keys(ffxivItemsMap).map((id) => ({
-    href: `/queries/item-data/${id}`,
-    text: `ffxiv Item ${id}`
-  }))
+  const [ffxivItemLinks, setFfxivItemLinks] = useState<
+    Array<{ href: string; text: string }>
+  >([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Dynamic import - runs in browser, not bundled into Worker
+    import('~/utils/items/ffxivItems').then(({ ffxivItemsMap }) => {
+      const links = Object.keys(ffxivItemsMap).map((id) => ({
+        href: `/queries/item-data/${id}`,
+        text: `ffxiv Item ${id}`
+      }))
+      setFfxivItemLinks(links)
+      setLoading(false)
+    })
+  }, [])
+
+  if (loading) {
+    return (
+      <main>
+        <h1 style={{ textAlign: 'center' }}>Loading FFXIV Items...</h1>
+      </main>
+    )
+  }
 
   return (
     <main>

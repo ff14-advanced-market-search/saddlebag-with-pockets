@@ -1,11 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { InputWithLabel } from '../../InputWithLabel'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import {
-  wowStackableItemList,
-  wowStackableItems
-} from '~/utils/items/id_to_item'
-import { getItemIDByName } from '~/utils/items'
 import CategorySelectionPopup from '../CategorySelectionPopup'
 import { itemClasses } from '~/utils/WoWFilters/itemClasses'
 import { getExpansionName } from '~/utils/WoWFilters/expansions'
@@ -47,6 +42,18 @@ const PriceGroupForm = ({
   onRemoveGroup,
   canRemove
 }: PriceGroupFormProps) => {
+  const [wowStackableItemList, setWowStackableItemList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(
+      ({ wowStackableItemList: itemsList }) => {
+        setWowStackableItemList(itemsList)
+      }
+    )
+  }, [])
+
   const [showCategoryPopup, setShowCategoryPopup] = useState(false)
 
   const getQualityDisplay = (quality: number): string => {

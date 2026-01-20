@@ -3,7 +3,7 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import Label from '~/components/form/Label'
 import CodeBlock from '~/components/Common/CodeBlock'
@@ -13,7 +13,6 @@ import { getUserSessionData } from '~/sessions'
 import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { getItemIDByName } from '~/utils/items'
-import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 
 interface Auction {
   itemName: string
@@ -94,6 +93,20 @@ type LoaderData = WoWLoaderData & {
 }
 
 const Index = () => {
+  const [wowItemsList, setWowItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+  const [wowItems, setWowItems] = useState<Array<[string, string]>>([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(
+      ({ wowItems: items, wowItemsList: itemsList }) => {
+        setWowItems(items)
+        setWowItemsList(itemsList)
+      }
+    )
+  }, [])
+
   const { wowRealm, wowRegion } = useLoaderData<LoaderData>()
   const [isPrice, setIsPrice] = useState(IS_PRICE_DEFAULT)
   const [jsonData, setJsonData] = useState<Input>({

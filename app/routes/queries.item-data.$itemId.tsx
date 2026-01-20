@@ -57,7 +57,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const parsedItemId = parseInt(itemId)
   if (isNaN(parsedItemId)) return { exception: 'Invalid item' }
 
-  const itemName = getItemNameById(itemId)
+  // Dynamically import item data to verify item exists
+  const { ffxivItems } = await import('~/utils/items/id_to_item')
+  const itemName = getItemNameById(itemId, ffxivItems)
   if (!itemName) {
     return { exception: 'No item found, please try again' }
   }

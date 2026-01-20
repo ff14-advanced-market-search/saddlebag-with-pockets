@@ -2,7 +2,6 @@ import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import type { ItemListingResponse } from '~/requests/GW2/ItemListingsDetailedData'
 import ItemListingsDetailedData from '~/requests/GW2/ItemListingsDetailedData'
-import { gw2ItemsList } from '~/utils/items/id_to_item'
 import { useActionData, useNavigation } from '@remix-run/react'
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
@@ -14,7 +13,6 @@ import ItemDataDisplay from '~/components/GW2Results/ItemData/ItemDataDisplay'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
 import { RadioButtons } from '~/components/Common/RadioButtons'
 import { getItemIDByName, getItemNameById } from '~/utils/items'
-import { gw2Items } from '~/utils/items/id_to_item'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -78,6 +76,20 @@ type ResponseType = ItemListingResponse | { exception: string } | undefined
 type SearchMode = 'name' | 'id'
 
 export default function Index() {
+  const [gw2ItemsList, setGw2ItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+  const [gw2Items, setGw2Items] = useState<Array<[string, string]>>([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(
+      ({ gw2Items: items, gw2ItemsList: itemsList }) => {
+        setGw2Items(items)
+        setGw2ItemsList(itemsList)
+      }
+    )
+  }, [])
+
   const { darkmode } = useTypedSelector((state) => state.user)
   const transition = useNavigation()
   const result = useActionData<ResponseType>()
@@ -119,12 +131,6 @@ export default function Index() {
     } else {
       setItemName('')
     }
-    if (error) {
-      setError(undefined)
-    }
-  }
-
-  const handleNameChange = () => {
     if (error) {
       setError(undefined)
     }

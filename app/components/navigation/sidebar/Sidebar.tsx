@@ -35,13 +35,6 @@ import DiscordIcon from '~/icons/DiscordIcon'
 import YoutubeIcon from '~/icons/YoutubeIcon'
 import type { LoaderData } from '~/root'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import {
-  ffxivItemsList,
-  wowItems,
-  wowItemsList,
-  gw2ItemsList,
-  gw2Items
-} from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
 import { NotificationBell } from './NotificationBell'
@@ -990,6 +983,36 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
  *   - Toggles search input form visibility through a button click.
  */
 const ItemSearch = () => {
+  const [wowItemsList, setWowItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+  const [wowItems, setWowItems] = useState<Array<[string, string]>>([])
+  const [gw2ItemsList, setGw2ItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+  const [gw2Items, setGw2Items] = useState<Array<[string, string]>>([])
+  const [ffxivItemsList, setFfxivItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(
+      ({
+        wowItemsList: wowList,
+        wowItems: wow,
+        gw2ItemsList: gw2List,
+        gw2Items: gw2,
+        ffxivItemsList: ffxivList
+      }) => {
+        setWowItemsList(wowList)
+        setWowItems(wow)
+        setGw2ItemsList(gw2List)
+        setGw2Items(gw2)
+        setFfxivItemsList(ffxivList)
+      }
+    )
+  }, [])
+
   const transition = useNavigation()
   const defaultSearchGame = useTypedSelector(
     (state) => state.user.defaultSearchGame
