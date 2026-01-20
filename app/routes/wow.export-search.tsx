@@ -11,7 +11,6 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ExportItem, WoWExportResponse } from '~/requests/WoW/ExportSearch'
 import WoWExportSearch from '~/requests/WoW/ExportSearch'
 import { getUserSessionData } from '~/sessions'
-import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import z from 'zod'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -154,6 +153,20 @@ type ActionResponseType =
   | (WoWExportResponse & { sortby: string })
 
 const ExportSearch = () => {
+  const [wowItemsList, setWowItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+  const [wowItems, setWowItems] = useState<Array<[string, string]>>([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(
+      ({ wowItems: items, wowItemsList: itemsList }) => {
+        setWowItems(items)
+        setWowItemsList(itemsList)
+      }
+    )
+  }, [])
+
   const loaderData = useLoaderData<typeof defaultFormValues>()
   const result = useActionData<ActionResponseType>()
   const [itemName, setItemName] = useState<{ name: string; error: string }>({

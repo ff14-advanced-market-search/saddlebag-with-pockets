@@ -5,12 +5,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import VideoGuide from '~/components/Common/VideoGuide'
@@ -32,7 +27,6 @@ import type {
 import GetShoppingList from '~/requests/FFXIV/shopping-list'
 import { getUserSessionData } from '~/sessions'
 import { getItemIDByName } from '~/utils/items'
-import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 

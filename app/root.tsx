@@ -4,8 +4,6 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
-import styles from './tailwind.css'
-import overrides from './base.css'
 import {
   Links,
   LiveReload,
@@ -55,6 +53,8 @@ import {
 import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
+// Import CSS files - Vite processes Tailwind directives from base.css automatically
+import './base.css'
 
 /**
  * Generates the basic HTML structure with linked resources and error boundaries.
@@ -96,14 +96,6 @@ export const ErrorBoundary = () => {
  */
 export const links = () => {
   return [
-    {
-      rel: 'stylesheet',
-      href: styles
-    },
-    {
-      rel: 'stylesheet',
-      href: overrides
-    },
     {
       rel: 'icon',
       type: 'image/png',

@@ -1,5 +1,5 @@
+import { useState, useEffect } from 'react'
 import type { MetaFunction } from '@remix-run/cloudflare'
-import { gw2ItemsMap } from '~/utils/items/gw2Items'
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,11 +19,30 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  // Generate simple anchor links for GW2 items with names
-  const gw2ItemLinks = Object.entries(gw2ItemsMap).map(([id, name]) => ({
-    href: `/gw2/item-data/${id}`,
-    text: `${name} (${id})`
-  }))
+  const [gw2ItemLinks, setGw2ItemLinks] = useState<
+    Array<{ href: string; text: string }>
+  >([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Dynamic import - runs in browser, not bundled into Worker
+    import('~/utils/items/gw2Items').then(({ gw2ItemsMap }) => {
+      const links = Object.entries(gw2ItemsMap).map(([id, name]) => ({
+        href: `/gw2/item-data/${id}`,
+        text: `${name} (${id})`
+      }))
+      setGw2ItemLinks(links)
+      setLoading(false)
+    })
+  }, [])
+
+  if (loading) {
+    return (
+      <main>
+        <h1 className="text-center">Loading GW2 Items...</h1>
+      </main>
+    )
+  }
 
   return (
     <main>

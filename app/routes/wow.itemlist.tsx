@@ -1,5 +1,5 @@
+import { useState, useEffect } from 'react'
 import type { MetaFunction } from '@remix-run/cloudflare'
-import { wowItemsMap } from '~/utils/items/wowItems'
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,11 +19,30 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  // Generate simple anchor links for WoW items
-  const wowItemLinks = Object.keys(wowItemsMap).map((id) => ({
-    href: `/wow/item-data/${id}`,
-    text: `WoW Item ${id}`
-  }))
+  const [wowItemLinks, setWowItemLinks] = useState<
+    Array<{ href: string; text: string }>
+  >([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Dynamic import - runs in browser, not bundled into Worker
+    import('~/utils/items/wowItems').then(({ wowItemsMap }) => {
+      const links = Object.keys(wowItemsMap).map((id) => ({
+        href: `/wow/item-data/${id}`,
+        text: `WoW Item ${id}`
+      }))
+      setWowItemLinks(links)
+      setLoading(false)
+    })
+  }, [])
+
+  if (loading) {
+    return (
+      <main>
+        <h1 style={{ textAlign: 'center' }}>Loading WoW Items...</h1>
+      </main>
+    )
+  }
 
   return (
     <main>

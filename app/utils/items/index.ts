@@ -1,6 +1,7 @@
-import { ffxivItems } from './id_to_item'
-
-export const searchForItemName = (term: string, itemList = ffxivItems) => {
+export const searchForItemName = (
+  term: string,
+  itemList: Array<[string, string]>
+) => {
   if (!term) {
     return
   }
@@ -26,8 +27,10 @@ export const searchForItemName = (term: string, itemList = ffxivItems) => {
  */
 export const getItemNameById = (
   id: number | string,
-  itemList = ffxivItems
+  itemList?: Array<[string, string]>
 ): string | undefined => {
+  if (!itemList) return undefined
+
   const idToUse = typeof id === 'number' ? id.toString() : id
 
   const name = itemList.find(([itemId]) => idToUse === itemId)
@@ -53,8 +56,10 @@ export const getItemNameById = (
  */
 export const getItemIDByName = (
   name: string,
-  itemList = ffxivItems
+  itemList?: Array<[string, string]>
 ): string | undefined => {
+  if (!itemList) return undefined
+
   const lowerCaseName = name.toLowerCase()
   const item = itemList.find(
     ([_, itemName]) => lowerCaseName === itemName.toLowerCase()

@@ -1,19 +1,17 @@
 #!/bin/bash
+set -e
 
-# # Echo all env vars for debugging
-# echo "DISCORD_CLIENT_ID: $DISCORD_CLIENT_ID"
-# echo "DISCORD_CLIENT_SECRET: $DISCORD_CLIENT_SECRET"
-# echo "DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN"
-# echo "NODE_VERSION: $NODE_VERSION"
-# echo "SITE_NAME: $SITE_NAME"
+# Note: wrangler.toml should exist in the repo root
+# Environment variables are injected via Cloudflare's build system
 
-# Write wrangler.toml dynamically
-cat <<EOF > wrangler.toml
-[vars]
-DISCORD_CLIENT_ID = "$DISCORD_CLIENT_ID"
-DISCORD_CLIENT_SECRET = "$DISCORD_CLIENT_SECRET"
-DISCORD_BOT_TOKEN = "$DISCORD_BOT_TOKEN"
-EOF
+yarn run write-items
+yarn run build
 
-npm run write-items
-npm run build
+# Copy client assets to public/build for Cloudflare Pages static serving
+if [ ! -d "build/client" ]; then
+  echo "Error: build/client directory does not exist. Build may have failed."
+  exit 1
+fi
+
+mkdir -p public/build
+cp -r build/client/* public/build/

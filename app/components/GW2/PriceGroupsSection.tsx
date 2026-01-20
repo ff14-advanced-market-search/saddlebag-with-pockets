@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { InputWithLabel } from '../form/InputWithLabel'
 import DebouncedSelectInput from '../Common/DebouncedSelectInput'
-import { gw2ItemsList } from '~/utils/items/id_to_item'
 import { itemTypes, type ItemType } from '~/utils/GW2Filters/itemTypes'
 import ErrorPopup from '../Common/ErrorPopup'
 import type { GW2PriceGroup } from '~/requests/GW2/WeeklyPriceGroupDelta'
@@ -47,6 +46,16 @@ export default function PriceGroupsSection({
   isSubmitting,
   setIsAddingPriceGroup
 }: PriceGroupsSectionProps) {
+  const [gw2ItemsList, setGw2ItemsList] = useState<
+    Array<{ value: string; label: string }>
+  >([])
+
+  useEffect(() => {
+    import('~/utils/items/id_to_item').then(({ gw2ItemsList: itemsList }) => {
+      setGw2ItemsList(itemsList)
+    })
+  }, [])
+
   const [showAddGroup, setStateShowAddGroup] = useState(false)
   const [groupName, setGroupName] = useState('')
   const [currentItemNames, setCurrentItemNames] = useState<

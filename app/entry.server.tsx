@@ -4,6 +4,15 @@ import { RemixServer } from '@remix-run/react'
 import { renderToString } from 'react-dom/server'
 import { redirectOnPath } from './utils/redirectOnPath'
 
+// Cloudflare Workers do not define `global`; some dependencies (e.g., raf/react-dnd-scrolling)
+// expect it. Polyfill to `globalThis` before anything else runs.
+const globalRef = globalThis as typeof globalThis & {
+  global?: typeof globalThis
+}
+if (!globalRef.global) {
+  globalRef.global = globalRef
+}
+
 /**
  * Processes an incoming request and generates an appropriate HTML response.
  * @example

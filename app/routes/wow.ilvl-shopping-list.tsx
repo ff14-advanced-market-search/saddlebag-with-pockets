@@ -28,7 +28,6 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import DebouncedSelectInput from '~/components/Common/DebouncedSelectInput'
-import { wowItems, wowItemsList } from '~/utils/items/id_to_item'
 import { getItemIDByName, getItemNameById } from '~/utils/items'
 import {
   parseStringToNumber,
