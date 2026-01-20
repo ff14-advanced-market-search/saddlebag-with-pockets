@@ -21,12 +21,8 @@ export default defineConfig({
     tsconfigPaths()
   ],
   ssr: {
-    external: ['react', 'react-dom']
-  },
-  build: {
-    rollupOptions: {
-      external: /\.css$/
-    }
+    external: ['react', 'react-dom'],
+    noExternal: []
   },
   optimizeDeps: {
     esbuildOptions: {

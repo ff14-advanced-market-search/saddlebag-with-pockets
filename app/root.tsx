@@ -4,8 +4,6 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
-import './tailwind.css'
-import './base.css'
 import {
   Links,
   LiveReload,
@@ -55,6 +53,11 @@ import {
 import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
+// Only import CSS in the client environment
+if (typeof document !== 'undefined') {
+  import('./tailwind.css')
+  import('./base.css')
+}
 
 /**
  * Generates the basic HTML structure with linked resources and error boundaries.
