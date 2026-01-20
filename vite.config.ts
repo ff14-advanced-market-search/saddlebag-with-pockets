@@ -5,9 +5,9 @@ import {
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
-    remixCloudflareDevProxy(),
+    command === 'serve' && remixCloudflareDevProxy(),
     remix({
       future: {
         v3_fetcherPersist: true,
@@ -18,7 +18,7 @@ export default defineConfig({
       }
     }),
     tsconfigPaths()
-  ],
+  ].filter(Boolean),
   ssr: {
     external: ['react', 'react-dom']
   },
@@ -27,4 +27,4 @@ export default defineConfig({
       target: 'es2020'
     }
   }
-})
+}))
