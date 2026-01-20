@@ -22,5 +22,6 @@ DISCORD_CLIENT_SECRET = "$DISCORD_CLIENT_SECRET"
 DISCORD_BOT_TOKEN = "$DISCORD_BOT_TOKEN"
 EOF
 
+npm run generate:css
 npm run write-items
 WRANGLER_TOML="$WRANGLER_CONFIG" npm run build
