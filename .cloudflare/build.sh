@@ -5,6 +5,7 @@ set -e
 # Environment variables are injected via Cloudflare's build system
 
 yarn run write-items
+yarn run generate:css
 yarn run build
 
 # Copy client assets to public/build for Cloudflare Pages static serving
