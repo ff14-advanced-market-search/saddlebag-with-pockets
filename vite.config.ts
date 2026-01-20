@@ -23,6 +23,11 @@ export default defineConfig({
   ssr: {
     external: ['react', 'react-dom']
   },
+  build: {
+    rollupOptions: {
+      external: /\.css$/
+    }
+  },
   optimizeDeps: {
     esbuildOptions: {
       target: 'es2020'
