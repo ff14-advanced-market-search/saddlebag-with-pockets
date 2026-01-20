@@ -9,9 +9,11 @@ set -e
 # echo "DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN"
 # echo "SESSION_SECRET: ${SESSION_SECRET:0:8}***"
 
-# Append environment variables to wrangler.toml (dynamic generation)
-# Use the production environment to avoid redefining the root [vars] table.
-cat <<EOF >> wrangler.toml
+# Build a temporary wrangler config instead of mutating the repository file.
+WRANGLER_CONFIG=".cloudflare/wrangler.generated.toml"
+cp wrangler.toml "$WRANGLER_CONFIG"
+
+cat <<EOF >> "$WRANGLER_CONFIG"
 
 # Dynamic environment variables (injected at build time)
 [env.production.vars]
@@ -21,4 +23,4 @@ DISCORD_BOT_TOKEN = "$DISCORD_BOT_TOKEN"
 EOF
 
 npm run write-items
-npm run build
+WRANGLER_TOML="$WRANGLER_CONFIG" npm run build
