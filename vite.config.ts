@@ -7,7 +7,10 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   plugins: [
-    remixCloudflareDevProxy(),
+    // Only use dev proxy in development mode
+    ...(process.env.NODE_ENV === 'development'
+      ? [remixCloudflareDevProxy()]
+      : []),
     remix({
       future: {
         v3_fetcherPersist: true,
