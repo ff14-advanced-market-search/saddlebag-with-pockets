@@ -7,8 +7,11 @@
   "homepage": "https://saddlebagexchange.com/",
   "sideEffects": false,
   "scripts": {
+    "generate:css": "tailwindcss -c tailwind.config.js -i ./app/base.css -o ./app/tailwind.css",
+    "predev": "yarn run generate:css",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
+    "prebuild": "yarn run generate:css",
     "preview": "wrangler pages dev",
     "prettier": "prettier --write app",
     "prettier:check": "prettier --check app",

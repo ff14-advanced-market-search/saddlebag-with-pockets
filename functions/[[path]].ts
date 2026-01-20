@@ -1,5 +1,5 @@
 import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
-// @ts-ignore - Vite generates this from the build output
+// @ts-expect-error - Vite generates this from the build output
 import * as build from "../build/server/index.js";
 
 const handleRequest = createPagesFunctionHandler({
