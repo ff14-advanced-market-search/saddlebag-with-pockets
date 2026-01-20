@@ -10,12 +10,11 @@ set -e
 # echo "SESSION_SECRET: ${SESSION_SECRET:0:8}***"
 
 # Append environment variables to wrangler.toml (dynamic generation)
-# This preserves the static configuration while injecting secrets from Cloudflare
+# Use the production environment to avoid redefining the root [vars] table.
 cat <<EOF >> wrangler.toml
 
 # Dynamic environment variables (injected at build time)
-# Update the [vars] section that was already defined in the static config
-[vars]
+[env.production.vars]
 DISCORD_CLIENT_ID = "$DISCORD_CLIENT_ID"
 DISCORD_CLIENT_SECRET = "$DISCORD_CLIENT_SECRET"
 DISCORD_BOT_TOKEN = "$DISCORD_BOT_TOKEN"
