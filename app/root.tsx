@@ -4,8 +4,8 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
-import styles from './tailwind.css?url'
-import overrides from './base.css?url'
+import './tailwind.css'
+import './base.css'
 import {
   Links,
   LiveReload,
@@ -96,14 +96,6 @@ export const ErrorBoundary = () => {
  */
 export const links = () => {
   return [
-    {
-      rel: 'stylesheet',
-      href: styles
-    },
-    {
-      rel: 'stylesheet',
-      href: overrides
-    },
     {
       rel: 'icon',
       type: 'image/png',
