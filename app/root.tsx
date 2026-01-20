@@ -375,7 +375,7 @@ function App() {
     <DatadogProvider>
       <html lang="en" className={classNames(`h-full`, theme || '')}>
         <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <Meta />
           <Links />
           <EnsureThemeApplied />
