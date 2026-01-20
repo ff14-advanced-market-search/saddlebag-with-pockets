@@ -53,11 +53,9 @@ import {
 import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
-// Only import CSS in the client environment
-if (typeof document !== 'undefined') {
-  import('./tailwind.css')
-  import('./base.css')
-}
+// Import CSS files - Remix's <Links /> component will automatically inject them from the build manifest
+import './tailwind.css'
+import './base.css'
 
 /**
  * Generates the basic HTML structure with linked resources and error boundaries.
