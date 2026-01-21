@@ -11,7 +11,7 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
-    "preview": "wrangler pages dev",
+    "preview": "wrangler pages dev ./build/client --compatibility-date=2025-01-01 --compatibility-flags=nodejs_compat",
     "generate:css": "npx tailwindcss -o ./app/tailwind.css",
     "prettier": "prettier --write app",
     "prettier:check": "prettier --check app",
