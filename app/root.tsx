@@ -133,6 +133,20 @@ export type LoaderData = {
  *   - Defaults site name to "Saddlebag Exchange" if none is provided in the context.
  */
 export const loader: LoaderFunction = async ({ request, context }) => {
+  const env = context.env as Record<string, unknown>
+  const proofMode = (env as any).PROOF_MODE === 'true'
+
+  // In proof mode, skip all session/auth logic
+  if (proofMode) {
+    return json<LoaderData>({
+      site_name: (context.SITE_NAME as string) ?? 'Saddlebag Exchange',
+      data_center: 'proof',
+      world: 'proof',
+      wowRealm: { name: 'proof', id: 0 },
+      wowRegion: 'NA'
+    })
+  }
+
   const { getWorld, getDataCenter, getWoWSessionData } =
     await getUserSessionData(request)
 
@@ -173,7 +187,15 @@ const validator = z.object({
  *   - Redirects to the root path with updated session and cookies upon successful validation.
  *   - Returns a failed JSON response if validation is unsuccessful.
  */
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  const env = context.env as Record<string, unknown>
+  const proofMode = (env as any).PROOF_MODE === 'true'
+
+  // In proof mode, return early
+  if (proofMode) {
+    return json({ update: 'proof_mode' })
+  }
+
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 

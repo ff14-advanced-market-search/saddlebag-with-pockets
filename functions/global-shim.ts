@@ -13,8 +13,11 @@ if (!globalScope.self) {
   globalScope.self = globalScope;
 }
 
+// Only shim if nodejs_compat hasn't provided a real process.
 if (!globalScope.process) {
   globalScope.process = { env: {} };
+} else if (!globalScope.process.env) {
+  globalScope.process.env = {};
 }
 
 // Provide a minimal matchMedia stub to satisfy browser-only checks during SSR

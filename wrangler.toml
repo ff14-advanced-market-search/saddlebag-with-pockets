@@ -3,15 +3,14 @@ compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "build/client"
 
-[pages]
-build_output_dir = "build/client"
-
 [vars]
 # Environment variables (overridden at build time via build.sh)
 DISCORD_CLIENT_ID = ""
 DISCORD_CLIENT_SECRET = ""
 DISCORD_BOT_TOKEN = ""
+PROOF_MODE = "true"
 
 [env.production]
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
+vars = { PROOF_MODE = "false" }
