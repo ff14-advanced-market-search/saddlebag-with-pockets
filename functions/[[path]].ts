@@ -1,17 +1,29 @@
 import "./global-shim";
 import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
-// @ts-ignore - Vite generates this from the build output
-import * as build from "../build/server/index.js";
+import type { PagesFunction } from "@cloudflare/workers-types";
 
-const handleRequest = createPagesFunctionHandler({
-  build,
-  mode: process.env.NODE_ENV || "production",
-  getLoadContext: (context) => ({
-    cloudflare: context.env,
-    env: context.env,
-  }),
-});
+let cachedHandler: PagesFunction | null = null;
 
-export function onRequest(context) {
-  return handleRequest(context);
+async function getHandler(env: Record<string, unknown>): Promise<PagesFunction> {
+  // Ensure runtime env is visible to build-time code that reads process.env
+  (globalThis as any).process = { env };
+
+  if (!cachedHandler) {
+    const build = await import("../build/server/index.js");
+    cachedHandler = createPagesFunctionHandler({
+      build,
+      mode: (env && (env as any).NODE_ENV) || "production",
+      getLoadContext: (context) => ({
+        cloudflare: context.env,
+        env: context.env,
+      }),
+    });
+  }
+
+  return cachedHandler;
 }
+
+export const onRequest: PagesFunction = async (context) => {
+  const handler = await getHandler(context.env as Record<string, unknown>);
+  return handler(context);
+};
