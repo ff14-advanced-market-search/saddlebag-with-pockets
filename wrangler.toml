@@ -1,5 +1,5 @@
 name = "saddlebag-with-pockets"
-compatibility_date = "2024-11-04"
+compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
@@ -9,5 +9,5 @@ DISCORD_CLIENT_SECRET = ""
 DISCORD_BOT_TOKEN = ""
 
 [env.production]
-compatibility_date = "2024-11-04"
+compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
