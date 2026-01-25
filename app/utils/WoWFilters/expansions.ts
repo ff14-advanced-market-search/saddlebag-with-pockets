@@ -15,7 +15,8 @@ export const expansionOptions: ExpansionOption[] = [
   { label: 'Battle for Azeroth', value: '8' },
   { label: 'Shadowlands', value: '9' },
   { label: 'Dragonflight', value: '10' },
-  { label: 'The War Within', value: '11' }
+  { label: 'The War Within', value: '11' },
+  { label: 'Midnight Expanse', value: '12' }
 ]
 
 /**
