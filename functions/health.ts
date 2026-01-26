@@ -1,0 +1,1 @@
+export const onRequest = async () => new Response("ok");
