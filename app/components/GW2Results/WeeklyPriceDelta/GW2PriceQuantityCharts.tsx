@@ -5,17 +5,22 @@ import HighchartsReact from 'highcharts-react-official'
 import { format } from 'date-fns'
 import type { GW2ItemData } from '~/requests/GW2/WeeklyPriceGroupDelta'
 
-// Initialize the highcharts-more module at the module level
+const canUseDOM =
+  typeof window !== 'undefined' && typeof document !== 'undefined'
+
+// Initialize the highcharts-more module at the module level only in the browser
 let highchartsMoreLoaded = false
-try {
-  addHighchartsMore(Highcharts)
-  highchartsMoreLoaded = true
-} catch (error) {
-  console.error(
-    'Failed to initialize Highcharts more module:',
-    error instanceof Error ? error.message : String(error)
-  )
-  highchartsMoreLoaded = false
+if (canUseDOM) {
+  try {
+    addHighchartsMore(Highcharts)
+    highchartsMoreLoaded = true
+  } catch (error) {
+    console.error(
+      'Failed to initialize Highcharts more module:',
+      error instanceof Error ? error.message : String(error)
+    )
+    highchartsMoreLoaded = false
+  }
 }
 
 interface GW2PriceQuantityChartsProps {

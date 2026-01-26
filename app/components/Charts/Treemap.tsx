@@ -3,14 +3,21 @@ import addHighchartsTreemap from 'highcharts/modules/treemap'
 import HighchartsReact from 'highcharts-react-official'
 import { useEffect, useRef, useState } from 'react'
 
-// Initialize the treemap module at the module level
-try {
-  addHighchartsTreemap(Highcharts)
-} catch (error) {
-  console.error(
-    'Failed to initialize Highcharts treemap module:',
-    error instanceof Error ? error.message : String(error)
-  )
+const canUseDOM =
+  typeof window !== 'undefined' && typeof document !== 'undefined'
+let treemapModuleLoaded = false
+
+// Initialize the treemap module only in the browser to avoid SSR/worker failures
+if (canUseDOM) {
+  try {
+    addHighchartsTreemap(Highcharts)
+    treemapModuleLoaded = true
+  } catch (error) {
+    console.error(
+      'Failed to initialize Highcharts treemap module:',
+      error instanceof Error ? error.message : String(error)
+    )
+  }
 }
 
 export interface TreemapNode {
@@ -49,7 +56,7 @@ const TreemapChart = ({
   backgroundColor?: string
 }) => {
   const chartRef = useRef<{ chart: Highcharts.Chart }>(null)
-  const [isModuleInitialized] = useState(true)
+  const [isModuleInitialized] = useState(treemapModuleLoaded)
 
   useEffect(() => {
     return () => {

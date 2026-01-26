@@ -15,17 +15,50 @@ export const DISCORD_USERNAME = 'discord_username'
 export const DISCORD_AVATAR = 'discord_avatar'
 export const EARLY_ACCESS_TOKEN = 'early_access_token'
 
-const { getSession, commitSession, destroySession } =
-  createCookieSessionStorage({
+// Defer session storage creation to avoid reading process.env at module scope
+let cachedSessionStorage: ReturnType<typeof createCookieSessionStorage> | null =
+  null
+let lastEnvKey = ''
+
+function getSessionStorage(env: Record<string, unknown>) {
+  const sessionSecret = (env as any).SESSION_SECRET || 'dev-session-secret'
+  const envKey = sessionSecret // simple cache key
+
+  // Reuse if env hasn't changed
+  if (cachedSessionStorage && lastEnvKey === envKey) {
+    return cachedSessionStorage
+  }
+
+  cachedSessionStorage = createCookieSessionStorage({
     cookie: {
       name: '__session',
-      secure: process.env.NODE_ENV === 'production',
+      secure: ((env as any).NODE_ENV || 'production') === 'production',
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      maxAge: defaultMaxAge
+      maxAge: defaultMaxAge,
+      secrets: [sessionSecret]
     }
   })
+  lastEnvKey = envKey
+  return cachedSessionStorage
+}
+
+// Factory function for loaders/actions to use
+export function getSessionMethods(env: Record<string, unknown>) {
+  const storage = getSessionStorage(env)
+  return {
+    getSession: storage.getSession,
+    commitSession: storage.commitSession,
+    destroySession: storage.destroySession
+  }
+}
+
+// Fallback for backward compatibility (reads process.env)
+const defaultEnv = () => (globalThis as any).process?.env || {}
+const { getSession, commitSession, destroySession } = getSessionStorage(
+  defaultEnv() as Record<string, unknown>
+)
 
 const getFF14WorldAndDataCenter = (session: Session) => {
   const worldSession = session.get(FF14_WORLD)
