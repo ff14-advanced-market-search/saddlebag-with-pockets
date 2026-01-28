@@ -27,6 +27,9 @@ const BASE_URL = '/wow/marketshare'
 
 // Updated searchParams
 const searchParams = {
+  // Midnight
+  midnightSingle: `${BASE_URL}?expansionNumber=12`,
+  midnightCommodity: `${BASE_URL}?commodity=on&expansionNumber=12`,
   // TWW
   // default
   defaultTWWSingle: `${BASE_URL}?expansionNumber=11`,
@@ -82,6 +85,19 @@ const searchParams = {
 
 // Updated recommendedQueries to reflect WoW searches
 const recommendedQueries = [
+  {
+    name: 'Midnight Single Realm',
+    description: 'See what "Midnight" items make the most gold on your realm.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.midnightSingle
+  },
+  {
+    name: 'Midnight Commodity Realm',
+    description:
+      'See what "Midnight" items make the most gold on your region wide commodity market.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.midnightCommodity
+  },
   {
     name: 'TWW Single Realm',
     description:

@@ -23,6 +23,8 @@ export const meta: MetaFunction = () => {
 
 // Updated searchParams with WoW best deals endpoints
 const searchParams = {
+  midnight:
+    '/wow/best-deals?type=df&itemClass=-1&itemSubClass=-1&discount=50&minPrice=2000&salesPerDay=1.1&expansionNumber=12',
   defaultTWW:
     '/wow/best-deals?type=df&itemClass=-1&itemSubClass=-1&discount=50&minPrice=2000&salesPerDay=1.1&expansionNumber=11',
   highValue:
@@ -80,6 +82,12 @@ const recommendedQueries = [
       'Spot the fastest selling items in the market with minimal investment. (Mostly bags)',
     Icon: DocumentSearchIcon,
     href: searchParams.superFastSelling
+  },
+  {
+    name: 'Midnight Deals',
+    description: 'Find deals on "Midnight" items.',
+    Icon: DocumentSearchIcon,
+    href: searchParams.midnight
   },
   {
     name: 'Default TWW Deals',
