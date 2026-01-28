@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
-import recommendedConfigs from '~/components/recommended/WoW/WeeklyPriceGroup'
+import {
+  patchCycleConfigs,
+  specialEventConfigs
+} from '~/components/recommended/WoW/WeeklyPriceGroup'
 
 export const meta: MetaFunction = () => {
   return [
@@ -23,8 +27,14 @@ export const meta: MetaFunction = () => {
   ]
 }
 
+type TabType = 'patch-cycles' | 'special-events'
+
 export default function RecommendedWeeklyPriceGroupDelta() {
-  const handleRunAnalysis = (rec: (typeof recommendedConfigs)[0]) => {
+  const [activeTab, setActiveTab] = useState<TabType>('patch-cycles')
+
+  const handleRunAnalysis = (
+    rec: (typeof patchCycleConfigs)[0] | (typeof specialEventConfigs)[0]
+  ) => {
     const form = document.createElement('form')
     form.method = 'POST'
     form.action = '/wow/weekly-price-group-delta'
@@ -48,6 +58,9 @@ export default function RecommendedWeeklyPriceGroupDelta() {
     document.body.appendChild(form)
     form.submit()
   }
+
+  const displayedConfigs =
+    activeTab === 'patch-cycles' ? patchCycleConfigs : specialEventConfigs
 
   return (
     <>
@@ -105,8 +118,46 @@ export default function RecommendedWeeklyPriceGroupDelta() {
                 page to start your analysis from scratch.
               </p>
             </div>
+
+            {/* Tab Navigation */}
+            <div className="border-b border-gray-200 dark:border-gray-700 mb-8">
+              <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+                <button
+                  onClick={() => setActiveTab('patch-cycles')}
+                  className={`
+                    ${
+                      activeTab === 'patch-cycles'
+                        ? 'border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                    }
+                    whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                  `}
+                  aria-current={
+                    activeTab === 'patch-cycles' ? 'page' : undefined
+                  }>
+                  Patch Cycles
+                </button>
+                <button
+                  onClick={() => setActiveTab('special-events')}
+                  className={`
+                    ${
+                      activeTab === 'special-events'
+                        ? 'border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                    }
+                    whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                  `}
+                  aria-current={
+                    activeTab === 'special-events' ? 'page' : undefined
+                  }>
+                  Special Economic Events
+                </button>
+              </nav>
+            </div>
+
+            {/* Tab Content */}
             <div className="not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {recommendedConfigs.map((rec) => (
+              {displayedConfigs.map((rec) => (
                 <button
                   key={rec.name}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded shadow text-left"

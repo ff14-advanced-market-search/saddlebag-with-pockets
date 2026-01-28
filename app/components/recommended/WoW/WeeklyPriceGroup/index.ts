@@ -17,7 +17,7 @@ import midnightFurnishingComponentsBaseExpansion from './midnightFurnishingCompo
 import midnightFurnishingComponentsBaseCategory from './midnightFurnishingComponentsBaseCategory'
 import midnightFurnishingDyes from './midnightFurnishingDyes'
 
-const recommendedConfigs = [
+const patchCycleConfigs = [
   tier11_2, // Tier 11.2 Complete Analysis
   consumablesTier11_2, // Consumables Tier 11.2 Complete Analysis
   tier11_1, // Tier 11.1 Complete Analysis
@@ -28,14 +28,20 @@ const recommendedConfigs = [
   consumablesTier10_2, // Consumables Tier 10.2 Complete Analysis
   tier10_1, // Tier 10.1 Complete Analysis
   consumablesTier10_1, // Consumables Tier 10.1 Complete Analysis
+  dragonflight1 // Dragonflight Market
+]
+
+const specialEventConfigs = [
   midnightFurnishingComponentsCategory, // Midnight Expanse Furnishing Components by Category
   midnightFurnishingComponentsExpansion, // Midnight Expanse Furnishing Components by Expansion
   midnightFurnishingComponentsBaseCategory, // Midnight Expanse Furnishing Components by Base Category
   midnightFurnishingComponentsBaseExpansion, // Midnight Expanse Furnishing Components by Base Expansion
   midnightFurnishingDyes, // Midnight Expanse Furnishing Dyes
   furnishingComponents, // Whooraas Midnight Expanse Furnishing Components
-  engMountTWW, // Increases from TWW mount using old parts
-  dragonflight1 // Dragonflight Market
+  engMountTWW // Increases from TWW mount using old parts
 ]
 
+const recommendedConfigs = [...patchCycleConfigs, ...specialEventConfigs]
+
 export default recommendedConfigs
+export { patchCycleConfigs, specialEventConfigs }
