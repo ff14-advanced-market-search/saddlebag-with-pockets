@@ -32,13 +32,13 @@ const patchCycleConfigs = [
 ]
 
 const specialEventConfigs = [
+  engMountTWW, // Increases from TWW mount using old parts
+  midnightFurnishingDyes, // Midnight Expanse Furnishing Dyes
   midnightFurnishingComponentsCategory, // Midnight Expanse Furnishing Components by Category
   midnightFurnishingComponentsExpansion, // Midnight Expanse Furnishing Components by Expansion
   midnightFurnishingComponentsBaseCategory, // Midnight Expanse Furnishing Components by Base Category
   midnightFurnishingComponentsBaseExpansion, // Midnight Expanse Furnishing Components by Base Expansion
-  midnightFurnishingDyes, // Midnight Expanse Furnishing Dyes
-  furnishingComponents, // Whooraas Midnight Expanse Furnishing Components
-  engMountTWW // Increases from TWW mount using old parts
+  furnishingComponents // Whooraas Midnight Expanse Furnishing Components
 ]
 
 const recommendedConfigs = [...patchCycleConfigs, ...specialEventConfigs]

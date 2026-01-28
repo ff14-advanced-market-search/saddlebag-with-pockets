@@ -120,17 +120,17 @@ export default function RecommendedWeeklyPriceGroupDelta() {
             </div>
 
             {/* Tab Navigation */}
-            <div className="border-b border-gray-200 dark:border-gray-700 mb-8">
-              <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+            <div className="flex justify-center mb-8">
+              <nav className="flex space-x-4" aria-label="Tabs">
                 <button
                   onClick={() => setActiveTab('patch-cycles')}
                   className={`
                     ${
                       activeTab === 'patch-cycles'
-                        ? 'border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                        ? 'bg-blue-600 text-white shadow-lg'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                     }
-                    whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                    whitespace-nowrap py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-150
                   `}
                   aria-current={
                     activeTab === 'patch-cycles' ? 'page' : undefined
@@ -142,10 +142,10 @@ export default function RecommendedWeeklyPriceGroupDelta() {
                   className={`
                     ${
                       activeTab === 'special-events'
-                        ? 'border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                        ? 'bg-blue-600 text-white shadow-lg'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                     }
-                    whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                    whitespace-nowrap py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-150
                   `}
                   aria-current={
                     activeTab === 'special-events' ? 'page' : undefined
