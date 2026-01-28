@@ -208,6 +208,10 @@ const FFXIVScripExchange = () => {
                     label: 'Allagan Tomestone of Aesthetics',
                     value: 'Allagan Tomestone of Aesthetics'
                   },
+                  {
+                    label: 'Allagan Tomestone of Mathematics',
+                    value: 'Allagan Tomestone of Mathematics'
+                  },
                   // Society Currencies (A Realm Reborn)
                   { label: 'Ixali Oaknot', value: 'Ixali Oaknot' },
                   { label: 'Sylphic Goldleaf', value: 'Sylphic Goldleaf' },
