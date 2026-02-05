@@ -1,19 +1,27 @@
 #!/bin/bash
 
+# Exit on error
+set -e
+
 # # Echo all env vars for debugging
 # echo "DISCORD_CLIENT_ID: $DISCORD_CLIENT_ID"
 # echo "DISCORD_CLIENT_SECRET: $DISCORD_CLIENT_SECRET"
 # echo "DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN"
-# echo "NODE_VERSION: $NODE_VERSION"
-# echo "SITE_NAME: $SITE_NAME"
+# echo "SESSION_SECRET: ${SESSION_SECRET:0:8}***"
 
-# Write wrangler.toml dynamically
-cat <<EOF > wrangler.toml
-[vars]
+# Build a temporary wrangler config instead of mutating the repository file.
+WRANGLER_CONFIG=".cloudflare/wrangler.generated.toml"
+cp wrangler.toml "$WRANGLER_CONFIG"
+
+cat <<EOF >> "$WRANGLER_CONFIG"
+
+# Dynamic environment variables (injected at build time)
+[env.production.vars]
 DISCORD_CLIENT_ID = "$DISCORD_CLIENT_ID"
 DISCORD_CLIENT_SECRET = "$DISCORD_CLIENT_SECRET"
 DISCORD_BOT_TOKEN = "$DISCORD_BOT_TOKEN"
 EOF
 
+npm run generate:css
 npm run write-items
-npm run build
+WRANGLER_TOML="$WRANGLER_CONFIG" npm run build
