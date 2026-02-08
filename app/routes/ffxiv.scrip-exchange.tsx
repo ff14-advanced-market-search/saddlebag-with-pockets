@@ -255,7 +255,16 @@ const FFXIVScripExchange = () => {
           data={data}
           columnList={columnList}
           mobileColumnList={mobileColumnList}
-          columnSelectOptions={['itemName']}
+          columnSelectOptions={[
+            'valuePerScrip',
+            'itemName',
+            'cost',
+            'minPrice',
+            'medianNQ',
+            'averageNQ',
+            'salesAmountNQ',
+            'quantitySoldNQ'
+          ]}
           sortingOrder={[{ id: 'valuePerScrip', desc: true }]}
         />
       )}
