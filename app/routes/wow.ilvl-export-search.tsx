@@ -353,7 +353,7 @@ const IlvlExportSearchComponent = () => {
             type="number"
             value={formValues.ilvl.toString()}
             min={0}
-            toolTip="Minimum item level to filter search results. Current 11.2 BOE levels are 115, 141, or 154."
+            toolTip="Minimum item level to filter search results. Current 11.2 BOE levels are 115, 128, 141, or 154."
             onChange={(e) =>
               setFormValues((prev) => ({
                 ...prev,
@@ -475,7 +475,7 @@ const IlvlExportSearchComponent = () => {
             <br />
             Note: If this page reset, then no items were found. Make sure you
             search for the exact ilvls you want and current 11.2 BOE levels 115,
-            141, or 154. Check the{' '}
+            128, 141, or 154. Check the{' '}
             <a
               href="/wow/ilvl-shopping-list"
               className="underline text-blue-600 dark:text-blue-400"
