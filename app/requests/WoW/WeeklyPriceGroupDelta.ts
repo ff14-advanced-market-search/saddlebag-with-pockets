@@ -1,4 +1,5 @@
 import { address, UserAgent } from '../client/config'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 
 export interface PriceGroup {
   name: string
@@ -59,7 +60,10 @@ const WeeklyPriceGroupDelta = async (
       'Content-Type': 'application/json',
       'User-Agent': UserAgent
     },
-    body: JSON.stringify(props)
+    body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
+      ...props
+    })
   })
 
   if (!response.ok) {

@@ -1,4 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 
 export type WoWServerRegion = 'NA' | 'EU'
 
@@ -108,6 +109,7 @@ WOWScanProps) => Promise<Response> = async ({
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       homeRealmId: homeRealmId,
       newRealmId: newRealmId,
       min_historic_price: minHistoricPrice,

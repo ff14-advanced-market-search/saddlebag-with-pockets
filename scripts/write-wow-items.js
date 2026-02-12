@@ -1,6 +1,9 @@
 const axios = require('axios')
 const { writeFile } = require('fs')
 
+const WOW_DISCORD_CONSENT =
+  'I have gone to discord and asked the devs about this api and i know it only updates once per hour and will not spam the api like an idiot and there is no point in making more than one request per hour and i will not make request for one item at a time i know many apis support calling multiple items at once'
+
 const ITEMS_ADDRESS = 'https://api.saddlebagexchange.com/api/wow/itemnames'
 
 const FILE_PATHS = {
@@ -58,9 +61,9 @@ const getItems = async (type = 'regular') => {
     console.log(`Fetching ${type} items from:`, ITEMS_ADDRESS)
 
     const data = {
-      regular: {},
-      stackable: { stackable: true },
-      pets: { pets: true }
+      regular: { discord_consent: WOW_DISCORD_CONSENT },
+      stackable: { discord_consent: WOW_DISCORD_CONSENT, stackable: true },
+      pets: { discord_consent: WOW_DISCORD_CONSENT, pets: true }
     }[type]
 
     const itemNameResponse = await axios({

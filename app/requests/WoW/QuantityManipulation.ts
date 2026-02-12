@@ -1,5 +1,6 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { WoWServerRegion } from './WOWScan'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 
 export interface QuantityManipulationProps {
   historicPrice: number
@@ -74,6 +75,7 @@ const WoWQuantityManipulation = async ({
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       region,
       itemQuality,
       historicPrice,

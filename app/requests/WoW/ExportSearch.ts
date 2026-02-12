@@ -1,5 +1,6 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { WoWServerRegion } from './WOWScan'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 
 interface WoWExportSearchProps {
   region: WoWServerRegion
@@ -77,6 +78,7 @@ const WoWExportSearch = async ({
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       region,
       itemID,
       populationWP,
