@@ -1,6 +1,7 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { WoWServerRegion } from './WOWScan'
 import type { ItemStat } from './IlvlShoppingList'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 
 interface IlvlExportSearchProps {
   region: WoWServerRegion
@@ -75,6 +76,7 @@ const IlvlExportSearch = async ({
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       region,
       itemID,
       ilvl,

@@ -1,4 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 
 export interface WOWSingleItemShortageProps {
   desiredAvgPrice: number
@@ -90,6 +91,7 @@ WOWSingleItemShortageProps) => Promise<Response> = async ({
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       desired_avg_price: desiredAvgPrice,
       desired_sales_per_day: desiredSalesPerDay,
       desired_price_increase: desiredPriceIncrease,

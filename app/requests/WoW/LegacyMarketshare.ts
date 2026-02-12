@@ -1,5 +1,6 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { MarketState } from '../FFXIV/marketshare'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 
 export interface LegacyMarketshareResponse {
   data: Array<LegacyMarketshareItem>
@@ -77,6 +78,7 @@ const LegacyMarketshare: (
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       homeRealmId,
       desired_avg_price: desiredAvgPrice,
       desired_sales_per_day: desiredSalesPerDay,

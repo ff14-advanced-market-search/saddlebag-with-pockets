@@ -1,4 +1,5 @@
 import { address, UserAgent } from '~/requests/client/config'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 
 export interface WoWShortage {
@@ -119,6 +120,7 @@ WOWCommodityShortageProps) => Promise<Response> = async ({
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       desired_avg_price: desiredAvgPrice,
       desired_sales_per_day: desiredSalesPerDay,
       desired_price_increase: desiredPriceIncrease,

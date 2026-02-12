@@ -1,5 +1,6 @@
 import { address, UserAgent } from '~/requests/client/config'
 import type { WoWServerRegion } from './WOWScan'
+import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
 import type { WoWMarketState } from './types'
 
 export interface PetMarketshareResponse {
@@ -82,6 +83,7 @@ const PetMarketshare: (
       'User-Agent': UserAgent
     },
     body: JSON.stringify({
+      discord_consent: WOW_DISCORD_CONSENT,
       region,
       homeRealmName,
       minPrice: desiredPrice,
