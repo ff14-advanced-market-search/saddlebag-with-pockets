@@ -37,6 +37,10 @@ import {
 import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import {
+  WOW_ILVL_DEFAULT,
+  WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION
+} from '~/constants/wowIlvl'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -66,11 +70,11 @@ const AVAILABLE_STATS: ItemStat[] = [
   'Socket',
   'Leech',
   'Speed',
-  'Avoidance'
-  // 'Haste',
-  // 'Crit',
-  // 'Mastery',
-  // 'Versatility'
+  'Avoidance',
+  'Haste',
+  'Crit',
+  'Mastery',
+  'Versatility'
 ]
 
 const inputMap: Record<string, string> = {
@@ -121,7 +125,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const itemID = params.get('itemId')
   const maxPurchasePrice = params.get('maxPurchasePrice') || '10000000'
-  const desiredMinIlvl = params.get('desiredMinIlvl') || '670'
+  const desiredMinIlvl =
+    params.get('desiredMinIlvl') || String(WOW_ILVL_DEFAULT)
   const desiredStats = [
     ...new Set(
       params
@@ -200,7 +205,9 @@ const IlvlShoppingListComponent = () => {
   const transition = useNavigation()
   const [itemName, setItemName] = useState<string>('')
   const [maxPurchasePrice, setMaxPurchasePrice] = useState<string>('10000000')
-  const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('670')
+  const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>(
+    String(WOW_ILVL_DEFAULT)
+  )
   const [itemID, setItemID] = useState<string>('')
   const [selectedStats, setSelectedStats] = useState<ItemStat[]>([])
 
@@ -213,7 +220,8 @@ const IlvlShoppingListComponent = () => {
     const itemIdFromUrl = searchParams.get('itemId')
     const maxPurchasePriceFromUrl =
       searchParams.get('maxPurchasePrice') || '10000000'
-    const desiredMinIlvlFromUrl = searchParams.get('desiredMinIlvl') || '670'
+    const desiredMinIlvlFromUrl =
+      searchParams.get('desiredMinIlvl') || String(WOW_ILVL_DEFAULT)
     const desiredStatsFromUrl = searchParams.getAll(
       'desiredStats'
     ) as ItemStat[]
@@ -264,15 +272,7 @@ const IlvlShoppingListComponent = () => {
         description={`
           Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
           Supports the following items:
-          - Harvested Creephide Cord
-          - Bone-Melted Faceplate
-          - Voidhound Trainer's Boots
-          - Veiled Manta Vest
-          - Acolyte's Infused Leggings
-          - Zadus's Liturgical Hat
-          - Jak'tull's Intruder Stompers
-          - Entropy
-          - Technomancer's Service Sandals
+          ${WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION}
         `}
         onClick={handleSubmit}
         error={error}

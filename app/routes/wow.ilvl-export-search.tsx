@@ -40,6 +40,12 @@ import { getActionUrl, handleCopyButton } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import {
+  WOW_ILVL_DEFAULT,
+  WOW_ILVL_LEVELS_DISPLAY,
+  WOW_ILVL_PATCH,
+  WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION
+} from '~/constants/wowIlvl'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -62,7 +68,16 @@ export const meta: MetaFunction = () => {
 
 const PAGE_URL = '/wow/ilvl-export-search'
 
-const AVAILABLE_STATS: ItemStat[] = ['Socket', 'Leech', 'Speed', 'Avoidance']
+const AVAILABLE_STATS: ItemStat[] = [
+  'Socket',
+  'Leech',
+  'Speed',
+  'Avoidance',
+  'Haste',
+  'Crit',
+  'Mastery',
+  'Versatility'
+]
 
 type SortByValue =
   | 'minPrice'
@@ -72,7 +87,7 @@ type SortByValue =
 
 const defaultFormValues = {
   itemId: '',
-  ilvl: 670,
+  ilvl: WOW_ILVL_DEFAULT,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
@@ -138,7 +153,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const params = url.searchParams
 
   const itemID = params.get('itemId')
-  const ilvl = params.get('ilvl') || '662'
+  const ilvl = params.get('ilvl') || String(WOW_ILVL_DEFAULT)
   const populationWP = params.get('populationWP') || '3000'
   const populationBlizz = params.get('populationBlizz') || '1'
   const rankingWP = params.get('rankingWP') || '90'
@@ -237,7 +252,7 @@ const IlvlExportSearchComponent = () => {
     }
 
     const itemIdFromUrl = searchParams.get('itemId')
-    const ilvlFromUrl = searchParams.get('ilvl') || '642'
+    const ilvlFromUrl = searchParams.get('ilvl') || String(WOW_ILVL_DEFAULT)
     const populationWPFromUrl = searchParams.get('populationWP') || '3000'
     const populationBlizzFromUrl = searchParams.get('populationBlizz') || '1'
     const rankingWPFromUrl = searchParams.get('rankingWP') || '90'
@@ -304,15 +319,7 @@ const IlvlExportSearchComponent = () => {
         description={`
           Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
           Supports the following items:
-          - Harvested Creephide Cord
-          - Bone-Melted Faceplate
-          - Voidhound Trainer's Boots
-          - Veiled Manta Vest
-          - Acolyte's Infused Leggings
-          - Zadus's Liturgical Hat
-          - Jak'tull's Intruder Stompers
-          - Entropy
-          - Technomancer's Service Sandals
+          ${WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION}
         `}
         onClick={handleSubmit}
         error={error}
@@ -344,7 +351,7 @@ const IlvlExportSearchComponent = () => {
             type="number"
             value={formValues.ilvl.toString()}
             min={0}
-            toolTip="Minimum item level to filter search results. Current 11.1 BOE levels are 675, 688, or 701."
+            toolTip={`Minimum item level to filter search results. Current ${WOW_ILVL_PATCH} BOE levels are ${WOW_ILVL_LEVELS_DISPLAY}.`}
             onChange={(e) =>
               setFormValues((prev) => ({
                 ...prev,
@@ -465,8 +472,8 @@ const IlvlExportSearchComponent = () => {
             <br />
             <br />
             Note: If this page reset, then no items were found. Make sure you
-            search for the exact ilvls you want and current 11.1 BOE levels 675,
-            688 or 701. Check the{' '}
+            search for the exact ilvls you want and current {WOW_ILVL_PATCH} BOE
+            levels {WOW_ILVL_LEVELS_DISPLAY}. Check the{' '}
             <a
               href="/wow/ilvl-shopping-list"
               className="underline text-blue-600 dark:text-blue-400"
