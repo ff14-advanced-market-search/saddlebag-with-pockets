@@ -474,7 +474,7 @@ const IlvlExportSearchComponent = () => {
             <br />
             <br />
             Note: If this page reset, then no items were found. Make sure you
-            search for the exact ilvls you want and current 11.1 BOE levels 115,
+            search for the exact ilvls you want and current 11.2 BOE levels 115,
             141, or 154. Check the{' '}
             <a
               href="/wow/ilvl-shopping-list"
