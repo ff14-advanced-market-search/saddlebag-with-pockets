@@ -81,7 +81,7 @@ type SortByValue =
 
 const defaultFormValues = {
   itemId: '',
-  ilvl: 114,
+  ilvl: 141,
   populationWP: 3000,
   populationBlizz: 1,
   rankingWP: 90,
@@ -147,7 +147,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const params = url.searchParams
 
   const itemID = params.get('itemId')
-  const ilvl = params.get('ilvl') || '114'
+  const ilvl = params.get('ilvl') || '141'
   const populationWP = params.get('populationWP') || '3000'
   const populationBlizz = params.get('populationBlizz') || '1'
   const rankingWP = params.get('rankingWP') || '90'
@@ -246,7 +246,7 @@ const IlvlExportSearchComponent = () => {
     }
 
     const itemIdFromUrl = searchParams.get('itemId')
-    const ilvlFromUrl = searchParams.get('ilvl') || '114'
+    const ilvlFromUrl = searchParams.get('ilvl') || '141'
     const populationWPFromUrl = searchParams.get('populationWP') || '3000'
     const populationBlizzFromUrl = searchParams.get('populationBlizz') || '1'
     const rankingWPFromUrl = searchParams.get('rankingWP') || '90'

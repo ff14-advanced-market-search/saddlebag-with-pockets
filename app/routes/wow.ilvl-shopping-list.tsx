@@ -121,7 +121,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const itemID = params.get('itemId')
   const maxPurchasePrice = params.get('maxPurchasePrice') || '10000000'
-  const desiredMinIlvl = params.get('desiredMinIlvl') || '114'
+  const desiredMinIlvl = params.get('desiredMinIlvl') || '141'
   const desiredStats = [
     ...new Set(
       params
@@ -200,7 +200,7 @@ const IlvlShoppingListComponent = () => {
   const transition = useNavigation()
   const [itemName, setItemName] = useState<string>('')
   const [maxPurchasePrice, setMaxPurchasePrice] = useState<string>('10000000')
-  const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('114')
+  const [desiredMinIlvl, setDesiredMinIlvl] = useState<string>('141')
   const [itemID, setItemID] = useState<string>('')
   const [selectedStats, setSelectedStats] = useState<ItemStat[]>([])
 
@@ -213,7 +213,7 @@ const IlvlShoppingListComponent = () => {
     const itemIdFromUrl = searchParams.get('itemId')
     const maxPurchasePriceFromUrl =
       searchParams.get('maxPurchasePrice') || '10000000'
-    const desiredMinIlvlFromUrl = searchParams.get('desiredMinIlvl') || '114'
+    const desiredMinIlvlFromUrl = searchParams.get('desiredMinIlvl') || '141'
     const desiredStatsFromUrl = searchParams.getAll(
       'desiredStats'
     ) as ItemStat[]
