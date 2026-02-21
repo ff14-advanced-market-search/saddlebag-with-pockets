@@ -250,16 +250,17 @@ export const meta: MetaFunction = ({ data }) => {
   } else {
     const canonicalUrl = `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
     const description = `${data.data.itemName} World of Warcraft Auctionhouse TSM (Trade Skill Master) Gold Statistics`
+    const title = `${data.data.itemName} – WoW Auction House Price & Market Data`
     return [
       { charset: 'utf-8' },
-      { title: data.data.itemName },
+      { title },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { name: 'description', content: description },
       { tagName: 'link', rel: 'canonical', href: canonicalUrl },
-      { property: 'og:title', content: data.data.itemName },
+      { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:url', content: canonicalUrl },
-      { property: 'og:type', content: 'website' },
+      { property: 'og:type', content: 'product' },
       { name: 'twitter:card', content: 'summary_large_image' }
     ]
   }

@@ -23,16 +23,17 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   } else {
     const canonicalUrl = `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
     const description = `Guild Wars 2 trading post data for ${data.data.itemName}`
+    const title = `${data.data.itemName} – GW2 Trading Post Price Data`
     return [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      { title: data.data.itemName },
+      { title },
       { name: 'description', content: description },
       { tagName: 'link', rel: 'canonical', href: canonicalUrl },
-      { property: 'og:title', content: data.data.itemName },
+      { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:url', content: canonicalUrl },
-      { property: 'og:type', content: 'website' },
+      { property: 'og:type', content: 'product' },
       { name: 'twitter:card', content: 'summary_large_image' }
     ]
   }

@@ -45,17 +45,18 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const itemId = data?.itemId ?? params?.itemId ?? '4745'
   const canonicalUrl = `https://saddlebagexchange.com/queries/item-data/${itemId}`
   const description = `${itemName}: FFXIV Market Board Data`
+  const title = `${itemName} – FFXIV Market Board Price Data`
 
   return [
     { charset: 'utf-8' },
-    { title: itemName },
+    { title },
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'description', content: description },
     { tagName: 'link', rel: 'canonical', href: canonicalUrl },
-    { property: 'og:title', content: itemName },
+    { property: 'og:title', content: title },
     { property: 'og:description', content: description },
     { property: 'og:url', content: canonicalUrl },
-    { property: 'og:type', content: 'website' },
+    { property: 'og:type', content: 'product' },
     { name: 'twitter:card', content: 'summary_large_image' }
   ]
 }
