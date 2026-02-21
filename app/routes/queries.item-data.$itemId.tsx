@@ -150,7 +150,7 @@ const ItemPage = () => {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: data.itemName,
-    description: `${data.itemName}: FFXIV Market Data`,
+    description: `${data.itemName}: FFXIV Market Board Data`,
     url: `https://saddlebagexchange.com/queries/item-data/${itemId}`
   }
 

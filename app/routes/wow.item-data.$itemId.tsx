@@ -313,7 +313,7 @@ export default function Index() {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: listing.itemName,
-      description: `TSM (Trade Skill Master) statistics for ${listing.itemName}`,
+      description: `${listing.itemName} World of Warcraft Auctionhouse TSM (Trade Skill Master) Gold Statistics`,
       url: `https://saddlebagexchange.com/wow/item-data/${listing.itemID}`
     }
     return (
