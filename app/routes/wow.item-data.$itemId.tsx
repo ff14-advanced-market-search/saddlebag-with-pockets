@@ -248,19 +248,21 @@ export const meta: MetaFunction = ({ data }) => {
       { name: 'description', content: `Error: ${data.exception}` }
     ]
   } else {
+    const canonicalUrl = `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
+    const description = `${data.data.itemName} World of Warcraft Auctionhouse TSM (Trade Skill Master) Gold Statistics`
+    const title = `${data.data.itemName} – WoW Auction House Price & Market Data`
     return [
       { charset: 'utf-8' },
-      { title: data.data.itemName },
+      { title },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      {
-        name: 'description',
-        content: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`
-      },
-      {
-        tagName: 'link',
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
-      }
+      { name: 'description', content: description },
+      { tagName: 'link', rel: 'canonical', href: canonicalUrl },
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: description },
+      { property: 'og:url', content: canonicalUrl },
+      { property: 'og:type', content: 'product' },
+      { property: 'og:site_name', content: 'SaddleBag Exchange' },
+      { name: 'twitter:card', content: 'summary' }
     ]
   }
 }
@@ -309,8 +311,65 @@ export default function Index() {
 
   if (listing) {
     const now = new Date()
+    const canonicalUrl = `https://saddlebagexchange.com/wow/item-data/${listing.itemID}`
+    const lowPrice =
+      typeof listing.minPrice === 'number' && listing.minPrice !== -1
+        ? listing.minPrice
+        : undefined
+    const jsonLd: Record<string, unknown> = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: listing.itemName,
+      description: `${listing.itemName} World of Warcraft Auctionhouse TSM (Trade Skill Master) Gold Statistics`,
+      url: canonicalUrl
+    }
+    if (lowPrice != null) {
+      jsonLd.offers = {
+        '@type': 'AggregateOffer',
+        lowPrice,
+        priceCurrency: 'GOLD',
+        availability: 'https://schema.org/InStock'
+      }
+    }
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://saddlebagexchange.com'
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'WoW',
+          item: 'https://saddlebagexchange.com/wow/itemlist'
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: listing.itemName,
+          item: canonicalUrl
+        }
+      ]
+    }
+    const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+    const breadcrumbString = JSON.stringify(breadcrumbSchema).replace(
+      /</g,
+      '\\u003c'
+    )
     return (
       <PageWrapper>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: breadcrumbString }}
+        />
         <Title title={listing.itemName} />
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>
         <Banner />

@@ -21,19 +21,21 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       { name: 'description', content: `Error: ${data.exception}` }
     ]
   } else {
+    const canonicalUrl = `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
+    const description = `Guild Wars 2 trading post data for ${data.data.itemName}`
+    const title = `${data.data.itemName} – GW2 Trading Post Price Data`
     return [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      { title: data.data.itemName },
-      {
-        name: 'description',
-        content: `Guild Wars 2 trading post data for ${data.data.itemName}`
-      },
-      {
-        tagName: 'link',
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
-      }
+      { title },
+      { name: 'description', content: description },
+      { tagName: 'link', rel: 'canonical', href: canonicalUrl },
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: description },
+      { property: 'og:url', content: canonicalUrl },
+      { property: 'og:type', content: 'product' },
+      { property: 'og:site_name', content: 'SaddleBag Exchange' },
+      { name: 'twitter:card', content: 'summary' }
     ]
   }
 }
@@ -94,8 +96,65 @@ export default function Index() {
   }
 
   if (listing) {
+    const canonicalUrl = `https://saddlebagexchange.com/gw2/item-data/${listing.itemID}`
+    const lowPrice =
+      typeof listing.price_average === 'number' && listing.price_average > 0
+        ? listing.price_average
+        : undefined
+    const jsonLd: Record<string, unknown> = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: listing.itemName,
+      description: `Guild Wars 2 trading post data for ${listing.itemName}`,
+      url: canonicalUrl
+    }
+    if (lowPrice != null) {
+      jsonLd.offers = {
+        '@type': 'AggregateOffer',
+        lowPrice,
+        priceCurrency: 'GOLD',
+        availability: 'https://schema.org/InStock'
+      }
+    }
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://saddlebagexchange.com'
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'GW2',
+          item: 'https://saddlebagexchange.com/gw2/itemlist'
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: listing.itemName,
+          item: canonicalUrl
+        }
+      ]
+    }
+    const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+    const breadcrumbString = JSON.stringify(breadcrumbSchema).replace(
+      /</g,
+      '\\u003c'
+    )
     return (
       <PageWrapper>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: breadcrumbString }}
+        />
         <Banner />
         <ItemDataDisplay
           listing={listing}

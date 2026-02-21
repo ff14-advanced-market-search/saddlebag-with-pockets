@@ -228,7 +228,8 @@ export const meta: MetaFunction = ({ data }) => {
       name: 'description',
       content:
         'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
-    }
+    },
+    { property: 'og:site_name', content: 'SaddleBag Exchange' }
   ]
 }
 
@@ -375,7 +376,6 @@ function App() {
     <DatadogProvider>
       <html lang="en" className={classNames(`h-full`, theme || '')}>
         <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <Meta />
           <Links />
           <EnsureThemeApplied />
