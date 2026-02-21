@@ -315,7 +315,7 @@ export default function Index() {
     const lowPrice =
       typeof listing.minPrice === 'number' && listing.minPrice !== -1
         ? listing.minPrice
-        : 0
+        : undefined
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'Product',

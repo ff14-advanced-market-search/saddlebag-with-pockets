@@ -149,12 +149,27 @@ const ItemPage = () => {
     (!listing || !('listings' in listing))
 
   const canonicalUrl = `https://saddlebagexchange.com/queries/item-data/${itemId}`
-  const jsonLd = {
+  const lowPrice =
+    listing &&
+    'min_price' in listing &&
+    typeof listing.min_price === 'number' &&
+    listing.min_price > 0
+      ? listing.min_price
+      : undefined
+  const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: data.itemName,
     description: `${data.itemName}: FFXIV Market Board Data`,
     url: canonicalUrl
+  }
+  if (lowPrice != null) {
+    jsonLd.offers = {
+      '@type': 'AggregateOffer',
+      lowPrice,
+      priceCurrency: 'GIL',
+      availability: 'https://schema.org/InStock'
+    }
   }
   const breadcrumbSchema = {
     '@context': 'https://schema.org',

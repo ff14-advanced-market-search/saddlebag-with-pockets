@@ -100,7 +100,7 @@ export default function Index() {
     const lowPrice =
       typeof listing.price_average === 'number' && listing.price_average > 0
         ? listing.price_average
-        : 0
+        : undefined
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'Product',
