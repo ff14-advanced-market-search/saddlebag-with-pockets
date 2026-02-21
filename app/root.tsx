@@ -228,7 +228,8 @@ export const meta: MetaFunction = ({ data }) => {
       name: 'description',
       content:
         'SaddleBag Exchange: An MMO market data analysis engine for the WoW Auctionhouse, FFXIV Marketboard and more!'
-    }
+    },
+    { property: 'og:site_name', content: 'SaddleBag Exchange' }
   ]
 }
 

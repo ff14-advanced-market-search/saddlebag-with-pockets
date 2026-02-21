@@ -57,6 +57,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     { property: 'og:description', content: description },
     { property: 'og:url', content: canonicalUrl },
     { property: 'og:type', content: 'product' },
+    { property: 'og:site_name', content: 'SaddleBag Exchange' },
     { name: 'twitter:card', content: 'summary_large_image' }
   ]
 }
@@ -147,20 +148,53 @@ const ItemPage = () => {
     (!data.history || !('price_history' in data.history)) &&
     (!listing || !('listings' in listing))
 
+  const canonicalUrl = `https://saddlebagexchange.com/queries/item-data/${itemId}`
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: data.itemName,
     description: `${data.itemName}: FFXIV Market Board Data`,
-    url: `https://saddlebagexchange.com/queries/item-data/${itemId}`
+    url: canonicalUrl
+  }
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://saddlebagexchange.com'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'FFXIV',
+        item: 'https://saddlebagexchange.com/ffxiv/itemlist'
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: data.itemName,
+        item: canonicalUrl
+      }
+    ]
   }
   const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+  const breadcrumbString = JSON.stringify(breadcrumbSchema).replace(
+    /</g,
+    '\\u003c'
+  )
 
   return (
     <PageWrapper>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: breadcrumbString }}
       />
       <>
         <Section>
