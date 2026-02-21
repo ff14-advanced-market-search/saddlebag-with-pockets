@@ -248,19 +248,19 @@ export const meta: MetaFunction = ({ data }) => {
       { name: 'description', content: `Error: ${data.exception}` }
     ]
   } else {
+    const canonicalUrl = `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
+    const description = `${data.data.itemName} World of Warcraft Auctionhouse TSM (Trade Skill Master) Gold Statistics`
     return [
       { charset: 'utf-8' },
       { title: data.data.itemName },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      {
-        name: 'description',
-        content: `TSM (Trade Skill Master) statistics for ${data.data.itemName}`
-      },
-      {
-        tagName: 'link',
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/wow/item-data/${data.data.itemID}`
-      }
+      { name: 'description', content: description },
+      { tagName: 'link', rel: 'canonical', href: canonicalUrl },
+      { property: 'og:title', content: data.data.itemName },
+      { property: 'og:description', content: description },
+      { property: 'og:url', content: canonicalUrl },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary_large_image' }
     ]
   }
 }
@@ -309,8 +309,19 @@ export default function Index() {
 
   if (listing) {
     const now = new Date()
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: listing.itemName,
+      description: `TSM (Trade Skill Master) statistics for ${listing.itemName}`,
+      url: `https://saddlebagexchange.com/wow/item-data/${listing.itemID}`
+    }
     return (
       <PageWrapper>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Title title={listing.itemName} />
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>
         <Banner />

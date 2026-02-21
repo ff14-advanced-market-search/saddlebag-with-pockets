@@ -21,19 +21,19 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       { name: 'description', content: `Error: ${data.exception}` }
     ]
   } else {
+    const canonicalUrl = `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
+    const description = `Guild Wars 2 trading post data for ${data.data.itemName}`
     return [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { title: data.data.itemName },
-      {
-        name: 'description',
-        content: `Guild Wars 2 trading post data for ${data.data.itemName}`
-      },
-      {
-        tagName: 'link',
-        rel: 'canonical',
-        href: `https://saddlebagexchange.com/gw2/item-data/${data.data.itemID}`
-      }
+      { name: 'description', content: description },
+      { tagName: 'link', rel: 'canonical', href: canonicalUrl },
+      { property: 'og:title', content: data.data.itemName },
+      { property: 'og:description', content: description },
+      { property: 'og:url', content: canonicalUrl },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary_large_image' }
     ]
   }
 }
@@ -94,8 +94,19 @@ export default function Index() {
   }
 
   if (listing) {
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: listing.itemName,
+      description: `Guild Wars 2 trading post data for ${listing.itemName}`,
+      url: `https://saddlebagexchange.com/gw2/item-data/${listing.itemID}`
+    }
     return (
       <PageWrapper>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Banner />
         <ItemDataDisplay
           listing={listing}

@@ -28,23 +28,35 @@ type ItemPageData =
       listing?: ListingResponseType | {}
       itemName: string
       itemDescription?: string
+      itemId?: string
     }
   | { exception: string; itemName: string }
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  if (data && 'exception' in data) {
+    return [
+      { charset: 'utf-8' },
+      { title: 'Error' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+      { name: 'description', content: `Error: ${data.exception}` }
+    ]
+  }
   const itemName = data?.itemName || 'Unknown Item'
-  const itemId = data?.itemId || '4745'
+  const itemId = data?.itemId ?? params?.itemId ?? '0'
+  const canonicalUrl = `https://saddlebagexchange.com/queries/item-data/${itemId}`
+  const description = `${itemName}: FFXIV Market Board Data`
 
   return [
     { charset: 'utf-8' },
     { title: itemName },
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-    { name: 'description', content: `${itemName}: FFXIV Market Data` },
-    {
-      tagName: 'link',
-      rel: 'canonical',
-      href: `https://saddlebagexchange.com/queries/item-data/${itemId}`
-    }
+    { name: 'description', content: description },
+    { tagName: 'link', rel: 'canonical', href: canonicalUrl },
+    { property: 'og:title', content: itemName },
+    { property: 'og:description', content: description },
+    { property: 'og:url', content: canonicalUrl },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary_large_image' }
   ]
 }
 
@@ -98,7 +110,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       history: await historyResponse.json(),
       listing: await listingResponse.json(),
       itemDescription: (await blogResponse.json()).itemDescription,
-      itemName
+      itemName,
+      itemId
     })
   } catch (error) {
     if (error instanceof Error) {
@@ -133,8 +146,20 @@ const ItemPage = () => {
     (!data.history || !('price_history' in data.history)) &&
     (!listing || !('listings' in listing))
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: data.itemName,
+    description: `${data.itemName}: FFXIV Market Data`,
+    url: `https://saddlebagexchange.com/queries/item-data/${itemId}`
+  }
+
   return (
     <PageWrapper>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <>
         <Section>
           <>
