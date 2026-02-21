@@ -154,12 +154,13 @@ const ItemPage = () => {
     description: `${data.itemName}: FFXIV Market Board Data`,
     url: `https://saddlebagexchange.com/queries/item-data/${itemId}`
   }
+  const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
 
   return (
     <PageWrapper>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString }}
       />
       <>
         <Section>

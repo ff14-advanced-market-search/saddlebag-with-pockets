@@ -317,11 +317,12 @@ export default function Index() {
       description: `${listing.itemName} World of Warcraft Auctionhouse TSM (Trade Skill Master) Gold Statistics`,
       url: `https://saddlebagexchange.com/wow/item-data/${listing.itemID}`
     }
+    const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
     return (
       <PageWrapper>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdString }}
         />
         <Title title={listing.itemName} />
         <p style={{ fontSize: '1px' }}>{listing.blog}</p>

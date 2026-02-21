@@ -102,11 +102,12 @@ export default function Index() {
       description: `Guild Wars 2 trading post data for ${listing.itemName}`,
       url: `https://saddlebagexchange.com/gw2/item-data/${listing.itemID}`
     }
+    const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
     return (
       <PageWrapper>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdString }}
         />
         <Banner />
         <ItemDataDisplay
