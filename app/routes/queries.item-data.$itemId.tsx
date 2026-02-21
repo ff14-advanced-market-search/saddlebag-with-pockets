@@ -42,7 +42,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     ]
   }
   const itemName = data?.itemName || 'Unknown Item'
-  const itemId = data?.itemId ?? params?.itemId ?? '0'
+  const itemId = data?.itemId ?? params?.itemId ?? '4745'
   const canonicalUrl = `https://saddlebagexchange.com/queries/item-data/${itemId}`
   const description = `${itemName}: FFXIV Market Board Data`
 
