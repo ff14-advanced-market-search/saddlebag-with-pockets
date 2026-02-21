@@ -35,7 +35,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       { property: 'og:url', content: canonicalUrl },
       { property: 'og:type', content: 'product' },
       { property: 'og:site_name', content: 'SaddleBag Exchange' },
-      { name: 'twitter:card', content: 'summary_large_image' }
+      { name: 'twitter:card', content: 'summary' }
     ]
   }
 }

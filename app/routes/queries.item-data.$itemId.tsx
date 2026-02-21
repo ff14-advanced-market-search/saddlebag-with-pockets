@@ -58,7 +58,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     { property: 'og:url', content: canonicalUrl },
     { property: 'og:type', content: 'product' },
     { property: 'og:site_name', content: 'SaddleBag Exchange' },
-    { name: 'twitter:card', content: 'summary_large_image' }
+    { name: 'twitter:card', content: 'summary' }
   ]
 }
 
@@ -148,7 +148,8 @@ const ItemPage = () => {
     (!data.history || !('price_history' in data.history)) &&
     (!listing || !('listings' in listing))
 
-  const canonicalUrl = `https://saddlebagexchange.com/queries/item-data/${itemId}`
+  const canonicalItemId = data.itemId ?? itemId
+  const canonicalUrl = `https://saddlebagexchange.com/queries/item-data/${canonicalItemId}`
   const lowPrice =
     listing &&
     'min_price' in listing &&
