@@ -168,7 +168,6 @@ const ItemPage = () => {
     jsonLd.offers = {
       '@type': 'AggregateOffer',
       lowPrice,
-      priceCurrency: 'GIL',
       availability: 'https://schema.org/InStock'
     }
   }

@@ -327,7 +327,6 @@ export default function Index() {
       jsonLd.offers = {
         '@type': 'AggregateOffer',
         lowPrice,
-        priceCurrency: 'GOLD',
         availability: 'https://schema.org/InStock'
       }
     }
