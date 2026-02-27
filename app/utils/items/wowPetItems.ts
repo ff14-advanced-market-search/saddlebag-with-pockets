@@ -2085,7 +2085,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4906': 'Scruffbeak',
   '4907': "Lil' Coalee",
   '4908': "Lil' Ashlee",
-  '4910': 'Do, child of Filo',
+  '4910': 'Do, Child of Filo',
   '4911': 'P.O.S.T. Assistant',
   '4912': 'Silvermoon Broom',
   '4913': 'Moon Darter',
@@ -2100,7 +2100,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4946': 'Linda the Lucky',
   '4947': 'Assistant Botanist Leafy',
   '4948': 'Perturbed Sporebat',
-  '4950': 'Immature Behemoth',
+  '4950': 'Fidoficus',
   '4951': 'Bubbly Snapling',
   '4952': 'Blitzcreek',
   '4953': 'Sporbie',
@@ -2129,5 +2129,6 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4983': 'Kai',
   '4984': 'Medusa',
   '4985': 'Princess Bloodshed',
-  '5003': 'Sunwing Hatchling'
+  '5003': 'Sunwing Hatchling',
+  '5012': 'Sootpaw'
 }
