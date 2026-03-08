@@ -19,7 +19,15 @@ interface ItemDetailsTableProps {
   getDataForTimestamp: (
     item: ItemData,
     timestamp: string
-  ) => { p?: number; delta?: number } | undefined
+  ) =>
+    | {
+        p?: number
+        delta?: number
+        q?: number
+        tsmP?: number | null
+        tsmQ?: number | null
+      }
+    | undefined
 }
 
 /**
@@ -60,9 +68,16 @@ export default function ItemDetailsTable({
             data={data.map((item) => {
               const itemData = getDataForTimestamp(item, selectedDate)
               return {
-                ...item,
-                price: itemData?.p || 0,
-                delta: itemData?.delta || 0
+                itemName: item.itemName,
+                itemID: item.itemID,
+                price: itemData?.p ?? '',
+                delta: itemData?.delta ?? '',
+                quantity: itemData?.q ?? '',
+                tsmP: itemData?.tsmP ?? '',
+                tsmQ: itemData?.tsmQ ?? '',
+                marketshare: item.marketshare,
+                historicPrice: item.historicPrice,
+                salesPerDay: item.salesPerDay
               }
             })}
             columns={[
@@ -75,7 +90,22 @@ export default function ItemDetailsTable({
               {
                 title: `Delta % (${formatTimestamp(selectedDate)})`,
                 value: 'delta'
-              }
+              },
+              {
+                title: `Quantity (${formatTimestamp(selectedDate)})`,
+                value: 'quantity'
+              },
+              {
+                title: `TSM Price (${formatTimestamp(selectedDate)})`,
+                value: 'tsmP'
+              },
+              {
+                title: `TSM Sales (${formatTimestamp(selectedDate)})`,
+                value: 'tsmQ'
+              },
+              { title: 'Marketshare', value: 'marketshare' },
+              { title: 'TSM Avg Price', value: 'historicPrice' },
+              { title: 'TSM Sales', value: 'salesPerDay' }
             ]}
             filename={`${selectedGroup}_items_${formatTimestamp(
               selectedDate
