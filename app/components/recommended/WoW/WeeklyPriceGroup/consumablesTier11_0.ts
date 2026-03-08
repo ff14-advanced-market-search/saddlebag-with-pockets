@@ -1,5 +1,5 @@
 const consumablesTier11_0 = {
-  name: 'TWW Raid Consumables 11.0 Consumables',
+  name: 'TWW Raid 11.0 Consumables',
   description:
     'Comprehensive price tracking for all major TWW consumables for the first raid. Food, flasks, potions, gems, enchants, etc.',
   config: {
