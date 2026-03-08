@@ -17,6 +17,7 @@ import midnightFurnishingComponentsBaseExpansion from './midnightFurnishingCompo
 import midnightFurnishingComponentsBaseCategory from './midnightFurnishingComponentsBaseCategory'
 import midnightFurnishingDyes from './midnightFurnishingDyes'
 import tier12_0 from './tier12_0'
+import consumablesTier12_0 from './consumablesTier12_0'
 
 const patchCycleConfigs = [
   tier12_0, // Tier 12.0 Complete Analysis
