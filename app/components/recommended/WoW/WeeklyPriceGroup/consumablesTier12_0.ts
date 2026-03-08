@@ -1,5 +1,5 @@
 const consumablesTier12_0 = {
-  name: 'Midnight Raid Consumables 12.0 Consumables',
+  name: 'Midnight Raid 12.0 Consumables',
   description:
     'Comprehensive price tracking for all major Midnight consumables for the first raid. Food, flasks, potions, gems, enchants, etc.',
   config: {
