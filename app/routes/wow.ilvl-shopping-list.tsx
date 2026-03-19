@@ -39,7 +39,10 @@ import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 import {
   WOW_ILVL_DEFAULT,
-  WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION
+  WOW_ILVL_LEVELS_DISPLAY,
+  WOW_ILVL_PATCH,
+  WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION,
+  WOW_TOOL_LEVELS_DISPLAY
 } from '~/constants/wowIlvl'
 
 // Overwrite default meta in the root.tsx
@@ -287,6 +290,7 @@ const IlvlShoppingListComponent = () => {
         <div className="pt-3 flex flex-col gap-4">
           <DebouncedSelectInput
             title={'Item to search for'}
+            tooltip="Search for a specific raid BOE item by name. Type to search and select from the dropdown."
             label="Item"
             id="export-item-select"
             selectOptions={wowItemsList}
@@ -308,6 +312,7 @@ const IlvlShoppingListComponent = () => {
             type="number"
             value={desiredMinIlvl}
             min={0}
+            toolTip={`Minimum item level to filter search results. Current ${WOW_ILVL_PATCH} BOE levels are ${WOW_ILVL_LEVELS_DISPLAY}. Blue profession tools are ilvl ${WOW_TOOL_LEVELS_DISPLAY}.`}
             onChange={(e) => setDesiredMinIlvl(e.currentTarget.value)}
           />
           <div className="flex flex-col gap-2">

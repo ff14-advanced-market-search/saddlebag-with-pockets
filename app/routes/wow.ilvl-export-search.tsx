@@ -44,7 +44,8 @@ import {
   WOW_ILVL_DEFAULT,
   WOW_ILVL_LEVELS_DISPLAY,
   WOW_ILVL_PATCH,
-  WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION
+  WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION,
+  WOW_TOOL_LEVELS_DISPLAY
 } from '~/constants/wowIlvl'
 
 // Overwrite default meta in the root.tsx
@@ -351,7 +352,7 @@ const IlvlExportSearchComponent = () => {
             type="number"
             value={formValues.ilvl.toString()}
             min={0}
-            toolTip={`Minimum item level to filter search results. Current ${WOW_ILVL_PATCH} BOE levels are ${WOW_ILVL_LEVELS_DISPLAY}. Blue Profession tools are ilvl 106.`}
+            toolTip={`Minimum item level to filter search results. Current ${WOW_ILVL_PATCH} BOE levels are ${WOW_ILVL_LEVELS_DISPLAY}. Blue profession tools are ilvl ${WOW_TOOL_LEVELS_DISPLAY}.`}
             onChange={(e) =>
               setFormValues((prev) => ({
                 ...prev,

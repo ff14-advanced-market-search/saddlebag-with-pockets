@@ -3,15 +3,16 @@
  * Update these when a new patch changes BOE levels or supported items.
  */
 
-/** Available BOE item levels for the current patch */
-/** Seems to always be 13 item levels apart */
-export const WOW_ILVL_LEVELS = [227, 240, 253, 266] as const
-
 /** Default minimum item level for the ilvl form */
 export const WOW_ILVL_DEFAULT = 106
 
 /** Patch label for copy */
 export const WOW_ILVL_PATCH = '12.0'
+
+/** Available BOE item levels for the current patch */
+/** Seems to always be 13 item levels apart */
+export const WOW_ILVL_LEVELS = [227, 240, 253, 266] as const
+export const WOW_TOOL_LEVELS = [206, 212, 218, 225, 232] as const
 
 /** Display string for BOE levels in tooltips/notes: "115, 128, 141, or 154" */
 export const WOW_ILVL_LEVELS_DISPLAY =
@@ -20,6 +21,13 @@ export const WOW_ILVL_LEVELS_DISPLAY =
         WOW_ILVL_LEVELS[WOW_ILVL_LEVELS.length - 1]
       }`
     : String(WOW_ILVL_LEVELS[0])
+/** Display string for profession tool levels in tooltips/notes */
+export const WOW_TOOL_LEVELS_DISPLAY =
+  WOW_TOOL_LEVELS.length > 1
+    ? `${WOW_TOOL_LEVELS.slice(0, -1).join(', ')} or ${
+        WOW_TOOL_LEVELS[WOW_TOOL_LEVELS.length - 1]
+      }`
+    : String(WOW_TOOL_LEVELS[0])
 
 /** Supported raid BOE item names (shown in form descriptions) */
 export const WOW_ILVL_SUPPORTED_ITEMS = [
