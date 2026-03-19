@@ -351,7 +351,7 @@ const IlvlExportSearchComponent = () => {
             type="number"
             value={formValues.ilvl.toString()}
             min={0}
-            toolTip={`Minimum item level to filter search results. Current ${WOW_ILVL_PATCH} BOE levels are ${WOW_ILVL_LEVELS_DISPLAY}.`}
+            toolTip={`Minimum item level to filter search results. Current ${WOW_ILVL_PATCH} BOE levels are ${WOW_ILVL_LEVELS_DISPLAY}. Blue Profession tools are ilvl 106.`}
             onChange={(e) =>
               setFormValues((prev) => ({
                 ...prev,

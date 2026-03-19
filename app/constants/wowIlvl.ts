@@ -4,13 +4,14 @@
  */
 
 /** Available BOE item levels for the current patch */
-export const WOW_ILVL_LEVELS = [115, 128, 141, 154] as const
+/** Seems to always be 13 item levels apart */
+export const WOW_ILVL_LEVELS = [227, 240, 253, 266] as const
 
 /** Default minimum item level for the ilvl form */
-export const WOW_ILVL_DEFAULT = 141
+export const WOW_ILVL_DEFAULT = 106
 
-/** Patch label for copy (e.g. "11.2") */
-export const WOW_ILVL_PATCH = '11.2'
+/** Patch label for copy */
+export const WOW_ILVL_PATCH = '12.0'
 
 /** Display string for BOE levels in tooltips/notes: "115, 128, 141, or 154" */
 export const WOW_ILVL_LEVELS_DISPLAY =
@@ -22,15 +23,37 @@ export const WOW_ILVL_LEVELS_DISPLAY =
 
 /** Supported raid BOE item names (shown in form descriptions) */
 export const WOW_ILVL_SUPPORTED_ITEMS = [
-  'Harvested Creephide Cord',
-  'Bone-Melted Faceplate',
-  "Voidhound Trainer's Boots",
-  'Veiled Manta Vest',
-  "Acolyte's Infused Leggings",
-  "Zadus's Liturgical Hat",
-  "Jak'tull's Intruder Stompers",
-  'Entropy',
-  "Technomancer's Service Sandals"
+  'Visage of Unseen Truths',
+  'Infernal Greatlock Girdle',
+  "Nullstrider's Boots",
+  'Power Stance Breeches',
+  'Primal Spark Pauldrons',
+  'Raging Storm Sash',
+  'Breastplate of the Final Defense',
+  'Fading Dawn Sabatons',
+  "Sin'dorei Scribe's Spectacles",
+  'Improved Right-Handed Magnifying Glass',
+  "Sin'dorei Jeweler's Loupes",
+  "Sin'dorei Enchanter's Crystal",
+  'Runed Brilliant Silver Rod',
+  "Sin'dorei Herbalist's Backpack",
+  "Sin'dorei Hunter's Pack",
+  "Eversong Hunter's Headcover",
+  "Sin'dorei Engineer's Gloves",
+  "Sin'dorei Leathershaper's Smock",
+  "Sin'dorei Alchemist's Hat",
+  "Sin'dorei Forgemaster's Cover",
+  "Sin'dorei Jeweler's Cover",
+  "Sin'dorei Snippers",
+  "Sin'dorei Headlamp",
+  "Sin'dorei Angler's Rod",
+  "Sin'dorei Clampers",
+  "Sin'dorei Gilded Hardhat",
+  "Turbo-Junker's Multitool v1",
+  "Junker's Big Ol' Bag",
+  "Sin'dorei Quill",
+  "Sin'dorei Alchemist's Mixing Rod",
+  "Sin'dorei Rolling Pin"
 ] as const
 
 /** Bullet-list string for form description (Supports the following items: ...) */
