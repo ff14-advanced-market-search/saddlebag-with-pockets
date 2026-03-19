@@ -31,6 +31,7 @@ export const WOW_TOOL_LEVELS_DISPLAY =
 
 /** Supported raid BOE item names (shown in form descriptions) */
 export const WOW_ILVL_SUPPORTED_ITEMS = [
+  // Raid BOE item names 12.0
   'Visage of Unseen Truths',
   'Infernal Greatlock Girdle',
   "Nullstrider's Boots",
@@ -39,6 +40,7 @@ export const WOW_ILVL_SUPPORTED_ITEMS = [
   'Raging Storm Sash',
   'Breastplate of the Final Defense',
   'Fading Dawn Sabatons',
+  // Midnight Profession tool items
   "Sin'dorei Scribe's Spectacles",
   'Improved Right-Handed Magnifying Glass',
   "Sin'dorei Jeweler's Loupes",
