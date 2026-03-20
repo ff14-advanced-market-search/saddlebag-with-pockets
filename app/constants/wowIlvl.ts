@@ -11,27 +11,26 @@ export const WOW_ILVL_PATCH = '12.0'
 
 /** Available BOE item levels for the current patch */
 /** Seems to always be 13 item levels apart */
-export const WOW_ILVL_LEVELS = [227, 240, 253, 266] as const
-export const WOW_TOOL_LEVELS = [206, 212, 218, 225, 232] as const
+export const WOW_BOE_ILVLS = [227, 240, 253, 266] as const
+export const WOW_TOOL_ILVLS = [206, 212, 218, 225, 232] as const
 
 /** Display string for BOE levels in tooltips/notes: "115, 128, 141, or 154" */
 export const WOW_ILVL_LEVELS_DISPLAY =
-  WOW_ILVL_LEVELS.length > 1
-    ? `${WOW_ILVL_LEVELS.slice(0, -1).join(', ')} or ${
-        WOW_ILVL_LEVELS[WOW_ILVL_LEVELS.length - 1]
+  WOW_BOE_ILVLS.length > 1
+    ? `${WOW_BOE_ILVLS.slice(0, -1).join(', ')} or ${
+        WOW_BOE_ILVLS[WOW_BOE_ILVLS.length - 1]
       }`
-    : String(WOW_ILVL_LEVELS[0])
+    : String(WOW_BOE_ILVLS[0])
 /** Display string for profession tool levels in tooltips/notes */
 export const WOW_TOOL_LEVELS_DISPLAY =
-  WOW_TOOL_LEVELS.length > 1
-    ? `${WOW_TOOL_LEVELS.slice(0, -1).join(', ')} or ${
-        WOW_TOOL_LEVELS[WOW_TOOL_LEVELS.length - 1]
+  WOW_TOOL_ILVLS.length > 1
+    ? `${WOW_TOOL_ILVLS.slice(0, -1).join(', ')} or ${
+        WOW_TOOL_ILVLS[WOW_TOOL_ILVLS.length - 1]
       }`
-    : String(WOW_TOOL_LEVELS[0])
+    : String(WOW_TOOL_ILVLS[0])
 
-/** Supported raid BOE item names (shown in form descriptions) */
-export const WOW_ILVL_SUPPORTED_ITEMS = [
-  // Raid BOE item names 12.0
+/** Supported raid BOE gear names (shown in form descriptions) */
+export const WOW_ILVL_SUPPORTED_RAID_GEAR = [
   'Visage of Unseen Truths',
   'Infernal Greatlock Girdle',
   "Nullstrider's Boots",
@@ -39,8 +38,11 @@ export const WOW_ILVL_SUPPORTED_ITEMS = [
   'Primal Spark Pauldrons',
   'Raging Storm Sash',
   'Breastplate of the Final Defense',
-  'Fading Dawn Sabatons',
-  // Midnight Profession tool items
+  'Fading Dawn Sabatons'
+] as const
+
+/** Supported profession tool names (shown in form descriptions) */
+export const WOW_ILVL_SUPPORTED_TOOLS = [
   "Sin'dorei Scribe's Spectacles",
   'Improved Right-Handed Magnifying Glass',
   "Sin'dorei Jeweler's Loupes",
@@ -65,7 +67,3 @@ export const WOW_ILVL_SUPPORTED_ITEMS = [
   "Sin'dorei Alchemist's Mixing Rod",
   "Sin'dorei Rolling Pin"
 ] as const
-
-/** Bullet-list string for form description (Supports the following items: ...) */
-export const WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION =
-  WOW_ILVL_SUPPORTED_ITEMS.map((name) => `- ${name}`).join('\n          ')

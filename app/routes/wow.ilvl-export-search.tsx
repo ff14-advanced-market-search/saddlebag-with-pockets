@@ -44,7 +44,8 @@ import {
   WOW_ILVL_DEFAULT,
   WOW_ILVL_LEVELS_DISPLAY,
   WOW_ILVL_PATCH,
-  WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION,
+  WOW_ILVL_SUPPORTED_RAID_GEAR,
+  WOW_ILVL_SUPPORTED_TOOLS,
   WOW_TOOL_LEVELS_DISPLAY
 } from '~/constants/wowIlvl'
 
@@ -317,11 +318,30 @@ const IlvlExportSearchComponent = () => {
     <PremiumPaywall loaderData={loaderData}>
       <SmallFormContainer
         title="Item Level Export Search"
-        description={`
-          Search for raid BOE items with specific item levels and stats across all realms, with additional realm data.
-          Supports the following items:
-          ${WOW_ILVL_SUPPORTED_ITEMS_DESCRIPTION}
-        `}
+        description={
+          <div className="text-sm text-gray-700 dark:text-gray-200 px-3 py-1 mb-1 space-y-2">
+            <p>
+              Search for raid BOE items with specific item levels and stats
+              across all realms, with additional realm data.
+            </p>
+            <div>
+              <p className="font-semibold">Supported raid BOE gear:</p>
+              <ul className="list-disc pl-5">
+                {WOW_ILVL_SUPPORTED_RAID_GEAR.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="font-semibold">Supported profession tools:</p>
+              <ul className="list-disc pl-5">
+                {WOW_ILVL_SUPPORTED_TOOLS.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        }
         onClick={handleSubmit}
         error={error}
         loading={isSubmitting}
