@@ -279,26 +279,33 @@ const IlvlShoppingListComponent = () => {
               Search for raid BOE items with specific item levels and stats
               across all realms, with additional realm data.
             </p>
-            <div>
-              <p className="font-semibold">
-                Supported raid BOE gear (ilvl {WOW_ILVL_LEVELS_DISPLAY}):
-              </p>
-              <ul className="list-disc pl-5">
-                {WOW_ILVL_SUPPORTED_RAID_GEAR.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold">
-                Supported profession tools (ilvl {WOW_TOOL_LEVELS_DISPLAY}):
-              </p>
-              <ul className="list-disc pl-5">
-                {WOW_ILVL_SUPPORTED_TOOLS.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
+            <details className="rounded border border-gray-300 dark:border-slate-500 p-2">
+              <summary className="cursor-pointer font-semibold select-none">
+                Supported items and expected ilvls
+              </summary>
+              <div className="mt-2 space-y-2">
+                <div>
+                  <p className="font-semibold">
+                    Raid BOE gear (ilvl {WOW_ILVL_LEVELS_DISPLAY}):
+                  </p>
+                  <ul className="list-disc pl-5">
+                    {WOW_ILVL_SUPPORTED_RAID_GEAR.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-semibold">
+                    Profession tools (ilvl {WOW_TOOL_LEVELS_DISPLAY}):
+                  </p>
+                  <ul className="list-disc pl-5">
+                    {WOW_ILVL_SUPPORTED_TOOLS.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </details>
           </div>
         }
         onClick={handleSubmit}
