@@ -2118,6 +2118,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4966': 'Screechy Mandrake',
   '4967': 'Gortham',
   '4968': "Lil' Staropod",
+  '4969': 'Roofus',
   '4971': 'Luma',
   '4972': 'Willie',
   '4974': 'Dali',
