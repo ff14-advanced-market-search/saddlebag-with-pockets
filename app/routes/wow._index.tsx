@@ -171,6 +171,13 @@ const recommendedQueries = [
     href: '/wow/price-alert'
   },
   {
+    name: 'ToekneeATX Flipping Lists and Guides',
+    description:
+      'Curated ToekneeATX lists and guides for AAA, Saddlebag Exchange, PBS, and TSM.',
+    Icon: DocumentSearchIcon,
+    href: '/wow/toekneeatx-flipping-lists'
+  },
+  {
     name: 'Zygor Guides',
     description: 'Addons and Guides for WoW',
     Icon: DocumentSearchIcon,
