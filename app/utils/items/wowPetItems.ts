@@ -2085,6 +2085,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4906': 'Scruffbeak',
   '4907': "Lil' Coalee",
   '4908': "Lil' Ashlee",
+  '4909': 'Emerald Hatchling',
   '4910': 'Do, Child of Filo',
   '4911': 'P.O.S.T. Assistant',
   '4912': 'Silvermoon Broom',

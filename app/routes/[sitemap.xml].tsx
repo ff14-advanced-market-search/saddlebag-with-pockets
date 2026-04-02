@@ -143,6 +143,11 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
+  <loc>https://saddlebagexchange.com/wow/toekneeatx-flipping-lists</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
   <loc>https://saddlebagexchange.com/options</loc>
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
   <priority>0.70</priority>

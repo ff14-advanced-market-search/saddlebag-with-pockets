@@ -11965,6 +11965,7 @@ export const wowStackableItemsMap: Record<string, string> = {
   '250317': 'Pile of Ash',
   '250856': 'Screwdriver',
   '250857': 'Rum-Ka',
+  '250858': 'Genedar Synthol',
   '250859': 'Terocone Wine',
   '250860': 'Prairie Pilsner',
   '250861': "Chieftain's Reserve",

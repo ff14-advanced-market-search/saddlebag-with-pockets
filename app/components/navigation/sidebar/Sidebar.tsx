@@ -343,6 +343,11 @@ const navGroups: Array<{
         href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
         icon: DocumentSearchIcon,
         external: true
+      },
+      {
+        name: 'ToekneeATX Flipping Lists and Guides',
+        href: '/wow/toekneeatx-flipping-lists',
+        icon: DocumentSearchIcon
       }
     ]
   },
