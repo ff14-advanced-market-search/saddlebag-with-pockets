@@ -137,7 +137,20 @@ const FFXIVFcSealsExchange = () => {
       <div className="py-3">
         <SmallFormContainer
           title="FC seals and credits vs market price"
-          description="Uses your home world from site options. Finds market listings at or below your max price and compares seal cost to FC credits and experience."
+          description={
+            <>
+              Finds market listings at or below your max price and compares seal
+              cost to FC credits and GC experience gained per turn in via{' '}
+              <a
+                href="https://ffxiv.consolegameswiki.com/wiki/Grand_Company#Expert_Delivery_Missions"
+                className="text-blue-600 underline"
+                target="_blank"
+                rel="noopener noreferrer">
+                Expert Delivery Missions
+              </a>
+              .
+            </>
+          }
           onClick={onSubmit}
           error={error}
           loading={transition.state === 'submitting'}
