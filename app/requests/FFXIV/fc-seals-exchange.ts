@@ -13,7 +13,6 @@ export interface FcSealsExchangeRow {
   listingServer: string
   price: number
   seals: number
-  fcCredits: number
   creditsPerGil: number
   fcExperience: number
 }

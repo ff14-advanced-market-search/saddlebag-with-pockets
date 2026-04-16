@@ -16,6 +16,7 @@ import {
 } from '~/requests/FFXIV/fc-seals-exchange'
 import type { ColumnList } from '~/components/types'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
+import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import z from 'zod'
 import {
   parseCheckboxBoolean,
@@ -192,35 +193,55 @@ const FFXIVFcSealsExchange = () => {
 }
 
 const columnList: Array<ColumnList<FcSealsExchangeRow>> = [
-  { columnId: 'itemName', header: 'Item' },
-  { columnId: 'itemLevel', header: 'iLvl' },
-  { columnId: 'listingServer', header: 'Listing' },
-  { columnId: 'price', header: 'Price (gil)' },
-  { columnId: 'seals', header: 'GC seals' },
-  { columnId: 'fcCredits', header: 'FC credits' },
-  { columnId: 'creditsPerGil', header: 'FC credits / gil' },
-  { columnId: 'fcExperience', header: 'FC EXP' },
+  { columnId: 'itemName', header: 'Name' },
+  {
+    columnId: 'universalis',
+    header: 'Universalis',
+    accessor: ({ row }) => (
+      <UniversalisBadgedLink
+        link={`https://universalis.app/market/${row.itemID}`}
+      />
+    )
+  },
   {
     columnId: 'itemData',
     header: 'Item data',
     accessor: ({ row }) => (
       <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
     )
-  }
+  },
+  { columnId: 'listingServer', header: 'Server' },
+  { columnId: 'price', header: 'Price (gil)' },
+  { columnId: 'creditsPerGil', header: 'Credits / gil' },
+  { columnId: 'seals', header: 'Seals' },
+  { columnId: 'fcExperience', header: 'FC experience' },
+  { columnId: 'itemLevel', header: 'Item Level' }
 ]
 
 const mobileColumnList: Array<ColumnList<FcSealsExchangeRow>> = [
-  { columnId: 'itemName', header: 'Item' },
-  { columnId: 'price', header: 'Price (gil)' },
-  { columnId: 'creditsPerGil', header: 'FC credits / gil' },
-  { columnId: 'listingServer', header: 'Listing' },
+  { columnId: 'itemName', header: 'Name' },
+  {
+    columnId: 'universalis',
+    header: 'Universalis',
+    accessor: ({ row }) => (
+      <UniversalisBadgedLink
+        link={`https://universalis.app/market/${row.itemID}`}
+      />
+    )
+  },
   {
     columnId: 'itemData',
     header: 'Item data',
     accessor: ({ row }) => (
       <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
     )
-  }
+  },
+  { columnId: 'listingServer', header: 'Server' },
+  { columnId: 'price', header: 'Price (gil)' },
+  { columnId: 'creditsPerGil', header: 'Credits / gil' },
+  { columnId: 'seals', header: 'Seals' },
+  { columnId: 'fcExperience', header: 'FC experience' },
+  { columnId: 'itemLevel', header: 'Item Level' }
 ]
 
 export default FFXIVFcSealsExchange
