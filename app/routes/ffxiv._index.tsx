@@ -109,6 +109,13 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
+    name: 'FC Seals and Credits Exchange',
+    href: '/ffxiv/fc-seals-exchange',
+    description:
+      'Find market gear cheap enough to buy for seals: compare gil price to GC seals, FC company credits, and credits per gil.',
+    Icon: ChartSquareBarIcon
+  },
+  {
     name: 'Extended Sale History',
     description:
       'See extended sale history of last 1800 sales on any FFXIV item.',
