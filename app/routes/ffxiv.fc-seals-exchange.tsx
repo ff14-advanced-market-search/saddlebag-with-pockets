@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import { PageWrapper } from '~/components/Common'
+import { ClipboardIcon } from '@heroicons/react/outline'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import {
   FcSealsExchangeRequest,
@@ -23,6 +24,26 @@ import {
   parseStringToNumber,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
+
+const CopyButton = ({ text }: { text: string }) => {
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text)
+      alert('Copied to clipboard!')
+    } catch {
+      alert('Failed to copy text')
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="text-blue-500 hover:text-blue-700 focus:outline-none">
+      <ClipboardIcon className="h-5 w-5 inline" />
+    </button>
+  )
+}
 
 export const meta = () => {
   return [
@@ -206,7 +227,16 @@ const FFXIVFcSealsExchange = () => {
 }
 
 const columnList: Array<ColumnList<FcSealsExchangeRow>> = [
-  { columnId: 'itemName', header: 'Name' },
+  {
+    columnId: 'itemName',
+    header: 'Name',
+    accessor: ({ row: { itemName } }) => (
+      <div className="flex items-center justify-between gap-2">
+        <span>{itemName}</span>
+        <CopyButton text={itemName} />
+      </div>
+    )
+  },
   {
     columnId: 'universalis',
     header: 'Universalis',
@@ -232,7 +262,16 @@ const columnList: Array<ColumnList<FcSealsExchangeRow>> = [
 ]
 
 const mobileColumnList: Array<ColumnList<FcSealsExchangeRow>> = [
-  { columnId: 'itemName', header: 'Name' },
+  {
+    columnId: 'itemName',
+    header: 'Name',
+    accessor: ({ row: { itemName } }) => (
+      <div className="flex items-center justify-between gap-2">
+        <span>{itemName}</span>
+        <CopyButton text={itemName} />
+      </div>
+    )
+  },
   {
     columnId: 'universalis',
     header: 'Universalis',
