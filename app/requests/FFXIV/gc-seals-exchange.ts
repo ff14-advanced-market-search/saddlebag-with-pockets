@@ -1,28 +1,28 @@
 import { address, UserAgent } from '~/requests/client/config'
 
-export interface FcSealsExchangeProps {
+export interface GcSealsExchangeProps {
   home_server: string
   max_item_cost: number
   region_wide: boolean
 }
 
-export interface FcSealsExchangeRow {
+export interface GcSealsExchangeRow {
   itemID: number
   itemName: string
   itemLevel: number
   listingServer: string
   price: number
   seals: number
-  creditsPerGil: number
-  fcExperience: number
+  gcSealsPerGil: number
+  gcExperience: number
 }
 
-export type FcSealsExchangeResults = FcSealsExchangeRow[]
+export type GcSealsExchangeResults = GcSealsExchangeRow[]
 
-export const FcSealsExchangeRequest = async (
-  body: FcSealsExchangeProps
-): Promise<FcSealsExchangeResults> => {
-  const response = await fetch(`${address}/api/ffxiv/fcsealsexchange`, {
+export const GcSealsExchangeRequest = async (
+  body: GcSealsExchangeProps
+): Promise<GcSealsExchangeResults> => {
+  const response = await fetch(`${address}/api/ffxiv/gcsealsexchange`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export const FcSealsExchangeRequest = async (
     throw new Error('Network response was not ok')
   }
 
-  const json = (await response.json()) as { data?: FcSealsExchangeResults }
+  const json = (await response.json()) as { data?: GcSealsExchangeResults }
 
   if (!json.data || !Array.isArray(json.data)) {
     throw new Error('Unexpected API response shape')

@@ -343,7 +343,7 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/ffxiv/fc-seals-exchange</loc>
+  <loc>https://saddlebagexchange.com/ffxiv/gc-seals-exchange</loc>
   <lastmod>2024-07-07T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>

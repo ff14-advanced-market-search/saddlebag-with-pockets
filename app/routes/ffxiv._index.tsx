@@ -109,10 +109,10 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
-    name: 'FC Seals and Credits Exchange',
-    href: '/ffxiv/fc-seals-exchange',
+    name: 'Grand Company Seals Exchange',
+    href: '/ffxiv/gc-seals-exchange',
     description:
-      'Find market gear cheap enough to buy for seals: compare gil price to GC seals, FC company credits, and credits per gil.',
+      'Expert Delivery helper: find cheap market gear and compare gil price to GC seal cost, seals per gil, and Grand Company experience.',
     Icon: ChartSquareBarIcon
   },
   {

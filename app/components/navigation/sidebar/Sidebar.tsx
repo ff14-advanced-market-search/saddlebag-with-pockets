@@ -203,8 +203,8 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
-        name: 'FC Seals Exchange',
-        href: 'ffxiv/fc-seals-exchange',
+        name: 'GC Seals Exchange',
+        href: 'ffxiv/gc-seals-exchange',
         icon: ChartSquareBarIcon
       },
       {
