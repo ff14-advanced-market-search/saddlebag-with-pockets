@@ -109,6 +109,13 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
+    name: 'Grand Company Seals Exchange',
+    href: '/ffxiv/gc-seals-exchange',
+    description:
+      'Expert Delivery helper: find cheap market gear and compare gil price to GC seal cost, seals per gil, and Grand Company experience.',
+    Icon: ChartSquareBarIcon
+  },
+  {
     name: 'Extended Sale History',
     description:
       'See extended sale history of last 1800 sales on any FFXIV item.',

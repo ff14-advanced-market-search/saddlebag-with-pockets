@@ -203,6 +203,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'GC Seals Exchange',
+        href: 'ffxiv/gc-seals-exchange',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Extended Sale History',
         href: '/ffxiv/extended-history',
         icon: ChartSquareBarIcon
