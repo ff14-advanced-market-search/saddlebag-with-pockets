@@ -37,6 +37,7 @@ export const loader: LoaderFunction = () => {
   Allow: /wow/weekly-price-group-delta
   Allow: /ffxiv/scrip-exchange
   Allow: /ffxiv/gc-seals-exchange
+  Allow: /ffxiv/gc-seal-crafting
   Allow: /ffxiv/extended-history
   Allow: /ffxiv/best-deals/recommended
   Allow: /ffxiv/weekly-price-group-delta

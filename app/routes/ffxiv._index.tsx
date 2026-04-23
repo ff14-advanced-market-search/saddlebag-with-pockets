@@ -116,6 +116,13 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
+    name: 'Grand Company Seal Crafting',
+    href: '/ffxiv/gc-seal-crafting',
+    description:
+      'Crafted Expert Delivery items: material cost from regional median or average prices, then GC seals and experience per gil.',
+    Icon: ChartSquareBarIcon
+  },
+  {
     name: 'Extended Sale History',
     description:
       'See extended sale history of last 1800 sales on any FFXIV item.',
