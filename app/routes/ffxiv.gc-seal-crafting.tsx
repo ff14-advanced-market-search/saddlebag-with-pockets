@@ -180,9 +180,8 @@ const FFXIVGcSealCrafting = () => {
           title="Grand Company seals: crafted turn-ins"
           description={
             <>
-              Estimates how much it costs to craft each item using regional
-              material prices (median or average), then shows GC seals and
-              experience per gil for{' '}
+              Estimates crafting costs for making different items you can turn
+              in for Grand Company seals and experience via{' '}
               <a
                 href="https://ffxiv.consolegameswiki.com/wiki/Grand_Company#Expert_Delivery_Missions"
                 className="text-blue-600 underline"
@@ -190,7 +189,7 @@ const FFXIVGcSealCrafting = () => {
                 rel="noopener noreferrer">
                 Expert Delivery
               </a>{' '}
-              turn-ins. Uses your home world from site options.
+              turn-ins. Get the mosst GC seals per gil spend on ingredients.
             </>
           }
           onClick={onSubmit}

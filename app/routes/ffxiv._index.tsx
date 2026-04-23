@@ -119,7 +119,7 @@ const ffxivPages = [
     name: 'Grand Company Seal Crafting',
     href: '/ffxiv/gc-seal-crafting',
     description:
-      'Crafted Expert Delivery items: material cost from regional median or average prices, then GC seals and experience per gil.',
+      'Crafted Expert Delivery items: Estimates crafting costs for making different items you can turn in for Grand Company seals and experience via Expert Delivery.',
     Icon: ChartSquareBarIcon
   },
   {
