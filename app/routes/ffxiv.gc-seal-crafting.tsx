@@ -9,19 +9,23 @@ import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import { PageWrapper } from '~/components/Common'
 import { ClipboardIcon } from '@heroicons/react/outline'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
+import Select from '~/components/form/select'
+import Filter from '~/components/form/Filter'
 import {
-  GcSealsExchangeRequest,
-  type GcSealsExchangeProps,
-  type GcSealsExchangeResults,
-  type GcSealsExchangeRow
-} from '~/requests/FFXIV/gc-seals-exchange'
+  GcSealCraftingRequest,
+  type GcSealCraftingProps,
+  type GcSealCraftingResults,
+  type GcSealCraftingRow
+} from '~/requests/FFXIV/gc-seal-crafting'
 import type { ColumnList } from '~/components/types'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
+import { dOHOptions } from '~/consts'
 import z from 'zod'
 import {
-  parseCheckboxBoolean,
+  createUnionSchema,
   parseStringToNumber,
+  parseStringToNumberArray,
   parseZodErrorsToDisplayString
 } from '~/utils/zodHelpers'
 
@@ -54,35 +58,42 @@ const CopyButton = ({ text }: { text: string }) => {
 export const meta = () => {
   return [
     { charset: 'utf-8' },
-    { title: 'Saddlebag Exchange: FFXIV Grand Company Seals Exchange' },
+    {
+      title:
+        'Saddlebag Exchange: FFXIV Grand Company seal crafting (material cost)'
+    },
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
       content:
-        'Compare FFXIV market board prices to Grand Company seal costs for Expert Delivery. Find gear with the best GC seals per gil and GC experience on your home world or data center wide.'
+        'FFXIV Expert Delivery crafting: estimate craft cost from regional material median or average prices, then compare GC seals and experience per gil for turn-in items.'
     },
     {
       tagName: 'link',
       rel: 'canonical',
-      href: 'https://saddlebagexchange.com/ffxiv/gc-seals-exchange'
+      href: 'https://saddlebagexchange.com/ffxiv/gc-seal-crafting'
     }
   ]
 }
 
+const materialMetricSchema = createUnionSchema(['median', 'average'] as const)
+
 const validateFormInput = z.object({
   home_server: z.string().min(1),
-  max_item_cost: parseStringToNumber.pipe(z.number().min(1)),
-  region_wide: parseCheckboxBoolean
+  material_price_metric: materialMetricSchema,
+  max_material_cost: parseStringToNumber.pipe(z.number().min(1)),
+  jobs: parseStringToNumberArray.pipe(z.array(z.number()).min(1))
 })
 
 const inputMap: Record<string, string> = {
   home_server: 'Home World',
-  max_item_cost: 'Max item price (gil)',
-  region_wide: 'Search entire data center'
+  material_price_metric: 'Material price metric',
+  max_material_cost: 'Max material cost (gil)',
+  jobs: 'Disciples of the Hand'
 }
 
 type ActionResponse =
-  | { data: GcSealsExchangeResults; payload: GcSealsExchangeProps }
+  | { data: GcSealCraftingResults; payload: GcSealCraftingProps }
   | { exception: string }
   | {}
 
@@ -100,20 +111,21 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  const payload: GcSealsExchangeProps = {
+  const payload: GcSealCraftingProps = {
     home_server: parsed.data.home_server,
-    max_item_cost: parsed.data.max_item_cost,
-    region_wide: parsed.data.region_wide
+    material_price_metric: parsed.data.material_price_metric,
+    max_material_cost: parsed.data.max_material_cost,
+    jobs: parsed.data.jobs
   }
 
   try {
-    const data = await GcSealsExchangeRequest(payload)
+    const data = await GcSealCraftingRequest(payload)
     if (!data.length) {
       return json({ exception: 'No data found.', payload })
     }
     return json({ data, payload })
   } catch (err) {
-    console.error('Error fetching GC seals exchange:', err)
+    console.error('Error fetching GC seal crafting:', err)
     return json({ exception: 'Error fetching data.' })
   }
 }
@@ -125,11 +137,13 @@ const parseServerError = (error: string) => {
   return error
 }
 
-const FFXIVGcSealsExchange = () => {
+const FFXIVGcSealCrafting = () => {
   const transition = useNavigation()
   const actionData = useActionData<ActionResponse>()
-  const [maxItemCost, setMaxItemCost] = useState('1500')
-  const [regionWide, setRegionWide] = useState(false)
+  const [maxMaterialCost, setMaxMaterialCost] = useState('5000')
+  const [materialMetric, setMaterialMetric] = useState<'median' | 'average'>(
+    'median'
+  )
   const [error, setError] = useState<string | undefined>()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -163,20 +177,19 @@ const FFXIVGcSealsExchange = () => {
     <PageWrapper>
       <div className="py-3">
         <SmallFormContainer
-          title="Grand Company seals vs market price"
+          title="Grand Company seals: crafted turn-ins"
           description={
             <>
-              Finds market listings at or below your max buyout price for Expert
-              Delivery turn-ins: seal cost, seals per gil, and Grand Company
-              experience via{' '}
+              Estimates crafting costs for making different items you can turn
+              in for Grand Company seals and experience via{' '}
               <a
                 href="https://ffxiv.consolegameswiki.com/wiki/Grand_Company#Expert_Delivery_Missions"
                 className="text-blue-600 underline"
                 target="_blank"
                 rel="noopener noreferrer">
-                Expert Delivery Missions
-              </a>
-              .
+                Expert Delivery
+              </a>{' '}
+              turn-ins. Get the mosst GC seals per gil spend on ingredients.
             </>
           }
           onClick={onSubmit}
@@ -184,41 +197,46 @@ const FFXIVGcSealsExchange = () => {
           loading={transition.state === 'submitting'}
           disabled={false}>
           <>
+            <Select
+              title="Material price metric"
+              name="material_price_metric"
+              id="material_price_metric"
+              value={materialMetric}
+              options={[
+                { label: 'Median (region)', value: 'median' },
+                { label: 'Average (region)', value: 'average' }
+              ]}
+              onChange={(e) => {
+                const v = e.target.value
+                if (v === 'median' || v === 'average') {
+                  setMaterialMetric(v)
+                  if (error) setError(undefined)
+                }
+              }}
+            />
             <InputWithLabel
-              labelTitle="Max item price (gil)"
-              name="max_item_cost"
+              labelTitle="Max material cost (gil)"
+              name="max_material_cost"
               type="number"
               min={1}
               required
-              value={maxItemCost}
+              value={maxMaterialCost}
               onChange={(e) => {
-                setMaxItemCost(e.target.value)
+                setMaxMaterialCost(e.target.value)
                 if (error) setError(undefined)
               }}
             />
-            <div className="mt-4 flex items-center gap-2">
-              <input
-                id="region_wide"
-                name="region_wide"
-                type="checkbox"
-                checked={regionWide}
-                onChange={(e) => {
-                  setRegionWide(e.target.checked)
-                  if (error) setError(undefined)
-                }}
-                className="h-4 w-4 rounded border-gray-300 text-blue-600"
-              />
-              <label
-                htmlFor="region_wide"
-                className="text-sm font-medium text-gray-700 dark:text-gray-100">
-                Search entire data center (region-wide)
-              </label>
-            </div>
+            <Filter
+              formName="jobs"
+              defaultValue={[0]}
+              options={dOHOptions}
+              title="Disciples of the Hand"
+            />
           </>
         </SmallFormContainer>
       </div>
       {error === 'No results found' && (
-        <NoResults href="/ffxiv/gc-seals-exchange" />
+        <NoResults href="/ffxiv/gc-seal-crafting" />
       )}
       {data && (
         <SmallTable
@@ -233,7 +251,7 @@ const FFXIVGcSealsExchange = () => {
   )
 }
 
-const columnList: Array<ColumnList<GcSealsExchangeRow>> = [
+const columnList: Array<ColumnList<GcSealCraftingRow>> = [
   {
     columnId: 'itemName',
     header: 'Name',
@@ -260,15 +278,14 @@ const columnList: Array<ColumnList<GcSealsExchangeRow>> = [
       <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
     )
   },
-  { columnId: 'listingServer', header: 'Server' },
-  { columnId: 'price', header: 'Price (gil)' },
+  { columnId: 'craftCostGil', header: 'Craft cost (gil)' },
   { columnId: 'gcSealsPerGil', header: 'GC seals / gil' },
   { columnId: 'seals', header: 'GC seals' },
   { columnId: 'gcExperience', header: 'GC experience' },
   { columnId: 'itemLevel', header: 'Item Level' }
 ]
 
-const mobileColumnList: Array<ColumnList<GcSealsExchangeRow>> = [
+const mobileColumnList: Array<ColumnList<GcSealCraftingRow>> = [
   {
     columnId: 'itemName',
     header: 'Name',
@@ -279,28 +296,10 @@ const mobileColumnList: Array<ColumnList<GcSealsExchangeRow>> = [
       </div>
     )
   },
-  {
-    columnId: 'universalis',
-    header: 'Universalis',
-    accessor: ({ row }) => (
-      <UniversalisBadgedLink
-        link={`https://universalis.app/market/${row.itemID}`}
-      />
-    )
-  },
-  {
-    columnId: 'itemData',
-    header: 'Item data',
-    accessor: ({ row }) => (
-      <ItemDataLink link={`/queries/item-data/${row.itemID}`} />
-    )
-  },
-  { columnId: 'listingServer', header: 'Server' },
-  { columnId: 'price', header: 'Price (gil)' },
+  { columnId: 'craftCostGil', header: 'Craft cost (gil)' },
   { columnId: 'gcSealsPerGil', header: 'GC seals / gil' },
   { columnId: 'seals', header: 'GC seals' },
-  { columnId: 'gcExperience', header: 'GC experience' },
-  { columnId: 'itemLevel', header: 'Item Level' }
+  { columnId: 'gcExperience', header: 'GC experience' }
 ]
 
-export default FFXIVGcSealsExchange
+export default FFXIVGcSealCrafting

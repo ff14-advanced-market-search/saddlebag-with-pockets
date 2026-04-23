@@ -116,6 +116,13 @@ const ffxivPages = [
     Icon: ChartSquareBarIcon
   },
   {
+    name: 'Grand Company Seal Crafting',
+    href: '/ffxiv/gc-seal-crafting',
+    description:
+      'Crafted Expert Delivery items: Estimates crafting costs for making different items you can turn in for Grand Company seals and experience via Expert Delivery.',
+    Icon: ChartSquareBarIcon
+  },
+  {
     name: 'Extended Sale History',
     description:
       'See extended sale history of last 1800 sales on any FFXIV item.',

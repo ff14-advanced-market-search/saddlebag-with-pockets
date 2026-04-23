@@ -208,6 +208,11 @@ const navGroups: Array<{
         icon: ChartSquareBarIcon
       },
       {
+        name: 'GC Seal Crafting',
+        href: 'ffxiv/gc-seal-crafting',
+        icon: ChartSquareBarIcon
+      },
+      {
         name: 'Extended Sale History',
         href: '/ffxiv/extended-history',
         icon: ChartSquareBarIcon
