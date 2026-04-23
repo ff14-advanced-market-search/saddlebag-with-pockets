@@ -30,12 +30,15 @@ import {
 } from '~/utils/zodHelpers'
 
 const CopyButton = ({ text }: { text: string }) => {
+  const [copied, setCopied] = useState(false)
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text)
-      alert('Copied to clipboard!')
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
     } catch {
-      alert('Failed to copy text')
+      console.error('Failed to copy text')
     }
   }
 
@@ -43,7 +46,10 @@ const CopyButton = ({ text }: { text: string }) => {
     <button
       type="button"
       onClick={handleCopy}
-      className="text-blue-500 hover:text-blue-700 focus:outline-none">
+      className={`${
+        copied ? 'text-green-500' : 'text-blue-500 hover:text-blue-700'
+      } focus:outline-none`}
+      title={copied ? 'Copied!' : 'Copy to clipboard'}>
       <ClipboardIcon className="h-5 w-5 inline" />
     </button>
   )
