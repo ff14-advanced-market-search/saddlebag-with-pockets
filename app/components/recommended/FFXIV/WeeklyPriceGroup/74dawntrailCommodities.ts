@@ -9,7 +9,7 @@ const dawntrail74Commodities = {
     start_day: 1,
     end_year: 2026,
     end_month: 3,
-    end_day: 1,
+    end_day: 31,
     minimum_marketshare: 30000000,
     price_setting: 'median',
     quantity_setting: 'quantitySold',

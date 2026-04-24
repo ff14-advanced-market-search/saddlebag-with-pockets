@@ -16,10 +16,14 @@ import dawntrail73Commodities from './73dawntrailCommodities'
 import dawntrail73Misc from './73dawntrailMisc'
 import dawntrail74Commodities from './74dawntrailCommodities'
 import dawntrail74Misc from './74dawntrailMisc'
+import dawntrail75Commodities from './75dawntrailCommodities'
+import dawntrail75Misc from './75dawntrailMisc'
 
 const recommendedConfigs = [
   materiaWeeklyDelta,
   furnishingsWeeklyDelta,
+  dawntrail75Commodities,
+  dawntrail75Misc,
   dawntrail74Commodities,
   dawntrail74Misc,
   dawntrail73Commodities,
