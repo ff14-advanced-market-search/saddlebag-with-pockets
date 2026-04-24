@@ -7,6 +7,8 @@ import type { ItemListingResponse } from '~/requests/WoW/ItemListingsData'
 import ItemListingsData from '~/requests/WoW/ItemListingsData'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions'
+import type { WoWServerRegion } from '~/requests/WoW/types'
+import { findWoWServersIdByName } from '~/utils/WoWServers'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { format, subHours } from 'date-fns'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -226,6 +228,35 @@ const LazyCharts = ({
 
 export const ErrorBoundary = () => <ErrorBounds />
 
+const regionFromSearchParam = (
+  value: string | null
+): WoWServerRegion | undefined => {
+  if (!value) return undefined
+  const upper = value.toUpperCase()
+  if (upper === 'NA' || upper === 'EU') return upper
+  return undefined
+}
+
+const resolveHomeRealmIdFromName = (
+  name: string,
+  region: WoWServerRegion
+): { ok: true; id: number } | { ok: false; message: string } => {
+  const matches = findWoWServersIdByName(name, region)
+  const exact = matches.find((s) => s.name.toLowerCase() === name.toLowerCase())
+  if (exact) return { ok: true, id: exact.id }
+  if (matches.length === 1) return { ok: true, id: matches[0].id }
+  if (matches.length === 0) {
+    return {
+      ok: false,
+      message: `No realm found matching "${name}" for region ${region}`
+    }
+  }
+  return {
+    ok: false,
+    message: `Multiple realms match "${name}" for region ${region}; add homeRealmId to pick one`
+  }
+}
+
 const makeTimeString = ({
   date,
   hoursToDeduct,
@@ -278,7 +309,34 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const session = await getUserSessionData(request)
 
-  const { server, region } = session.getWoWSessionData()
+  let { server, region } = session.getWoWSessionData()
+
+  const url = new URL(request.url)
+  const regionFromUrl = regionFromSearchParam(url.searchParams.get('region'))
+  const homeRealmIdRaw = url.searchParams.get('homeRealmId')
+  const homeRealmNameRaw = url.searchParams.get('homeRealmName')?.trim() ?? ''
+
+  const parsedHomeRealmId =
+    homeRealmIdRaw != null && homeRealmIdRaw !== ''
+      ? parseInt(homeRealmIdRaw, 10)
+      : NaN
+  const hasHomeRealmId = !Number.isNaN(parsedHomeRealmId)
+  const hasHomeRealmName = homeRealmNameRaw.length > 0
+
+  if (hasHomeRealmId || hasHomeRealmName) {
+    if (regionFromUrl) {
+      region = regionFromUrl
+    }
+    if (hasHomeRealmId) {
+      server = { ...server, id: parsedHomeRealmId }
+    } else {
+      const resolved = resolveHomeRealmIdFromName(homeRealmNameRaw, region)
+      if (!resolved.ok) {
+        return { exception: resolved.message }
+      }
+      server = { ...server, id: resolved.id }
+    }
+  }
 
   return await ItemListingsData({
     homeRealmId: server.id,
