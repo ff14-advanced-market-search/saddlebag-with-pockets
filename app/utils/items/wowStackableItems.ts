@@ -5595,6 +5595,7 @@ export const wowStackableItemsMap: Record<string, string> = {
   '110874': 'Charred Glyph',
   '110875': 'Charred Glyph',
   '110876': 'Charred Glyph',
+  '110877': 'Charred Glyph',
   '110879': 'Charred Glyph',
   '111245': 'Luminous Shard',
   '111431': 'Hearty Elekk Steak',
