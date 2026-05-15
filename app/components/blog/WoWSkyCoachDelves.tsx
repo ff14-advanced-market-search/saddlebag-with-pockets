@@ -86,7 +86,7 @@ const WoWSkyCoachDelves = () => {
             href="https://skycoach.gg/wow-boost/gold"
             className="text-blue-600 hover:underline"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer nofollow">
             Skycoach
           </a>{' '}
           quick and easy so that you can spend more time seeing just what delves
@@ -335,7 +335,8 @@ const WoWSkyCoachDelves = () => {
             exploring{' '}
             <a
               href="https://skycoach.gg/wow-boost/dungeons"
-              className="text-blue-600 hover:underline">
+              className="text-blue-600 hover:underline"
+              rel="nofollow">
               professional WoW services
             </a>{' '}
             to complement your Delve progression with additional support and

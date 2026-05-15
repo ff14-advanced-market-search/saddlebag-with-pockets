@@ -73,7 +73,8 @@ const WoWSkyCoach = () => {
           successful{' '}
           <a
             href="https://skycoach.gg/wow-boost/dungeons"
-            className="text-blue-600 hover:underline">
+            className="text-blue-600 hover:underline"
+            rel="nofollow">
             mythic plus carry
           </a>{' '}
           in raids, where teamwork, speed and confident actions in your roles
@@ -249,7 +250,8 @@ const WoWSkyCoach = () => {
           correct{' '}
           <a
             href="https://skycoach.gg/wow-boost/dungeons"
-            className="text-blue-600 hover:underline">
+            className="text-blue-600 hover:underline"
+            rel="nofollow">
             WoW Mythic+ raid carry
           </a>
           .

@@ -65,7 +65,7 @@ const WoWSkyCoachMoPGold = () => {
             href="https://skycoach.gg/wow-pandaria-classic-boost/gold"
             className="text-blue-600 hover:underline"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer nofollow">
             Pandarian Gold
           </a>
           .
@@ -86,7 +86,8 @@ const WoWSkyCoachMoPGold = () => {
           and those who read guides, this is a great opportunity to get{' '}
           <a
             href="https://skycoach.gg/wow-boost/gold"
-            className="text-blue-600 hover:underline">
+            className="text-blue-600 hover:underline"
+            rel="nofollow">
             mop gold
           </a>{' '}
           right away.
@@ -470,7 +471,8 @@ const WoWSkyCoachMoPGold = () => {
             For example, you can buy cheap WoW MoP gold by{' '}
             <a
               href="https://skycoach.gg/wow-boost/gold"
-              className="text-blue-600 hover:underline">
+              className="text-blue-600 hover:underline"
+              rel="nofollow">
               Skycoach
             </a>{' '}
             with delivery within a few minutes.
