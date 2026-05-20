@@ -122,8 +122,34 @@ export const itemTypes = [
       { name: 'Sword', value: 151 },
       { name: 'Torch', value: 152 },
       { name: 'Trident', value: 153 },
-      { name: 'Warhorn', value: 154 }
+      { name: 'Warhorn', value: 154 },
+      { name: 'LargeBundle', value: 155 },
+      { name: 'SmallBundle', value: 156 },
+      { name: 'Toy', value: 157 },
+      { name: 'ToyTwoHanded', value: 158 }
     ]
+  },
+  {
+    name: 'Gathering',
+    value: 15,
+    subClasses: [
+      { name: 'Foraging', value: 159 },
+      { name: 'Logging', value: 160 },
+      { name: 'Mining', value: 161 },
+      { name: 'Bait', value: 162 },
+      { name: 'Lure', value: 163 },
+      { name: 'Fishing', value: 164 }
+    ]
+  },
+  {
+    name: 'Key',
+    value: 16,
+    subClasses: [{ name: 'None', value: 165 }]
+  },
+  {
+    name: 'Tool',
+    value: 17,
+    subClasses: [{ name: 'Salvage', value: 166 }]
   }
 ]
 
