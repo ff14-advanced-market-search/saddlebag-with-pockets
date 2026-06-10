@@ -12011,6 +12011,7 @@ export const wowStackableItemsMap: Record<string, string> = {
   '257750': 'Laced Zoomshots --- Quality 2',
   '257751': 'Weighted Boomshots --- Quality 1',
   '257752': 'Weighted Boomshots --- Quality 2',
+  '258636': "Honored Guest's Party Favor",
   '258838': 'Gold Dye',
   '259053': 'Warm Teak Dye',
   '259078': 'Basic Birch Dye',
