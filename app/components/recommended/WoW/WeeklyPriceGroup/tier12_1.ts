@@ -1,14 +1,14 @@
-const tier12_0 = {
-  name: 'Midnight Tier 12.0 Trade Goods',
+const tier12_1 = {
+  name: 'Midnight Tier 12.1 Trade Goods',
   description:
-    'Comprehensive price tracking for all major Midnight tradegoods for the 12.0 Expansion release and first raid.',
+    'Comprehensive price tracking for all major Midnight tradegoods for the 12.1 raid release.',
   config: {
     region: 'NA',
     start_year: 2026,
-    start_month: 2,
-    start_day: 28,
+    start_month: 5,
+    start_day: 1,
     end_year: 2026,
-    end_month: 5,
+    end_month: 9,
     end_day: 1,
     price_groups: [
       {
@@ -163,4 +163,4 @@ const tier12_0 = {
     ]
   }
 }
-export default tier12_0
+export default tier12_1

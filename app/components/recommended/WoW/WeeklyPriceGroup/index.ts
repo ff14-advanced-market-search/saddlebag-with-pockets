@@ -18,8 +18,12 @@ import midnightFurnishingComponentsBaseCategory from './midnightFurnishingCompon
 import midnightFurnishingDyes from './midnightFurnishingDyes'
 import tier12_0 from './tier12_0'
 import consumablesTier12_0 from './consumablesTier12_0'
+import tier12_1 from './tier12_1'
+import consumablesTier12_1 from './consumablesTier12_1'
 
 const patchCycleConfigs = [
+  tier12_1, // Tier 12.1 Complete Analysis
+  consumablesTier12_1, // Consumables Tier 12.1 Complete Analysis
   tier12_0, // Tier 12.0 Complete Analysis
   consumablesTier12_0, // Consumables Tier 12.0 Complete Analysis
   tier11_2, // Tier 11.2 Complete Analysis

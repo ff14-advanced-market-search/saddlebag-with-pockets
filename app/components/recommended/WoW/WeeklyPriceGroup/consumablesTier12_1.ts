@@ -1,14 +1,14 @@
-const consumablesTier12_0 = {
-  name: 'Midnight Raid 12.0 Consumables',
+const consumablesTier12_1 = {
+  name: 'Midnight Raid 12.1 Consumables',
   description:
-    'Comprehensive price tracking for all major Midnight consumables for the first raid. Food, flasks, potions, gems, enchants, etc.',
+    'Comprehensive price tracking for all major Midnight consumables for the 12.1 raid. Food, flasks, potions, gems, enchants, etc.',
   config: {
     region: 'NA',
     start_year: 2026,
-    start_month: 2,
-    start_day: 28,
+    start_month: 5,
+    start_day: 1,
     end_year: 2026,
-    end_month: 5,
+    end_month: 9,
     end_day: 1,
     price_groups: [
       {
@@ -65,4 +65,4 @@ const consumablesTier12_0 = {
     ]
   }
 }
-export default consumablesTier12_0
+export default consumablesTier12_1
