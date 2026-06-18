@@ -2,8 +2,6 @@
 
 The frontend of https://saddlebagexchange.com/
 
-Last updated for FFXIV 6.51
-
 _Frontend for Aetheryte API_
 
 ## Prerequisites
