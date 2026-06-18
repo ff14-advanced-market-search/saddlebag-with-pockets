@@ -26,7 +26,6 @@
   },
   "packageManager": "yarn@1.22.18",
   "dependencies": {
-    "@cloudflare/wrangler": "^1.21.0",
     "@datadog/browser-rum": "^6.10.1",
     "@discordjs/rest": "^2.5.1",
     "@reduxjs/toolkit": "^1.8.6",
