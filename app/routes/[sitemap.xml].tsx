@@ -1,13 +1,28 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
+import { blogPosts } from '~/content/blog/posts'
 
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)
 const toW3CDate = (date: Date): string => {
   return date.toISOString().replace(/\.\d{3}Z$/, '+00:00')
 }
 
+const getBlogPath = (post: (typeof blogPosts)[string]): string =>
+  post.category ? `/blog/${post.category}/${post.slug}` : `/blog/${post.slug}`
+
 export const loader: LoaderFunction = async () => {
   const baseURL = 'https://saddlebagexchange.com'
   const currentDate = toW3CDate(new Date())
+
+  const blogUrls = Object.values(blogPosts)
+    .sort((a, b) => getBlogPath(a).localeCompare(getBlogPath(b)))
+    .map(
+      (post) => `<url>
+  <loc>${baseURL}${getBlogPath(post)}</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.70</priority>
+</url>`
+    )
+    .join('\n')
 
   const Sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
@@ -177,66 +192,7 @@ export const loader: LoaderFunction = async () => {
   <lastmod>2024-05-11T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/howtoresell</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/tldr</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs2</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/undercut</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/r1</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/r2</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/r3</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs11</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/wow/crossrealm1</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs6</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/wow/tldr</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/wow/advanced-strategies</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
+${blogUrls}
 <url>
   <loc>https://saddlebagexchange.com/ffxiv/scrip-exchange</loc>
   <lastmod>2024-07-07T00:27:48+00:00</lastmod>

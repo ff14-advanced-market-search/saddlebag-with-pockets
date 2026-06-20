@@ -1,11 +1,14 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
-import { blogPosts } from '~/content/blog/posts'
+import WikiBlog from '~/components/blog/WikiBlog'
 import { blogComponents, blogMetaFunctions } from '~/components/blog'
+import { getWikiMarkdown } from '~/content/blog/getWikiContent'
+import { blogPosts } from '~/content/blog/posts'
 
 interface LoaderData {
   post: (typeof blogPosts)[string]
   componentName: string
+  wikiMarkdown?: string
 }
 
 export const loader = ({ params }: LoaderFunctionArgs) => {
@@ -15,7 +18,6 @@ export const loader = ({ params }: LoaderFunctionArgs) => {
     throw new Response('Missing category or slug', { status: 400 })
   }
 
-  // Construct the key based on category and slug
   const postKey = `${category}/${slug}`
   const post = blogPosts[postKey]
 
@@ -23,9 +25,19 @@ export const loader = ({ params }: LoaderFunctionArgs) => {
     throw new Response('Blog post not found', { status: 404 })
   }
 
+  const wikiMarkdown =
+    post.component === 'WikiBlog' && post.wikiSlug
+      ? getWikiMarkdown(post.wikiSlug)
+      : undefined
+
+  if (post.component === 'WikiBlog' && !wikiMarkdown) {
+    throw new Response('Wiki blog content not found', { status: 404 })
+  }
+
   return {
     post,
-    componentName: post.component
+    componentName: post.component,
+    wikiMarkdown
   } as LoaderData
 }
 
@@ -39,13 +51,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   const { post, componentName } = data
 
-  // Use component meta if available, otherwise fallback to post config
   const componentMeta = blogMetaFunctions[componentName]
   if (componentMeta && typeof componentMeta === 'function') {
     return componentMeta()
   }
 
-  // Fallback to post config
   return [
     { title: post.title },
     { name: 'description', content: post.description },
@@ -64,9 +74,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export default function BlogCategorySlugRoute() {
-  const { post, componentName } = useLoaderData<LoaderData>()
+  const { post, componentName, wikiMarkdown } = useLoaderData<LoaderData>()
 
-  // Dynamically get the component from the registry
+  if (post.component === 'WikiBlog' && wikiMarkdown) {
+    return <WikiBlog title={post.title} markdown={wikiMarkdown} />
+  }
+
   const Component = blogComponents[componentName]
 
   if (!Component) {

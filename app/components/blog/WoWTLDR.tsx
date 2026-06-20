@@ -27,7 +27,7 @@ const WoWTLDR = () => {
           💰 How to Earn Gold with Cross Realm Trading 🚀
         </h1>
         <p className="mt-4 text-gray-700 max-w-3xl mx-auto">
-          Simple buy low in one realm, deposit an item in your warband bank,
+          Simply buy low in one realm, deposit an item in your warband bank,
           move it to another realm and sell high!
         </p>
       </header>
@@ -138,7 +138,7 @@ const WoWTLDR = () => {
               <li>
                 📈{' '}
                 <a
-                  href="https://temp.saddlebagexchange.com/megaitemnames"
+                  href="https://saddlebagexchange.com/wow/itemlist"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={linkClass}>
@@ -379,7 +379,7 @@ const WoWTLDR = () => {
           Bonus Tips: Setting up alts
         </h2>
         <p className="text-gray-700 mb-4">
-          Best way to setup alts is have an{' '}
+          Best way to setup alts is to have an{' '}
           <a
             href="https://www.wowhead.com/guide/allied-race/maghar-orc"
             target="_blank"
@@ -393,10 +393,10 @@ const WoWTLDR = () => {
           Then go the &quot;Valley of Wisdom&quot; this is the best place for an
           AH alt as theres a bank, ah, guild bank, inn, mailbox and vendor all
           in one spot and you can mount up between them. You can do this with
-          any allied race or ah, however you can make an alt and get to the
-          &quot;Valley of Wisdom&quot; in under a minute. Other good AH
-          locations like shrine or booty bay take a few min to run your alts out
-          there. In org you just spawn there instantly.
+          any allied race or other AH location, however you can make an alt and
+          get to the &quot;Valley of Wisdom&quot; in under a minute. Other good
+          AH locations like shrine or booty bay take a few min to run your alts
+          out there. In org you just spawn there instantly.
         </p>
         <img
           src="https://github.com/user-attachments/assets/7f3e1677-b8b7-4552-93d8-e49b4bd98672"

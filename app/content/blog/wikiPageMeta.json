@@ -1,0 +1,122 @@
+{
+  "repo-architecture": {
+    "title": "Repository Architecture Overview",
+    "description": "Overview of the Saddlebag Exchange repository structure and key directories."
+  },
+  "how-to-use-the-ffxiv-crafting-profit-simulator-craftsim": {
+    "title": "FFXIV Crafting Profit Simulator (Craftsim)",
+    "description": "Learn how to use the crafting profit simulator to find the most profitable items you can craft."
+  },
+  "ffxiv-alternative-seller-id-lookup": {
+    "title": "FFXIV Alternative Seller ID Lookup",
+    "description": "Use the Discord /seller command to look up retainer seller IDs for undercut and sale alerts."
+  },
+  "how-to-cross-realm-trade-with-saddlebag-exchange-for-ffxiv-players": {
+    "title": "WoW Cross-Realm Trading for FFXIV Players",
+    "description": "Key differences between FFXIV and WoW marketboards when cross-realm trading with Saddlebag Exchange."
+  },
+  "what-to-do-if-your-ffxiv-undercut-alerts-are-incorrect": {
+    "title": "What To Do If FFXIV Undercut Alerts Are Incorrect",
+    "description": "Troubleshoot false undercut alerts and keep your Universalis data up to date."
+  },
+  "undercut-alerts-alpha-version": {
+    "title": "FFXIV Undercut Alerts (Discord Bot)",
+    "description": "Set up Discord undercut alerts that monitor Universalis and notify you when you are undercut."
+  },
+  "ffxiv-experimental-discount-price-sniper": {
+    "title": "FFXIV Experimental Discount Price Sniper",
+    "description": "Find amazing FFXIV marketboard deals streamed to Discord for Patreon supporters."
+  },
+  "allagan-tools-inventory-analysis": {
+    "title": "Allagan Tools Inventory Analysis",
+    "description": "Analyze your inventory, generate alert JSON, and find valuable items to list on the marketboard."
+  },
+  "ffxiv-sale-leads": {
+    "title": "FFXIV Secret Sale Leads",
+    "description": "Use sales-qualified leads to find buyers and maximize your FFXIV marketboard profits."
+  },
+  "changes-to-seller-id-impacting-sale-and-undercut-alerts": {
+    "title": "Changes to seller_id and Alert Updates",
+    "description": "How Universalis seller_id changes affect undercut and sale alerts, and how to migrate to retainer names."
+  },
+  "how-to-update-ffxiv-price-data-on-universalis": {
+    "title": "How to Update FFXIV Price Data on Universalis",
+    "description": "Refresh Universalis listing data so Saddlebag Exchange and your alerts stay accurate."
+  },
+  "ffxiv-advanced-undercut-alert-options": {
+    "title": "FFXIV Advanced Undercut Alert Options",
+    "description": "Advanced undercut alert settings for HQ vs NQ, stack sizes, ignored items, and more."
+  },
+  "premium-website-pages": {
+    "title": "Premium Website Pages & Discord Login",
+    "description": "Overview of premium Saddlebag Exchange pages and the Discord login system for supporters."
+  },
+  "simple-beginners-regiment-for-making-gil-with-saddlebag-exchange": {
+    "title": "Beginner's Guide to Making Gil with Saddlebag Exchange",
+    "description": "A simple step-by-step regiment to start earning gil with reselling and market overview searches."
+  },
+  "setting-your-home-server": {
+    "title": "Setting Your Home Server (FFXIV & WoW)",
+    "description": "Configure your FFXIV world and WoW home realm in Saddlebag Exchange site settings."
+  },
+  "how-to-use-item-data-searches-to-help-you-find-good-items-to-trade": {
+    "title": "How to Use Item Data Searches",
+    "description": "Use item data searches to find profitable cross-server trades and marketboard flips."
+  },
+  "how-to-travel-to-any-datacenter-in-your-region": {
+    "title": "How to Travel to Any Datacenter in Your Region",
+    "description": "Video guide on traveling to other FFXIV servers and datacenters for cross-server trading."
+  },
+  "do-not-copy-and-paste-commands-click-the-sticky": {
+    "title": "Discord Bot Commands: Click the Sticky",
+    "description": "Why you should click Discord bot command stickies instead of copy-pasting slash commands."
+  },
+  "how-to-allow-bot-dm-messages": {
+    "title": "How to Allow Bot DM Messages",
+    "description": "Configure Discord privacy settings so Saddlebag Exchange bot alerts can DM you."
+  },
+  "item-categories-ids-and-list": {
+    "title": "FFXIV Item Category IDs and List",
+    "description": "Reference for custom FFXIV item category IDs used by Saddlebag Exchange searches."
+  },
+  "experimental-price-sniper": {
+    "title": "Experimental Price Sniper (FFXIV)",
+    "description": "Early experimental tool that streams Universalis data to find extreme discount listings."
+  },
+  "price-sniper-and-item-price-alerts": {
+    "title": "Price Sniper and Item Price Alerts",
+    "description": "Discord bot alerts for price discounts and price spikes on items you want to buy or sell."
+  },
+  "how-to-use-price-group-deltas": {
+    "title": "How to Use Price Group Deltas",
+    "description": "Track long-term price changes across item groups to spot investment and flipping opportunities."
+  },
+  "gw2-type-details-type-rarity-submap-680": {
+    "title": "GW2 Type and Rarity Submap",
+    "description": "Internal GW2 type, details_type, and rarity mapping reference for the API."
+  },
+  "how-to-use-the-wow-out-of-stock-search": {
+    "title": "WoW Out of Stock Search Guide",
+    "description": "Find high-demand WoW auction house items with no listings on top realms using the out-of-stock search."
+  },
+  "wow-discord-undercut-alerts": {
+    "title": "WoW Discord Undercut Alerts",
+    "description": "Set up WoW undercut alerts using the Saddlebag Exchange addon and Discord bot."
+  },
+  "how-to-trade-using-our-wow-market-overview": {
+    "title": "WoW Market Overview Trading Guide",
+    "description": "Use the WoW market overview and commodity shortage tools for cross-realm gold making."
+  },
+  "wow-retail-realm-population": {
+    "title": "WoW Retail Realm Population",
+    "description": "Realm population data for NA and EU WoW servers to help pick the best realms for selling."
+  },
+  "wow-item-classes-and-subclasses": {
+    "title": "WoW Item Classes and Subclasses",
+    "description": "Reference for WoW item class and subclass IDs used in Saddlebag Exchange searches."
+  },
+  "wow-discord-price-sniper-and-spike-alerts": {
+    "title": "WoW Discord Price Sniper & Spike Alerts",
+    "description": "Set up WoW price sniper and spike alerts through the Saddlebag Exchange Discord bot."
+  }
+}
