@@ -213,27 +213,6 @@ export const blogPosts: Record<string, BlogPost> = {
     description: 'Strategies to control and dominate WoW markets.',
     component: 'WoWMarketDomination'
   },
-  'wow/skycoach': {
-    category: 'wow',
-    slug: 'skycoach',
-    title: 'SkyCoach Gold Making Methods',
-    description: 'Proven methods for making gold in WoW.',
-    component: 'WoWSkyCoach'
-  },
-  'wow/skycoach-mop-gold': {
-    category: 'wow',
-    slug: 'skycoach-mop-gold',
-    title: 'MoP Gold Making with SkyCoach',
-    description: 'Mists of Pandaria era gold making techniques.',
-    component: 'WoWSkyCoachMoPGold'
-  },
-  'wow/skycoach-delves': {
-    category: 'wow',
-    slug: 'skycoach-delves',
-    title: 'Delves Gold Making Guide',
-    description: 'Maximize profits from WoW Delves.',
-    component: 'WoWSkyCoachDelves'
-  },
 
   // MMO Economics
   'mmo/economics-theory': {

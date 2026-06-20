@@ -28,25 +28,6 @@ const recommendedQueries = [
     href: '/blog/wow/tldr'
   },
   {
-    name: 'Preparing for Mythic+: Key Points',
-    description:
-      'How to best prepare and properly complete Mythic+ dungeons in World of Warcraft, where you can get the best weapons and gear',
-    Icon: DocumentSearchIcon,
-    href: '/blog/wow/skycoach'
-  },
-  {
-    name: 'Skycoach Mists of Pandaria Gold Farming Guide',
-    description: '10 Ways to Farm Mists of Pandaria Gold in WoW Classic',
-    Icon: DocumentSearchIcon,
-    href: '/blog/wow/skycoach-mop-gold'
-  },
-  {
-    name: 'Skycoach Delves Guide',
-    description: 'How to complete Delves in WoW Classic',
-    Icon: DocumentSearchIcon,
-    href: '/blog/wow/skycoach-delves'
-  },
-  {
     name: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
     description:
       'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts. Master the Marketboard with real-time notifications.',

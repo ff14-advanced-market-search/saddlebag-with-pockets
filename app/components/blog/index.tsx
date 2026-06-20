@@ -33,9 +33,6 @@ import WoWTLDR from './WoWTLDR'
 import WoWCrossRealm1 from './WoWCrossRealm1'
 import WoWAdvancedStrategies from './WoWAdvancedStrategies'
 import WoWMarketDomination from './WoWMarketDomination'
-import WoWSkyCoach from './WoWSkyCoach'
-import WoWSkyCoachMoPGold from './WoWSkyCoachMoPGold'
-import WoWSkyCoachDelves from './WoWSkyCoachDelves'
 
 import MMOEconomicsTheory from './MMOEconomicsTheory'
 import MMOFutureEconomies from './MMOFutureEconomies'
@@ -72,9 +69,6 @@ import * as WoWTLDRMeta from './WoWTLDR'
 import * as WoWCrossRealm1Meta from './WoWCrossRealm1'
 import * as WoWAdvancedStrategiesMeta from './WoWAdvancedStrategies'
 import * as WoWMarketDominationMeta from './WoWMarketDomination'
-import * as WoWSkyCoachMeta from './WoWSkyCoach'
-import * as WoWSkyCoachMoPGoldMeta from './WoWSkyCoachMoPGold'
-import * as WoWSkyCoachDelvesMeta from './WoWSkyCoachDelves'
 import * as MMOEconomicsTheoryMeta from './MMOEconomicsTheory'
 import * as MMOFutureEconomiesMeta from './MMOFutureEconomies'
 import * as TradingAutomationToolsMeta from './TradingAutomationTools'
@@ -111,9 +105,6 @@ export const blogComponents: Record<string, React.ComponentType> = {
   WoWCrossRealm1,
   WoWAdvancedStrategies,
   WoWMarketDomination,
-  WoWSkyCoach,
-  WoWSkyCoachMoPGold,
-  WoWSkyCoachDelves,
 
   // MMO Economics
   MMOEconomicsTheory,
@@ -155,9 +146,6 @@ export const blogMetaFunctions: Record<string, MetaFunction | undefined> = {
   WoWCrossRealm1: WoWCrossRealm1Meta.meta,
   WoWAdvancedStrategies: WoWAdvancedStrategiesMeta.meta,
   WoWMarketDomination: WoWMarketDominationMeta.meta,
-  WoWSkyCoach: WoWSkyCoachMeta.meta,
-  WoWSkyCoachMoPGold: WoWSkyCoachMoPGoldMeta.meta,
-  WoWSkyCoachDelves: WoWSkyCoachDelvesMeta.meta,
   MMOEconomicsTheory: MMOEconomicsTheoryMeta.meta,
   MMOFutureEconomies: MMOFutureEconomiesMeta.meta,
   TradingAutomationTools: TradingAutomationToolsMeta.meta,
