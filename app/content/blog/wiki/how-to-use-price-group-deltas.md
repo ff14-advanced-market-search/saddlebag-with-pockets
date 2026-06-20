@@ -2,7 +2,7 @@
 
 ---
 
-The `Price Group Deltas` all about observing the Delta Δ (aka the changes) in item prices over long periods of time, making it the ulimate long term investment tool! This lets you observe long term trends on markets with multiple items to find what jumps up in price around patch cycles.
+The `Price Group Deltas` all about observing the Delta Δ (aka the changes) in item prices over long periods of time, making it the ultimate long term investment tool! This lets you observe long term trends on markets with multiple items to find what jumps up in price around patch cycles.
 
 The idea is find which items have increased in price around a major patch, new pvp season, raid release or any major update or event. This means it will be an easy way to earn gold/gil by stocking up right before a patch when demand is low and then selling after the patch at much higher prices!
 
@@ -21,7 +21,7 @@ We support both WoW and FFXIV:
 - [What is the Price Group Deltas Tool?](#what-is-the-price-group-deltas-tool)
   - [WoW Chart Example](#wow-chart-example)
   - [FFXIV Chart Example](#ffxiv-chart-example)
-  - [Data Table Example](#data-chart-example)
+  - [Data Table Example](#data-table-example)
   - [Price vs Quantity Chart Example](#price-vs-quantity-chart-example)
   - [Data Availability](#data-availability)
 - [WoW Instructions](#wow-instructions)

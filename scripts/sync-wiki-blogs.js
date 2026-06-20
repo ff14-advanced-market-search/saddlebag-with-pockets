@@ -127,6 +127,7 @@ const pages = []
 
 function addPage({ slug, outName, wikiContent, wikiFile, categorySource }) {
   if (excludedSlugs.has(slug)) return
+  if (pages.some((page) => page.slug === slug)) return
   if (wikiContent.trim().length < 10) return
 
   const title = wikiPageMeta[slug]?.title ?? extractTitle(wikiContent)

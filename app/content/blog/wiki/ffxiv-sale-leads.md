@@ -1,6 +1,6 @@
 # Sales-Qualified Leads!
 
-Our ultimate gil earning tool the [FFXIV Secret Sale Leads](https://en.wikipedia.org/wiki/Lead_generation) will find buyers for you!
+Our ultimate gil earning tool, FFXIV Secret Sale Leads, will find buyers for you!
 
 Think of it as video game door to door sales. Which might seem odd, but it is the single most profitable opportunity in all of FFXIV!
 

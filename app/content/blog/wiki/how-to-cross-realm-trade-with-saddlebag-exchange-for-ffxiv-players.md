@@ -45,17 +45,17 @@ Basically heres the top ways to use saddlebag for wow:
 - https://saddlebagexchange.com/wow/best-deals
 - https://saddlebagexchange.com/wow/itemlist
 
-2. **Buy low**: Search for good deals on those items using the mega-alerts, shopping list or best deals, then buy them (if not crafting):
+1. **Buy low**: Search for good deals on those items using the mega-alerts, shopping list or best deals, then buy them (if not crafting):
 
 - https://github.com/ff14-advanced-market-search/mega-alerts/blob/main/README.md
 - https://saddlebagexchange.com/wow/shopping-list
 - https://saddlebagexchange.com/wow/best-deals
 
-3. **Sell High**: Use the export search to find the best realm with the highest population to sell any items you buy or craft.
+1. **Sell High**: Use the export search to find the best realm with the highest population to sell any items you buy or craft.
 
 - https://saddlebagexchange.com/wow/export-search
 
-4. **Check for sales and undercuts**: Use the undercut addon / webpage to check on the items you have listed on the AH (usually wait after you log back in or 1 hour after posting items so the api data from blizzard updates):
+1. **Check for sales and undercuts**: Use the undercut addon / webpage to check on the items you have listed on the AH (usually wait after you log back in or 1 hour after posting items so the api data from blizzard updates):
 
 - https://www.curseforge.com/wow/addons/saddlebag-exchange
 - https://saddlebagexchange.com/wow/region-undercut

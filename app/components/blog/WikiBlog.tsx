@@ -142,7 +142,9 @@ const WikiBlog = ({ title, markdown }: WikiBlogProps) => {
           </ReactMarkdown>
         </div>
       </article>
-      <footer className="mt-12 text-center text-gray-500">
+      <footer
+        className="mt-12 text-center text-gray-500"
+        suppressHydrationWarning>
         &copy; {new Date().getFullYear()} SaddlebagExchange. All rights
         reserved.
       </footer>

@@ -40,7 +40,12 @@ for (const page of wikiPages) {
 }
 
 function normalizeWikiPageName(raw: string): string {
-  return decodeURIComponent(raw.replace(/ /g, '-'))
+  const normalized = raw.replace(/ /g, '-')
+  try {
+    return decodeURIComponent(normalized)
+  } catch {
+    return normalized
+  }
 }
 
 function resolveWikiLink(pageRef: string, anchor = ''): string | null {
@@ -96,11 +101,11 @@ function fixTempUrls(markdown: string): string {
 }
 
 function convertLinkedLeadingH1(markdown: string): string {
-  return markdown.replace(/^#\s+\[([^\]]+)\]\(([^)]+)\)\s*\n+/m, '[$1]($2)\n\n')
+  return markdown.replace(/^#\s+\[([^\]]+)\]\(([^)]+)\)\s*\n+/, '[$1]($2)\n\n')
 }
 
 function stripLeadingH1(markdown: string): string {
-  return markdown.replace(/^#\s+.+\n+/m, '')
+  return markdown.replace(/^#\s+.+\n+/, '')
 }
 
 function fixMarkdownArtifacts(markdown: string): string {
@@ -137,7 +142,7 @@ function fixYoutubeImageLinks(markdown: string): string {
 }
 
 function prependHeadingIfMissing(markdown: string, slug: string): string {
-  if (/^#\s+/m.test(markdown.trim())) return markdown
+  if (/^#\s+/.test(markdown.trim())) return markdown
 
   const meta = wikiPageMeta[slug as keyof typeof wikiPageMeta]
   if (!meta) return markdown

@@ -1,10 +1,10 @@
 In the discord we have bot command channels
 
-[ffxiv bot-commmands](https://discord.com/channels/973380473281724476/1046875234684387348)
+[ffxiv bot-commands](https://discord.com/channels/973380473281724476/1046875234684387348)
 
 <img width="1379" alt="image" src="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/assets/17516896/0774e99a-9916-40d3-bb66-0b9615e4e331">
 
-[wow bot-commmands](https://discord.com/channels/973380473281724476/1062015833473286184)
+[wow bot-commands](https://discord.com/channels/973380473281724476/1062015833473286184)
 
 <img width="973" alt="image" src="https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/assets/17516896/d4787b45-96ba-446b-ac8e-2518aab40c87">
 
