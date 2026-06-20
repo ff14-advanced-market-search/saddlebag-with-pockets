@@ -56,6 +56,14 @@ export const blogPosts: Record<string, BlogPost> = {
     description: 'Complete guide to buying and reselling for profit.',
     component: 'FFXIVHowToResell'
   },
+  'ffxiv/tldr': {
+    category: 'ffxiv',
+    slug: 'tldr',
+    title: 'TLDR: How to make gil in FFXIV with cross server trading',
+    description: 'Easy 4 step method to making gil with cross server trading.',
+    component: 'FFXIVTLDR',
+    canonical: 'https://saddlebagexchange.com/blog/ffxiv/tldr'
+  },
   'ffxiv/undercut': {
     category: 'ffxiv',
     slug: 'undercut',
@@ -124,15 +132,15 @@ export const featuredPosts: FeaturedPost[] = [
     href: '/blog/ffxiv/howtoresell'
   },
   {
+    name: 'TLDR: How to make gil in FFXIV with cross server trading',
+    description: 'Easy 4 step method to making gil.',
+    Icon: documentSearchIcon,
+    href: '/blog/ffxiv/tldr'
+  },
+  {
     name: 'TLDR: How to make gold in WoW with cross realm trading',
     description: 'Easy 4 step method to making gold.',
     Icon: documentSearchIcon,
     href: '/blog/wow/tldr'
-  },
-  {
-    name: 'The Art of Undercutting in FFXIV',
-    description: 'Strategic undercutting for competitive advantage.',
-    Icon: documentSearchIcon,
-    href: '/blog/ffxiv/undercut'
   }
 ]

@@ -28,6 +28,12 @@ const recommendedQueries = [
     href: '/blog/ffxiv/howtoresell'
   },
   {
+    name: 'TLDR: How to make gil in FFXIV with cross server trading',
+    description: 'Easy 4 step method to making gil.',
+    Icon: DocumentSearchIcon,
+    href: '/blog/ffxiv/tldr'
+  },
+  {
     name: 'TLDR: How to make gold in WoW with cross realm trading',
     description: 'Easy 4 step method to making gold.',
     Icon: DocumentSearchIcon,
