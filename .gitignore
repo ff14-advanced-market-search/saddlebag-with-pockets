@@ -3,6 +3,7 @@
 .DS_Store
 .dccache
 .cache
+.wiki-cache
 .idea
 
 # React
