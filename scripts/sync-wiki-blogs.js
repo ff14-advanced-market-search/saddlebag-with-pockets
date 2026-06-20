@@ -9,6 +9,12 @@ const { execSync } = require('child_process')
 const repoRoot = path.join(__dirname, '..')
 const wikiDir = path.join(repoRoot, '.wiki-cache')
 const outDir = path.join(repoRoot, 'app/content/blog/wiki')
+const wikiPageMeta = JSON.parse(
+  fs.readFileSync(
+    path.join(repoRoot, 'app/content/blog/wikiPageMeta.json'),
+    'utf8'
+  )
+)
 
 const skipFiles = new Set([
   'Home.md',
@@ -113,34 +119,64 @@ function extractDescription(content, title) {
   return `Guide: ${title}`
 }
 
-if (!fs.existsSync(wikiDir)) {
-  execSync(
-    'git clone --depth 1 https://github.com/ff14-advanced-market-search/saddlebag-with-pockets.wiki.git .wiki-cache',
-    { cwd: repoRoot, stdio: 'inherit' }
-  )
-} else {
-  execSync('git pull', { cwd: wikiDir, stdio: 'inherit' })
-}
+const localOnly = process.argv.includes('--local')
 
 fs.mkdirSync(outDir, { recursive: true })
 
 const pages = []
-for (const file of fs.readdirSync(wikiDir).filter((f) => f.endsWith('.md'))) {
-  if (skipFiles.has(file)) continue
-  const wikiContent = fs.readFileSync(path.join(wikiDir, file), 'utf8')
-  if (wikiContent.trim().length < 10) continue
-  const slug = toSlug(file)
-  if (excludedSlugs.has(slug)) continue
-  const outName = `${slug}.md`
-  fs.copyFileSync(path.join(wikiDir, file), path.join(outDir, outName))
+
+function addPage({ slug, outName, wikiContent, wikiFile, categorySource }) {
+  if (excludedSlugs.has(slug)) return
+  if (wikiContent.trim().length < 10) return
+
+  const title = wikiPageMeta[slug]?.title ?? extractTitle(wikiContent)
   pages.push({
     slug,
     file: outName,
-    category: guessCategory(file),
-    title: extractTitle(wikiContent),
-    description: extractDescription(wikiContent, extractTitle(wikiContent)),
-    wikiFile: file
+    category: guessCategory(categorySource),
+    title,
+    description:
+      wikiPageMeta[slug]?.description ?? extractDescription(wikiContent, title),
+    wikiFile
   })
+}
+
+if (localOnly) {
+  for (const file of fs.readdirSync(outDir).filter((f) => f.endsWith('.md'))) {
+    const slug = file.replace(/\.md$/, '')
+    const wikiContent = fs.readFileSync(path.join(outDir, file), 'utf8')
+    addPage({
+      slug,
+      outName: file,
+      wikiContent,
+      wikiFile: file,
+      categorySource: file
+    })
+  }
+} else {
+  if (!fs.existsSync(wikiDir)) {
+    execSync(
+      'git clone --depth 1 https://github.com/ff14-advanced-market-search/saddlebag-with-pockets.wiki.git .wiki-cache',
+      { cwd: repoRoot, stdio: 'inherit' }
+    )
+  } else {
+    execSync('git pull', { cwd: wikiDir, stdio: 'inherit' })
+  }
+
+  for (const file of fs.readdirSync(wikiDir).filter((f) => f.endsWith('.md'))) {
+    if (skipFiles.has(file)) continue
+    const wikiContent = fs.readFileSync(path.join(wikiDir, file), 'utf8')
+    const slug = toSlug(file)
+    const outName = `${slug}.md`
+    fs.copyFileSync(path.join(wikiDir, file), path.join(outDir, outName))
+    addPage({
+      slug,
+      outName,
+      wikiContent,
+      wikiFile: file,
+      categorySource: file
+    })
+  }
 }
 
 pages.sort(

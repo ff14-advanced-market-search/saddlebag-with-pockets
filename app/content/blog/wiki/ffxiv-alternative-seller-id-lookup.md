@@ -1,6 +1,6 @@
 # Alternative seller id finder:
 
-In any channel of the discord using the discord bot `/seller` command with the name of a retainer, the server they are on and the item id of one item they are selling ([for more info on how to find item ids read the wiki](https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/How-to-find-the-item-id-of-any-item-in-FFXIV%3F)). When you have your retainer name, server name and item id run `/seller`:
+In any channel of the discord using the discord bot `/seller` command with the name of a retainer, the server they are on and the item id of one item they are selling ([for more info on how to find item ids, search on Saddlebag Exchange](https://saddlebagexchange.com/ffxiv)). When you have your retainer name, server name and item id run `/seller`:
 
 <img width="271" alt="image" src="https://user-images.githubusercontent.com/17516896/203456416-4f2c4df3-a002-453e-b0e1-222ac6eeeafb.png">
 
@@ -14,11 +14,11 @@ This will give you the exact json blob you need for that character. `a7e7f232a4d
 
 ## Direct Message Warning
 
-Do not direct message the bot, only run the slash commands within any channel of the [Saddlebag Exchange](https://discord.gg/Pbp5xhmBJ7) discord server. \***\*The bot needs to verify your role before running and your discord must allow messages from non-friends to continue verification.\*\***
+Do not direct message the bot, only run the slash commands within any channel of the [Saddlebag Exchange](https://discord.gg/Pbp5xhmBJ7) discord server. **The bot needs to verify your role before running and your discord must allow messages from non-friends to continue verification.**
 
 ### To allow messages from non-friends with the following discord privacy settings:
 
-![image](https://user-images.githubusercontent.com/17516896/204146207-014cb33a-1919-478c-a06e-89ded05f8388.png)``
+![image](https://user-images.githubusercontent.com/17516896/204146207-014cb33a-1919-478c-a06e-89ded05f8388.png)
 
 ## Sending Command error
 

@@ -43,7 +43,7 @@ Basically heres the top ways to use saddlebag for wow:
 - https://saddlebagexchange.com/wow/marketshare
 - https://saddlebagexchange.com/wow/legacy-marketshare
 - https://saddlebagexchange.com/wow/best-deals
-- https://temp.saddlebagexchange.com/megaitemnames
+- https://saddlebagexchange.com/wow/itemlist
 
 2. **Buy low**: Search for good deals on those items using the mega-alerts, shopping list or best deals, then buy them (if not crafting):
 
