@@ -17,7 +17,9 @@ import WoWTLDR from './WoWTLDR'
 import WoWCrossRealm1 from './WoWCrossRealm1'
 import WoWAdvancedStrategies from './WoWAdvancedStrategies'
 
+import ResearchPost1 from './ResearchPost1'
 import ResearchPost2 from './ResearchPost2'
+import ResearchPost3 from './ResearchPost3'
 
 import * as FFXIVBs2Meta from './FFXIVBs2'
 import * as FFXIVBs6Meta from './FFXIVBs6'
@@ -27,7 +29,9 @@ import * as FFXIVUndercutMeta from './FFXIVUndercut'
 import * as WoWTLDRMeta from './WoWTLDR'
 import * as WoWCrossRealm1Meta from './WoWCrossRealm1'
 import * as WoWAdvancedStrategiesMeta from './WoWAdvancedStrategies'
+import * as ResearchPost1Meta from './ResearchPost1'
 import * as ResearchPost2Meta from './ResearchPost2'
+import * as ResearchPost3Meta from './ResearchPost3'
 
 export const blogComponents: Record<string, React.ComponentType> = {
   FFXIVBs2,
@@ -38,7 +42,9 @@ export const blogComponents: Record<string, React.ComponentType> = {
   WoWTLDR,
   WoWCrossRealm1,
   WoWAdvancedStrategies,
-  ResearchPost2
+  ResearchPost1,
+  ResearchPost2,
+  ResearchPost3
 }
 
 export const blogMetaFunctions: Record<string, MetaFunction | undefined> = {
@@ -50,5 +56,7 @@ export const blogMetaFunctions: Record<string, MetaFunction | undefined> = {
   WoWTLDR: WoWTLDRMeta.meta,
   WoWCrossRealm1: WoWCrossRealm1Meta.meta,
   WoWAdvancedStrategies: WoWAdvancedStrategiesMeta.meta,
-  ResearchPost2: ResearchPost2Meta.meta
+  ResearchPost1: ResearchPost1Meta.meta,
+  ResearchPost2: ResearchPost2Meta.meta,
+  ResearchPost3: ResearchPost3Meta.meta
 }

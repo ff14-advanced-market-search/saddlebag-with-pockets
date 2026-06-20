@@ -193,7 +193,17 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
+  <loc>https://saddlebagexchange.com/blog/r1</loc>
+  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
   <loc>https://saddlebagexchange.com/blog/r2</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/r3</loc>
   <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>

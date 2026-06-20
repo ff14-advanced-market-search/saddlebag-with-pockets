@@ -42,10 +42,22 @@ const recommendedQueries = [
     href: '/blog/ffxiv/undercut'
   },
   {
+    name: 'How to Cross Server Trade in FFXIV',
+    description: 'Watch a youtube video on how to trade between servers',
+    Icon: DocumentSearchIcon,
+    href: '/blog/r1'
+  },
+  {
     name: 'How to use ffxiv marketshare',
     description: 'how to marketshare',
     Icon: DocumentSearchIcon,
     href: '/blog/r2'
+  },
+  {
+    name: 'How to use wow commodity shortage',
+    description: 'how to wow commodity shortage',
+    Icon: DocumentSearchIcon,
+    href: '/blog/r3'
   },
   {
     name: 'FFXIV Trading Strategies Post 11',

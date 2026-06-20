@@ -85,6 +85,17 @@ export const blogPosts: Record<string, BlogPost> = {
     description: 'Expert strategies for maximizing World of Warcraft gold.',
     component: 'WoWAdvancedStrategies'
   },
+  r1: {
+    category: '',
+    slug: 'r1',
+    title: 'How to Use Commodity Shortage Futures as a Crafter',
+    description:
+      'Discover effective strategies for utilizing commodity shortage futures to maximize profits as a crafter.',
+    component: 'ResearchPost1',
+    canonical: 'https://saddlebagexchange.com/blog/r1',
+    customHeading:
+      'Maximizing Profits: Using Commodity Shortage Futures as a Crafter'
+  },
   r2: {
     category: '',
     slug: 'r2',
@@ -92,6 +103,13 @@ export const blogPosts: Record<string, BlogPost> = {
     description:
       'Discover effective methods and guidelines for cross-server trading in Final Fantasy XIV.',
     component: 'ResearchPost2'
+  },
+  r3: {
+    category: '',
+    slug: 'r3',
+    title: 'Research Post 3',
+    description: 'Third research post on economic systems.',
+    component: 'ResearchPost3'
   }
 }
 
