@@ -28,11 +28,10 @@ const recommendedQueries = [
     href: '/blog/ffxiv/howtoresell'
   },
   {
-    name: 'FFXIV Trading Strategies Post 2',
-    description:
-      'Advanced FFXIV marketboard techniques and profit optimization',
+    name: 'TLDR: How to make gold in WoW with cross realm trading',
+    description: 'Easy 4 step method to making gold.',
     Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs2'
+    href: '/blog/wow/tldr'
   },
   {
     name: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
@@ -80,10 +79,11 @@ const recommendedQueries = [
     href: '/blog/ffxiv/bs6'
   },
   {
-    name: 'TLDR: How to make gold in WoW with cross realm trading',
-    description: 'Easy 4 step method to making gold.',
+    name: 'FFXIV Trading Strategies Post 2',
+    description:
+      'Advanced FFXIV marketboard techniques and profit optimization',
     Icon: DocumentSearchIcon,
-    href: '/blog/wow/tldr'
+    href: '/blog/ffxiv/bs2'
   },
   {
     name: 'Advanced World of Warcraft Trading Strategies',
