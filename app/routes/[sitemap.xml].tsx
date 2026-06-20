@@ -178,22 +178,17 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/wow/tldr</loc>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/howtoresell</loc>
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/bs2</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/undercut</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/r1</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/wow/crossrealm1</loc>
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
@@ -203,38 +198,13 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/howtoresell</loc>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/bs11</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/crossrealm1</loc>
   <lastmod>2024-05-07T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/r3</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs1</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs2</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs3</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs4</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs5</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
@@ -243,92 +213,12 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs7</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs8</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs9</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs10</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs11</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs12</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs13</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs14</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs15</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs16</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs17</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <loc>https://saddlebagexchange.com/blog/wow/tldr</loc>
+  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/wow/advanced-strategies</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/advanced-crafting</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/mmo/economics-theory</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/trading/automation-tools</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/market-mastery</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/wow/market-domination</loc>
-  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://saddlebagexchange.com/blog/mmo/future-economies</loc>
   <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
