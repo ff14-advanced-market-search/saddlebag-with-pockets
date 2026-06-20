@@ -31,7 +31,7 @@ const FFXIVTLDR = () => {
           💰 How to Earn Gil with Cross Server Trading 🚀
         </h1>
         <p className="mt-4 text-gray-700 max-w-3xl mx-auto">
-          Simple buy low from a different server in your region, then resell for
+          Simply buy low from a different server in your region, then resell for
           a higher price on your home server!
         </p>
       </header>
@@ -212,7 +212,7 @@ const FFXIVTLDR = () => {
               <li>
                 🛍️{' '}
                 <a
-                  href="https://saddlebagexchange.com/wow/shopping-list"
+                  href="https://saddlebagexchange.com/ffxiv/shopping-list"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={linkClass}>
