@@ -21,6 +21,7 @@ import WoWAdvancedStrategies from './WoWAdvancedStrategies'
 import ResearchPost1 from './ResearchPost1'
 import ResearchPost2 from './ResearchPost2'
 import ResearchPost3 from './ResearchPost3'
+import WikiBlog from './WikiBlog'
 
 import * as FFXIVBs2Meta from './FFXIVBs2'
 import * as FFXIVBs6Meta from './FFXIVBs6'
@@ -47,7 +48,8 @@ export const blogComponents: Record<string, React.ComponentType> = {
   WoWAdvancedStrategies,
   ResearchPost1,
   ResearchPost2,
-  ResearchPost3
+  ResearchPost3,
+  WikiBlog
 }
 
 export const blogMetaFunctions: Record<string, MetaFunction | undefined> = {
@@ -62,5 +64,6 @@ export const blogMetaFunctions: Record<string, MetaFunction | undefined> = {
   WoWAdvancedStrategies: WoWAdvancedStrategiesMeta.meta,
   ResearchPost1: ResearchPost1Meta.meta,
   ResearchPost2: ResearchPost2Meta.meta,
-  ResearchPost3: ResearchPost3Meta.meta
+  ResearchPost3: ResearchPost3Meta.meta,
+  WikiBlog: undefined
 }

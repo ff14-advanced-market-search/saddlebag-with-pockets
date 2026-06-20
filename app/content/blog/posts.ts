@@ -1,5 +1,6 @@
 import type React from 'react'
 import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { wikiBlogPosts } from './wikiPostsEntries'
 
 type FeaturedPostIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>
 
@@ -11,6 +12,7 @@ export interface BlogPost {
   component: string
   canonical?: string
   customHeading?: string
+  wikiSlug?: string
 }
 
 export interface FeaturedPost {
@@ -26,7 +28,7 @@ const documentSearchIcon = DocumentSearchIcon as FeaturedPostIcon
  * Central configuration for all blog posts
  * Key format: 'category/slug' for categorized posts, or just 'slug' for research posts
  */
-export const blogPosts: Record<string, BlogPost> = {
+const legacyBlogPosts: Record<string, BlogPost> = {
   'ffxiv/bs2': {
     category: 'ffxiv',
     slug: 'bs2',
@@ -122,6 +124,11 @@ export const blogPosts: Record<string, BlogPost> = {
     customHeading:
       'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter'
   }
+}
+
+export const blogPosts: Record<string, BlogPost> = {
+  ...legacyBlogPosts,
+  ...wikiBlogPosts
 }
 
 /**

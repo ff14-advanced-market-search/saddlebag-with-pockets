@@ -178,12 +178,17 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/howtoresell</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <loc>https://saddlebagexchange.com/blog/dev/repo-architecture</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/tldr</loc>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/allagan-tools-inventory-analysis</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/bs11</loc>
   <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
@@ -193,13 +198,138 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/bs6</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/changes-to-seller-id-impacting-sale-and-undercut-alerts</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/ffxiv-advanced-undercut-alert-options</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/ffxiv-alternative-seller-id-lookup</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/ffxiv-experimental-discount-price-sniper</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/ffxiv-sale-leads</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/how-to-cross-realm-trade-with-saddlebag-exchange-for-ffxiv-players</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/how-to-update-ffxiv-price-data-on-universalis</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/how-to-use-the-ffxiv-crafting-profit-simulator-craftsim</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/howtoresell</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/tldr</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
   <loc>https://saddlebagexchange.com/blog/ffxiv/undercut</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/undercut-alerts-alpha-version</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/ffxiv/what-to-do-if-your-ffxiv-undercut-alerts-are-incorrect</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/do-not-copy-and-paste-commands-click-the-sticky</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/experimental-price-sniper</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/how-to-allow-bot-dm-messages</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/how-to-travel-to-any-datacenter-in-your-region</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/how-to-use-item-data-searches-to-help-you-find-good-items-to-trade</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/how-to-use-price-group-deltas</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/item-categories-ids-and-list</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/premium-website-pages</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/price-sniper-and-item-price-alerts</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/setting-your-home-server</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/guides/simple-beginners-regiment-for-making-gil-with-saddlebag-exchange</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/gw2/gw2-type-details-type-rarity-submap-680</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/r1</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
@@ -213,27 +343,47 @@ export const loader: LoaderFunction = async () => {
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs11</loc>
+  <loc>https://saddlebagexchange.com/blog/wow/advanced-strategies</loc>
   <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/wow/crossrealm1</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/ffxiv/bs6</loc>
+  <loc>https://saddlebagexchange.com/blog/wow/how-to-trade-using-our-wow-market-overview</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/how-to-use-the-wow-out-of-stock-search</loc>
   <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
   <loc>https://saddlebagexchange.com/blog/wow/tldr</loc>
-  <lastmod>2024-05-07T00:27:48+00:00</lastmod>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://saddlebagexchange.com/blog/wow/advanced-strategies</loc>
+  <loc>https://saddlebagexchange.com/blog/wow/wow-discord-price-sniper-and-spike-alerts</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/wow-discord-undercut-alerts</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/wow-item-classes-and-subclasses</loc>
+  <lastmod>2025-06-13T00:27:48+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://saddlebagexchange.com/blog/wow/wow-retail-realm-population</loc>
   <lastmod>2025-06-13T00:27:48+00:00</lastmod>
   <priority>0.70</priority>
 </url>

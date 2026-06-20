@@ -2,7 +2,8 @@ import { DocumentSearchIcon } from '@heroicons/react/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 import type { MetaFunction } from '@remix-run/cloudflare'
-// Overwrite default meta in the root.tsx
+import { blogPosts, featuredPosts } from '~/content/blog/posts'
+
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
@@ -20,87 +21,26 @@ export const meta: MetaFunction = () => {
   ]
 }
 
+const featuredHrefs = new Set(featuredPosts.map((post) => post.href))
+
 const recommendedQueries = [
-  {
-    name: 'How to Resell Items in FFXIV',
-    description: 'Complete guide to buying and reselling for profit.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/howtoresell'
-  },
-  {
-    name: 'TLDR: How to make gil in FFXIV with cross server trading',
-    description: 'Easy 4 step method to making gil.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/tldr'
-  },
-  {
-    name: 'TLDR: How to make gold in WoW with cross realm trading',
-    description: 'Easy 4 step method to making gold.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/wow/tldr'
-  },
-  {
-    name: 'FFXIV Marketboard Guide: Mastering Undercutting with Saddlebag Exchange',
-    description:
-      'Learn how to maximize your FFXIV gil earnings using undercutting strategies and Saddlebag Exchange alerts.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/undercut'
-  },
-  {
-    name: 'How to Import, Trade and Flip Items on the FFXIV Marketboard',
-    description:
-      'Learn cross-server trading basics: buy low on other servers and sell high on your home server.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/r1'
-  },
-  {
-    name: 'How to Earn Gil with the FFXIV Market Overview',
-    description:
-      'Use marketshare searches to find the best items to sell on the marketboard.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/r2'
-  },
-  {
-    name: 'How to Trade Using Commodity Shortage Futures as a Crafter',
-    description:
-      'Explore strategies for trading commodity shortage futures to maximize crafter profits.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/r3'
-  },
-  {
-    name: 'FFXIV Trading Strategies Post 11',
-    description:
-      'Data analysis, market trends, and statistical trading methods',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs11'
-  },
-  {
-    name: 'Our first wow cross realm update',
-    description: 'Launch of cross realm trading tools',
-    Icon: DocumentSearchIcon,
-    href: '/blog/wow/crossrealm1'
-  },
-  {
-    name: 'FFXIV Trading Strategies Post 6',
-    description:
-      'Multi-tier trading strategies from core to master-level techniques',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs6'
-  },
-  {
-    name: 'FFXIV Trading Strategies Post 2',
-    description:
-      'Advanced FFXIV marketboard techniques and profit optimization',
-    Icon: DocumentSearchIcon,
-    href: '/blog/ffxiv/bs2'
-  },
-  {
-    name: 'Advanced World of Warcraft Trading Strategies',
-    description:
-      'Master commodity markets, cross-realm arbitrage, profession-based trading empires, and advanced market analysis tools for WoW.',
-    Icon: DocumentSearchIcon,
-    href: '/blog/wow/advanced-strategies'
-  }
+  ...featuredPosts,
+  ...Object.values(blogPosts)
+    .filter((post) => {
+      const href = post.category
+        ? `/blog/${post.category}/${post.slug}`
+        : `/blog/${post.slug}`
+      return !featuredHrefs.has(href)
+    })
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .map((post) => ({
+      name: post.title,
+      description: post.description,
+      Icon: DocumentSearchIcon,
+      href: post.category
+        ? `/blog/${post.category}/${post.slug}`
+        : `/blog/${post.slug}`
+    }))
 ]
 
 export default function Index() {
@@ -116,7 +56,7 @@ export default function Index() {
             <div
               className={`not-prose my-12 grid grid-cols-1 gap-6 sm:grid-cols-2`}>
               {recommendedQueries.map((query) => {
-                return <TileLink key={query.name} {...query} />
+                return <TileLink key={query.href} {...query} />
               })}
             </div>
           </div>
