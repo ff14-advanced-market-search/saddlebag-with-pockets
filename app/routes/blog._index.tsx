@@ -47,20 +47,23 @@ const recommendedQueries = [
     href: '/blog/ffxiv/undercut'
   },
   {
-    name: 'How to Cross Server Trade in FFXIV',
-    description: 'Watch a youtube video on how to trade between servers',
+    name: 'How to Import, Trade and Flip Items on the FFXIV Marketboard',
+    description:
+      'Learn cross-server trading basics: buy low on other servers and sell high on your home server.',
     Icon: DocumentSearchIcon,
     href: '/blog/r1'
   },
   {
-    name: 'How to use ffxiv marketshare',
-    description: 'how to marketshare',
+    name: 'How to Earn Gil with the FFXIV Market Overview',
+    description:
+      'Use marketshare searches to find the best items to sell on the marketboard.',
     Icon: DocumentSearchIcon,
     href: '/blog/r2'
   },
   {
-    name: 'How to use wow commodity shortage',
-    description: 'how to wow commodity shortage',
+    name: 'How to Trade Using Commodity Shortage Futures as a Crafter',
+    description:
+      'Explore strategies for trading commodity shortage futures to maximize crafter profits.',
     Icon: DocumentSearchIcon,
     href: '/blog/r3'
   },

@@ -96,28 +96,31 @@ export const blogPosts: Record<string, BlogPost> = {
   r1: {
     category: '',
     slug: 'r1',
-    title: 'How to Use Commodity Shortage Futures as a Crafter',
+    title: 'How to Import, Trade and Flip Items on the FFXIV Marketboard',
     description:
-      'Discover effective strategies for utilizing commodity shortage futures to maximize profits as a crafter.',
+      'Learn cross-server trading basics: buy low on other servers and sell high on your home server using the FFXIV marketboard.',
     component: 'ResearchPost1',
-    canonical: 'https://saddlebagexchange.com/blog/r1',
-    customHeading:
-      'Maximizing Profits: Using Commodity Shortage Futures as a Crafter'
+    canonical: 'https://saddlebagexchange.com/blog/r1'
   },
   r2: {
     category: '',
     slug: 'r2',
-    title: 'How to Cross-Server Trade in FFXIV',
+    title: 'How to Earn Gil with the FFXIV Market Overview',
     description:
-      'Discover effective methods and guidelines for cross-server trading in Final Fantasy XIV.',
-    component: 'ResearchPost2'
+      'Use marketshare searches to find the best items to sell on the marketboard.',
+    component: 'ResearchPost2',
+    canonical: 'https://saddlebagexchange.com/blog/r2'
   },
   r3: {
     category: '',
     slug: 'r3',
-    title: 'Research Post 3',
-    description: 'Third research post on economic systems.',
-    component: 'ResearchPost3'
+    title: 'How to Trade Using Commodity Shortage Futures as a Crafter',
+    description:
+      'Explore effective strategies for trading using commodity shortage futures to maximize profits as a crafter.',
+    component: 'ResearchPost3',
+    canonical: 'https://saddlebagexchange.com/blog/r3',
+    customHeading:
+      'Maximizing Profits: Trading with Commodity Shortage Futures as a Crafter'
   }
 }
 
