@@ -8,7 +8,7 @@ const furnishingComponents = {
     start_month: 5,
     start_day: 1,
     end_year: 2026,
-    end_month: 12,
+    end_month: 4,
     end_day: 1,
     price_groups: [
       {

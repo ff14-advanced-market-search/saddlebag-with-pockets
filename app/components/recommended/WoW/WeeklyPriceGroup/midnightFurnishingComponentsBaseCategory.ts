@@ -8,7 +8,7 @@ const midnightFurnishingComponents = {
     start_month: 7,
     start_day: 1,
     end_year: 2026,
-    end_month: 12,
+    end_month: 4,
     end_day: 30,
     price_groups: [
       {
