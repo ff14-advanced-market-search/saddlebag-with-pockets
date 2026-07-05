@@ -1,5 +1,6 @@
 const axios = require('axios')
 const { writeFile } = require('fs')
+const { USER_AGENT } = require('./config')
 
 const ITEMS_ADDRESS =
   'https://api.saddlebagexchange.com/api/gw2/marketableitems'
@@ -58,6 +59,10 @@ const getItems = async () => {
     const itemNameResponse = await axios({
       method: 'post',
       url: ITEMS_ADDRESS,
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': USER_AGENT
+      },
       data: {
         type: -1,
         details_type: -1,

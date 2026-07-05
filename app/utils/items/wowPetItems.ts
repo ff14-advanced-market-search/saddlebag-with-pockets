@@ -1098,7 +1098,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '2530': 'Mechantula',
   '2531': 'Mechanical Cockroach',
   '2532': 'Leper Rat',
-  '2533': 'Alarm-O-Dog',
+  '2533': 'Alarm-o-Dog',
   '2534': 'Mini Spider Tank',
   '2535': 'Wicker Wraith',
   '2537': 'Baby Zandalari Raptor',
@@ -2103,6 +2103,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4946': 'Linda the Lucky',
   '4947': 'Assistant Botanist Leafy',
   '4948': 'Perturbed Sporebat',
+  '4949': 'Shadowflame Remnant',
   '4950': 'Fidoficus',
   '4951': 'Bubbly Snapling',
   '4952': 'Blitzcreek',
@@ -2117,7 +2118,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4961': 'Nibblesworth',
   '4963': 'Grumpy Mandrake',
   '4964': 'Plump Mandrake',
-  '4965': 'Chirpy Mandrake',
+  '4965': 'Sleepy Mandrake',
   '4966': 'Screechy Mandrake',
   '4967': 'Gortham',
   '4968': "Lil' Staropod",
@@ -2134,6 +2135,7 @@ export const wowPetsItemsMap: Record<string, string> = {
   '4984': 'Medusa',
   '4985': 'Princess Bloodshed',
   '5003': 'Sunwing Hatchling',
+  '5007': 'Akiki',
   '5012': 'Sootpaw',
   '5017': 'Void-Scarred Eaglet',
   '5019': 'Chubs',
@@ -2146,5 +2148,8 @@ export const wowPetsItemsMap: Record<string, string> = {
   '5038': 'Wriggling Capybara',
   '5039': 'Cappy',
   '5040': 'Curious Lynx Kitten',
-  '5065': "Ka'bubb"
+  '5041': 'Emberlyn',
+  '5065': "Ka'bubb",
+  '5073': 'Frosticus Maximus',
+  '5074': 'Silento'
 }

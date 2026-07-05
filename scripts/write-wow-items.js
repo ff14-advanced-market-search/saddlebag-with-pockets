@@ -1,5 +1,6 @@
 const axios = require('axios')
 const { writeFile } = require('fs')
+const { USER_AGENT } = require('./config')
 
 const WOW_DISCORD_CONSENT =
   'I have gone to discord and asked the devs about this api and i know it only updates once per hour and will not spam the api like an idiot and there is no point in making more than one request per hour and i will not make request for one item at a time i know many apis support calling multiple items at once'
@@ -69,6 +70,10 @@ const getItems = async (type = 'regular') => {
     const itemNameResponse = await axios({
       method: 'post',
       url: ITEMS_ADDRESS,
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': USER_AGENT
+      },
       data
     })
 
