@@ -2149,6 +2149,8 @@ export const wowPetsItemsMap: Record<string, string> = {
   '5039': 'Cappy',
   '5040': 'Curious Lynx Kitten',
   '5041': 'Emberlyn',
+  '5052': 'Sunflicker Driftmoth',
+  '5064': "Murk'atath",
   '5065': "Ka'bubb",
   '5073': 'Frosticus Maximus',
   '5074': 'Silento'
