@@ -11,7 +11,7 @@ export const WOW_ILVL_PATCH = '12.1'
 
 /** Available BOE item levels for the current patch */
 /** Seems to always be 13 item levels apart */
-export const WOW_BOE_ILVLS = [279, 292, 295, 298, 305] as const
+export const WOW_BOE_ILVLS = [279, 292, 295, 298, 305, 308] as const
 export const WOW_TOOL_ILVLS = [206, 212, 218, 225, 232] as const
 
 /** Display string for BOE levels in tooltips/notes: "115, 128, 141, or 154" */
