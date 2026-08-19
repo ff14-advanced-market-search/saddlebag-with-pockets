@@ -7,11 +7,11 @@
 export const WOW_ILVL_DEFAULT = 106
 
 /** Patch label for copy */
-export const WOW_ILVL_PATCH = '12.0'
+export const WOW_ILVL_PATCH = '12.1'
 
 /** Available BOE item levels for the current patch */
 /** Seems to always be 13 item levels apart */
-export const WOW_BOE_ILVLS = [227, 240, 253, 266] as const
+export const WOW_BOE_ILVLS = [279, 292, 295, 298, 305] as const
 export const WOW_TOOL_ILVLS = [206, 212, 218, 225, 232] as const
 
 /** Display string for BOE levels in tooltips/notes: "115, 128, 141, or 154" */
@@ -31,14 +31,15 @@ export const WOW_TOOL_LEVELS_DISPLAY =
 
 /** Supported raid BOE gear names (shown in form descriptions) */
 export const WOW_ILVL_SUPPORTED_RAID_GEAR = [
-  'Visage of Unseen Truths',
-  'Infernal Greatlock Girdle',
-  "Nullstrider's Boots",
-  'Power Stance Breeches',
-  'Primal Spark Pauldrons',
-  'Raging Storm Sash',
-  'Breastplate of the Final Defense',
-  'Fading Dawn Sabatons'
+  'Venom Rite Mantle',
+  'Slippers of the Hissing Cult',
+  "Temple Delver's Mystic Helm",
+  'Slitherscale Girdle',
+  'Crushing Coiler Coif',
+  'Greaves of the Noxious Depths',
+  'Pauldrons of the Forgotten Sacrifice',
+  "Fanged Brute's Greatbelt",
+  "Bound Serpent's Jade Eye"
 ] as const
 
 /** Supported profession tool names (shown in form descriptions) */
