@@ -8,7 +8,7 @@ const tier12_0 = {
     start_month: 2,
     start_day: 28,
     end_year: 2026,
-    end_month: 5,
+    end_month: 6,
     end_day: 1,
     price_groups: [
       {

@@ -5,10 +5,10 @@ const consumablesTier12_1 = {
   config: {
     region: 'NA',
     start_year: 2026,
-    start_month: 5,
+    start_month: 7,
     start_day: 1,
     end_year: 2026,
-    end_month: 9,
+    end_month: 11,
     end_day: 1,
     price_groups: [
       {
