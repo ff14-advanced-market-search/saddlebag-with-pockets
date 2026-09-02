@@ -12,7 +12,7 @@
     "build:remix": "remix build",
     "dev": "yarn run generate:css && remix build && run-p \"dev:*\"",
     "dev:css": "yarn run generate:css --watch",
-    "dev:remix": "remix dev",
+    "dev:remix": "remix watch",
     "dev:wrangler": "wrangler pages dev ./public --compatibility-date=2026-05-03",
     "generate:css": "npx tailwindcss -o ./app/tailwind.css",
     "prettier": "prettier --write app",
