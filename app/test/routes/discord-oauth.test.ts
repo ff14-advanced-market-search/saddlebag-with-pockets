@@ -85,9 +85,11 @@ describe('Discord OAuth Routes', () => {
     })
 
     it('should reject callbacks without the matching OAuth state', async () => {
+      const { cookie } = await startDiscordLogin()
       const response = (await discordCallbackLoader({
         request: new Request(
-          'http://localhost:8788/discord-callback?code=attacker-code&state=invalid'
+          'http://localhost:8788/discord-callback?code=attacker-code&state=invalid',
+          { headers: { Cookie: cookie } }
         ),
         params: {},
         context
