@@ -22,9 +22,13 @@ import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
 import { getUserSessionData } from '~/sessions.server'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
 
   const validInput = validateShortageData(formData)
@@ -82,14 +86,18 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
 
-  return combineWithDiscordSession(request, {
-    wowRealm: server,
-    wowRegion: region
-  })
+  return combineWithDiscordSession(
+    request,
+    {
+      wowRealm: server,
+      wowRegion: region
+    },
+    context
+  )
 }
 
 const Index = () => {

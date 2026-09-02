@@ -18,8 +18,7 @@ import {
   useActionData,
   useNavigation,
   useSearchParams,
-  useLoaderData,
-  useNavigate
+  useLoaderData
 } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
@@ -39,7 +38,11 @@ import {
 import { getActionUrl, handleCopyButton } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  getDiscordSessionData,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 import {
   WOW_ILVL_DEFAULT,
   WOW_ILVL_LEVELS_DISPLAY,
@@ -115,7 +118,8 @@ const validateInput = z.object({
   sortBy: z.string()
 })
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const session = await getUserSessionData(request)
   const formData = await request.formData()
   const formDataObj = Object.fromEntries(formData)
@@ -150,7 +154,7 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const url = new URL(request.url)
   const params = url.searchParams
 
@@ -163,6 +167,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   const desiredStats = params.getAll('desiredStats') as ItemStat[]
 
   if (itemID) {
+    const discordSessionData = await getDiscordSessionData(request, context)
+    if (!discordSessionData.isLoggedIn || !discordSessionData.hasPremium) {
+      return json(discordSessionData)
+    }
+
     const formData = {
       itemId: itemID,
       ilvl,
@@ -173,12 +182,16 @@ export const loader: LoaderFunction = async ({ request }) => {
     }
     const validatedFormData = validateInput.safeParse(formData)
     if (!validatedFormData.success) {
-      return combineWithDiscordSession(request, {
-        exception: parseZodErrorsToDisplayString(
-          validatedFormData.error,
-          inputMap
-        )
-      })
+      return combineWithDiscordSession(
+        request,
+        {
+          exception: parseZodErrorsToDisplayString(
+            validatedFormData.error,
+            inputMap
+          )
+        },
+        context
+      )
     }
 
     const session = await getUserSessionData(request)
@@ -195,14 +208,18 @@ export const loader: LoaderFunction = async ({ request }) => {
       sortBy: validatedFormData.data.sortBy
     })
 
-    return combineWithDiscordSession(request, {
-      ...(await result.json()),
-      sortby: validatedFormData.data.sortBy,
-      formValues: { ...validatedFormData.data, desiredStats }
-    })
+    return combineWithDiscordSession(
+      request,
+      {
+        ...(await result.json()),
+        sortby: validatedFormData.data.sortBy,
+        formValues: { ...validatedFormData.data, desiredStats }
+      },
+      context
+    )
   }
 
-  return combineWithDiscordSession(request, {})
+  return combineWithDiscordSession(request, {}, context)
 }
 
 type LoaderResponseType =

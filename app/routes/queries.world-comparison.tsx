@@ -27,7 +27,10 @@ import TitleTooltip from '~/components/Common/TitleTooltip'
 import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',
@@ -70,7 +73,7 @@ const inputSchema = z.object({
 })
 
 // Loader function to handle URL parameters
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const params = new URL(request.url).searchParams
 
   const values = {
@@ -82,13 +85,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validParams = inputSchema.safeParse(values)
   if (!validParams.success) {
-    return combineWithDiscordSession(request, {
-      exception: `Missing: ${validParams.error.issues
-        .map(({ path }) => path.join(', '))
-        .join(', ')}`
-    })
+    return combineWithDiscordSession(
+      request,
+      {
+        exception: `Missing: ${validParams.error.issues
+          .map(({ path }) => path.join(', '))
+          .join(', ')}`
+      },
+      context
+    )
   }
-  return combineWithDiscordSession(request, validParams.data)
+  return combineWithDiscordSession(request, validParams.data, context)
 }
 
 const sortByPrice =
@@ -102,7 +109,8 @@ const sortByPrice =
     return desc ? 1 : -1
   }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
   const session = await getUserSessionData(request)
 

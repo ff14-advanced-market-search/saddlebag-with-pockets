@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import {
@@ -40,7 +35,10 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilters/commodityClasses'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 const PAGE_URL = '/wow/shortage-predictor'
 
@@ -74,7 +72,8 @@ const pageTitle = 'Commodity Shortage Futures'
 const pageDescription =
   'Find Commodity Shortages and Price Spikes BEFORE they happen and be there first!'
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)
 
@@ -137,7 +136,7 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const { getWoWSessionData } = await getUserSessionData(request)
   const { server, region } = getWoWSessionData()
 
@@ -192,10 +191,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const validInput = validateFormData.safeParse(input)
   if (validInput.success) {
-    return combineWithDiscordSession(request, validInput.data)
+    return combineWithDiscordSession(request, validInput.data, context)
   }
 
-  return combineWithDiscordSession(request, defaultFormValues)
+  return combineWithDiscordSession(request, defaultFormValues, context)
 }
 
 const Index = () => {

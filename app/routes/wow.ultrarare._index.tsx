@@ -10,9 +10,11 @@ import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { UltrarareItem, UltrarareResponse } from '~/requests/WoW/Ultrarare'
 import UltrarareSearch from '~/requests/WoW/Ultrarare'
 import { getUserSessionData } from '~/sessions.server'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasElite } from '~/utils/premium'
 import z from 'zod'
 import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -33,10 +35,7 @@ import {
 } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import Banner from '~/components/Common/Banner'
-import {
-  ExpansionSelect,
-  ItemClassSelect
-} from '~/components/form/WoW/WoWScanForm'
+import { ExpansionSelect } from '~/components/form/WoW/WoWScanForm'
 import { itemQuality } from '~/utils/WoWFilters/itemQuality'
 import { itemClasses } from '~/utils/WoWFilters/itemClasses'
 import { ToolTip } from '~/components/Common/InfoToolTip'
@@ -122,7 +121,7 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const params = new URL(request.url).searchParams
 
   const values = {
@@ -164,10 +163,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const formData = validParams.success ? validParams.data : defaultFormValues
 
-  return combineWithDiscordSession(request, formData)
+  return combineWithDiscordSession(request, formData, context)
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context, 'elite')
   const { getWoWSessionData } = await getUserSessionData(request)
   const region = getWoWSessionData().region
 

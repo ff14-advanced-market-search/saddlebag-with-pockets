@@ -64,9 +64,10 @@ Discord authentication is only needed when developing or testing the Discord log
 DISCORD_CLIENT_ID=your-client-id
 DISCORD_CLIENT_SECRET=your-client-secret
 DISCORD_BOT_TOKEN=your-bot-token
+SESSION_SECRET=your-random-session-signing-secret
 ```
 
-The production redirect URI must match the deployed site URL registered in Discord. `SITE_NAME` is optional and defaults to `Saddlebag Exchange`.
+The production redirect URI must match the deployed site URL registered in Discord. `SITE_NAME` is optional and defaults to `Saddlebag Exchange`. `SESSION_SECRET` is recommended for signing Discord sessions; when unset, `DISCORD_CLIENT_SECRET` is used as a secure fallback.
 
 ## Contributing
 

@@ -19,7 +19,10 @@ import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import type { LoaderFunction } from '@remix-run/node'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -66,7 +69,8 @@ const validateInput = ({
   return { home_server, color }
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
   const session = await getUserSessionData(request)
 
@@ -105,8 +109,8 @@ type ActionResponse =
   | { exception: string }
   | {}
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return combineWithDiscordSession(request, {})
+export const loader: LoaderFunction = async ({ request, context }) => {
+  return combineWithDiscordSession(request, {}, context)
 }
 
 const FFXIVScripExchange = () => {

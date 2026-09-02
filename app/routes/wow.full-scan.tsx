@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import type {
   ActionFunction,
   LoaderFunction,
@@ -27,7 +22,10 @@ import type { WoWLoaderData } from '~/requests/WoW/types'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import Banner from '~/components/Common/Banner'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -48,25 +46,34 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   try {
     const { getWoWSessionData } = await getUserSessionData(request)
     const { server, region } = getWoWSessionData()
 
-    return combineWithDiscordSession(request, {
-      wowRealm: server,
-      wowRegion: region
-    })
+    return combineWithDiscordSession(
+      request,
+      {
+        wowRealm: server,
+        wowRegion: region
+      },
+      context
+    )
   } catch (err) {
     // Fallback to safe defaults if session retrieval fails
-    return combineWithDiscordSession(request, {
-      wowRealm: 'Thrall',
-      wowRegion: 'NA'
-    })
+    return combineWithDiscordSession(
+      request,
+      {
+        wowRealm: 'Thrall',
+        wowRegion: 'NA'
+      },
+      context
+    )
   }
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
 
   const validInput = validateWoWScanInput(formData)

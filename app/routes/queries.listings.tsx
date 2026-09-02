@@ -22,7 +22,10 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -73,7 +76,8 @@ const validateInput = ({
   return { itemId: parsedItemId, world, initialDays: 30, endDays: 0 }
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
   const session = await getUserSessionData(request)
 
@@ -103,8 +107,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return combineWithDiscordSession(request, {})
+export const loader: LoaderFunction = async ({ request, context }) => {
+  return combineWithDiscordSession(request, {}, context)
 }
 
 const Index = () => {
