@@ -1,8 +1,7 @@
 import type { Options, PointOptionsObject } from 'highcharts'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import subHours from 'date-fns/subHours'
-import format from 'date-fns/format'
+import { format, subHours } from 'date-fns'
 
 const getHourString = (index: number, arrayLength: number) => {
   return `${format(subHours(new Date(), arrayLength - index), 'HH')}:00`

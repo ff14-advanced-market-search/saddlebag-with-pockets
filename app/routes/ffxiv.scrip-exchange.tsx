@@ -1,29 +1,25 @@
-import {
-  useActionData,
-  useNavigation,
-  useLoaderData,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useNavigation, useLoaderData } from '@remix-run/react'
 import type { ActionFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import { PageWrapper } from '~/components/Common'
 import VideoGuide from '~/components/Common/VideoGuide'
 import { useDispatch } from 'react-redux'
-import { useTypedSelector } from '~/redux/useTypedSelector'
 import Select from '~/components/form/select'
-import type { ScripExchangeResults } from '~/requests/FFXIV/scrip-exchange'
-import { ScripExchangeRequest } from '~/requests/FFXIV/scrip-exchange'
-import type { ScripExchangeProps } from '~/requests/FFXIV/scrip-exchange'
+import {
+  ScripExchangeRequest,
+  type ScripExchangeProps,
+  type ScripExchangeResults
+} from '~/requests/FFXIV/scrip-exchange'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import type { LoaderFunction } from '@remix-run/node'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -125,8 +121,6 @@ const FFXIVScripExchange = () => {
     color: 'Orange Gatherers'
   })
   const [error, setError] = useState<string | undefined>()
-  const { darkmode } = useTypedSelector((state) => state.user)
-  const { itemHistory } = useTypedSelector((state) => state.queries)
   const dispatch = useDispatch()
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -22,7 +22,7 @@ import {
   ChevronDoubleRightIcon,
   ChevronDownIcon,
   ChevronUpIcon
-} from '@heroicons/react/solid'
+} from '@heroicons/react/24/solid'
 import { classNames } from '~/utils'
 import UniversalisBadgedLink from '~/components/utilities/UniversalisBadgedLink'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
@@ -108,11 +108,11 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   let dir = 0
 
-  if (rowA.columnFiltersMeta[columnId]) {
-    dir = compareItems(
-      rowA.columnFiltersMeta[columnId]?.itemRank!,
-      rowB.columnFiltersMeta[columnId]?.itemRank!
-    )
+  const rowARank = rowA.columnFiltersMeta[columnId]?.itemRank
+  const rowBRank = rowB.columnFiltersMeta[columnId]?.itemRank
+
+  if (rowARank && rowBRank) {
+    dir = compareItems(rowARank, rowBRank)
   }
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }

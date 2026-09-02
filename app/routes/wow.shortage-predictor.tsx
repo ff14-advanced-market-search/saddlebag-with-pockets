@@ -27,7 +27,7 @@ import type {
 import WoWShortagePredictor from '~/requests/WoW/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import { Results } from '~/components/WoWResults/ShortagePredictor/Results'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { useState } from 'react'
@@ -40,7 +40,7 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getCommodityItemClasses } from '~/utils/WoWFilters/commodityClasses'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 const PAGE_URL = '/wow/shortage-predictor'
 

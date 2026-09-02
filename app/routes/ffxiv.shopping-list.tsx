@@ -1,16 +1,11 @@
-import { TrashIcon } from '@heroicons/react/solid'
+import { TrashIcon } from '@heroicons/react/24/solid'
 import type {
   ActionFunction,
   LoaderFunction,
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import VideoGuide from '~/components/Common/VideoGuide'
@@ -30,11 +25,11 @@ import type {
   ShoppingListItem
 } from '~/requests/FFXIV/shopping-list'
 import GetShoppingList from '~/requests/FFXIV/shopping-list'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {

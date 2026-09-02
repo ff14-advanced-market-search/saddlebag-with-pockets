@@ -27,7 +27,7 @@ import type {
 import LegacyMarketshare from '~/requests/WoW/LegacyMarketshare'
 import type { WoWLoaderData, WoWServerRegion } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import TreemapChart from '~/components/Charts/Treemap'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import FullTable from '~/components/Tables/FullTable'

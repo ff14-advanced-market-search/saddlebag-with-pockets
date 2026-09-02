@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useNavigation,
-  useLoaderData,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useNavigation, useLoaderData } from '@remix-run/react'
 import type {
   ActionFunction,
   MetaFunction,
@@ -16,7 +11,7 @@ import type {
   GetHistoryResponse
 } from '~/requests/FFXIV/GetHistory'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import ItemSelect from '~/components/Common/ItemSelect'
 import type { ItemSelected } from '~/components/Common/ItemSelect'
 import { useEffect, useState } from 'react'
@@ -28,7 +23,7 @@ import { setItemHistory } from '~/redux/reducers/queriesSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {

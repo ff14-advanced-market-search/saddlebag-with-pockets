@@ -1,8 +1,6 @@
 import type { FC, PropsWithoutRef } from 'react'
 import { useEffect, useState } from 'react'
 import * as locations from '~/utils/locations'
-import type { ValidationResult } from 'remix-validated-form'
-import type SelectWorldInputFields from '~/routes/_public.options'
 import type { GetDeepProp } from '~/utils/ts'
 import type { WorldsList } from '~/utils/locations/Worlds'
 import { SelectDataCenter } from '~/components/form/select/SelectWorld/SelectDataCenter'
@@ -13,7 +11,6 @@ import type { RouterState } from '@remix-run/router'
 type SelectWorldProps = PropsWithoutRef<{
   navigation: RouterState['navigation']
   sessionData: SessionData
-  actionData?: ValidationResult<typeof SelectWorldInputFields>
   onChange?: (ffxiv: { world: string; data_center: string }) => void
 }>
 

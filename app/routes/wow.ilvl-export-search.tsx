@@ -12,7 +12,7 @@ import type {
   IlvlExportResponse
 } from '~/requests/WoW/IlvlExportSearch'
 import IlvlExportSearch from '~/requests/WoW/IlvlExportSearch'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
 import {
   useActionData,
@@ -39,7 +39,7 @@ import {
 import { getActionUrl, handleCopyButton } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 import {
   WOW_ILVL_DEFAULT,
   WOW_ILVL_LEVELS_DISPLAY,

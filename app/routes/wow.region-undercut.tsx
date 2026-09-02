@@ -8,7 +8,7 @@ import { z } from 'zod'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { TextArea } from '~/components/form/TextArea'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import type {
   RegionUndercutResponse,
   UndercutItems
@@ -21,7 +21,7 @@ import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { useLoaderData } from '@remix-run/react'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 const formName = 'region-undercut'
 

@@ -4,13 +4,15 @@ import HighchartsReact from 'highcharts-react-official'
 import { useEffect, useRef, useState } from 'react'
 
 // Initialize the treemap module at the module level
-try {
-  addHighchartsTreemap(Highcharts)
-} catch (error) {
-  console.error(
-    'Failed to initialize Highcharts treemap module:',
-    error instanceof Error ? error.message : String(error)
-  )
+if (typeof window !== 'undefined') {
+  try {
+    addHighchartsTreemap(Highcharts)
+  } catch (error) {
+    console.error(
+      'Failed to initialize Highcharts treemap module:',
+      error instanceof Error ? error.message : String(error)
+    )
+  }
 }
 
 export interface TreemapNode {
