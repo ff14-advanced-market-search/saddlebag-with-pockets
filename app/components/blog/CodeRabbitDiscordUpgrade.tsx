@@ -72,9 +72,11 @@ const CodeRabbitDiscordUpgrade = () => {
               </div>
             </section>
 
-            <div className="prose prose-lg prose-slate mt-12 max-w-none">
-              <h2>When “we should upgrade that” turns into years</h2>
-              <p>
+            <div className="mt-12 space-y-6 text-lg leading-relaxed text-slate-700">
+              <h2 className="pt-2 text-3xl font-black leading-tight text-slate-900">
+                When “we should upgrade that” turns into years
+              </h2>
+              <p className="leading-relaxed">
                 Saddlebag Exchange is an open-source market data platform for
                 Final Fantasy XIV, World of Warcraft, and Guild Wars 2. Like a
                 lot of useful community projects, it grew while its frontend
@@ -83,7 +85,7 @@ const CodeRabbitDiscordUpgrade = () => {
                 thousands of lockfile lines, and interactive UI that still had
                 to work when everything was done.
               </p>
-              <p>
+              <p className="leading-relaxed">
                 This was not a one-package version bump. It was the sort of
                 upgrade that crosses route loaders, server-only session code,
                 client hydration, components, build configuration, tests, and
@@ -104,8 +106,10 @@ const CodeRabbitDiscordUpgrade = () => {
                 </footer>
               </blockquote>
 
-              <h2>Why doing the work in Discord changed the equation</h2>
-              <p>
+              <h2 className="pt-4 text-3xl font-black leading-tight text-slate-900">
+                Why doing the work in Discord changed the equation
+              </h2>
+              <p className="leading-relaxed">
                 The breakthrough was not another isolated code suggestion. The
                 CodeRabbit Discord bot joined the actual development
                 conversation with access to the repository and the surrounding
@@ -113,11 +117,11 @@ const CodeRabbitDiscordUpgrade = () => {
                 language, inspect progress together, and keep narrowing the work
                 without rebuilding context in a new tool every time.
               </p>
-              <p>
+              <p className="leading-relaxed">
                 From that conversation, the bot could move through the whole
                 engineering loop:
               </p>
-              <ul>
+              <ul className="list-disc space-y-3 pl-6 marker:text-orange-500">
                 <li>
                   inspect the repository and identify the real dependency and
                   runtime constraints;
@@ -142,8 +146,10 @@ const CodeRabbitDiscordUpgrade = () => {
                 </li>
               </ul>
 
-              <h2>What shipped</h2>
-              <p>
+              <h2 className="pt-4 text-3xl font-black leading-tight text-slate-900">
+                What shipped
+              </h2>
+              <p className="leading-relaxed">
                 The merged upgrade modernized the project’s Node runtime, Remix,
                 React, Tailwind CSS, Vite, Vitest, and supporting packages. It
                 also fixed the less-visible problems that make large dependency
@@ -151,15 +157,17 @@ const CodeRabbitDiscordUpgrade = () => {
                 route behavior, test compatibility, and production build
                 configuration.
               </p>
-              <p>
+              <p className="leading-relaxed">
                 The result was not “the lockfile changed, good luck.” It was a
                 reviewable pull request with 107 changed files, passing focused
                 tests, a successful production build, and follow-through on the
                 comments that arrived during review.
               </p>
 
-              <h2>An AI teammate where open-source teams already work</h2>
-              <p>
+              <h2 className="pt-4 text-3xl font-black leading-tight text-slate-900">
+                An AI teammate where open-source teams already work
+              </h2>
+              <p className="leading-relaxed">
                 For maintainers, the interface matters. Contributors already
                 arrive in Discord to report bugs, ask questions, and coordinate
                 work. Putting a repository-aware coding agent in that same
@@ -167,7 +175,7 @@ const CodeRabbitDiscordUpgrade = () => {
                 every participant to clone the project, reproduce the local
                 environment, or learn a new workflow first.
               </p>
-              <p>
+              <p className="leading-relaxed">
                 That makes the CodeRabbit Discord bot especially compelling for
                 open source: it can help explain a codebase, triage issues,
                 investigate failures, plan changes, implement fixes, and carry
