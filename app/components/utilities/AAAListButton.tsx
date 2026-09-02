@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SubmitButton } from '../form/SubmitButton'
-import { Dialog, DialogBackdrop } from '@headlessui/react'
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 
 export interface AAAListProps<DataType> {
   data: Array<DataType>
@@ -90,7 +90,7 @@ export default function AAAListButton<DataType extends { itemID: number }>({
         onClose={() => setIsOpen(false)}
         className="fixed inset-0 flex items-center justify-center p-4">
         <DialogBackdrop className="fixed inset-0 bg-black/50" />
-        <div className="relative bg-white rounded-lg p-6 max-w-sm w-full">
+        <DialogPanel className="relative bg-white rounded-lg p-6 max-w-sm w-full">
           <h3 className="text-lg font-bold mb-4">AAA List Settings</h3>
 
           <div className="space-y-4">
@@ -143,7 +143,7 @@ export default function AAAListButton<DataType extends { itemID: number }>({
               </button>
             </div>
           </div>
-        </div>
+        </DialogPanel>
       </Dialog>
     </>
   )

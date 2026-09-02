@@ -6,13 +6,13 @@ _Frontend for Aetheryte API_
 
 ## Prerequisites
 
-- Node `20.19.2`
+- Node `22.23.2`
 - Discord Application (for OAuth functionality)
 
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-nvm install 20
-nvm use 20
+nvm install 22.23.2
+nvm use 22.23.2
 ```
 
 ## [Documentation](docs/INDEX.md)
