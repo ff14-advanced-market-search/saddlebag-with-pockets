@@ -7,9 +7,10 @@
   "homepage": "https://saddlebagexchange.com/",
   "sideEffects": false,
   "scripts": {
-    "build": "run-s \"build:css\" \"build:remix\"",
+    "build": "run-s \"build:css\" \"build:remix\" \"build:sourcemaps\"",
     "build:css": "yarn run generate:css --minify",
-    "build:remix": "remix build",
+    "build:remix": "remix build --sourcemap",
+    "build:sourcemaps": "node ./scripts/upload-sourcemaps.js",
     "dev": "yarn run generate:css && remix build && run-p \"dev:*\"",
     "dev:css": "yarn run generate:css --watch",
     "dev:remix": "remix dev",
@@ -56,6 +57,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260702.1",
+    "@datadog/datadog-ci": "^5.23.0",
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "@remix-run/dev": "^2.17.5",

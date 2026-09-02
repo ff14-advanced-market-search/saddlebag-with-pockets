@@ -28,7 +28,7 @@ const initDatadog = () => {
     trackResources: true,
     trackLongTasks: true,
     defaultPrivacyLevel: 'allow',
-    version: '1.0.1'
+    version: window.__remixManifest.version
   })
 }
 

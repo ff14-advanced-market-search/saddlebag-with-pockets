@@ -523,6 +523,11 @@
     "@datadog/browser-rum-core" "7.10.0"
     "@datadog/js-core" "0.0.11"
 
+"@datadog/datadog-ci@^5.23.0":
+  version "5.23.0"
+  resolved "https://registry.yarnpkg.com/@datadog/datadog-ci/-/datadog-ci-5.23.0.tgz#ae65abff1ea9e4defb403a929766cc390a7588ef"
+  integrity sha512-NWeCH75OSS8td3Kx7ZXVQy3SOUjtof/m61ufQt6p9GHJBleiyqQ9DuufWnaNYGta7MJX8dVZq0EUD6PaVa5YiQ==
+
 "@datadog/js-core@0.0.11":
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@datadog/js-core/-/js-core-0.0.11.tgz#ad0cfceb26c8e9258ea3c531c57254dd774e4641"
