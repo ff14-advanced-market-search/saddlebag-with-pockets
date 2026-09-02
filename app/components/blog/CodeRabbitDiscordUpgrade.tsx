@@ -2,6 +2,9 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
 const CODERABBIT_DISCORD_URL = 'https://www.coderabbit.ai/discord'
+const SADDLEBAG_DISCORD_URL =
+  'https://discord.com/servers/saddlebag-exchange-973380473281724476'
+const SADDLEBAG_PATREON_URL = 'https://www.patreon.com/indopan'
 
 export const meta: MetaFunction = () => {
   return [
@@ -204,6 +207,33 @@ const CodeRabbitDiscordUpgrade = () => {
               <p className="mt-4 text-sm text-slate-400">
                 Free for open-source communities.
               </p>
+            </section>
+
+            <section className="mt-8 rounded-2xl border border-orange-200 bg-orange-50 px-6 py-9 text-center sm:px-10">
+              <h2 className="text-3xl font-black text-slate-900">
+                Join the Saddlebag Exchange community
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-700">
+                Get market tips, project updates, and help from the community in
+                Discord—or support the tools and data that keep Saddlebag
+                Exchange running through Patreon.
+              </p>
+              <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+                <a
+                  className="inline-flex justify-center rounded-full bg-orange-500 px-6 py-3 font-bold text-white no-underline shadow-sm transition hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-300"
+                  href={SADDLEBAG_DISCORD_URL}
+                  target="_blank"
+                  rel="noreferrer">
+                  Join Saddlebag Discord
+                </a>
+                <a
+                  className="inline-flex justify-center rounded-full border-2 border-orange-500 bg-white px-6 py-3 font-bold text-orange-700 no-underline transition hover:bg-orange-100 focus:outline-none focus:ring-4 focus:ring-orange-300"
+                  href={SADDLEBAG_PATREON_URL}
+                  target="_blank"
+                  rel="noreferrer">
+                  Support on Patreon
+                </a>
+              </div>
             </section>
           </div>
         </article>
