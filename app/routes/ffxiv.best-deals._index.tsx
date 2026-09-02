@@ -12,14 +12,9 @@ import type {
   BestDealsResponse
 } from '~/requests/FFXIV/BestDeals'
 import FFXIVBestDeals from '~/requests/FFXIV/BestDeals'
-import { getUserSessionData, getSession } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import NoResults from '~/components/Common/NoResults'
 import { Results } from '~/components/FFXIVResults/BestDeals/Results'

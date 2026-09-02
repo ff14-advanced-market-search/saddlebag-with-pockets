@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -20,7 +15,7 @@ import type {
 } from '~/requests/FFXIV/ShortagePredictor'
 import FFXIVShortagePredictor from '~/requests/FFXIV/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions.server'
 import { Results } from '~/components/FFXIVResults/ShortagePredictor/Results'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { useState } from 'react'

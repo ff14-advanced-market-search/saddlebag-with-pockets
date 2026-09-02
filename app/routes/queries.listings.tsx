@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useNavigation,
-  useLoaderData,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useNavigation, useLoaderData } from '@remix-run/react'
 import type {
   ActionFunction,
   MetaFunction,
@@ -15,7 +10,7 @@ import type {
   ListingResponseType
 } from '~/requests/FFXIV/GetListing'
 import Results from '~/components/FFXIVResults/listings/Results'
-import { getUserSessionData, getSession } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions.server'
 import type { ItemSelected } from '~/components/form/select/ItemSelect'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { useEffect, useState } from 'react'

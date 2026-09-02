@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
@@ -13,7 +8,7 @@ import NoResults from '~/components/Common/NoResults'
 import {
   validateShortageData,
   WoWShortageFormFields
-} from './wow.shortages.commodities'
+} from '~/components/form/WoW/WoWShortageFormFields'
 import ShortageResults from '~/components/WoWResults/Shortages/ShortageResults'
 import type {
   ActionFunction,

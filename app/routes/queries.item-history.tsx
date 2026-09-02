@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useNavigation,
-  useLoaderData,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useNavigation, useLoaderData } from '@remix-run/react'
 import type {
   ActionFunction,
   MetaFunction,
@@ -16,7 +11,7 @@ import type {
   GetHistoryResponse
 } from '~/requests/FFXIV/GetHistory'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions.server'
+import { getUserSessionData } from '~/sessions.server'
 import ItemSelect from '~/components/Common/ItemSelect'
 import type { ItemSelected } from '~/components/Common/ItemSelect'
 import { useEffect, useState } from 'react'
