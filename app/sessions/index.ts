@@ -3,16 +3,13 @@ import { validateWorldAndDataCenter } from '~/utils/locations'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import { commitSession, destroySession, getSession } from './storage.server'
-
-export const DATA_CENTER = 'data_center'
-export const FF14_WORLD = 'world'
-export const WOW_REGION = 'wow_region'
-export const WOW_REALM_ID = 'wow_realm_id'
-export const WOW_REALM_NAME = 'wow_realm_name'
-export const DISCORD_ID = 'discord_id'
-export const DISCORD_USERNAME = 'discord_username'
-export const DISCORD_AVATAR = 'discord_avatar'
-export const EARLY_ACCESS_TOKEN = 'early_access_token'
+import {
+  DATA_CENTER,
+  FF14_WORLD,
+  WOW_REALM_ID,
+  WOW_REALM_NAME,
+  WOW_REGION
+} from './constants'
 
 const getFF14WorldAndDataCenter = (session: Session) => {
   const worldSession = session.get(FF14_WORLD)

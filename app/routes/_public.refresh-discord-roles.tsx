@@ -1,6 +1,6 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
-import { getSession, commitSession } from '~/sessions'
+import { getSession, commitSession } from '~/sessions.server'
 import { GUILD_ID, fetchDiscordGuildMember } from '~/utils/premium'
 
 export const action: ActionFunction = async ({ request, context }) => {

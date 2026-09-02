@@ -9,7 +9,7 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import ItemServerComparison from '~/requests/FFXIV/ItemServerComparison'
 import type { ItemServerComparisonList } from '~/requests/FFXIV/ItemServerComparison'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import { z } from 'zod'
 import CheckBox from '~/components/form/CheckBox'
 import { useState } from 'react'
@@ -27,7 +27,7 @@ import TitleTooltip from '~/components/Common/TitleTooltip'
 import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 const pathHash: Record<string, string> = {
   hqOnly: 'High Quality Only',

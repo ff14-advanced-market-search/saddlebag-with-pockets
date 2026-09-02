@@ -24,10 +24,10 @@ import { json } from '@remix-run/cloudflare'
 import type { WOWSingleItemShortageProps } from '~/requests/WoW/WoWSingleItemShortage'
 import WoWSingleItemShortage from '~/requests/WoW/WoWSingleItemShortage'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()

@@ -14,7 +14,7 @@ import type {
   ItemStat
 } from '~/requests/WoW/IlvlShoppingList'
 import IlvlShoppingList from '~/requests/WoW/IlvlShoppingList'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
 import {
   useActionData,
@@ -36,7 +36,7 @@ import {
 } from '~/utils/zodHelpers'
 import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 import {
   WOW_ILVL_DEFAULT,
   WOW_ILVL_LEVELS_DISPLAY,

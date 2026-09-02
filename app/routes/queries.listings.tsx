@@ -15,7 +15,7 @@ import type {
   ListingResponseType
 } from '~/requests/FFXIV/GetListing'
 import Results from '~/components/FFXIVResults/listings/Results'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions.server'
 import type { ItemSelected } from '~/components/form/select/ItemSelect'
 import ItemSelect from '~/components/form/select/ItemSelect'
 import { useEffect, useState } from 'react'
@@ -27,7 +27,7 @@ import { useTypedSelector } from '~/redux/useTypedSelector'
 import { json } from '@remix-run/cloudflare'
 import { getItemNameById } from '~/utils/items'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {

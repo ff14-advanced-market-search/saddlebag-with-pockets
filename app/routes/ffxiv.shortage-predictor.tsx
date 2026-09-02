@@ -20,7 +20,7 @@ import type {
 } from '~/requests/FFXIV/ShortagePredictor'
 import FFXIVShortagePredictor from '~/requests/FFXIV/ShortagePredictor'
 import NoResults from '~/components/Common/NoResults'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData, getSession } from '~/sessions.server'
 import { Results } from '~/components/FFXIVResults/ShortagePredictor/Results'
 import { parseStringToNumber } from '~/utils/zodHelpers'
 import { useState } from 'react'
@@ -33,7 +33,7 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import CheckBox from '~/components/form/CheckBox'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
 
 const PAGE_URL = '/ffxiv/shortage-predictor'
 

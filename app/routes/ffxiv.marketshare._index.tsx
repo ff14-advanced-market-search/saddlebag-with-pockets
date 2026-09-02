@@ -9,7 +9,7 @@ import { PageWrapper } from '~/components/Common'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import { z } from 'zod'
 import MarketShare, { marketShareSortBys } from '~/requests/FFXIV/marketshare'
 import type {

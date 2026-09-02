@@ -17,7 +17,7 @@ import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { WoWLoaderData } from '~/requests/WoW/types'
 import { useTypedSelector } from '~/redux/useTypedSelector'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import type { ColumnList } from '~/components/types'
 import type {
   WeeklyPriceGroupDeltaResponse,

@@ -1,6 +1,6 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { redirect } from '@remix-run/cloudflare'
-import { getSession, commitSession } from '~/sessions'
+import { getSession, commitSession } from '~/sessions.server'
 
 export const action: ActionFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('Cookie'))

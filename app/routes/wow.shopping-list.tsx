@@ -9,7 +9,7 @@ import { PageWrapper } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type { ListItem, WoWListResponse } from '~/requests/WoW/ShoppingList'
 import WoWShoppingList from '~/requests/WoW/ShoppingList'
-import { getUserSessionData } from '~/sessions'
+import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
 import {
   useActionData,

@@ -34,8 +34,8 @@ import CraftingList, {
   revenueMetricLabels,
   revenueMetrics
 } from '~/requests/FFXIV/crafting-list'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
-import { getUserSessionData } from '~/sessions'
+import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import { getUserSessionData } from '~/sessions.server'
 import {
   createUnionSchema,
   parseCheckboxBoolean,

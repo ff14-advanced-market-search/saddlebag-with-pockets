@@ -1,5 +1,5 @@
 import { json } from '@remix-run/cloudflare'
-import { getSession } from '~/sessions'
+import { getSession } from '~/sessions.server'
 import { getHasPremium, getHasElite, needsRolesRefresh } from '~/utils/premium'
 
 /**

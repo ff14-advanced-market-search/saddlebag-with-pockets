@@ -20,9 +20,11 @@ import Sidebar from '~/components/navigation/sidebar'
 import {
   getUserSessionData,
   getSession,
+  commitSession
+} from '~/sessions.server'
+import {
   DATA_CENTER,
   FF14_WORLD,
-  commitSession,
   WOW_REGION,
   WOW_REALM_ID,
   WOW_REALM_NAME
