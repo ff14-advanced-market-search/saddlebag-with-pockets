@@ -182,7 +182,7 @@ export const WoWShortageFormFields = ({
     <InputWithLabel
       defaultValue={overMarketPricePercentDefault}
       type="number"
-      labelTitle="Desired Increase Percenet vs Average Price"
+      labelTitle="Desired Increase Percent vs Average Price"
       inputTag="%"
       name="overMarketPricePercent"
       min={0}
