@@ -1,131 +1,77 @@
-# saddlebag-with-pockets
+# Saddlebag with Pockets
 
-The frontend of https://saddlebagexchange.com/
+The web frontend for [Saddlebag Exchange](https://saddlebagexchange.com/), a market-analysis tool for Final Fantasy XIV, World of Warcraft, and Guild Wars 2.
 
-_Frontend for Aetheryte API_
+It is a [Remix](https://remix.run/) application deployed on [Cloudflare Pages](https://pages.cloudflare.com/). The API contract is available in the [Saddlebag Exchange documentation](https://docs.saddlebagexchange.com/docs).
 
-## Prerequisites
+## Requirements
 
-- Node `22.23.2`
-- Discord Application (for OAuth functionality)
+- [Node.js](https://nodejs.org/) `22.23.2` (see [`.nvmrc`](.nvmrc))
+- [Corepack](https://nodejs.org/api/corepack.html) to provide Yarn `1.22.22`
+
+If you use `nvm`:
 
 ```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-nvm install 22.23.2
-nvm use 22.23.2
+nvm install
+nvm use
+corepack enable
 ```
 
-## [Documentation](docs/INDEX.md)
-
-## Getting Started
-
-Install the dependencies:
+## Quick start
 
 ```bash
-yarn install
-```
-
-Run Server:
-
-```bash
-yarn run dev
-```
-
-For Windows:
-
-```bash
+yarn install --frozen-lockfile
 yarn dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
-Check your terminal for the address, the default is `http://127.0.0.1:8788`
+The development server rebuilds assets as files change. Use the URL printed by Remix in the terminal.
 
-## Discord OAuth Setup
+## Useful commands
 
-To enable Discord login functionality, you need to set up a Discord application:
+| Command               | Purpose                                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| `yarn dev`            | Start the local development environment.                                                    |
+| `yarn build`          | Create a production build.                                                                  |
+| `yarn dev:wrangler`   | Serve the generated `public/` assets with Cloudflare Pages tooling. Run `yarn build` first. |
+| `yarn test`           | Run the Vitest test suite.                                                                  |
+| `yarn prettier:check` | Check formatting under `app/`.                                                              |
+| `yarn prettier`       | Format files under `app/`.                                                                  |
+| `yarn write-items`    | Refresh FFXIV, WoW, and GW2 item-data files.                                                |
 
-1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
-2. Create a new application
-3. Go to the "OAuth2" section
-4. Add your redirect URI: `http://localhost:8788/discord-callback` (for development)
-5. Copy your Client ID and Client Secret
-6. Set the following environment variables:
-   - `DISCORD_CLIENT_ID`: Your Discord application client ID
-   - `DISCORD_CLIENT_SECRET`: Your Discord application client secret
-   - `DISCORD_BOT_TOKEN`: Your Discord bot token for pulling role ids
-
-For production, update the redirect URI to your production domain.
-
-## FFXIV Items list
-
-You can fetch and update the ffxiv items list if you find items are missing using:
+To run a single test file or keep Vitest running:
 
 ```bash
-yarn run write-items
-prettier -w app/utils/items/items.ts
+yarn test app/test/routes/discord-oauth.test.ts
+yarn test --watch
 ```
 
-### Testing
+## Local Cloudflare Pages runtime
 
-We have just started to use [Vitest](https://vitest.dev) to run unit tests.
-
-We are currently using the .test.ts ending to mark our test files for the test runner.
-For any route level testing, such as action files or loaders keep your test files in the `app/test/routes` folder.
-For other files try to keep your test files in the same folder as the file your testing. If this gets out of hand we can try to manage the test files into the test folder too. We'll see how it goes.
-
-You can run all unit tests by running:
+For a production-style local run, build first and then use Wrangler:
 
 ```bash
-yarn test
+yarn build
+yarn dev:wrangler
 ```
 
-You can run a single unit test file by running
+Wrangler reads Cloudflare bindings and secrets from `.dev.vars` when present. Never commit that file or production credentials.
 
-```bash
-yarn test testFile
+## Optional Discord OAuth setup
+
+Discord authentication is only needed when developing or testing the Discord login and role-refresh routes. Create a Discord application in the [Discord Developer Portal](https://discord.com/developers/applications), configure a local redirect URI such as `http://localhost:8788/discord-callback`, and provide these values to the Cloudflare Pages runtime:
+
+```dotenv
+DISCORD_CLIENT_ID=your-client-id
+DISCORD_CLIENT_SECRET=your-client-secret
+DISCORD_BOT_TOKEN=your-bot-token
 ```
 
-You can set vite into watch mode by passing the watch arguement:
+The production redirect URI must match the deployed site URL registered in Discord. `SITE_NAME` is optional and defaults to `Saddlebag Exchange`.
 
-```bash
-yarn test watch
-```
+## Contributing
 
-<!-- ### Docker
+Read the [contribution guide](docs/CONTRIBUTING.md) and [styling guide](docs/STYLING.md) before submitting a change. The repository uses conventional commit messages and keeps `master` stable.
 
-Alternatively, you can use docker to run the server:
+## Documentation
 
-```bash
-docker-compose up --build
-```
-
-Any subsequent runs will not require you to rebuild the images:
-
-```bash
-docker-compose up
-```
-
-> NOTE: any changes to the `Dockerfile` or dependencies will require you to rebuild the images.
- -->
-
-## Deployment
-
-Commit to `master`. Auto deploys to CloudFlare.
-
-https://dash.cloudflare.com/131d3ef77f51b43d39c70f2e5b65c34c/pages/view/saddlebag-with-pockets
-
-## Architecture
-
-For those interested, we're using the following in the front-end architecture:
-
-- [Remix Run](https://remix.run/)
-- [Cloudflare Pages](https://pages.cloudflare.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-
-## Package upgrades
-
-Can always upgrade some packages easily without breaking anything. These are handled with:
-
-```
-./low-impact-package-upgrade.sh
-```
+Additional project documentation is listed in [docs/INDEX.md](docs/INDEX.md).
