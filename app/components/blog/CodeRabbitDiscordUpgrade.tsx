@@ -129,11 +129,17 @@ const CodeRabbitDiscordUpgrade = () => {
                 Why CodeRabbit was already part of my workflow
               </h2>
               <p className="leading-relaxed">
-                I joined the CodeRabbit team around its 2024 Series A, but I had
-                already used CodeRabbit’s reviews for about a year. I knew what
-                a good review loop could do for a codebase. What I had not had
-                yet was an agentic teammate that could work from the same place
-                where an open-source project actually coordinates: Discord.
+                In 2023, as GitHub Copilot and ChatGPT were taking off, I was
+                looking for an AI tool that natively lived inside GitHub. That
+                search led me to CodeRabbit. Saddlebag Exchange has relied on
+                its reviews as part of development for years, so I had already
+                seen what a good review loop could do for a codebase.
+              </p>
+              <p className="leading-relaxed">
+                I joined the CodeRabbit team around its 2024 Series A. What I
+                had not had yet was an agentic teammate that could work from the
+                same place where an open-source project actually coordinates:
+                Discord.
               </p>
               <p className="leading-relaxed">
                 When I got access to try the new CodeRabbit agentic bot with
