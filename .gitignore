@@ -16,6 +16,7 @@ node_modules
 
 # Secrets
 .env
+.dev.vars
 .idea
 
 # @Cloudflare/Wrangler
