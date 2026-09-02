@@ -5,12 +5,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { PageWrapper, Title } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import DateCell from '~/components/FFXIVResults/FullScan/DateCell'
@@ -22,13 +17,15 @@ import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { ColumnList } from '~/components/types'
 import CSVButton from '~/components/utilities/CSVButton'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
-import type { SelfPurchaseResults } from '~/requests/FFXIV/self-purchase'
+import type { SelfPurchaseResults , SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
-import type { SelfPurchase } from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions.server'
 import DebouncedInput from '~/components/Common/DebouncedInput'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -49,16 +46,21 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const session = await getUserSessionData(request)
 
-  return combineWithDiscordSession(request, {
-    world: session.getWorld(),
-    data_center: session.getDataCenter()
-  })
+  return combineWithDiscordSession(
+    request,
+    {
+      world: session.getWorld(),
+      data_center: session.getDataCenter()
+    },
+    context
+  )
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
 
   const playerName = formData.get('playerName')

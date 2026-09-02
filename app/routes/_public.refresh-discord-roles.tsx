@@ -1,10 +1,13 @@
 import type { ActionFunction } from '@remix-run/cloudflare'
 import { redirect, json } from '@remix-run/cloudflare'
-import { getSession, commitSession } from '~/sessions.server'
+import {
+  commitDiscordSession,
+  getDiscordSession
+} from '~/sessions/discord.server'
 import { GUILD_ID, fetchDiscordGuildMember } from '~/utils/premium'
 
 export const action: ActionFunction = async ({ request, context }) => {
-  const session = await getSession(request.headers.get('Cookie'))
+  const session = await getDiscordSession(request, context)
   const discordId = session.get('discord_id')
   if (!discordId) {
     return redirect('/options?error=discord_roles_refresh_failed')
@@ -32,7 +35,7 @@ export const action: ActionFunction = async ({ request, context }) => {
           { success: true },
           {
             headers: {
-              'Set-Cookie': await commitSession(session)
+              'Set-Cookie': await commitDiscordSession(session, context)
             }
           }
         )
@@ -41,7 +44,7 @@ export const action: ActionFunction = async ({ request, context }) => {
       // Otherwise redirect (GET request)
       return redirect('/options?success=discord_roles_refreshed', {
         headers: {
-          'Set-Cookie': await commitSession(session)
+          'Set-Cookie': await commitDiscordSession(session, context)
         }
       })
     }

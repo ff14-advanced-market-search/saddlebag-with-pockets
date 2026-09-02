@@ -43,6 +43,7 @@ import {
   EarlyAccessTokenSection
 } from '~/components/Options'
 import { getWindowUrlParams } from '~/utils/urlHelpers'
+import { getDiscordSession } from '~/sessions/discord.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -198,8 +199,9 @@ const OptionSection = ({
   )
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const session = await getSession(request.headers.get('Cookie'))
+  const discordSession = await getDiscordSession(request, context)
   const { getWorld, getDataCenter, getWoWSessionData } =
     await getUserSessionData(request)
 
@@ -208,15 +210,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { server, region } = getWoWSessionData()
 
   return json({
-    ...session.data,
     data_center,
     world,
     wowRealm: server,
     wowRegion: region,
-    discordId: session.get('discord_id'),
-    discordUsername: session.get('discord_username'),
-    discordAvatar: session.get('discord_avatar'),
-    discordRoles: session.get('discord_roles') || [],
+    discordId: discordSession.get('discord_id'),
+    discordUsername: discordSession.get('discord_username'),
+    discordAvatar: discordSession.get('discord_avatar'),
+    discordRoles: discordSession.get('discord_roles') || [],
     earlyAccessToken: session.get(EARLY_ACCESS_TOKEN) || ''
   })
 }

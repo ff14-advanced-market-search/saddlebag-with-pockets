@@ -18,7 +18,10 @@ import type { AllaganResults, InBagsReport } from '~/requests/FFXIV/allagan'
 import AllaganRequest from '~/requests/FFXIV/allagan'
 import { getUserSessionData } from '~/sessions.server'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 const formName = 'allaganData'
 
@@ -49,7 +52,8 @@ const objectHasProperties = (object: Object) => {
   return Object.keys(object).length > 0
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
   const session = await getUserSessionData(request)
 
@@ -110,8 +114,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return combineWithDiscordSession(request, {})
+export const loader: LoaderFunction = async ({ request, context }) => {
+  return combineWithDiscordSession(request, {}, context)
 }
 
 type ActionResponse =

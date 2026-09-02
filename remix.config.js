@@ -14,5 +14,7 @@ module.exports = {
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
+  // Keep Single Fetch disabled until the app migrates to React Router versions
+  // that include the patched turbo-stream serialization implementation.
   future: {}
 }

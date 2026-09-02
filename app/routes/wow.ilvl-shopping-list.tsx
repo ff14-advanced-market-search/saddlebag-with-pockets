@@ -36,7 +36,11 @@ import {
 } from '~/utils/zodHelpers'
 import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  getDiscordSessionData,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 import {
   WOW_ILVL_DEFAULT,
   WOW_ILVL_LEVELS_DISPLAY,
@@ -93,7 +97,8 @@ const validateInput = z.object({
   desiredMinIlvl: parseStringToNumber
 })
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const session = await getUserSessionData(request)
   const formData = await request.formData()
   const formDataObj = Object.fromEntries(formData)
@@ -123,7 +128,7 @@ export const action: ActionFunction = async ({ request }) => {
   })
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const url = new URL(request.url)
   const params = url.searchParams
 
@@ -141,6 +146,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   ] as ItemStat[]
 
   if (itemID) {
+    const discordSessionData = await getDiscordSessionData(request, context)
+    if (!discordSessionData.isLoggedIn || !discordSessionData.hasPremium) {
+      return json(discordSessionData)
+    }
+
     const validateInput = z.object({
       itemID: parseStringToNumber,
       maxPurchasePrice: parseStringToNumber,
@@ -150,12 +160,16 @@ export const loader: LoaderFunction = async ({ request }) => {
     const formData = { itemID, maxPurchasePrice, desiredMinIlvl }
     const validatedFormData = validateInput.safeParse(formData)
     if (!validatedFormData.success) {
-      return combineWithDiscordSession(request, {
-        exception: parseZodErrorsToDisplayString(
-          validatedFormData.error,
-          inputMap
-        )
-      })
+      return combineWithDiscordSession(
+        request,
+        {
+          exception: parseZodErrorsToDisplayString(
+            validatedFormData.error,
+            inputMap
+          )
+        },
+        context
+      )
     }
 
     const session = await getUserSessionData(request)
@@ -167,14 +181,18 @@ export const loader: LoaderFunction = async ({ request }) => {
       desiredStats
     })
 
-    return combineWithDiscordSession(request, {
-      ...(await result.json()),
-      sortby: 'price',
-      formValues: { ...validatedFormData.data, desiredStats }
-    })
+    return combineWithDiscordSession(
+      request,
+      {
+        ...(await result.json()),
+        sortby: 'price',
+        formValues: { ...validatedFormData.data, desiredStats }
+      },
+      context
+    )
   }
 
-  return combineWithDiscordSession(request, {})
+  return combineWithDiscordSession(request, {}, context)
 }
 
 type LoaderResponseType =
