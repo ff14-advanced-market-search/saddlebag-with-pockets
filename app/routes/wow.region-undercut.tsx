@@ -14,7 +14,7 @@ import type {
   UndercutItems
 } from '~/requests/WoW/RegionUndercut'
 import RegionUndercutRequest from '~/requests/WoW/RegionUndercut'
-import { useActionData, useNavigation , useLoaderData } from '@remix-run/react'
+import { useActionData, useNavigation, useLoaderData } from '@remix-run/react'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'

@@ -17,7 +17,10 @@ import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { ColumnList } from '~/components/types'
 import CSVButton from '~/components/utilities/CSVButton'
 import ItemDataLink from '~/components/utilities/ItemDataLink'
-import type { SelfPurchaseResults , SelfPurchase } from '~/requests/FFXIV/self-purchase'
+import type {
+  SelfPurchaseResults,
+  SelfPurchase
+} from '~/requests/FFXIV/self-purchase'
 import selfPurchaseRequest from '~/requests/FFXIV/self-purchase'
 import { getUserSessionData } from '~/sessions.server'
 import DebouncedInput from '~/components/Common/DebouncedInput'
