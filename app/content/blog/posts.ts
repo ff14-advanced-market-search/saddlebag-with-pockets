@@ -32,9 +32,9 @@ const legacyBlogPosts: Record<string, BlogPost> = {
   'coderabbit-discord-frontend-upgrade': {
     category: '',
     slug: 'coderabbit-discord-frontend-upgrade',
-    title: 'The Discord Bot That Finally Unblocked Our Frontend Upgrade',
+    title: 'One Morning, a Discord Agent, and Five Years of Tech Debt',
     description:
-      'How CodeRabbit helped Saddlebag Exchange complete a long-stalled, 107-file frontend dependency upgrade from Discord.',
+      'How CodeRabbit Discord helped Saddlebag Exchange clear years of OSS tech debt and contributor churn with a 107-file frontend upgrade.',
     component: 'CodeRabbitDiscordUpgrade',
     canonical:
       'https://saddlebagexchange.com/blog/coderabbit-discord-frontend-upgrade'
@@ -146,9 +146,9 @@ export const blogPosts: Record<string, BlogPost> = {
  */
 export const featuredPosts: FeaturedPost[] = [
   {
-    name: 'The Discord Bot That Finally Unblocked Our Frontend Upgrade',
+    name: 'One Morning, a Discord Agent, and Five Years of Tech Debt',
     description:
-      'How CodeRabbit completed a long-stalled, 107-file dependency upgrade from Discord.',
+      'How CodeRabbit Discord cleared years of tech debt in a 107-file frontend upgrade.',
     Icon: documentSearchIcon,
     href: '/blog/coderabbit-discord-frontend-upgrade'
   },
