@@ -1,9 +1,9 @@
 import {
-  DocumentSearchIcon,
-  ChartSquareBarIcon,
-  PencilAltIcon
-} from '@heroicons/react/outline'
-import { ExclamationCircleIcon } from '@heroicons/react/solid'
+  DocumentMagnifyingGlassIcon,
+  ChartBarSquareIcon,
+  PencilSquareIcon
+} from '@heroicons/react/24/outline'
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid'
 import type { MetaFunction } from '@remix-run/cloudflare'
 import Banner from '~/components/Common/Banner'
 
@@ -30,7 +30,7 @@ const ffxivPages = [
     name: 'Reselling Trade Searches',
     description:
       'Find items you can buy on other servers and resell on your own for a profit!',
-    Icon: ChartSquareBarIcon,
+    Icon: ChartBarSquareIcon,
     href: '/queries/recommended'
   },
   {
@@ -44,46 +44,46 @@ const ffxivPages = [
     href: '/ffxiv/marketshare/queries',
     description:
       'Finds the best items to sell! Shows the top 200 best selling items on your home server.',
-    Icon: ChartSquareBarIcon
+    Icon: ChartBarSquareIcon
   },
   {
     name: 'Craftsim Search',
     href: '/ffxiv/craftsim/queries',
     description: 'Finds the best items to craft!',
-    Icon: ChartSquareBarIcon
+    Icon: ChartBarSquareIcon
   },
   {
     name: 'Shopping List Search',
     href: '/ffxiv/shopping-list',
     description:
       'Helps make a shopping list, telling you where to find crafting materials for the best prices!',
-    Icon: PencilAltIcon
+    Icon: PencilSquareIcon
   },
   {
     name: 'Weekly Price Group Delta',
     href: '/ffxiv/weekly-price-group-delta',
     description: 'View weekly price changes for investment opportunities!',
-    Icon: ChartSquareBarIcon
+    Icon: ChartBarSquareIcon
   },
   {
     name: 'Discord Undercut and Sale Alerts Generator',
     description:
       'Undercut Alerts will notify you via discord direct message when you are undercut. Sale Alerts will notify you via discord direct message when you have a sale.',
-    Icon: PencilAltIcon,
+    Icon: PencilSquareIcon,
     href: '/undercut'
   },
   {
     name: 'Undercut Alerts Guide',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Undercut-Alerts---Alpha-version',
     description: 'A guide on how to setup and use Undercut Alerts.',
-    Icon: DocumentSearchIcon,
+    Icon: DocumentMagnifyingGlassIcon,
     external: true
   },
   {
     name: 'Discord Price Discount Sniper and Price Spike Alert Generator',
     description:
       'Price Discount Sniper and Price Spike Alerts will notify you via discord direct message when items go above or below prices you set.',
-    Icon: PencilAltIcon,
+    Icon: PencilSquareIcon,
     href: '/price-sniper'
   },
   {
@@ -91,7 +91,7 @@ const ffxivPages = [
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/Price-Sniper-and-Item-Price-Alerts',
     description:
       'A guide on how to setup and use Price Discount Sniper and Price Spike Alerts.',
-    Icon: DocumentSearchIcon,
+    Icon: DocumentMagnifyingGlassIcon,
     external: true
   },
   {
@@ -99,62 +99,62 @@ const ffxivPages = [
     href: '/allagan-data',
     description:
       'Use data from the Allagan Tools Plugin to create sale alerts and find valuable items in your bags you may have forgotten about.',
-    Icon: ChartSquareBarIcon
+    Icon: ChartBarSquareIcon
   },
   {
     name: 'Orange and Purple Scrip to Gil',
     href: '/ffxiv/scrip-exchange',
     description:
       'Get the most Gil per Scrip! Find the best Orange or Purple Scrip to Gil conversion.',
-    Icon: ChartSquareBarIcon
+    Icon: ChartBarSquareIcon
   },
   {
     name: 'Grand Company Seals Exchange',
     href: '/ffxiv/gc-seals-exchange',
     description:
       'Expert Delivery helper: find cheap market gear and compare gil price to GC seal cost, seals per gil, and Grand Company experience.',
-    Icon: ChartSquareBarIcon
+    Icon: ChartBarSquareIcon
   },
   {
     name: 'Grand Company Seal Crafting',
     href: '/ffxiv/gc-seal-crafting',
     description:
       'Crafted Expert Delivery items: Estimates crafting costs for making different items you can turn in for Grand Company seals and experience via Expert Delivery.',
-    Icon: ChartSquareBarIcon
+    Icon: ChartBarSquareIcon
   },
   {
     name: 'Extended Sale History',
     description:
       'See extended sale history of last 1800 sales on any FFXIV item.',
-    Icon: ChartSquareBarIcon,
+    Icon: ChartBarSquareIcon,
     href: '/ffxiv/extended-history'
   },
   {
     name: 'Item History Statistics and Graphs',
     description:
       'Helps you find if an item is worth selling or not based on past sale history. Can tell you the best price to sell at, best time of day to sell, best stack size to sell at and more!',
-    Icon: ChartSquareBarIcon,
+    Icon: ChartBarSquareIcon,
     href: '/queries/item-history'
   },
   {
     name: 'Listings Comparison and Competition Metric',
     description:
       'Shows you how tough the undercutting competition is on specific items.',
-    Icon: ChartSquareBarIcon,
+    Icon: ChartBarSquareIcon,
     href: '/queries/listings'
   },
   {
     name: 'Export Trading Search',
     description:
       'Compare prices on items between servers to find the best server to sell your items on.',
-    Icon: ChartSquareBarIcon,
+    Icon: ChartBarSquareIcon,
     href: '/queries/world-comparison'
   },
   {
     name: 'Self Purchase Records',
     description:
       'See a record of your recent past purchases from our stored data. Note we only store the last 40 sales of any single item, some purchases may not appear.',
-    Icon: ChartSquareBarIcon,
+    Icon: ChartBarSquareIcon,
     href: '/ffxiv/self-purchase'
   },
   {
@@ -162,7 +162,7 @@ const ffxivPages = [
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
     description:
       'Our ultimate secret sale leads (for patreons) that can earn you tens of millions of gil each day!',
-    Icon: DocumentSearchIcon,
+    Icon: DocumentMagnifyingGlassIcon,
     external: true
   }
 ]

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline'
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import { ToolTip } from '~/components/Common/InfoToolTip'
 
 interface EarlyAccessTokenSectionProps {
@@ -62,7 +62,7 @@ const EarlyAccessTokenSection: React.FC<EarlyAccessTokenSectionProps> = ({
             className="inline-flex items-center justify-center px-3 rounded-r-md bg-gray-50 text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             aria-label={isVisible ? 'Hide token' : 'Show token'}>
             {isVisible ? (
-              <EyeOffIcon className="h-5 w-5" />
+              <EyeSlashIcon className="h-5 w-5" />
             ) : (
               <EyeIcon className="h-5 w-5" />
             )}

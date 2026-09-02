@@ -1,9 +1,4 @@
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { ContentContainer, PageWrapper, Title } from '~/components/Common'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import type {
@@ -14,7 +9,7 @@ import type {
 import { json } from '@remix-run/cloudflare'
 import ItemServerComparison from '~/requests/FFXIV/ItemServerComparison'
 import type { ItemServerComparisonList } from '~/requests/FFXIV/ItemServerComparison'
-import { getUserSessionData, getSession } from '~/sessions'
+import { getUserSessionData } from '~/sessions'
 import { z } from 'zod'
 import CheckBox from '~/components/form/CheckBox'
 import { useState } from 'react'
@@ -26,13 +21,10 @@ import {
   ChevronUpIcon,
   TrashIcon,
   ChevronDownIcon
-} from '@heroicons/react/outline'
+} from '@heroicons/react/24/outline'
 import { WorldList } from '~/utils/locations/Worlds'
 import TitleTooltip from '~/components/Common/TitleTooltip'
-import {
-  getActionUrl,
-  handleSearchParamChange
-} from '~/utils/urlSeachParamsHelpers'
+import { getActionUrl } from '~/utils/urlSeachParamsHelpers'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'

@@ -1,5 +1,5 @@
 import type React from 'react'
-import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { DocumentMagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { wikiBlogPosts } from './wikiPostsEntries'
 
 type FeaturedPostIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>
@@ -22,7 +22,7 @@ export interface FeaturedPost {
   href: string
 }
 
-const documentSearchIcon = DocumentSearchIcon as FeaturedPostIcon
+const documentSearchIcon = DocumentMagnifyingGlassIcon as FeaturedPostIcon
 
 /**
  * Central configuration for all blog posts

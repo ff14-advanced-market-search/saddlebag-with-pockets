@@ -1,4 +1,4 @@
-import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { DocumentMagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Banner from '~/components/Common/Banner'
 import type { MetaFunction } from '@remix-run/cloudflare'
 
@@ -27,7 +27,7 @@ export const meta: MetaFunction = () => {
 const recommendedQueries: Array<{
   name: string
   description: string
-  Icon: typeof DocumentSearchIcon
+  Icon: typeof DocumentMagnifyingGlassIcon
   href: string
   external?: boolean
 }> = [
@@ -35,21 +35,21 @@ const recommendedQueries: Array<{
     name: 'Detailed Item Data',
     description:
       'View detailed data for an item on the Trading Post. Includes price history charts, current buy and sell orders, and more.',
-    Icon: DocumentSearchIcon,
+    Icon: DocumentMagnifyingGlassIcon,
     href: '/gw2/item-data-detailed'
   },
   {
     name: 'Marketshare Overview',
     description:
       'Find out what items are actually selling and what are the best items to sell. Shows the top items matching your search.',
-    Icon: DocumentSearchIcon,
+    Icon: DocumentMagnifyingGlassIcon,
     href: '/gw2/marketshare/recommended'
   },
   {
     name: 'Weekly Price Group Delta',
     description:
       'See the price and quantity changes for each item in each price group over years of data. Great for investing for patch and raid cycles!',
-    Icon: DocumentSearchIcon,
+    Icon: DocumentMagnifyingGlassIcon,
     href: '/gw2/weekly-price-group-delta-recommended'
   }
 ]

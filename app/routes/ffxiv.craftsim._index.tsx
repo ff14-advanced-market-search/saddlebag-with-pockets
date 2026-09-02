@@ -4,12 +4,7 @@ import type {
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import z from 'zod'
 import { useMemo, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
@@ -17,7 +12,7 @@ import VideoGuide from '~/components/Common/VideoGuide'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import CheckBox from '~/components/form/CheckBox'
-import { ClipboardIcon } from '@heroicons/react/outline'
+import { ClipboardIcon } from '@heroicons/react/24/outline'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import ItemsFilter from '~/components/form/ffxiv/ItemsFilter'
@@ -33,13 +28,12 @@ import type {
   FlatCraftingList,
   RevenueMetrics
 } from '~/requests/FFXIV/crafting-list'
-import {
+import CraftingList, {
   costMetrics,
   costMetricLabels,
   revenueMetricLabels,
   revenueMetrics
 } from '~/requests/FFXIV/crafting-list'
-import CraftingList from '~/requests/FFXIV/crafting-list'
 import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader'
 import { getUserSessionData } from '~/sessions'
 import {
@@ -58,7 +52,6 @@ import {
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { dOHOptions } from '~/consts'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { getHasPremium, needsRolesRefresh } from '~/utils/premium'
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false)

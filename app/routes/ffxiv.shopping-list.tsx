@@ -1,16 +1,11 @@
-import { TrashIcon } from '@heroicons/react/solid'
+import { TrashIcon } from '@heroicons/react/24/solid'
 import type {
   ActionFunction,
   LoaderFunction,
   MetaFunction
 } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import { useCallback, useState } from 'react'
 import { PageWrapper } from '~/components/Common'
 import VideoGuide from '~/components/Common/VideoGuide'

@@ -3,7 +3,7 @@ import {
   ChevronDoubleLeftIcon,
   ChevronRightIcon,
   ChevronDoubleRightIcon
-} from '@heroicons/react/solid'
+} from '@heroicons/react/24/solid'
 import type { Table } from '@tanstack/react-table'
 import { classNames } from '~/utils'
 

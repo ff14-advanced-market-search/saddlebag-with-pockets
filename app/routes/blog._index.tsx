@@ -1,4 +1,4 @@
-import { DocumentSearchIcon } from '@heroicons/react/outline'
+import { DocumentMagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Banner from '~/components/Common/Banner'
 import TileLink from '~/components/Common/TileLink'
 import type { MetaFunction } from '@remix-run/cloudflare'
@@ -36,7 +36,7 @@ const recommendedQueries = [
     .map((post) => ({
       name: post.title,
       description: post.description,
-      Icon: DocumentSearchIcon,
+      Icon: DocumentMagnifyingGlassIcon,
       href: post.category
         ? `/blog/${post.category}/${post.slug}`
         : `/blog/${post.slug}`

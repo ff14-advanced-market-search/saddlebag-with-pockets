@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { LinkIcon } from '@heroicons/react/solid'
+import { LinkIcon } from '@heroicons/react/24/solid'
 
 type Props = {
   link: string

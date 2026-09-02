@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SubmitButton } from '../form/SubmitButton'
-import { Dialog } from '@headlessui/react'
+import { Dialog, DialogBackdrop } from '@headlessui/react'
 
 export interface AAAListProps<DataType> {
   data: Array<DataType>
@@ -89,7 +89,7 @@ export default function AAAListButton<DataType extends { itemID: number }>({
         open={isOpen}
         onClose={() => setIsOpen(false)}
         className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+        <DialogBackdrop className="fixed inset-0 bg-black/50" />
         <div className="relative bg-white rounded-lg p-6 max-w-sm w-full">
           <h3 className="text-lg font-bold mb-4">AAA List Settings</h3>
 

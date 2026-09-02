@@ -7,15 +7,17 @@ import type { GW2ItemData } from '~/requests/GW2/WeeklyPriceGroupDelta'
 
 // Initialize the highcharts-more module at the module level
 let highchartsMoreLoaded = false
-try {
-  addHighchartsMore(Highcharts)
-  highchartsMoreLoaded = true
-} catch (error) {
-  console.error(
-    'Failed to initialize Highcharts more module:',
-    error instanceof Error ? error.message : String(error)
-  )
-  highchartsMoreLoaded = false
+if (typeof window !== 'undefined') {
+  try {
+    addHighchartsMore(Highcharts)
+    highchartsMoreLoaded = true
+  } catch (error) {
+    console.error(
+      'Failed to initialize Highcharts more module:',
+      error instanceof Error ? error.message : String(error)
+    )
+    highchartsMoreLoaded = false
+  }
 }
 
 interface GW2PriceQuantityChartsProps {

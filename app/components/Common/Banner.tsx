@@ -1,4 +1,4 @@
-import { InformationCircleIcon } from '@heroicons/react/solid'
+import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
 /**
  * Renders a banner component with a message and a link to Discord.

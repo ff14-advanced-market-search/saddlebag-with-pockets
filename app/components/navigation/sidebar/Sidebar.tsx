@@ -2,21 +2,21 @@ import type { FC, PropsWithChildren } from 'react'
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
-  ChartSquareBarIcon,
+  ChartBarSquareIcon,
   ClockIcon,
   CogIcon,
-  MenuAlt2Icon,
-  XIcon,
+  Bars3BottomLeftIcon,
+  XMarkIcon,
   DocumentTextIcon,
-  DocumentSearchIcon,
+  DocumentMagnifyingGlassIcon,
   ChevronUpIcon,
   ChevronDownIcon,
-  PencilAltIcon,
-  SearchIcon,
+  PencilSquareIcon,
+  MagnifyingGlassIcon,
   ExclamationCircleIcon,
   ShoppingCartIcon,
-  ExternalLinkIcon
-} from '@heroicons/react/outline'
+  ArrowTopRightOnSquareIcon
+} from '@heroicons/react/24/outline'
 import {
   Form,
   Link,
@@ -159,13 +159,13 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#ffxiv-alert-guides',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Reselling Trading Searches',
         href: 'queries/recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Best Deals',
@@ -175,17 +175,17 @@ const navGroups: Array<{
       {
         name: 'Marketshare Overview',
         href: 'ffxiv/marketshare/queries',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Weekly Price Group Delta',
         href: '/ffxiv/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Craftsim Search',
         href: 'ffxiv/craftsim/queries',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Shopping List',
@@ -195,69 +195,69 @@ const navGroups: Array<{
       {
         name: 'Allagan Data Reports',
         href: 'allagan-data',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Scrip Value Search',
         href: 'ffxiv/scrip-exchange',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'GC Seals Exchange',
         href: 'ffxiv/gc-seals-exchange',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'GC Seal Crafting',
         href: 'ffxiv/gc-seal-crafting',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Extended Sale History',
         href: '/ffxiv/extended-history',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Self Purchase Records',
         href: 'ffxiv/self-purchase',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Export Trading Search',
         href: 'queries/world-comparison',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Undercut Alert Input',
         href: 'undercut',
-        icon: PencilAltIcon
+        icon: PencilSquareIcon
       },
       {
         name: 'Price Sniper Alert Input',
         href: 'price-sniper',
-        icon: PencilAltIcon
+        icon: PencilSquareIcon
       },
       {
         name: 'Secret Sale Leads',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Experimental Discount Price Sniper',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Experimental-Discount-Price-Sniper',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Listings Comparison and Competition Metrics',
         href: 'queries/listings',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Item History Statistics and Graphs',
         href: 'queries/item-history',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       }
     ]
   },
@@ -268,13 +268,13 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#wow-general-guides',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Azeroth Auction Assassin Sniper',
         href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         external: true
       },
       {
@@ -285,7 +285,7 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: 'wow/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Shopping List',
@@ -295,7 +295,7 @@ const navGroups: Array<{
       {
         name: 'Item Export Search',
         href: 'wow/export-search',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       },
       {
         name: 'Raid BOE Ilvl Shopping List',
@@ -305,17 +305,17 @@ const navGroups: Array<{
       {
         name: 'Raid BOE Ilvl Export Search',
         href: 'wow/ilvl-export-search',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       },
       {
         name: 'Ultra Rare',
         href: 'wow/ultrarare/recommended',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       },
       {
         name: 'Price Alert Input Generator',
         href: 'wow/price-alert',
-        icon: PencilAltIcon
+        icon: PencilSquareIcon
       },
       {
         name: 'Upload Timers',
@@ -325,39 +325,39 @@ const navGroups: Array<{
       {
         name: 'Region Wide Undercut Checker',
         href: 'wow/region-undercut',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       },
       {
         name: 'Undercut Alerts Curseforge Addon',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         href: 'https://www.curseforge.com/wow/addons/saddlebag-exchange',
         external: true
       },
       {
         name: 'Current Content Marketshare Overview',
         href: '/wow/marketshare/recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Legacy Marketshare Overview',
         href: '/wow/legacy-marketshare',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Pet Marketshare Overview',
         href: '/wow/pet-marketshare',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'TSM to AAA converter Addon',
         href: 'https://www.curseforge.com/wow/addons/aaatransformer/latest',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         external: true
       },
       {
         name: 'ToekneeATX Flipping Lists and Guides',
         href: '/wow/toekneeatx-flipping-lists',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       }
     ]
   },
@@ -368,23 +368,23 @@ const navGroups: Array<{
       {
         name: 'Guides and Tutorials',
         href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#gw2-general-guides',
-        icon: DocumentSearchIcon,
+        icon: DocumentMagnifyingGlassIcon,
         external: true
       },
       {
         name: 'Detailed Item Data',
         href: '/gw2/item-data-detailed',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       },
       {
         name: 'Marketshare Overview',
         href: '/gw2/marketshare/recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Weekly Price Group Delta',
         href: '/gw2/weekly-price-group-delta-recommended',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       }
     ]
   },
@@ -394,37 +394,37 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: '/wow/weekly-price-group-delta',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Big Goblin Tracker',
         href: '/wow/quantity-manipulation',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Out of Stock',
         href: '/wow/out-of-stock',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       },
       {
         name: 'Server Transfer Trading Search',
         href: '/wow/full-scan',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Commodity Shortage Futures',
         href: 'wow/shortage-predictor',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Commodity Shortage Finder',
         href: 'wow/shortages/commodities',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Local Market Shortage Finder',
         href: '/wow/shortages/single',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       }
     ]
   },
@@ -434,12 +434,12 @@ const navGroups: Array<{
       {
         name: 'Weekly Price Group Delta',
         href: '/ffxiv/weekly-price-group-delta',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       },
       {
         name: 'Marketboard Shortage Futures',
         href: '/ffxiv/shortage-predictor',
-        icon: ChartSquareBarIcon
+        icon: ChartBarSquareIcon
       }
     ]
   },
@@ -509,7 +509,7 @@ const navGroups: Array<{
       {
         name: 'blog',
         href: '/blog',
-        icon: DocumentSearchIcon
+        icon: DocumentMagnifyingGlassIcon
       },
       {
         name: 'List of all WoW Items',
@@ -530,7 +530,7 @@ const navGroups: Array<{
         name: 'Fandom',
         href: 'https://ffxivmarketboard.fandom.com/wiki/Ffxivmarketboard_Wiki',
         external: true,
-        icon: ExternalLinkIcon
+        icon: ArrowTopRightOnSquareIcon
       },
       {
         name: 'Discord Webpage',
@@ -678,7 +678,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                       className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                       onClick={() => setSidebarOpen(false)}>
                       <span className="sr-only">Close sidebar</span>
-                      <XIcon
+                      <XMarkIcon
                         className="h-6 w-6 text-white"
                         aria-hidden="true"
                       />
@@ -871,7 +871,7 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
             className="px-4 border-r border-gray-200 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
             onClick={() => setSidebarOpen(true)}>
             <span className="sr-only">Open sidebar</span>
-            <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
+            <Bars3BottomLeftIcon className="h-6 w-6" aria-hidden="true" />
           </button>
 
           <div className="flex-1 px-4 flex justify-end">
@@ -1102,7 +1102,7 @@ const ItemSearch = () => {
         type="button"
         onClick={handleFormToggle}
         className="h-full p-2 flex gap-2 px-1.5 group items-center justify-center md:hover:bg-gray-50 md:dark:hover:bg-slate-800">
-        <SearchIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
+        <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100" />
         <p className="hidden md:block font-medium shrink-0 text-sm text-gray-500 dark:text-gray-200">
           Item Search
         </p>

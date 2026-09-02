@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import SmallFormContainer from '~/components/form/SmallFormContainer'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import { PageWrapper } from '~/components/Common'
-import { ClipboardIcon } from '@heroicons/react/outline'
+import { ClipboardIcon } from '@heroicons/react/24/outline'
 import { InputWithLabel } from '~/components/form/InputWithLabel'
 import {
   GcSealsExchangeRequest,

@@ -8,9 +8,7 @@
 
 # React
 node_modules
-/functions/\[\[path\]\].js
-/functions/\[\[path\]\].js.map
-/functions/_assets
+/functions/
 /build
 /public/build
 

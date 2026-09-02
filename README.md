@@ -6,7 +6,7 @@ _Frontend for Aetheryte API_
 
 ## Prerequisites
 
-- Node `20.3.0`
+- Node `20.19.2`
 - Discord Application (for OAuth functionality)
 
 ```bash
