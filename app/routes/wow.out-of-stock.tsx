@@ -11,12 +11,7 @@ import type { OutOfStockItem } from '~/requests/WoW/OutOfStock'
 import WoWOutOfStock from '~/requests/WoW/OutOfStock'
 import { getUserSessionData } from '~/sessions.server'
 import z from 'zod'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  useNavigate
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigation } from '@remix-run/react'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
@@ -30,7 +25,10 @@ import { SubmitButton } from '~/components/form/SubmitButton'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import OutOfStockForm from '~/components/form/WoW/OutOfStockForm'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -101,7 +99,7 @@ const validateInput = z.object({
     )
 })
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   try {
     const params = new URL(request.url).searchParams
     const values = Object.fromEntries(
@@ -113,26 +111,39 @@ export const loader: LoaderFunction = async ({ request }) => {
 
     const validParams = validateInput.safeParse(values)
     if (!validParams.success) {
-      return combineWithDiscordSession(request, {
-        exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
-      })
+      return combineWithDiscordSession(
+        request,
+        {
+          exception: parseZodErrorsToDisplayString(validParams.error, inputMap)
+        },
+        context
+      )
     }
 
     const session = await getUserSessionData(request)
     const { region } = session.getWoWSessionData()
 
-    return combineWithDiscordSession(request, {
-      ...validParams.data,
-      region
-    })
+    return combineWithDiscordSession(
+      request,
+      {
+        ...validParams.data,
+        region
+      },
+      context
+    )
   } catch (error) {
-    return combineWithDiscordSession(request, {
-      exception: 'Invalid URL format'
-    })
+    return combineWithDiscordSession(
+      request,
+      {
+        exception: 'Invalid URL format'
+      },
+      context
+    )
   }
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const session = await getUserSessionData(request)
   const { region } = session.getWoWSessionData()
   if (!region) {

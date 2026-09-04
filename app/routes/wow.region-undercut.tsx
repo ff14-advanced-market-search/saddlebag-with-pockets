@@ -14,14 +14,16 @@ import type {
   UndercutItems
 } from '~/requests/WoW/RegionUndercut'
 import RegionUndercutRequest from '~/requests/WoW/RegionUndercut'
-import { useActionData, useNavigation } from '@remix-run/react'
+import { useActionData, useNavigation, useLoaderData } from '@remix-run/react'
 import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import ExternalLink from '~/components/utilities/ExternalLink'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { useLoaderData } from '@remix-run/react'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 const formName = 'region-undercut'
 
@@ -63,7 +65,8 @@ const validateInput = z.array(
   })
 )
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
   const session = await getUserSessionData(request)
 
@@ -99,8 +102,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return combineWithDiscordSession(request, {})
+export const loader: LoaderFunction = async ({ request, context }) => {
+  return combineWithDiscordSession(request, {}, context)
 }
 
 type RegionActionResponse =

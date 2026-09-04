@@ -34,7 +34,10 @@ import CraftingList, {
   revenueMetricLabels,
   revenueMetrics
 } from '~/requests/FFXIV/crafting-list'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 import { getUserSessionData } from '~/sessions.server'
 import {
   createUnionSchema,
@@ -169,7 +172,7 @@ const inputMap = {
   hideExpertRecipes: 'Hide Expert Recipes'
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const params = new URL(request.url).searchParams
 
   const hideExpertRecipesParam = params.has('hideExpertRecipes')
@@ -206,13 +209,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   const validParams = validateFormInput.safeParse(values)
 
   if (validParams.success) {
-    return combineWithDiscordSession(request, validParams.data)
+    return combineWithDiscordSession(request, validParams.data, context)
   }
 
-  return combineWithDiscordSession(request, defaultFormValues)
+  return combineWithDiscordSession(request, defaultFormValues, context)
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const session = await getUserSessionData(request)
   const formData = await request.formData()
   const formPayload = Object.fromEntries(formData)

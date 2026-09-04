@@ -29,7 +29,10 @@ import { getUserSessionData } from '~/sessions.server'
 import { getItemIDByName } from '~/utils/items'
 import { ffxivItemsList } from '~/utils/items/id_to_item'
 import PremiumPaywall from '~/components/Common/PremiumPaywall'
-import { combineWithDiscordSession } from '~/components/Common/DiscordSessionLoader.server'
+import {
+  combineWithDiscordSession,
+  requireDiscordTier
+} from '~/components/Common/DiscordSessionLoader.server'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -62,7 +65,8 @@ const REGION_WIDE = 'region-wide'
 type ShoppingFormItem = ShoppingInputItem & { name: string }
 type ActionDataResponse = GetShoppingListResponse | { exception: string } | {}
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  await requireDiscordTier(request, context)
   const formData = await request.formData()
 
   const shoppingData = formData.get(FORM_NAME)
@@ -101,8 +105,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return combineWithDiscordSession(request, {})
+export const loader: LoaderFunction = async ({ request, context }) => {
+  return combineWithDiscordSession(request, {}, context)
 }
 
 /**
