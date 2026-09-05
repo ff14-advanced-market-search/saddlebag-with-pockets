@@ -184,7 +184,7 @@ function FullTable<Type>({
   }, [])
 
   return (
-    <div className="mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll">
+    <div className="mt-2 max-w-full max-h-[calc(100vh_-_64px)] overflow-scroll desktop-scrollbar">
       <table className="divide-y divide-gray-300 relative dark:bg-gray-600 dark:divide-gray-600 dark:text-gray-100">
         <thead className="bg-gray-50 dark:bg-gray-600">
           {table.getHeaderGroups().map((headerGroup) => (
