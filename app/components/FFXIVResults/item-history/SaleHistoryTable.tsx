@@ -125,9 +125,9 @@ const SaleHistoryTable = ({ data }: { data: Array<StackChance> }) => {
         purchases (inddividual times people click on the buy button) and total
         quantity sold (total of all quantity sold from all purchases).
       </p>
-      <div className="overflow-x-auto my-2">
+      <div className="overflow-x-auto md:overflow-x-scroll desktop-scrollbar my-2">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
+          <div className="overflow-scroll desktop-scrollbar max-h-96 shadow ring-1 ring-black ring-opacity-5">
             <table className="min-w-full divide-y relative divide-gray-300 dark:bg-gray-600 dark:divide-gray-600">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (

@@ -29,6 +29,47 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+/*
+ * Desktop browsers can render native scrollbars as faint overlays, which makes
+ * scrollable data tables easy to miss. Give the primary scrolling surfaces a
+ * persistent, high-contrast track and thumb without affecting touch layouts.
+ */
+@media (min-width: 768px) {
+  .desktop-scrollbar {
+    scrollbar-color: #64748b #e2e8f0;
+    scrollbar-gutter: stable;
+    scrollbar-width: auto;
+  }
+
+  .dark .desktop-scrollbar {
+    scrollbar-color: #94a3b8 #334155;
+  }
+
+  .desktop-scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  .desktop-scrollbar::-webkit-scrollbar-track {
+    background: #e2e8f0;
+  }
+
+  .dark .desktop-scrollbar::-webkit-scrollbar-track {
+    background: #334155;
+  }
+
+  .desktop-scrollbar::-webkit-scrollbar-thumb {
+    background: #64748b;
+    border: 3px solid #e2e8f0;
+    border-radius: 9999px;
+  }
+
+  .dark .desktop-scrollbar::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-color: #334155;
+  }
+}
+
 @keyframes grow {
   0% {
     opacity: 0;

@@ -424,9 +424,9 @@ const Results = ({ rows }: ResultTableProps) => {
         <DndProvider
           backend={touchBackendRef.current ? TouchBackend : HTML5Backend}>
           <ScrollingComponent>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto md:overflow-x-scroll desktop-scrollbar">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-[calc(100vh-120px)]">
+                <div className="overflow-scroll desktop-scrollbar shadow ring-1 ring-black ring-opacity-5 md:rounded-lg max-h-[calc(100vh-120px)]">
                   <table
                     ref={tableRef}
                     className="min-w-full relavtive divide-y divide-gray-300 mt-2 bg-gray-50 dark:bg-gray-600 dark:divide-gray-600">

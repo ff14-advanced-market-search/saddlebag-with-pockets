@@ -121,9 +121,9 @@ const SuspiciousSaleTable = ({ data }: { data: Array<DirtySale> }) => {
   return (
     <div
       className={`mt-0 flex flex-col my-6 bg-white dark:bg-slate-700 p-4 sm:rounded-md`}>
-      <div className="overflow-x-auto my-2">
+      <div className="overflow-x-auto md:overflow-x-scroll desktop-scrollbar my-2">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5">
+          <div className="overflow-scroll desktop-scrollbar max-h-96 shadow ring-1 ring-black ring-opacity-5">
             <table className="min-w-full relative divide-y divide-gray-300 dark:bg-gray-600 dark:divide-gray-600">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (

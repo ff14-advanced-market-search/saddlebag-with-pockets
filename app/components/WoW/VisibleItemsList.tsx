@@ -15,7 +15,7 @@ export default function VisibleItemsList({
   onVisibilityChange
 }: VisibleItemsListProps) {
   return (
-    <div className="overflow-auto px-4 pb-4 flex-grow">
+    <div className="overflow-auto md:overflow-scroll desktop-scrollbar px-4 pb-4 flex-grow">
       <div className="space-y-2">
         {Object.entries(visibleItems).filter(([name]) =>
           name.toLowerCase().includes(visibilityFilter.toLowerCase())

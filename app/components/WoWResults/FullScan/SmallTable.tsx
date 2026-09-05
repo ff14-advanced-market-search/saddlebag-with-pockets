@@ -180,9 +180,9 @@ function DesktopTable({
           />
         </div>
       </div>
-      <div className="overflow-x-auto my-2">
+      <div className="overflow-x-auto md:overflow-x-scroll desktop-scrollbar my-2">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll max-h-fit shadow ring-1 ring-black ring-opacity-5">
+          <div className="overflow-scroll desktop-scrollbar max-h-fit shadow ring-1 ring-black ring-opacity-5">
             <table className="min-w-full relative divide-y divide-gray-300">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
