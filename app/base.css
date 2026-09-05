@@ -34,7 +34,7 @@
  * scrollable data tables easy to miss. Give the primary scrolling surfaces a
  * persistent, high-contrast track and thumb without affecting touch layouts.
  */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (pointer: fine) and (hover: hover) {
   .desktop-scrollbar {
     scrollbar-color: #64748b #e2e8f0;
     scrollbar-gutter: stable;

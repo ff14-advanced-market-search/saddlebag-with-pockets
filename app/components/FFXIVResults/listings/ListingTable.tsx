@@ -124,7 +124,7 @@ const ListingTable = ({ data }: { data: ListingResponseType }) => {
     <div className={`mt-0 flex flex-col`}>
       <div className="overflow-x-auto md:overflow-x-scroll desktop-scrollbar">
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-scroll desktop-scrollbar max-h-96 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <div className="overflow-y-scroll max-h-96 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
             <table className="min-w-full divide-y relative divide-gray-300">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
