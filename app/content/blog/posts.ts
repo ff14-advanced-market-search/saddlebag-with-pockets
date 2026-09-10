@@ -29,6 +29,16 @@ const documentSearchIcon = DocumentMagnifyingGlassIcon as FeaturedPostIcon
  * Key format: 'category/slug' for categorized posts, or just 'slug' for research posts
  */
 const legacyBlogPosts: Record<string, BlogPost> = {
+  'coderabbit-discord-frontend-upgrade': {
+    category: '',
+    slug: 'coderabbit-discord-frontend-upgrade',
+    title: 'One Morning, a Discord Agent, and Five Years of Tech Debt',
+    description:
+      'How CodeRabbit Discord helped Saddlebag Exchange clear years of OSS tech debt and contributor churn with a 107-file frontend upgrade.',
+    component: 'CodeRabbitDiscordUpgrade',
+    canonical:
+      'https://saddlebagexchange.com/blog/coderabbit-discord-frontend-upgrade'
+  },
   'ffxiv/bs2': {
     category: 'ffxiv',
     slug: 'bs2',
@@ -135,6 +145,13 @@ export const blogPosts: Record<string, BlogPost> = {
  * Featured posts shown on the blog index page
  */
 export const featuredPosts: FeaturedPost[] = [
+  {
+    name: 'One Morning, a Discord Agent, and Five Years of Tech Debt',
+    description:
+      'How CodeRabbit Discord cleared years of tech debt in a 107-file frontend upgrade.',
+    Icon: documentSearchIcon,
+    href: '/blog/coderabbit-discord-frontend-upgrade'
+  },
   {
     name: 'How to Resell Items in FFXIV',
     description: 'Complete guide to buying and reselling for profit.',

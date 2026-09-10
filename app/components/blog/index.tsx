@@ -22,6 +22,7 @@ import ResearchPost1 from './ResearchPost1'
 import ResearchPost2 from './ResearchPost2'
 import ResearchPost3 from './ResearchPost3'
 import WikiBlog from './WikiBlog'
+import CodeRabbitDiscordUpgrade from './CodeRabbitDiscordUpgrade'
 
 import * as FFXIVBs2Meta from './FFXIVBs2'
 import * as FFXIVBs6Meta from './FFXIVBs6'
@@ -35,6 +36,7 @@ import * as WoWAdvancedStrategiesMeta from './WoWAdvancedStrategies'
 import * as ResearchPost1Meta from './ResearchPost1'
 import * as ResearchPost2Meta from './ResearchPost2'
 import * as ResearchPost3Meta from './ResearchPost3'
+import * as CodeRabbitDiscordUpgradeMeta from './CodeRabbitDiscordUpgrade'
 
 export const blogComponents: Record<string, React.ComponentType> = {
   FFXIVBs2,
@@ -49,6 +51,7 @@ export const blogComponents: Record<string, React.ComponentType> = {
   ResearchPost1,
   ResearchPost2,
   ResearchPost3,
+  CodeRabbitDiscordUpgrade,
   WikiBlog
 }
 
@@ -65,5 +68,6 @@ export const blogMetaFunctions: Record<string, MetaFunction | undefined> = {
   ResearchPost1: ResearchPost1Meta.meta,
   ResearchPost2: ResearchPost2Meta.meta,
   ResearchPost3: ResearchPost3Meta.meta,
+  CodeRabbitDiscordUpgrade: CodeRabbitDiscordUpgradeMeta.meta,
   WikiBlog: undefined
 }
