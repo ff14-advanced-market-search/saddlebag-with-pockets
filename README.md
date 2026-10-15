@@ -6,7 +6,7 @@ It is a [Remix](https://remix.run/) application deployed on [Cloudflare Pages](h
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) `22.23.2` (see [`.nvmrc`](.nvmrc))
+- [Node.js](https://nodejs.org/) `22.23.3` (see [`.nvmrc`](.nvmrc))
 - [Corepack](https://nodejs.org/api/corepack.html) to provide Yarn `1.22.22`
 
 If you use `nvm`:
