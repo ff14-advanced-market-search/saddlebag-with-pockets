@@ -1,7 +1,13 @@
 import Highcharts from 'highcharts'
 import addHighchartsTreemap from 'highcharts/modules/treemap'
 import HighchartsReact from 'highcharts-react-official'
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useMemo, useRef } from 'react'
+import { observeContainerWidth } from './observeContainerWidth'
+
+const CHART_HEIGHT = 400
+const CONTAINER_PROPS = {
+  style: { width: '100%', minWidth: 0, height: CHART_HEIGHT }
+}
 
 // Initialize the treemap module at the module level
 if (typeof window !== 'undefined') {
@@ -37,7 +43,7 @@ export interface TreemapNode {
  * @description
  *   - Integrates Highcharts treemap with React via HighchartsReact component.
  *   - Applies different styles based on dark mode flag, affecting both background and text color.
- *   - Ensures immutability of the rendered component through the 'immutable' prop.
+ *   - Keeps chart height stable and schedules width changes outside resize callbacks.
  */
 const TreemapChart = ({
   chartData,
@@ -50,76 +56,81 @@ const TreemapChart = ({
   darkMode: boolean
   backgroundColor?: string
 }) => {
-  const chartRef = useRef<{ chart: Highcharts.Chart }>(null)
-  const [isModuleInitialized] = useState(true)
+  const chartRef = useRef<HighchartsReact.RefObject>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    return () => {
-      // Cleanup chart when component unmounts
-      if (chartRef.current?.chart) {
-        chartRef.current.chart.destroy()
+    const container = containerRef.current
+    if (!container) return
+
+    // HighchartsReact owns chart destruction. Our observer only owns resizing
+    // the existing chart; a new options object must not rebuild its observers.
+    return observeContainerWidth(container, (width) => {
+      const chart = chartRef.current?.chart
+      if (chart?.container && chart.chartWidth !== width) {
+        chart.setSize(width, CHART_HEIGHT, false)
       }
-    }
+    })
   }, [])
 
-  const styles = darkMode
-    ? {
-        backgroundColor: backgroundColor ?? '#334155',
-        color: 'white',
-        hoverColor: '#f8f8f8'
-      }
-    : { backgroundColor }
-
-  const options = {
-    title: { text: title, style: { color: styles?.color } },
-    chart: { backgroundColor: styles?.backgroundColor },
-    series: [
-      {
-        name: 'Overview',
-        type: 'treemap',
-        layoutAlgorithm: 'squarified',
-        allowDrillToNode: true,
+  const options = useMemo<Highcharts.Options>(
+    () => ({
+      title: { text: title, style: { color: darkMode ? 'white' : undefined } },
+      chart: {
+        backgroundColor: backgroundColor ?? (darkMode ? '#334155' : undefined),
+        height: CHART_HEIGHT,
+        reflow: false,
         animation: false,
-        shadow: false,
-        dataLabels: {
-          enabled: false
-        },
-        levels: [
-          {
-            level: 1,
-            dataLabels: {
-              enabled: false,
-              style: {
-                textOutline: false
-              }
-            },
-            borderWidth: 2
+        allowMutatingData: false
+      },
+      series: [
+        {
+          name: 'Overview',
+          type: 'treemap',
+          layoutAlgorithm: 'squarified',
+          allowDrillToNode: true,
+          animation: false,
+          shadow: false,
+          dataLabels: {
+            enabled: false
+          },
+          levels: [
+            {
+              level: 1,
+              dataLabels: {
+                enabled: false,
+                style: {
+                  textOutline: 'none'
+                }
+              },
+              borderWidth: 2
+            }
+          ],
+          // Highcharts may annotate treemap nodes; keep React-owned data intact.
+          data: chartData.map((node) => ({ ...node, id: String(node.id) })),
+          tooltip: {
+            useHTML: true,
+            pointFormat: '{point.toolTip}'
           }
-        ],
-        data: chartData,
-        tooltip: {
-          useHTML: true,
-          pointFormat: '{point.toolTip}'
         }
+      ],
+      credits: {
+        enabled: false
       }
-    ],
-    credits: {
-      enabled: false
-    }
-  }
-
-  if (!isModuleInitialized) {
-    return <div>Loading chart...</div>
-  }
+    }),
+    [chartData, title, darkMode, backgroundColor]
+  )
 
   return (
-    <HighchartsReact
-      ref={chartRef}
-      highcharts={Highcharts}
-      options={options}
-      immutable
-    />
+    <div ref={containerRef} style={CONTAINER_PROPS.style}>
+      <HighchartsReact
+        ref={chartRef}
+        highcharts={Highcharts}
+        options={options}
+        containerProps={CONTAINER_PROPS}
+      />
+    </div>
   )
 }
 
-export default TreemapChart
+export default memo(TreemapChart)

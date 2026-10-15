@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { TreemapNode } from '~/components/Charts/Treemap'
 import TreemapChart from '~/components/Charts/Treemap'
 import { ContentContainer, Title } from '~/components/Common'
@@ -6,7 +6,6 @@ import { RadioButtons } from '~/components/Common/RadioButtons'
 import type { ColumnList } from '~/components/Tables/FullTable'
 import FullTable from '~/components/Tables/FullTable'
 import CSVButton from '~/components/utilities/CSVButton'
-import { getOribosLink } from '~/components/utilities/getOribosLink'
 import { getSaddlebagWoWLink } from '~/components/utilities/getSaddlebagWoWLink'
 import type { ItemStats } from '~/requests/WoW/ItemStatLookup'
 import type { WoWServerRegion } from '~/requests/WoW/types'
@@ -60,12 +59,14 @@ const MarketshareResults = ({
   const [currentMarketValue, setCurrentMarketValue] = useState(true)
   const [globalFilter, setGlobalFilter] = useState('')
 
-  // // get oribos links
-  // const itemDataLink = getOribosLink(results.serverName, 'Link', results.region)
   const itemDataLink = getSaddlebagWoWLink('Link')
-  const chartData = currentMarketValue
-    ? getChartData(results.data, colorValue)
-    : getHistoryChartData(results.data, colorValue)
+  const chartData = useMemo(
+    () =>
+      currentMarketValue
+        ? getChartData(results.data, colorValue)
+        : getHistoryChartData(results.data, colorValue),
+    [results.data, colorValue, currentMarketValue]
+  )
 
   const currentMarketOptions = [
     {
