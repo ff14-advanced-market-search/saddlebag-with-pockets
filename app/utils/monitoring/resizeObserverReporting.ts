@@ -73,24 +73,20 @@ export function createResizeObserverBeforeSend(
 
     const timestamp = now()
     let warnings = views.get(event.view.id)
-    if (!warnings) {
-      warnings = {
-        lastReportedAt: timestamp,
-        observedCount: 0,
-        reportedCount: 0,
-        suppressedCount: 0,
-        suppressedSincePreviousSample: 0
-      }
+    warnings ??= {
+      lastReportedAt: timestamp,
+      observedCount: 0,
+      reportedCount: 0,
+      suppressedCount: 0,
+      suppressedSincePreviousSample: 0
     }
 
     // Touch the entry on each warning, keeping active views when space runs out.
     views.delete(event.view.id)
     views.set(event.view.id, warnings)
     if (views.size > MAX_TRACKED_VIEWS) {
-      for (const oldestView of views.keys()) {
-        views.delete(oldestView)
-        break
-      }
+      const oldestView = views.keys().next()
+      if (!oldestView.done) views.delete(oldestView.value)
     }
 
     warnings.observedCount += 1
