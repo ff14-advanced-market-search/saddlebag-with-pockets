@@ -1,20 +1,10 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useEffect } from 'react'
+import { createResizeObserverBeforeSend } from '~/utils/monitoring/resizeObserverReporting'
 
-/**
- * Initializes the Datadog RUM for monitoring user interactions if not in a server environment
- * @example
- * functionName()
- * undefined
- * @returns {void} No return value.
- * @description
- *   - The function configures Datadog RUM with specific identifiers and sampling rates for a production environment.
- *   - It only executes in a browser environment, as checked by the window object.
- *   - Data collection settings include tracking user interactions, resources, and long tasks.
- *   - User input privacy is set to mask user input by default.
- */
-const initDatadog = () => {
-  if (typeof window === 'undefined') return
+/** Initialize RUM once per page, preserving warning samples across remounts. */
+export const initDatadog = () => {
+  if (typeof window === 'undefined' || datadogRum.getInitConfiguration()) return
 
   datadogRum.init({
     applicationId: '96c0b8c8-03c7-4a12-93df-102730a4493e',
@@ -28,10 +18,12 @@ const initDatadog = () => {
     trackResources: true,
     trackLongTasks: true,
     defaultPrivacyLevel: 'allow',
-    version: '1.0.1'
+    version: '1.0.1',
+    beforeSend: createResizeObserverBeforeSend()
   })
 }
 
+/** Start browser monitoring after mount while rendering children unchanged. */
 export function DatadogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     initDatadog()
