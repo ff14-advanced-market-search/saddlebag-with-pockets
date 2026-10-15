@@ -25,6 +25,7 @@ interface ViewWarnings {
   suppressedSincePreviousSample: number
 }
 
+/** Attach warning totals without replacing the event's existing context. */
 function addWarningContext(event: RumEvent, warnings: ViewWarnings) {
   event.context = {
     ...event.context,

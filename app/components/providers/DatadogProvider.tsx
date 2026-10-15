@@ -2,9 +2,8 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useEffect } from 'react'
 import { createResizeObserverBeforeSend } from '~/utils/monitoring/resizeObserverReporting'
 
+/** Initialize RUM once per page, preserving warning samples across remounts. */
 export const initDatadog = () => {
-  // Effects can run again after a remount or in React Strict Mode. The SDK and
-  // its warning sample state must remain a single instance for the page.
   if (typeof window === 'undefined' || datadogRum.getInitConfiguration()) return
 
   datadogRum.init({
@@ -24,6 +23,7 @@ export const initDatadog = () => {
   })
 }
 
+/** Start browser monitoring after mount while rendering children unchanged. */
 export function DatadogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     initDatadog()
