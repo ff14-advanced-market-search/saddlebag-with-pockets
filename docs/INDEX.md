@@ -5,4 +5,3 @@
 - [Styling](STYLING.md)
 - [Contributing](CONTRIBUTING.md)
   - [Code of Conduct](CODE_OF_CONDUCT.md)
-- [RUM resize warning troubleshooting](RUM.md)

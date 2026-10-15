@@ -16,7 +16,9 @@ describe('observeContainerWidth', () => {
   const flushFrame = () => {
     const pending = [...frames.values()]
     frames.clear()
-    pending.forEach((callback) => callback(0))
+    pending.forEach((callback) => {
+      callback(0)
+    })
   }
 
   beforeEach(() => {
@@ -81,7 +83,9 @@ describe('observeContainerWidth', () => {
   })
 
   it('does not resize again for unchanged widths or chart height changes', () => {
-    const resize = vi.fn(() => notify())
+    const resize = vi.fn(() => {
+      notify()
+    })
     const cleanup = observeContainerWidth(container, resize)
     flushFrame()
     // Even a size notification caused by the chart's own write must settle.

@@ -57,7 +57,6 @@ import {
 import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
-import { scheduleExternalScripts } from '~/utils/externalScripts'
 
 /**
  * Generates the basic HTML structure with linked resources and error boundaries.
@@ -309,7 +308,71 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(scheduleExternalScripts, [])
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.requestAnimationFrame(() => {
+        // Load Google Tag Manager
+        {
+          const w = window as Window & { dataLayer?: any[] }
+          const d = document
+          const i = 'GTM-WH4KFG5'
+          const l = 'dataLayer'
+          const s = 'script'
+          w[l] = w[l] || []
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+          const f = d.getElementsByTagName(s)[0] as HTMLScriptElement
+          const j = d.createElement(s) as HTMLScriptElement
+          const dl = l == 'dataLayer' ? '' : `&l=${l}`
+          j.async = true
+          j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`
+          if (f?.parentNode) {
+            try {
+              f.parentNode.insertBefore(j, f)
+            } catch (e) {
+              // Fallback to append if insertBefore fails
+              document.body.appendChild(j)
+            }
+          } else {
+            // Fallback if target element not found
+            document.body.appendChild(j)
+          }
+        }
+
+        // Load Next Millennium script
+        const nextMilleniumScript = document.createElement('script')
+        nextMilleniumScript.src = 'https://powerad.ai/261066107350250/script.js'
+        nextMilleniumScript.async = true
+        document.body.appendChild(nextMilleniumScript)
+
+        // // Load HubSpot script
+        // const hubspotScript = document.createElement('script')
+        // hubspotScript.id = 'hs-script-loader'
+        // hubspotScript.src = '//js-na1.hs-scripts.com/48701885.js'
+        // hubspotScript.async = true
+        // hubspotScript.defer = true
+        // document.body.appendChild(hubspotScript)
+
+        // // Load Ezoic script
+        // const ezoicScript = document.createElement('script')
+        // ezoicScript.src = '//www.ezojs.com/ezoic/sa.min.js'
+        // ezoicScript.async = true
+        // document.body.appendChild(ezoicScript)
+
+        // ezoicScript.onload = function () {
+        //   window.ezstandalone = window.ezstandalone || {}
+        //   ezstandalone.cmd = ezstandalone.cmd || []
+        //   ezstandalone.cmd.push(function () {
+        //     ezstandalone.define(118, 116)
+        //     ezstandalone.refresh()
+        //     ezstandalone.enable()
+        //     ezstandalone.display()
+        //   })
+        // }
+      })
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <DatadogProvider>

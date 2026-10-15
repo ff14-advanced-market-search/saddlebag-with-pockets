@@ -87,8 +87,10 @@ export function createResizeObserverBeforeSend(
     views.delete(event.view.id)
     views.set(event.view.id, warnings)
     if (views.size > MAX_TRACKED_VIEWS) {
-      const oldestView = views.keys().next().value
-      if (oldestView !== undefined) views.delete(oldestView)
+      for (const oldestView of views.keys()) {
+        views.delete(oldestView)
+        break
+      }
     }
 
     warnings.observedCount += 1

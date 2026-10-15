@@ -1,10 +1,10 @@
-import type { RumInitConfiguration } from '@datadog/browser-rum'
+import type { datadogRum } from '@datadog/browser-rum'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { initDatadog } from '~/components/providers/DatadogProvider'
 
 const rum = vi.hoisted(() => ({
-  getInitConfiguration: vi.fn<() => RumInitConfiguration | undefined>(),
-  init: vi.fn<(configuration: RumInitConfiguration) => void>()
+  getInitConfiguration: vi.fn<typeof datadogRum.getInitConfiguration>(),
+  init: vi.fn<typeof datadogRum.init>()
 }))
 
 vi.mock('@datadog/browser-rum', () => ({ datadogRum: rum }))
