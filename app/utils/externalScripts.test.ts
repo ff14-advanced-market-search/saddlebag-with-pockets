@@ -21,7 +21,9 @@ describe('external script lifecycle', () => {
   const runFrames = () => {
     const callbacks = [...frames.values()]
     frames.clear()
-    callbacks.forEach((callback) => callback(0))
+    callbacks.forEach((callback) => {
+      callback(0)
+    })
   }
 
   const finishLoading = () => {
