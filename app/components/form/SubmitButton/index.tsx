@@ -73,7 +73,7 @@ export const SubmitButton = ({
         </svg>
       )}
       {/* Keep the label element stable when translation replaces its text. */}
-      <span>{title || children}</span>
+      <span>{title?.length ? title : children}</span>
     </button>
   )
 }
