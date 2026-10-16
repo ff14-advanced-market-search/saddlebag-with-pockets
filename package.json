@@ -9,7 +9,7 @@
   "scripts": {
     "build": "run-s \"build:css\" \"build:remix\"",
     "build:css": "yarn run generate:css --minify",
-    "build:remix": "remix build",
+    "build:remix": "node scripts/datadog-build.cjs",
     "dev": "yarn run generate:css && run-p \"dev:css\" \"dev:remix\"",
     "dev:css": "yarn run generate:css --watch",
     "dev:remix": "remix dev --manual -c \"yarn run dev:wrangler\"",
@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260702.1",
+    "@datadog/datadog-ci": "5.25.0",
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "@remix-run/dev": "^2.17.5",

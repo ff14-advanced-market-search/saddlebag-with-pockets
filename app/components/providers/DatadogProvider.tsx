@@ -1,6 +1,7 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useEffect } from 'react'
-import { createResizeObserverBeforeSend } from '~/utils/monitoring/resizeObserverReporting'
+import buildMetadata from '~/.generated/datadog-build.json'
+import { createRumBeforeSend } from '~/utils/monitoring/rumDebugContext'
 
 /** Initialize RUM once per page, preserving warning samples across remounts. */
 export const initDatadog = () => {
@@ -10,16 +11,16 @@ export const initDatadog = () => {
     applicationId: '96c0b8c8-03c7-4a12-93df-102730a4493e',
     clientToken: 'pub58195f295af90ffce1b77c4a4e356e67',
     site: 'us5.datadoghq.com',
-    service: 'saddlebag-exchange',
-    env: 'production',
+    service: buildMetadata.service,
+    env: buildMetadata.env,
     sessionSampleRate: 100,
     sessionReplaySampleRate: 100,
     trackUserInteractions: true,
     trackResources: true,
     trackLongTasks: true,
     defaultPrivacyLevel: 'allow',
-    version: '1.0.1',
-    beforeSend: createResizeObserverBeforeSend()
+    version: buildMetadata.version,
+    beforeSend: createRumBeforeSend()
   })
 }
 
