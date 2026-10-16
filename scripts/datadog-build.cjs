@@ -145,6 +145,14 @@ function runBuild({
     cleanBuildOutputs(rootDirectory, false)
     let uploadStatus
     try {
+      const uploadEnvironment = {
+        ...environment,
+        DD_SITE: DATADOG_SITE,
+        DATADOG_SITE
+      }
+      // This CLI override takes precedence over DD_SITE and receives the API key.
+      // Use the US5 intake derived from the pinned site, retaining proxy settings.
+      delete uploadEnvironment.DATADOG_SOURCEMAP_INTAKE_URL
       uploadStatus = runCommand(
         [
           require.resolve('@datadog/datadog-ci'),
@@ -160,11 +168,7 @@ function runBuild({
         ],
         {
           ...commandOptions,
-          env: {
-            ...environment,
-            DD_SITE: DATADOG_SITE,
-            DATADOG_SITE
-          }
+          env: uploadEnvironment
         }
       )
     } catch {

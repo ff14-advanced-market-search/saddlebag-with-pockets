@@ -104,6 +104,53 @@ describe('public Datadog build metadata', () => {
 })
 
 describe('Datadog build integration', () => {
+  it.each(['DATADOG_API_KEY', 'DD_API_KEY'])(
+    'prevents intake redirects while preserving %s and normal upload networking',
+    (apiKeyVariable) => {
+      const rootDirectory = createProject()
+      const environment = {
+        ...PUBLIC_ENVIRONMENT,
+        [apiKeyVariable]: 'private-upload-key',
+        DD_SITE: 'datadoghq.eu',
+        DATADOG_SITE: 'datadoghq.eu',
+        DATADOG_SOURCEMAP_INTAKE_URL: 'https://untrusted.example/upload',
+        HTTPS_PROXY: 'http://proxy.example:3128',
+        NODE_EXTRA_CA_CERTS: '/example/ca.pem',
+        DD_GIT_REPOSITORY_URL:
+          'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets'
+      }
+      const originalEnvironment = { ...environment }
+      const runCommand = vi.fn<typeof runNodeCommand>().mockReturnValue(0)
+
+      expect(
+        runBuild({
+          rootDirectory,
+          environment,
+          runCommand,
+          logger: createLogger()
+        })
+      ).toBe(0)
+
+      expect(runCommand).toHaveBeenCalledTimes(2)
+      expect(runCommand.mock.calls[0][1].env).toBe(environment)
+      const uploadEnvironment = runCommand.mock.calls[1][1].env
+      expect(uploadEnvironment).not.toHaveProperty(
+        'DATADOG_SOURCEMAP_INTAKE_URL'
+      )
+      expect(uploadEnvironment[apiKeyVariable]).toBe('private-upload-key')
+      expect(uploadEnvironment.DD_SITE).toBe('us5.datadoghq.com')
+      expect(uploadEnvironment.DATADOG_SITE).toBe('us5.datadoghq.com')
+      expect(uploadEnvironment.HTTPS_PROXY).toBe(environment.HTTPS_PROXY)
+      expect(uploadEnvironment.NODE_EXTRA_CA_CERTS).toBe(
+        environment.NODE_EXTRA_CA_CERTS
+      )
+      expect(uploadEnvironment.DD_GIT_REPOSITORY_URL).toBe(
+        environment.DD_GIT_REPOSITORY_URL
+      )
+      expect(environment).toEqual(originalEnvironment)
+    }
+  )
+
   it('uploads the final deployed JavaScript with matching release metadata', () => {
     const rootDirectory = createProject()
     const runCommand = vi.fn<typeof runNodeCommand>()
