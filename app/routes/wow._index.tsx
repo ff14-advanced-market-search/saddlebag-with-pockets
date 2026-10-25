@@ -171,6 +171,20 @@ const recommendedQueries = [
     href: '/wow/price-alert'
   },
   {
+    name: 'WoW Season Gold Making Guide',
+    description:
+      'Evaluate Auction House markets using realistic margins, competition and inventory risk.',
+    Icon: DocumentMagnifyingGlassIcon,
+    href: '/blog/wow/season-market-guide'
+  },
+  {
+    name: 'Is a WoW Item Worth Farming?',
+    description:
+      'Estimate gold per hour using realistic sale proceeds, measured yield, fees and sell-through risk.',
+    Icon: DocumentMagnifyingGlassIcon,
+    href: '/blog/wow/is-an-item-worth-farming'
+  },
+  {
     name: 'ToekneeATX Flipping Lists and Guides',
     description:
       'Curated ToekneeATX lists and guides for AAA, Saddlebag Exchange, PBS, and TSM.',

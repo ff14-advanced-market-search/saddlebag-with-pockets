@@ -158,6 +158,20 @@ const ffxivPages = [
     href: '/ffxiv/self-purchase'
   },
   {
+    name: 'FFXIV Patch Market Guide',
+    description:
+      'Find patch trading opportunities using completed sales, competition and material costs.',
+    Icon: DocumentMagnifyingGlassIcon,
+    href: '/blog/ffxiv/patch-market-guide'
+  },
+  {
+    name: 'Is an FFXIV Item Worth Farming?',
+    description:
+      'Estimate gil per hour using completed sales, measured yield and market competition.',
+    Icon: DocumentMagnifyingGlassIcon,
+    href: '/blog/ffxiv/is-an-item-worth-farming'
+  },
+  {
     name: 'Secret Sale Leads',
     href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki/FFXIV-Sale-Leads',
     description:
