@@ -1,6 +1,7 @@
 import type React from 'react'
 import { DocumentMagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { wikiBlogPosts } from './wikiPostsEntries'
+import { marketGuidePosts } from './marketGuides'
 
 type FeaturedPostIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>
 
@@ -138,13 +139,27 @@ const legacyBlogPosts: Record<string, BlogPost> = {
 
 export const blogPosts: Record<string, BlogPost> = {
   ...legacyBlogPosts,
-  ...wikiBlogPosts
+  ...wikiBlogPosts,
+  ...marketGuidePosts
 }
 
 /**
  * Featured posts shown on the blog index page
  */
 export const featuredPosts: FeaturedPost[] = [
+  {
+    name: 'FFXIV Patch Markets: How to Find Items Worth Selling',
+    description:
+      'Check completed sales, competition and crafting costs around a patch.',
+    Icon: documentSearchIcon,
+    href: '/blog/ffxiv/patch-market-guide'
+  },
+  {
+    name: 'WoW Season Gold Making: Evaluate Auction House Markets',
+    description: 'Compare realistic margins and inventory risk before buying.',
+    Icon: documentSearchIcon,
+    href: '/blog/wow/season-market-guide'
+  },
   {
     name: 'One Morning, a Discord Agent, and Five Years of Tech Debt',
     description:

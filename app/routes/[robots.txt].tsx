@@ -48,7 +48,6 @@ export const loader: LoaderFunction = () => {
   Allow: /gw2/weekly-price-group-delta
 
   Disallow: /nogooglebot/
-  Disallow: /build/
   Disallow: /queries/full-scan
   Disallow: /ffxiv/marketshare
   Disallow: /ffxiv/craftsim
