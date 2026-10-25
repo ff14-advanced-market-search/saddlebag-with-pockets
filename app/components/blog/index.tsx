@@ -23,6 +23,7 @@ import ResearchPost2 from './ResearchPost2'
 import ResearchPost3 from './ResearchPost3'
 import WikiBlog from './WikiBlog'
 import CodeRabbitDiscordUpgrade from './CodeRabbitDiscordUpgrade'
+import MarketGuide from './MarketGuide'
 
 import * as FFXIVBs2Meta from './FFXIVBs2'
 import * as FFXIVBs6Meta from './FFXIVBs6'
@@ -52,6 +53,7 @@ export const blogComponents: Record<string, React.ComponentType> = {
   ResearchPost2,
   ResearchPost3,
   CodeRabbitDiscordUpgrade,
+  MarketGuide,
   WikiBlog
 }
 
