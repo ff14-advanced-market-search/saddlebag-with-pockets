@@ -89,28 +89,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const input = { itemId: parsedItemId, world, itemType, initialDays, endDays }
 
   try {
-    const [historyResponse, listingResponse, itemDescription] =
-      await Promise.all([
-        GetHistory(input),
-        GetListing(input),
-        // Descriptions are optional: an outage must not hide working market data.
-        GetBlog({ itemId: parsedItemId })
-          .then(async (response) => {
-            if (!response.ok) return undefined
-            const blog: unknown = await response.json()
-            if (
-              !blog ||
-              typeof blog !== 'object' ||
-              !('itemDescription' in blog)
-            ) {
-              return undefined
-            }
-            return typeof blog.itemDescription === 'string'
-              ? blog.itemDescription
-              : undefined
-          })
-          .catch(() => undefined)
-      ])
+    const [historyResponse, listingResponse, blogResponse] = await Promise.all([
+      GetHistory(input),
+      GetListing(input),
+      GetBlog({ itemId: parsedItemId })
+    ])
 
     if (!historyResponse.ok) {
       return { exception: historyResponse.statusText }
@@ -120,11 +103,15 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       return { exception: listingResponse.statusText }
     }
 
+    if (!blogResponse.ok) {
+      return { exception: blogResponse.statusText }
+    }
+
     return json({
       'Cache-Control': 'public, max-age=31536000, immutable',
       history: await historyResponse.json(),
       listing: await listingResponse.json(),
-      itemDescription,
+      itemDescription: (await blogResponse.json()).itemDescription,
       itemName,
       itemId
     })
