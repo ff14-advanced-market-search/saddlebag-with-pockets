@@ -1,3 +1,7 @@
+const { writeBuildMetadata } = require('./scripts/datadog-build.cjs')
+
+writeBuildMetadata()
+
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   server: './server.js',
