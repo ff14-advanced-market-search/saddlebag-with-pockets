@@ -40,11 +40,6 @@ export const loader: LoaderFunction = async () => {
   return json({ data: results.data })
 }
 
-const formatUnix = (unix: number) => {
-  if (!unix) return ''
-  return new Date(unix * 1000).toLocaleString()
-}
-
 const Index = () => {
   const results = useLoaderData<
     { data: Array<ForeverUploadTimer> } | undefined
@@ -78,8 +73,8 @@ const Index = () => {
             { title: 'Region', value: 'region' },
             { title: 'Auction House', value: 'auctionHouseLabel' },
             { title: 'Feed', value: 'feedLabel' },
-            { title: 'Last Checked Unix', value: 'lastCheckedUnix' },
-            { title: 'Last Published Unix', value: 'lastPublishedUnix' },
+            { title: 'Last Upload Time Raw', value: 'lastUploadTimeRaw' },
+            { title: 'Last Upload Time (unix)', value: 'lastUploadUnix' },
             { title: 'Auction Count', value: 'auctionCount' }
           ]
         }}
@@ -96,19 +91,8 @@ const columnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'feedLabel', header: 'Feed' },
   {
     columnId: 'lastUploadUnix',
-    header: 'Last Upload',
-    hidden: true,
+    header: 'Last Upload Time Raw',
     accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
-  },
-  {
-    columnId: 'lastCheckedUnix',
-    header: 'Last Checked',
-    accessor: ({ row }) => <span>{formatUnix(row.lastCheckedUnix)}</span>
-  },
-  {
-    columnId: 'lastPublishedUnix',
-    header: 'Last Published',
-    accessor: ({ row }) => <span>{formatUnix(row.lastPublishedUnix)}</span>
   },
   { columnId: 'auctionCount', header: 'Auctions' }
 ]
@@ -123,5 +107,5 @@ const mobileColumnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'feedLabel', header: 'Feed' },
   { columnId: 'auctionCount', header: 'Auctions' },
-  { columnId: 'lastUploadUnix', header: 'Last Upload' }
+  { columnId: 'lastUploadUnix', header: 'Last Upload Time Raw' }
 ]

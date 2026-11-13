@@ -9,5 +9,4 @@ export type ColumnList<Type> = {
     getValue: () => ReturnType<NonNullable<ColumnList<Type>['dataAccessor']>>
   }) => JSX.Element | null
   sortUndefined?: false | 'first' | 'last' | undefined
-  hidden?: boolean
 }

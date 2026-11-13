@@ -44,7 +44,7 @@ test('mobile upload timers default to region, feed, auctions, and last upload', 
 
   expect(mobile).toContain('Table sort by')
   expect(mobile).toContain('value="lastUploadUnix" selected=""')
-  expect(mobile).toContain('>Last Upload<')
+  expect(mobile).toContain('>Last Upload Time Raw<')
 
   const headerNames = [...mobile.matchAll(/<th[\s\S]*?<\/th>/g)].map((match) =>
     match[0]
@@ -56,7 +56,7 @@ test('mobile upload timers default to region, feed, auctions, and last upload', 
     'Region',
     'Feed',
     'Auctions',
-    'Last Upload'
+    'Last Upload Time Raw'
   ])
 
   const newer = mobile.indexOf('Fri, 13 Nov 2026 01:25:22 GMT')
@@ -79,7 +79,7 @@ const headerNames = (html: string) =>
       .trim()
   )
 
-test('desktop upload timers show region, house, feed, and check times', async () => {
+test('desktop upload timers show one last upload date', async () => {
   const { default: UploadTimers } = await import(
     '~/routes/wow-forever.upload-timers'
   )
@@ -90,13 +90,15 @@ test('desktop upload timers show region, house, feed, and check times', async ()
     'Region',
     'Auction House',
     'Feed',
-    'Last Checked',
-    'Last Published',
+    'Last Upload Time Raw',
     'Auctions'
   ])
+  expect(desktop).toContain('Fri, 13 Nov 2026 01:25:22 GMT')
+  expect(desktop).toContain('Fri, 13 Nov 2026 01:25:21 GMT')
   expect(desktop).not.toContain('Auction House ID')
   expect(desktop).not.toContain('Feed Type')
-  expect(desktop).not.toContain('>Last Upload<')
+  expect(desktop).not.toContain('Last Checked')
+  expect(desktop).not.toContain('Last Published')
   expect(desktop).not.toContain('HTTP Status')
   expect(desktop).toContain('Normal Alliance (111)')
   expect(desktop).toContain('Normal Horde (114)')
