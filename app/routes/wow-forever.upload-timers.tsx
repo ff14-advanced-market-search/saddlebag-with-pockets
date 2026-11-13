@@ -40,11 +40,6 @@ export const loader: LoaderFunction = async () => {
   return json({ data: results.data })
 }
 
-const formatUnix = (unix: number) => {
-  if (!unix) return ''
-  return new Date(unix * 1000).toLocaleString()
-}
-
 const Index = () => {
   const results = useLoaderData<
     { data: Array<ForeverUploadTimer> } | undefined
@@ -76,13 +71,10 @@ const Index = () => {
           filename: 'saddlebag-wow-forever-upload-timers.csv',
           columns: [
             { title: 'Region', value: 'region' },
-            { title: 'Auction House ID', value: 'auctionHouseID' },
-            { title: 'Feed Type', value: 'feedType' },
-            { title: 'Last Upload Time', value: 'lastUploadTimeRaw' },
-            { title: 'Last Upload Unix', value: 'lastUploadUnix' },
-            { title: 'Last Checked Unix', value: 'lastCheckedUnix' },
-            { title: 'Last Published Unix', value: 'lastPublishedUnix' },
-            { title: 'HTTP Status', value: 'lastHttpStatus' },
+            { title: 'Auction House', value: 'auctionHouseLabel' },
+            { title: 'Feed', value: 'feedLabel' },
+            { title: 'Last Upload Time Raw', value: 'lastUploadTimeRaw' },
+            { title: 'Last Upload Time (unix)', value: 'lastUploadUnix' },
             { title: 'Auction Count', value: 'auctionCount' }
           ]
         }}
@@ -96,50 +88,18 @@ export default Index
 const columnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'auctionHouseLabel', header: 'Auction House' },
-  { columnId: 'auctionHouseID', header: 'Auction House ID' },
   { columnId: 'feedLabel', header: 'Feed' },
-  { columnId: 'feedType', header: 'Feed Type' },
   {
     columnId: 'lastUploadUnix',
-    header: 'Last Upload',
+    header: 'Last Upload Time Raw',
     accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
-  },
-  {
-    columnId: 'lastCheckedUnix',
-    header: 'Last Checked',
-    accessor: ({ row }) => <span>{formatUnix(row.lastCheckedUnix)}</span>
-  },
-  {
-    columnId: 'lastPublishedUnix',
-    header: 'Last Published',
-    accessor: ({ row }) => <span>{formatUnix(row.lastPublishedUnix)}</span>
-  },
-  {
-    columnId: 'lastHttpStatus',
-    header: 'HTTP Status',
-    accessor: ({ row }) => (
-      <span
-        className={
-          row.lastHttpStatus === 200
-            ? 'text-green-600 dark:text-green-400'
-            : 'text-red-600 dark:text-red-400'
-        }>
-        {row.lastHttpStatus}
-      </span>
-    )
   },
   { columnId: 'auctionCount', header: 'Auctions' }
 ]
 
-const selectOptions = [
-  'region',
-  'auctionHouseID',
-  'feedType',
-  'lastUploadUnix',
-  'auctionCount'
-]
+const selectOptions = ['region', 'lastUploadUnix', 'auctionCount']
 
-const sortingOrder = [{ id: 'auctionHouseID', desc: false }]
+const sortingOrder = [{ id: 'auctionHouseLabel', desc: false }]
 
 const mobileSortingOrder = [{ id: 'lastUploadUnix', desc: true }]
 
@@ -147,5 +107,5 @@ const mobileColumnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'feedLabel', header: 'Feed' },
   { columnId: 'auctionCount', header: 'Auctions' },
-  { columnId: 'lastUploadUnix', header: 'Last Upload' }
+  { columnId: 'lastUploadUnix', header: 'Last Upload Time Raw' }
 ]
