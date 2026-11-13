@@ -369,8 +369,16 @@ function App() {
 
       // Cookies can expire while local storage still has the saved faction.
       // Persist that choice without leaving the page the user opened.
+      // FFXIV and WoW stay on the session values. Local copies of those games
+      // can be fallback defaults, and this sync must not write them over a
+      // valid session.
       if (localForeverDiffers && savedForever) {
-        submitHomeSettings(localFFXIVWorld, localWoWRealm, savedForever, true)
+        submitHomeSettings(
+          { data_center: data.data_center, world: data.world },
+          { server: data.wowRealm, region: data.wowRegion },
+          savedForever,
+          true
+        )
       }
     } else if (
       ffxivWorld.world !== data.world ||
