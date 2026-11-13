@@ -44,11 +44,11 @@ const Index = () => {
 
   const filteredData = useMemo(() => {
     if (!results || !('data' in results)) return []
-    
+
     if (regionFilter === 'All') {
       return results.data
     }
-    
+
     return results.data.filter((item) => item.region === regionFilter)
   }, [results, regionFilter])
 
@@ -62,7 +62,7 @@ const Index = () => {
         <PageWrapper>
           <h1 className="text-white">World of Warcraft API Upload Times</h1>
           <Banner />
-          
+
           <div className="flex gap-2 mb-4 justify-center">
             <button
               onClick={() => setRegionFilter('All')}
@@ -70,8 +70,7 @@ const Index = () => {
                 regionFilter === 'All'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-              }`}
-            >
+              }`}>
               All
             </button>
             <button
@@ -80,8 +79,7 @@ const Index = () => {
                 regionFilter === 'EU'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-              }`}
-            >
+              }`}>
               EU
             </button>
             <button
@@ -90,8 +88,7 @@ const Index = () => {
                 regionFilter === 'NA'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-              }`}
-            >
+              }`}>
               NA
             </button>
           </div>
