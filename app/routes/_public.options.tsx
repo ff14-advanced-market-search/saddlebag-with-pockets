@@ -305,11 +305,11 @@ export default function Options() {
     )
     formData.append(
       'foreverRegion',
-      overrides.foreverRegion ?? data.wowForever.region
+      overrides.foreverRegion ?? wowForever.region
     )
     formData.append(
       'foreverFaction',
-      overrides.foreverFaction ?? data.wowForever.faction
+      overrides.foreverFaction ?? wowForever.faction
     )
     formData.append(
       'earlyAccessToken',
@@ -358,6 +358,8 @@ export default function Options() {
   }
 
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const settingsFormRef = useRef(settingsForm)
+  settingsFormRef.current = settingsForm
 
   const handleEarlyAccessTokenChange = (token: string) => {
     // Clear previous timer
@@ -365,9 +367,10 @@ export default function Options() {
       clearTimeout(debounceTimerRef.current)
     }
 
-    // Set new timer to submit after 500ms of no input
+    // Read the form when the timer fires so a Forever edit made
+    // after this keystroke is not overwritten by the loader snapshot.
     debounceTimerRef.current = setTimeout(() => {
-      fetcher.submit(settingsForm({ earlyAccessToken: token }), {
+      fetcher.submit(settingsFormRef.current({ earlyAccessToken: token }), {
         method: 'POST'
       })
     }, 500)

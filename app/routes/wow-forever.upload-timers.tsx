@@ -11,6 +11,12 @@ import ForeverUploadTimers, {
 } from '~/requests/WoWForever/UploadTimers'
 import { foreverAuctionHouseLabel, foreverFeedLabel } from '~/utils/WoWForever'
 
+const withSearchLabels = (row: ForeverUploadTimer) => ({
+  ...row,
+  auctionHouseLabel: foreverAuctionHouseLabel(row.auctionHouseID),
+  feedLabel: foreverFeedLabel(row.feedType)
+})
+
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
@@ -57,9 +63,14 @@ const Index = () => {
       <SmallTable
         description="Shows when every WoW Forever auction house was last updated, for both regions and every faction. Item listings and commodities update separately."
         columnList={columnList}
-        data={results.data}
+        data={
+          results.data.map(withSearchLabels) as Array<
+            Record<string, string | number>
+          >
+        }
         columnSelectOptions={selectOptions}
         sortingOrder={sortingOrder}
+        mobileSortingOrder={mobileSortingOrder}
         mobileColumnList={mobileColumnList}
         csvOptions={{
           filename: 'saddlebag-wow-forever-upload-timers.csv',
@@ -84,18 +95,10 @@ export default Index
 
 const columnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
-  {
-    columnId: 'auctionHouseID',
-    header: 'Auction House',
-    accessor: ({ row }) => (
-      <span>{foreverAuctionHouseLabel(row.auctionHouseID)}</span>
-    )
-  },
-  {
-    columnId: 'feedType',
-    header: 'Feed',
-    accessor: ({ row }) => <span>{foreverFeedLabel(row.feedType)}</span>
-  },
+  { columnId: 'auctionHouseLabel', header: 'Auction House' },
+  { columnId: 'auctionHouseID', header: 'Auction House ID' },
+  { columnId: 'feedLabel', header: 'Feed' },
+  { columnId: 'feedType', header: 'Feed Type' },
   {
     columnId: 'lastUploadUnix',
     header: 'Last Upload',
@@ -138,19 +141,11 @@ const selectOptions = [
 
 const sortingOrder = [{ id: 'auctionHouseID', desc: false }]
 
+const mobileSortingOrder = [{ id: 'lastUploadUnix', desc: true }]
+
 const mobileColumnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
-  {
-    columnId: 'auctionHouseID',
-    header: 'Auction House',
-    accessor: ({ row }) => (
-      <span>{foreverAuctionHouseLabel(row.auctionHouseID)}</span>
-    )
-  },
-  {
-    columnId: 'feedType',
-    header: 'Feed',
-    accessor: ({ row }) => <span>{foreverFeedLabel(row.feedType)}</span>
-  },
-  { columnId: 'auctionCount', header: 'Auctions' }
+  { columnId: 'feedLabel', header: 'Feed' },
+  { columnId: 'auctionCount', header: 'Auctions' },
+  { columnId: 'lastUploadUnix', header: 'Last Upload' }
 ]

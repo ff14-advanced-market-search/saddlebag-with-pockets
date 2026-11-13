@@ -332,6 +332,7 @@ const SmallTable = ({
   title,
   description,
   mobileColumnList,
+  mobileSortingOrder,
   columnSelectOptions,
   csvOptions,
   fitScreen,
@@ -342,6 +343,7 @@ const SmallTable = ({
   sortingOrder: Array<{ id: string; desc: boolean }>
   columnList: Array<ColumnList<any>>
   mobileColumnList: Array<ColumnList<any>>
+  mobileSortingOrder?: Array<{ id: string; desc: boolean }>
   title?: string
   description?: string
   columnSelectOptions: Array<string>
@@ -354,7 +356,7 @@ const SmallTable = ({
     <>
       <MobileTable
         data={data}
-        sortingOrder={sortingOrder}
+        sortingOrder={mobileSortingOrder ?? sortingOrder}
         columnList={mobileColumnList}
         title={title}
         description={description}

@@ -309,6 +309,24 @@ function App() {
       localWoWForever.region !== data.wowForever.region ||
       localWoWForever.faction !== data.wowForever.faction
 
+    const submitHomeSettings = (
+      world: { data_center: string; world: string },
+      realm: typeof localWoWRealm,
+      forever: typeof localWoWForever
+    ) => {
+      const formData = new FormData()
+
+      formData.set(DATA_CENTER, world.data_center)
+      formData.set(FF14_WORLD, world.world)
+      formData.set(WOW_REGION, realm.region)
+      formData.set(WOW_REALM_NAME, realm.server.name)
+      formData.set(WOW_REALM_ID, realm.server.id.toString())
+      formData.set(WOW_FOREVER_REGION, forever.region)
+      formData.set(WOW_FOREVER_FACTION, forever.faction)
+
+      submit(formData, { method: 'post' })
+    }
+
     // If local data exists, use that
     if (
       localFFXIVWorld.world !== data.world ||
@@ -321,6 +339,12 @@ function App() {
       dispatch(setFFxivWorld(localFFXIVWorld))
       dispatch(setWoWRealmData(localWoWRealm))
       dispatch(setWoWForeverSettings(localWoWForever))
+
+      // Cookies can expire while local storage still has the saved faction.
+      // Persist that choice or the next full-settings submit restores the default.
+      if (localForeverDiffers) {
+        submitHomeSettings(localFFXIVWorld, localWoWRealm, localWoWForever)
+      }
     } else if (
       ffxivWorld.world !== data.world ||
       ffxivWorld.data_center !== data.data_center ||
@@ -331,17 +355,7 @@ function App() {
       wowForever.faction !== data.wowForever.faction
     ) {
       // If local data doesn't exist, use session data and update local storage
-      const formData = new FormData()
-
-      formData.set(DATA_CENTER, ffxivWorld.data_center)
-      formData.set(FF14_WORLD, ffxivWorld.world)
-      formData.set(WOW_REGION, wowRealm.region)
-      formData.set(WOW_REALM_NAME, wowRealm.server.name)
-      formData.set(WOW_REALM_ID, wowRealm.server.id.toString())
-      formData.set(WOW_FOREVER_REGION, wowForever.region)
-      formData.set(WOW_FOREVER_FACTION, wowForever.faction)
-
-      submit(formData, { method: 'post' })
+      submitHomeSettings(ffxivWorld, wowRealm, wowForever)
 
       setFFWorldDataInLocalStorage(ffxivWorld.world, ffxivWorld.data_center)
       setWoWRealmDataInLocalStorage(wowRealm.server, wowRealm.region)
