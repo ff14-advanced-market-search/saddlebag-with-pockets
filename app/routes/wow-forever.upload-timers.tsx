@@ -63,7 +63,6 @@ const Index = () => {
       <SmallTable
         description="Shows when every WoW Forever auction house was last updated, for both regions and every faction. Item listings and commodities update separately."
         columnList={columnList}
-        rowLabels={rowLabels}
         data={
           results.data.map(withSearchLabels) as Array<
             Record<string, string | number>
@@ -108,15 +107,6 @@ const columnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'auctionCount', header: 'Auctions' }
 ]
 
-const rowLabels: Array<ColumnList<ForeverUploadTimer>> = [
-  ...columnList,
-  {
-    columnId: 'lastUploadUnix',
-    header: 'Last Upload',
-    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
-  }
-]
-
 const selectOptions = ['region', 'lastUploadUnix', 'auctionCount']
 
 const sortingOrder = [{ id: 'auctionHouseLabel', desc: false }]
@@ -127,5 +117,9 @@ const mobileColumnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'feedLabel', header: 'Feed' },
   { columnId: 'auctionCount', header: 'Auctions' },
-  { columnId: 'lastUploadUnix', header: 'Last Upload' }
+  {
+    columnId: 'lastUploadUnix',
+    header: 'Last Upload',
+    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
+  }
 ]

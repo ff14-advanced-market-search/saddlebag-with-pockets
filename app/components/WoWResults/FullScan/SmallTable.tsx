@@ -311,7 +311,6 @@ function DesktopTable({
  * @param {Array<DataType>} data - Array of data objects to be displayed in the tables.
  * @param {Array<{id: string, desc: boolean}>} sortingOrder - Array representing the order in which columns should be sorted.
  * @param {Array<ColumnList<any>>} columnList - List of column definitions for desktop table view.
- * @param {Array<ColumnList<any>>} [rowLabels] - Column definitions used by the mobile detail view. Defaults to the desktop columns.
  * @param {Array<ColumnList<any>>} mobileColumnList - List of column definitions for mobile table view.
  * @param {string} [title] - Optional title for the tables.
  * @param {string} [description] - Optional description for the tables.
@@ -330,7 +329,6 @@ const SmallTable = ({
   data,
   sortingOrder,
   columnList,
-  rowLabels,
   title,
   description,
   mobileColumnList,
@@ -344,7 +342,6 @@ const SmallTable = ({
   data: Array<DataType>
   sortingOrder: Array<{ id: string; desc: boolean }>
   columnList: Array<ColumnList<any>>
-  rowLabels?: Array<ColumnList<any>>
   mobileColumnList: Array<ColumnList<any>>
   mobileSortingOrder?: Array<{ id: string; desc: boolean }>
   title?: string
@@ -363,7 +360,7 @@ const SmallTable = ({
         columnList={mobileColumnList}
         title={title}
         description={description}
-        rowLabels={rowLabels ?? columnList}
+        rowLabels={columnList}
         columnSelectOptions={columnSelectOptions}
       />
       <DesktopTable

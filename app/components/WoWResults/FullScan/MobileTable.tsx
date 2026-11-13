@@ -80,7 +80,7 @@ function MobileTable({
 }: {
   data: Array<Type>
   sortingOrder: Array<{ id: keyof Type; desc: boolean }>
-  columnList: Array<{ header: string; columnId: string }>
+  columnList: ColumnList<any>[]
   title?: string
   description?: string
   rowLabels: Array<ColumnList<any>>
@@ -95,8 +95,7 @@ function MobileTable({
 
   const [desc, setDesc] = useState<boolean>(sortingOrder[0].desc || true)
 
-  const [columns, setColumns] =
-    useState<Array<{ header: string; columnId: string }>>(columnList)
+  const [columns, setColumns] = useState<ColumnList<any>[]>(columnList)
 
   const sortingColumn = columnSort
   const sortedData = sortingColumn
@@ -149,7 +148,9 @@ function MobileTable({
             )
           }}>
           {columnSelectOptions.map((option, index) => {
-            const row = rowLabels.find(({ columnId }) => columnId === option)
+            const row =
+              rowLabels.find(({ columnId }) => columnId === option) ??
+              columnList.find(({ columnId }) => columnId === option)
             if (!row) return <></>
 
             return (
@@ -207,14 +208,15 @@ function MobileTable({
                     const maybeRow = rowLabels.find(
                       ({ columnId }) => columnId === col.columnId
                     )
+                    const accessor = maybeRow?.accessor ?? col.accessor
                     return (
                       <td
                         key={`cell-${rowIndex}-${i}`}
                         className={`p-2 ${
                           i !== 0 ? 'text-center' : 'text-left'
                         }`}>
-                        {maybeRow?.accessor
-                          ? maybeRow.accessor({
+                        {accessor
+                          ? accessor({
                               row,
                               getValue: () => row[col.columnId]
                             })
