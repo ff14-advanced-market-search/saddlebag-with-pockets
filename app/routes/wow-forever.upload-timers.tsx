@@ -133,10 +133,10 @@ const Index = () => {
             { title: 'Region', value: 'region' },
             { title: 'Auction House', value: 'auctionHouseLabel' },
             { title: 'Feed', value: 'feedLabel' },
-            { title: 'Last Upload Time Raw', value: 'lastUploadTimeRaw' },
+            { title: 'Auction Count', value: 'auctionCount' },
             { title: 'Last Upload Time (Local)', value: 'lastUploadTimeLocal' },
             { title: 'Last Upload Time (unix)', value: 'lastUploadUnix' },
-            { title: 'Auction Count', value: 'auctionCount' }
+            { title: 'Last Upload Time Raw', value: 'lastUploadTimeRaw' }
           ]
         }}
       />
@@ -152,17 +152,17 @@ const columnList: Array<ColumnList<UploadTimerRow>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'auctionHouseLabel', header: 'Auction House' },
   { columnId: 'feedLabel', header: 'Feed' },
-  {
-    columnId: 'lastUploadUnix',
-    header: 'Last Upload Time Raw',
-    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
-  },
+  { columnId: 'auctionCount', header: 'Auctions' },
   {
     columnId: 'lastUploadLocal',
     header: 'Last Upload Time (Local)',
     accessor: ({ row }) => <span>{row.lastUploadTimeLocal}</span>
   },
-  { columnId: 'auctionCount', header: 'Auctions' }
+  {
+    columnId: 'lastUploadUnix',
+    header: 'Last Upload Time Raw',
+    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
+  }
 ]
 
 const selectOptions = [
@@ -179,7 +179,7 @@ const mobileSortingOrder = [{ id: 'lastUploadUnix', desc: true }]
 const mobileColumnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'feedLabel', header: 'Feed' },
-  { columnId: 'auctionCount', header: 'Auctions' },
   { columnId: 'lastUploadUnix', header: 'Last Upload Time Raw' },
+  { columnId: 'auctionCount', header: 'Auctions' },
   { columnId: 'lastUploadLocal', header: 'Last Upload Time (Local)' }
 ]

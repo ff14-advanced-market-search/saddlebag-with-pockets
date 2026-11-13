@@ -35,7 +35,7 @@ vi.mock('@remix-run/react', async () => {
   }
 })
 
-test('mobile upload timers default to region, feed, auctions, and last upload', async () => {
+test('mobile upload timers display raw upload time before auctions', async () => {
   const { default: UploadTimers } = await import(
     '~/routes/wow-forever.upload-timers'
   )
@@ -57,8 +57,8 @@ test('mobile upload timers default to region, feed, auctions, and last upload', 
   expect(headerNames).toEqual([
     'Region',
     'Feed',
-    'Auctions',
     'Last Upload Time Raw',
+    'Auctions',
     'Last Upload Time (Local)'
   ])
 
@@ -93,9 +93,9 @@ test('desktop upload timers include raw and local last upload dates', async () =
     'Region',
     'Auction House',
     'Feed',
-    'Last Upload Time Raw',
+    'Auctions',
     'Last Upload Time (Local)',
-    'Auctions'
+    'Last Upload Time Raw'
   ])
   expect(desktop).toContain('Fri, 13 Nov 2026 01:25:22 GMT')
   expect(desktop).toContain('Fri, 13 Nov 2026 01:25:21 GMT')
