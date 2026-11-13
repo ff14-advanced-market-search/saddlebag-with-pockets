@@ -25,6 +25,8 @@ import {
 import {
   DATA_CENTER,
   FF14_WORLD,
+  WOW_FOREVER_FACTION,
+  WOW_FOREVER_REGION,
   WOW_REGION,
   WOW_REALM_ID,
   WOW_REALM_NAME
@@ -41,11 +43,17 @@ import { Provider, useDispatch } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
 import { useEffect } from 'react'
 import type { WoWServerRegion } from './requests/WoW/types'
+import type { WoWForeverSettings } from './utils/WoWForever'
+import { validateWoWForeverSettings } from './utils/WoWForever'
 import { z } from 'zod'
 import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
 import ErrorBounds from './components/utilities/ErrorBoundary'
-import { setFFxivWorld, setWoWRealmData } from './redux/reducers/userSlice'
+import {
+  setFFxivWorld,
+  setWoWForeverSettings,
+  setWoWRealmData
+} from './redux/reducers/userSlice'
 import {
   getFFWorldDataFromLocalStorage,
   setFFWorldDataInLocalStorage
@@ -54,6 +62,10 @@ import {
   getWoWRealmDataFromLocalStorage,
   setWoWRealmDataInLocalStorage
 } from './redux/localStorage/wowRealmHelpers'
+import {
+  getWoWForeverSettingsFromLocalStorage,
+  setWoWForeverSettingsInLocalStorage
+} from './redux/localStorage/wowForeverHelpers'
 import { setCookie } from './utils/cookies'
 import HelpWidget from '~/components/widgets/HelpWidget'
 import { DatadogProvider } from '~/components/providers/DatadogProvider'
@@ -121,6 +133,7 @@ export type LoaderData = {
   world: string
   wowRealm: { name: string; id: number }
   wowRegion: WoWServerRegion
+  wowForever: WoWForeverSettings
 }
 
 /**
@@ -135,19 +148,25 @@ export type LoaderData = {
  *   - Defaults site name to "Saddlebag Exchange" if none is provided in the context.
  */
 export const loader: LoaderFunction = async ({ request, context }) => {
-  const { getWorld, getDataCenter, getWoWSessionData } =
-    await getUserSessionData(request)
+  const {
+    getWorld,
+    getDataCenter,
+    getWoWSessionData,
+    getWoWForeverSessionData
+  } = await getUserSessionData(request)
 
   const data_center = getDataCenter()
   const world = getWorld()
   const { server, region } = getWoWSessionData()
+  const wowForever = getWoWForeverSessionData()
 
   return json<LoaderData>({
     site_name: (context.SITE_NAME as string) ?? 'Saddlebag Exchange',
     data_center,
     world,
     wowRealm: server,
-    wowRegion: region
+    wowRegion: region,
+    wowForever
   })
 }
 
@@ -159,7 +178,9 @@ const validator = z.object({
   wow_realm_id: z
     .string()
     .min(1)
-    .transform((val) => parseInt(val, 10))
+    .transform((val) => parseInt(val, 10)),
+  wow_forever_region: z.union([z.literal('NA'), z.literal('EU')]),
+  wow_forever_faction: z.enum(['alliance', 'horde'])
 })
 
 /**
@@ -200,16 +221,25 @@ export const action: ActionFunction = async ({ request }) => {
 
   session.set(DATA_CENTER, data_center)
   session.set(FF14_WORLD, world)
+  const wowForever = validateWoWForeverSettings(
+    result.data.wow_forever_region,
+    result.data.wow_forever_faction
+  )
+
   session.set(WOW_REGION, region)
   session.set(WOW_REALM_NAME, server.name)
   session.set(WOW_REALM_ID, server.id)
+  session.set(WOW_FOREVER_REGION, wowForever.region)
+  session.set(WOW_FOREVER_FACTION, wowForever.faction)
 
   const cookies = [
     setCookie(DATA_CENTER, data_center),
     setCookie(FF14_WORLD, world),
     setCookie(WOW_REALM_ID, server.id.toString()),
     setCookie(WOW_REALM_NAME, server.name),
-    setCookie(WOW_REGION, region)
+    setCookie(WOW_REGION, region),
+    setCookie(WOW_FOREVER_REGION, wowForever.region),
+    setCookie(WOW_FOREVER_FACTION, wowForever.faction)
   ]
 
   return redirect('/', {
@@ -249,7 +279,7 @@ export const meta: MetaFunction = ({ data }) => {
 function App() {
   const data = useLoaderData<LoaderData>()
   const [theme, setTheme] = useTheme()
-  const { darkmode, ffxivWorld, wowRealm } = useTypedSelector(
+  const { darkmode, ffxivWorld, wowRealm, wowForever } = useTypedSelector(
     (state) => state.user
   )
   const submit = useSubmit()
@@ -273,6 +303,11 @@ function App() {
     // Check local storage first
     const localFFXIVWorld = getFFWorldDataFromLocalStorage()
     const localWoWRealm = getWoWRealmDataFromLocalStorage()
+    const localWoWForever = getWoWForeverSettingsFromLocalStorage()
+
+    const localForeverDiffers =
+      localWoWForever.region !== data.wowForever.region ||
+      localWoWForever.faction !== data.wowForever.faction
 
     // If local data exists, use that
     if (
@@ -280,16 +315,20 @@ function App() {
       localFFXIVWorld.data_center !== data.data_center ||
       localWoWRealm.region !== data.wowRegion ||
       localWoWRealm.server.id !== data.wowRealm.id ||
-      localWoWRealm.server.name !== data.wowRealm.name
+      localWoWRealm.server.name !== data.wowRealm.name ||
+      localForeverDiffers
     ) {
       dispatch(setFFxivWorld(localFFXIVWorld))
       dispatch(setWoWRealmData(localWoWRealm))
+      dispatch(setWoWForeverSettings(localWoWForever))
     } else if (
       ffxivWorld.world !== data.world ||
       ffxivWorld.data_center !== data.data_center ||
       wowRealm.region !== data.wowRegion ||
       wowRealm.server.id !== data.wowRealm.id ||
-      wowRealm.server.name !== data.wowRealm.name
+      wowRealm.server.name !== data.wowRealm.name ||
+      wowForever.region !== data.wowForever.region ||
+      wowForever.faction !== data.wowForever.faction
     ) {
       // If local data doesn't exist, use session data and update local storage
       const formData = new FormData()
@@ -299,11 +338,14 @@ function App() {
       formData.set(WOW_REGION, wowRealm.region)
       formData.set(WOW_REALM_NAME, wowRealm.server.name)
       formData.set(WOW_REALM_ID, wowRealm.server.id.toString())
+      formData.set(WOW_FOREVER_REGION, wowForever.region)
+      formData.set(WOW_FOREVER_FACTION, wowForever.faction)
 
       submit(formData, { method: 'post' })
 
       setFFWorldDataInLocalStorage(ffxivWorld.world, ffxivWorld.data_center)
       setWoWRealmDataInLocalStorage(wowRealm.server, wowRealm.region)
+      setWoWForeverSettingsInLocalStorage(wowForever)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

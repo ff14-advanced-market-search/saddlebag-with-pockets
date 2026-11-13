@@ -1,11 +1,14 @@
 import type { Session } from '@remix-run/cloudflare'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import { validateServerAndRegion } from '~/utils/WoWServers'
+import { validateWoWForeverSettings } from '~/utils/WoWForever'
 import type { WoWServerRegion } from '~/requests/WoW/types'
 import { commitSession, destroySession, getSession } from './storage.server'
 import {
   DATA_CENTER,
   FF14_WORLD,
+  WOW_FOREVER_FACTION,
+  WOW_FOREVER_REGION,
   WOW_REALM_ID,
   WOW_REALM_NAME,
   WOW_REGION
@@ -47,6 +50,13 @@ const getUserWoWSessionData = (session: Session) => {
     sessionWoWRegion,
     sessionWoWRealm,
     sessionWoWRealmName
+  )
+}
+
+const getUserWoWForeverSessionData = (session: Session) => {
+  return validateWoWForeverSettings(
+    session.get(WOW_FOREVER_REGION),
+    session.get(WOW_FOREVER_FACTION)
   )
 }
 
@@ -112,10 +122,22 @@ async function getUserSessionData(request: Request) {
     return getUserWoWSessionData(session)
   }
 
+  const getWoWForeverData = () => {
+    const regionCookie = getCookieValue(WOW_FOREVER_REGION)
+    const factionCookie = getCookieValue(WOW_FOREVER_FACTION)
+
+    if (regionCookie && factionCookie) {
+      return validateWoWForeverSettings(regionCookie, factionCookie)
+    }
+
+    return getUserWoWForeverSessionData(session)
+  }
+
   return {
     getWorld: () => getFF14Data().world,
     getDataCenter: () => getFF14Data().data_center,
     getWoWSessionData: () => getWoWData(),
+    getWoWForeverSessionData: () => getWoWForeverData(),
     getAllUserSessionData: () => ({
       ...getFF14Data(),
       ...getWoWData()

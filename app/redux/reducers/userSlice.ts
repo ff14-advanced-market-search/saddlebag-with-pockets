@@ -18,6 +18,12 @@ import {
   setWoWRealmDataInLocalStorage
 } from '../localStorage/wowRealmHelpers'
 import {
+  getWoWForeverSettingsFromLocalStorage,
+  setWoWForeverSettingsInLocalStorage
+} from '../localStorage/wowForeverHelpers'
+import type { WoWForeverSettings } from '~/utils/WoWForever'
+import { validateWoWForeverSettings } from '~/utils/WoWForever'
+import {
   getDefaultSearchGameFromLocalStorage,
   setDefaultSearchGameInLocalStorage
 } from '../localStorage/defaultSearchGameHelpers'
@@ -29,6 +35,7 @@ export interface UserState {
   ffScanSortOrder: Array<string>
   ffxivWorld: { data_center: string; world: string }
   wowRealm: { server: WoWServerData; region: WoWServerRegion }
+  wowForever: WoWForeverSettings
   defaultSearchGame: 'ffxiv' | 'wow' | 'gw2'
 }
 
@@ -37,6 +44,7 @@ const initialState: UserState = {
   ffScanSortOrder: getFFScanSortOrderInLocalStorage(),
   ffxivWorld: getFFWorldDataFromLocalStorage(),
   wowRealm: getWoWRealmDataFromLocalStorage(),
+  wowForever: getWoWForeverSettingsFromLocalStorage(),
   defaultSearchGame: getDefaultSearchGameFromLocalStorage()
 }
 
@@ -85,6 +93,17 @@ export const userSlice = createSlice({
 
       state.wowRealm = { server, region }
     },
+    setWoWForeverSettings: (
+      state,
+      { payload }: PayloadAction<WoWForeverSettings>
+    ) => {
+      const settings = validateWoWForeverSettings(
+        payload.region,
+        payload.faction
+      )
+      setWoWForeverSettingsInLocalStorage(settings)
+      state.wowForever = settings
+    },
     setDefaultSearchGame: (
       state,
       { payload }: PayloadAction<'ffxiv' | 'wow' | 'gw2'>
@@ -101,6 +120,7 @@ export const {
   setFFScanOrder,
   setFFxivWorld,
   setWoWRealmData,
+  setWoWForeverSettings,
   setDefaultSearchGame
 } = userSlice.actions
 
