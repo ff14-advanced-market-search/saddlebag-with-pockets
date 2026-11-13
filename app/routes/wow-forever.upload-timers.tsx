@@ -95,6 +95,12 @@ const columnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'auctionHouseLabel', header: 'Auction House' },
   { columnId: 'feedLabel', header: 'Feed' },
   {
+    columnId: 'lastUploadUnix',
+    header: 'Last Upload',
+    hidden: true,
+    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
+  },
+  {
     columnId: 'lastCheckedUnix',
     header: 'Last Checked',
     accessor: ({ row }) => <span>{formatUnix(row.lastCheckedUnix)}</span>
@@ -117,9 +123,5 @@ const mobileColumnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'feedLabel', header: 'Feed' },
   { columnId: 'auctionCount', header: 'Auctions' },
-  {
-    columnId: 'lastUploadUnix',
-    header: 'Last Upload',
-    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
-  }
+  { columnId: 'lastUploadUnix', header: 'Last Upload' }
 ]

@@ -1,5 +1,3 @@
-import type { Getter } from '@tanstack/table-core'
-
 export type ColumnList<Type> = {
   columnId: string
   header: string
@@ -11,4 +9,5 @@ export type ColumnList<Type> = {
     getValue: () => ReturnType<NonNullable<ColumnList<Type>['dataAccessor']>>
   }) => JSX.Element | null
   sortUndefined?: false | 'first' | 'last' | undefined
+  hidden?: boolean
 }

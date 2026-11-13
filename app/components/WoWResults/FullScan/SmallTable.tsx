@@ -102,19 +102,21 @@ function DesktopTable({
     return value
   }
 
-  const columns = columnList.map((col) => {
-    // @ts-ignore
-    return columnHelper.accessor(col.columnId, {
-      header: col.header,
-      cell: (props) =>
-        col.accessor
-          ? col.accessor({
-              row: props.row.original,
-              getValue: () => parseToLocaleString(props.getValue())
-            })
-          : parseToLocaleString(props.getValue())
+  const columns = columnList
+    .filter((col) => !col.hidden)
+    .map((col) => {
+      // @ts-ignore
+      return columnHelper.accessor(col.columnId, {
+        header: col.header,
+        cell: (props) =>
+          col.accessor
+            ? col.accessor({
+                row: props.row.original,
+                getValue: () => parseToLocaleString(props.getValue())
+              })
+            : parseToLocaleString(props.getValue())
+      })
     })
-  })
 
   const table = useReactTable({
     data: data,
