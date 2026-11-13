@@ -8,6 +8,13 @@ const rum = vi.hoisted(() => ({
 }))
 
 vi.mock('@datadog/browser-rum', () => ({ datadogRum: rum }))
+vi.mock('~/.generated/datadog-build.json', () => ({
+  default: {
+    service: 'saddlebag-exchange',
+    env: 'preview',
+    version: '1234567890abcdef1234567890abcdef12345678'
+  }
+}))
 
 beforeEach(() => {
   rum.getInitConfiguration.mockReset()
@@ -33,6 +40,17 @@ describe('Datadog initialization', () => {
     initDatadog()
     expect(rum.init).toHaveBeenCalledTimes(1)
     expect(rum.init.mock.calls[0][0].beforeSend).toBeTypeOf('function')
+    expect(rum.init.mock.calls[0][0]).toMatchObject({
+      service: 'saddlebag-exchange',
+      env: 'preview',
+      version: '1234567890abcdef1234567890abcdef12345678',
+      sessionSampleRate: 100,
+      sessionReplaySampleRate: 100,
+      trackUserInteractions: true,
+      trackResources: true,
+      trackLongTasks: true,
+      defaultPrivacyLevel: 'allow'
+    })
     expect(rum.getInitConfiguration()).toBe(rum.init.mock.calls[0][0])
   })
 })
