@@ -40,6 +40,12 @@ const recommendedQueries = [
     href: '/wow'
   },
   {
+    name: 'WoW Forever',
+    description:
+      'Auction house tools for World of Warcraft: Forever. Upload timers show every house. Your Alliance or Horde setting is saved for later tools.',
+    href: '/wow-forever'
+  },
+  {
     name: 'Guild Wars 2',
     description: 'Trading Post Tools for Guild Wars 2!',
     href: '/gw2'
@@ -84,10 +90,10 @@ export default function Index() {
               Saddlebag Exchange
             </h1>
             <p className="mt-4 text-xl text-gray-200">
-              Explore MMO Market Data for FFXIV, WoW, and GW2
+              Explore MMO Market Data for FFXIV, WoW, WoW Forever, and GW2
             </p>
             <div className="mt-8 flex justify-center">
-              <div className="flex gap-4">
+              <div className="flex flex-wrap justify-center gap-4">
                 <a
                   href="/queries"
                   className="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
@@ -97,6 +103,11 @@ export default function Index() {
                   href="/wow"
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
                   World of Warcraft
+                </a>
+                <a
+                  href="/wow-forever"
+                  className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                  WoW Forever
                 </a>
                 <a
                   href="/gw2"

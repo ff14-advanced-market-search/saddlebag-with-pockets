@@ -362,6 +362,17 @@ const navGroups: Array<{
     ]
   },
   {
+    title: 'WoW Forever',
+    openMatch: '/wow-forever',
+    links: [
+      {
+        name: 'Upload Timers',
+        href: '/wow-forever/upload-timers',
+        icon: ClockIcon
+      }
+    ]
+  },
+  {
     title: 'Guild Wars 2',
     openMatch: '/gw2/',
     links: [
@@ -700,7 +711,10 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                       <ButtonAccordian
                         key={group.title}
                         title={group.title}
-                        openOverride={group.openMatch === lastMatch}>
+                        openOverride={Boolean(
+                          group.openMatch &&
+                            lastMatch?.startsWith(group.openMatch)
+                        )}>
                         {group.links.map((item) =>
                           !item.external ? (
                             <NavLink
@@ -794,7 +808,9 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                 <ButtonAccordian
                   key={group.title}
                   title={group.title}
-                  openOverride={group.openMatch === lastMatch}>
+                  openOverride={Boolean(
+                    group.openMatch && lastMatch?.startsWith(group.openMatch)
+                  )}>
                   {group.links.map((item) =>
                     !item.external ? (
                       <NavLink
@@ -912,6 +928,24 @@ export const Sidebar: FC<Props> = ({ children, data }) => {
                           </p>
                           <p className="text-sm font-medium">
                             {data.wowRealm.name}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex w-fit min-w-[130px]">
+                      <div className="pl-2 gap-1.5 flex items-center text-sm text-gray-500 dark:text-gray-200 basis-full dark:group-hover:text-gray-100">
+                        <FlatWoWIcon
+                          className="flex shrink-0 h-5 w-5 text-gray-400 dark:text-gray-200 group-hover:text-blue-500 dark:group-hover:text-gray-100"
+                          aria-hidden="true"
+                        />
+                        <div className="flex flex-col">
+                          <p className="text-xs">
+                            {data.wowForever.region === 'NA'
+                              ? 'NA Forever'
+                              : 'EU Forever'}
+                          </p>
+                          <p className="text-sm font-medium capitalize">
+                            {data.wowForever.faction}
                           </p>
                         </div>
                       </div>

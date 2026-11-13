@@ -18,6 +18,31 @@ const parseToLocaleString = (value: any) => {
 
 type Type = Record<string, any>
 
+type MobileColumn = { header: string; columnId: string }
+
+/**
+ * Keep a sort choice that is already on screen. Replacing the previous sort
+ * column is only for a choice that is not visible yet.
+ */
+export const nextMobileColumns = (
+  columns: Array<MobileColumn>,
+  currentSort: string | undefined,
+  nextSort: string,
+  rowLabels: Array<MobileColumn>
+) => {
+  if (columns.some((column) => column.columnId === nextSort)) {
+    return columns
+  }
+
+  const nextColumn = rowLabels.find((row) => row.columnId === nextSort)
+  if (!nextColumn) return columns
+
+  return [
+    ...columns.filter((column) => column.columnId !== currentSort),
+    nextColumn
+  ]
+}
+
 /**
  * Renders a sortable and responsive data table optimized for mobile viewing.
  * @example
@@ -118,17 +143,10 @@ function MobileTable({
 
             if (!value) return
 
-            const filteredColumns = columns.filter(
-              (col) => col.columnId !== columnSort
-            )
-
             setColumnSort(value)
-
-            const newColumn = rowLabels.find((row) => row.columnId === value)
-
-            if (!newColumn) return
-
-            setColumns([...filteredColumns, newColumn])
+            setColumns((current) =>
+              nextMobileColumns(current, columnSort, value, rowLabels)
+            )
           }}>
           {columnSelectOptions.map((option, index) => {
             const row = rowLabels.find(({ columnId }) => columnId === option)

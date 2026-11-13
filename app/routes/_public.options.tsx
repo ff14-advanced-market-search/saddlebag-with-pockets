@@ -1,4 +1,9 @@
-import { useLoaderData, useNavigation, useFetcher } from '@remix-run/react'
+import {
+  useLoaderData,
+  useNavigation,
+  useFetcher,
+  useSearchParams
+} from '@remix-run/react'
 import type {
   LoaderFunction,
   MetaFunction,
@@ -14,6 +19,8 @@ import {
 import {
   DATA_CENTER,
   FF14_WORLD,
+  WOW_FOREVER_FACTION,
+  WOW_FOREVER_REGION,
   WOW_REALM_ID,
   WOW_REALM_NAME,
   WOW_REGION,
@@ -23,6 +30,7 @@ import { useDispatch } from 'react-redux'
 import { setCookie } from '~/utils/cookies'
 import {
   setFFxivWorld,
+  setWoWForeverSettings,
   setWoWRealmData,
   toggleDarkMode
 } from '~/redux/reducers/userSlice'
@@ -31,8 +39,11 @@ import React, { useRef, useState } from 'react'
 import { validateServerAndRegion } from '~/utils/WoWServers'
 import { validateWorldAndDataCenter } from '~/utils/locations'
 import RegionAndServerSelect from '~/components/form/WoW/RegionAndServerSelect'
+import ForeverHomeSelect from '~/components/form/WoWForever/ForeverHomeSelect'
 import SelectDCandWorld from '~/components/form/select/SelectWorld'
 import type { WoWServerData, WoWServerRegion } from '~/requests/WoW/types'
+import type { WoWForeverSettings } from '~/utils/WoWForever'
+import { validateWoWForeverSettings } from '~/utils/WoWForever'
 import { PageWrapper, Banner } from '~/components/Common'
 import {
   DiscordAccountSection,
@@ -53,8 +64,7 @@ export const meta: MetaFunction = () => {
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     {
       name: 'description',
-      content:
-        'Set your FFXIV datacenter and server / Set your wow realm and region'
+      content: 'Set your FFXIV world, WoW realm, and WoW Forever home market'
     },
     {
       name: 'customHeading',
@@ -74,6 +84,8 @@ export const validator = z.object({
   world: z.string().min(1),
   region: z.union([z.literal('NA'), z.literal('EU')]),
   homeRealm: z.string().min(1),
+  foreverRegion: z.union([z.literal('NA'), z.literal('EU')]),
+  foreverFaction: z.enum(['alliance', 'horde']),
   earlyAccessToken: z
     .string()
     .regex(/^[a-zA-Z0-9]*$/, 'Token must be alphanumeric only')
@@ -107,9 +119,16 @@ export const action: ActionFunction = async ({ request }) => {
 
   session.set(DATA_CENTER, data_center)
   session.set(FF14_WORLD, world)
+  const wowForever = validateWoWForeverSettings(
+    result.data.foreverRegion,
+    result.data.foreverFaction
+  )
+
   session.set(WOW_REALM_ID, server.id)
   session.set(WOW_REALM_NAME, server.name)
   session.set(WOW_REGION, region)
+  session.set(WOW_FOREVER_REGION, wowForever.region)
+  session.set(WOW_FOREVER_FACTION, wowForever.faction)
 
   // Handle early access token - save if provided, remove if empty
   const trimmedToken = result.data.earlyAccessToken?.trim() || ''
@@ -124,7 +143,9 @@ export const action: ActionFunction = async ({ request }) => {
     setCookie(FF14_WORLD, world),
     setCookie(WOW_REALM_ID, server.id.toString()),
     setCookie(WOW_REALM_NAME, server.name),
-    setCookie(WOW_REGION, region)
+    setCookie(WOW_REGION, region),
+    setCookie(WOW_FOREVER_REGION, wowForever.region),
+    setCookie(WOW_FOREVER_FACTION, wowForever.faction)
   ]
 
   // Add early access token cookie if it exists, or delete it if empty
@@ -202,18 +223,24 @@ const OptionSection = ({
 export const loader: LoaderFunction = async ({ request, context }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const discordSession = await getDiscordSession(request, context)
-  const { getWorld, getDataCenter, getWoWSessionData } =
-    await getUserSessionData(request)
+  const {
+    getWorld,
+    getDataCenter,
+    getWoWSessionData,
+    getWoWForeverSessionData
+  } = await getUserSessionData(request)
 
   const data_center = getDataCenter()
   const world = getWorld()
   const { server, region } = getWoWSessionData()
+  const wowForever = getWoWForeverSessionData()
 
   return json({
     data_center,
     world,
     wowRealm: server,
     wowRegion: region,
+    wowForever,
     discordId: discordSession.get('discord_id'),
     discordUsername: discordSession.get('discord_username'),
     discordAvatar: discordSession.get('discord_avatar'),
@@ -235,13 +262,19 @@ export default function Options() {
   const fetcher = useFetcher()
 
   const dispatch = useDispatch()
-  const { darkmode, wowRealm, defaultSearchGame } = useTypedSelector(
-    (state) => state.user
-  )
+  const { darkmode, wowRealm, wowForever, defaultSearchGame } =
+    useTypedSelector((state) => state.user)
+  const [searchParams] = useSearchParams()
+  const requestedTab = searchParams.get('tab')
 
-  // Tab state
-  const [activeTab, setActiveTab] = useState<'general' | 'wow' | 'ffxiv'>(
-    'general'
+  type OptionsTab = 'general' | 'wow' | 'forever' | 'ffxiv'
+  const [activeTab, setActiveTab] = useState<OptionsTab>(
+    requestedTab === 'wow' ||
+      requestedTab === 'ffxiv' ||
+      requestedTab === 'forever' ||
+      requestedTab === 'general'
+      ? requestedTab
+      : 'general'
   )
 
   // Extract URL parameters for success/error messages
@@ -251,19 +284,52 @@ export default function Options() {
     dispatch(toggleDarkMode())
   }
 
+  const settingsForm = (
+    overrides: {
+      data_center?: string
+      world?: string
+      region?: string
+      homeRealm?: string
+      foreverRegion?: string
+      foreverFaction?: string
+      earlyAccessToken?: string
+    } = {}
+  ) => {
+    const formData = new FormData()
+    formData.append('data_center', overrides.data_center ?? data.data_center)
+    formData.append('world', overrides.world ?? data.world)
+    formData.append('region', overrides.region ?? data.wowRegion)
+    formData.append(
+      'homeRealm',
+      overrides.homeRealm ?? `${data.wowRealm.id}---${data.wowRealm.name}`
+    )
+    formData.append(
+      'foreverRegion',
+      overrides.foreverRegion ?? wowForever.region
+    )
+    formData.append(
+      'foreverFaction',
+      overrides.foreverFaction ?? wowForever.faction
+    )
+    formData.append(
+      'earlyAccessToken',
+      overrides.earlyAccessToken ?? (data.earlyAccessToken || '')
+    )
+    return formData
+  }
+
   const handleFFXIVWorldChange = (newWorld: {
     data_center: string
     world: string
   }) => {
     dispatch(setFFxivWorld(newWorld))
-    // Also save to session
-    const formData = new FormData()
-    formData.append('data_center', newWorld.data_center)
-    formData.append('world', newWorld.world)
-    formData.append('region', data.wowRegion)
-    formData.append('homeRealm', `${data.wowRealm.id}---${data.wowRealm.name}`)
-    formData.append('earlyAccessToken', data.earlyAccessToken || '')
-    fetcher.submit(formData, { method: 'POST' })
+    fetcher.submit(
+      settingsForm({
+        data_center: newWorld.data_center,
+        world: newWorld.world
+      }),
+      { method: 'POST' }
+    )
   }
 
   const handleWoWRealmChange = (newRealm: {
@@ -271,20 +337,29 @@ export default function Options() {
     region: WoWServerRegion
   }) => {
     dispatch(setWoWRealmData(newRealm))
-    // Also save to session
-    const formData = new FormData()
-    formData.append('data_center', data.data_center)
-    formData.append('world', data.world)
-    formData.append('region', newRealm.region)
-    formData.append(
-      'homeRealm',
-      `${newRealm.server.id}---${newRealm.server.name}`
+    fetcher.submit(
+      settingsForm({
+        region: newRealm.region,
+        homeRealm: `${newRealm.server.id}---${newRealm.server.name}`
+      }),
+      { method: 'POST' }
     )
-    formData.append('earlyAccessToken', data.earlyAccessToken || '')
-    fetcher.submit(formData, { method: 'POST' })
+  }
+
+  const handleWoWForeverChange = (next: WoWForeverSettings) => {
+    dispatch(setWoWForeverSettings(next))
+    fetcher.submit(
+      settingsForm({
+        foreverRegion: next.region,
+        foreverFaction: next.faction
+      }),
+      { method: 'POST' }
+    )
   }
 
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const settingsFormRef = useRef(settingsForm)
+  settingsFormRef.current = settingsForm
 
   const handleEarlyAccessTokenChange = (token: string) => {
     // Clear previous timer
@@ -292,19 +367,12 @@ export default function Options() {
       clearTimeout(debounceTimerRef.current)
     }
 
-    // Set new timer to submit after 500ms of no input
+    // Read the form when the timer fires so a Forever edit made
+    // after this keystroke is not overwritten by the loader snapshot.
     debounceTimerRef.current = setTimeout(() => {
-      // Save to session
-      const formData = new FormData()
-      formData.append('data_center', data.data_center)
-      formData.append('world', data.world)
-      formData.append('region', data.wowRegion)
-      formData.append(
-        'homeRealm',
-        `${data.wowRealm.id}---${data.wowRealm.name}`
-      )
-      formData.append('earlyAccessToken', token)
-      fetcher.submit(formData, { method: 'POST' })
+      fetcher.submit(settingsFormRef.current({ earlyAccessToken: token }), {
+        method: 'POST'
+      })
     }, 500)
   }
 
@@ -315,6 +383,7 @@ export default function Options() {
   const tabs = [
     { id: 'general' as const, label: 'General' },
     { id: 'wow' as const, label: 'WoW' },
+    { id: 'forever' as const, label: 'WoW Forever' },
     { id: 'ffxiv' as const, label: 'FFXIV' }
   ]
 
@@ -421,6 +490,17 @@ export default function Options() {
                   handleWoWRealmChange({ server, region })
                 }
               }}
+            />
+          </OptionSection>
+        )}
+
+        {activeTab === 'forever' && (
+          <OptionSection
+            title="WoW Forever Faction"
+            description="Your region and faction for later WoW Forever tools. Upload timers stay unfiltered and list every house.">
+            <ForeverHomeSelect
+              settings={wowForever}
+              onChange={handleWoWForeverChange}
             />
           </OptionSection>
         )}

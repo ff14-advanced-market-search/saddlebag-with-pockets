@@ -25,6 +25,8 @@ export const loader: LoaderFunction = () => {
   Allow: /allagan-data
   Allow: /wow/best-deals/recommended
   Allow: /wow/upload-timers
+  Allow: /wow-forever
+  Allow: /wow-forever/upload-timers
   Allow: /wow/marketshare/recommended
   Allow: /wow/shortage-predictor
   Allow: /wow/legacy-marketshare
