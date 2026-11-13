@@ -13,6 +13,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useFetcher,
   useLoaderData,
   useSubmit
 } from '@remix-run/react'
@@ -63,7 +64,7 @@ import {
   setWoWRealmDataInLocalStorage
 } from './redux/localStorage/wowRealmHelpers'
 import {
-  getWoWForeverSettingsFromLocalStorage,
+  getSavedWoWForeverSettingsFromLocalStorage,
   setWoWForeverSettingsInLocalStorage
 } from './redux/localStorage/wowForeverHelpers'
 import { setCookie } from './utils/cookies'
@@ -242,12 +243,18 @@ export const action: ActionFunction = async ({ request }) => {
     setCookie(WOW_FOREVER_FACTION, wowForever.faction)
   ]
 
-  return redirect('/', {
-    headers: [
-      ['Set-Cookie', await commitSession(session)],
-      ...cookies.map((cookie) => ['Set-Cookie', cookie] as [string, string])
-    ]
-  })
+  const headers = [
+    ['Set-Cookie', await commitSession(session)],
+    ...cookies.map((cookie) => ['Set-Cookie', cookie] as [string, string])
+  ] as Array<[string, string]>
+
+  // Page-load sync must not redirect, or a deep link such as upload timers
+  // is replaced by the homepage. Other submissions still go home.
+  if (formData.get('background_sync') === '1') {
+    return json({ update: 'ok' }, { headers })
+  }
+
+  return redirect('/', { headers })
 }
 
 export const meta: MetaFunction = ({ data }) => {
@@ -283,6 +290,7 @@ function App() {
     (state) => state.user
   )
   const submit = useSubmit()
+  const settingsFetcher = useFetcher()
   const dispatch = useDispatch()
 
   /**
@@ -303,16 +311,27 @@ function App() {
     // Check local storage first
     const localFFXIVWorld = getFFWorldDataFromLocalStorage()
     const localWoWRealm = getWoWRealmDataFromLocalStorage()
-    const localWoWForever = getWoWForeverSettingsFromLocalStorage()
+    const savedForever = getSavedWoWForeverSettingsFromLocalStorage()
+    const localWoWForever = savedForever ?? data.wowForever
 
     const localForeverDiffers =
-      localWoWForever.region !== data.wowForever.region ||
-      localWoWForever.faction !== data.wowForever.faction
+      savedForever !== null &&
+      (savedForever.region !== data.wowForever.region ||
+        savedForever.faction !== data.wowForever.faction)
+
+    if (
+      savedForever === null &&
+      (wowForever.region !== data.wowForever.region ||
+        wowForever.faction !== data.wowForever.faction)
+    ) {
+      dispatch(setWoWForeverSettings(data.wowForever))
+    }
 
     const submitHomeSettings = (
       world: { data_center: string; world: string },
       realm: typeof localWoWRealm,
-      forever: typeof localWoWForever
+      forever: typeof localWoWForever,
+      background = false
     ) => {
       const formData = new FormData()
 
@@ -323,6 +342,12 @@ function App() {
       formData.set(WOW_REALM_ID, realm.server.id.toString())
       formData.set(WOW_FOREVER_REGION, forever.region)
       formData.set(WOW_FOREVER_FACTION, forever.faction)
+
+      if (background) {
+        formData.set('background_sync', '1')
+        settingsFetcher.submit(formData, { method: 'post' })
+        return
+      }
 
       submit(formData, { method: 'post' })
     }
@@ -338,12 +363,14 @@ function App() {
     ) {
       dispatch(setFFxivWorld(localFFXIVWorld))
       dispatch(setWoWRealmData(localWoWRealm))
-      dispatch(setWoWForeverSettings(localWoWForever))
+      if (savedForever) {
+        dispatch(setWoWForeverSettings(savedForever))
+      }
 
       // Cookies can expire while local storage still has the saved faction.
-      // Persist that choice or the next full-settings submit restores the default.
-      if (localForeverDiffers) {
-        submitHomeSettings(localFFXIVWorld, localWoWRealm, localWoWForever)
+      // Persist that choice without leaving the page the user opened.
+      if (localForeverDiffers && savedForever) {
+        submitHomeSettings(localFFXIVWorld, localWoWRealm, savedForever, true)
       }
     } else if (
       ffxivWorld.world !== data.world ||
@@ -351,15 +378,17 @@ function App() {
       wowRealm.region !== data.wowRegion ||
       wowRealm.server.id !== data.wowRealm.id ||
       wowRealm.server.name !== data.wowRealm.name ||
-      wowForever.region !== data.wowForever.region ||
-      wowForever.faction !== data.wowForever.faction
+      (savedForever !== null &&
+        (wowForever.region !== data.wowForever.region ||
+          wowForever.faction !== data.wowForever.faction))
     ) {
       // If local data doesn't exist, use session data and update local storage
-      submitHomeSettings(ffxivWorld, wowRealm, wowForever)
+      const foreverForSync = savedForever ?? data.wowForever
+      submitHomeSettings(ffxivWorld, wowRealm, foreverForSync)
 
       setFFWorldDataInLocalStorage(ffxivWorld.world, ffxivWorld.data_center)
       setWoWRealmDataInLocalStorage(wowRealm.server, wowRealm.region)
-      setWoWForeverSettingsInLocalStorage(wowForever)
+      setWoWForeverSettingsInLocalStorage(foreverForSync)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
