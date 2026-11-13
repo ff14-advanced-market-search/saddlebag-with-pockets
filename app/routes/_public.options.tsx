@@ -32,7 +32,8 @@ import {
   setFFxivWorld,
   setWoWForeverSettings,
   setWoWRealmData,
-  toggleDarkMode
+  toggleDarkMode,
+  resetToSystemTheme
 } from '~/redux/reducers/userSlice'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 import React, { useRef, useState } from 'react'
@@ -262,7 +263,7 @@ export default function Options() {
   const fetcher = useFetcher()
 
   const dispatch = useDispatch()
-  const { darkmode, wowRealm, wowForever, defaultSearchGame } =
+  const { darkmode, themePreference, wowRealm, wowForever, defaultSearchGame } =
     useTypedSelector((state) => state.user)
   const [searchParams] = useSearchParams()
   const requestedTab = searchParams.get('tab')
@@ -445,7 +446,9 @@ export default function Options() {
               description="Needs more sparkles.. ✨✨✨✨">
               <ThemeSection
                 darkMode={darkmode}
+                usingSystemTheme={themePreference === 'system'}
                 onDarkModeToggle={handleDarkModeToggle}
+                onUseSystemTheme={() => dispatch(resetToSystemTheme())}
               />
             </OptionSection>
             <OptionSection

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {
-  getDarkModeFromLocalStorage,
+  clearDarkModeFromLocalStorage,
+  getSystemDarkMode,
   setDarkModeInLocalStorage
 } from '../localStorage/darkModeHelpers'
 import {
@@ -32,6 +33,7 @@ import { validateServerAndRegion } from '~/utils/WoWServers'
 
 export interface UserState {
   darkmode: boolean
+  themePreference: 'system' | 'manual'
   ffScanSortOrder: Array<string>
   ffxivWorld: { data_center: string; world: string }
   wowRealm: { server: WoWServerData; region: WoWServerRegion }
@@ -40,7 +42,8 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  darkmode: getDarkModeFromLocalStorage(),
+  darkmode: false,
+  themePreference: 'system',
   ffScanSortOrder: getFFScanSortOrderInLocalStorage(),
   ffxivWorld: getFFWorldDataFromLocalStorage(),
   wowRealm: getWoWRealmDataFromLocalStorage(),
@@ -57,10 +60,26 @@ export const userSlice = createSlice({
       setDarkModeInLocalStorage(newValue)
 
       state.darkmode = newValue
+      state.themePreference = 'manual'
     },
     setDarkMode: (state, { payload }: PayloadAction<boolean>) => {
       setDarkModeInLocalStorage(payload)
       state.darkmode = payload
+      state.themePreference = 'manual'
+    },
+    syncTheme: (
+      state,
+      {
+        payload
+      }: PayloadAction<{ darkmode: boolean; preference: 'system' | 'manual' }>
+    ) => {
+      state.darkmode = payload.darkmode
+      state.themePreference = payload.preference
+    },
+    resetToSystemTheme: (state) => {
+      clearDarkModeFromLocalStorage()
+      state.darkmode = getSystemDarkMode()
+      state.themePreference = 'system'
     },
     setFFScanOrder: (state, { payload }: PayloadAction<Array<string>>) => {
       setFFScanOrderInLocalStorage(payload)
@@ -117,6 +136,8 @@ export const userSlice = createSlice({
 export const {
   toggleDarkMode,
   setDarkMode,
+  syncTheme,
+  resetToSystemTheme,
   setFFScanOrder,
   setFFxivWorld,
   setWoWRealmData,

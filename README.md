@@ -26,6 +26,10 @@ yarn dev
 
 The development server rebuilds assets as files change. Use the URL printed by Remix in the terminal.
 
+## Theme
+
+The site follows the browser or system light/dark preference by default. In Site Configuration, the dark mode switch saves a manual choice; select **Use system setting** to follow the system again.
+
 ## Useful commands
 
 | Command               | Purpose                                                                                     |
