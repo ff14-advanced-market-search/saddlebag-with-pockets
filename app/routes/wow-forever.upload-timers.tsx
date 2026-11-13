@@ -63,6 +63,7 @@ const Index = () => {
       <SmallTable
         description="Shows when every WoW Forever auction house was last updated, for both regions and every faction. Item listings and commodities update separately."
         columnList={columnList}
+        rowLabels={rowLabels}
         data={
           results.data.map(withSearchLabels) as Array<
             Record<string, string | number>
@@ -76,13 +77,10 @@ const Index = () => {
           filename: 'saddlebag-wow-forever-upload-timers.csv',
           columns: [
             { title: 'Region', value: 'region' },
-            { title: 'Auction House ID', value: 'auctionHouseID' },
-            { title: 'Feed Type', value: 'feedType' },
-            { title: 'Last Upload Time', value: 'lastUploadTimeRaw' },
-            { title: 'Last Upload Unix', value: 'lastUploadUnix' },
+            { title: 'Auction House', value: 'auctionHouseLabel' },
+            { title: 'Feed', value: 'feedLabel' },
             { title: 'Last Checked Unix', value: 'lastCheckedUnix' },
             { title: 'Last Published Unix', value: 'lastPublishedUnix' },
-            { title: 'HTTP Status', value: 'lastHttpStatus' },
             { title: 'Auction Count', value: 'auctionCount' }
           ]
         }}
@@ -96,14 +94,7 @@ export default Index
 const columnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'auctionHouseLabel', header: 'Auction House' },
-  { columnId: 'auctionHouseID', header: 'Auction House ID' },
   { columnId: 'feedLabel', header: 'Feed' },
-  { columnId: 'feedType', header: 'Feed Type' },
-  {
-    columnId: 'lastUploadUnix',
-    header: 'Last Upload',
-    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
-  },
   {
     columnId: 'lastCheckedUnix',
     header: 'Last Checked',
@@ -114,32 +105,21 @@ const columnList: Array<ColumnList<ForeverUploadTimer>> = [
     header: 'Last Published',
     accessor: ({ row }) => <span>{formatUnix(row.lastPublishedUnix)}</span>
   },
-  {
-    columnId: 'lastHttpStatus',
-    header: 'HTTP Status',
-    accessor: ({ row }) => (
-      <span
-        className={
-          row.lastHttpStatus === 200
-            ? 'text-green-600 dark:text-green-400'
-            : 'text-red-600 dark:text-red-400'
-        }>
-        {row.lastHttpStatus}
-      </span>
-    )
-  },
   { columnId: 'auctionCount', header: 'Auctions' }
 ]
 
-const selectOptions = [
-  'region',
-  'auctionHouseID',
-  'feedType',
-  'lastUploadUnix',
-  'auctionCount'
+const rowLabels: Array<ColumnList<ForeverUploadTimer>> = [
+  ...columnList,
+  {
+    columnId: 'lastUploadUnix',
+    header: 'Last Upload',
+    accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
+  }
 ]
 
-const sortingOrder = [{ id: 'auctionHouseID', desc: false }]
+const selectOptions = ['region', 'lastUploadUnix', 'auctionCount']
+
+const sortingOrder = [{ id: 'auctionHouseLabel', desc: false }]
 
 const mobileSortingOrder = [{ id: 'lastUploadUnix', desc: true }]
 

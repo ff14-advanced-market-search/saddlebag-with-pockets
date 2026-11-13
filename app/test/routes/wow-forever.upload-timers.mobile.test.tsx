@@ -70,3 +70,36 @@ test('mobile upload timers default to region, feed, auctions, and last upload', 
   const headerRow = mobile.match(/<thead[\s\S]*?<\/thead>/)?.[0] ?? ''
   expect(headerRow).not.toContain('Auction House')
 })
+
+const headerNames = (html: string) =>
+  [...html.matchAll(/<th[\s\S]*?<\/th>/g)].map((match) =>
+    match[0]
+      .replace(/<[^>]+>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+  )
+
+test('desktop upload timers show region, house, feed, and check times', async () => {
+  const { default: UploadTimers } = await import(
+    '~/routes/wow-forever.upload-timers'
+  )
+  const html = renderToString(<UploadTimers />)
+  const desktop = html.split('hidden mt-0 sm:flex').slice(1).join('')
+
+  expect(headerNames(desktop)).toEqual([
+    'Region',
+    'Auction House',
+    'Feed',
+    'Last Checked',
+    'Last Published',
+    'Auctions'
+  ])
+  expect(desktop).not.toContain('Auction House ID')
+  expect(desktop).not.toContain('Feed Type')
+  expect(desktop).not.toContain('>Last Upload<')
+  expect(desktop).not.toContain('HTTP Status')
+  expect(desktop).toContain('Normal Alliance (111)')
+  expect(desktop).toContain('Normal Horde (114)')
+  expect(desktop).toContain('Items')
+  expect(desktop).toContain('Commodities')
+})
