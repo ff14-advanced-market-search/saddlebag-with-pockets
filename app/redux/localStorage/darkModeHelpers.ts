@@ -1,14 +1,21 @@
 const DARK_MODE_STORAGE_KEY = 'darkmode'
 
+const getSystemPrefersDarkMode = () => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+}
+
 export const getDarkModeFromLocalStorage = () => {
   try {
     const darkmode = localStorage.getItem(DARK_MODE_STORAGE_KEY)
     if (!darkmode) {
-      return false
+      return getSystemPrefersDarkMode()
     }
     return darkmode === 'true'
   } catch {
-    return false
+    return getSystemPrefersDarkMode()
   }
 }
 

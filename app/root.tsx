@@ -51,6 +51,7 @@ import { validateWorldAndDataCenter } from './utils/locations'
 import { validateServerAndRegion } from './utils/WoWServers'
 import ErrorBounds from './components/utilities/ErrorBoundary'
 import {
+  setDarkMode,
   setFFxivWorld,
   setWoWForeverSettings,
   setWoWRealmData
@@ -303,6 +304,24 @@ function App() {
       setTheme(Theme.LIGHT)
     }
   }, [setTheme, darkmode])
+
+  /**
+   * Listen for system theme preference changes and update Redux state
+   * Only updates if user hasn't explicitly set a preference in localStorage
+   */
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    
+    const handleThemeChange = (e: MediaQueryListEvent) => {
+      const hasExplicitPreference = localStorage.getItem('darkmode') !== null
+      if (!hasExplicitPreference) {
+        dispatch(setDarkMode(e.matches))
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleThemeChange)
+    return () => mediaQuery.removeEventListener('change', handleThemeChange)
+  }, [dispatch])
 
   /**
    * Sync ffxiv servers and wow realms between local storage and session cookies.
