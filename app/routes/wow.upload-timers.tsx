@@ -10,6 +10,7 @@ import NoResults from '~/components/Common/NoResults'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
 import type { ColumnList } from '~/components/types'
 import Banner from '~/components/Common/Banner'
+import { useState, useMemo } from 'react'
 
 // Overwrite default meta in the root.tsx
 export const meta: MetaFunction = () => {
@@ -39,6 +40,18 @@ const Index = () => {
     UploadTimersResponse | { exception: string } | {} | undefined
   >()
 
+  const [regionFilter, setRegionFilter] = useState<'All' | 'EU' | 'NA'>('All')
+
+  const filteredData = useMemo(() => {
+    if (!results || !('data' in results)) return []
+    
+    if (regionFilter === 'All') {
+      return results.data
+    }
+    
+    return results.data.filter((item) => item.region === regionFilter)
+  }, [results, regionFilter])
+
   if (results) {
     if (Object.keys(results).length === 0) {
       return <NoResults href="/wow/upload-timers" />
@@ -49,11 +62,45 @@ const Index = () => {
         <PageWrapper>
           <h1 className="text-white">World of Warcraft API Upload Times</h1>
           <Banner />
+          
+          <div className="flex gap-2 mb-4 justify-center">
+            <button
+              onClick={() => setRegionFilter('All')}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                regionFilter === 'All'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+              }`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setRegionFilter('EU')}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                regionFilter === 'EU'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+              }`}
+            >
+              EU
+            </button>
+            <button
+              onClick={() => setRegionFilter('NA')}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                regionFilter === 'NA'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+              }`}
+            >
+              NA
+            </button>
+          </div>
+
           <SmallTable
             // title="Upload Timers"
             description="Shows when the WoW auction house data was last uploaded."
             columnList={columnList}
-            data={results.data}
+            data={filteredData}
             columnSelectOptions={selectOptions}
             sortingOrder={sortingOrder}
             mobileColumnList={mobileColumnList}
