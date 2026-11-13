@@ -1,16 +1,19 @@
-const DARK_MODE_STORAGE_KEY = 'darkmode'
+export const DARK_MODE_STORAGE_KEY = 'darkmode'
+export const DARK_MODE_MEDIA_QUERY = '(prefers-color-scheme: dark)'
 
-export const getDarkModeFromLocalStorage = () => {
+export const getSavedDarkMode = (): boolean | null => {
   try {
-    const darkmode = localStorage.getItem(DARK_MODE_STORAGE_KEY)
-    if (!darkmode) {
-      return false
-    }
-    return darkmode === 'true'
+    const value = localStorage.getItem(DARK_MODE_STORAGE_KEY)
+    return value === 'true' ? true : value === 'false' ? false : null
   } catch {
-    return false
+    return null
   }
 }
+
+export const getSystemDarkMode = (): boolean =>
+  typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+    ? window.matchMedia(DARK_MODE_MEDIA_QUERY).matches
+    : false
 
 export const setDarkModeInLocalStorage = (value: boolean) => {
   try {
@@ -18,5 +21,13 @@ export const setDarkModeInLocalStorage = (value: boolean) => {
     return { success: true }
   } catch {
     return undefined
+  }
+}
+
+export const clearDarkModeFromLocalStorage = () => {
+  try {
+    localStorage.removeItem(DARK_MODE_STORAGE_KEY)
+  } catch {
+    // The current session can still follow the system preference.
   }
 }

@@ -34,11 +34,8 @@ import {
 } from '~/sessions'
 import {
   EnsureThemeApplied,
-  Theme,
-  ThemeProvider,
-  useTheme
+  startThemeSync
 } from '~/utils/providers/theme-provider'
-import { classNames } from '~/utils'
 import { store } from '~/redux/store'
 import { Provider, useDispatch } from 'react-redux'
 import { useTypedSelector } from './redux/useTypedSelector'
@@ -285,24 +282,14 @@ export const meta: MetaFunction = ({ data }) => {
  */
 function App() {
   const data = useLoaderData<LoaderData>()
-  const [theme, setTheme] = useTheme()
-  const { darkmode, ffxivWorld, wowRealm, wowForever } = useTypedSelector(
+  const { ffxivWorld, wowRealm, wowForever } = useTypedSelector(
     (state) => state.user
   )
   const submit = useSubmit()
   const settingsFetcher = useFetcher()
   const dispatch = useDispatch()
 
-  /**
-   * Setup theme for app
-   */
-  useEffect(() => {
-    if (darkmode) {
-      setTheme(Theme.DARK)
-    } else {
-      setTheme(Theme.LIGHT)
-    }
-  }, [setTheme, darkmode])
+  useEffect(() => startThemeSync(store), [])
 
   /**
    * Sync ffxiv servers and wow realms between local storage and session cookies.
@@ -469,11 +456,11 @@ function App() {
 
   return (
     <DatadogProvider>
-      <html lang="en" className={classNames(`h-full`, theme || '')}>
+      <html lang="en" className="h-full" suppressHydrationWarning>
         <head>
+          <EnsureThemeApplied />
           <Meta />
           <Links />
-          <EnsureThemeApplied />
         </head>
         <body className={`h-full bg-gray-100 dark:bg-slate-800`}>
           <noscript>
@@ -501,9 +488,7 @@ function App() {
 export default function AppWithTheme() {
   return (
     <Provider store={store}>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <App />
     </Provider>
   )
 }
