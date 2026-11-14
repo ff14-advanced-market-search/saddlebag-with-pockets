@@ -511,7 +511,7 @@ export default function Options() {
         {activeTab === 'forever' && (
           <OptionSection
             title="WoW Forever Settings"
-            description="Your region, faction, and ruleset for later WoW Forever tools. Upload timers list every house.">
+            description="Your region, faction, and ruleset for later WoW Forever tools.">
             <ForeverHomeSelect
               settings={wowForever}
               onChange={handleWoWForeverChange}
