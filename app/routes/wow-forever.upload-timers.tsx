@@ -1,6 +1,8 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
+import { useEffect, useMemo, useState } from 'react'
+import { localizeUploadTime } from '~/utils/localUploadTime'
 import { PageWrapper } from '~/components/Common'
 import Banner from '~/components/Common/Banner'
 import NoResults from '~/components/Common/NoResults'
@@ -10,9 +12,12 @@ import ForeverUploadTimers, {
   type ForeverUploadTimer
 } from '~/requests/WoWForever/UploadTimers'
 import { foreverAuctionHouseLabel, foreverFeedLabel } from '~/utils/WoWForever'
-import { useState, useMemo } from 'react'
 
-const withSearchLabels = (row: ForeverUploadTimer) => ({
+const withSearchLabels = (
+  row: ForeverUploadTimer,
+  formatter: Intl.DateTimeFormat | null
+) => ({
+  ...localizeUploadTime(row.lastUploadTimeRaw, formatter),
   ...row,
   auctionHouseLabel: foreverAuctionHouseLabel(row.auctionHouseID),
   feedLabel: foreverFeedLabel(row.feedType)
@@ -48,17 +53,30 @@ const Index = () => {
 
   const [regionFilter, setRegionFilter] = useState<'All' | 'EU' | 'NA'>('All')
 
+  const [formatter, setFormatter] = useState<Intl.DateTimeFormat | null>(null)
+
+  useEffect(() => {
+    setFormatter(
+      new Intl.DateTimeFormat(undefined, {
+        dateStyle: 'medium',
+        timeStyle: 'long'
+      })
+    )
+  }, [])
+
   const filteredData = useMemo(() => {
     if (!results?.data) return []
-    
-    const dataWithLabels = results.data.map(withSearchLabels)
-    
+
+    const dataWithLabels = results.data.map((row) =>
+      withSearchLabels(row, formatter)
+    )
+
     if (regionFilter === 'All') {
       return dataWithLabels
     }
-    
+
     return dataWithLabels.filter((item) => item.region === regionFilter)
-  }, [results?.data, regionFilter])
+  }, [results?.data, regionFilter, formatter])
 
   if (!results?.data?.length) {
     return <NoResults href="/wow-forever/upload-timers" />
@@ -70,7 +88,7 @@ const Index = () => {
         WoW Forever Upload Timers
       </h1>
       <Banner />
-      
+
       <div className="flex gap-2 mb-4 justify-center">
         <button
           onClick={() => setRegionFilter('All')}
@@ -78,8 +96,7 @@ const Index = () => {
             regionFilter === 'All'
               ? 'bg-blue-500 text-white'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-          }`}
-        >
+          }`}>
           All
         </button>
         <button
@@ -88,8 +105,7 @@ const Index = () => {
             regionFilter === 'EU'
               ? 'bg-blue-500 text-white'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-          }`}
-        >
+          }`}>
           EU
         </button>
         <button
@@ -98,8 +114,7 @@ const Index = () => {
             regionFilter === 'NA'
               ? 'bg-blue-500 text-white'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-          }`}
-        >
+          }`}>
           NA
         </button>
       </div>
@@ -107,11 +122,7 @@ const Index = () => {
       <SmallTable
         description="Shows when every WoW Forever auction house was last updated, for both regions and every faction. Item listings and commodities update separately."
         columnList={columnList}
-        data={
-          filteredData as Array<
-            Record<string, string | number>
-          >
-        }
+        data={filteredData as Array<Record<string, string | number | null>>}
         columnSelectOptions={selectOptions}
         sortingOrder={sortingOrder}
         mobileSortingOrder={mobileSortingOrder}
@@ -122,9 +133,10 @@ const Index = () => {
             { title: 'Region', value: 'region' },
             { title: 'Auction House', value: 'auctionHouseLabel' },
             { title: 'Feed', value: 'feedLabel' },
-            { title: 'Last Upload Time Raw', value: 'lastUploadTimeRaw' },
+            { title: 'Auction Count', value: 'auctionCount' },
+            { title: 'Last Upload Time (Local)', value: 'lastUploadTimeLocal' },
             { title: 'Last Upload Time (unix)', value: 'lastUploadUnix' },
-            { title: 'Auction Count', value: 'auctionCount' }
+            { title: 'Last Upload Time Raw', value: 'lastUploadTimeRaw' }
           ]
         }}
       />
@@ -134,19 +146,31 @@ const Index = () => {
 
 export default Index
 
-const columnList: Array<ColumnList<ForeverUploadTimer>> = [
+type UploadTimerRow = ForeverUploadTimer & ReturnType<typeof localizeUploadTime>
+
+const columnList: Array<ColumnList<UploadTimerRow>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'auctionHouseLabel', header: 'Auction House' },
   { columnId: 'feedLabel', header: 'Feed' },
+  { columnId: 'auctionCount', header: 'Auctions' },
+  {
+    columnId: 'lastUploadLocal',
+    header: 'Last Upload Time (Local)',
+    accessor: ({ row }) => <span>{row.lastUploadTimeLocal}</span>
+  },
   {
     columnId: 'lastUploadUnix',
     header: 'Last Upload Time Raw',
     accessor: ({ row }) => <span>{row.lastUploadTimeRaw}</span>
-  },
-  { columnId: 'auctionCount', header: 'Auctions' }
+  }
 ]
 
-const selectOptions = ['region', 'lastUploadUnix', 'auctionCount']
+const selectOptions = [
+  'region',
+  'lastUploadUnix',
+  'lastUploadLocal',
+  'auctionCount'
+]
 
 const sortingOrder = [{ id: 'auctionHouseLabel', desc: false }]
 
@@ -155,6 +179,7 @@ const mobileSortingOrder = [{ id: 'lastUploadUnix', desc: true }]
 const mobileColumnList: Array<ColumnList<ForeverUploadTimer>> = [
   { columnId: 'region', header: 'Region' },
   { columnId: 'feedLabel', header: 'Feed' },
+  { columnId: 'lastUploadUnix', header: 'Last Upload Time Raw' },
   { columnId: 'auctionCount', header: 'Auctions' },
-  { columnId: 'lastUploadUnix', header: 'Last Upload Time Raw' }
+  { columnId: 'lastUploadLocal', header: 'Last Upload Time (Local)' }
 ]
