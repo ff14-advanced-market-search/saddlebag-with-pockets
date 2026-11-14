@@ -1,7 +1,8 @@
 import { afterEach, expect, test, vi } from 'vitest'
 import {
   getSavedWoWForeverSettingsFromLocalStorage,
-  getWoWForeverSettingsFromLocalStorage
+  getWoWForeverSettingsFromLocalStorage,
+  setWoWForeverSettingsInLocalStorage
 } from './wowForeverHelpers'
 
 const storage = new Map<string, string>()
@@ -26,7 +27,8 @@ test('missing forever settings are not treated as a saved preference', () => {
   expect(getSavedWoWForeverSettingsFromLocalStorage()).toBeNull()
   expect(getWoWForeverSettingsFromLocalStorage()).toEqual({
     region: 'NA',
-    faction: 'alliance'
+    faction: 'alliance',
+    ruleset: 'normal'
   })
   expect(storage.size).toBe(0)
 })
@@ -39,7 +41,7 @@ test('unreadable forever settings are not treated as a saved preference', () => 
   expect(storage.get('wow_forever_settings')).toBe('{')
 })
 
-test('a saved forever preference is returned as stored', () => {
+test('a legacy forever preference keeps region and faction and defaults to Normal', () => {
   storage.set(
     'wow_forever_settings',
     JSON.stringify({ region: 'EU', faction: 'horde' })
@@ -48,6 +50,43 @@ test('a saved forever preference is returned as stored', () => {
 
   expect(getSavedWoWForeverSettingsFromLocalStorage()).toEqual({
     region: 'EU',
-    faction: 'horde'
+    faction: 'horde',
+    ruleset: 'normal'
+  })
+})
+
+test.each(['normal', 'pvp', 'rp', 'rp_pvp'] as const)(
+  'saves and restores the %s ruleset',
+  (ruleset) => {
+    stubStorage()
+    const settings = { region: 'EU', faction: 'horde', ruleset } as const
+    setWoWForeverSettingsInLocalStorage(settings)
+    expect(getSavedWoWForeverSettingsFromLocalStorage()).toEqual(settings)
+  }
+)
+
+test('invalid stored rulesets fall back to Normal without losing other choices', () => {
+  storage.set(
+    'wow_forever_settings',
+    JSON.stringify({ region: 'EU', faction: 'horde', ruleset: 'unknown' })
+  )
+  stubStorage()
+  expect(getSavedWoWForeverSettingsFromLocalStorage()).toEqual({
+    region: 'EU',
+    faction: 'horde',
+    ruleset: 'normal'
+  })
+})
+
+test('legacy local preferences can inherit the existing session ruleset', () => {
+  storage.set(
+    'wow_forever_settings',
+    JSON.stringify({ region: 'EU', faction: 'horde' })
+  )
+  stubStorage()
+  expect(getSavedWoWForeverSettingsFromLocalStorage('pvp')).toEqual({
+    region: 'EU',
+    faction: 'horde',
+    ruleset: 'pvp'
   })
 })

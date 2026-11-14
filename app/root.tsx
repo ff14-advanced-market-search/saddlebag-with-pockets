@@ -28,6 +28,7 @@ import {
   FF14_WORLD,
   WOW_FOREVER_FACTION,
   WOW_FOREVER_REGION,
+  WOW_FOREVER_RULESET,
   WOW_REGION,
   WOW_REALM_ID,
   WOW_REALM_NAME
@@ -178,7 +179,8 @@ const validator = z.object({
     .min(1)
     .transform((val) => parseInt(val, 10)),
   wow_forever_region: z.union([z.literal('NA'), z.literal('EU')]),
-  wow_forever_faction: z.enum(['alliance', 'horde'])
+  wow_forever_faction: z.enum(['alliance', 'horde']),
+  wow_forever_ruleset: z.enum(['normal', 'pvp', 'rp', 'rp_pvp']).optional()
 })
 
 /**
@@ -221,7 +223,8 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(FF14_WORLD, world)
   const wowForever = validateWoWForeverSettings(
     result.data.wow_forever_region,
-    result.data.wow_forever_faction
+    result.data.wow_forever_faction,
+    result.data.wow_forever_ruleset ?? session.get(WOW_FOREVER_RULESET)
   )
 
   session.set(WOW_REGION, region)
@@ -229,6 +232,7 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(WOW_REALM_ID, server.id)
   session.set(WOW_FOREVER_REGION, wowForever.region)
   session.set(WOW_FOREVER_FACTION, wowForever.faction)
+  session.set(WOW_FOREVER_RULESET, wowForever.ruleset)
 
   const cookies = [
     setCookie(DATA_CENTER, data_center),
@@ -237,7 +241,8 @@ export const action: ActionFunction = async ({ request }) => {
     setCookie(WOW_REALM_NAME, server.name),
     setCookie(WOW_REGION, region),
     setCookie(WOW_FOREVER_REGION, wowForever.region),
-    setCookie(WOW_FOREVER_FACTION, wowForever.faction)
+    setCookie(WOW_FOREVER_FACTION, wowForever.faction),
+    setCookie(WOW_FOREVER_RULESET, wowForever.ruleset)
   ]
 
   const headers = [
@@ -298,20 +303,23 @@ function App() {
     // Check local storage first
     const localFFXIVWorld = getFFWorldDataFromLocalStorage()
     const localWoWRealm = getWoWRealmDataFromLocalStorage()
-    const savedForever = getSavedWoWForeverSettingsFromLocalStorage()
+    const savedForever = getSavedWoWForeverSettingsFromLocalStorage(
+      data.wowForever.ruleset
+    )
     const localWoWForever = savedForever ?? data.wowForever
 
     const localForeverDiffers =
       savedForever !== null &&
       (savedForever.region !== data.wowForever.region ||
-        savedForever.faction !== data.wowForever.faction)
+        savedForever.faction !== data.wowForever.faction ||
+        savedForever.ruleset !== data.wowForever.ruleset)
 
     if (
-      savedForever === null &&
-      (wowForever.region !== data.wowForever.region ||
-        wowForever.faction !== data.wowForever.faction)
+      wowForever.region !== localWoWForever.region ||
+      wowForever.faction !== localWoWForever.faction ||
+      wowForever.ruleset !== localWoWForever.ruleset
     ) {
-      dispatch(setWoWForeverSettings(data.wowForever))
+      dispatch(setWoWForeverSettings(localWoWForever))
     }
 
     const submitHomeSettings = (
@@ -329,6 +337,7 @@ function App() {
       formData.set(WOW_REALM_ID, realm.server.id.toString())
       formData.set(WOW_FOREVER_REGION, forever.region)
       formData.set(WOW_FOREVER_FACTION, forever.faction)
+      formData.set(WOW_FOREVER_RULESET, forever.ruleset)
 
       if (background) {
         formData.set('background_sync', '1')

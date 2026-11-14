@@ -118,7 +118,8 @@ export const userSlice = createSlice({
     ) => {
       const settings = validateWoWForeverSettings(
         payload.region,
-        payload.faction
+        payload.faction,
+        payload.ruleset
       )
       setWoWForeverSettingsInLocalStorage(settings)
       state.wowForever = settings

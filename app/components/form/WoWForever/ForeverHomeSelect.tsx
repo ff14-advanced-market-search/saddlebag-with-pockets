@@ -1,8 +1,7 @@
 import Label from '~/components/form/Label'
 import {
   WOW_FOREVER_FACTIONS,
-  wowForeverFactionLabel,
-  wowForeverRegionLabel,
+  WOW_FOREVER_RULESETS,
   type WoWForeverFaction,
   type WoWForeverRegion,
   type WoWForeverSettings
@@ -51,7 +50,7 @@ const ChoiceRow = <Value extends string>({
 }
 
 /**
- * Region and faction for WoW Forever. Neutral auction houses are not a setting.
+ * Region, faction, and ruleset for WoW Forever.
  */
 export default function ForeverHomeSelect({
   settings,
@@ -78,11 +77,13 @@ export default function ForeverHomeSelect({
           onChange({ ...settings, faction })
         }
       />
-      <p className="text-sm text-gray-600 dark:text-gray-300">
-        Home faction: {wowForeverRegionLabel(settings.region)} ·{' '}
-        {wowForeverFactionLabel(settings.faction)}. Neutral auction houses are
-        not selected here. Each tool handles those separately.
-      </p>
+      <ChoiceRow
+        title="Ruleset"
+        name="forever-ruleset"
+        value={settings.ruleset}
+        options={WOW_FOREVER_RULESETS}
+        onChange={(ruleset) => onChange({ ...settings, ruleset })}
+      />
     </div>
   )
 }

@@ -8,7 +8,7 @@ const WOW_FOREVER_SETTINGS_KEY = 'wow_forever_settings'
 
 const isSavedWoWForeverSettings = (
   value: Partial<WoWForeverSettings>
-): value is WoWForeverSettings =>
+): boolean =>
   (value.region === 'NA' || value.region === 'EU') &&
   (value.faction === 'alliance' || value.faction === 'horde')
 
@@ -17,18 +17,25 @@ const isSavedWoWForeverSettings = (
  * Missing or unreadable storage is not a preference, so callers must not
  * write the fallback defaults over a valid session.
  */
-export const getSavedWoWForeverSettingsFromLocalStorage =
-  (): WoWForeverSettings | null => {
-    try {
-      if (typeof localStorage === 'undefined') return null
-      const raw = localStorage.getItem(WOW_FOREVER_SETTINGS_KEY)
-      if (!raw) return null
-      const parsed = JSON.parse(raw) as Partial<WoWForeverSettings>
-      return isSavedWoWForeverSettings(parsed) ? parsed : null
-    } catch {
-      return null
-    }
+export const getSavedWoWForeverSettingsFromLocalStorage = (
+  legacyRuleset?: WoWForeverSettings['ruleset']
+): WoWForeverSettings | null => {
+  try {
+    if (typeof localStorage === 'undefined') return null
+    const raw = localStorage.getItem(WOW_FOREVER_SETTINGS_KEY)
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as Partial<WoWForeverSettings>
+    return isSavedWoWForeverSettings(parsed)
+      ? validateWoWForeverSettings(
+          parsed.region,
+          parsed.faction,
+          parsed.ruleset ?? legacyRuleset
+        )
+      : null
+  } catch {
+    return null
   }
+}
 
 export const getWoWForeverSettingsFromLocalStorage = (): WoWForeverSettings =>
   getSavedWoWForeverSettingsFromLocalStorage() ?? DEFAULT_WOW_FOREVER_SETTINGS
@@ -37,7 +44,11 @@ export const setWoWForeverSettingsInLocalStorage = (
   settings: WoWForeverSettings
 ) => {
   try {
-    const valid = validateWoWForeverSettings(settings.region, settings.faction)
+    const valid = validateWoWForeverSettings(
+      settings.region,
+      settings.faction,
+      settings.ruleset
+    )
     localStorage.setItem(WOW_FOREVER_SETTINGS_KEY, JSON.stringify(valid))
     return { success: true }
   } catch {

@@ -9,6 +9,7 @@ import {
   FF14_WORLD,
   WOW_FOREVER_FACTION,
   WOW_FOREVER_REGION,
+  WOW_FOREVER_RULESET,
   WOW_REALM_ID,
   WOW_REALM_NAME,
   WOW_REGION
@@ -56,7 +57,8 @@ const getUserWoWSessionData = (session: Session) => {
 const getUserWoWForeverSessionData = (session: Session) => {
   return validateWoWForeverSettings(
     session.get(WOW_FOREVER_REGION),
-    session.get(WOW_FOREVER_FACTION)
+    session.get(WOW_FOREVER_FACTION),
+    session.get(WOW_FOREVER_RULESET)
   )
 }
 
@@ -127,7 +129,11 @@ async function getUserSessionData(request: Request) {
     const factionCookie = getCookieValue(WOW_FOREVER_FACTION)
 
     if (regionCookie && factionCookie) {
-      return validateWoWForeverSettings(regionCookie, factionCookie)
+      return validateWoWForeverSettings(
+        regionCookie,
+        factionCookie,
+        getCookieValue(WOW_FOREVER_RULESET) ?? session.get(WOW_FOREVER_RULESET)
+      )
     }
 
     return getUserWoWForeverSessionData(session)
