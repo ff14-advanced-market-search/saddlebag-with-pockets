@@ -17,6 +17,7 @@
     "generate:css": "npx tailwindcss -o ./app/tailwind.css",
     "prettier": "prettier --write app",
     "prettier:check": "prettier --check app",
+    "pretest": "yarn run generate:css",
     "test": "vitest",
     "prepare": "husky",
     "write-items": "yarn run write-ffxiv-items && prettier --write app/utils/items/ffxivItems.ts && yarn run write-wow-items && prettier --write app/utils/items/wowItems.ts && yarn run write-gw2-items && prettier --write app/utils/items/gw2Items.ts && yarn run prettier",
