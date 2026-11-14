@@ -21,6 +21,7 @@ import {
   FF14_WORLD,
   WOW_FOREVER_FACTION,
   WOW_FOREVER_REGION,
+  WOW_FOREVER_RULESET,
   WOW_REALM_ID,
   WOW_REALM_NAME,
   WOW_REGION,
@@ -87,6 +88,7 @@ export const validator = z.object({
   homeRealm: z.string().min(1),
   foreverRegion: z.union([z.literal('NA'), z.literal('EU')]),
   foreverFaction: z.enum(['alliance', 'horde']),
+  foreverRuleset: z.enum(['normal', 'pvp', 'rp', 'rp_pvp']).optional(),
   earlyAccessToken: z
     .string()
     .regex(/^[a-zA-Z0-9]*$/, 'Token must be alphanumeric only')
@@ -122,7 +124,8 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(FF14_WORLD, world)
   const wowForever = validateWoWForeverSettings(
     result.data.foreverRegion,
-    result.data.foreverFaction
+    result.data.foreverFaction,
+    result.data.foreverRuleset ?? session.get(WOW_FOREVER_RULESET)
   )
 
   session.set(WOW_REALM_ID, server.id)
@@ -130,6 +133,7 @@ export const action: ActionFunction = async ({ request }) => {
   session.set(WOW_REGION, region)
   session.set(WOW_FOREVER_REGION, wowForever.region)
   session.set(WOW_FOREVER_FACTION, wowForever.faction)
+  session.set(WOW_FOREVER_RULESET, wowForever.ruleset)
 
   // Handle early access token - save if provided, remove if empty
   const trimmedToken = result.data.earlyAccessToken?.trim() || ''
@@ -146,7 +150,8 @@ export const action: ActionFunction = async ({ request }) => {
     setCookie(WOW_REALM_NAME, server.name),
     setCookie(WOW_REGION, region),
     setCookie(WOW_FOREVER_REGION, wowForever.region),
-    setCookie(WOW_FOREVER_FACTION, wowForever.faction)
+    setCookie(WOW_FOREVER_FACTION, wowForever.faction),
+    setCookie(WOW_FOREVER_RULESET, wowForever.ruleset)
   ]
 
   // Add early access token cookie if it exists, or delete it if empty
@@ -293,6 +298,7 @@ export default function Options() {
       homeRealm?: string
       foreverRegion?: string
       foreverFaction?: string
+      foreverRuleset?: string
       earlyAccessToken?: string
     } = {}
   ) => {
@@ -311,6 +317,10 @@ export default function Options() {
     formData.append(
       'foreverFaction',
       overrides.foreverFaction ?? wowForever.faction
+    )
+    formData.append(
+      'foreverRuleset',
+      overrides.foreverRuleset ?? wowForever.ruleset
     )
     formData.append(
       'earlyAccessToken',
@@ -352,7 +362,8 @@ export default function Options() {
     fetcher.submit(
       settingsForm({
         foreverRegion: next.region,
-        foreverFaction: next.faction
+        foreverFaction: next.faction,
+        foreverRuleset: next.ruleset
       }),
       { method: 'POST' }
     )
@@ -499,8 +510,8 @@ export default function Options() {
 
         {activeTab === 'forever' && (
           <OptionSection
-            title="WoW Forever Faction"
-            description="Your region and faction for later WoW Forever tools. Upload timers stay unfiltered and list every house.">
+            title="WoW Forever Settings"
+            description="Your region, faction, and ruleset for later WoW Forever tools. Upload timers list every house.">
             <ForeverHomeSelect
               settings={wowForever}
               onChange={handleWoWForeverChange}

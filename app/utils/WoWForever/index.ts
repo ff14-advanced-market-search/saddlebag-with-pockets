@@ -1,14 +1,17 @@
 export type WoWForeverRegion = 'NA' | 'EU'
 export type WoWForeverFaction = 'alliance' | 'horde'
+export type WoWForeverRuleset = 'normal' | 'pvp' | 'rp' | 'rp_pvp'
 
 export interface WoWForeverSettings {
   region: WoWForeverRegion
   faction: WoWForeverFaction
+  ruleset: WoWForeverRuleset
 }
 
 export const DEFAULT_WOW_FOREVER_SETTINGS: WoWForeverSettings = {
   region: 'NA',
-  faction: 'alliance'
+  faction: 'alliance',
+  ruleset: 'normal'
 }
 
 /**
@@ -38,12 +41,24 @@ export const WOW_FOREVER_FACTIONS: Array<{
   { value: 'horde', label: 'Horde' }
 ]
 
+export const WOW_FOREVER_RULESETS: Array<{
+  value: WoWForeverRuleset
+  label: string
+}> = [
+  { value: 'normal', label: 'Normal' },
+  { value: 'pvp', label: 'PvP' },
+  { value: 'rp', label: 'RP' },
+  { value: 'rp_pvp', label: 'RP PvP' }
+]
+
 const regions = new Set<WoWForeverRegion>(['NA', 'EU'])
 const factions = new Set<WoWForeverFaction>(['alliance', 'horde'])
+const rulesets = new Set<WoWForeverRuleset>(['normal', 'pvp', 'rp', 'rp_pvp'])
 
 export const validateWoWForeverSettings = (
   region: unknown,
-  faction: unknown
+  faction: unknown,
+  ruleset: unknown
 ): WoWForeverSettings => {
   return {
     region: regions.has(region as WoWForeverRegion)
@@ -51,7 +66,10 @@ export const validateWoWForeverSettings = (
       : DEFAULT_WOW_FOREVER_SETTINGS.region,
     faction: factions.has(faction as WoWForeverFaction)
       ? (faction as WoWForeverFaction)
-      : DEFAULT_WOW_FOREVER_SETTINGS.faction
+      : DEFAULT_WOW_FOREVER_SETTINGS.faction,
+    ruleset: rulesets.has(ruleset as WoWForeverRuleset)
+      ? (ruleset as WoWForeverRuleset)
+      : DEFAULT_WOW_FOREVER_SETTINGS.ruleset
   }
 }
 
