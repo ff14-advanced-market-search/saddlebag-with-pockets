@@ -1,21 +1,13 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
-import { PageWrapper, Title } from '~/components/Common'
+import { PageWrapper } from '~/components/Common'
 import NoResults from '~/components/Common/NoResults'
 import ErrorBounds from '~/components/utilities/ErrorBoundary'
-import type {
-  ForeverItemListing,
-  ForeverItemListingResponse
-} from '~/requests/WoWForever/Listings'
+import ForeverItemDataDisplay from '~/components/WoWForever/ItemDataDisplay'
+import type { ForeverItemListingResponse } from '~/requests/WoWForever/Listings'
 import ForeverListings from '~/requests/WoWForever/Listings'
-import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions.server'
-import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
-import CustomButton from '~/components/utilities/CustomButton'
-import Banner from '~/components/Common/Banner'
-import type { ColumnList } from '~/components/types'
 import {
-  foreverAuctionHouseLabel,
   getHomeForeverAuctionHouseId,
   isEnabledForeverAuctionHouseId,
   validateWoWForeverSettings,
@@ -38,113 +30,14 @@ const regionFromSearchParam = (
 const safeJsonLd = (value: unknown) =>
   JSON.stringify(value).replaceAll('<', '\u003c')
 
-const diffClass =
-  'bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
-
-const formatStat = (value: number | null | undefined) => {
-  if (value == null || Number.isNaN(value)) return null
-  return value.toLocaleString()
-}
-
-const StatBlock = ({
-  items
-}: {
-  items: Array<{ title: string; amount: string } | null>
-}) => {
-  const visible = items.filter(Boolean) as Array<{
-    title: string
-    amount: string
-  }>
-  if (!visible.length) return null
-  return (
-    <div className="flex flex-col max-w-full">
-      {visible.map((item) => (
-        <Differences
-          key={item.title}
-          diffTitle={item.title}
-          diffAmount={item.amount}
-          className={diffClass}
-        />
-      ))}
-    </div>
-  )
-}
-
-const optionalDiff = (
-  title: string,
-  value: number | null | undefined,
-  options?: { skipValue?: number; suffix?: string }
-) => {
-  if (value == null || Number.isNaN(value)) return null
-  if (options?.skipValue != null && value === options.skipValue) return null
-  const amount = formatStat(value)
-  if (amount == null) return null
-  return {
-    title,
-    amount: options?.suffix ? `${amount}${options.suffix}` : amount
-  }
-}
-
-const listingStatGroups = (listing: ForeverItemListing) => [
-  [
-    optionalDiff('Minimum Price', listing.minPrice, { skipValue: -1 }),
-    optionalDiff('Historic Price', listing.historicPrice, { skipValue: -1 })
-  ],
-  [
-    optionalDiff('Current Market Value', listing.currentMarketValue, {
-      skipValue: -1
-    }),
-    optionalDiff('Historic Market Value', listing.historicMarketValue, {
-      skipValue: -1
-    })
-  ],
-  [
-    optionalDiff('Sales Per Day', listing.salesPerDay, { skipValue: -1 }),
-    optionalDiff('Percent Change', listing.percentChange, {
-      skipValue: -1,
-      suffix: '%'
-    })
-  ],
-  [
-    optionalDiff('Current Quantity', listing.currentQuantity, {
-      skipValue: 1
-    }),
-    optionalDiff('Average Quantity', listing.avgQuantity, { skipValue: -1 }),
-    optionalDiff(
-      'Avg v Current Quantity',
-      listing.currentVsAvgQuantityPercent,
-      { skipValue: 100, suffix: '%' }
-    )
-  ]
-]
-
-/** Shown when API exposes Forever TSM raw columns (tsm* prefix). */
-const tsmStatGroups = (listing: ForeverItemListing) => {
-  const stats = [
-    optionalDiff('tsmQuantity', listing.tsmQuantity),
-    optionalDiff('tsmMarketValue', listing.tsmMarketValue),
-    optionalDiff('tsmAvgSalePrice', listing.tsmAvgSalePrice),
-    optionalDiff('tsmSaleRate', listing.tsmSaleRate),
-    optionalDiff('tsmSoldPerDay', listing.tsmSoldPerDay),
-    optionalDiff('tsmHistorical', listing.tsmHistorical)
-  ]
-  if (!stats.some(Boolean)) return []
-  // Two columns for layout parity with live stats.
-  return [stats.slice(0, 3), stats.slice(3)]
-}
-
 export const meta: MetaFunction = ({ data }) => {
   if (!data || 'exception' in data) {
+    const message = data && 'exception' in data ? data.exception : 'Unknown'
     return [
       { charset: 'utf-8' },
       { title: 'Error' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      {
-        name: 'description',
-        content: `Error: ${
-          data && 'exception' in data ? data.exception : 'Unknown'
-        }`
-      }
+      { name: 'description', content: `Error: ${message}` }
     ]
   }
 
@@ -202,8 +95,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     }
   }
 
-  const validated = validateWoWForeverSettings(region, faction, ruleset)
-  region = validated.region
+  region = validateWoWForeverSettings(region, faction, ruleset).region
 
   try {
     return await ForeverListings({
@@ -219,70 +111,41 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 }
 
-type ResponseType = ForeverItemListingResponse
-
-type ListItem = {
-  price: number
-  quantity: number
-}
-
-const columnList: Array<ColumnList<ListItem>> = [
-  { columnId: 'price', header: 'Price' },
-  { columnId: 'quantity', header: 'Quantity' }
-]
-
-const mobileColumnList: Array<ColumnList<ListItem>> = [
-  { columnId: 'price', header: 'Price' },
-  { columnId: 'quantity', header: 'Quantity' }
-]
-
 export default function Index() {
-  const result = useLoaderData<ResponseType>()
+  const result = useLoaderData<ForeverItemListingResponse>()
 
-  const error = result && 'exception' in result ? result.exception : undefined
-
-  if (error) {
+  if (result && 'exception' in result) {
     return (
       <PageWrapper>
-        <h2 className="text-red-800 dark:text-red-200">Error: {error}</h2>
+        <h2 className="text-red-800 dark:text-red-200">
+          Error: {result.exception}
+        </h2>
       </PageWrapper>
     )
   }
 
-  if (!Object.keys(result).length) {
+  if (!result || !('data' in result) || !result.data) {
     return <NoResults />
   }
 
-  const listing = 'data' in result ? result.data : undefined
-  if (!listing) {
-    return <NoResults />
-  }
-
+  const listing = result.data
   const canonicalUrl = `https://saddlebagexchange.com/wow-forever/item-data/${listing.itemID}`
-  const houseLabel =
-    listing.auctionHouseName || foreverAuctionHouseLabel(listing.auctionHouseId)
-  const lowPrice =
-    typeof listing.minPrice === 'number' && listing.minPrice !== -1
-      ? listing.minPrice
-      : undefined
-  const tsmGroups = tsmStatGroups(listing)
-
-  const jsonLd: Record<string, unknown> = {
+  const productSchema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: listing.itemName,
     description: `${listing.itemName} WoW Forever auction house price and listing data`,
     url: canonicalUrl
   }
-  if (lowPrice != null) {
-    jsonLd.offers = {
+  if (typeof listing.minPrice === 'number' && listing.minPrice !== -1) {
+    productSchema.offers = {
       '@type': 'AggregateOffer',
-      lowPrice,
+      lowPrice: listing.minPrice,
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock'
     }
   }
-  const breadcrumbSchema = {
+  const crumbs = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
@@ -311,66 +174,13 @@ export default function Index() {
     <PageWrapper>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(productSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(crumbs) }}
       />
-      <Title title={listing.itemName} />
-      <p className="text-center text-sm text-gray-600 dark:text-gray-300 mb-2">
-        WoW Forever · {listing.faction} · {houseLabel}
-      </p>
-      {listing.blog ? <p style={{ fontSize: '1px' }}>{listing.blog}</p> : null}
-      <Banner />
-      <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
-        {listingStatGroups(listing).map((group, index) => (
-          <StatBlock key={index} items={group} />
-        ))}
-      </div>
-      {tsmGroups.length > 0 ? (
-        <div className="mx-3 my-4">
-          <h2 className="text-center text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
-            TSM Raw
-          </h2>
-          <div className="flex flex-col justify-around md:flex-row">
-            {tsmGroups.map((group, index) => (
-              <StatBlock key={`tsm-${index}`} items={group} />
-            ))}
-          </div>
-        </div>
-      ) : null}
-      <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
-        <div className="flex flex-wrap gap-2">
-          <CustomButton
-            link="https://saddlebagexchange.com/wow-forever/"
-            buttonText="View all Forever tools"
-          />
-          <CustomButton
-            link="https://saddlebagexchange.com/options"
-            buttonText="Change Forever home AH"
-          />
-          <CustomButton
-            link={`https://www.wowhead.com/item=${listing.itemID}`}
-            buttonText="View on WoWHead"
-          />
-        </div>
-      </div>
-
-      {listing.listingData.length === 0 ? (
-        <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
-          Out of Stock on Selected Auction House
-        </div>
-      ) : (
-        <SmallTable
-          title={`${listing.itemName} : ${houseLabel} Listings`}
-          sortingOrder={[{ desc: false, id: 'price' }]}
-          columnList={columnList}
-          mobileColumnList={mobileColumnList}
-          columnSelectOptions={['price', 'quantity']}
-          data={listing.listingData}
-        />
-      )}
+      <ForeverItemDataDisplay listing={listing} />
     </PageWrapper>
   )
 }
