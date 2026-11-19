@@ -1,7 +1,7 @@
-import { address, UserAgent } from '~/requests/client/config'
-import { WOW_DISCORD_CONSENT } from '~/constants/wowDiscordConsent'
-import type { WoWMarketState } from '~/requests/WoW/types'
-import type { WoWForeverRegion } from '~/utils/WoWForever'
+import { address, UserAgent } from '../client/config'
+import { WOW_DISCORD_CONSENT } from '../../constants/wowDiscordConsent'
+import type { WoWMarketState } from '../WoW/types'
+import type { WoWForeverRegion } from '../../utils/WoWForever'
 
 interface ListingData {
   price: number
@@ -24,7 +24,7 @@ export interface ForeverItemListing {
   minPrice: number
   historicPrice: number
   salesPerDay: number
-  listingData: Array<ListingData>
+  listingData: ListingData[]
   quantity?: number
   currentQuantity: number
   currentMarketValue: number
@@ -40,8 +40,8 @@ export interface ForeverItemListing {
   avgQuantity?: number
   quantityState?: WoWMarketState
   currentVsAvgQuantityPercent?: number
-  priceTimeData?: Array<number>
-  quantityTimeData?: Array<number>
+  priceTimeData?: number[]
+  quantityTimeData?: number[]
   blog?: string
   tsmQuantity?: number | null
   tsmMarketValue?: number | null
@@ -59,6 +59,13 @@ export interface ForeverListingsProps {
   auctionHouseId: number
   region: WoWForeverRegion
   itemID: number
+}
+
+const isForeverItemListingResponse = (
+  body: unknown
+): body is ForeverItemListingResponse => {
+  if (body == null || typeof body !== 'object') return false
+  return 'data' in body || 'exception' in body
 }
 
 /**
@@ -90,8 +97,8 @@ const ForeverListings = async ({
     }
   }
 
-  const body = (await response.json()) as ForeverItemListingResponse
-  if (!body || typeof body !== 'object') {
+  const body: unknown = await response.json()
+  if (!isForeverItemListingResponse(body)) {
     return { exception: 'Invalid Forever listings response' }
   }
   return body

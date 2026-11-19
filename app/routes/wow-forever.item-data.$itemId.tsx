@@ -22,6 +22,11 @@ import {
 
 export const ErrorBoundary = () => <ErrorBounds />
 
+type LoaderResult = ForeverItemListingResponse
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null
+
 const regionFromSearchParam = (
   value: string | null
 ): WoWForeverRegion | undefined => {
@@ -33,20 +38,28 @@ const regionFromSearchParam = (
   return undefined
 }
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data || 'exception' in data) {
-    return foreverItemErrorMeta(
-      data && 'exception' in data ? data.exception : 'Unknown'
-    )
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  if (!isRecord(data) || 'exception' in data) {
+    const message =
+      isRecord(data) && typeof data.exception === 'string'
+        ? data.exception
+        : 'Unknown'
+    return foreverItemErrorMeta(message)
   }
-  return foreverItemPageMeta({
-    itemID: data.data.itemID,
-    itemName: data.data.itemName
-  })
+
+  const listing = isRecord(data.data) ? data.data : null
+  const itemID = typeof listing?.itemID === 'number' ? listing.itemID : 0
+  const itemName =
+    typeof listing?.itemName === 'string' ? listing.itemName : 'Unknown item'
+
+  return foreverItemPageMeta({ itemID, itemName })
 }
 
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const itemId = params.itemId
+export const loader: LoaderFunction = async ({
+  params,
+  request
+}): Promise<LoaderResult> => {
+  const itemId = typeof params.itemId === 'string' ? params.itemId : undefined
   if (!itemId) {
     return { exception: 'No item found, please try again' }
   }
@@ -97,7 +110,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 }
 
 export default function Index() {
-  const result = useLoaderData<ForeverItemListingResponse>()
+  const result = useLoaderData<LoaderResult>()
 
   if (result && 'exception' in result) {
     return (

@@ -1,12 +1,18 @@
-import type { ForeverItemListing } from '~/requests/WoWForever/Listings'
-import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
-import CustomButton from '~/components/utilities/CustomButton'
-import Banner from '~/components/Common/Banner'
-import { Title } from '~/components/Common'
-import type { ColumnList } from '~/components/types'
-import { foreverAuctionHouseLabel } from '~/utils/WoWForever'
+import type { ForeverItemListing } from '../../requests/WoWForever/Listings'
+import SmallTable from '../WoWResults/FullScan/SmallTable'
+import CustomButton from '../utilities/CustomButton'
+import Banner from '../Common/Banner'
+import { Title } from '../Common'
+import type { ColumnList } from '../types'
+import { foreverAuctionHouseLabel } from '../../utils/WoWForever'
 
 type Metric = { label: string; value: string }
+
+type TableRow = {
+  price: number
+  quantity: number
+  [key: string]: string | number | boolean | null | undefined
+}
 
 const formatMetric = (
   label: string,
@@ -27,9 +33,9 @@ const MetricGrid = ({
   metrics
 }: Readonly<{
   heading?: string
-  metrics: Array<Metric | null>
+  metrics: (Metric | null)[]
 }>) => {
-  const rows = metrics.filter(Boolean) as Array<Metric>
+  const rows = metrics.filter((row): row is Metric => row != null)
   if (!rows.length) return null
   return (
     <section className="mx-3 my-5">
@@ -56,7 +62,7 @@ const MetricGrid = ({
   )
 }
 
-const liveMetrics = (listing: ForeverItemListing): Array<Metric | null> => [
+const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
   formatMetric('Minimum Price', listing.minPrice, { skip: -1 }),
   formatMetric('Historic Price', listing.historicPrice, { skip: -1 }),
   formatMetric('Current Market Value', listing.currentMarketValue, {
@@ -78,7 +84,7 @@ const liveMetrics = (listing: ForeverItemListing): Array<Metric | null> => [
   })
 ]
 
-const tsmMetrics = (listing: ForeverItemListing): Array<Metric | null> => [
+const tsmMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
   formatMetric('tsmQuantity', listing.tsmQuantity),
   formatMetric('tsmMarketValue', listing.tsmMarketValue),
   formatMetric('tsmAvgSalePrice', listing.tsmAvgSalePrice),
@@ -87,12 +93,16 @@ const tsmMetrics = (listing: ForeverItemListing): Array<Metric | null> => [
   formatMetric('tsmHistorical', listing.tsmHistorical)
 ]
 
-type ListItem = { price: number; quantity: number }
-
-const columnList: Array<ColumnList<ListItem>> = [
+const columnList: ColumnList<TableRow>[] = [
   { columnId: 'price', header: 'Price' },
   { columnId: 'quantity', header: 'Quantity' }
 ]
+
+const toTableRows = (listing: ForeverItemListing): TableRow[] =>
+  listing.listingData.map((row) => ({
+    price: row.price,
+    quantity: row.quantity
+  }))
 
 /**
  * Forever item-data body: AH label, live metrics, optional tsm* raw, listings.
@@ -140,7 +150,7 @@ export default function ForeverItemDataDisplay({
           columnList={columnList}
           mobileColumnList={columnList}
           columnSelectOptions={['price', 'quantity']}
-          data={listing.listingData}
+          data={toTableRows(listing)}
         />
       )}
     </>
