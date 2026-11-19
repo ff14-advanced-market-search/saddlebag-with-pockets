@@ -6,8 +6,8 @@ import ErrorBounds from '~/components/utilities/ErrorBoundary'
 import type {
   ForeverItemListing,
   ForeverItemListingResponse
-} from '~/requests/WoWForever/BulkListings'
-import { ForeverItemListingsData } from '~/requests/WoWForever/BulkListings'
+} from '~/requests/WoWForever/Listings'
+import ForeverListings from '~/requests/WoWForever/Listings'
 import { Differences } from '~/components/FFXIVResults/listings/Differences'
 import { getUserSessionData } from '~/sessions.server'
 import SmallTable from '~/components/WoWResults/FullScan/SmallTable'
@@ -41,6 +41,11 @@ const safeJsonLd = (value: unknown) =>
 const diffClass =
   'bg-blue-100 text-blue-900 font-semibold dark:bg-blue-600 dark:text-gray-100'
 
+const formatStat = (value: number | null | undefined) => {
+  if (value == null || Number.isNaN(value)) return null
+  return value.toLocaleString()
+}
+
 const StatBlock = ({
   items
 }: {
@@ -65,67 +70,68 @@ const StatBlock = ({
   )
 }
 
+const optionalDiff = (
+  title: string,
+  value: number | null | undefined,
+  options?: { skipValue?: number; suffix?: string }
+) => {
+  if (value == null || Number.isNaN(value)) return null
+  if (options?.skipValue != null && value === options.skipValue) return null
+  const amount = formatStat(value)
+  if (amount == null) return null
+  return {
+    title,
+    amount: options?.suffix ? `${amount}${options.suffix}` : amount
+  }
+}
+
 const listingStatGroups = (listing: ForeverItemListing) => [
   [
-    listing.minPrice !== -1
-      ? { title: 'Minimum Price', amount: listing.minPrice.toLocaleString() }
-      : null,
-    listing.historicPrice !== -1
-      ? {
-          title: 'Historic Price',
-          amount: listing.historicPrice.toLocaleString()
-        }
-      : null
+    optionalDiff('Minimum Price', listing.minPrice, { skipValue: -1 }),
+    optionalDiff('Historic Price', listing.historicPrice, { skipValue: -1 })
   ],
   [
-    listing.currentMarketValue !== -1
-      ? {
-          title: 'Current Market Value',
-          amount: listing.currentMarketValue.toLocaleString()
-        }
-      : null,
-    listing.historicMarketValue !== -1
-      ? {
-          title: 'Historic Market Value',
-          amount: listing.historicMarketValue.toLocaleString()
-        }
-      : null
+    optionalDiff('Current Market Value', listing.currentMarketValue, {
+      skipValue: -1
+    }),
+    optionalDiff('Historic Market Value', listing.historicMarketValue, {
+      skipValue: -1
+    })
   ],
   [
-    listing.salesPerDay !== -1
-      ? {
-          title: 'Sales Per Day',
-          amount: listing.salesPerDay.toLocaleString()
-        }
-      : null,
-    listing.percentChange !== -1
-      ? {
-          title: 'Percent Change',
-          amount: `${listing.percentChange.toLocaleString()}%`
-        }
-      : null
+    optionalDiff('Sales Per Day', listing.salesPerDay, { skipValue: -1 }),
+    optionalDiff('Percent Change', listing.percentChange, {
+      skipValue: -1,
+      suffix: '%'
+    })
   ],
   [
-    listing.currentQuantity !== 1
-      ? {
-          title: 'Current Quantity',
-          amount: listing.currentQuantity.toLocaleString()
-        }
-      : null,
-    listing.avgQuantity !== -1
-      ? {
-          title: 'Average Quantity',
-          amount: listing.avgQuantity.toLocaleString()
-        }
-      : null,
-    listing.currentVsAvgQuantityPercent !== 100
-      ? {
-          title: 'Avg v Current Quantity',
-          amount: `${listing.currentVsAvgQuantityPercent.toLocaleString()}%`
-        }
-      : null
+    optionalDiff('Current Quantity', listing.currentQuantity, {
+      skipValue: 1
+    }),
+    optionalDiff('Average Quantity', listing.avgQuantity, { skipValue: -1 }),
+    optionalDiff(
+      'Avg v Current Quantity',
+      listing.currentVsAvgQuantityPercent,
+      { skipValue: 100, suffix: '%' }
+    )
   ]
 ]
+
+/** Shown when API exposes Forever TSM raw columns (tsm* prefix). */
+const tsmStatGroups = (listing: ForeverItemListing) => {
+  const stats = [
+    optionalDiff('tsmQuantity', listing.tsmQuantity),
+    optionalDiff('tsmMarketValue', listing.tsmMarketValue),
+    optionalDiff('tsmAvgSalePrice', listing.tsmAvgSalePrice),
+    optionalDiff('tsmSaleRate', listing.tsmSaleRate),
+    optionalDiff('tsmSoldPerDay', listing.tsmSoldPerDay),
+    optionalDiff('tsmHistorical', listing.tsmHistorical)
+  ]
+  if (!stats.some(Boolean)) return []
+  // Two columns for layout parity with live stats.
+  return [stats.slice(0, 3), stats.slice(3)]
+}
 
 export const meta: MetaFunction = ({ data }) => {
   if (!data || 'exception' in data) {
@@ -200,7 +206,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   region = validated.region
 
   try {
-    return await ForeverItemListingsData({
+    return await ForeverListings({
       auctionHouseId,
       region,
       itemID: parsedItemId
@@ -208,7 +214,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   } catch {
     return {
       exception:
-        'Failed to load Forever item data. POST /api/wow/forever/bulk-listings may not be deployed yet (Aetheryte PR #426).'
+        'Failed to load Forever item data. POST /api/wow/forever/listings may not be deployed yet (Aetheryte PR #426).'
     }
   }
 }
@@ -259,6 +265,7 @@ export default function Index() {
     typeof listing.minPrice === 'number' && listing.minPrice !== -1
       ? listing.minPrice
       : undefined
+  const tsmGroups = tsmStatGroups(listing)
 
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -321,6 +328,18 @@ export default function Index() {
           <StatBlock key={index} items={group} />
         ))}
       </div>
+      {tsmGroups.length > 0 ? (
+        <div className="mx-3 my-4">
+          <h2 className="text-center text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
+            TSM Raw
+          </h2>
+          <div className="flex flex-col justify-around md:flex-row">
+            {tsmGroups.map((group, index) => (
+              <StatBlock key={`tsm-${index}`} items={group} />
+            ))}
+          </div>
+        </div>
+      ) : null}
       <div className="flex flex-col justify-around mx-3 my-6 md:flex-row">
         <div className="flex flex-wrap gap-2">
           <CustomButton
