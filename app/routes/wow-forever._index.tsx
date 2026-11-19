@@ -26,7 +26,13 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-const recommendedQueries = [
+const recommendedQueries: Array<{
+  name: string
+  description: string
+  Icon: typeof ClockIcon
+  href: string
+  external?: boolean
+}> = [
   {
     name: 'Upload Timers',
     description:
@@ -90,7 +96,12 @@ export default function Index() {
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {recommendedQueries.map((query) => (
-                <a key={query.name} href={query.href} className="block">
+                <a
+                  key={query.name}
+                  href={query.href}
+                  target={query.external ? '_blank' : '_self'}
+                  rel={query.external ? 'noopener noreferrer' : undefined}
+                  className="block">
                   <div className="h-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-amber-50 dark:hover:bg-amber-900/50">
                     <div className="flex items-center mb-4">
                       <query.Icon className="h-6 w-6 text-amber-500 dark:text-amber-400" />
