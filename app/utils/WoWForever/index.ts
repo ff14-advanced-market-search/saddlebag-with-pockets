@@ -82,6 +82,32 @@ export const wowForeverRegionShort = (region: WoWForeverRegion) =>
 export const wowForeverFactionLabel = (faction: WoWForeverFaction) =>
   faction === 'alliance' ? 'Alliance' : 'Horde'
 
+/**
+ * Home-faction auction house for each Forever ruleset.
+ * Neutral / Blackwater houses are not home choices.
+ */
+const HOME_AUCTION_HOUSE_BY_RULESET_FACTION: Record<
+  WoWForeverRuleset,
+  Record<WoWForeverFaction, number>
+> = {
+  normal: { alliance: 111, horde: 114 },
+  pvp: { alliance: 110, horde: 113 },
+  rp: { alliance: 119, horde: 120 },
+  rp_pvp: { alliance: 123, horde: 124 }
+}
+
+export const getHomeForeverAuctionHouseId = (
+  faction: WoWForeverFaction,
+  ruleset: WoWForeverRuleset
+): number => HOME_AUCTION_HOUSE_BY_RULESET_FACTION[ruleset][faction]
+
+const enabledForeverAuctionHouseIds = new Set(
+  WOW_FOREVER_MARKETS.map((entry) => entry.id)
+)
+
+export const isEnabledForeverAuctionHouseId = (auctionHouseId: number) =>
+  enabledForeverAuctionHouseIds.has(auctionHouseId)
+
 export const foreverAuctionHouseLabel = (auctionHouseId: number) => {
   const market = WOW_FOREVER_MARKETS.find(
     (entry) => entry.id === auctionHouseId

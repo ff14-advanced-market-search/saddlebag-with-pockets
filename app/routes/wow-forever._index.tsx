@@ -35,6 +35,13 @@ const recommendedQueries = [
     href: '/wow-forever/upload-timers'
   },
   {
+    name: 'Item Data',
+    description:
+      'Price, quantity, and live listings for a Forever item on your home region, faction, and ruleset auction house.',
+    Icon: DocumentMagnifyingGlassIcon,
+    href: '/wow-forever/item-data/2840'
+  },
+  {
     name: 'Ultra Fast Azeroth Auction Assassin Sniper',
     description:
       'Try our standalone Azeroth Auction Assassin Sniper, designed to snipe across all factions and game modes for the best deals seconds after the Blizzard AH API updates so you get there first!',
@@ -70,6 +77,11 @@ export default function Index() {
                 href="/wow-forever/upload-timers"
                 className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
                 Upload Timers
+              </a>
+              <a
+                href="/wow-forever/item-data/2840"
+                className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
+                Item Data
               </a>
             </div>
           </div>
