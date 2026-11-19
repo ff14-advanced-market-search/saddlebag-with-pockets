@@ -19,9 +19,8 @@ test('loader posts Forever listings with home AH from session defaults', async (
       data: {
         itemID: 2840,
         itemName: 'Copper Bar',
+        item_type: 'single',
         minPrice: 0.38,
-        historicPrice: 5,
-        salesPerDay: 12.5,
         listingData: [{ price: 0.38, quantity: 20 }],
         currentQuantity: 20,
         currentMarketValue: 4,
@@ -32,6 +31,7 @@ test('loader posts Forever listings with home AH from session defaults', async (
         auctionHouseId: 111,
         auctionHouseName: 'Alliance Auction House',
         faction: 'alliance',
+        gameType: 'normal',
         tsmAvgSalePrice: 5,
         tsmSoldPerDay: 12.5
       }
@@ -64,9 +64,16 @@ test('loader posts Forever listings with home AH from session defaults', async (
       itemID: 2840,
       itemName: 'Copper Bar',
       auctionHouseId: 111,
-      tsmAvgSalePrice: 5
+      gameType: 'normal',
+      tsmAvgSalePrice: 5,
+      tsmSoldPerDay: 12.5
     }
   })
+  expect(result).toBeTruthy()
+  if (result && typeof result === 'object' && 'data' in result) {
+    expect(result.data).not.toHaveProperty('historicPrice')
+    expect(result.data).not.toHaveProperty('salesPerDay')
+  }
 })
 
 test('loader honors auctionHouseId and region query overrides', async () => {
@@ -77,8 +84,6 @@ test('loader honors auctionHouseId and region query overrides', async () => {
         itemID: 2589,
         itemName: 'Linen Cloth',
         minPrice: 1,
-        historicPrice: 1,
-        salesPerDay: 1,
         listingData: [],
         currentQuantity: 0,
         currentMarketValue: 1,
@@ -88,7 +93,8 @@ test('loader honors auctionHouseId and region query overrides', async () => {
         link: 'https://saddlebagexchange.com/wow-forever/item-data/2589',
         auctionHouseId: 113,
         auctionHouseName: 'Horde Auction House',
-        faction: 'horde'
+        faction: 'horde',
+        gameType: 'pvp'
       }
     })
   })

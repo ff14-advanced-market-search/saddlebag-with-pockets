@@ -6,7 +6,6 @@ import type { WoWForeverRegion } from '../../utils/WoWForever'
 interface ListingData {
   price: number
   quantity: number
-  auctionID?: number
 }
 
 /**
@@ -14,7 +13,8 @@ interface ListingData {
  * Render listingData / prices as returned — do not pick commodity vs single
  * via is_stackable (item ids are not in both markets; API sets item_type).
  *
- * Optional tsm* fields are shown when the API exposes Forever TSM raw columns.
+ * historicPrice / salesPerDay are not returned — use tsmAvgSalePrice /
+ * tsmSoldPerDay. Optional tsm* fields are null when TSM raw is missing.
  */
 export interface ForeverItemListing {
   itemID: number
@@ -22,8 +22,6 @@ export interface ForeverItemListing {
   /** API-provided feed label only; do not use for market selection. */
   item_type?: string
   minPrice: number
-  historicPrice: number
-  salesPerDay: number
   listingData: ListingData[]
   currentQuantity: number
   currentMarketValue: number
@@ -34,13 +32,8 @@ export interface ForeverItemListing {
   auctionHouseId: number
   auctionHouseName: string
   faction: string
-  lowestAuctionID?: number
-  /** Present on bulk / older shapes; optional on compact forever/listings. */
-  avgQuantity?: number
-  quantityState?: WoWMarketState
-  currentVsAvgQuantityPercent?: number
-  priceTimeData?: number[]
-  quantityTimeData?: number[]
+  /** Forever house ruleset label, e.g. normal / pvp / rp / rp pvp. */
+  gameType: string
   blog?: string
   tsmQuantity?: number | null
   tsmMarketValue?: number | null

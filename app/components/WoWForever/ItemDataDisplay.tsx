@@ -64,24 +64,17 @@ const MetricGrid = ({
 
 const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
   formatMetric('Minimum Price', listing.minPrice, { skip: -1 }),
-  formatMetric('Historic Price', listing.historicPrice, { skip: -1 }),
   formatMetric('Current Market Value', listing.currentMarketValue, {
     skip: -1
   }),
   formatMetric('Historic Market Value', listing.historicMarketValue, {
     skip: -1
   }),
-  formatMetric('Sales Per Day', listing.salesPerDay, { skip: -1 }),
   formatMetric('Percent Change', listing.percentChange, {
     skip: -1,
     suffix: '%'
   }),
-  formatMetric('Current Quantity', listing.currentQuantity, { skip: -1 }),
-  formatMetric('Average Quantity', listing.avgQuantity, { skip: -1 }),
-  formatMetric('Avg v Current Quantity', listing.currentVsAvgQuantityPercent, {
-    skip: 100,
-    suffix: '%'
-  })
+  formatMetric('Current Quantity', listing.currentQuantity, { skip: -1 })
 ]
 
 const tsmMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
@@ -119,7 +112,7 @@ export default function ForeverItemDataDisplay({
     <>
       <Title title={listing.itemName} />
       <p className="mb-2 text-center text-sm text-slate-600 dark:text-slate-300">
-        WoW Forever · {listing.faction} · {houseLabel}
+        WoW Forever · {listing.faction} · {listing.gameType} · {houseLabel}
       </p>
       {listing.blog ? <p style={{ fontSize: '1px' }}>{listing.blog}</p> : null}
       <Banner />
