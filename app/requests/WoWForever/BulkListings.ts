@@ -18,7 +18,7 @@ export interface ForeverItemListing {
   itemID: number
   itemName: string
   /** API-provided feed label only; do not use for market selection. */
-  item_type?: 'commodity' | 'single' | string
+  item_type?: string
   avgQuantity: number
   currentQuantity: number
   quantityState: WoWMarketState
