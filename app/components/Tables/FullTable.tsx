@@ -113,18 +113,22 @@ function FullTable<Type>({
     return String(value)
   }
 
+  // A cell renderer can remount after translation replaces its text nodes.
+  // Default cells own a span so React can safely remove the whole element.
   const columns = columnList.map((col) => {
     const columnDef = col.dataAccessor
       ? columnHelper.accessor(col.dataAccessor, {
           id: col.columnId,
           header: col.header,
           cell: (props) =>
-            col.accessor
-              ? col.accessor({
-                  row: props.row.original,
-                  getValue: props.getValue
-                })
-              : parseToLocaleString(props.getValue()),
+            col.accessor ? (
+              col.accessor({
+                row: props.row.original,
+                getValue: props.getValue
+              })
+            ) : (
+              <span>{parseToLocaleString(props.getValue())}</span>
+            ),
           enableSorting: true,
           // @ts-ignore - Type definition expects 1/-1, but implementation/docs use 'last'/'first'
           sortUndefined: col.sortUndefined ?? undefined
@@ -132,12 +136,14 @@ function FullTable<Type>({
       : columnHelper.accessor(col.columnId as any, {
           header: col.header,
           cell: (props) =>
-            col.accessor
-              ? col.accessor({
-                  row: props.row.original,
-                  getValue: props.getValue
-                })
-              : parseToLocaleString(props.getValue()),
+            col.accessor ? (
+              col.accessor({
+                row: props.row.original,
+                getValue: props.getValue
+              })
+            ) : (
+              <span>{parseToLocaleString(props.getValue())}</span>
+            ),
           enableSorting: true,
           // @ts-ignore - Type definition expects 1/-1, but implementation/docs use 'last'/'first'
           sortUndefined: col.sortUndefined ?? undefined
