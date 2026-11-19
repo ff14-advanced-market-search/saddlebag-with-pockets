@@ -94,4 +94,4 @@ export const foreverItemStructuredData = ({
 }
 
 export const encodeJsonLd = (value: unknown) =>
-  JSON.stringify(value).replaceAll('<', '\u003c')
+  JSON.stringify(value).replaceAll('<', '\\u003c')

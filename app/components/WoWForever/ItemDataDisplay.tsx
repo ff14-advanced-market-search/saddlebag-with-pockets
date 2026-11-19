@@ -6,9 +6,12 @@ import { Title } from '../Common'
 import type { ColumnList } from '../types'
 import { foreverAuctionHouseLabel } from '../../utils/WoWForever'
 
-type Metric = { label: string; value: string }
+interface Metric {
+  label: string
+  value: string
+}
 
-type TableRow = {
+interface TableRow {
   price: number
   quantity: number
   [key: string]: string | number | boolean | null | undefined

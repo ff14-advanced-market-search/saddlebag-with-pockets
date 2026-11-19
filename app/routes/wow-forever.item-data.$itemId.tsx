@@ -1,24 +1,24 @@
 import type { LoaderFunction, MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
-import { PageWrapper } from '~/components/Common'
-import NoResults from '~/components/Common/NoResults'
-import ErrorBounds from '~/components/utilities/ErrorBoundary'
-import ForeverItemDataDisplay from '~/components/WoWForever/ItemDataDisplay'
-import type { ForeverItemListingResponse } from '~/requests/WoWForever/Listings'
-import ForeverListings from '~/requests/WoWForever/Listings'
-import { getUserSessionData } from '~/sessions.server'
+import { PageWrapper } from '../components/Common'
+import NoResults from '../components/Common/NoResults'
+import ErrorBounds from '../components/utilities/ErrorBoundary'
+import ForeverItemDataDisplay from '../components/WoWForever/ItemDataDisplay'
+import type { ForeverItemListingResponse } from '../requests/WoWForever/Listings'
+import ForeverListings from '../requests/WoWForever/Listings'
+import { getUserSessionData } from '../sessions.server'
 import {
   getHomeForeverAuctionHouseId,
   isEnabledForeverAuctionHouseId,
   validateWoWForeverSettings,
   type WoWForeverRegion
-} from '~/utils/WoWForever'
+} from '../utils/WoWForever'
 import {
   encodeJsonLd,
   foreverItemErrorMeta,
   foreverItemPageMeta,
   foreverItemStructuredData
-} from '~/utils/WoWForever/itemDataSeo'
+} from '../utils/WoWForever/itemDataSeo'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -30,11 +30,10 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const regionFromSearchParam = (
   value: string | null
 ): WoWForeverRegion | undefined => {
-  if (!value) return undefined
+  if (value == null || value === '') return undefined
   const upper = value.toUpperCase()
-  if (upper === 'NA' || upper === 'EU' || upper === 'US') {
-    return upper === 'US' ? 'NA' : upper
-  }
+  if (upper === 'US' || upper === 'NA') return 'NA'
+  if (upper === 'EU') return 'EU'
   return undefined
 }
 
@@ -59,7 +58,8 @@ export const loader: LoaderFunction = async ({
   params,
   request
 }): Promise<LoaderResult> => {
-  const itemId = typeof params.itemId === 'string' ? params.itemId : undefined
+  const rawItemId = params.itemId
+  const itemId = typeof rawItemId === 'string' ? rawItemId : undefined
   if (!itemId) {
     return { exception: 'No item found, please try again' }
   }
@@ -70,7 +70,8 @@ export const loader: LoaderFunction = async ({
   const session = await getUserSessionData(request)
   let { region, faction, ruleset } = session.getWoWForeverSessionData()
 
-  const url = new URL(request.url)
+  const requestUrl = typeof request.url === 'string' ? request.url : ''
+  const url = new URL(requestUrl)
   const regionFromUrl = regionFromSearchParam(url.searchParams.get('region'))
   const auctionHouseIdRaw = url.searchParams.get('auctionHouseId')
   const parsedAuctionHouseId =
@@ -132,16 +133,19 @@ export default function Index() {
     itemName: listing.itemName,
     minPrice: listing.minPrice
   })
+  const productJsonLd = encodeJsonLd(product)
+  const crumbsJsonLd = encodeJsonLd(crumbs)
 
   return (
     <PageWrapper>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: encodeJsonLd(product) }}
+        // encodeJsonLd escapes `<` to `\u003c` for script-context safety
+        dangerouslySetInnerHTML={{ __html: productJsonLd }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: encodeJsonLd(crumbs) }}
+        dangerouslySetInnerHTML={{ __html: crumbsJsonLd }}
       />
       <ForeverItemDataDisplay listing={listing} />
     </PageWrapper>
