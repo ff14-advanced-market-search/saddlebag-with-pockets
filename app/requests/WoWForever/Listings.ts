@@ -86,7 +86,7 @@ const ForeverListings = async ({
 
   if (!response.ok) {
     return {
-      exception: `Forever listings request failed (${response.status})`
+      exception: `Forever listings request failed (${response.status}). POST /api/wow/forever/listings may not be deployed yet (Aetheryte PR #426).`
     }
   }
 

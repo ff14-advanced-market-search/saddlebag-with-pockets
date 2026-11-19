@@ -25,10 +25,10 @@ const formatMetric = (
 const MetricGrid = ({
   heading,
   metrics
-}: {
+}: Readonly<{
   heading?: string
   metrics: Array<Metric | null>
-}) => {
+}>) => {
   const rows = metrics.filter(Boolean) as Array<Metric>
   if (!rows.length) return null
   return (
@@ -70,7 +70,7 @@ const liveMetrics = (listing: ForeverItemListing): Array<Metric | null> => [
     skip: -1,
     suffix: '%'
   }),
-  formatMetric('Current Quantity', listing.currentQuantity, { skip: 1 }),
+  formatMetric('Current Quantity', listing.currentQuantity, { skip: -1 }),
   formatMetric('Average Quantity', listing.avgQuantity, { skip: -1 }),
   formatMetric('Avg v Current Quantity', listing.currentVsAvgQuantityPercent, {
     skip: 100,
@@ -99,9 +99,9 @@ const columnList: Array<ColumnList<ListItem>> = [
  */
 export default function ForeverItemDataDisplay({
   listing
-}: {
+}: Readonly<{
   listing: ForeverItemListing
-}) {
+}>) {
   const houseLabel =
     listing.auctionHouseName || foreverAuctionHouseLabel(listing.auctionHouseId)
 

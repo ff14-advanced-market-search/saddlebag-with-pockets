@@ -18,21 +18,25 @@ export const foreverItemPageMeta = ({
   const href = foreverItemCanonicalUrl(itemID)
   const blurb = `${itemName} WoW Forever auction house price and listing data`
   const heading = `${itemName} – WoW Forever Auction House Data`
-  const tags: Array<MetaTag> = [{ charset: 'utf-8' }, { title: heading }]
-  tags.push({ name: 'viewport', content: 'width=device-width,initial-scale=1' })
-  tags.push({ name: 'description', content: blurb })
-  tags.push({ tagName: 'link', rel: 'canonical', href })
-  for (const [property, content] of [
-    ['og:title', heading],
-    ['og:description', blurb],
-    ['og:url', href],
-    ['og:type', 'product'],
-    ['og:site_name', 'SaddleBag Exchange']
-  ] as const) {
-    tags.push({ property, content })
-  }
-  tags.push({ name: 'twitter:card', content: 'summary' })
-  return tags
+  const openGraph = (
+    [
+      ['og:title', heading],
+      ['og:description', blurb],
+      ['og:url', href],
+      ['og:type', 'product'],
+      ['og:site_name', 'Saddlebag Exchange']
+    ] as const
+  ).map(([property, content]) => ({ property, content }))
+
+  return [
+    { charset: 'utf-8' },
+    { title: heading },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { name: 'description', content: blurb },
+    { tagName: 'link', rel: 'canonical', href },
+    ...openGraph,
+    { name: 'twitter:card', content: 'summary' }
+  ]
 }
 
 export const foreverItemErrorMeta = (message: string): Array<MetaTag> => [
