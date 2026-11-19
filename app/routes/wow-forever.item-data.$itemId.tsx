@@ -13,6 +13,12 @@ import {
   validateWoWForeverSettings,
   type WoWForeverRegion
 } from '~/utils/WoWForever'
+import {
+  encodeJsonLd,
+  foreverItemErrorMeta,
+  foreverItemPageMeta,
+  foreverItemStructuredData
+} from '~/utils/WoWForever/itemDataSeo'
 
 export const ErrorBoundary = () => <ErrorBounds />
 
@@ -27,37 +33,16 @@ const regionFromSearchParam = (
   return undefined
 }
 
-const safeJsonLd = (value: unknown) =>
-  JSON.stringify(value).replaceAll('<', '\u003c')
-
 export const meta: MetaFunction = ({ data }) => {
   if (!data || 'exception' in data) {
-    const message = data && 'exception' in data ? data.exception : 'Unknown'
-    return [
-      { charset: 'utf-8' },
-      { title: 'Error' },
-      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      { name: 'description', content: `Error: ${message}` }
-    ]
+    return foreverItemErrorMeta(
+      data && 'exception' in data ? data.exception : 'Unknown'
+    )
   }
-
-  const listing = data.data
-  const canonicalUrl = `https://saddlebagexchange.com/wow-forever/item-data/${listing.itemID}`
-  const description = `${listing.itemName} WoW Forever auction house price and listing data`
-  const title = `${listing.itemName} – WoW Forever Auction House Data`
-  return [
-    { charset: 'utf-8' },
-    { title },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-    { name: 'description', content: description },
-    { tagName: 'link', rel: 'canonical', href: canonicalUrl },
-    { property: 'og:title', content: title },
-    { property: 'og:description', content: description },
-    { property: 'og:url', content: canonicalUrl },
-    { property: 'og:type', content: 'product' },
-    { property: 'og:site_name', content: 'SaddleBag Exchange' },
-    { name: 'twitter:card', content: 'summary' }
-  ]
+  return foreverItemPageMeta({
+    itemID: data.data.itemID,
+    itemName: data.data.itemName
+  })
 }
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -129,56 +114,21 @@ export default function Index() {
   }
 
   const listing = result.data
-  const canonicalUrl = `https://saddlebagexchange.com/wow-forever/item-data/${listing.itemID}`
-  const productSchema: Record<string, unknown> = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: listing.itemName,
-    description: `${listing.itemName} WoW Forever auction house price and listing data`,
-    url: canonicalUrl
-  }
-  if (typeof listing.minPrice === 'number' && listing.minPrice !== -1) {
-    productSchema.offers = {
-      '@type': 'AggregateOffer',
-      lowPrice: listing.minPrice,
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock'
-    }
-  }
-  const crumbs = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://saddlebagexchange.com'
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'WoW Forever',
-        item: 'https://saddlebagexchange.com/wow-forever'
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: listing.itemName,
-        item: canonicalUrl
-      }
-    ]
-  }
+  const { product, crumbs } = foreverItemStructuredData({
+    itemID: listing.itemID,
+    itemName: listing.itemName,
+    minPrice: listing.minPrice
+  })
 
   return (
     <PageWrapper>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(productSchema) }}
+        dangerouslySetInnerHTML={{ __html: encodeJsonLd(product) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(crumbs) }}
+        dangerouslySetInnerHTML={{ __html: encodeJsonLd(crumbs) }}
       />
       <ForeverItemDataDisplay listing={listing} />
     </PageWrapper>
