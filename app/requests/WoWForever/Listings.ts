@@ -25,7 +25,6 @@ export interface ForeverItemListing {
   historicPrice: number
   salesPerDay: number
   listingData: ListingData[]
-  quantity?: number
   currentQuantity: number
   currentMarketValue: number
   historicMarketValue: number

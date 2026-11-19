@@ -23,7 +23,6 @@ test('loader posts Forever listings with home AH from session defaults', async (
         historicPrice: 5,
         salesPerDay: 12.5,
         listingData: [{ price: 0.38, quantity: 20 }],
-        quantity: 20,
         currentQuantity: 20,
         currentMarketValue: 4,
         historicMarketValue: 62,
