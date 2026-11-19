@@ -30,6 +30,14 @@ const recommendedQueries = [
       'See when Blizzard last updated each WoW Forever auction house, including single listings and commodities.',
     Icon: ClockIcon,
     href: '/wow-forever/upload-timers'
+  },
+  {
+    name: 'Ultra Fast Azeroth Auction Assassin Sniper',
+    description:
+      'Try our standalone Azeroth Auction Assassin Sniper, designed to snipe across all factions and game modes for the best deals seconds after the Blizzard AH API updates so you get there first!',
+    Icon: DocumentMagnifyingGlassIcon,
+    href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
+    external: true
   }
 ]
 
