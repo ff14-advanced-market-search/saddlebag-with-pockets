@@ -20,6 +20,10 @@ export const loader: LoaderFunction = async () => {
   <lastmod>${currentDate}</lastmod>
 </sitemap>
 <sitemap>
+  <loc>${baseURL}/sitemap-wow-forever.xml</loc>
+  <lastmod>${currentDate}</lastmod>
+</sitemap>
+<sitemap>
   <loc>${baseURL}/sitemap-gw2.xml</loc>
   <lastmod>${currentDate}</lastmod>
 </sitemap>

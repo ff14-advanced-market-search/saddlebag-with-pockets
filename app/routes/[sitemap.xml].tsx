@@ -48,6 +48,11 @@ export const loader: LoaderFunction = async () => {
   <priority>0.90</priority>
 </url>
 <url>
+  <loc>https://saddlebagexchange.com/wow-forever/itemlist</loc>
+  <lastmod>${currentDate}</lastmod>
+  <priority>0.90</priority>
+</url>
+<url>
   <loc>https://saddlebagexchange.com/gw2/marketshare/recommended</loc>
   <lastmod>2026-01-01T00:27:48+00:00</lastmod>
   <priority>0.90</priority>
