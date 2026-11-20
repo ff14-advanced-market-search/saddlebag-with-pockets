@@ -429,7 +429,7 @@ const navGroups: Array<{
         icon: ClockIcon
       },
       {
-        name: 'List of all Forever Items',
+        name: 'List of all WoW Forever Items',
         href: '/wow-forever/itemlist',
         icon: DocumentTextIcon
       }
@@ -591,7 +591,7 @@ const navGroups: Array<{
         icon: DocumentTextIcon
       },
       {
-        name: 'List of all Forever Items',
+        name: 'List of all WoW Forever Items',
         href: '/wow-forever/itemlist',
         icon: DocumentTextIcon
       },
