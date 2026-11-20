@@ -408,6 +408,18 @@ const navGroups: Array<{
     openMatch: '/wow-forever',
     links: [
       {
+        name: 'Guides and Tutorials',
+        href: 'https://github.com/ff14-advanced-market-search/saddlebag-with-pockets/wiki#wow-general-guides',
+        icon: DocumentMagnifyingGlassIcon,
+        external: true
+      },
+      {
+        name: 'Azeroth Auction Assassin Sniper',
+        href: 'https://github.com/ff14-advanced-market-search/AzerothAuctionAssassin/blob/main/README.md',
+        icon: DocumentMagnifyingGlassIcon,
+        external: true
+      },
+      {
         name: 'Upload Timers',
         href: '/wow-forever/upload-timers',
         icon: ClockIcon
