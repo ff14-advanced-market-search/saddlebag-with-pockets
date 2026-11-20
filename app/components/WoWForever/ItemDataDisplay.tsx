@@ -78,7 +78,6 @@ const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
     skip: -1
   }),
   formatMetric('Percent Change', listing.percentChange, {
-    skip: -1,
     suffix: '%'
   })
 ]

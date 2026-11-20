@@ -138,3 +138,20 @@ test('loader rejects disabled Forever auction house ids', async () => {
     exception: '112 is not a valid Forever auction house id'
   })
 })
+
+test('loader returns invalid-response exception for empty data payload', async () => {
+  global.fetch = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ data: {} })
+  }) as typeof fetch
+
+  const result = await loader({
+    request: new Request(
+      'https://saddlebagexchange.com/wow-forever/item-data/2840'
+    ),
+    params: { itemId: '2840' },
+    context: {}
+  })
+
+  expect(result).toEqual({ exception: 'Invalid Forever listings response' })
+})

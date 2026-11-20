@@ -59,11 +59,41 @@ export interface ForeverListingsProps {
   itemID: number
 }
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null
+
+const isForeverItemListing = (value: unknown): value is ForeverItemListing => {
+  if (!isRecord(value)) return false
+  return (
+    typeof value.itemID === 'number' &&
+    typeof value.itemName === 'string' &&
+    typeof value.minPrice === 'number' &&
+    Array.isArray(value.listingData) &&
+    typeof value.currentQuantity === 'number' &&
+    typeof value.currentSoldPerDay === 'number' &&
+    typeof value.currentMarketValue === 'number' &&
+    typeof value.historicMarketValue === 'number' &&
+    typeof value.percentChange === 'number' &&
+    typeof value.state === 'string' &&
+    typeof value.link === 'string' &&
+    typeof value.auctionHouseId === 'number' &&
+    typeof value.auctionHouseName === 'string' &&
+    typeof value.faction === 'string' &&
+    typeof value.gameType === 'string'
+  )
+}
+
 const isForeverItemListingResponse = (
   body: unknown
 ): body is ForeverItemListingResponse => {
-  if (body == null || typeof body !== 'object') return false
-  return 'data' in body || 'exception' in body
+  if (!isRecord(body)) return false
+  if ('exception' in body) {
+    return typeof body.exception === 'string'
+  }
+  if ('data' in body) {
+    return isForeverItemListing(body.data)
+  }
+  return false
 }
 
 /**
