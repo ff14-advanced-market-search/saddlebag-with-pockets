@@ -8,8 +8,7 @@ const toW3CDate = (date: Date): string => {
 
 // Helper to get last modified date for an item
 const getItemLastMod = (_id: string): string => {
-  // TODO: Implement actual last modified date lookup from your database
-  // For now, we'll use a more realistic approach - weekly updates
+  // Weekly fallback until Forever item lastmod is available from the API.
   const now = new Date()
   const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
   return toW3CDate(lastWeek)
