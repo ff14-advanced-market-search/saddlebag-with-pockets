@@ -45,7 +45,7 @@ import {
   gw2Items
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
-import { getItemIDByName } from '~/utils/items'
+import { resolveItemIDBySearch } from '~/utils/items'
 import { isSearchGame, type SearchGame } from '~/utils/WoWForever/itemNames'
 import { NotificationBell } from './NotificationBell'
 import { useTypedSelector } from '~/redux/useTypedSelector'
@@ -1125,7 +1125,10 @@ const ItemSearch = () => {
       return
     }
 
-    const itemId = getItemIDByName(itemName.trim(), searchItemEntries(game))
+    const itemId = resolveItemIDBySearch(
+      itemName.trim(),
+      searchItemEntries(game)
+    )
 
     if (!itemId) {
       event.preventDefault()

@@ -20,11 +20,30 @@ export const parseItemsForDataListSelect = ([value, label]: [
   label
 })
 
+/**
+ * Datalist labels for search: append ` (id)` when the same name maps to
+ * multiple ids so selecting a suggestion targets that specific item.
+ */
+export const itemSelectOptionsWithUniqueLabels = (
+  items: [string, string][]
+) => {
+  const nameCounts = new Map<string, number>()
+  for (const [, name] of items) {
+    const key = name.toLowerCase()
+    nameCounts.set(key, (nameCounts.get(key) ?? 0) + 1)
+  }
+
+  return items.map(([id, name]) => ({
+    value: id,
+    label:
+      (nameCounts.get(name.toLowerCase()) ?? 0) > 1 ? `${name} (${id})` : name
+  }))
+}
+
 export const ffxivItemsList = ffxivItems.map(parseItemsForDataListSelect)
 export const wowItemsList = wowItems.map(parseItemsForDataListSelect)
-export const wowForeverItemsList = wowForeverItems.map(
-  parseItemsForDataListSelect
-)
+export const wowForeverItemsList =
+  itemSelectOptionsWithUniqueLabels(wowForeverItems)
 export const wowPetItemsList = wowPetsItems.map(parseItemsForDataListSelect)
 export const wowStackableItemList = wowStackableItems.map(
   parseItemsForDataListSelect

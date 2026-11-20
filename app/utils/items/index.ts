@@ -66,3 +66,29 @@ export const getItemIDByName = (
 
   return item[0]
 }
+
+/**
+ * Resolve a search input to an item id. Supports disambiguated suggestion
+ * labels of the form `Item Name (12345)` (used when duplicate names exist),
+ * then falls back to exact name lookup for free-text input.
+ */
+export const resolveItemIDBySearch = (
+  input: string,
+  itemList = ffxivItems
+): string | undefined => {
+  const trimmed = input.trim()
+  const disambiguated = trimmed.match(/^(.*)\s\((\d+)\)$/)
+  if (disambiguated) {
+    const baseName = disambiguated[1]
+    const itemId = disambiguated[2]
+    const match = itemList.find(
+      ([id, name]) =>
+        id === itemId && name.toLowerCase() === baseName.toLowerCase()
+    )
+    if (match) {
+      return match[0]
+    }
+  }
+
+  return getItemIDByName(trimmed, itemList)
+}
