@@ -62,13 +62,19 @@ export interface ForeverListingsProps {
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null
 
+const isListingDataRow = (value: unknown): value is ListingData =>
+  isRecord(value) &&
+  typeof value.price === 'number' &&
+  typeof value.quantity === 'number'
+
 const isForeverItemListing = (value: unknown): value is ForeverItemListing => {
   if (!isRecord(value)) return false
+  if (!Array.isArray(value.listingData)) return false
+  if (!value.listingData.every(isListingDataRow)) return false
   return (
     typeof value.itemID === 'number' &&
     typeof value.itemName === 'string' &&
     typeof value.minPrice === 'number' &&
-    Array.isArray(value.listingData) &&
     typeof value.currentQuantity === 'number' &&
     typeof value.currentSoldPerDay === 'number' &&
     typeof value.currentMarketValue === 'number' &&

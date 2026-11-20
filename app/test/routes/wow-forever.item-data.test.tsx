@@ -155,3 +155,38 @@ test('loader returns invalid-response exception for empty data payload', async (
 
   expect(result).toEqual({ exception: 'Invalid Forever listings response' })
 })
+
+test('loader rejects listingData rows without numeric price and quantity', async () => {
+  global.fetch = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({
+      data: {
+        itemID: 2840,
+        itemName: 'Copper Bar',
+        minPrice: 1,
+        listingData: [null],
+        currentQuantity: 0,
+        currentSoldPerDay: 0,
+        currentMarketValue: 0,
+        historicMarketValue: 0,
+        percentChange: 0,
+        state: 'stable',
+        link: 'https://saddlebagexchange.com/wow-forever/item-data/2840',
+        auctionHouseId: 111,
+        auctionHouseName: 'Alliance Auction House',
+        faction: 'alliance',
+        gameType: 'normal'
+      }
+    })
+  }) as typeof fetch
+
+  const result = await loader({
+    request: new Request(
+      'https://saddlebagexchange.com/wow-forever/item-data/2840'
+    ),
+    params: { itemId: '2840' },
+    context: {}
+  })
+
+  expect(result).toEqual({ exception: 'Invalid Forever listings response' })
+})
