@@ -146,7 +146,7 @@ const tsmMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
 ]
 
 const TSM_STATISTICS_DESCRIPTION =
-  'TSM values are averages across all Forever factions, auction houses, and game modes. They can run lower than Normal markets and higher than RP modes.'
+  'TSM values are averages across all Forever factions, auction houses, and game modes. They can run lower than Normal markets and higher than Role Play markets.'
 
 const columnList: ColumnList<TableRow>[] = [
   {
