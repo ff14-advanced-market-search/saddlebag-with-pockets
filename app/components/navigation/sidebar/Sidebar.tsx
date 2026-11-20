@@ -411,11 +411,6 @@ const navGroups: Array<{
         name: 'Upload Timers',
         href: '/wow-forever/upload-timers',
         icon: ClockIcon
-      },
-      {
-        name: 'List of all WoW Forever Items',
-        href: '/wow-forever/itemlist',
-        icon: DocumentTextIcon
       }
     ]
   },
