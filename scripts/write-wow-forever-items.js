@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { writeFile } = require('fs')
+const { writeFile } = require('node:fs')
 const { USER_AGENT } = require('./config')
 
 const ITEMS_ADDRESS =
@@ -37,7 +37,7 @@ const validateItem = (id, itemName) => {
     return undefined
   }
 
-  return itemName.replace(/\u00a0/g, ' ')
+  return itemName.replaceAll('\u00a0', ' ')
 }
 
 /**

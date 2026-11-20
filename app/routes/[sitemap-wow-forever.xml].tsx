@@ -14,7 +14,7 @@ const getItemLastMod = (_id: string): string => {
   return toW3CDate(lastWeek)
 }
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = () => {
   const baseURL = 'https://saddlebagexchange.com'
 
   // Get arrays of item IDs without labels
