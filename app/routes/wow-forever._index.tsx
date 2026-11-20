@@ -35,11 +35,11 @@ const recommendedQueries = [
     href: '/wow-forever/upload-timers'
   },
   {
-    name: 'Item Data',
+    name: 'List of Forever Items',
     description:
-      'Price, quantity, and live listings for a Forever item on your home region, faction, and ruleset auction house.',
+      'Browse all Forever marketable items, then open price, quantity, and live listings for any item.',
     Icon: DocumentMagnifyingGlassIcon,
-    href: '/wow-forever/item-data/2840'
+    href: '/wow-forever/itemlist'
   },
   {
     name: 'Ultra Fast Azeroth Auction Assassin Sniper',
@@ -79,9 +79,9 @@ export default function Index() {
                 Upload Timers
               </a>
               <a
-                href="/wow-forever/item-data/2840"
+                href="/wow-forever/itemlist"
                 className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-6 rounded-md shadow-md">
-                Item Data
+                Forever Items
               </a>
             </div>
           </div>

@@ -40,12 +40,24 @@ import {
   wowItems,
   wowItemsList,
   gw2ItemsList,
-  gw2Items
+  gw2Items,
+  parseItemsForDataListSelect
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
+import ForeverItemNames from '~/requests/WoWForever/ItemNames'
+import {
+  foreverItemNamesToEntries,
+  type ForeverItemEntry,
+  type SearchGame
+} from '~/utils/WoWForever/itemNames'
 import { NotificationBell } from './NotificationBell'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+
+type SelectOption = { value: string; label: string }
+
+let foreverItemsCache: ForeverItemEntry[] | null = null
+let foreverSelectCache: SelectOption[] | null = null
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -369,6 +381,11 @@ const navGroups: Array<{
         name: 'Upload Timers',
         href: '/wow-forever/upload-timers',
         icon: ClockIcon
+      },
+      {
+        name: 'List of all Forever Items',
+        href: '/wow-forever/itemlist',
+        icon: DocumentTextIcon
       }
     ]
   },
@@ -525,6 +542,11 @@ const navGroups: Array<{
       {
         name: 'List of all WoW Items',
         href: '/wow/itemlist',
+        icon: DocumentTextIcon
+      },
+      {
+        name: 'List of all Forever Items',
+        href: '/wow-forever/itemlist',
         icon: DocumentTextIcon
       },
       {
@@ -1044,20 +1066,64 @@ const ItemSearch = () => {
     (state) => state.user.defaultSearchGame
   )
   const [itemName, setItemName] = useState('')
-  const [game, setGame] = useState<'ffxiv' | 'wow' | 'gw2'>(defaultSearchGame)
+  const [game, setGame] = useState<SearchGame>(defaultSearchGame)
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
+  const [foreverItems, setForeverItems] = useState<ForeverItemEntry[] | null>(
+    foreverItemsCache
+  )
+  const [foreverSelectOptions, setForeverSelectOptions] = useState<
+    SelectOption[]
+  >(foreverSelectCache ?? [])
+  const [foreverLoading, setForeverLoading] = useState(false)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const isWoW = game === 'wow'
   const isGW2 = game === 'gw2'
+  const isForever = game === 'forever'
 
   const dataFormItemList = isWoW
     ? wowItemsList
     : isGW2
     ? gw2ItemsList
+    : isForever
+    ? foreverSelectOptions
     : ffxivItemsList
+
+  useEffect(() => {
+    if (!isForever || foreverItems != null) {
+      return
+    }
+
+    let cancelled = false
+    setForeverLoading(true)
+
+    ForeverItemNames()
+      .then((names) => {
+        if (cancelled) return
+        const entries = foreverItemNamesToEntries(names)
+        const options = entries.map(parseItemsForDataListSelect)
+        foreverItemsCache = entries
+        foreverSelectCache = options
+        setForeverItems(entries)
+        setForeverSelectOptions(options)
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setSearchError('Could not load Forever item names')
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setForeverLoading(false)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [isForever, foreverItems])
 
   /**
    * Handles click events on a button to navigate to item data pages.
@@ -1068,7 +1134,7 @@ const ItemSearch = () => {
    * @returns {void} Does not return any value.
    * @description
    *   - Prevents default action if itemName is empty or itemID cannot be retrieved.
-   *   - Uses different API paths based on whether the isWoW boolean is true.
+   *   - Uses different API paths based on the selected game.
    *   - Updates navigation path with the item ID before navigating.
    *   - This function is used in the Sidebar component to fetch and display item data.
    */
@@ -1080,10 +1146,21 @@ const ItemSearch = () => {
       return
     }
 
-    const itemId = getItemIDByName(
-      itemName.trim(),
-      isWoW ? wowItems : isGW2 ? gw2Items : undefined
-    )
+    if (isForever && foreverItems == null) {
+      event.preventDefault()
+      setSearchError('Forever item names are still loading')
+      return
+    }
+
+    const itemList = isWoW
+      ? wowItems
+      : isGW2
+      ? gw2Items
+      : isForever
+      ? foreverItems
+      : undefined
+
+    const itemId = getItemIDByName(itemName.trim(), itemList)
 
     if (!itemId) {
       event.preventDefault()
@@ -1095,6 +1172,8 @@ const ItemSearch = () => {
       ? 'wow/item-data/'
       : isGW2
       ? 'gw2/item-data/'
+      : isForever
+      ? '/wow-forever/item-data/'
       : '/queries/item-data/'
     navigate(path + itemId)
     setIsOpen(false)
@@ -1102,8 +1181,14 @@ const ItemSearch = () => {
 
   const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
     const value = (event.target as HTMLInputElement).value
-    if (value === 'ffxiv' || value === 'wow' || value === 'gw2') {
-      setGame(value as 'ffxiv' | 'wow' | 'gw2')
+    if (
+      value === 'ffxiv' ||
+      value === 'wow' ||
+      value === 'gw2' ||
+      value === 'forever'
+    ) {
+      setGame(value)
+      setSearchError(undefined)
     }
   }
 
@@ -1129,7 +1214,7 @@ const ItemSearch = () => {
     }
   }, [isOpen, defaultSearchGame])
 
-  const isLoading = transition.state === 'loading'
+  const isLoading = transition.state === 'loading' || foreverLoading
   return (
     <div>
       <button
@@ -1180,6 +1265,21 @@ const ItemSearch = () => {
                 </span>
               </label>
               <label
+                htmlFor={`radio-forever`}
+                className="cursor-pointer w-full md:w-fit">
+                <input
+                  id={`radio-forever`}
+                  type="radio"
+                  value={'forever'}
+                  name="game-items"
+                  defaultChecked={game === 'forever'}
+                  className="peer hidden"
+                />
+                <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
+                  Forever
+                </span>
+              </label>
+              <label
                 htmlFor={`radio-gw2`}
                 className="cursor-pointer w-full md:w-fit">
                 <input
@@ -1204,7 +1304,11 @@ const ItemSearch = () => {
                 formName={ITEM_DATA_FORM_NAME}
                 onSelect={handleSelect}
                 error={searchError}
-                placeholder="Search items..."
+                placeholder={
+                  foreverLoading && isForever
+                    ? 'Loading Forever items...'
+                    : 'Search items...'
+                }
                 containerClassNames="w-full"
                 useDebounce={true}
               />
