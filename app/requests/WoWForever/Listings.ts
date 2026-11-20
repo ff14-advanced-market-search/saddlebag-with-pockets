@@ -3,9 +3,11 @@ import { WOW_DISCORD_CONSENT } from '../../constants/wowDiscordConsent'
 import type { WoWMarketState } from '../WoW/types'
 import type { WoWForeverRegion } from '../../utils/WoWForever'
 
-interface ListingData {
+/** Row shape for Forever AH listings; index signature satisfies SmallTable's Record contract. */
+type ListingData = {
   price: number
   quantity: number
+  [key: string]: string | number | boolean | null | undefined
 }
 
 /**
