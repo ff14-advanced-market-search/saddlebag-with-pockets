@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { ForeverItemListing } from '../../requests/WoWForever/Listings'
 import SmallTable from '../WoWResults/FullScan/SmallTable'
 import CustomButton from '../utilities/CustomButton'
@@ -5,10 +6,11 @@ import Banner from '../Common/Banner'
 import { Title } from '../Common'
 import type { ColumnList } from '../types'
 import { foreverAuctionHouseLabel } from '../../utils/WoWForever'
+import GoldPrice from '../WoW/GoldPrice'
 
 interface Metric {
   label: string
-  value: string
+  value: ReactNode
 }
 
 interface TableRow {
@@ -20,10 +22,13 @@ interface TableRow {
 const formatMetric = (
   label: string,
   value: number | null | undefined,
-  options?: { skip?: number; suffix?: string }
+  options?: { skip?: number; suffix?: string; gold?: boolean }
 ): Metric | null => {
   if (value == null || Number.isNaN(value)) return null
   if (options?.skip != null && value === options.skip) return null
+  if (options?.gold) {
+    return { label, value: <GoldPrice amount={value} /> }
+  }
   const formatted = value.toLocaleString()
   return {
     label,
@@ -66,16 +71,18 @@ const MetricGrid = ({
 }
 
 const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
-  formatMetric('Minimum Price', listing.minPrice, { skip: -1 }),
+  formatMetric('Minimum Price', listing.minPrice, { skip: -1, gold: true }),
   formatMetric('Current Quantity', listing.currentQuantity, { skip: -1 }),
   formatMetric('Current Sold Per Day', listing.currentSoldPerDay, {
     skip: -1
   }),
   formatMetric('Current Market Value', listing.currentMarketValue, {
-    skip: -1
+    skip: -1,
+    gold: true
   }),
   formatMetric('Historic Market Value', listing.historicMarketValue, {
-    skip: -1
+    skip: -1,
+    gold: true
   }),
   formatMetric('Percent Change', listing.percentChange, {
     suffix: '%'
@@ -84,15 +91,20 @@ const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
 
 const tsmMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
   formatMetric('Quantity', listing.tsmQuantity),
-  formatMetric('Market Value', listing.tsmMarketValue),
-  formatMetric('Average Sale Price', listing.tsmAvgSalePrice),
+  formatMetric('Market Value', listing.tsmMarketValue, { gold: true }),
+  formatMetric('Average Sale Price', listing.tsmAvgSalePrice, { gold: true }),
   formatMetric('Sale Rate', listing.tsmSaleRate),
   formatMetric('Sold Per Day', listing.tsmSoldPerDay),
-  formatMetric('Historical', listing.tsmHistorical)
+  formatMetric('Historical', listing.tsmHistorical, { gold: true })
 ]
 
 const columnList: ColumnList<TableRow>[] = [
-  { columnId: 'price', header: 'Price' },
+  {
+    columnId: 'price',
+    header: 'Price',
+    accessor: ({ row }) =>
+      typeof row.price === 'number' ? <GoldPrice amount={row.price} /> : null
+  },
   { columnId: 'quantity', header: 'Quantity' }
 ]
 
