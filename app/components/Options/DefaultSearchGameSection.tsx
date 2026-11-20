@@ -7,7 +7,7 @@ interface DefaultSearchGameSectionProps {
   defaultSearchGame: SearchGame
 }
 
-const games: Array<{ value: SearchGame; label: string }> = [
+const games: { value: SearchGame; label: string }[] = [
   { value: 'ffxiv', label: 'FFXIV' },
   { value: 'wow', label: 'WoW' },
   { value: 'forever', label: 'Forever' },
@@ -41,7 +41,9 @@ const DefaultSearchGameSection: React.FC<DefaultSearchGameSectionProps> = ({
               name="defaultSearchGame"
               value={game.value}
               checked={defaultSearchGame === game.value}
-              onChange={() => handleGameChange(game.value)}
+              onChange={() => {
+                handleGameChange(game.value)
+              }}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
             />
             <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">

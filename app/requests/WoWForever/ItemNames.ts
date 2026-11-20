@@ -30,8 +30,17 @@ const ForeverItemNames = async (
 
   const names: ForeverItemNamesMap = {}
   for (const [itemId, itemName] of Object.entries(body)) {
-    if (typeof itemName === 'string' && itemName.length > 0) {
-      names[itemId] = itemName
+    if (
+      /^\d+$/.test(itemId) &&
+      typeof itemName === 'string' &&
+      itemName.length > 0
+    ) {
+      Object.defineProperty(names, itemId, {
+        value: itemName,
+        enumerable: true,
+        writable: true,
+        configurable: true
+      })
     }
   }
   return names

@@ -6,9 +6,8 @@ const toW3CDate = (date: Date): string => {
   return date.toISOString().replace(/\.\d{3}Z$/, '+00:00')
 }
 
-// Helper to get last modified date for an item
-const getItemLastMod = (_id: string): string => {
-  // Weekly fallback until Forever item lastmod is available from the API.
+// Weekly fallback until Forever item lastmod is available from the API.
+const getItemLastMod = (): string => {
   const now = new Date()
   const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
   return toW3CDate(lastWeek)
@@ -24,7 +23,7 @@ export const loader: LoaderFunction = () => {
   const dynamicForeverURLs = foreverItemIDs.map((id) => {
     return {
       url: `${baseURL}/wow-forever/item-data/${id}`,
-      lastmod: getItemLastMod(id)
+      lastmod: getItemLastMod()
     }
   })
 

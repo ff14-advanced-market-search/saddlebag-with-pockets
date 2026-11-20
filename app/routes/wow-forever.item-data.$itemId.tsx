@@ -34,7 +34,8 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 const readParam = (params: unknown, key: string): string | undefined => {
   if (!isRecord(params)) return undefined
-  const value = params[key]
+  if (!Object.prototype.hasOwnProperty.call(params, key)) return undefined
+  const value = Reflect.get(params, key)
   return typeof value === 'string' ? value : undefined
 }
 

@@ -17,7 +17,14 @@ describe('goldToCoins', () => {
   })
 
   it('formats AAA-style text', () => {
-    expect(formatGoldText(12.3456)).toBe('12g 34s 56c')
-    expect(formatCopperAmount(12.34)).toBe('12.34')
+    expect(formatGoldText(12.3456)).toBe(
+      `${(12).toLocaleString()}g 34s ${formatCopperAmount(56)}c`
+    )
+    expect(formatCopperAmount(12.34)).toBe(
+      (12.34).toLocaleString(undefined, {
+        maximumFractionDigits: 4,
+        minimumFractionDigits: 0
+      })
+    )
   })
 })

@@ -31,16 +31,15 @@ export const loader: LoaderFunction = async () => {
 }
 
 export default function Index() {
-  const { items } = useLoaderData<{ items: Array<[string, string]> }>()
+  const { items } = useLoaderData<{ items: [string, string][] }>()
   const [query, setQuery] = useState('')
 
   const filteredItems = useMemo(() => {
     const term = query.trim().toLowerCase()
     if (term.length < 2) return items
-    return items.filter(
-      ([itemId, itemName]) =>
-        itemName.toLowerCase().includes(term) || itemId.includes(term)
-    )
+    return items.filter(([itemId, itemName]) => {
+      return itemName.toLowerCase().includes(term) || itemId.includes(term)
+    })
   }, [items, query])
 
   return (
@@ -63,7 +62,9 @@ export default function Index() {
             id="forever-itemlist-filter"
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value)
+            }}
             placeholder="Search by name or id..."
             className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-slate-800 dark:text-gray-100"
           />
