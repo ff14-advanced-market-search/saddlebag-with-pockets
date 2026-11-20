@@ -9,7 +9,11 @@ import {
   foreverAuctionHouseLabel,
   foreverUndermineItemUrl,
   foreverWowheadItemUrl,
-  type WoWForeverRegion
+  WOW_FOREVER_FACTIONS,
+  WOW_FOREVER_RULESETS,
+  type WoWForeverFaction,
+  type WoWForeverRegion,
+  type WoWForeverRuleset
 } from '../../utils/WoWForever'
 import GoldPrice from '../WoW/GoldPrice'
 
@@ -41,11 +45,45 @@ const formatMetric = (
   }
 }
 
+const titleCaseWords = (value: string): string =>
+  value
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+
+const factionHeadingLabel = (faction: string): string => {
+  const known = WOW_FOREVER_FACTIONS.find(
+    (entry) => entry.value === (faction.toLowerCase() as WoWForeverFaction)
+  )
+  return known?.label ?? titleCaseWords(faction)
+}
+
+/** API gameType uses spaces (e.g. `rp pvp`); options use underscores. */
+const gameTypeHeadingLabel = (gameType: string): string => {
+  const normalized = gameType.trim().toLowerCase().replaceAll(/\s+/g, '_')
+  const known = WOW_FOREVER_RULESETS.find(
+    (entry) => entry.value === (normalized as WoWForeverRuleset)
+  )
+  return known?.label ?? titleCaseWords(gameType)
+}
+
+/** e.g. Alliance Normal Statistics from listing.faction + listing.gameType */
+const liveStatisticsHeading = (listing: ForeverItemListing): string => {
+  const faction = factionHeadingLabel(listing.faction)
+  const gameMode = gameTypeHeadingLabel(listing.gameType)
+  const label = [faction, gameMode].filter(Boolean).join(' ')
+  return label ? `${label} Statistics` : 'Statistics'
+}
+
 const MetricGrid = ({
   heading,
+  description,
   metrics
 }: Readonly<{
   heading?: string
+  description?: string
   metrics: (Metric | null)[]
 }>) => {
   const rows = metrics.filter((row): row is Metric => row != null)
@@ -53,9 +91,14 @@ const MetricGrid = ({
   return (
     <section className="mx-3 my-5">
       {heading ? (
-        <h2 className="mb-3 text-center text-base font-semibold tracking-wide text-slate-700 dark:text-slate-200">
+        <h2 className="mb-2 text-center text-base font-semibold tracking-wide text-slate-700 dark:text-slate-200">
           {heading}
         </h2>
+      ) : null}
+      {description ? (
+        <p className="mx-auto mb-3 max-w-2xl text-center text-sm text-slate-600 dark:text-slate-300">
+          {description}
+        </p>
       ) : null}
       <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {rows.map((row) => (
@@ -96,12 +139,14 @@ const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
 
 const tsmMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
   formatMetric('Quantity', listing.tsmQuantity),
-  formatMetric('Market Value', listing.tsmMarketValue, { gold: true }),
   formatMetric('Average Sale Price', listing.tsmAvgSalePrice, { gold: true }),
   formatMetric('Sale Rate', listing.tsmSaleRate),
   formatMetric('Sold Per Day', listing.tsmSoldPerDay),
   formatMetric('Historical', listing.tsmHistorical, { gold: true })
 ]
+
+const TSM_STATISTICS_DESCRIPTION =
+  'TSM values are averages across all Forever factions, auction houses, and game modes. They can run lower than Normal markets and higher than RP modes.'
 
 const columnList: ColumnList<TableRow>[] = [
   {
@@ -143,8 +188,15 @@ export default function ForeverItemDataDisplay({
       <Title title={listing.itemName} />
       {listing.blog ? <p style={{ fontSize: '1px' }}>{listing.blog}</p> : null}
       <Banner />
-      <MetricGrid metrics={liveMetrics(listing)} />
-      <MetricGrid heading="TSM Statistics" metrics={tsmMetrics(listing)} />
+      <MetricGrid
+        heading={liveStatisticsHeading(listing)}
+        metrics={liveMetrics(listing)}
+      />
+      <MetricGrid
+        heading="TSM Statistics"
+        description={TSM_STATISTICS_DESCRIPTION}
+        metrics={tsmMetrics(listing)}
+      />
       <div className="mx-3 my-6 flex flex-wrap justify-center gap-2">
         <CustomButton
           link="https://saddlebagexchange.com/wow-forever/"
