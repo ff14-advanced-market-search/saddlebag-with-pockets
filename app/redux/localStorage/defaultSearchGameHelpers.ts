@@ -1,22 +1,21 @@
+import { isSearchGame, type SearchGame } from '~/utils/WoWForever/itemNames'
+
 const DEFAULT_SEARCH_GAME_STORAGE_KEY = 'defaultSearchGame'
 
-export const getDefaultSearchGameFromLocalStorage = ():
-  | 'ffxiv'
-  | 'wow'
-  | 'gw2' => {
+export const getDefaultSearchGameFromLocalStorage = (): SearchGame => {
   try {
     const game = localStorage.getItem(DEFAULT_SEARCH_GAME_STORAGE_KEY)
-    if (!game || (game !== 'ffxiv' && game !== 'wow' && game !== 'gw2')) {
+    if (!isSearchGame(game)) {
       return 'ffxiv'
     }
-    return game as 'ffxiv' | 'wow' | 'gw2'
+    return game
   } catch {
     return 'ffxiv'
   }
 }
 
 export const setDefaultSearchGameInLocalStorage = (
-  value: 'ffxiv' | 'wow' | 'gw2'
+  value: SearchGame
 ): { success: true } | undefined => {
   try {
     localStorage.setItem(DEFAULT_SEARCH_GAME_STORAGE_KEY, value)

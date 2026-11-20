@@ -24,6 +24,7 @@ import {
 } from '../localStorage/wowForeverHelpers'
 import type { WoWForeverSettings } from '~/utils/WoWForever'
 import { validateWoWForeverSettings } from '~/utils/WoWForever'
+import type { SearchGame } from '~/utils/WoWForever/itemNames'
 import {
   getDefaultSearchGameFromLocalStorage,
   setDefaultSearchGameInLocalStorage
@@ -38,7 +39,7 @@ export interface UserState {
   ffxivWorld: { data_center: string; world: string }
   wowRealm: { server: WoWServerData; region: WoWServerRegion }
   wowForever: WoWForeverSettings
-  defaultSearchGame: 'ffxiv' | 'wow' | 'gw2'
+  defaultSearchGame: SearchGame
 }
 
 const initialState: UserState = {
@@ -124,10 +125,7 @@ export const userSlice = createSlice({
       setWoWForeverSettingsInLocalStorage(settings)
       state.wowForever = settings
     },
-    setDefaultSearchGame: (
-      state,
-      { payload }: PayloadAction<'ffxiv' | 'wow' | 'gw2'>
-    ) => {
+    setDefaultSearchGame: (state, { payload }: PayloadAction<SearchGame>) => {
       setDefaultSearchGameInLocalStorage(payload)
       state.defaultSearchGame = payload
     }

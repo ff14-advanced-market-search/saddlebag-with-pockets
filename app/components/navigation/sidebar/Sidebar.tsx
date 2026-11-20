@@ -39,13 +39,55 @@ import {
   ffxivItemsList,
   wowItems,
   wowItemsList,
+  wowForeverItems,
+  wowForeverItemsList,
   gw2ItemsList,
   gw2Items
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
-import { getItemIDByName } from '~/utils/items'
+import { resolveItemIDBySearch } from '~/utils/items'
+import { isSearchGame, type SearchGame } from '~/utils/WoWForever/itemNames'
 import { NotificationBell } from './NotificationBell'
 import { useTypedSelector } from '~/redux/useTypedSelector'
+
+const searchSelectOptions = (game: SearchGame) => {
+  switch (game) {
+    case 'wow':
+      return wowItemsList
+    case 'gw2':
+      return gw2ItemsList
+    case 'forever':
+      return wowForeverItemsList
+    default:
+      return ffxivItemsList
+  }
+}
+
+const searchItemEntries = (game: SearchGame) => {
+  switch (game) {
+    case 'wow':
+      return wowItems
+    case 'gw2':
+      return gw2Items
+    case 'forever':
+      return wowForeverItems
+    default:
+      return undefined
+  }
+}
+
+const itemDataPathForGame = (game: SearchGame): string => {
+  switch (game) {
+    case 'wow':
+      return 'wow/item-data/'
+    case 'gw2':
+      return 'gw2/item-data/'
+    case 'forever':
+      return '/wow-forever/item-data/'
+    default:
+      return '/queries/item-data/'
+  }
+}
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -525,6 +567,11 @@ const navGroups: Array<{
       {
         name: 'List of all WoW Items',
         href: '/wow/itemlist',
+        icon: DocumentTextIcon
+      },
+      {
+        name: 'List of all WoW Forever Items',
+        href: '/wow-forever/itemlist',
         icon: DocumentTextIcon
       },
       {
@@ -1044,20 +1091,13 @@ const ItemSearch = () => {
     (state) => state.user.defaultSearchGame
   )
   const [itemName, setItemName] = useState('')
-  const [game, setGame] = useState<'ffxiv' | 'wow' | 'gw2'>(defaultSearchGame)
+  const [game, setGame] = useState<SearchGame>(defaultSearchGame)
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const isWoW = game === 'wow'
-  const isGW2 = game === 'gw2'
-
-  const dataFormItemList = isWoW
-    ? wowItemsList
-    : isGW2
-    ? gw2ItemsList
-    : ffxivItemsList
+  const dataFormItemList = searchSelectOptions(game)
 
   /**
    * Handles click events on a button to navigate to item data pages.
@@ -1068,7 +1108,7 @@ const ItemSearch = () => {
    * @returns {void} Does not return any value.
    * @description
    *   - Prevents default action if itemName is empty or itemID cannot be retrieved.
-   *   - Uses different API paths based on whether the isWoW boolean is true.
+   *   - Uses different API paths based on the selected game.
    *   - Updates navigation path with the item ID before navigating.
    *   - This function is used in the Sidebar component to fetch and display item data.
    */
@@ -1080,9 +1120,9 @@ const ItemSearch = () => {
       return
     }
 
-    const itemId = getItemIDByName(
+    const itemId = resolveItemIDBySearch(
       itemName.trim(),
-      isWoW ? wowItems : isGW2 ? gw2Items : undefined
+      searchItemEntries(game)
     )
 
     if (!itemId) {
@@ -1091,19 +1131,15 @@ const ItemSearch = () => {
       return
     }
 
-    const path = isWoW
-      ? 'wow/item-data/'
-      : isGW2
-      ? 'gw2/item-data/'
-      : '/queries/item-data/'
-    navigate(path + itemId)
+    navigate(itemDataPathForGame(game) + itemId)
     setIsOpen(false)
   }
 
   const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
     const value = (event.target as HTMLInputElement).value
-    if (value === 'ffxiv' || value === 'wow' || value === 'gw2') {
-      setGame(value as 'ffxiv' | 'wow' | 'gw2')
+    if (isSearchGame(value)) {
+      setGame(value)
+      setSearchError(undefined)
     }
   }
 
@@ -1177,6 +1213,21 @@ const ItemSearch = () => {
                 />
                 <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
                   WoW
+                </span>
+              </label>
+              <label
+                htmlFor={`radio-forever`}
+                className="cursor-pointer w-full md:w-fit">
+                <input
+                  id={`radio-forever`}
+                  type="radio"
+                  value={'forever'}
+                  name="game-items"
+                  defaultChecked={game === 'forever'}
+                  className="peer hidden"
+                />
+                <span className="w-full md:w-fit inline-block text-center peer-checked:text-blue-500 peer-checked:bg-white dark:peer-checked:bg-slate-800 peer-checked:border-gray-200 dark:peer-checked:border-slate-700 text-gray-500 dark:text-gray-400 border border-transparent rounded-md hover:bg-gray-100 dark:hover:bg-slate-600 font-medium h-full px-3 py-1.5">
+                  Forever
                 </span>
               </label>
               <label
