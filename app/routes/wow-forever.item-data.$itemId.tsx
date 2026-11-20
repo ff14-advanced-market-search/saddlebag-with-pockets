@@ -25,7 +25,9 @@ import {
 
 export const ErrorBoundary = () => <ErrorBounds />
 
-type LoaderResult = ForeverItemListingResponse
+type LoaderResult =
+  | { data: ForeverItemListing; region: WoWForeverRegion }
+  | { exception: string }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null
@@ -116,11 +118,15 @@ export const loader: LoaderFunction = async (args): Promise<LoaderResult> => {
   region = validateWoWForeverSettings(region, faction, ruleset).region
 
   try {
-    return await ForeverListings({
+    const result: ForeverItemListingResponse = await ForeverListings({
       auctionHouseId,
       region,
       itemID: parsedItemId
     })
+    if ('exception' in result) {
+      return result
+    }
+    return { data: result.data, region }
   } catch {
     return {
       exception:
@@ -148,6 +154,9 @@ export default function Index() {
     return <NoResults />
   }
 
+  const region: WoWForeverRegion =
+    isRecord(result) && result.region === 'EU' ? 'EU' : 'NA'
+
   const { product, crumbs } = foreverItemStructuredData({
     itemID: listing.itemID,
     itemName: listing.itemName,
@@ -169,7 +178,7 @@ export default function Index() {
         // eslint-disable-next-line react/no-danger -- encodeJsonLd escapes script breakouts
         dangerouslySetInnerHTML={{ __html: crumbsJsonLd }}
       />
-      <ForeverItemDataDisplay listing={listing} />
+      <ForeverItemDataDisplay listing={listing} region={region} />
     </PageWrapper>
   )
 }

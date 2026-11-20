@@ -62,6 +62,7 @@ test('loader posts Forever listings with home AH from session defaults', async (
     itemID: 2840
   })
   expect(result).toMatchObject({
+    region: 'NA',
     data: {
       itemID: 2840,
       itemName: 'Copper Bar',

@@ -121,3 +121,41 @@ export const foreverFeedLabel = (feedType: string) => {
   if (feedType === 'commodity') return 'Commodities'
   return feedType
 }
+
+/**
+ * Undermine Forever house slugs (AAA Forever.undermine markets).
+ * Keys are absolute Forever auction-house ids.
+ */
+export const WOW_FOREVER_UNDERMINE_SLUGS: Record<number, string> = {
+  110: 'pvp-alliance',
+  111: 'pve-alliance',
+  113: 'pvp-horde',
+  114: 'pve-horde',
+  116: 'pvp-neutral',
+  117: 'pve-neutral',
+  119: 'rp-alliance',
+  120: 'rp-horde',
+  121: 'rp-neutral',
+  123: 'rppvp-alliance',
+  124: 'rppvp-horde',
+  125: 'rppvp-neutral'
+}
+
+/** AAA-style Forever Wowhead item URL. */
+export const foreverWowheadItemUrl = (itemId: number) =>
+  `https://www.wowhead.com/forever/item=${itemId}`
+
+/**
+ * AAA-style Forever Undermine item URL for a region + auction house.
+ * Example: https://undermine.exchange/#usf-pve-alliance/2840
+ */
+export const foreverUndermineItemUrl = (
+  region: WoWForeverRegion,
+  auctionHouseId: number,
+  itemId: number
+): string | null => {
+  const slug = WOW_FOREVER_UNDERMINE_SLUGS[Math.abs(auctionHouseId)]
+  if (!slug) return null
+  const prefix = region === 'NA' ? 'usf' : 'euf'
+  return `https://undermine.exchange/#${prefix}-${slug}/${itemId}`
+}

@@ -77,7 +77,7 @@ export const resolveItemIDBySearch = (
   itemList = ffxivItems
 ): string | undefined => {
   const trimmed = input.trim()
-  const disambiguated = trimmed.match(/^(.*)\s\((\d+)\)$/)
+  const disambiguated = /^(.*)\s\((\d+)\)$/.exec(trimmed)
   if (disambiguated) {
     const baseName = disambiguated[1]
     const itemId = disambiguated[2]

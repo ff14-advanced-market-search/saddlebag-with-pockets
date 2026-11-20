@@ -1,5 +1,7 @@
 import { expect, test } from 'vitest'
 import {
+  foreverUndermineItemUrl,
+  foreverWowheadItemUrl,
   getHomeForeverAuctionHouseId,
   isEnabledForeverAuctionHouseId,
   type WoWForeverFaction,
@@ -34,4 +36,16 @@ test('disabled Forever houses are rejected', () => {
   expect(isEnabledForeverAuctionHouseId(112)).toBe(false)
   expect(isEnabledForeverAuctionHouseId(115)).toBe(false)
   expect(isEnabledForeverAuctionHouseId(118)).toBe(false)
+})
+
+test('Forever external item links match AAA URL shapes', () => {
+  expect(foreverWowheadItemUrl(2840)).toBe(
+    'https://www.wowhead.com/forever/item=2840'
+  )
+  expect(foreverUndermineItemUrl('NA', 111, 2840)).toBe(
+    'https://undermine.exchange/#usf-pve-alliance/2840'
+  )
+  expect(foreverUndermineItemUrl('EU', 113, 2589)).toBe(
+    'https://undermine.exchange/#euf-pvp-horde/2589'
+  )
 })

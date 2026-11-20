@@ -5,7 +5,12 @@ import CustomButton from '../utilities/CustomButton'
 import Banner from '../Common/Banner'
 import { Title } from '../Common'
 import type { ColumnList } from '../types'
-import { foreverAuctionHouseLabel } from '../../utils/WoWForever'
+import {
+  foreverAuctionHouseLabel,
+  foreverUndermineItemUrl,
+  foreverWowheadItemUrl,
+  type WoWForeverRegion
+} from '../../utils/WoWForever'
 import GoldPrice from '../WoW/GoldPrice'
 
 interface Metric {
@@ -118,12 +123,20 @@ const toTableRows = (listing: ForeverItemListing): TableRow[] =>
  * Forever item-data body: live metrics, optional TSM statistics, listings.
  */
 export default function ForeverItemDataDisplay({
-  listing
+  listing,
+  region
 }: Readonly<{
   listing: ForeverItemListing
+  region: WoWForeverRegion
 }>) {
   const houseLabel =
     listing.auctionHouseName || foreverAuctionHouseLabel(listing.auctionHouseId)
+  const undermineLink = foreverUndermineItemUrl(
+    region,
+    listing.auctionHouseId,
+    listing.itemID
+  )
+  const wowheadLink = foreverWowheadItemUrl(listing.itemID)
 
   return (
     <>
@@ -137,14 +150,10 @@ export default function ForeverItemDataDisplay({
           link="https://saddlebagexchange.com/wow-forever/"
           buttonText="View all Forever tools"
         />
-        <CustomButton
-          link="https://saddlebagexchange.com/options"
-          buttonText="Change Forever home AH"
-        />
-        <CustomButton
-          link={`https://www.wowhead.com/item=${listing.itemID}`}
-          buttonText="View on WoWHead"
-        />
+        {undermineLink ? (
+          <CustomButton link={undermineLink} buttonText="View on Undermine" />
+        ) : null}
+        <CustomButton link={wowheadLink} buttonText="View on Wowhead" />
       </div>
       {listing.listingData.length === 0 ? (
         <div className="my-8 text-center text-xl font-bold text-red-700 dark:text-red-300">
