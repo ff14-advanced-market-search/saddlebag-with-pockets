@@ -14,7 +14,7 @@ export const foreverItemPageMeta = ({
 }: {
   itemID: number
   itemName: string
-}): Array<MetaTag> => {
+}): MetaTag[] => {
   const href = foreverItemCanonicalUrl(itemID)
   const blurb = `${itemName} WoW Forever auction house price and listing data`
   const heading = `${itemName} – WoW Forever Auction House Data`
@@ -39,7 +39,7 @@ export const foreverItemPageMeta = ({
   ]
 }
 
-export const foreverItemErrorMeta = (message: string): Array<MetaTag> => [
+export const foreverItemErrorMeta = (message: string): MetaTag[] => [
   { charset: 'utf-8' },
   { title: 'Error' },
   { name: 'viewport', content: 'width=device-width,initial-scale=1' },
@@ -94,4 +94,4 @@ export const foreverItemStructuredData = ({
 }
 
 export const encodeJsonLd = (value: unknown) =>
-  JSON.stringify(value).replaceAll('<', '\\u003c')
+  JSON.stringify(value).replaceAll('<', String.raw`\u003c`)

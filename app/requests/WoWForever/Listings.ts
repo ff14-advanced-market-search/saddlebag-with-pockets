@@ -14,7 +14,9 @@ interface ListingData {
  * via is_stackable (item ids are not in both markets; API sets item_type).
  *
  * historicPrice / salesPerDay are not returned — use tsmAvgSalePrice /
- * tsmSoldPerDay. Optional tsm* fields are null when TSM raw is missing.
+ * tsmSoldPerDay. Market values use currentSoldPerDay (= currentQuantity *
+ * tsmSaleRate) × minPrice / tsmAvgSalePrice. Optional tsm* are null when
+ * TSM raw is missing.
  */
 export interface ForeverItemListing {
   itemID: number
@@ -24,7 +26,11 @@ export interface ForeverItemListing {
   minPrice: number
   listingData: ListingData[]
   currentQuantity: number
+  /** currentQuantity * tsmSaleRate (0 when rate is null). */
+  currentSoldPerDay: number
+  /** currentSoldPerDay * minPrice */
   currentMarketValue: number
+  /** currentSoldPerDay * (tsmAvgSalePrice ?? historic fallback) */
   historicMarketValue: number
   percentChange: number
   state: WoWMarketState
@@ -85,7 +91,7 @@ const ForeverListings = async ({
 
   if (!response.ok) {
     return {
-      exception: `Forever listings request failed (${response.status}). POST /api/wow/forever/listings may not be deployed yet (Aetheryte PR #426).`
+      exception: `Forever listings request failed (${response.status}). POST /api/wow/forever/listings may not be available yet.`
     }
   }
 

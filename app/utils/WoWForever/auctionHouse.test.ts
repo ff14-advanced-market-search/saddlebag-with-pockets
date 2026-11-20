@@ -1,25 +1,34 @@
 import { expect, test } from 'vitest'
 import {
   getHomeForeverAuctionHouseId,
-  isEnabledForeverAuctionHouseId
+  isEnabledForeverAuctionHouseId,
+  type WoWForeverFaction,
+  type WoWForeverRuleset
 } from './index'
 
-test.each([
-  ['normal', 'alliance', 111],
-  ['normal', 'horde', 114],
-  ['pvp', 'alliance', 110],
-  ['pvp', 'horde', 113],
-  ['rp', 'alliance', 119],
-  ['rp', 'horde', 120],
-  ['rp_pvp', 'alliance', 123],
-  ['rp_pvp', 'horde', 124]
-] as const)(
-  '%s %s maps to home auction house %i',
-  (ruleset, faction, auctionHouseId) => {
-    expect(getHomeForeverAuctionHouseId(faction, ruleset)).toBe(auctionHouseId)
-    expect(isEnabledForeverAuctionHouseId(auctionHouseId)).toBe(true)
-  }
-)
+const homeAuctionHouseCases: Array<{
+  ruleset: WoWForeverRuleset
+  faction: WoWForeverFaction
+  auctionHouseId: number
+}> = [
+  { ruleset: 'normal', faction: 'alliance', auctionHouseId: 111 },
+  { ruleset: 'normal', faction: 'horde', auctionHouseId: 114 },
+  { ruleset: 'pvp', faction: 'alliance', auctionHouseId: 110 },
+  { ruleset: 'pvp', faction: 'horde', auctionHouseId: 113 },
+  { ruleset: 'rp', faction: 'alliance', auctionHouseId: 119 },
+  { ruleset: 'rp', faction: 'horde', auctionHouseId: 120 },
+  { ruleset: 'rp_pvp', faction: 'alliance', auctionHouseId: 123 },
+  { ruleset: 'rp_pvp', faction: 'horde', auctionHouseId: 124 }
+]
+
+for (const homeCase of homeAuctionHouseCases) {
+  test(`${homeCase.ruleset} ${homeCase.faction} maps to home auction house ${homeCase.auctionHouseId}`, () => {
+    expect(
+      getHomeForeverAuctionHouseId(homeCase.faction, homeCase.ruleset)
+    ).toBe(homeCase.auctionHouseId)
+    expect(isEnabledForeverAuctionHouseId(homeCase.auctionHouseId)).toBe(true)
+  })
+}
 
 test('disabled Forever houses are rejected', () => {
   expect(isEnabledForeverAuctionHouseId(112)).toBe(false)

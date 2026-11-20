@@ -67,6 +67,10 @@ const MetricGrid = ({
 
 const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
   formatMetric('Minimum Price', listing.minPrice, { skip: -1 }),
+  formatMetric('Current Quantity', listing.currentQuantity, { skip: -1 }),
+  formatMetric('Current Sold Per Day', listing.currentSoldPerDay, {
+    skip: -1
+  }),
   formatMetric('Current Market Value', listing.currentMarketValue, {
     skip: -1
   }),
@@ -76,8 +80,7 @@ const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
   formatMetric('Percent Change', listing.percentChange, {
     skip: -1,
     suffix: '%'
-  }),
-  formatMetric('Current Quantity', listing.currentQuantity, { skip: -1 })
+  })
 ]
 
 const tsmMetrics = (listing: ForeverItemListing): (Metric | null)[] => [

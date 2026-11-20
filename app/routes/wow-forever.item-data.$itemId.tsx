@@ -4,7 +4,10 @@ import { PageWrapper } from '../components/Common'
 import NoResults from '../components/Common/NoResults'
 import ErrorBounds from '../components/utilities/ErrorBoundary'
 import ForeverItemDataDisplay from '../components/WoWForever/ItemDataDisplay'
-import type { ForeverItemListingResponse } from '../requests/WoWForever/Listings'
+import type {
+  ForeverItemListing,
+  ForeverItemListingResponse
+} from '../requests/WoWForever/Listings'
 import ForeverListings from '../requests/WoWForever/Listings'
 import { getUserSessionData } from '../sessions.server'
 import {
@@ -26,6 +29,22 @@ type LoaderResult = ForeverItemListingResponse
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null
+
+const readParam = (params: unknown, key: string): string | undefined => {
+  if (!isRecord(params)) return undefined
+  const value = params[key]
+  return typeof value === 'string' ? value : undefined
+}
+
+const isForeverListing = (value: unknown): value is ForeverItemListing => {
+  if (!isRecord(value)) return false
+  return (
+    typeof value.itemID === 'number' &&
+    typeof value.itemName === 'string' &&
+    typeof value.minPrice === 'number' &&
+    Array.isArray(value.listingData)
+  )
+}
 
 const regionFromSearchParam = (
   value: string | null
@@ -54,12 +73,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return foreverItemPageMeta({ itemID, itemName })
 }
 
-export const loader: LoaderFunction = async ({
-  params,
-  request
-}): Promise<LoaderResult> => {
-  const rawItemId = params.itemId
-  const itemId = typeof rawItemId === 'string' ? rawItemId : undefined
+export const loader: LoaderFunction = async (args): Promise<LoaderResult> => {
+  const itemId = readParam(args.params, 'itemId')
   if (!itemId) {
     return { exception: 'No item found, please try again' }
   }
@@ -67,11 +82,15 @@ export const loader: LoaderFunction = async ({
   const parsedItemId = Number.parseInt(itemId, 10)
   if (Number.isNaN(parsedItemId)) return { exception: 'Invalid item' }
 
+  const request = args.request
+  if (!(request instanceof Request)) {
+    return { exception: 'Invalid request' }
+  }
+
   const session = await getUserSessionData(request)
   let { region, faction, ruleset } = session.getWoWForeverSessionData()
 
-  const requestUrl = typeof request.url === 'string' ? request.url : ''
-  const url = new URL(requestUrl)
+  const url = new URL(request.url)
   const regionFromUrl = regionFromSearchParam(url.searchParams.get('region'))
   const auctionHouseIdRaw = url.searchParams.get('auctionHouseId')
   const parsedAuctionHouseId =
@@ -105,15 +124,15 @@ export const loader: LoaderFunction = async ({
   } catch {
     return {
       exception:
-        'Failed to load Forever item data. POST /api/wow/forever/listings may not be deployed yet (Aetheryte PR #426).'
+        'Failed to load Forever item data. POST /api/wow/forever/listings may not be available yet.'
     }
   }
 }
 
 export default function Index() {
-  const result = useLoaderData<LoaderResult>()
+  const result: unknown = useLoaderData()
 
-  if (result && 'exception' in result) {
+  if (isRecord(result) && typeof result.exception === 'string') {
     return (
       <PageWrapper>
         <h2 className="text-red-800 dark:text-red-200">
@@ -123,11 +142,12 @@ export default function Index() {
     )
   }
 
-  if (!result || !('data' in result) || !result.data) {
+  const listing =
+    isRecord(result) && isForeverListing(result.data) ? result.data : null
+  if (!listing) {
     return <NoResults />
   }
 
-  const listing = result.data
   const { product, crumbs } = foreverItemStructuredData({
     itemID: listing.itemID,
     itemName: listing.itemName,
@@ -138,13 +158,15 @@ export default function Index() {
 
   return (
     <PageWrapper>
+      {/* JSON-LD is escaped by encodeJsonLd (`<` → `\u003c`); matches retail item-data. */}
       <script
         type="application/ld+json"
-        // encodeJsonLd escapes `<` to `\u003c` for script-context safety
+        // eslint-disable-next-line react/no-danger -- encodeJsonLd escapes script breakouts
         dangerouslySetInnerHTML={{ __html: productJsonLd }}
       />
       <script
         type="application/ld+json"
+        // eslint-disable-next-line react/no-danger -- encodeJsonLd escapes script breakouts
         dangerouslySetInnerHTML={{ __html: crumbsJsonLd }}
       />
       <ForeverItemDataDisplay listing={listing} />

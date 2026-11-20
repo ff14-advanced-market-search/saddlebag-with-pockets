@@ -23,8 +23,9 @@ test('loader posts Forever listings with home AH from session defaults', async (
         minPrice: 0.38,
         listingData: [{ price: 0.38, quantity: 20 }],
         currentQuantity: 20,
-        currentMarketValue: 4,
-        historicMarketValue: 62,
+        currentSoldPerDay: 5,
+        currentMarketValue: 1,
+        historicMarketValue: 25,
         percentChange: -92.4,
         state: 'crashing',
         link: 'https://saddlebagexchange.com/wow-forever/item-data/2840',
@@ -32,6 +33,7 @@ test('loader posts Forever listings with home AH from session defaults', async (
         auctionHouseName: 'Alliance Auction House',
         faction: 'alliance',
         gameType: 'normal',
+        tsmSaleRate: 0.25,
         tsmAvgSalePrice: 5,
         tsmSoldPerDay: 12.5
       }
@@ -65,6 +67,8 @@ test('loader posts Forever listings with home AH from session defaults', async (
       itemName: 'Copper Bar',
       auctionHouseId: 111,
       gameType: 'normal',
+      currentSoldPerDay: 5,
+      tsmSaleRate: 0.25,
       tsmAvgSalePrice: 5,
       tsmSoldPerDay: 12.5
     }
@@ -86,15 +90,17 @@ test('loader honors auctionHouseId and region query overrides', async () => {
         minPrice: 1,
         listingData: [],
         currentQuantity: 0,
-        currentMarketValue: 1,
-        historicMarketValue: 1,
+        currentSoldPerDay: 0,
+        currentMarketValue: 0,
+        historicMarketValue: 0,
         percentChange: 0,
         state: 'stable',
         link: 'https://saddlebagexchange.com/wow-forever/item-data/2589',
         auctionHouseId: 113,
         auctionHouseName: 'Horde Auction House',
         faction: 'horde',
-        gameType: 'pvp'
+        gameType: 'pvp',
+        tsmSaleRate: null
       }
     })
   })
