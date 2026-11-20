@@ -39,54 +39,38 @@ import {
   ffxivItemsList,
   wowItems,
   wowItemsList,
+  wowForeverItems,
+  wowForeverItemsList,
   gw2ItemsList,
-  gw2Items,
-  parseItemsForDataListSelect
+  gw2Items
 } from '~/utils/items/id_to_item'
 import { SubmitButton } from '~/components/form/SubmitButton'
 import { getItemIDByName } from '~/utils/items'
-import ForeverItemNames from '~/requests/WoWForever/ItemNames'
-import {
-  foreverItemNamesToEntries,
-  isSearchGame,
-  type ForeverItemEntry,
-  type SearchGame
-} from '~/utils/WoWForever/itemNames'
+import { isSearchGame, type SearchGame } from '~/utils/WoWForever/itemNames'
 import { NotificationBell } from './NotificationBell'
 import { useTypedSelector } from '~/redux/useTypedSelector'
 
-type SelectOption = { value: string; label: string }
-
-let foreverItemsCache: ForeverItemEntry[] | null = null
-let foreverSelectCache: SelectOption[] | null = null
-
-const searchSelectOptions = (
-  game: SearchGame,
-  foreverOptions: SelectOption[]
-): SelectOption[] => {
+const searchSelectOptions = (game: SearchGame) => {
   switch (game) {
     case 'wow':
       return wowItemsList
     case 'gw2':
       return gw2ItemsList
     case 'forever':
-      return foreverOptions
+      return wowForeverItemsList
     default:
       return ffxivItemsList
   }
 }
 
-const searchItemEntries = (
-  game: SearchGame,
-  foreverItems: ForeverItemEntry[] | null
-) => {
+const searchItemEntries = (game: SearchGame) => {
   switch (game) {
     case 'wow':
       return wowItems
     case 'gw2':
       return gw2Items
     case 'forever':
-      return foreverItems ?? undefined
+      return wowForeverItems
     default:
       return undefined
   }
@@ -1114,53 +1098,11 @@ const ItemSearch = () => {
   const [itemName, setItemName] = useState('')
   const [game, setGame] = useState<SearchGame>(defaultSearchGame)
   const [searchError, setSearchError] = useState<string | undefined>(undefined)
-  const [foreverItems, setForeverItems] = useState<ForeverItemEntry[] | null>(
-    foreverItemsCache
-  )
-  const [foreverSelectOptions, setForeverSelectOptions] = useState<
-    SelectOption[]
-  >(foreverSelectCache ?? [])
-  const [foreverLoading, setForeverLoading] = useState(false)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const isForever = game === 'forever'
-  const dataFormItemList = searchSelectOptions(game, foreverSelectOptions)
-
-  useEffect(() => {
-    if (!isForever || foreverItems != null) {
-      return
-    }
-
-    let cancelled = false
-    setForeverLoading(true)
-
-    ForeverItemNames()
-      .then((names) => {
-        if (cancelled) return
-        const entries = foreverItemNamesToEntries(names)
-        const options = entries.map(parseItemsForDataListSelect)
-        foreverItemsCache = entries
-        foreverSelectCache = options
-        setForeverItems(entries)
-        setForeverSelectOptions(options)
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setSearchError('Could not load Forever item names')
-        }
-      })
-      .finally(() => {
-        if (!cancelled) {
-          setForeverLoading(false)
-        }
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [isForever, foreverItems])
+  const dataFormItemList = searchSelectOptions(game)
 
   /**
    * Handles click events on a button to navigate to item data pages.
@@ -1183,16 +1125,7 @@ const ItemSearch = () => {
       return
     }
 
-    if (isForever && foreverItems == null) {
-      event.preventDefault()
-      setSearchError('Forever item names are still loading')
-      return
-    }
-
-    const itemId = getItemIDByName(
-      itemName.trim(),
-      searchItemEntries(game, foreverItems)
-    )
+    const itemId = getItemIDByName(itemName.trim(), searchItemEntries(game))
 
     if (!itemId) {
       event.preventDefault()
@@ -1234,7 +1167,7 @@ const ItemSearch = () => {
     }
   }, [isOpen, defaultSearchGame])
 
-  const isLoading = transition.state === 'loading' || foreverLoading
+  const isLoading = transition.state === 'loading'
   return (
     <div>
       <button
@@ -1324,11 +1257,7 @@ const ItemSearch = () => {
                 formName={ITEM_DATA_FORM_NAME}
                 onSelect={handleSelect}
                 error={searchError}
-                placeholder={
-                  foreverLoading && isForever
-                    ? 'Loading Forever items...'
-                    : 'Search items...'
-                }
+                placeholder="Search items..."
                 containerClassNames="w-full"
                 useDebounce={true}
               />

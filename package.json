@@ -20,9 +20,10 @@
     "pretest": "yarn run generate:css",
     "test": "vitest",
     "prepare": "husky",
-    "write-items": "yarn run write-ffxiv-items && prettier --write app/utils/items/ffxivItems.ts && yarn run write-wow-items && prettier --write app/utils/items/wowItems.ts && yarn run write-gw2-items && prettier --write app/utils/items/gw2Items.ts && yarn run prettier",
+    "write-items": "yarn run write-ffxiv-items && prettier --write app/utils/items/ffxivItems.ts && yarn run write-wow-items && prettier --write app/utils/items/wowItems.ts && yarn run write-wow-forever-items && prettier --write app/utils/items/wowForeverItems.ts && yarn run write-gw2-items && prettier --write app/utils/items/gw2Items.ts && yarn run prettier",
     "write-ffxiv-items": "node ./scripts/write-ffxiv-items.js && prettier --write app/utils/items/ffxivItems.ts",
     "write-wow-items": "node ./scripts/write-wow-items.js && prettier --write app/utils/items/wowItems.ts",
+    "write-wow-forever-items": "node ./scripts/write-wow-forever-items.js && prettier --write app/utils/items/wowForeverItems.ts",
     "write-gw2-items": "node ./scripts/write-gw2-items.js && prettier --write app/utils/items/gw2Items.ts"
   },
   "packageManager": "yarn@1.22.22",

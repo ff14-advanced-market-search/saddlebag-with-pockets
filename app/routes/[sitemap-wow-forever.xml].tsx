@@ -1,5 +1,5 @@
 import type { LoaderFunction } from '@remix-run/cloudflare'
-import ForeverItemNames from '../requests/WoWForever/ItemNames'
+import { wowForeverItemsMap } from '~/utils/items/wowForeverItems'
 
 // Helper to format dates in W3C format (YYYY-MM-DDThh:mm:ss+00:00)
 const toW3CDate = (date: Date): string => {
@@ -17,8 +17,8 @@ const getItemLastMod = (_id: string): string => {
 export const loader: LoaderFunction = async () => {
   const baseURL = 'https://saddlebagexchange.com'
 
-  const foreverItemNames = await ForeverItemNames()
-  const foreverItemIDs = Object.keys(foreverItemNames)
+  // Get arrays of item IDs without labels
+  const foreverItemIDs = Object.keys(wowForeverItemsMap)
 
   // Generate URLs with dynamic parameters for Forever items
   const dynamicForeverURLs = foreverItemIDs.map((id) => {
