@@ -48,6 +48,7 @@ import { getItemIDByName } from '~/utils/items'
 import ForeverItemNames from '~/requests/WoWForever/ItemNames'
 import {
   foreverItemNamesToEntries,
+  isSearchGame,
   type ForeverItemEntry,
   type SearchGame
 } from '~/utils/WoWForever/itemNames'
@@ -58,6 +59,51 @@ type SelectOption = { value: string; label: string }
 
 let foreverItemsCache: ForeverItemEntry[] | null = null
 let foreverSelectCache: SelectOption[] | null = null
+
+const searchSelectOptions = (
+  game: SearchGame,
+  foreverOptions: SelectOption[]
+): SelectOption[] => {
+  switch (game) {
+    case 'wow':
+      return wowItemsList
+    case 'gw2':
+      return gw2ItemsList
+    case 'forever':
+      return foreverOptions
+    default:
+      return ffxivItemsList
+  }
+}
+
+const searchItemEntries = (
+  game: SearchGame,
+  foreverItems: ForeverItemEntry[] | null
+) => {
+  switch (game) {
+    case 'wow':
+      return wowItems
+    case 'gw2':
+      return gw2Items
+    case 'forever':
+      return foreverItems ?? undefined
+    default:
+      return undefined
+  }
+}
+
+const itemDataPathForGame = (game: SearchGame): string => {
+  switch (game) {
+    case 'wow':
+      return 'wow/item-data/'
+    case 'gw2':
+      return 'gw2/item-data/'
+    case 'forever':
+      return '/wow-forever/item-data/'
+    default:
+      return '/queries/item-data/'
+  }
+}
 
 export const ITEM_DATA_FORM_NAME = 'item-data-from'
 
@@ -1079,17 +1125,8 @@ const ItemSearch = () => {
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const isWoW = game === 'wow'
-  const isGW2 = game === 'gw2'
   const isForever = game === 'forever'
-
-  const dataFormItemList = isWoW
-    ? wowItemsList
-    : isGW2
-    ? gw2ItemsList
-    : isForever
-    ? foreverSelectOptions
-    : ffxivItemsList
+  const dataFormItemList = searchSelectOptions(game, foreverSelectOptions)
 
   useEffect(() => {
     if (!isForever || foreverItems != null) {
@@ -1152,15 +1189,10 @@ const ItemSearch = () => {
       return
     }
 
-    const itemList = isWoW
-      ? wowItems
-      : isGW2
-      ? gw2Items
-      : isForever
-      ? foreverItems
-      : undefined
-
-    const itemId = getItemIDByName(itemName.trim(), itemList)
+    const itemId = getItemIDByName(
+      itemName.trim(),
+      searchItemEntries(game, foreverItems)
+    )
 
     if (!itemId) {
       event.preventDefault()
@@ -1168,25 +1200,13 @@ const ItemSearch = () => {
       return
     }
 
-    const path = isWoW
-      ? 'wow/item-data/'
-      : isGW2
-      ? 'gw2/item-data/'
-      : isForever
-      ? '/wow-forever/item-data/'
-      : '/queries/item-data/'
-    navigate(path + itemId)
+    navigate(itemDataPathForGame(game) + itemId)
     setIsOpen(false)
   }
 
   const handleFormChange = (event: React.SyntheticEvent<EventTarget>) => {
     const value = (event.target as HTMLInputElement).value
-    if (
-      value === 'ffxiv' ||
-      value === 'wow' ||
-      value === 'gw2' ||
-      value === 'forever'
-    ) {
+    if (isSearchGame(value)) {
       setGame(value)
       setSearchError(undefined)
     }
