@@ -83,12 +83,12 @@ const liveMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
 ]
 
 const tsmMetrics = (listing: ForeverItemListing): (Metric | null)[] => [
-  formatMetric('tsmQuantity', listing.tsmQuantity),
-  formatMetric('tsmMarketValue', listing.tsmMarketValue),
-  formatMetric('tsmAvgSalePrice', listing.tsmAvgSalePrice),
-  formatMetric('tsmSaleRate', listing.tsmSaleRate),
-  formatMetric('tsmSoldPerDay', listing.tsmSoldPerDay),
-  formatMetric('tsmHistorical', listing.tsmHistorical)
+  formatMetric('Quantity', listing.tsmQuantity),
+  formatMetric('Market Value', listing.tsmMarketValue),
+  formatMetric('Average Sale Price', listing.tsmAvgSalePrice),
+  formatMetric('Sale Rate', listing.tsmSaleRate),
+  formatMetric('Sold Per Day', listing.tsmSoldPerDay),
+  formatMetric('Historical', listing.tsmHistorical)
 ]
 
 const columnList: ColumnList<TableRow>[] = [
@@ -103,7 +103,7 @@ const toTableRows = (listing: ForeverItemListing): TableRow[] =>
   }))
 
 /**
- * Forever item-data body: AH label, live metrics, optional tsm* raw, listings.
+ * Forever item-data body: live metrics, optional TSM statistics, listings.
  */
 export default function ForeverItemDataDisplay({
   listing
@@ -116,13 +116,10 @@ export default function ForeverItemDataDisplay({
   return (
     <>
       <Title title={listing.itemName} />
-      <p className="mb-2 text-center text-sm text-slate-600 dark:text-slate-300">
-        WoW Forever · {listing.faction} · {listing.gameType} · {houseLabel}
-      </p>
       {listing.blog ? <p style={{ fontSize: '1px' }}>{listing.blog}</p> : null}
       <Banner />
       <MetricGrid metrics={liveMetrics(listing)} />
-      <MetricGrid heading="TSM Raw" metrics={tsmMetrics(listing)} />
+      <MetricGrid heading="TSM Statistics" metrics={tsmMetrics(listing)} />
       <div className="mx-3 my-6 flex flex-wrap justify-center gap-2">
         <CustomButton
           link="https://saddlebagexchange.com/wow-forever/"
