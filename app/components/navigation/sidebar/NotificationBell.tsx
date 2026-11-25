@@ -18,11 +18,11 @@ interface Notification {
 
 const notifications: Notification[] = [
   {
-    id: 'wow-weekly-price-delta',
-    title: 'Try WoW Weekly Price Delta!',
+    id: 'wow-forever-market-data',
+    title: 'Try WoW Forever Market Data!',
     description:
-      'Discover price trends and investment opportunities across different realms with our new Weekly Price Delta feature.',
-    link: '/wow/weekly-price-group-delta-recommended',
+      'Browse Forever Classic auction house prices, upload timers, and item listings across Alliance, Horde, and Neutral houses on Saddlebag.',
+    link: '/wow-forever',
     icon: ChartBarSquareIcon,
     showOn: (pathname) => pathname.startsWith('/wow')
   },
